@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TourWriterReportsLocalization>
+    <Language langid="en-NZ" langname="English (NZ)">
+    
+   		<!-- Use these settings to position the vouchers on the page (change the Text value in "") -->   		
+        <Localize Type="label" Name="VoucherDetailHeight"  Text="23" />
+        <Localize Type="label" Name="VoucherNoteHeight"    Text="18" />        
+        <Localize Type="label" Name="PageTopMargin"        Text="20" />
+        <Localize Type="label" Name="PageLeftMargin"       Text="22" />
+        <Localize Type="label" Name="SpaceBetweenVouchers" Text="10" />
+        <Localize Type="label" Name="VouchersPerPage"      Text="3" />
+        
+        <!-- Use this setting to change the format of the date/time on the vouchers -->
+        <Localize Type="label" Name="DateFormat" Text="dd MMM yy" />
+        
+   		<!-- Use these settings to change the lable texts on each voucher (change the Text value in "") -->
+        <Localize Type="label" Name="Label1"  Text="Voucher for:" />
+        <Localize Type="label" Name="Label2"  Text="Client name:" />
+        <Localize Type="label" Name="Label3"  Text="Notes:" />
+        <Localize Type="label" Name="Label4"  Text="Voucher no:" />
+        <Localize Type="label" Name="Label5"  Text="Issued by:" />
+        <Localize Type="label" Name="Label6"  Text="Issue date:" />
+    </Language>
+    <Language langid="fr-FR" langname="Francais">    
+    </Language>
+    <Language langid="de-DE" langname="Deutsch">    
+    </Language>
+</TourWriterReportsLocalization>

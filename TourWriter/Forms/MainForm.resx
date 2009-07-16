@@ -1,0 +1,1137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="contextMenuNavigation.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>390, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="contextMenuOpen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuOpen.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="contextMenuSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="contextMenuNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="contextMenuNew.Text" xml:space="preserve">
+    <value>New Item</value>
+  </data>
+  <data name="contextMenuNewFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 22</value>
+  </data>
+  <data name="contextMenuNewFolder.Text" xml:space="preserve">
+    <value>New Folder</value>
+  </data>
+  <data name="contextMenuAdd.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuAdd.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="contextMenuCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuCopy.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="contextMenuDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuDelete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="contextMenuRename.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuRename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="contextMenuSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="contextMenuEmailSelected.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
+  </data>
+  <data name="contextMenuEmailSelected.Text" xml:space="preserve">
+    <value>Selected contacts...</value>
+  </data>
+  <data name="contextMenuEmailGroup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
+  </data>
+  <data name="contextMenuEmailGroup.Text" xml:space="preserve">
+    <value>Contact categories...</value>
+  </data>
+  <data name="contextMenuEmail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuEmail.Text" xml:space="preserve">
+    <value>Send email to</value>
+  </data>
+  <data name="contextMenuSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuSearch.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="contextMenuRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="contextMenuRefresh.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="menuSuppliers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="menuSuppliers.Text" xml:space="preserve">
+    <value>&amp;Suppliers</value>
+  </data>
+  <data name="contextMenuNavigation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>147, 192</value>
+  </data>
+  <data name="contextMenuNavigation.Text" xml:space="preserve">
+    <value>contextMenu</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNavigation.Name" xml:space="preserve">
+    <value>contextMenuNavigation</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNavigation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="treeItineraries.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeItineraries.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ultraTreeNode1.Text" xml:space="preserve">
+    <value>Itineraries</value>
+  </data>
+  <data name="treeItineraries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="treeItineraries.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="&gt;&gt;treeItineraries.Name" xml:space="preserve">
+    <value>treeItineraries</value>
+  </data>
+  <data name="&gt;&gt;treeItineraries.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinTree.UltraTree, Infragistics2.Win.UltraWinTree.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;treeItineraries.Parent" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl1</value>
+  </data>
+  <data name="&gt;&gt;treeItineraries.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 28</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl1.Name" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl1</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl1.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarContainerControl, Infragistics2.Win.UltraWinExplorerBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl1.Parent" xml:space="preserve">
+    <value>navPane</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="menuContacts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="menuContacts.Text" xml:space="preserve">
+    <value>&amp;Contacts</value>
+  </data>
+  <data name="treeSuppliers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeSuppliers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ultraTreeNode2.Text" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="treeSuppliers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <data name="treeSuppliers.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;treeSuppliers.Name" xml:space="preserve">
+    <value>treeSuppliers</value>
+  </data>
+  <data name="&gt;&gt;treeSuppliers.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinTree.UltraTree, Infragistics2.Win.UltraWinTree.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;treeSuppliers.Parent" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl2</value>
+  </data>
+  <data name="&gt;&gt;treeSuppliers.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>-10000, -10000</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl2.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl2.Name" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl2</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl2.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarContainerControl, Infragistics2.Win.UltraWinExplorerBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl2.Parent" xml:space="preserve">
+    <value>navPane</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="treeContacts.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeContacts.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ultraTreeNode3.Text" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="treeContacts.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <data name="treeContacts.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="&gt;&gt;treeContacts.Name" xml:space="preserve">
+    <value>treeContacts</value>
+  </data>
+  <data name="&gt;&gt;treeContacts.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinTree.UltraTree, Infragistics2.Win.UltraWinTree.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;treeContacts.Parent" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl3</value>
+  </data>
+  <data name="&gt;&gt;treeContacts.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>-10000, -10000</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 172</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl3.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="ultraExplorerBarContainerControl3.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl3.Name" xml:space="preserve">
+    <value>ultraExplorerBarContainerControl3</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl3.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarContainerControl, Infragistics2.Win.UltraWinExplorerBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl3.Parent" xml:space="preserve">
+    <value>navPane</value>
+  </data>
+  <data name="&gt;&gt;ultraExplorerBarContainerControl3.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="menuItineraries.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="menuItineraries.Text" xml:space="preserve">
+    <value>&amp;Itineraries</value>
+  </data>
+  <data name="resource.Name" xml:space="preserve">
+    <value>Tahoma</value>
+  </data>
+  <data name="navPane.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ultraExplorerBarGroup1.Text" xml:space="preserve">
+    <value>Itineraries</value>
+  </data>
+  <data name="ultraExplorerBarGroup2.Text" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="ultraExplorerBarGroup3.Text" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="ultraExplorerBarItem1.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="ultraExplorerBarItem2.Text" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="ultraExplorerBarItem3.Text" xml:space="preserve">
+    <value>Reports (*old)</value>
+  </data>
+  <data name="ultraExplorerBarItem4.Text" xml:space="preserve">
+    <value>Data import/export</value>
+  </data>
+  <data name="ultraExplorerBarItem5.Text" xml:space="preserve">
+    <value>TourWriterData folder</value>
+  </data>
+  <data name="ultraExplorerBarItem6.Text" xml:space="preserve">
+    <value>Start page</value>
+  </data>
+  <data name="ultraExplorerBarItem7.Text" xml:space="preserve">
+    <value>Setup</value>
+  </data>
+  <data name="ultraExplorerBarGroup4.Text" xml:space="preserve">
+    <value>Additional</value>
+  </data>
+  <data name="navPane.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 4</value>
+  </data>
+  <data name="navPane.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 343</value>
+  </data>
+  <data name="navPane.TabIndex" type="System.Int32, mscorlib">
+    <value>58</value>
+  </data>
+  <data name="&gt;&gt;navPane.Name" xml:space="preserve">
+    <value>navPane</value>
+  </data>
+  <data name="&gt;&gt;navPane.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinExplorerBar.UltraExplorerBar, Infragistics2.Win.UltraWinExplorerBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;navPane.Parent" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;navPane.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="mdiManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>558, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>123</value>
+  </metadata>
+  <data name="$this.AutoScaleBaseSize" type="System.Drawing.Size, System.Drawing">
+    <value>6, 15</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>627, 423</value>
+  </data>
+  <data name="splitter1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="splitter1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>182, 49</value>
+  </data>
+  <data name="splitter1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>4, 351</value>
+  </data>
+  <data name="splitter1.TabIndex" type="System.Int32, mscorlib">
+    <value>76</value>
+  </data>
+  <data name="&gt;&gt;splitter1.Name" xml:space="preserve">
+    <value>splitter1</value>
+  </data>
+  <data name="&gt;&gt;splitter1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Splitter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitter1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splitter1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pnlMenu.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="pnlMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 49</value>
+  </data>
+  <data name="pnlMenu.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 0, 4</value>
+  </data>
+  <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 351</value>
+  </data>
+  <data name="pnlMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Name" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>0, 24</value>
+  </metadata>
+  <metadata name="contextMenuQuickNew.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>225, 17</value>
+  </metadata>
+  <data name="menuItineraryNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="menuItineraryNew.Text" xml:space="preserve">
+    <value>New Itinerary</value>
+  </data>
+  <data name="menuSupplierNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="menuSupplierNew.Text" xml:space="preserve">
+    <value>New Supplier</value>
+  </data>
+  <data name="menuContactNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="menuContactNew.Text" xml:space="preserve">
+    <value>New Contact</value>
+  </data>
+  <data name="contextMenuQuickNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 70</value>
+  </data>
+  <data name="&gt;&gt;contextMenuQuickNew.Name" xml:space="preserve">
+    <value>contextMenuQuickNew</value>
+  </data>
+  <data name="&gt;&gt;contextMenuQuickNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolNew.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Transparent</value>
+  </data>
+  <data name="toolNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 22</value>
+  </data>
+  <data name="toolNew.Text" xml:space="preserve">
+    <value>New...</value>
+  </data>
+  <data name="toolNew.ToolTipText" xml:space="preserve">
+    <value>Add new item</value>
+  </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>627, 25</value>
+  </data>
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>73</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>0, 0</value>
+  </metadata>
+  <data name="menuNew.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="menuNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 22</value>
+  </data>
+  <data name="menuNew.Text" xml:space="preserve">
+    <value>&amp;New</value>
+  </data>
+  <data name="toolStripSeparator.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 6</value>
+  </data>
+  <data name="menuExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>98, 22</value>
+  </data>
+  <data name="menuExit.Text" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
+  <data name="menuFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
+  </data>
+  <data name="menuFile.Text" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="menuSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuSearch.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="menuReports.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuReports.Text" xml:space="preserve">
+    <value>General reports</value>
+  </data>
+  <data name="menuGeneralReports.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuGeneralReports.Text" xml:space="preserve">
+    <value>General reports (*old)</value>
+  </data>
+  <data name="menuDataExtraction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuDataExtraction.Text" xml:space="preserve">
+    <value>Data import/export</value>
+  </data>
+  <data name="menuTourWriterData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuTourWriterData.Text" xml:space="preserve">
+    <value>TourWriterData folder</value>
+  </data>
+  <data name="menuStartPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuStartPage.Text" xml:space="preserve">
+    <value>Start page</value>
+  </data>
+  <data name="menuAdditional.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="menuAdditional.Text" xml:space="preserve">
+    <value>&amp;Additional</value>
+  </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 6</value>
+  </data>
+  <data name="menuSetup.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 22</value>
+  </data>
+  <data name="menuSetup.Text" xml:space="preserve">
+    <value>S&amp;etup</value>
+  </data>
+  <data name="menuTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="menuTools.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
+  </data>
+  <data name="menuCloseAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 22</value>
+  </data>
+  <data name="menuCloseAll.Text" xml:space="preserve">
+    <value>Close All</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>117, 6</value>
+  </data>
+  <data name="menuWindow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 20</value>
+  </data>
+  <data name="menuWindow.Text" xml:space="preserve">
+    <value>&amp;Window</value>
+  </data>
+  <data name="menuDebugUser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="menuDebugUser.Text" xml:space="preserve">
+    <value>User data</value>
+  </data>
+  <data name="menuDebugTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="menuDebugTools.Text" xml:space="preserve">
+    <value>Tools data</value>
+  </data>
+  <data name="menuDebugAgents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="menuDebugAgents.Text" xml:space="preserve">
+    <value>Agents data</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="btnSchema.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 22</value>
+  </data>
+  <data name="btnSchema.Text" xml:space="preserve">
+    <value>Write schema</value>
+  </data>
+  <data name="menuDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 20</value>
+  </data>
+  <data name="menuDebug.Text" xml:space="preserve">
+    <value>&amp;Debug</value>
+  </data>
+  <data name="menuDebug.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="menuHelpContents.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>F1</value>
+  </data>
+  <data name="menuHelpContents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="menuHelpContents.Text" xml:space="preserve">
+    <value>&amp;Contents</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 6</value>
+  </data>
+  <data name="menuUpdate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="menuUpdate.Text" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="menuScreenshot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="menuScreenshot.Text" xml:space="preserve">
+    <value>Send screenshot</value>
+  </data>
+  <data name="menuFeedback.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="menuFeedback.Text" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+  <data name="menuAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 22</value>
+  </data>
+  <data name="menuAbout.Text" xml:space="preserve">
+    <value>&amp;About</value>
+  </data>
+  <data name="menuHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
+  </data>
+  <data name="menuHelp.Text" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>627, 24</value>
+  </data>
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>71</value>
+  </data>
+  <data name="menuStrip1.Text" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="appearance10.FontData.SizeInPoints" type="System.Single, mscorlib">
+    <value>8.25</value>
+  </data>
+  <data name="StatusBar.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="StatusBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 400</value>
+  </data>
+  <data name="appearance11.TextHAlignAsString" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="StatusBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>627, 23</value>
+  </data>
+  <data name="StatusBar.TabIndex" type="System.Int32, mscorlib">
+    <value>47</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Name" xml:space="preserve">
+    <value>StatusBar</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinStatusBar.UltraStatusBar, Infragistics2.Win.UltraWinStatusBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;StatusBar.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9pt</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>TourWriter</value>
+  </data>
+  <data name="&gt;&gt;contextMenuOpen.Name" xml:space="preserve">
+    <value>contextMenuOpen</value>
+  </data>
+  <data name="&gt;&gt;contextMenuOpen.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSeparator1.Name" xml:space="preserve">
+    <value>contextMenuSeparator1</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuAdd.Name" xml:space="preserve">
+    <value>contextMenuAdd</value>
+  </data>
+  <data name="&gt;&gt;contextMenuAdd.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNew.Name" xml:space="preserve">
+    <value>contextMenuNew</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNewFolder.Name" xml:space="preserve">
+    <value>contextMenuNewFolder</value>
+  </data>
+  <data name="&gt;&gt;contextMenuNewFolder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCopy.Name" xml:space="preserve">
+    <value>contextMenuCopy</value>
+  </data>
+  <data name="&gt;&gt;contextMenuCopy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuDelete.Name" xml:space="preserve">
+    <value>contextMenuDelete</value>
+  </data>
+  <data name="&gt;&gt;contextMenuDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuRename.Name" xml:space="preserve">
+    <value>contextMenuRename</value>
+  </data>
+  <data name="&gt;&gt;contextMenuRename.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSeparator2.Name" xml:space="preserve">
+    <value>contextMenuSeparator2</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmail.Name" xml:space="preserve">
+    <value>contextMenuEmail</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmail.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmailSelected.Name" xml:space="preserve">
+    <value>contextMenuEmailSelected</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmailSelected.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmailGroup.Name" xml:space="preserve">
+    <value>contextMenuEmailGroup</value>
+  </data>
+  <data name="&gt;&gt;contextMenuEmailGroup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSearch.Name" xml:space="preserve">
+    <value>contextMenuSearch</value>
+  </data>
+  <data name="&gt;&gt;contextMenuSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuRefresh.Name" xml:space="preserve">
+    <value>contextMenuRefresh</value>
+  </data>
+  <data name="&gt;&gt;contextMenuRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuContacts.Name" xml:space="preserve">
+    <value>menuContacts</value>
+  </data>
+  <data name="&gt;&gt;menuContacts.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuItineraries.Name" xml:space="preserve">
+    <value>menuItineraries</value>
+  </data>
+  <data name="&gt;&gt;menuItineraries.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuSuppliers.Name" xml:space="preserve">
+    <value>menuSuppliers</value>
+  </data>
+  <data name="&gt;&gt;menuSuppliers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;mdiManager.Name" xml:space="preserve">
+    <value>mdiManager</value>
+  </data>
+  <data name="&gt;&gt;mdiManager.Type" xml:space="preserve">
+    <value>Infragistics.Win.UltraWinTabbedMdi.UltraTabbedMdiManager, Infragistics2.Win.UltraWinTabbedMdi.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb</value>
+  </data>
+  <data name="&gt;&gt;toolNew.Name" xml:space="preserve">
+    <value>toolNew</value>
+  </data>
+  <data name="&gt;&gt;toolNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuItineraryNew.Name" xml:space="preserve">
+    <value>menuItineraryNew</value>
+  </data>
+  <data name="&gt;&gt;menuItineraryNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuSupplierNew.Name" xml:space="preserve">
+    <value>menuSupplierNew</value>
+  </data>
+  <data name="&gt;&gt;menuSupplierNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuContactNew.Name" xml:space="preserve">
+    <value>menuContactNew</value>
+  </data>
+  <data name="&gt;&gt;menuContactNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuNew.Name" xml:space="preserve">
+    <value>menuNew</value>
+  </data>
+  <data name="&gt;&gt;menuNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuFile.Name" xml:space="preserve">
+    <value>menuFile</value>
+  </data>
+  <data name="&gt;&gt;menuFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator.Name" xml:space="preserve">
+    <value>toolStripSeparator</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuExit.Name" xml:space="preserve">
+    <value>menuExit</value>
+  </data>
+  <data name="&gt;&gt;menuExit.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuTools.Name" xml:space="preserve">
+    <value>menuTools</value>
+  </data>
+  <data name="&gt;&gt;menuTools.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuAdditional.Name" xml:space="preserve">
+    <value>menuAdditional</value>
+  </data>
+  <data name="&gt;&gt;menuAdditional.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuSearch.Name" xml:space="preserve">
+    <value>menuSearch</value>
+  </data>
+  <data name="&gt;&gt;menuSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuReports.Name" xml:space="preserve">
+    <value>menuReports</value>
+  </data>
+  <data name="&gt;&gt;menuReports.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuGeneralReports.Name" xml:space="preserve">
+    <value>menuGeneralReports</value>
+  </data>
+  <data name="&gt;&gt;menuGeneralReports.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuDataExtraction.Name" xml:space="preserve">
+    <value>menuDataExtraction</value>
+  </data>
+  <data name="&gt;&gt;menuDataExtraction.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuTourWriterData.Name" xml:space="preserve">
+    <value>menuTourWriterData</value>
+  </data>
+  <data name="&gt;&gt;menuTourWriterData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStartPage.Name" xml:space="preserve">
+    <value>menuStartPage</value>
+  </data>
+  <data name="&gt;&gt;menuStartPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
+    <value>toolStripSeparator7</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuSetup.Name" xml:space="preserve">
+    <value>menuSetup</value>
+  </data>
+  <data name="&gt;&gt;menuSetup.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuWindow.Name" xml:space="preserve">
+    <value>menuWindow</value>
+  </data>
+  <data name="&gt;&gt;menuWindow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuCloseAll.Name" xml:space="preserve">
+    <value>menuCloseAll</value>
+  </data>
+  <data name="&gt;&gt;menuCloseAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuDebug.Name" xml:space="preserve">
+    <value>menuDebug</value>
+  </data>
+  <data name="&gt;&gt;menuDebug.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuDebugUser.Name" xml:space="preserve">
+    <value>menuDebugUser</value>
+  </data>
+  <data name="&gt;&gt;menuDebugUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuDebugTools.Name" xml:space="preserve">
+    <value>menuDebugTools</value>
+  </data>
+  <data name="&gt;&gt;menuDebugTools.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuDebugAgents.Name" xml:space="preserve">
+    <value>menuDebugAgents</value>
+  </data>
+  <data name="&gt;&gt;menuDebugAgents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnSchema.Name" xml:space="preserve">
+    <value>btnSchema</value>
+  </data>
+  <data name="&gt;&gt;btnSchema.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuHelp.Name" xml:space="preserve">
+    <value>menuHelp</value>
+  </data>
+  <data name="&gt;&gt;menuHelp.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuHelpContents.Name" xml:space="preserve">
+    <value>menuHelpContents</value>
+  </data>
+  <data name="&gt;&gt;menuHelpContents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuUpdate.Name" xml:space="preserve">
+    <value>menuUpdate</value>
+  </data>
+  <data name="&gt;&gt;menuUpdate.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuScreenshot.Name" xml:space="preserve">
+    <value>menuScreenshot</value>
+  </data>
+  <data name="&gt;&gt;menuScreenshot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuFeedback.Name" xml:space="preserve">
+    <value>menuFeedback</value>
+  </data>
+  <data name="&gt;&gt;menuFeedback.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuAbout.Name" xml:space="preserve">
+    <value>menuAbout</value>
+  </data>
+  <data name="&gt;&gt;menuAbout.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainForm</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ActiveReportsLayout Version="3" PrintWidth="9554.4" DocumentName="ActiveReports Document" ScriptLang="C#" CodeFile="ClientLocations.cs">
+  <StyleSheet>
+    <Style Name="Normal" Value="font-family: Arial; font-style: normal; font-variant: inherit; font-weight: normal; font-size: 10pt; font-size-adjust: inherit; font-stretch: inherit; color: rgb(0,0,0); background-repeat: inherit; background-attachment: inherit; opacity: inherit; word-spacing: inherit; letter-spacing: inherit; text-decoration: none; vertical-align: inherit; text-transform: inherit; text-align: inherit; text-indent: inherit; unicode-bidi: inherit; line-height: inherit; white-space: inherit; ddo-char-set: 0; " />
+    <Style Name="Heading1" Value="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; font-size: 16pt; font-size-adjust: inherit; font-stretch: inherit; " />
+    <Style Name="Heading2" Value="font-family: Times New Roman; font-style: italic; font-variant: inherit; font-weight: bold; font-size: 14pt; font-size-adjust: inherit; font-stretch: inherit; " />
+    <Style Name="Heading3" Value="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; font-size: 13pt; font-size-adjust: inherit; font-stretch: inherit; " />
+  </StyleSheet>
+  <Sections>
+    <Section Type="ReportHeader" Name="ReportHeader" Height="435" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label1" DataField="Title" MOD="4" Left="0" Top="0" Width="9540" Height="288" Caption="Client travel locations" Style="ddo-char-set: 1; text-decoration: underline; text-align: center; font-weight: bold; " />
+    </Section>
+    <Section Type="PageHeader" Name="PageHeader" Height="374" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label4" MOD="4" Left="4782.756" Top="-19.13386" Width="1440" Height="288" Caption="Itinerary" Style="ddo-char-set: 1; font-weight: normal; font-size: 9pt; " />
+      <Control Type="AR.Label" Name="Label2" MOD="4" Left="0" Top="0" Width="720" Height="288" Caption="City" Style="ddo-char-set: 1; font-weight: normal; font-size: 9pt; " />
+      <Control Type="AR.Label" Name="Label3" MOD="4" Left="1825.512" Top="-19.13386" Width="1440" Height="288" Caption="Supplier" Style="ddo-char-set: 1; font-weight: normal; font-size: 9pt; " />
+      <Control Type="AR.Line" Name="Line1" MOD="4" X1="0" Y1="234.72" X2="9552.96" Y2="234.72" />
+      <Control Type="AR.Label" Name="Label5" MOD="4" Left="8190" Top="0" Width="1440" Height="288" Caption="Status" Style="ddo-char-set: 1; font-weight: normal; font-size: 9pt; " />
+    </Section>
+    <Section Type="GroupHeader" Name="ghDay" Height="254" DataField="Date" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Shape" Name="Shape1" MOD="4" Left="-21" Top="-36" Width="9540" Height="270" BackColor="14474460" BackStyle="1" LineColor="16777215" />
+      <Control Type="AR.Field" Name="TextBox1" DataField="Date" MOD="4" Left="0" Top="0" Width="1080" Height="288" Text="Date" Style="ddo-char-set: 1; text-decoration: underline; font-size: 9pt; " />
+    </Section>
+    <Section Type="Detail" Name="Detail" Height="240" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Field" Name="TextBox2" DataField="Itinerary" MOD="4" Left="4770" Top="0" Width="3420" Height="288" Text="Itinerary" Style="ddo-char-set: 1; font-size: 9pt; " />
+      <Control Type="AR.Field" Name="TextBox3" DataField="City" MOD="4" Left="0" Top="0" Width="1800" Height="288" Text="City" Style="ddo-char-set: 1; font-size: 9pt; " />
+      <Control Type="AR.Field" Name="TextBox4" DataField="Supplier" MOD="4" Left="1819.016" Top="0" Width="2950.984" Height="288" Text="Supplier" Style="ddo-char-set: 1; font-size: 9pt; " />
+      <Control Type="AR.Field" Name="Itinerary1" DataField="Status" MOD="4" Left="8190.72" Top="0" Width="1350" Height="288" Text="Status" Style="ddo-char-set: 1; font-size: 9pt; " />
+    </Section>
+    <Section Type="GroupFooter" Name="gfDay" Height="60" BackColor="16777215" CanShrink="0" />
+    <Section Type="PageFooter" Name="PageFooter" Height="0" BackColor="16777215" CanShrink="0" />
+    <Section Type="ReportFooter" Name="ReportFooter" Height="0" BackColor="16777215" CanShrink="0" />
+  </Sections>
+  <PageSettings LeftMargin="1134" RightMargin="1134" TopMargin="1417" BottomMargin="1417" />
+</ActiveReportsLayout>

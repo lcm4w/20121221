@@ -1,0 +1,1567 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6270B95D-545C-4E53-A866-22F0E3C4BF26}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TourWriter</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TourWriter</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>TourWriter.ApplicationEntryPoint</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>http://localhost/TourWriter/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRules>-Microsoft.Design#CA1012;-Microsoft.Design#CA2210;-Microsoft.Design#CA1040;-Microsoft.Design#CA1005;-Microsoft.Design#CA1020;-Microsoft.Design#CA1021;-Microsoft.Design#CA1010;-Microsoft.Design#CA1011;-Microsoft.Design#CA1009;-Microsoft.Design#CA1050;-Microsoft.Design#CA1026;-Microsoft.Design#CA1019;-Microsoft.Design#CA1031;-Microsoft.Design#CA1047;-Microsoft.Design#CA1000;-Microsoft.Design#CA1048;-Microsoft.Design#CA1051;-Microsoft.Design#CA1002;-Microsoft.Design#CA1061;-Microsoft.Design#CA1006;-Microsoft.Design#CA1046;-Microsoft.Design#CA1045;-Microsoft.Design#CA1065;-Microsoft.Design#CA1038;-Microsoft.Design#CA1008;-Microsoft.Design#CA1028;-Microsoft.Design#CA1064;-Microsoft.Design#CA1004;-Microsoft.Design#CA1035;-Microsoft.Design#CA1063;-Microsoft.Design#CA1032;-Microsoft.Design#CA1023;-Microsoft.Design#CA1033;-Microsoft.Design#CA1039;-Microsoft.Design#CA1016;-Microsoft.Design#CA1014;-Microsoft.Design#CA1017;-Microsoft.Design#CA1018;-Microsoft.Design#CA1027;-Microsoft.Design#CA1059;-Microsoft.Design#CA1060;-Microsoft.Design#CA1034;-Microsoft.Design#CA1013;-Microsoft.Design#CA1036;-Microsoft.Design#CA1044;-Microsoft.Design#CA1041;-Microsoft.Design#CA1025;-Microsoft.Design#CA1052;-Microsoft.Design#CA1053;-Microsoft.Design#CA1057;-Microsoft.Design#CA1058;-Microsoft.Design#CA1001;-Microsoft.Design#CA1049;-Microsoft.Design#CA1054;-Microsoft.Design#CA1056;-Microsoft.Design#CA1055;-Microsoft.Design#CA1030;-Microsoft.Design#CA1003;-Microsoft.Design#CA1007;-Microsoft.Design#CA1043;-Microsoft.Design#CA1024;-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1308;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA2101;-Microsoft.Globalization#CA1300;-Microsoft.Globalization#CA1307;-Microsoft.Globalization#CA1309;-Microsoft.Interoperability#CA1403;-Microsoft.Interoperability#CA1406;-Microsoft.Interoperability#CA1413;-Microsoft.Interoperability#CA1402;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1404;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1405;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1408;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Interoperability#CA1401;-Microsoft.Maintainability#CA1506;-Microsoft.Maintainability#CA1502;-Microsoft.Maintainability#CA1501;-Microsoft.Maintainability#CA1505;-Microsoft.Maintainability#CA1504;-Microsoft.Maintainability#CA1500;-Microsoft.Mobility#CA1600;-Microsoft.Mobility#CA1601;-Microsoft.Naming#CA1702;-Microsoft.Naming#CA1700;-Microsoft.Naming#CA1712;-Microsoft.Naming#CA1713;-Microsoft.Naming#CA1714;-Microsoft.Naming#CA1709;-Microsoft.Naming#CA1704;-Microsoft.Naming#CA1708;-Microsoft.Naming#CA1715;-Microsoft.Naming#CA1710;-Microsoft.Naming#CA1720;-Microsoft.Naming#CA1707;-Microsoft.Naming#CA1722;-Microsoft.Naming#CA1711;-Microsoft.Naming#CA1716;-Microsoft.Naming#CA1717;-Microsoft.Naming#CA1725;-Microsoft.Naming#CA1719;-Microsoft.Naming#CA1721;-Microsoft.Naming#CA1701;-Microsoft.Naming#CA1703;-Microsoft.Naming#CA1724;-Microsoft.Naming#CA1726;-Microsoft.Performance#CA1809;-Microsoft.Performance#CA1811;-Microsoft.Performance#CA1812;-Microsoft.Performance#CA1813;-Microsoft.Performance#CA1823;-Microsoft.Performance#CA1800;-Microsoft.Performance#CA1805;-Microsoft.Performance#CA1810;-Microsoft.Performance#CA1824;-Microsoft.Performance#CA1822;-Microsoft.Performance#CA1815;-Microsoft.Performance#CA1814;-Microsoft.Performance#CA1819;-Microsoft.Performance#CA1821;-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1820;-Microsoft.Performance#CA1802;-Microsoft.Portability#CA1901;-Microsoft.Portability#CA1900;-Microsoft.Reliability#CA2001;-Microsoft.Reliability#CA2002;-Microsoft.Reliability#CA2003;-Microsoft.Reliability#CA2004;-Microsoft.Reliability#CA2006;-Microsoft.Security#CA2116;-Microsoft.Security#CA2117;-Microsoft.Security#CA2105;-Microsoft.Security#CA2115;-Microsoft.Security#CA2102;-Microsoft.Security#CA2104;-Microsoft.Security#CA2122;-Microsoft.Security#CA2114;-Microsoft.Security#CA2123;-Microsoft.Security#CA2111;-Microsoft.Security#CA2108;-Microsoft.Security#CA2107;-Microsoft.Security#CA2103;-Microsoft.Security#CA2118;-Microsoft.Security#CA2109;-Microsoft.Security#CA2119;-Microsoft.Security#CA2106;-Microsoft.Security#CA2112;-Microsoft.Security#CA2120;-Microsoft.Security#CA2121;-Microsoft.Security#CA2126;-Microsoft.Security#CA2124;-Microsoft.Security#CA2127;-Microsoft.Security#CA2128;-Microsoft.Security#CA2129;-Microsoft.Usage#CA2243;-Microsoft.Usage#CA2236;-Microsoft.Usage#CA1816;-Microsoft.Usage#CA2227;-Microsoft.Usage#CA2213;-Microsoft.Usage#CA2216;-Microsoft.Usage#CA2214;-Microsoft.Usage#CA2222;-Microsoft.Usage#CA1806;-Microsoft.Usage#CA2217;-Microsoft.Usage#CA2212;-Microsoft.Usage#CA2219;-Microsoft.Usage#CA2201;-Microsoft.Usage#CA2228;-Microsoft.Usage#CA2221;-Microsoft.Usage#CA2220;-Microsoft.Usage#CA2240;-Microsoft.Usage#CA2229;-Microsoft.Usage#CA2238;-Microsoft.Usage#CA2207;-Microsoft.Usage#CA2208;-Microsoft.Usage#CA2235;-Microsoft.Usage#CA2237;-Microsoft.Usage#CA2232;-Microsoft.Usage#CA2223;-Microsoft.Usage#CA2211;-Microsoft.Usage#CA2233;-Microsoft.Usage#CA2225;-Microsoft.Usage#CA2226;-Microsoft.Usage#CA2231;-Microsoft.Usage#CA2224;-Microsoft.Usage#CA2218;-Microsoft.Usage#CA2234;-Microsoft.Usage#CA2239;-Microsoft.Usage#CA2200;-Microsoft.Usage#CA1801;-Microsoft.Usage#CA2242;-Microsoft.Usage#CA2205;-Microsoft.Usage#CA2230</CodeAnalysisRules>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="ActiveReports, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.HtmlExport, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.HtmlExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.PdfExport, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.PdfExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.RtfExport, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.RtfExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.TextExport, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.TextExport.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.Viewer, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Excel, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Excel10\Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Office, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Word8\Interop.Office.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Word, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Word8\Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.Vbe.Interop, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="System">
+      <Name>System</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing.Design">
+      <Name>System.Drawing.Design</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap">
+      <Name>System.Runtime.Serialization.Formatters.Soap</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Infragistics2.Excel.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Excel.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Shared.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Shared.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.Misc.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.Misc.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinCalcManager.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinCalcManager.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinDataSource.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinDataSource.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinDock.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinDock.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinEditors.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinEditors.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinExplorerBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinExplorerBar.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinGrid.ExcelExport.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinGrid.ExcelExport.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinGrid.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinGrid.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinMaskedEdit.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinMaskedEdit.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinPrintPreviewDialog.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinPrintPreviewDialog.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinStatusBar.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinStatusBar.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinTabbedMdi.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinTabbedMdi.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinTabControl.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinTabControl.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinToolbars.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinToolbars.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.UltraWinTree.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.UltraWinTree.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Infragistics2.Win.v8.3, Version=8.3.20083.1009, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Infragistics8.3\Infragistics2.Win.v8.3.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Resources\remove.bmp" />
+    <None Include="Resources\plus.bmp">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Resources\page_delete.png" />
+    <None Include="Resources\page_copy.png" />
+    <None Include="Resources\page_add.png" />
+    <None Include="Resources\page_edit.png" />
+    <None Include="Resources\pencil.png" />
+    <None Include="Resources\add.png" />
+    <None Include="Resources\accept.png" />
+    <None Include="Resources\world_go.png" />
+    <None Include="Resources\email_go.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\delete.png" />
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApplicationStarter.cs" />
+    <Compile Include="Forms\AccountingExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AccountingExportForm.Designer.cs">
+      <DependentUpon>AccountingExportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\ContactExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\ContactExport.Designer.cs">
+      <DependentUpon>ContactExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\GeneralReportsMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\GeneralReportsMain.Designer.cs">
+      <DependentUpon>GeneralReportsMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\GeneralReportsMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\ReportsMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\ReportsMain.Designer.cs">
+      <DependentUpon>ReportsMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\ReportType.cs" />
+    <Compile Include="Modules\GeneralReportsModule\old\UserControls\ClientLocations.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\UserControls\ItineraryYield.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\GeneralReportsModule\old\UserControls\SupplierPurchases.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingFlagEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingFlagEditor.Designer.cs">
+      <DependentUpon>BookingFlagEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CurrencyRateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CurrencyRateEditor.Designer.cs">
+      <DependentUpon>CurrencyRateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DepositForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DepositForm.Designer.cs">
+      <DependentUpon>DepositForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LicenseExpiredForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LicenseExpiredForm.Designer.cs">
+      <DependentUpon>LicenseExpiredForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OptionPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionPicker.Designer.cs">
+      <DependentUpon>OptionPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PaymentTermsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PaymentTermsEditor.Designer.cs">
+      <DependentUpon>PaymentTermsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ServerManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ServerManager.Designer.cs">
+      <DependentUpon>ServerManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PriceEditorForm.Designer.cs">
+      <DependentUpon>PriceEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SplashScreen.Designer.cs">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\Accounting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\Accounting.Designer.cs">
+      <DependentUpon>Accounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\FolderSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\Currency.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\Currency.Designer.cs">
+      <DependentUpon>Currency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\EmailSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\CategorySelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\CategorySelector.Designer.cs">
+      <DependentUpon>CategorySelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\ContactMain.Designer.cs">
+      <DependentUpon>ContactMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\ContactEmailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\ContactEmailForm.Designer.cs">
+      <DependentUpon>ContactEmailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\ContactEmailInfo.cs" />
+    <Compile Include="Modules\ContactModule\Email\EmailForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\EmailForm.Designer.cs">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\SendForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\SendForm.Designer.cs">
+      <DependentUpon>SendForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\TemplateForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\TemplateForm.Designer.cs">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ContactModule\Email\TemplateSettings.cs" />
+    <Compile Include="Modules\DataExtract\DataExtractMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\DataExtractMain.Designer.cs">
+      <DependentUpon>DataExtractMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\SupplierDetailExcelExporter.cs" />
+    <Compile Include="Modules\DataExtract\UserControls\RatesExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\RatesExport.Designer.cs">
+      <DependentUpon>RatesExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\Import.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\Import.Designer.cs">
+      <DependentUpon>Import.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\SalesExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\SalesExport.Designer.cs">
+      <DependentUpon>SalesExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\PaymentsExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\PaymentsExport.Designer.cs">
+      <DependentUpon>PaymentsExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\SupplierExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\SupplierExport.Designer.cs">
+      <DependentUpon>SupplierExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Emailer\EmailForm.Designer.cs">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Emailer\SendForm.Designer.cs">
+      <DependentUpon>SendForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Emailer\TemplateForm.Designer.cs">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Accounting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Accounting.Designer.cs">
+      <DependentUpon>Accounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\AccountingDataLoad.cs" />
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingsQuote.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingsQuote.Designer.cs">
+      <DependentUpon>BookingsQuote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingSelectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingSelectorForm.Designer.cs">
+      <DependentUpon>BookingSelectorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\BookingEmailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\BookingEmailForm.Designer.cs">
+      <DependentUpon>BookingEmailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingsViewer.Designer.cs">
+      <DependentUpon>BookingsViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\BookingEmailInfo.cs" />
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\EmailForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\EmailForm.Designer.cs">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\SendForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\SendForm.Designer.cs">
+      <DependentUpon>SendForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\TemplateForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\TemplateForm.Designer.cs">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\Email\TemplateSettings.cs" />
+    <Compile Include="Modules\ItineraryModule\Bookings\GroupQuote.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ClientEditor.Designer.cs">
+      <DependentUpon>ClientEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\CurrencyUpdater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\CurrencyUpdater.Designer.cs">
+      <DependentUpon>CurrencyUpdater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\DateKicker\DateKickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\DateKicker\DateKickerForm.Designer.cs">
+      <DependentUpon>DateKickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ExportToExcel.cs" />
+    <Compile Include="Modules\ItineraryModule\NetOverrideForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\NetOverrideForm.Designer.cs">
+      <DependentUpon>NetOverrideForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\DocumentWriter.cs" />
+    <Compile Include="Modules\ItineraryModule\Publishing\FileBuilderProcessorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\FileBuilderProcessorForm.Designer.cs">
+      <DependentUpon>FileBuilderProcessorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\FileBuilderSimple.cs" />
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutControl.Designer.cs">
+      <DependentUpon>LayoutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutForm.Designer.cs">
+      <DependentUpon>LayoutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\PublisherMain.Designer.cs">
+      <DependentUpon>PublisherMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\ItineraryExport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\DataExtract\UserControls\ItineraryExport.designer.cs">
+      <DependentUpon>ItineraryExport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\ExcelReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\SaleAllocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\SaleAllocationForm.Designer.cs">
+      <DependentUpon>SaleAllocationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Search\SearchMain.Designer.cs">
+      <DependentUpon>SearchMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\StartPage\StartMain.Designer.cs">
+      <DependentUpon>StartMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Accounting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Accounting.Designer.cs">
+      <DependentUpon>Accounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\AccountingDataLoad.cs" />
+    <Compile Include="Modules\SupplierModule\ExportToExcel.cs" />
+    <Compile Include="Modules\SupplierModule\SupplierMain.Designer.cs">
+      <DependentUpon>SupplierMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AccountingExport.cs" />
+    <Compile Include="Services\AccountingService.cs" />
+    <Compile Include="Services\CurrencyUpdateService.cs" />
+    <Compile Include="Services\ErrorHelper.cs" />
+    <Compile Include="Services\DataTableExcelExporter.cs" />
+    <Compile Include="Services\ExcelWriter.cs" />
+    <Compile Include="Services\ExcelHelper.cs" />
+    <Compile Include="Services\Extensions.cs" />
+    <Compile Include="Services\ExternalFilesHelper.cs" />
+    <Compile Include="Services\GridExcelExporter.cs" />
+    <Compile Include="Services\LicenseService.cs" />
+    <Compile Include="Services\NetworkConnectionHelper.cs" />
+    <Compile Include="Services\ScreenshotService.cs" />
+    <Compile Include="Services\TemplateHelper.cs" />
+    <Compile Include="Services\Update\ApplicationUpdateService.cs" />
+    <Compile Include="Services\Update\DatabaseUpdateService.cs" />
+    <Compile Include="Services\Update\DotNetUpdateService.cs" />
+    <Compile Include="Services\WordHelper.cs" />
+    <Compile Include="UserControls\AccountingGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AccountingGrid.Designer.cs">
+      <DependentUpon>AccountingGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DataExtractGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DataExtractGrid.designer.cs">
+      <DependentUpon>DataExtractGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MyToolStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\MyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\ServiceEditor.Designer.cs">
+      <DependentUpon>ServiceEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Forms\PriceEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DataErrorViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DataSourceViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Global\App.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global\Cache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global\Export.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\AdminModule\AdminMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\AgentLabels.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\DataLists.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\DbBackup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\LicenseManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\Locations.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\ServiceConfigs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\SupplierConfigs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\UserAccounts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\UserAccountTypes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\UserDetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ContactModule\ContactMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Emailer\EmailBuilderBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Emailer\EmailForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Emailer\SendForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Emailer\TemplateForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingEditorForm.Designer.cs">
+      <DependentUpon>BookingEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingEditor.Designer.cs">
+      <DependentUpon>BookingEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\BookingsViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryMain.Designer.cs">
+      <DependentUpon>ItineraryMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\SupplierSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\SupplierSearch.Designer.cs">
+      <DependentUpon>SupplierSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ClientEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Converter\ConverterArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Converter\ConverterManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Converter\ConverterOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Converter\ConverterTypes.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryFeatures.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryFormLoader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\FileBuilderAdvanced.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\LayoutSortComparer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\PublisherMain.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Publishing\PublisherFileChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\ClientFinalPricing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\ClientFullPricing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\ClientNoPricing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\PricingDetailed.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\PricingSummary.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\SupplierMessage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\ReportControls\Vouchers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ModuleBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ReportViewer\ReportEmailBuilder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\ReportViewer\ReportViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Search\SearchMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\StartPage\StartMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\ServiceEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\ReportControls\WhoUsedSupplier.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\SupplierMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApplicationEntryPoint.cs">
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AppPermissions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\EmailMessage.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\GridHelper.cs" />
+    <Compile Include="Services\IconHelper\IconHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IconHelper\IconListManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\MenuHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\CheckBoxSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GridCaption.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\GridCaption.Designer.cs">
+      <DependentUpon>GridCaption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HeaderLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HeaderLabel.Designer.cs">
+      <DependentUpon>HeaderLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\NullableComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\NullableDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProgressWindow\IProgressCallback.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProgressWindow\ProgressWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\OptionEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\OptionEdit.Designer.cs">
+      <DependentUpon>OptionEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Reports\RdlcFileHelper.cs" />
+    <Compile Include="UserControls\Reports\ReportManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\ReportManager.Designer.cs">
+      <DependentUpon>ReportManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Reports\ExplorerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\ExplorerControl.Designer.cs">
+      <DependentUpon>ExplorerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Reports\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Reports\ViewerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Reports\ViewerControl.Designer.cs">
+      <DependentUpon>ViewerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Wizard\Wizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\Wizard\WizardPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\Wizard\WizardPageEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Forms\CurrencyRateEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CurrencyRateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ServerManager.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ServerManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PriceEditorForm.resx">
+      <DependentUpon>PriceEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\About.de.resx">
+      <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataErrorViewer.de.resx">
+      <DependentUpon>DataErrorViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataErrorViewer.resx">
+      <DependentUpon>DataErrorViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataSourceViewer.resx">
+      <DependentUpon>DataSourceViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Login.de.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.de.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MessageForm.de.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\AdminMain.resx">
+      <DependentUpon>AdminMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\AgentLabels.resx">
+      <DependentUpon>AgentLabels.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\Currency.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\DataLists.resx">
+      <DependentUpon>DataLists.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\DbBackup.resx">
+      <DependentUpon>DbBackup.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\LicenseManager.resx">
+      <DependentUpon>LicenseManager.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\Locations.resx">
+      <DependentUpon>Locations.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\ServiceConfigs.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\SupplierConfigs.resx">
+      <DependentUpon>SupplierConfigs.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\UserAccounts.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\UserAccountTypes.resx">
+      <DependentUpon>UserAccountTypes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\UserDetail.resx">
+      <DependentUpon>UserDetail.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\ContactMain.resx">
+      <DependentUpon>ContactMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\DataExtractMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DataExtractMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Emailer\EmailForm.resx">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Emailer\SendForm.resx">
+      <DependentUpon>SendForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Emailer\TemplateForm.resx">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BookingEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingEditorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BookingEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\Email\BookingEmailForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BookingEmailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingsViewer.resx">
+      <DependentUpon>BookingsViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\Email\EmailForm.resx">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\Email\SendForm.resx">
+      <DependentUpon>SendForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\Email\TemplateForm.resx">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Publishing\FileBuilderProcessorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FileBuilderProcessorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Publishing\LayoutControl.resx">
+      <DependentUpon>LayoutControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Publishing\LayoutForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LayoutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\SupplierSearch.resx">
+      <DependentUpon>SupplierSearch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ClientEditor.resx">
+      <DependentUpon>ClientEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Converter\ConverterOptions.resx">
+      <DependentUpon>ConverterOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Converter\ConverterTypes.resx">
+      <DependentUpon>ConverterTypes.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ItineraryMain.resx">
+      <DependentUpon>ItineraryMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ItineraryFeatures.resx">
+      <DependentUpon>ItineraryFeatures.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ItineraryGroup.resx">
+      <DependentUpon>ItineraryGroup.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Publishing\PublisherMain.resx">
+      <DependentUpon>PublisherMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Publishing\PublisherFileChooser.resx">
+      <DependentUpon>PublisherFileChooser.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\ClientFinalPricing.resx">
+      <DependentUpon>ClientFinalPricing.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\ClientFullPricing.resx">
+      <DependentUpon>ClientFullPricing.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\ClientNoPricing.resx">
+      <DependentUpon>ClientNoPricing.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\PricingDetailed.resx">
+      <DependentUpon>PricingDetailed.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\PricingSummary.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\SupplierMessage.resx">
+      <DependentUpon>SupplierMessage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\Vouchers.resx">
+      <DependentUpon>Vouchers.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ModuleBase.resx">
+      <DependentUpon>ModuleBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ReportViewer\ReportViewerForm.resx">
+      <DependentUpon>ReportViewerForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Search\SearchMain.resx">
+      <DependentUpon>SearchMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\StartPage\StartMain.resx">
+      <DependentUpon>StartMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\ServiceEditor.resx">
+      <DependentUpon>ServiceEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\ReportControls\WhoUsedSupplier.resx">
+      <DependentUpon>WhoUsedSupplier.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\SupplierMain.resx">
+      <DependentUpon>SupplierMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\CheckBoxSet.resx">
+      <DependentUpon>CheckBoxSet.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GridCaption.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>GridCaption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HeaderLabel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HeaderLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Wizard\Wizard.resx">
+      <DependentUpon>Wizard.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Wizard\WizardPage.resx">
+      <DependentUpon>WizardPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{CF845C55-C321-4742-B673-E6212D061ED9}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_attach.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attach.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\min.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tw16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tw32.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tw48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_explore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\house.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\expand.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapse.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_excel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TourWriter.BusinessLogic\TourWriter.BusinessLogic.csproj">
+      <Project>{DF41EF19-295B-417C-8877-E4E40E54E605}</Project>
+      <Name>TourWriter.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TourWriter.Info\TourWriter.Info.csproj">
+      <Project>{492415C3-3213-4CCB-8FFC-402F088F4F07}</Project>
+      <Name>TourWriter.Info</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TourWriter.Reports\TourWriter.Reports.csproj">
+      <Project>{7C2C761B-1E4E-4924-AE0E-BCBFD3B5CF38}</Project>
+      <Name>TourWriter.Reports</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TourWriter.Utilities\TourWriter.Utilities.csproj">
+      <Project>{48976480-DA72-4F4A-95B8-458ED13153FB}</Project>
+      <Name>TourWriter.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\TourWriter.Info.ItinerarySet.datasource" />
+    <None Include="Properties\DataSources\TourWriter.Info.ToolSet.datasource" />
+    <None Include="Resources\activityindicator.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Run.bmp" />
+    <None Include="Resources\Refresh.bmp" />
+    <None Include="Resources\Save.bmp" />
+    <None Include="Resources\help16.bmp" />
+    <EmbeddedResource Include="Forms\AccountingExportForm.resx">
+      <DependentUpon>AccountingExportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DepositForm.resx">
+      <DependentUpon>DepositForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LicenseExpiredForm.resx">
+      <DependentUpon>LicenseExpiredForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionPicker.resx">
+      <DependentUpon>OptionPicker.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PasswordForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PaymentTermsEditor.resx">
+      <DependentUpon>PaymentTermsEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SplashScreen.resx">
+      <DependentUpon>SplashScreen.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\Accounting.resx">
+      <DependentUpon>Accounting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\FolderSettings.resx">
+      <DependentUpon>FolderSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\EmailSettings.resx">
+      <DependentUpon>EmailSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\CategorySelector.resx">
+      <DependentUpon>CategorySelector.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\Email\ContactEmailForm.resx">
+      <DependentUpon>ContactEmailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\Email\EmailForm.resx">
+      <DependentUpon>EmailForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\Email\SendForm.resx">
+      <DependentUpon>SendForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ContactModule\Email\TemplateForm.resx">
+      <DependentUpon>TemplateForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\ContactExport.resx">
+      <DependentUpon>ContactExport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\RatesExport.resx">
+      <DependentUpon>RatesExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\Import.resx">
+      <DependentUpon>Import.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\SalesExport.resx">
+      <DependentUpon>SalesExport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\ItineraryExport.resx">
+      <DependentUpon>ItineraryExport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\PaymentsExport.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PaymentsExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\DataExtract\UserControls\SupplierExport.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SupplierExport.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Resources\TourWriter.Email.BookingRequest.html" />
+    <EmbeddedResource Include="Modules\GeneralReportsModule\GeneralReportsMain.resx">
+      <DependentUpon>GeneralReportsMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\GeneralReportsModule\old\GeneralReportsMain.resx">
+      <DependentUpon>GeneralReportsMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\GeneralReportsModule\old\ReportsMain.resx">
+      <DependentUpon>ReportsMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\GeneralReportsModule\old\UserControls\ClientLocations.resx">
+      <DependentUpon>ClientLocations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\GeneralReportsModule\old\UserControls\ItineraryYield.resx">
+      <DependentUpon>ItineraryYield.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\GeneralReportsModule\old\UserControls\SupplierPurchases.resx">
+      <DependentUpon>SupplierPurchases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Accounting.resx">
+      <DependentUpon>Accounting.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingFlagEditor.resx">
+      <DependentUpon>BookingFlagEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingsQuote.resx">
+      <DependentUpon>BookingsQuote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\BookingSelectorForm.resx">
+      <DependentUpon>BookingSelectorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\CurrencyUpdater.resx">
+      <DependentUpon>CurrencyUpdater.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\DateKicker\DateKickerForm.resx">
+      <DependentUpon>DateKickerForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\NetOverrideForm.resx">
+      <DependentUpon>NetOverrideForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ReportControls\ExcelReport.resx">
+      <DependentUpon>ExcelReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\SaleAllocationForm.resx">
+      <DependentUpon>SaleAllocationForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\Accounting.resx">
+      <DependentUpon>Accounting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\AccountingGrid.resx">
+      <DependentUpon>AccountingGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DataExtractGrid.resx">
+      <DependentUpon>DataExtractGrid.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Resources\lock_edit.png" />
+    <None Include="Resources\calculator.png" />
+    <None Include="Resources\checkbox.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\tick.png" />
+    <None Include="Resources\splash.png" />
+    <None Include="Resources\page_refresh.png" />
+    <None Include="Resources\page_go.png" />
+    <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />
+    <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFinalPricing.txt" />
+    <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFullPricing.txt" />
+    <Content Include="Resources\TourWriter.Reports.Itinerary.Voucher.txt" />
+    <None Include="Resources\web_download.png" />
+    <None Include="Resources\warn.ico" />
+    <None Include="Resources\Transfer.png" />    
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.07.10.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.29.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.18.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.06.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.05.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.04.20.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.04.02.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.03.17.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.02.27.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.01.28.sql" />
+    <EmbeddedResource Include="UserControls\Reports\OptionEdit.resx">
+      <DependentUpon>OptionEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Reports\ReportManager.resx">
+      <DependentUpon>ReportManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Reports\ExplorerControl.resx">
+      <DependentUpon>ExplorerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Reports\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Reports\ViewerControl.resx">
+      <DependentUpon>ViewerControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

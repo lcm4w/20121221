@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ActiveReportsLayout Version="3" PrintWidth="9637.796" DocumentName="ActiveReports Document" ScriptLang="C#" CodeFile="SupplierMessage.cs">
+  <StyleSheet>
+    <Style Name="Normal" Value="font-family: Arial; font-style: normal; font-variant: inherit; font-weight: normal; font-size: 10pt; font-size-adjust: inherit; font-stretch: inherit; color: rgb(0,0,0); background-repeat: inherit; background-attachment: inherit; opacity: inherit; word-spacing: inherit; letter-spacing: inherit; text-decoration: none; vertical-align: inherit; text-transform: inherit; text-align: inherit; text-indent: inherit; unicode-bidi: inherit; line-height: inherit; white-space: inherit; ddo-char-set: 0; " />
+    <Style Name="Heading1" Value="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; font-size: 16pt; font-size-adjust: inherit; font-stretch: inherit; " />
+    <Style Name="Heading2" Value="font-family: Times New Roman; font-style: italic; font-variant: inherit; font-weight: bold; font-size: 14pt; font-size-adjust: inherit; font-stretch: inherit; " />
+    <Style Name="Heading3" Value="font-family: inherit; font-style: inherit; font-variant: inherit; font-weight: bold; font-size: 13pt; font-size-adjust: inherit; font-stretch: inherit; " />
+  </StyleSheet>
+  <Sections>
+    <Section Type="PageHeader" Name="PageHeader" Height="3105" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label1" DataField="TodayDate" MOD="4" Left="0" Top="0" Width="2834.646" Height="288" Caption="Date" Style="ddo-char-set: 1; font-size: 8.25pt; " />
+      <Control Type="AR.Field" Name="TextBox1" DataField="AgentInfo" MOD="4" Left="6236.22" Top="1417.323" Width="3401.575" Height="1488.189" Text="Agent info" Style="ddo-char-set: 1; font-size: 8.25pt; " />
+      <Control Type="AR.Image" Name="picLogo" DataField="AgentLogo" MOD="4" Left="5102.362" Top="0" Width="4535.434" Height="1346.457" LineColor="16777215" LineWeight="0" HyperLink="" />
+      <Control Type="AR.Field" Name="AgentInfo1" DataField="SupplierInfo" MOD="4" Left="0" Top="1417.323" Width="5102.362" Height="1488.189" Text="Supplier info" Style="ddo-char-set: 1; font-size: 8.25pt; " />
+    </Section>
+    <Section Type="GroupHeader" Name="ghDetails" Height="1530" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label" DataField="Title" MOD="4" Left="0" Top="0" Width="9496.063" Height="288" Caption="Title" Style="ddo-char-set: 1; text-decoration: underline; text-align: center; " />
+      <Control Type="AR.Label" Name="Label2" MOD="4" Left="70.86614" Top="463.4646" Width="850.3936" Height="226.7717" Caption="Booking:" Style="ddo-char-set: 1; text-align: left; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtBookingName" DataField="BookingName" MOD="4" Left="992.1259" Top="463.4646" Width="8503.938" Height="226.7717" Text="booking" Style="ddo-char-set: 1; font-size: 8pt; " />
+      <Control Type="AR.Label" Name="Label4" MOD="4" Left="5579.292" Top="779.5275" Width="1431.496" Height="226.7717" Caption="Booking number:" Style="ddo-char-set: 1; text-align: right; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtOrderNumber" DataField="Order" MOD="4" Left="7157.48" Top="779.5275" Width="2415.118" Height="226.7717" Text="order" Style="ddo-char-set: 1; font-size: 8pt; " />
+      <Control Type="AR.Label" Name="Label6" MOD="4" Left="6429.686" Top="992.1259" Width="581.1019" Height="226.7717" Caption="From:" Style="ddo-char-set: 1; text-align: right; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtUsername" DataField="User" MOD="4" Left="7157.48" Top="992.1259" Width="2415.118" Height="226.7717" Text="user" Style="ddo-char-set: 1; font-size: 8pt; " />
+      <Control Type="AR.Label" Name="Label3" MOD="4" Left="90" Top="798.6613" Width="850.3936" Height="226.7717" Caption="To:" Style="ddo-char-set: 1; text-align: left; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtSupplierName" DataField="SupplierName" MOD="4" Left="992.1259" Top="798.6615" Width="4110.236" Height="226.7717" Text="supplier" Style="ddo-char-set: 1; font-size: 8pt; " />
+      <Control Type="AR.Label" Name="Label5" MOD="4" Left="70.86614" Top="992.126" Width="850.3936" Height="226.7717" Caption="Attn/Ref:" Style="ddo-char-set: 1; text-align: left; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtReference" DataField="AttentionTo" MOD="4" Left="992.1259" Top="1011.26" Width="4091.103" Height="226.7717" Text="reference" Style="ddo-char-set: 1; font-size: 8pt; " />
+    </Section>
+    <Section Type="GroupHeader" Name="GroupHeader1" Height="0" BackColor="16777215" CanShrink="0" />
+    <Section Type="GroupHeader" Name="ghItems" Height="285" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label14" MOD="4" Left="8820" Top="0" Width="608.7401" Height="288" Caption="Total" Style="ddo-char-set: 1; text-align: right; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label13" MOD="4" Left="7905" Top="0" Width="414.0005" Height="288" Caption="Qty" Style="ddo-char-set: 1; text-align: right; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label12" MOD="4" Left="7470" Top="0" Width="435.0002" Height="288" Caption="Nts" Style="ddo-char-set: 1; text-align: right; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label11" MOD="4" Left="6789.686" Top="0" Width="680.3146" Height="288" Caption="Comm" Style="ddo-char-set: 1; text-align: right; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label10" MOD="4" Left="6105" Top="0" Width="540" Height="288" Caption="Price" Style="ddo-char-set: 1; text-align: right; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label8" MOD="4" Left="990" Top="0" Width="1097.716" Height="288" Caption="Description" Style="ddo-char-set: 1; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label7" MOD="4" Left="212.5984" Top="0" Width="425.1969" Height="288" Caption="Date" Style="ddo-char-set: 1; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Label" Name="Label9" MOD="4" Left="4824.567" Top="0" Width="921.2599" Height="288" Caption="Reference" Style="ddo-char-set: 1; font-weight: normal; font-size: 8.25pt; " />
+      <Control Type="AR.Line" Name="Line5" MOD="4" X1="0" Y1="270" X2="9566.93" Y2="270" />
+    </Section>
+    <Section Type="Detail" Name="Detail" Height="240" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Field" Name="txtName" DataField="Description" MOD="4" Left="992.1259" Top="0" Width="3755.906" Height="288" Text="Service, Option" Style="font-size: 8.25pt; " />
+      <Control Type="AR.Field" Name="txtQty" DataField="Qty" MOD="4" Left="7920" Top="0" Width="414.567" Height="288" Text="Qty" OutputFormat="g" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="txtDays" DataField="Days" MOD="4" Left="7470" Top="0" Width="440.2208" Height="288" Text="Nts" OutputFormat="g" Style="ddo-char-set: 0; text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="txtDate" DataField="Date" MOD="4" Left="0" Top="0" Width="921.2598" Height="288" Text="Date" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="txtPrice" DataField="Price" MOD="4" Left="5849.292" Top="0" Width="954.8032" Height="288" Text="Price" OutputFormat="c" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="txtItemTotal" DataField="ItemTotal" MOD="4" Left="8362.204" Top="0" Width="1246.536" Height="288" Text="ItemTotal" OutputFormat="c" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="txtComm" DataField="Comm" MOD="4" Left="6803.15" Top="0" Width="666.8502" Height="288" Text="Comm" OutputFormat="###.00\%" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " />
+      <Control Type="AR.Field" Name="Description1" DataField="Reference" MOD="4" Left="4767.166" Top="0" Width="1062.992" Height="288" Text="Reference" Style="font-size: 8.25pt; " />
+    </Section>
+    <Section Type="GroupFooter" Name="gfItems" Height="390" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Field" Name="txtLineTotal" DataField="LineTotal" MOD="4" Left="8078.74" Top="70.86614" Width="1530" Height="288" Text="LineTotal" OutputFormat="c" Style="text-align: right; font-size: 8.25pt; white-space: nowrap; " SummaryType="3" SummaryRunning="1" SummaryGroup="ghItems" />
+      <Control Type="AR.Label" Name="Label15" MOD="4" Left="6944.882" Top="70.86614" Width="1155.118" Height="288" Caption="Services Total:" Style="text-align: right; font-size: 8.25pt; " />
+      <Control Type="AR.Line" Name="Line3" MOD="4" X1="7015.748" Y1="0" X2="9630" Y2="0" />
+      <Control Type="AR.Line" Name="Line4" MOD="4" X1="7015.748" Y1="354.3307" X2="9624.331" Y2="354.3307" />
+    </Section>
+    <Section Type="GroupFooter" Name="GroupFooter2" Height="1080" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Label" Name="Label16" MOD="4" Left="0" Top="270" Width="810" Height="288" Caption="Notes:" Style="text-decoration: underline; ddo-char-set: 1; font-weight: bold; font-size: 8pt; " />
+      <Control Type="AR.Field" Name="txtNotes" DataField="Notes" MOD="4" Left="810" Top="270" Width="8756.93" Height="630" Text="TextBox1" Style="ddo-char-set: 1; font-size: 8pt; " />
+    </Section>
+    <Section Type="GroupFooter" Name="GroupFooter1" Height="344" BackColor="16777215" CanShrink="0">
+      <Control Type="AR.Field" Name="txtFooter" DataField="Footer" MOD="4" Left="0" Top="0" Width="9566.93" Height="283.4646" Text="footer text" Style="ddo-char-set: 1; font-size: 8pt; " />
+    </Section>
+    <Section Type="PageFooter" Name="PageFooter" Height="0" BackColor="16777215" CanShrink="0" />
+  </Sections>
+  <PageSettings LeftMargin="1134" RightMargin="1134" />
+</ActiveReportsLayout>

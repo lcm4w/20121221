@@ -1,0 +1,289 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C2C761B-1E4E-4924-AE0E-BCBFD3B5CF38}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TourWriter.Reports</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TourWriter.Reports</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActiveReports, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.dll</HintPath>
+    </Reference>
+    <Reference Include="ActiveReports.Viewer, Version=3.4.0.2027, Culture=neutral, PublicKeyToken=cc4967777c49a3ff">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ActiveReports1\ActiveReports.Viewer.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\TourWriter.BusinessLogic\TourWriter.BusinessLogic.csproj">
+      <Name>TourWriter.BusinessLogic</Name>
+      <Project>{DF41EF19-295B-417C-8877-E4E40E54E605}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\TourWriter.Info\TourWriter.Info.csproj">
+      <Name>TourWriter.Info</Name>
+      <Project>{492415C3-3213-4CCB-8FFC-402F088F4F07}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="General\ClientLocations.cs">
+      <DependentUpon>ClientLocations.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="General\ItineraryYield.cs">
+      <DependentUpon>ItineraryYield.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="General\SupplierPurchases.cs">
+      <DependentUpon>SupplierPurchases.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\BatchReportBlank.cs">
+      <DependentUpon>BatchReportBlank.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\ClientFinalPricing.cs">
+      <DependentUpon>ClientFinalPricing.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\ClientFullPricing.cs">
+      <DependentUpon>ClientFullPricing.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\ClientNoPricing.cs">
+      <DependentUpon>ClientNoPricing.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\ClientPayments.cs">
+      <DependentUpon>ClientPayments.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\ItineraryHeader.cs">
+      <DependentUpon>ItineraryHeader.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\PricingDetailed.cs">
+      <DependentUpon>PricingDetailed.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\PricingSummary.cs">
+      <DependentUpon>PricingSummary.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\SupplierMessage.cs">
+      <DependentUpon>SupplierMessage.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\Voucher.cs">
+      <DependentUpon>Voucher.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Itinerary\VoucherLines.cs">
+      <DependentUpon>VoucherLines.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Localization.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Lookup.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supplier\WhoUsed.cs">
+      <DependentUpon>WhoUsed.rpx</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <EmbeddedResource Include="General\ClientLocations.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ClientLocations.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\ItineraryYield.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ItineraryYield.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\SupplierPurchases.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>SupplierPurchases.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\BatchReportBlank.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>BatchReportBlank.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\ClientFinalPricing.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ClientFinalPricing.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\ClientFullPricing.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ClientFullPricing.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\ClientNoPricing.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ClientNoPricing.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\ClientPayments.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ClientPayments.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\ItineraryHeader.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>ItineraryHeader.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\PricingDetailed.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>PricingDetailed.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\PricingSummary.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>PricingSummary.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\SupplierMessage.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>SupplierMessage.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\Voucher.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>Voucher.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Itinerary\VoucherLines.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>VoucherLines.cs</LastGenOutput>
+      <CustomToolNamespace>StartDate</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Supplier\WhoUsed.rpx">
+      <Generator>ARVSPackage.CodeGenerator</Generator>
+      <LastGenOutput>WhoUsed.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

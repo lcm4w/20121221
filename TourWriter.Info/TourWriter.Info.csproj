@@ -1,0 +1,276 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{492415C3-3213-4CCB-8FFC-402F088F4F07}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>TourWriter.Info</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TourWriter.Info</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Smo\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=9.0.242.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Smo\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="AgentSet.cs">
+      <DependentUpon>AgentSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="AgentSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgentSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ChargeTypeList.cs" />
+    <Compile Include="ContactSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DepositTypeList.cs" />
+    <Compile Include="ErrorMessage.cs" />
+    <Compile Include="NavigationTreeItemInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ConnectionString.cs" />
+    <Compile Include="Services\DatabaseHelper.cs" />
+    <Compile Include="Services\DataSetHelper.cs" />
+    <Compile Include="Services\SqlHelper.cs" />
+    <Compile Include="ItinerarySet.cs">
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ItinerarySet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierSet.cs">
+      <DependentUpon>SupplierSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SupplierSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SupplierSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ToolSet.cs">
+      <DependentUpon>ToolSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ToolSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="UserSession.cs" />
+    <Compile Include="UserSet.cs">
+      <DependentUpon>UserSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Common.cs" />
+    <Compile Include="ContactInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="License.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VersionInfo.cs" />
+    <Content Include="AgentSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>AgentSet.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="ContactSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ContactSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ItinerarySet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ItinerarySet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SupplierSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SupplierSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="ToolSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>ToolSet.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="UserSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>UserSet.Designer.cs</LastGenOutput>
+    </Content>
+    <None Include="AgentSet.xss">
+      <DependentUpon>AgentSet.xsd</DependentUpon>
+    </None>
+    <None Include="AgentSet.xsc">
+      <DependentUpon>AgentSet.xsd</DependentUpon>
+    </None>
+    <None Include="AgentSet.xsx">
+      <DependentUpon>AgentSet.xsd</DependentUpon>
+    </None>
+    <None Include="ContactSet.xsc">
+      <DependentUpon>ContactSet.xsd</DependentUpon>
+    </None>
+    <None Include="ContactSet.xss">
+      <DependentUpon>ContactSet.xsd</DependentUpon>
+    </None>
+    <None Include="ContactSet.xsx">
+      <DependentUpon>ContactSet.xsd</DependentUpon>
+    </None>
+    <None Include="ItinerarySet.xsc">
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+    </None>
+    <None Include="ItinerarySet.xss">
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+    </None>
+    <None Include="ItinerarySet.xsx">
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+    </None>
+    <None Include="SupplierSet.xsc">
+      <DependentUpon>SupplierSet.xsd</DependentUpon>
+    </None>
+    <None Include="SupplierSet.xss">
+      <DependentUpon>SupplierSet.xsd</DependentUpon>
+    </None>
+    <None Include="SupplierSet.xsx">
+      <DependentUpon>SupplierSet.xsd</DependentUpon>
+    </None>
+    <None Include="ToolSet.xsc">
+      <DependentUpon>ToolSet.xsd</DependentUpon>
+    </None>
+    <None Include="ToolSet.xss">
+      <DependentUpon>ToolSet.xsd</DependentUpon>
+    </None>
+    <None Include="ToolSet.xsx">
+      <DependentUpon>ToolSet.xsd</DependentUpon>
+    </None>
+    <None Include="UserSet.xsc">
+      <DependentUpon>UserSet.xsd</DependentUpon>
+    </None>
+    <None Include="UserSet.xss">
+      <DependentUpon>UserSet.xsd</DependentUpon>
+    </None>
+    <None Include="UserSet.xsx">
+      <DependentUpon>UserSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TourWriter.Utilities\TourWriter.Utilities.csproj">
+      <Project>{48976480-DA72-4F4A-95B8-458ED13153FB}</Project>
+      <Name>TourWriter.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TourWriterReportsLocalization>
+    <Language langid="en-NZ" langname="English (NZ)">    
+        <Localize Type="label" Name="Label1" Text="Itinerary:" />
+        <Localize Type="label" Name="Label2" Text="Arriving:" />
+        <Localize Type="label" Name="Label3" Text="Country:" />
+        <Localize Type="label" Name="Label4" Text="Length:" />
+        <Localize Type="label" Name="Label5" Text="Departing:" />                
+        <Localize Type="label" Name="Label6" Text="Date" />
+        <Localize Type="label" Name="Label7" Text="Nights" />
+        <Localize Type="label" Name="Label8" Text="Qty" />
+        <Localize Type="label" Name="Label9" Text="Location" />
+        <Localize Type="label" Name="Label10" Text="Description" />		
+        <Localize Type="label" Name="Label11" Text="Total Due:" />
+        <Localize Type="label" Name="Label12" Text="Includes GST of:" />
+        <Localize Type="label" Name="Label13" Text="Additional costs:" />
+        <Localize Type="label" Name="Label14" Text="Notes:" />
+        <Localize Type="label" Name="Label15" Text="Total cost:" />
+        <Localize Type="label" Name="Label16" Text="Total cost:" />
+        <Localize Type="label" Name="Label17" Text="Payments received:" />
+		<Localize Type="label" Name="Label18" Text="Total balance:" />		   
+	</Language>
+    <Language langid="fr-FR" langname="Francais">    
+    </Language>
+    <Language langid="de-DE" langname="Deutsch">    
+    </Language>
+</TourWriterReportsLocalization>
