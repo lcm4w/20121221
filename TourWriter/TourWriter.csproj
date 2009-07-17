@@ -1492,6 +1492,7 @@
     <EmbeddedResource Include="Modules\SupplierModule\Accounting.resx">
       <DependentUpon>Accounting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="UserControls\AccountingGrid.resx">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </EmbeddedResource>
@@ -1513,7 +1514,7 @@
     <Content Include="Resources\TourWriter.Reports.Itinerary.Voucher.txt" />
     <None Include="Resources\web_download.png" />
     <None Include="Resources\warn.ico" />
-    <None Include="Resources\Transfer.png" />    
+    <None Include="Resources\Transfer.png" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.07.10.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.29.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.05.18.sql" />
