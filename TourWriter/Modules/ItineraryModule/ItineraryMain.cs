@@ -1046,5 +1046,16 @@ namespace TourWriter.Modules.ItineraryModule
         }
 
         #endregion
+
+        private void txtDepartDate_Enter(object sender, EventArgs e)
+        {
+            if (txtDepartDate.Value != null) return;
+
+            // default to arrive date
+            var binding = txtDepartDate.DataBindings[0];
+            txtDepartDate.DataBindings.Clear();
+            txtDepartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
+            txtDepartDate.DataBindings.Add(binding);
+        }
     }
 }

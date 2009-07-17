@@ -824,6 +824,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.txtDepartDate.TabIndex = 7;
             this.txtDepartDate.Value = new System.DateTime(2007, 7, 26, 13, 47, 7, 125);
             this.txtDepartDate.CloseUp += new System.EventHandler(this.txtDepartDate_CloseUp);
+            this.txtDepartDate.Enter += new System.EventHandler(this.txtDepartDate_Enter);
             // 
             // cmbDepartCity
             // 
