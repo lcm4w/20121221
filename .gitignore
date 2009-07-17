@@ -1,8 +1,8 @@
-bin/
-obj/
-Debug/
-Release/
-*ReSharper*/
+bin
+obj
+Debug
+Release
+*ReSharper*
 *.exe
 *.dll
 *.obj
@@ -10,11 +10,11 @@ Release/
 *.pdb
 *.suo
 *.user
-*.user
 *.cache
+*.resharper
 *.dat
 *.vsmdi
 *.bak
 *.log
-.hg/
+.hg
 .hgignore
