@@ -4,6 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -140,6 +141,14 @@ namespace TourWriter.Modules.ItineraryModule
             accounting1.ItinerarySet = itinerarySet;
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull())
+            {
+                var id = itinerarySet.Itinerary[0].AgentID;
+                var agent = Cache.ToolSet.Agent.Where(a => a.AgentID == id).FirstOrDefault();
+                if (agent != null && !agent.IsVoucherLogoFileNull())
+                    reportControl.DefaultParameters.Add("@LogoFile",
+                                                        ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile));
+            }
             reportControl.FilterReportExplorer("Itinerary");
 
             // add event to track when data changed
