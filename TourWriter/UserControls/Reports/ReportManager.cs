@@ -43,8 +43,7 @@ namespace TourWriter.UserControls.Reports
             if (File.Exists(e.ReportPath))
                 OpenReport(e.ReportName, e.ReportPath);
             else
-                App.ShowError("Report file not found: " + e.ReportPath +
-                              "\r\nIf you have not downloaded the report templates, please contact TourWriter support.");
+                App.ShowError("Report file not found: " + e.ReportPath);
         }
 
         private void viewerControl_ReportHostClosed(object sender, EventArgs e)
