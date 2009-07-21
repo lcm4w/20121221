@@ -141,14 +141,7 @@ namespace TourWriter.Modules.ItineraryModule
             accounting1.ItinerarySet = itinerarySet;
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            if (!itinerarySet.Itinerary[0].IsAgentIDNull())
-            {
-                var id = itinerarySet.Itinerary[0].AgentID;
-                var agent = Cache.ToolSet.Agent.Where(a => a.AgentID == id).FirstOrDefault();
-                if (agent != null && !agent.IsVoucherLogoFileNull())
-                    reportControl.DefaultParameters.Add("@LogoFile",
-                                                        ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile));
-            }
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportLogoFile();
             reportControl.FilterReportExplorer("Itinerary");
 
             // add event to track when data changed
@@ -674,7 +667,7 @@ namespace TourWriter.Modules.ItineraryModule
             Validate();
         }
 
-        #region Agent markup overrides
+        #region Agent
         private bool HasOverrides()
         {
             foreach (ItinerarySet.ItineraryMarginOverrideRow row in itinerarySet.ItineraryMarginOverride)
@@ -724,6 +717,19 @@ namespace TourWriter.Modules.ItineraryModule
             itinerarySet.Itinerary[0].NetComOrMup = (!agentRow.IsNetComOrMupNull()) ? agentRow.NetComOrMup : "mup";
         }
 
+        private void SetReportLogoFile()
+        {
+            var id = itinerarySet.Itinerary[0].AgentID;
+            var agent = Cache.ToolSet.Agent.Where(a => a.AgentID == id).FirstOrDefault();
+            if (agent == null || agent.IsVoucherLogoFileNull()) return;
+
+            if (!reportControl.DefaultParameters.ContainsKey("@LogoFile"))
+                reportControl.DefaultParameters.Add("@LogoFile", "");
+                
+            reportControl.DefaultParameters["@LogoFile"] = 
+                "file:\\\\\\" + ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile);
+        }
+
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cmbAgent.SelectedValue == null || (int)cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
@@ -740,6 +746,7 @@ namespace TourWriter.Modules.ItineraryModule
             }
             AutoPopulateNetOverrides();
             bookingsViewer.RecalculateFinalPricing();
+            SetReportLogoFile();
         }
 
         #endregion
