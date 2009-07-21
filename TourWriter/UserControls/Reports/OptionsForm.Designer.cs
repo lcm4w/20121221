@@ -46,10 +46,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnLogo = new System.Windows.Forms.Button();
-            this.txtLogo = new System.Windows.Forms.TextBox();
             this.lblSpacing1 = new System.Windows.Forms.Label();
-            this.lblLogo = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -104,7 +101,7 @@
             // txtSpacing
             // 
             this.txtSpacing.FormatString = "###0.00 cm";
-            this.txtSpacing.Location = new System.Drawing.Point(302, 52);
+            this.txtSpacing.Location = new System.Drawing.Point(290, 30);
             this.txtSpacing.Name = "txtSpacing";
             this.txtSpacing.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtSpacing.Size = new System.Drawing.Size(50, 21);
@@ -174,7 +171,7 @@
             this.lblSpacing2.AutoSize = true;
             this.lblSpacing2.Enabled = false;
             this.lblSpacing2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblSpacing2.Location = new System.Drawing.Point(352, 57);
+            this.lblSpacing2.Location = new System.Drawing.Point(340, 35);
             this.lblSpacing2.Name = "lblSpacing2";
             this.lblSpacing2.Size = new System.Drawing.Size(184, 13);
             this.lblSpacing2.TabIndex = 11;
@@ -248,10 +245,7 @@
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Controls.Add(this.btnLogo);
-            this.panel2.Controls.Add(this.txtLogo);
             this.panel2.Controls.Add(this.lblSpacing1);
-            this.panel2.Controls.Add(this.lblLogo);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.txtBottomMargin);
@@ -271,40 +265,14 @@
             this.panel2.Size = new System.Drawing.Size(679, 88);
             this.panel2.TabIndex = 15;
             // 
-            // btnLogo
-            // 
-            this.btnLogo.Location = new System.Drawing.Point(607, 30);
-            this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Size = new System.Drawing.Size(24, 20);
-            this.btnLogo.TabIndex = 18;
-            this.btnLogo.Text = "...";
-            this.btnLogo.UseVisualStyleBackColor = true;
-            this.btnLogo.Click += new System.EventHandler(this.btnLogo_Click);
-            // 
-            // txtLogo
-            // 
-            this.txtLogo.Location = new System.Drawing.Point(302, 30);
-            this.txtLogo.Name = "txtLogo";
-            this.txtLogo.Size = new System.Drawing.Size(303, 20);
-            this.txtLogo.TabIndex = 17;
-            // 
             // lblSpacing1
             // 
             this.lblSpacing1.AutoSize = true;
-            this.lblSpacing1.Location = new System.Drawing.Point(250, 57);
+            this.lblSpacing1.Location = new System.Drawing.Point(242, 35);
             this.lblSpacing1.Name = "lblSpacing1";
             this.lblSpacing1.Size = new System.Drawing.Size(46, 13);
             this.lblSpacing1.TabIndex = 16;
             this.lblSpacing1.Text = "Spacing";
-            // 
-            // lblLogo
-            // 
-            this.lblLogo.AutoSize = true;
-            this.lblLogo.Location = new System.Drawing.Point(250, 35);
-            this.lblLogo.Name = "lblLogo";
-            this.lblLogo.Size = new System.Drawing.Size(31, 13);
-            this.lblLogo.TabIndex = 15;
-            this.lblLogo.Text = "Logo";
             // 
             // label5
             // 
@@ -336,7 +304,7 @@
             this.label6.Text = "Use these settings to adjust the layout. These settings are saved for future use." +
                 "";
             // 
-            // ReportOptionsForm
+            // OptionsForm
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,7 +315,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Name = "ReportOptionsForm";
+            this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Report margins";
             this.Load += new System.EventHandler(this.OptionsForm_Load);
@@ -390,9 +358,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.FlowLayoutPanel pnlLayout;
-        private System.Windows.Forms.Label lblLogo;
-        private System.Windows.Forms.TextBox txtLogo;
         private System.Windows.Forms.Label lblSpacing1;
-        private System.Windows.Forms.Button btnLogo;
     }
 }

@@ -47,13 +47,6 @@ namespace TourWriter.UserControls.Reports
             SaveLayoutOptions();
         }
 
-        private void btnLogo_Click(object sender, EventArgs e)
-        {
-            const string filter = "Images (*.jpg;*.jpeg;*.gif;*.png;*.bmp)|*.jpg;*.jpeg;*.gif;*.png;*.bmp|All files (*.*)|*.*";
-            var file = App.SelectExternalFile(true, "Choose file", filter, 1);
-            if (file != null) txtLogo.Text = Services.ExternalFilesHelper.ConvertToAbsolutePath(file);
-        }
-
         private bool ValidateEditorControls()
         {
             string msgs = "";
@@ -127,9 +120,6 @@ namespace TourWriter.UserControls.Reports
 
             txtSpacing.Value = rdlcHelper.GetSpacing(ref exists);
             txtSpacing.Enabled = lblSpacing1.Enabled = exists;
-
-            txtLogo.Text = rdlcHelper.GetLogo(ref exists);
-            txtLogo.Enabled = lblLogo.Enabled = btnLogo.Enabled = exists;
         }
 
         private void SaveLayoutOptions()
@@ -152,9 +142,6 @@ namespace TourWriter.UserControls.Reports
 
             if (txtSpacing.Enabled && rdlc.GetSpacing(ref exists) != (double)txtSpacing.Value)
             { rdlc.SetSpacing((double)txtSpacing.Value); edit = true; }
-
-            if (txtLogo.Enabled && rdlc.GetLogo(ref exists) != txtLogo.Text)
-            { rdlc.SetLogo(txtLogo.Text); edit = true; }
 
             if (edit) rdlc.WriteFile();
         }

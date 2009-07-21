@@ -16,7 +16,6 @@ namespace TourWriter.UserControls.Reports
         private const string regexRightMargin = @"(?<=<RightMargin>)\d*\.?\d+(?=cm</RightMargin>)";
         private const string regexSpacing = "(?<=<Textbox Name=\"SpacerCell\">.*<Height>)\\d*\\.?\\d+(?=cm</Height>)";
         private const string regexSqlExpression = @"(where|and|or) *\(? *(?<col>\w*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
-        private const string regexLogo = "(?<=<Image Name=\"logo\">.*?<Value>).*?(?=</Value>.*?</Image>)";
         #endregion
 
         private readonly string rdlcFile;
@@ -94,11 +93,6 @@ namespace TourWriter.UserControls.Reports
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
-        internal string GetLogo(ref bool exists)
-        {
-            return GetValue(regexLogo, ref exists, RegexOptions.Singleline).ToString();
-        }
-
         internal string GetSql(ref bool exists)
         {
             return GetValue(regexSql, ref exists).ToString();
@@ -141,13 +135,6 @@ namespace TourWriter.UserControls.Reports
         internal void SetSpacing(double? value)
         {
             SetValue(regexSpacing, value);
-        }
-        
-        internal void SetLogo(string value)
-        {
-            const string s = "file:///";
-            value = s + value.TrimStart(s.ToCharArray());
-            SetValue(regexLogo, value);
         }
 
         #endregion
