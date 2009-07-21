@@ -29,11 +29,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             bookingsBindingSource.DataMember = "PurchaseLine";
             bookingsNavigator.BindingSource = bookingsBindingSource;
             
-            // BUG: this causing booking name editing to fire re-sorting during editing.
-            //bookingsNavigator.BindingSource.Sort = "PurchaseLineName";
-            
             bookingEditor11.BindingSource = bookingsBindingSource;
-            bookingEditor11.OnOpenSupplier +=new OnBookingEditorOpenSupplierHandler(bookingEditor11_OnOpenSupplier);
+            bookingEditor11.OnOpenSupplier += bookingEditor11_OnOpenSupplier;
 
             cmbBookings.ComboBox.DataSource = bookingsBindingSource;
             cmbBookings.ComboBox.ValueMember = "PurchaseLineID";

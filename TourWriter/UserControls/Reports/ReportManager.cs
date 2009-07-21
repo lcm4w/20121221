@@ -60,6 +60,5 @@ namespace TourWriter.UserControls.Reports
                 }
             }
         }
-
     }
 }
