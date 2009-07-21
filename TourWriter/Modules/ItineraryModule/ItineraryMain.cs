@@ -141,7 +141,7 @@ namespace TourWriter.Modules.ItineraryModule
             accounting1.ItinerarySet = itinerarySet;
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportLogoFile();
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.FilterReportExplorer("Itinerary");
 
             // add event to track when data changed
@@ -717,7 +717,7 @@ namespace TourWriter.Modules.ItineraryModule
             itinerarySet.Itinerary[0].NetComOrMup = (!agentRow.IsNetComOrMupNull()) ? agentRow.NetComOrMup : "mup";
         }
 
-        private void SetReportLogoFile()
+        private void SetReportAgentParams()
         {
             var id = itinerarySet.Itinerary[0].AgentID;
             var agent = Cache.ToolSet.Agent.Where(a => a.AgentID == id).FirstOrDefault();
@@ -725,9 +725,12 @@ namespace TourWriter.Modules.ItineraryModule
 
             if (!reportControl.DefaultParameters.ContainsKey("@LogoFile"))
                 reportControl.DefaultParameters.Add("@LogoFile", "");
-                
             reportControl.DefaultParameters["@LogoFile"] = 
                 "file:\\\\\\" + ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile);
+
+            if (!reportControl.DefaultParameters.ContainsKey("@AgentVoucherNote"))
+                reportControl.DefaultParameters.Add("@AgentVoucherNote", "");
+            reportControl.DefaultParameters["@AgentVoucherNote"] = agent.VoucherFooter;
         }
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
@@ -746,7 +749,7 @@ namespace TourWriter.Modules.ItineraryModule
             }
             AutoPopulateNetOverrides();
             bookingsViewer.RecalculateFinalPricing();
-            SetReportLogoFile();
+            SetReportAgentParams();
         }
 
         #endregion
