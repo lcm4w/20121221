@@ -711,16 +711,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (gridItems.ActiveRow == null)
-                return;
+            if (gridItems.ActiveRow == null) return;
 
-            ItinerarySet.PurchaseItemRow copyRow = itinerarySet.PurchaseItem.FindByPurchaseItemID(
+            var copyRow = itinerarySet.PurchaseItem.FindByPurchaseItemID(
                 (int)gridItems.ActiveRow.Cells["PurchaseItemID"].Value);
 
-            if (App.AskYesNo("Copy booking item: " + copyRow.PurchaseItemName + "?"))
-            {
-                SetActiveRow(copyRow.PurchaseItemID);
-            }
+            if (!App.AskYesNo("Copy booking item: " + copyRow.PurchaseItemName + "?")) return;
+            var newRow = itinerarySet.CopyPurchaseItem(
+                copyRow, copyRow.PurchaseLineRow.PurchaseLineID, "Copy of", Cache.User.UserID);
+            SetActiveRow(newRow.PurchaseItemID);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
