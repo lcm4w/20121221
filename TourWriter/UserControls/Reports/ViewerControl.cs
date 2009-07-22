@@ -97,6 +97,7 @@ namespace TourWriter.UserControls.Reports
         private bool LoadReport()
         {
             // set report
+            reportViewer.Reset();
             reportViewer.LocalReport.ReportPath = reportFile;
 
             // load default params from report

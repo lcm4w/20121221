@@ -9,7 +9,7 @@ namespace TourWriter.UserControls.Reports
     public partial class OptionsForm : Form
     {
         private string reportFile;
-        private readonly RdlcFileHelper rdlcHelper;
+        private RdlcFileHelper rdlcHelper;
         private readonly Dictionary<string, object> defaultParameters;
 
         public OptionsForm(string reportFile, Dictionary<string, object> defaultParameters)
@@ -143,7 +143,11 @@ namespace TourWriter.UserControls.Reports
             if (txtSpacing.Enabled && rdlc.GetSpacing(ref exists) != (double)txtSpacing.Value)
             { rdlc.SetSpacing((double)txtSpacing.Value); edit = true; }
 
-            if (edit) rdlc.WriteFile();
+            if (edit)
+            {
+                rdlc.WriteFile();
+                rdlcHelper = new RdlcFileHelper(reportFile); // reset
+            }
         }
     }
 }
