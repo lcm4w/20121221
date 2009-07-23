@@ -281,7 +281,7 @@ namespace TourWriter.Modules.SupplierModule
             if(supplierSet == null)
             {
                 if (!serverConnectionError_UserNotified)
-                    App.ShowError("Failed to load Supplier data.");
+                    App.ShowError("Failed to load Supplier from database.");
 
                 foreach (Control c in Controls)
                     c.Enabled = false; // disable top level controls

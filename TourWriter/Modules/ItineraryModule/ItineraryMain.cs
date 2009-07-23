@@ -122,7 +122,7 @@ namespace TourWriter.Modules.ItineraryModule
             if (itinerarySet.Itinerary.Count == 0)
             {
                 if (!serverConnectionError_UserNotified)
-                    App.ShowError("Failed to load Itinerary data.");
+                    App.ShowError("Failed to load Itinerary from database.");
 
                 foreach (Control c in Controls)
                     c.Enabled = false; // disable top level controls
