@@ -36,6 +36,7 @@ namespace TourWriter.UserControls.Reports
             this.btnClose = new System.Windows.Forms.Button();
             this.chkRunImmediate = new System.Windows.Forms.CheckBox();
             this.lblReportName = new System.Windows.Forms.Label();
+            this.btnEmail = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // reportViewer
@@ -51,7 +52,7 @@ namespace TourWriter.UserControls.Reports
             // btnOptions
             // 
             this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOptions.Location = new System.Drawing.Point(435, 7);
+            this.btnOptions.Location = new System.Drawing.Point(431, 7);
             this.btnOptions.Name = "btnOptions";
             this.btnOptions.Size = new System.Drawing.Size(75, 23);
             this.btnOptions.TabIndex = 2;
@@ -62,7 +63,7 @@ namespace TourWriter.UserControls.Reports
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRun.Location = new System.Drawing.Point(354, 7);
+            this.btnRun.Location = new System.Drawing.Point(273, 7);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 3;
@@ -88,7 +89,7 @@ namespace TourWriter.UserControls.Reports
             this.chkRunImmediate.Checked = global::TourWriter.Properties.Settings.Default.RunReportsImmediately;
             this.chkRunImmediate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRunImmediate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::TourWriter.Properties.Settings.Default, "RunReportsImmediately", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkRunImmediate.Location = new System.Drawing.Point(215, 11);
+            this.chkRunImmediate.Location = new System.Drawing.Point(143, 11);
             this.chkRunImmediate.Name = "chkRunImmediate";
             this.chkRunImmediate.Size = new System.Drawing.Size(133, 17);
             this.chkRunImmediate.TabIndex = 5;
@@ -105,17 +106,29 @@ namespace TourWriter.UserControls.Reports
             this.lblReportName.TabIndex = 6;
             this.lblReportName.Text = "Report Name";
             // 
-            // ReportViewerControl
+            // btnEmail
+            // 
+            this.btnEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEmail.Location = new System.Drawing.Point(352, 7);
+            this.btnEmail.Name = "btnEmail";
+            this.btnEmail.Size = new System.Drawing.Size(75, 23);
+            this.btnEmail.TabIndex = 7;
+            this.btnEmail.Text = "Email";
+            this.btnEmail.UseVisualStyleBackColor = true;
+            this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+            // 
+            // ViewerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRun);
+            this.Controls.Add(this.btnEmail);
             this.Controls.Add(this.lblReportName);
             this.Controls.Add(this.chkRunImmediate);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.reportViewer);
-            this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnOptions);
-            this.Name = "ReportViewerControl";
+            this.Name = "ViewerControl";
             this.Size = new System.Drawing.Size(595, 372);
             this.Load += new System.EventHandler(this.viewerControl_Load);
             this.ResumeLayout(false);
@@ -131,5 +144,6 @@ namespace TourWriter.UserControls.Reports
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.CheckBox chkRunImmediate;
         private System.Windows.Forms.Label lblReportName;
+        private System.Windows.Forms.Button btnEmail;
     }
 }

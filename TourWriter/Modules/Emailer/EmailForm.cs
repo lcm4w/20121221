@@ -32,9 +32,7 @@ namespace TourWriter.Modules.Emailer
             InitializeComponent();
         }
         
-        private void EmailForm_Load(object sender, EventArgs e)
-        {
-        }
+        private void EmailForm_Load(object sender, EventArgs e) { }
 
         private void BuildAllEmails()
         {
@@ -58,9 +56,10 @@ namespace TourWriter.Modules.Emailer
                 txtTo.Text = email._To;
                 txtSubject.Text = email.Subject;
                 txtBody.Text = email.Body;
+                txtAttach.Text = "";
                 foreach (System.Net.Mail.Attachment att in email.Attachments)
-                    txtAttach.Text += att.Name + ",";
-                txtAttach.Text = txtAttach.Text.TrimEnd(',');
+                    txtAttach.Text += att.Name + ", ";
+                txtAttach.Text = txtAttach.Text.Trim().TrimEnd(',');
             }
 
             // update position controls			

@@ -913,6 +913,7 @@
       <DependentUpon>OptionEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Reports\RdlcFileHelper.cs" />
+    <Compile Include="UserControls\Reports\ReportEmailBuilder.cs" />
     <Compile Include="UserControls\Reports\ReportManager.cs">
       <SubType>UserControl</SubType>
     </Compile>

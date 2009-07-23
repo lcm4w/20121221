@@ -5,7 +5,8 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using TourWriter.Info.Services;
-using TourWriter.Services;
+using TourWriter.Modules.Emailer;
+using TourWriter.Properties;
 
 namespace TourWriter.UserControls.Reports
 {
@@ -99,6 +100,7 @@ namespace TourWriter.UserControls.Reports
             // set report
             reportViewer.Reset();
             reportViewer.LocalReport.ReportPath = reportFile;
+            reportViewer.LocalReport.DisplayName = lblReportName.Text;
 
             // load default params from report
             foreach (var param in reportViewer.LocalReport.GetParameters())
@@ -161,6 +163,23 @@ namespace TourWriter.UserControls.Reports
             }
         }
 
+        private void SendEmail()
+        {
+            var emailBuilder = new ReportEmailBuilder(reportViewer.LocalReport);
+            emailBuilder.TemplateSubject = lblReportName.Text + (ParentForm != null ? ": " + ParentForm.Text : "");
+
+            var wizard = new Wizard(Settings.Default.EmailEditorSize)
+                             {
+                                 Text = "TourWriter report email",
+                                 Params = emailBuilder
+                             };
+            wizard.AddPage(new TemplateForm());
+            wizard.AddPage(new EmailForm());
+            wizard.AddPage(new SendForm());
+            wizard.Show(this);
+            wizard.Next();
+        }
+
         #region Events
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -176,6 +195,11 @@ namespace TourWriter.UserControls.Reports
         private void btnClose_Click(object sender, EventArgs e)
         {
             ViewerControlClosed(this, new EventArgs());
+        }
+
+        private void btnEmail_Click(object sender, EventArgs e)
+        {
+            SendEmail();
         }
 
         private void LocalReport_SubreportProcessing(object sender, SubreportProcessingEventArgs e)
