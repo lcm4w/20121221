@@ -98,7 +98,6 @@ namespace TourWriter.UserControls.Reports
         private bool LoadReport()
         {
             // set report
-            reportViewer.Reset();
             reportViewer.LocalReport.ReportPath = reportFile;
             reportViewer.LocalReport.DisplayName = lblReportName.Text;
 
