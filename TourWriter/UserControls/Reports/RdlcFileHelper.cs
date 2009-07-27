@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using TourWriter.Services;
@@ -9,34 +8,34 @@ namespace TourWriter.UserControls.Reports
     public class RdlcFileHelper
     {
         #region Regex patterns
-        private const string regexSql = @"(?<=<CommandText>).*(?=</CommandText>)";
-        private const string regexTopMargin = @"(?<=<TopMargin>)\d*\.?\d+(?=cm</TopMargin>)";
-        private const string regexBottomMargin = @"(?<=<BottomMargin>)\d*\.?\d+(?=cm</BottomMargin>)";
-        private const string regexLeftMargin = @"(?<=<LeftMargin>)\d*\.?\d+(?=cm</LeftMargin>)";
-        private const string regexRightMargin = @"(?<=<RightMargin>)\d*\.?\d+(?=cm</RightMargin>)";
-        private const string regexSpacing = "(?<=<Textbox Name=\"SpacerCell\">.*<Height>)\\d*\\.?\\d+(?=cm</Height>)";
-        private const string regexSqlExpression = @"(where|and|or) *\(? *(?<col>\w*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
+        private const string RegexDataSources = @"<DataSet.*?<DataSourceName>(?<name>\w*)</DataSourceName>.*?<CommandText>(?<sql>.*?)</CommandText>.*?</DataSet>";
+        private const string RegexTopMargin = @"(?<=<TopMargin>)\d*\.?\d+(?=cm</TopMargin>)";
+        private const string RegexBottomMargin = @"(?<=<BottomMargin>)\d*\.?\d+(?=cm</BottomMargin>)";
+        private const string RegexLeftMargin = @"(?<=<LeftMargin>)\d*\.?\d+(?=cm</LeftMargin>)";
+        private const string RegexRightMargin = @"(?<=<RightMargin>)\d*\.?\d+(?=cm</RightMargin>)";
+        private const string RegexSpacing = "(?<=<Textbox Name=\"SpacerCell\">.*<Height>)\\d*\\.?\\d+(?=cm</Height>)";
+        private const string RegexSqlExpression = @"(where|and|or) *\(? *(?<col>\w*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
         #endregion
 
-        private readonly string rdlcFile;
-        private string rdlc;
+        private readonly string _rdlcFile;
+        private string _rdlc;
 
         public RdlcFileHelper(string rdlcFile)
         {
-            this.rdlcFile = rdlcFile;
+            _rdlcFile = rdlcFile;
             ReadFile(rdlcFile);
         }
 
         private void ReadFile(string file)
         {
             using (TextReader reader = new StreamReader(file))
-                rdlc = reader.ReadToEnd();
+                _rdlc = reader.ReadToEnd();
         }
 
         internal void WriteFile()
         {
-            using (TextWriter writer = new StreamWriter(rdlcFile))
-                writer.Write(rdlc);
+            using (TextWriter writer = new StreamWriter(_rdlcFile))
+                writer.Write(_rdlc);
         }
 
         private object GetValue(string pattern, ref bool exists)
@@ -46,14 +45,14 @@ namespace TourWriter.UserControls.Reports
 
         private object GetValue(string pattern, ref bool exists, RegexOptions regexOption)
         {
-            var match = Regex.Match(rdlc, pattern, regexOption);
+            var match = Regex.Match(_rdlc, pattern, regexOption);
             exists = match.Success;
             return match.Value.XmlDecode();
         }
 
         private void SetValue(string pattern, object value)
         {
-            rdlc = new Regex(pattern, RegexOptions.Singleline).Replace(rdlc, value.ToString());
+            _rdlc = new Regex(pattern, RegexOptions.Singleline).Replace(_rdlc, value.ToString());
         }
 
         #region Getter methods
@@ -61,52 +60,65 @@ namespace TourWriter.UserControls.Reports
         internal double? GetTopMargin(ref bool exists)
         {
             double d;
-            var val = GetValue(regexTopMargin, ref exists);
+            var val = GetValue(RegexTopMargin, ref exists);
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
         internal double? GetBottomMargin(ref bool exists)
         {
             double d;
-            var val = GetValue(regexBottomMargin, ref exists);
+            var val = GetValue(RegexBottomMargin, ref exists);
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
         internal double? GetLeftMargin(ref bool exists)
         {
             double d;
-            var val = GetValue(regexLeftMargin, ref exists);
+            var val = GetValue(RegexLeftMargin, ref exists);
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
         internal double? GetRightMargin(ref bool exists)
         {
             double d;
-            var val = GetValue(regexRightMargin, ref exists, RegexOptions.Singleline);
+            var val = GetValue(RegexRightMargin, ref exists, RegexOptions.Singleline);
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
         internal double? GetSpacing(ref bool exists)
         {
             double d;
-            var val = GetValue(regexSpacing, ref exists, RegexOptions.Singleline);
+            var val = GetValue(RegexSpacing, ref exists, RegexOptions.Singleline);
             return double.TryParse(val.ToString(), out d) ? (double?)d : null;
         }
 
-        internal string GetSql(ref bool exists)
+        internal Dictionary<string, string> GetDataSourcesNameAndSql(ref bool exists)
         {
-            return GetValue(regexSql, ref exists).ToString();
+            var matches = Regex.Matches(_rdlc, RegexDataSources, RegexOptions.Singleline);
+            exists = matches.Count > 0;
+
+            var dataSources = new Dictionary<string, string>(matches.Count);
+            foreach (Match match in matches)
+                dataSources.Add(match.Groups["name"].Value.XmlDecode(), match.Groups["sql"].Value.XmlDecode());
+
+            return dataSources;
         }
 
         internal List<SqlExpression> GetSqlExpressions()
         {
-            bool exists = false;
-            var mc = new Regex(regexSqlExpression, RegexOptions.IgnoreCase).Matches(GetSql(ref exists));
-
-            var result = new List<SqlExpression>(mc.Count);
-            foreach (Match m in mc)
-                result.Add(new SqlExpression(m.Value, m.Groups["col"].Value, m.Groups["param"].Value));
-            return result;
+            var exists = false;
+            var paramList = new List<SqlExpression>();
+            foreach(var dataSource in GetDataSourcesNameAndSql(ref exists))
+            {
+                var mc = new Regex(RegexSqlExpression, RegexOptions.IgnoreCase).Matches(dataSource.Value);
+                foreach (Match m in mc)
+                {
+                    var param = new SqlExpression(
+                        m.Value.XmlDecode(), m.Groups["col"].Value.XmlDecode(), m.Groups["param"].Value.XmlDecode());
+                    if (!paramList.Contains(param)) paramList.Add(param);
+                }
+            }
+            return paramList;
         }
         #endregion
 
@@ -114,27 +126,27 @@ namespace TourWriter.UserControls.Reports
 
         internal void SetTopMargin(double value)
         {
-            SetValue(regexTopMargin, value);
+            SetValue(RegexTopMargin, value);
         }
 
         internal void SetBottomMargin(double value)
         {
-            SetValue(regexBottomMargin, value);
+            SetValue(RegexBottomMargin, value);
         }
 
         internal void SetLeftMargin(double value)
         {
-            SetValue(regexLeftMargin, value);
+            SetValue(RegexLeftMargin, value);
         }
 
         internal void SetRightMargin(double value)
         {
-            SetValue(regexRightMargin, value);
+            SetValue(RegexRightMargin, value);
         }
 
         internal void SetSpacing(double? value)
         {
-            SetValue(regexSpacing, value);
+            SetValue(RegexSpacing, value);
         }
 
         #endregion

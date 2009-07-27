@@ -29,7 +29,7 @@ namespace TourWriter.UserControls.Reports
         {
             var reportViewer = new ViewerControl(reportName, reportFile, DefaultParameters)
                                    {Dock = DockStyle.Fill};
-            reportViewer.ViewerControlClosed += viewerControl_ReportHostClosed;
+            reportViewer.ViewerControlClosed += ViewerControlReportHostClosed;
 
             // create a new tab and add the ReportHost control to it
             var key = Guid.NewGuid().ToString();
@@ -46,7 +46,7 @@ namespace TourWriter.UserControls.Reports
                 App.ShowError("Report file not found: " + e.ReportPath);
         }
 
-        private void viewerControl_ReportHostClosed(object sender, EventArgs e)
+        private void ViewerControlReportHostClosed(object sender, EventArgs e)
         {
             // look for the tab which contains this control, and remove it
             for (int i = reportTabControl.Tabs.Count - 1; i >= 0; i--)

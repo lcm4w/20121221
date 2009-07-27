@@ -8,19 +8,19 @@ namespace TourWriter.UserControls.Reports
 {
     public partial class OptionsForm : Form
     {
-        private string reportFile;
-        private RdlcFileHelper rdlcHelper;
-        private readonly Dictionary<string, object> defaultParameters;
+        private RdlcFileHelper _rdlcHelper;
+        private readonly string _reportFile;
+        private readonly Dictionary<string, object> _defaultParams;
 
-        public OptionsForm(string reportFile, Dictionary<string, object> defaultParameters)
+        public OptionsForm(string reportFile, Dictionary<string, object> reportParams)
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;
 
-            rdlcHelper = new RdlcFileHelper(reportFile);
-            this.reportFile = reportFile;
-            this.defaultParameters = defaultParameters;
-            LoadParameterOptions();
+            _rdlcHelper = new RdlcFileHelper(reportFile);
+            _reportFile = reportFile;
+            _defaultParams = reportParams;
+            LoadEditorControls();
         }
 
         private void OptionsForm_Load(object sender, EventArgs e)
@@ -28,23 +28,13 @@ namespace TourWriter.UserControls.Reports
             LoadLayoutOptions();
         }
 
-        private void LoadParameterOptions()
+        private void LoadEditorControls()
         {
-            foreach (RdlcFileHelper.SqlExpression sqlExpression in rdlcHelper.GetSqlExpressions())
+            foreach (var sqlExpression in _rdlcHelper.GetSqlExpressions())
             {
-                var editor = new OptionEdit(sqlExpression, defaultParameters);
+                var editor = new OptionEdit(sqlExpression, _defaultParams);
                 pnlLayout.Controls.Add(editor);
             }
-        }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            if (!ValidateEditorControls())
-            {
-                DialogResult = DialogResult.None;
-                return;
-            }
-            SaveLayoutOptions();
         }
 
         private bool ValidateEditorControls()
@@ -65,67 +55,85 @@ namespace TourWriter.UserControls.Reports
             return true;
         }
 
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            if (!ValidateEditorControls())
+            {
+                DialogResult = DialogResult.None;
+                return;
+            }
+            SaveLayoutOptions();
+        }
+
         /// <summary>
-        ///  Process report options, updating the default params list and returning the processed sql statement
+        ///  Process report options.
         /// </summary>
         /// <returns></returns>
-        public string ProcessOptions()
+        public void ProcessOptions(ref Dictionary<string, object> reportParams, ref Dictionary<string, string> dataSources)
         {
-            // get default sql statement
-            bool exists = false;
-            var sql = rdlcHelper.GetSql(ref exists);
+            var exists = false;
+            reportParams = _defaultParams;
+            dataSources = _rdlcHelper.GetDataSourcesNameAndSql(ref exists);
+
             if (!exists) throw new ArgumentException("Report section not found: SQL statement");
 
-            // get option parameters
-            foreach(var c in pnlLayout.Controls)
+            foreach(var editControl in pnlLayout.Controls)
             {
-                var editor = c as OptionEdit;
-                if (editor != null)
+                var editor = editControl as OptionEdit;
+                if (editor == null) continue;
+
+                // get editor value
+                var value = editor.GetEditorValue();
+
+                // inject value into default params list
+                if (_defaultParams.ContainsKey(editor.SqlExpression.ParameterName))
+                    _defaultParams[editor.SqlExpression.ParameterName] = value;
+
+                // apply sql formatting to value
+                var stringValue = value.ToString();
+                if (value.GetType() == typeof(DateTime))
                 {
-                    var value = editor.GetEditorValue();
+                    if (editor.SqlExpression.ParameterName == "@EndDate")
+                        value = ((DateTime) value).Date.AddDays(1);
+                    stringValue = string.Format("'{0}'", ((DateTime)value).ToString("yyyy-MM-dd 00:00:00:000"));
+                }
 
-                    // update default params list
-                    if (defaultParameters.ContainsKey(editor.SqlExpression.ParameterName))
-                        defaultParameters[editor.SqlExpression.ParameterName] = value;
-
-                    // inject sql params
-                    var stringValue = value.ToString();
-                    if (value.GetType() == typeof(DateTime))
-                    {
-                        if (editor.SqlExpression.ParameterName == "@EndDate")
-                            value = ((DateTime) value).Date.AddDays(1);
-                        stringValue = string.Format("'{0}'", ((DateTime)value).ToString("yyyy-MM-dd 00:00:00:000"));
-                    }
-                    sql = new Regex(editor.SqlExpression.ParameterName).Replace(sql, stringValue);
+                // inject value into datasources sql statements
+                var dsNames = new string[dataSources.Count];
+                dataSources.Keys.CopyTo(dsNames, 0);
+                foreach (var dsName in dsNames)
+                {
+                    var dsSql = dataSources[dsName];
+                    dsSql = new Regex(editor.SqlExpression.ParameterName).Replace(dsSql, stringValue);
+                    dataSources[dsName] = dsSql;
                 }
             }
-            return sql;
         }
 
         private void LoadLayoutOptions()
         {
             var exists = false;
 
-            txtTopMargin.Value = rdlcHelper.GetTopMargin(ref exists);
+            txtTopMargin.Value = _rdlcHelper.GetTopMargin(ref exists);
             txtTopMargin.Enabled = exists;
 
-            txtBottomMargin.Value = rdlcHelper.GetBottomMargin(ref exists);
+            txtBottomMargin.Value = _rdlcHelper.GetBottomMargin(ref exists);
             txtBottomMargin.Enabled = exists;
 
-            txtLeftMargin.Value = rdlcHelper.GetLeftMargin(ref exists);
+            txtLeftMargin.Value = _rdlcHelper.GetLeftMargin(ref exists);
             txtLeftMargin.Enabled = exists;
 
-            txtRightMargin.Value = rdlcHelper.GetRightMargin(ref exists);
+            txtRightMargin.Value = _rdlcHelper.GetRightMargin(ref exists);
             txtRightMargin.Enabled = exists;
 
-            txtSpacing.Value = rdlcHelper.GetSpacing(ref exists);
+            txtSpacing.Value = _rdlcHelper.GetSpacing(ref exists);
             txtSpacing.Enabled = lblSpacing1.Enabled = exists;
         }
 
         private void SaveLayoutOptions()
         {
             // use new file helper to ensure we only write the changes to settings
-            var rdlc = new RdlcFileHelper(reportFile);
+            var rdlc = new RdlcFileHelper(_reportFile);
             bool exists = false, edit = false;
 
             if (txtTopMargin.Enabled && rdlc.GetTopMargin(ref exists) != (double)txtTopMargin.Value)
@@ -146,7 +154,7 @@ namespace TourWriter.UserControls.Reports
             if (edit)
             {
                 rdlc.WriteFile();
-                rdlcHelper = new RdlcFileHelper(reportFile); // reset
+                _rdlcHelper = new RdlcFileHelper(_reportFile); // reset
             }
         }
     }
