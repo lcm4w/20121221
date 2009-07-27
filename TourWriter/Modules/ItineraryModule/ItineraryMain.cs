@@ -731,6 +731,10 @@ namespace TourWriter.Modules.ItineraryModule
             if (!reportControl.DefaultParameters.ContainsKey("@AgentVoucherNote"))
                 reportControl.DefaultParameters.Add("@AgentVoucherNote", "");
             reportControl.DefaultParameters["@AgentVoucherNote"] = agent.VoucherFooter;
+
+            if (!reportControl.DefaultParameters.ContainsKey("@AgentClientFooter"))
+                reportControl.DefaultParameters.Add("@AgentClientFooter", "");
+            reportControl.DefaultParameters["@AgentClientFooter"] = agent.ClientFooter;
         }
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
