@@ -725,16 +725,18 @@ namespace TourWriter.Modules.ItineraryModule
 
             if (!reportControl.DefaultParameters.ContainsKey("@LogoFile"))
                 reportControl.DefaultParameters.Add("@LogoFile", "");
-            reportControl.DefaultParameters["@LogoFile"] = 
-                "file:\\\\\\" + ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile);
+            reportControl.DefaultParameters["@LogoFile"] = "file:\\\\\\" + 
+                (!agent.IsVoucherLogoFileNull() ? ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile) : "");
 
             if (!reportControl.DefaultParameters.ContainsKey("@AgentVoucherNote"))
                 reportControl.DefaultParameters.Add("@AgentVoucherNote", "");
-            reportControl.DefaultParameters["@AgentVoucherNote"] = agent.VoucherFooter;
+            reportControl.DefaultParameters["@AgentVoucherNote"] = 
+                !agent.IsVoucherFooterNull() ? agent.VoucherFooter : "";
 
             if (!reportControl.DefaultParameters.ContainsKey("@AgentClientFooter"))
                 reportControl.DefaultParameters.Add("@AgentClientFooter", "");
-            reportControl.DefaultParameters["@AgentClientFooter"] = agent.ClientFooter;
+            reportControl.DefaultParameters["@AgentClientFooter"] = 
+                !agent.IsClientFooterNull() ? agent.ClientFooter : "";
         }
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
