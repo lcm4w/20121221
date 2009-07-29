@@ -8,6 +8,7 @@ namespace TourWriter.UserControls.Reports
 {
     public partial class OptionsForm : Form
     {
+        public bool LayoutRefreshRequired;
         private RdlcFileHelper _rdlcHelper;
         private readonly string _reportFile;
         private readonly Dictionary<string, object> _defaultParams;
@@ -155,6 +156,7 @@ namespace TourWriter.UserControls.Reports
             {
                 rdlc.WriteFile();
                 _rdlcHelper = new RdlcFileHelper(_reportFile); // reset
+                LayoutRefreshRequired = true;
             }
         }
     }

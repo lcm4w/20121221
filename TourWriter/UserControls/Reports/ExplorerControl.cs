@@ -134,9 +134,7 @@ namespace TourWriter.UserControls.Reports
                 node.Remove();
                 parentNode.Nodes.Add(node);
             }
-
-            // expand the root node
-            nodes[0].Expand();
+            if (nodes.Count > 0) nodes[0].Expand();
         }
 
         private static TreeNode GetReportCategoryNode(TreeNode node)

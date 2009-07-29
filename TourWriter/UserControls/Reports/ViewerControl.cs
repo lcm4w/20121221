@@ -40,28 +40,6 @@ namespace TourWriter.UserControls.Reports
             _defaultParams = new Dictionary<string, object>(defaultParameters.Count);
             foreach (var param in defaultParameters) _defaultParams.Add(param.Key, param.Value);
             _defaultParams.Add("@ReportName", reportName);
-
-
-            InitialiseReport();
-        }
-
-        private void InitialiseReport()
-        {
-            reportViewer.Reset();
-            reportViewer.LocalReport.ReportPath = _reportFile;
-            reportViewer.LocalReport.DisplayName = lblReportName.Text;
-            reportViewer.ProcessingMode = ProcessingMode.Local;
-            reportViewer.LocalReport.EnableExternalImages = true;
-            reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
-            reportViewer.LocalReport.SubreportProcessing += LocalReportSubreportProcessing;
-
-            // get report params, merge into our default params list to ensure we have them all covered
-            foreach (var param in reportViewer.LocalReport.GetParameters())
-            {
-                var key = !param.Name.StartsWith("@") ? "@" + param.Name : param.Name;
-                if (!_defaultParams.ContainsKey(key) && param.Values.Count > 0 && param.Values[0] != null)
-                    _defaultParams.Add(key, param.Values[0]);
-            }
         }
 
         public void RunReport()
@@ -72,9 +50,26 @@ namespace TourWriter.UserControls.Reports
                 else Cursor = Cursors.WaitCursor;
                 Application.DoEvents();
 
+                // initialise
+                reportViewer.Reset();
+                reportViewer.LocalReport.ReportPath = _reportFile;
+                reportViewer.LocalReport.DisplayName = lblReportName.Text;
+                reportViewer.ProcessingMode = ProcessingMode.Local;
+                reportViewer.LocalReport.EnableExternalImages = true;
+                reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
+                reportViewer.LocalReport.SubreportProcessing += LocalReportSubreportProcessing;
+                // get report params, merge into our default params list to ensure we have them all covered
+                foreach (var param in reportViewer.LocalReport.GetParameters())
+                {
+                    var key = !param.Name.StartsWith("@") ? "@" + param.Name : param.Name;
+                    if (!_defaultParams.ContainsKey(key) && param.Values.Count > 0 && param.Values[0] != null)
+                        _defaultParams.Add(key, param.Values[0]);
+                }
+
+                // load dynamic options
                 ReportOptions.ProcessOptions(ref _defaultParams, ref _dataSources);
 
-                // load report parameters
+                // set report param values
                 var reportParams = new List<ReportParameter>();
                 foreach (var param in reportViewer.LocalReport.GetParameters())
                 {
@@ -84,7 +79,7 @@ namespace TourWriter.UserControls.Reports
                 }
                 reportViewer.LocalReport.SetParameters(reportParams.ToArray());
                 
-                // load data in datasources
+                // set data
                 foreach (var dataSource in _dataSources)
                 {
                     reportViewer.LocalReport.DataSources.Add(
