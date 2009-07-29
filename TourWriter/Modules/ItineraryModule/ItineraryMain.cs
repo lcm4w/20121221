@@ -737,6 +737,11 @@ namespace TourWriter.Modules.ItineraryModule
                 reportControl.DefaultParameters.Add("@AgentClientFooter", "");
             reportControl.DefaultParameters["@AgentClientFooter"] = 
                 !agent.IsClientFooterNull() ? agent.ClientFooter : "";
+
+            if (!reportControl.DefaultParameters.ContainsKey("@AgentHeader"))
+                reportControl.DefaultParameters.Add("@AgentHeader", "");
+            reportControl.DefaultParameters["@AgentHeader"] =
+                !agent.IsAgentHeaderNull() ? agent.AgentHeader : "";
         }
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
