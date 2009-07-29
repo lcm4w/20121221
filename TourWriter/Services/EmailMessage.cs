@@ -48,9 +48,12 @@ namespace TourWriter.Services
         {
             ToolSet.AppSettingsRow settings = TourWriter.Global.Cache.ToolSet.AppSettings[0];
 
+            if (string.IsNullOrEmpty(settings.SmtpServerName))
+                throw new ApplicationException("Email server name not found, email server settings may not have been entered.");
+
             return Send(
                 settings.SmtpServerName,
-                settings.SmtpServerPort,
+                !settings.IsSmtpServerPortNull() ? settings.SmtpServerPort : 25,
                 !settings.IsSmtpServerEnableSslNull() ? settings.SmtpServerEnableSsl : false,
                 settings.SmtpServerUsername,
                 settings.SmtpServerPassword);
