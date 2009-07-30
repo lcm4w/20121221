@@ -1,8 +1,8 @@
 /*
-TourWriter database update script, from version 2009.07.10 to 2009.07.29
+TourWriter database update script, from version 2009.07.10 to 2009.07.30
 */
 GO
-if ('2009.07.29' <= (select VersionNumber from AppSettings)) return
+if ('2009.07.30' <= (select VersionNumber from AppSettings)) return
 GO
 
 SET NUMERIC_ROUNDABORT OFF
@@ -113,11 +113,13 @@ from
 		case item.StartDate	when null then null else datename(year,    item.StartDate) end as PurchaseItemYear, 		
 		--case item.StartDate when null then null else substring(convert(varchar(10), item.StartDate, 120), 6, 2) end as PurchaseItemMonthNumber,
 		dateadd(day,item.NumberOfDays,item.StartDate) as PurchaseItemEndDate,
+		item.EndTime as PurchaseItemEndTime,
 		line.NoteToSupplier,
 		line.NoteToVoucher,
 		line.NoteToClient,
 		sup.*,
 		serv.ServiceName,
+		serv.CheckinMinutesEarly,
 		opt.OptionName,
 		opt.PricingOption,
 		rate.ValidFrom AS RateValidFrom,
@@ -181,7 +183,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2009.07.29'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2009.07.30'
 GO
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
