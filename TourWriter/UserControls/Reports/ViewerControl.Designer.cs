@@ -30,13 +30,17 @@ namespace TourWriter.UserControls.Reports
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.btnOptions = new System.Windows.Forms.Button();
-            this.btnRun = new System.Windows.Forms.Button();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.chkRunImmediate = new System.Windows.Forms.CheckBox();
             this.lblReportName = new System.Windows.Forms.Label();
-            this.btnEmail = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
+            this.btnOptions = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btnEmail = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.myToolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // reportViewer
@@ -49,53 +53,6 @@ namespace TourWriter.UserControls.Reports
             this.reportViewer.Size = new System.Drawing.Size(588, 337);
             this.reportViewer.TabIndex = 1;
             // 
-            // btnOptions
-            // 
-            this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOptions.Location = new System.Drawing.Point(431, 7);
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(75, 23);
-            this.btnOptions.TabIndex = 2;
-            this.btnOptions.Text = "Options";
-            this.btnOptions.UseVisualStyleBackColor = true;
-            this.btnOptions.Click += new System.EventHandler(this.btnChangeMargins_Click);
-            // 
-            // btnRun
-            // 
-            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRun.Location = new System.Drawing.Point(273, 7);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
-            this.btnRun.TabIndex = 3;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.Location = new System.Drawing.Point(516, 7);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
-            this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // chkRunImmediate
-            // 
-            this.chkRunImmediate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkRunImmediate.AutoSize = true;
-            this.chkRunImmediate.Checked = global::TourWriter.Properties.Settings.Default.RunReportsImmediately;
-            this.chkRunImmediate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRunImmediate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::TourWriter.Properties.Settings.Default, "RunReportsImmediately", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkRunImmediate.Location = new System.Drawing.Point(143, 11);
-            this.chkRunImmediate.Name = "chkRunImmediate";
-            this.chkRunImmediate.Size = new System.Drawing.Size(133, 17);
-            this.chkRunImmediate.TabIndex = 5;
-            this.chkRunImmediate.Text = "Run report immediately";
-            this.chkRunImmediate.UseVisualStyleBackColor = true;
-            // 
             // lblReportName
             // 
             this.lblReportName.AutoSize = true;
@@ -106,31 +63,81 @@ namespace TourWriter.UserControls.Reports
             this.lblReportName.TabIndex = 6;
             this.lblReportName.Text = "Report Name";
             // 
+            // myToolStrip1
+            // 
+            this.myToolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.myToolStrip1.DisableAllMenuItems = true;
+            this.myToolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOptions,
+            this.btnRefresh,
+            this.btnEmail,
+            this.toolStripSeparator1,
+            this.toolStripButton1});
+            this.myToolStrip1.Location = new System.Drawing.Point(327, 3);
+            this.myToolStrip1.Name = "myToolStrip1";
+            this.myToolStrip1.Size = new System.Drawing.Size(263, 26);
+            this.myToolStrip1.TabIndex = 8;
+            this.myToolStrip1.Text = "myToolStrip1";
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.Image = global::TourWriter.Properties.Resources.Wrench;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(69, 23);
+            this.btnOptions.Text = "Options";
+            this.btnOptions.ToolTipText = "Set report options and filters";
+            this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = global::TourWriter.Properties.Resources.Refresh;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(66, 23);
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.ToolTipText = "Reload data and refresh report";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // btnEmail
             // 
-            this.btnEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEmail.Location = new System.Drawing.Point(352, 7);
+            this.btnEmail.Image = global::TourWriter.Properties.Resources.EmailAttach;
+            this.btnEmail.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnEmail.Name = "btnEmail";
-            this.btnEmail.Size = new System.Drawing.Size(75, 23);
-            this.btnEmail.TabIndex = 7;
+            this.btnEmail.Size = new System.Drawing.Size(56, 23);
             this.btnEmail.Text = "Email";
-            this.btnEmail.UseVisualStyleBackColor = true;
+            this.btnEmail.ToolTipText = "Email report in PDF attachment";
             this.btnEmail.Click += new System.EventHandler(this.btnEmail_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 26);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 23);
+            this.toolStripButton1.Text = "X";
+            this.toolStripButton1.ToolTipText = "Close this report";
+            this.toolStripButton1.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // ViewerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.btnRun);
-            this.Controls.Add(this.btnEmail);
+            this.Controls.Add(this.myToolStrip1);
             this.Controls.Add(this.lblReportName);
-            this.Controls.Add(this.chkRunImmediate);
-            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.reportViewer);
-            this.Controls.Add(this.btnOptions);
             this.Name = "ViewerControl";
             this.Size = new System.Drawing.Size(595, 372);
             this.Load += new System.EventHandler(this.viewerControl_Load);
+            this.myToolStrip1.ResumeLayout(false);
+            this.myToolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,11 +146,13 @@ namespace TourWriter.UserControls.Reports
         #endregion
 
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
-        private System.Windows.Forms.Button btnOptions;
-        private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.CheckBox chkRunImmediate;
         private System.Windows.Forms.Label lblReportName;
-        private System.Windows.Forms.Button btnEmail;
+        private MyToolStrip myToolStrip1;
+        private System.Windows.Forms.ToolStripButton btnEmail;
+        private System.Windows.Forms.ToolStripButton btnOptions;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton btnRefresh;
     }
 }

@@ -147,16 +147,15 @@ namespace TourWriter.UserControls.Reports
 
         private void viewerControl_Load(object sender, EventArgs e)
         {
-            if (chkRunImmediate.Checked)
-                RunReport();
+            RunReport();
         }
 
-        private void btnRun_Click(object sender, EventArgs e)
+        private void btnRefresh_Click(object sender, EventArgs e)
         {
             RunReport();
         }
 
-        private void btnChangeMargins_Click(object sender, EventArgs e)
+        private void btnOptions_Click(object sender, EventArgs e)
         {
             ShowOptionsForm();
         }
