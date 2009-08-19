@@ -513,6 +513,8 @@ namespace TourWriter.Modules.SupplierModule
 
             foreach (UltraGridRow row in gridOptions.Rows)
             {
+                if (row.VisibleIndex < 0) continue;
+
                 if ((bool)row.Cells["IsSelected"].Value)
                     continue;
 
