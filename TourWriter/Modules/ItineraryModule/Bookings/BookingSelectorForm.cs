@@ -443,57 +443,63 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void serviceEditor1_OnOptionCheckedChanged(OptionCheckedChangedEventArgs e)
         {
-            if (e.IsChecked)
+            if (!e.IsChecked) // unchecking so remove
             {
-                var warning = serviceEditor1.GetSelectedServiceWarningMessage();
-                if (warning != string.Empty)
+                RemovePurchaseItem(e.OptionID);
+                return;
+            }
+            
+            // show any warnings
+            var warning = serviceEditor1.GetSelectedServiceWarningMessage();
+            if (warning != string.Empty)
+            {
+                warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\nContinue?", warning);
+                if (MessageBox.Show(warning, "BookingEditor Warning Message", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
                 {
-                    warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\nContinue?", warning);
-                    if (MessageBox.Show(warning, "BookingEditor Warning Message", MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
-                    {
-                        serviceEditor1.SetSelectedOnActiveOptionRow(false);
-                        return;
-                    }
-                }
-                var id = AddNewPurchaseItem(e.OptionID).PurchaseItemID;
-                foreach(var row in gridBookings.Rows)
-                {
-                    if ((int)row.Cells["PurchaseItemID"].Value == id)
-                    {
-                        // add service times to dropdown
-                        row.Selected = true;
-                        row.Activate();
-                        
-                        ValueList list;
-                        var key = "ServiceTimes" + e.OptionID;
-                        if (gridBookings.DisplayLayout.ValueLists.Exists(key))
-                            list = gridBookings.DisplayLayout.ValueLists[key];
-                        else
-                        {
-                            list = gridBookings.DisplayLayout.ValueLists.Add(key);
-                            list.SortStyle = ValueListSortStyle.Ascending;
-                            list.ValueListItems.Add(DBNull.Value, "(none)");
-                            
-                            foreach (SupplierSet.ServiceTimeRow time in 
-                                supplierSet.Option.FindByOptionID(e.OptionID).RateRow.ServiceRow.GetServiceTimeRows())
-                            {
-                                var text = 
-                                    (!time.IsStartTimeNull() ? time.StartTime.ToShortTimeString() : "") +
-                                    (!time.IsEndTimeNull() ? " / " + time.EndTime.ToShortTimeString() : "");
-
-                                list.ValueListItems.Add(time.ServiceTimeID, text);
-                            }
-
-                        }
-                        var cell = row.Cells["ServiceTimeID"];
-                        cell.ValueList = list;
-                        if (cell.ValueList.ItemCount > 0)
-                            cell.ValueList.SelectedItemIndex = 0;
-                    }
+                    serviceEditor1.SetSelectedOnActiveOptionRow(false);
+                    return;
                 }
             }
-            else RemovePurchaseItem(e.OptionID);
+
+            // add purchase item
+            var id = AddNewPurchaseItem(e.OptionID).PurchaseItemID;
+            UltraGridRow newRow = null;
+            foreach (var row in gridBookings.Rows)
+                if ((int)row.Cells["PurchaseItemID"].Value == id)
+                {
+                    newRow = row;
+                    newRow.Selected = true;
+                    newRow.Activate();
+                    break;
+                }
+            if (newRow == null) return;
+
+            // populate servicetime cell dropdown
+            ValueList list;
+            var cell = newRow.Cells["ServiceTime"];
+            var key = "ServiceTimes" + e.OptionID;
+            if (gridBookings.DisplayLayout.ValueLists.Exists(key))
+            {   // add existing
+                list = gridBookings.DisplayLayout.ValueLists[key];
+            }
+            else
+            {   // create list
+                list = gridBookings.DisplayLayout.ValueLists.Add(key);
+                list.SortStyle = ValueListSortStyle.Ascending;
+                list.ValueListItems.Add(DBNull.Value, "(none)");
+
+                var times = supplierSet.Option.FindByOptionID(e.OptionID).RateRow.ServiceRow.GetServiceTimeRows();
+                foreach (var time in times)
+                {
+                    if (time.IsStartTimeNull()) continue;
+                    list.ValueListItems.Add(time.StartTime,
+                        time.StartTime.ToShortTimeString() + (!time.IsEndTimeNull() ? " (out: " + time.EndTime.ToShortTimeString() + ")" : ""));
+                }
+            }
+            if (list.ValueListItems.Count <= 1) return;
+            cell.Style = ColumnStyle.DropDownList; // convert cell to drop-down
+            cell.ValueList = list;
         }
         
         private void btnOptionDel_Click(object sender, EventArgs e)
@@ -521,8 +527,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void gridBookings_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
-            if (!e.Layout.Bands[0].Columns.Exists("ServiceTimeID"))
-                e.Layout.Bands[0].Columns.Add("ServiceTimeID");
+            if (!e.Layout.Bands[0].Columns.Exists("ServiceTime"))
+                e.Layout.Bands[0].Columns.Add("ServiceTime");
 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
@@ -546,13 +552,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellClickAction = CellClickAction.Edit;
                     c.TabStop = true;
                 }
-                else if (c.Key == "ServiceTimeID")
+                else if (c.Key == "ServiceTime")
                 {
                     c.Width = 100;
-                    c.DataType = typeof(int);
+                    c.MaskInput = "{time}";
+                    c.DataType = typeof(DateTime);
                     c.Header.Caption = "Time";
-                    c.Header.ToolTipText = "Booking times";
-                    c.Style = ColumnStyle.DropDownList;
+                    c.Header.ToolTipText = "Booking time";
+                    c.Style = ColumnStyle.TimeWithSpin;
                     c.ButtonDisplayStyle = ButtonDisplayStyle.Always;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
@@ -587,7 +594,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             int pos = 0;
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = pos++;
             e.Layout.Bands[0].Columns["StartDate"].Header.VisiblePosition = pos++;
-            e.Layout.Bands[0].Columns["ServiceTimeID"].Header.VisiblePosition = pos++;
+            e.Layout.Bands[0].Columns["ServiceTime"].Header.VisiblePosition = pos++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = pos++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = pos;
 
@@ -602,33 +609,46 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void gridBookings_AfterCellListCloseUp(object sender, CellEventArgs e)
         {
-            if (e.Cell.Column.Key == "ServiceTimeID") 
+            if (e.Cell.Column.Key == "ServiceTime") 
             {
-                int i;
-                if (e.Cell.Value != null && int.TryParse(e.Cell.Value.ToString(), out i))
+                DateTime d;
+                if (e.Cell.Value != null && DateTime.TryParse(e.Cell.Value.ToString(), out d))
                     e.Cell.Row.Update(); // fire immediate edit
             }
         }
 
         private void gridBookings_AfterCellUpdate(object sender, CellEventArgs e)
         {
-            if (e.Cell.Column.Key == "ServiceTimeID")
+            if (e.Cell.Column.Key == "ServiceTime")
             {
-                int id;
-                DateTime? start = null;
-                DateTime? end = null;
-
-                if (e.Cell.Value != null && int.TryParse(e.Cell.Value.ToString(), out id))
+                switch (e.Cell.Style)
                 {
-                    var time = supplierSet.ServiceTime.Where(s => s.ServiceTimeID == id).First();
-                    if (time != null)
-                    {
-                        if (!time.IsStartTimeNull()) start = time.StartTime;
-                        if (!time.IsEndTimeNull()) end = time.EndTime;
-                    }
+                    case ColumnStyle.Default://.DateTimeWithSpin:
+                        e.Cell.Row.Cells["StartTime"].Value = e.Cell.Value;
+                        break;
+                    case ColumnStyle.DropDownList:
+                        {
+                            DateTime time;
+                            DateTime? start = null;
+                            DateTime? end = null;
+
+                            if (e.Cell.Value != null && DateTime.TryParse(e.Cell.Value.ToString(), out time))
+                            {
+                                var id = (int) e.Cell.Row.Cells["OptionID"].Value;
+                                var row = supplierSet.Option.FindByOptionID(id).RateRow.ServiceRow.
+                                    GetServiceTimeRows().Where(t => t.StartTime == time).First();
+
+                                if (row != null)
+                                {
+                                    if (!row.IsStartTimeNull()) start = row.StartTime;
+                                    if (!row.IsEndTimeNull()) end = row.EndTime;
+                                }
+                            }
+                            e.Cell.Row.Cells["StartTime"].Value = start.HasValue ? (object) start : DBNull.Value;
+                            e.Cell.Row.Cells["EndTime"].Value = end.HasValue ? (object) end : DBNull.Value;
+                        }
+                        break;
                 }
-                e.Cell.Row.Cells["StartTime"].Value = start.HasValue ? (object)start : DBNull.Value;
-                e.Cell.Row.Cells["EndTime"].Value = end.HasValue ? (object)end : DBNull.Value;
             }
         }
 
