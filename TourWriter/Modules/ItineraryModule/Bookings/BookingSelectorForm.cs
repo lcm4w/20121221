@@ -47,26 +47,38 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             AcceptButton = btnNext;
             CancelButton = btnCancel;
-            btnOk.Enabled = tempItinerarySet.PurchaseItem.Count > 0;
+            btnOk.Enabled = gridBookings.Rows.Count > 0;
+            chkIncrementDates.Checked = true;
         }
 
         private DateTime GetNextDefaultDate()
         {
-            // get from visible grid
-            if (gridBookings.Rows.Count > 0)
+            // get from grid rows
+            if (gridBookings.Rows.Count > 0 && gridBookings.Rows[gridBookings.Rows.Count - 1].Cells["StartDate"].Value != DBNull.Value)
             {
-                DateTime date = DateTime.MinValue;
-                if (DateTime.TryParse(
-                    gridBookings.Rows[gridBookings.Rows.Count - 1].Cells["StartDate"].Value.ToString(), out date))
+                var date = (DateTime)gridBookings.Rows[gridBookings.Rows.Count - 1].Cells["StartDate"].Value;
+                if (chkIncrementDates.Checked)
                 {
-                    var delta = chkIncrementDates.Checked ? 1 : 0;
+                    var delta = 1;
+                    if (gridBookings.Rows[gridBookings.Rows.Count - 1].Cells["NumberOfDays"].Value != DBNull.Value)
+                        delta = Convert.ToInt32(gridBookings.Rows[gridBookings.Rows.Count - 1].Cells["NumberOfDays"].Value);
                     return date.AddDays(delta);
                 }
+                return date;
             }
-            var items = itinerarySet.PurchaseItem.Where(
-                i => i.RowState != DataRowState.Deleted && !i.IsStartDateNull());
-            return items.Count() > 0 ? 
-                items.Max(i => i.StartDate).AddDays(1).Date : itinerarySet.Itinerary[0].ArriveDate.Date;
+            // no rows yet, get from underlying itinerary
+            var items = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && !i.IsStartDateNull());
+            if (items.Count() > 0)
+            {
+                var date = items.Max(i => i.StartDate);
+                if (chkIncrementDates.Checked)
+                {
+                    var delta = items.Where(i => i.StartDate == date).Max(i => i.NumberOfDays);
+                    return date.AddDays(delta);
+                }
+                return date;
+            }
+            return itinerarySet.Itinerary[0].ArriveDate.Date;
         }
 
         public void LoadSupplier(int supplierId, int? serviceId, int? optionId)
@@ -236,7 +248,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (tempItinerarySet.PurchaseItem[i].OptionID == optionId)
                     tempItinerarySet.PurchaseItem[i].Delete();
             }
-            btnOk.Enabled = tempItinerarySet.PurchaseItem.Count > 0;
+            btnOk.Enabled = gridBookings.Rows.Count > 0;
         }
 
         private void PopulateBookingsList(int supplierId)
