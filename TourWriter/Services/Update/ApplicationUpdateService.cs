@@ -77,7 +77,7 @@ namespace TourWriter.Services.Update
                 if (isValid)
                 {
                     var updateVersion = new Version(updateInfo.FileVersion);
-                    var currentVersion = new Version(new AssemblyInfo().VersionFull);
+                    var currentVersion = new Version(AssemblyInfo.FileVersion);
 
                     isValid = updateVersion > currentVersion;
                 }

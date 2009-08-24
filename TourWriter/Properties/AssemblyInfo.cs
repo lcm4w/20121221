@@ -47,33 +47,18 @@ using System.Reflection;
 public class AssemblyInfo
 {
 	// Used by Helper functions to access information from Assembly Attributes
-	private System.Type myType; 
+	private System.Type appType; 
 
 	public AssemblyInfo()
 	{
-		myType = typeof(TourWriter.Forms.MainForm);
+	    appType = typeof (TourWriter.Forms.MainForm);
 	}
 
-
-	public string AsmName
-	{
-		get
-		{
-			return myType.Assembly.GetName().Name;
-		}
-	}
-	public string AsmFQName
-	{
-		get
-		{
-			return myType.Assembly.GetName().FullName;
-		}
-	}
 	public string CodeBase
 	{
 		get
 		{
-			return myType.Assembly.CodeBase;
+			return appType.Assembly.CodeBase;
 		}
 	}
 
@@ -82,7 +67,7 @@ public class AssemblyInfo
 		get
 		{			
 			System.Type aType = typeof(AssemblyCopyrightAttribute);
-			System.Object[] array = myType.Assembly.GetCustomAttributes(aType, false);
+			System.Object[] array = appType.Assembly.GetCustomAttributes(aType, false);
 			AssemblyCopyrightAttribute atrib = array[0] as AssemblyCopyrightAttribute;
 			return atrib.Copyright;
 		}
@@ -93,7 +78,7 @@ public class AssemblyInfo
 		get
 		{			
 			System.Type aType = typeof(AssemblyCompanyAttribute);
-			System.Object[] array = myType.Assembly.GetCustomAttributes(aType, false);
+			System.Object[] array = appType.Assembly.GetCustomAttributes(aType, false);
 			AssemblyCompanyAttribute atrib = array[0] as AssemblyCompanyAttribute;
 			return atrib.Company;
 		}
@@ -104,7 +89,7 @@ public class AssemblyInfo
 		get
 		{			
 			System.Type aType = typeof(AssemblyDescriptionAttribute);
-			System.Object[] array = myType.Assembly.GetCustomAttributes(aType, false);
+			System.Object[] array = appType.Assembly.GetCustomAttributes(aType, false);
 			AssemblyDescriptionAttribute atrib = array[0] as AssemblyDescriptionAttribute;
 			return atrib.Description;
 		}
@@ -115,7 +100,7 @@ public class AssemblyInfo
 		get
 		{			
 			System.Type aType = typeof(AssemblyProductAttribute);
-			System.Object[] array = myType.Assembly.GetCustomAttributes(aType, false);
+			System.Object[] array = appType.Assembly.GetCustomAttributes(aType, false);
 			AssemblyProductAttribute atrib = array[0] as AssemblyProductAttribute;
 			return atrib.Product;
 		}
@@ -126,49 +111,33 @@ public class AssemblyInfo
 		get
 		{			
 			System.Type aType = typeof(AssemblyTitleAttribute);
-			System.Object[] array = myType.Assembly.GetCustomAttributes(aType, false);
+			System.Object[] array = appType.Assembly.GetCustomAttributes(aType, false);
 			AssemblyTitleAttribute atrib = array[0] as AssemblyTitleAttribute;
 			return atrib.Title;
 		}
 	}
 
+    public static string FileVersion
+    {
+        get
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if (assembly.Location == null) return "0";
+            var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            return string.Format("{0}.{1}.{2}.{3}", 
+                fvi.FileMajorPart, fvi.FileMinorPart, fvi.FileBuildPart, fvi.FilePrivatePart);
+        }
+    }
 
-	public string VersionFull
-	{
-		get
-		{
-            return myType.Assembly.GetName().Version.ToString();
-		}
-	}
-	
-	public string VersionMajor
-	{
-		get
-		{			
-			return myType.Assembly.GetName().Version.Major.ToString();
-		}
-	}
-	public string VersionMinor
-	{
-		get
-		{			
-			return myType.Assembly.GetName().Version.Minor.ToString();
-		}
-	}
-	public string VersionBuild
-	{
-		get
-		{			
-			return myType.Assembly.GetName().Version.Build.ToString();
-		}
-	}
-	
-	public string VersionRevision
-	{
-		get
-		{			
-			return myType.Assembly.GetName().Version.Revision.ToString();
-		}
-	}
+    public static string InformationalVersion
+    {
+        get
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if (assembly.Location == null) return "0";
+            var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.ProductVersion;
+        }
+    }
 }
 #endregion

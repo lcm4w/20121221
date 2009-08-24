@@ -31,7 +31,7 @@ namespace TourWriter
         protected override void OnCreateSplashScreen()
         {
             SplashScreen splash = new SplashScreen();
-            splash.VersionText = "Version: " + new AssemblyInfo().VersionFull;
+            splash.VersionText = "Version: " + AssemblyInfo.FileVersion;
 
             SplashScreen = splash;
             

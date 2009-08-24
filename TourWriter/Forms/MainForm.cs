@@ -62,9 +62,8 @@ namespace TourWriter.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             // set version display text
-            AssemblyInfo ai = new AssemblyInfo();
-            StatusBar_VersionText = "Version " + String.Format(
-                "{0}.{1}.{2} ", ai.VersionMajor, ai.VersionMinor, ai.VersionBuild);
+            var s = AssemblyInfo.FileVersion; 
+            StatusBar_VersionText = "Version " + s.Substring(0, s.LastIndexOf('.'));
         }
 
         private void MainForm_Shown(object sender, EventArgs e)

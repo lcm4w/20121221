@@ -11,7 +11,7 @@ using System.Reflection;
 //------------------------------------------------------------------------------
 //
 [assembly: AssemblyProduct("TourWriter")]
-[assembly: AssemblyCopyright("Copyright (c) 2009")]
-[assembly: AssemblyVersion("0")]
-[assembly: AssemblyFileVersion("")]
-[assembly: AssemblyInformationalVersion("Development version")]
+[assembly: AssemblyCopyright("Copyright (c)")]
+[assembly: AssemblyVersion("9999.0")]
+[assembly: AssemblyFileVersion("9999.0.0.0")]
+[assembly: AssemblyInformationalVersion("9999.0.0.0 (DEV build)")]

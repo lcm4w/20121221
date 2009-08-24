@@ -351,7 +351,7 @@ namespace TourWriter.Forms
         {
             get
             {
-                var currentVersion = new Version(new AssemblyInfo().VersionFull);
+                var currentVersion = new Version(AssemblyInfo.FileVersion);
                 return currentVersion < updateReponse.Version;
             }
         }
@@ -360,7 +360,7 @@ namespace TourWriter.Forms
         {
             get
             {
-                var currentVersion = new Version(new AssemblyInfo().VersionFull);
+                var currentVersion = new Version(AssemblyInfo.FileVersion);
                 if (currentVersion < new Version(MinUpdateableVersion))
                 {
                     updateReponse.Uri = new Uri(updateReponse.Uri.AbsoluteUri.Replace("-update.exe", "-setup.exe"));
@@ -383,7 +383,7 @@ namespace TourWriter.Forms
                 if (localFile.FileVersion != null)
                 {
                     var localVersion = new Version(localFile.FileVersion);
-                    var currentVersion = new Version(new AssemblyInfo().VersionFull);
+                    var currentVersion = new Version(AssemblyInfo.FileVersion);
                     validLocalUpdate =
                         localVersion > currentVersion &&
                         localVersion == updateResponse.Version &&
@@ -450,7 +450,7 @@ namespace TourWriter.Forms
                             <act>{10}</act>
                         </req>".Replace(Environment.NewLine, "").Replace(" ", ""),
                     Info.VersionInfo.GetInstallId(),
-                    new AssemblyInfo().VersionFull,
+                    AssemblyInfo.FileVersion,
                     Cache.ToolSet.AppSettings[0].VersionNumber,
                     Environment.OSVersion.Version,
                     App.GetDotNetVersion(),

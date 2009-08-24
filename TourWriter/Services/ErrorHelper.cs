@@ -184,7 +184,7 @@ namespace TourWriter.Services
                 }
                 try
                 {
-                    appVersion = new AssemblyInfo().VersionFull;
+                    appVersion = AssemblyInfo.FileVersion;
                 }
                 catch
                 {

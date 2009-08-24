@@ -50,8 +50,7 @@ namespace TourWriter.Forms
 
         private void ServerManager_Load(object sender, EventArgs e)
         {
-            AssemblyInfo info = new AssemblyInfo();
-            lblVersion.Text = "TourWriter version: " + info.VersionFull;
+            lblVersion.Text = "TourWriter version: " + AssemblyInfo.FileVersion;
             txtServer.Select();
         }
 

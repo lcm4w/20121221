@@ -265,11 +265,10 @@ namespace TourWriter.Forms
 
 			try
 			{
-				AssemblyInfo ai = new AssemblyInfo();
+				var ai = new AssemblyInfo();
 
 				lblTitle.Text = ai.Title;
-				lblAppVersion.Text = String.Format("{0}.{1}.{2}.{3}", 
-                    ai.VersionMajor, ai.VersionMinor, ai.VersionBuild, ai.VersionRevision);
+                lblAppVersion.Text = AssemblyInfo.InformationalVersion;
 			    lblDbVersion.Text = Cache.ToolSet.AppSettings[0].VersionNumber;
                 lblOsVersion.Text = Environment.OSVersion.VersionString;
 			    lblDotNetVersion.Text = App.GetDotNetVersion().ToString();
