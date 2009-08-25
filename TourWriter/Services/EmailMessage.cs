@@ -178,13 +178,13 @@ namespace TourWriter.Services
 	    private void FillStandardFieldsFromCustomFields()
 	    {
 	        if(!String.IsNullOrEmpty(_To))
-	            To.Add(_To);
+	            To.Add(_To.Replace(';',','));
 	        
 	        if (!String.IsNullOrEmpty(_Cc))
-	            CC.Add(_Cc);
+	            CC.Add(_Cc.Replace(';',','));
 	        
 	        if (!String.IsNullOrEmpty(_Bcc))
-	            Bcc.Add(_Bcc);
+	            Bcc.Add(_Bcc.Replace(';',','));
 
 	        if (!String.IsNullOrEmpty(_From))
 	            From = new MailAddress(_From);
