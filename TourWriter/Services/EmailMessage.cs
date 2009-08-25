@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Text;
 using TourWriter.Info;
 
 namespace TourWriter.Services
@@ -46,7 +47,7 @@ namespace TourWriter.Services
         /// <returns>True if the email was successfully sent.</returns></returns>
         public bool Send()
         {
-            ToolSet.AppSettingsRow settings = TourWriter.Global.Cache.ToolSet.AppSettings[0];
+            ToolSet.AppSettingsRow settings = Global.Cache.ToolSet.AppSettings[0];
 
             if (string.IsNullOrEmpty(settings.SmtpServerName))
                 throw new ApplicationException("Email server name not found, email server settings may not have been entered.");
@@ -65,25 +66,33 @@ namespace TourWriter.Services
         /// <returns>True if the email was successfully sent.</returns>
         public bool Send(string host, int port, bool enableSsl, string username, string password)
         {
-            if (IsBodyHtml)
-                EmbedImages();
-
             FillStandardFieldsFromCustomFields();
 
-            SmtpClient smtpClient = new SmtpClient();
-            smtpClient.Host = host;
-            smtpClient.Port = port;
-            smtpClient.EnableSsl = enableSsl;
-            smtpClient.Credentials = new System.Net.NetworkCredential(username, password);
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            // FIX: replace body text as an AlternativeView to control transfer encoding, otherwise defaults to
+            // 'quoted-printable' which is fragile and causes problems on some servers/clients.
+            var body = Body;
+            Body = null;
+            var linkedResources = GetLinkedResources(ref body);
+            var htmlPart = AlternateView.CreateAlternateViewFromString(body, Encoding.GetEncoding("iso-8859-1"), "text/html");
+            htmlPart.TransferEncoding = TransferEncoding.SevenBit;
+            AlternateViews.Add(htmlPart);
+            foreach (var res in linkedResources)
+                htmlPart.LinkedResources.Add(res);
+            BodyEncoding = Encoding.GetEncoding("iso-8859-1");
 
+            var smtpClient = new SmtpClient
+                                 {
+                                     Host = host,
+                                     Port = port,
+                                     EnableSsl = enableSsl,
+                                     Credentials = new System.Net.NetworkCredential(username, password),
+                                     DeliveryMethod = SmtpDeliveryMethod.Network
+                                 };
             try
             {
                 smtpClient.Send(this);
-
                 _Status = StatusType.Sent;
                 _ErrorMsg = "";
-
                 return true;
             }
             catch (Exception ex)
@@ -110,10 +119,12 @@ namespace TourWriter.Services
         public string SaveToDisk(string saveToPath)
         {
             Directory.CreateDirectory(saveToPath);
-            SmtpClient saveClient = new SmtpClient();
-            saveClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-            saveClient.PickupDirectoryLocation = saveToPath;
-            saveClient.SendAsync(this, "token?");
+            var saveClient = new SmtpClient
+                                 {
+                                     DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
+                                     PickupDirectoryLocation = saveToPath
+                                 };
+	        saveClient.SendAsync(this, "token?");
 
             saveToPath = GetLatestFileEntryName(saveToPath);
             
@@ -166,7 +177,7 @@ namespace TourWriter.Services
         /// <param name="fileName">The attachment name.</param>
 	    public void AddAttachment(byte[] bytes, string fileName)
 	    {
-            MemoryStream ms = new MemoryStream(bytes);
+            var ms = new MemoryStream(bytes);
 	        ms.Seek(0, SeekOrigin.Begin);
 	        Attachments.Add(new Attachment(ms, fileName));
 	        // Don't close, you get send error //ms.Close();
@@ -202,51 +213,53 @@ namespace TourWriter.Services
         }
 
         /// <summary>
-        /// Searches for html img tags and attaches images where the image location is a local file path.
-        /// Then the local image location is replaced with a content id pointing to the newly attached image.
+        /// Replace img tags in a html string with content id and create related content resources list.
         /// </summary>
-        private void EmbedImages()
+        /// <param name="html">Html string, returned updated as 'ref'</param>
+        /// <returns>List of linked resources, and updated html string in 'ref' param.</returns>
+        private static List<LinkedResource> GetLinkedResources(ref string html)
         {
-            string tempBody = Body;
-            List<LinkedResource> linkedResources = new List<LinkedResource>();
+            var temp = html;
+            var linkedResources = new List<LinkedResource>();
 
-            int searchStart = 0;
+            var searchStart = 0;
             while (true)
             {
-                int indexOfImgTagOpen = tempBody.IndexOf("<img", searchStart, StringComparison.CurrentCultureIgnoreCase);
+                var indexOfImgTagOpen = temp.IndexOf("<img", searchStart, StringComparison.CurrentCultureIgnoreCase);
                 if (indexOfImgTagOpen == -1)
                     break; // no more img tags
 
                 searchStart = indexOfImgTagOpen + 4;
-                if (searchStart >= tempBody.Length)
+                if (searchStart >= temp.Length)
                     break; // end of string
 
-                int indexOfImgTagClose = tempBody.IndexOf(">", indexOfImgTagOpen);
+                var indexOfImgTagClose = temp.IndexOf(">", indexOfImgTagOpen);
                 if (indexOfImgTagClose == -1)
                     continue;
 
-                string imgTag = tempBody.Substring(indexOfImgTagOpen, (indexOfImgTagClose - indexOfImgTagOpen) + 1);
-                string imageLocation = GetImageLocationFromTag(imgTag);
+                var imgTag = temp.Substring(indexOfImgTagOpen, (indexOfImgTagClose - indexOfImgTagOpen) + 1);
+                var imageLocation = GetImageLocationFromTag(imgTag);
 
                 // only attach image if the location is NOT a web url
                 if (imageLocation != null && !Uri.IsWellFormedUriString(imageLocation, UriKind.Absolute))
                 {
                     try
                     {
-                        if (Body.IndexOf(imageLocation) == -1)
+                        if (html.IndexOf(imageLocation) == -1)
                             continue; // the image has already been attached
 
-                        LinkedResource resource = new LinkedResource(imageLocation);
-                        resource.ContentType.Name = Path.GetFileName(imageLocation);
-                        resource.ContentId = Guid.NewGuid().ToString("N");
+                        var resource = new LinkedResource(imageLocation)
+                                           {
+                                               ContentType = {Name = Path.GetFileName(imageLocation)},
+                                               ContentId = Guid.NewGuid().ToString("N")
+                                           };
                         linkedResources.Add(resource);
 
-                        Body = Body.Replace(imageLocation, "cid:" + resource.ContentId);
+                        html = html.Replace(imageLocation, "cid:" + resource.ContentId);
                     }
                     catch (Exception ex)
                     {
-                        if (ex is FileNotFoundException ||
-                            ex is DirectoryNotFoundException)
+                        if (ex is FileNotFoundException || ex is DirectoryNotFoundException)
                         {
                             // ignore file/directory not found errors
                         }
@@ -257,13 +270,7 @@ namespace TourWriter.Services
                     }
                 }
             }
-
-            AlternateView altView = AlternateView.CreateAlternateViewFromString(Body, null, MediaTypeNames.Text.Html);
-            foreach (LinkedResource res in linkedResources)
-            {
-                altView.LinkedResources.Add(res);
-            }
-            AlternateViews.Add(altView);
+            return linkedResources;
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using TourWriter.Global;
@@ -76,15 +77,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             emailMessage._From = templateSettings.From;
             emailMessage._Bcc = templateSettings.Bcc;
             emailMessage.Subject = templateSettings.Subject;
-            //emailMessage.BodyEncoding = Encoding.UTF8; // TODO: removed as seems SC-to-Custom Transfers does not decode from UTF-8
             emailMessage.IsBodyHtml = true;
             emailMessage.Body = BuildEmailBody(templateSettings.Body);
             emailMessage._Tag = this;
             emailMessage._SaveWhenSent = templateSettings.SaveToFile;
 
             // add alternate text view
-            emailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(
-                HtmlToPlainText(emailMessage.Body), new System.Net.Mime.ContentType("text/plain")));
+            var textPart = AlternateView.CreateAlternateViewFromString(
+                HtmlToPlainText(emailMessage.Body), Encoding.GetEncoding("iso-8859-1"), "text/plain");
+            textPart.TransferEncoding = TransferEncoding.SevenBit;
+            emailMessage.AlternateViews.Add(textPart);
             
             // add read receipt
             if (templateSettings.ReadReceipt)
