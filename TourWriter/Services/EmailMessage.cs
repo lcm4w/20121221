@@ -248,25 +248,15 @@ namespace TourWriter.Services
                         if (html.IndexOf(imageLocation) == -1)
                             continue; // the image has already been attached
 
-                        var resource = new LinkedResource(imageLocation)
-                                           {
-                                               ContentType = {Name = Path.GetFileName(imageLocation)},
-                                               ContentId = Guid.NewGuid().ToString("N")
-                                           };
+                        var stream = new System.Net.WebClient().OpenRead(imageLocation);
+                        var resource = new LinkedResource(stream) { ContentId = Guid.NewGuid().ToString("N") };
                         linkedResources.Add(resource);
-
                         html = html.Replace(imageLocation, "cid:" + resource.ContentId);
                     }
                     catch (Exception ex)
                     {
-                        if (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-                        {
-                            // ignore file/directory not found errors
-                        }
-                        else
-                        {
-                            throw;
-                        }
+                        // ignore file/directory not found errors
+                        if (!(ex is FileNotFoundException || ex is DirectoryNotFoundException)) throw;
                     }
                 }
             }
