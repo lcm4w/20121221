@@ -512,6 +512,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (list.ValueListItems.Count <= 1) return;
             cell.Style = ColumnStyle.DropDownList; // convert cell to drop-down
             cell.ValueList = list;
+
+            cell.Value = list.ValueListItems[1].DataValue;
+            cell.Row.Update();
         }
         
         private void btnOptionDel_Click(object sender, EventArgs e)
@@ -635,7 +638,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 switch (e.Cell.Style)
                 {
-                    case ColumnStyle.Default://.DateTimeWithSpin:
+                    case ColumnStyle.Default:
                         e.Cell.Row.Cells["StartTime"].Value = e.Cell.Value;
                         break;
                     case ColumnStyle.DropDownList:
@@ -646,6 +649,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                             if (e.Cell.Value != null && DateTime.TryParse(e.Cell.Value.ToString(), out time))
                             {
+                                // find service time record that matches selected start time value
                                 var id = (int) e.Cell.Row.Cells["OptionID"].Value;
                                 var row = supplierSet.Option.FindByOptionID(id).RateRow.ServiceRow.
                                     GetServiceTimeRows().Where(t => t.StartTime == time).First();
