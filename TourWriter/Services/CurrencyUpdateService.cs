@@ -107,7 +107,7 @@ namespace TourWriter.Services
             var reg = Regex.Match(response, @"[0-9]+\.[0-9]+(?=<\/double>)");
 
             double result;
-            if (double.TryParse(reg.Value, out result))
+            if (double.TryParse(reg.Value, NumberStyles.Any, CultureInfo.CreateSpecificCulture("en-US"), out result))
                 return result;
 
             return 0;

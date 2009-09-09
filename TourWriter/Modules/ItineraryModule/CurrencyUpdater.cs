@@ -12,6 +12,7 @@ namespace TourWriter.Modules.ItineraryModule
 {
     public partial class CurrencyUpdater : Form
     {
+        private readonly string _localCurrencyCode;
         private readonly ItinerarySet itinerarySet;
         private readonly DataTable purchaseItemTable;
 
@@ -23,8 +24,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
 
-            string currencyCode = CurrencyUpdateService.GetLocalCurrencyCode();
-            purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", currencyCode);
+            _localCurrencyCode = CurrencyUpdateService.GetLocalCurrencyCode();
+            lblLocalCurrency.Text += _localCurrencyCode;
+            purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", _localCurrencyCode);
             
             gridBookings.DataSource = purchaseItemTable.DefaultView;
         }
@@ -40,7 +42,7 @@ namespace TourWriter.Modules.ItineraryModule
                 var currency = new CurrencyUpdateService.Currency();
                 currency.Key = row;
                 currency.FromCurrency = row.Cells["CurrencyCode"].Value.ToString();
-                currency.ToCurrency = CurrencyUpdateService.GetLocalCurrencyCode();
+                currency.ToCurrency = _localCurrencyCode;
                 currencyList.Add(currency);
             }
 
@@ -60,7 +62,6 @@ namespace TourWriter.Modules.ItineraryModule
 
                 decimal value = Convert.ToDecimal(txtRateAdjustment.Value);
                 decimal adjustment = 1 + ((value != 0) ? value / 100 : 0);
-
                 row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * adjustment, 4);
 
                 if (String.IsNullOrEmpty(currency.ErrorMessage))
@@ -188,10 +189,10 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     c.Width = 80;
                     c.Header.Caption = "New rate";
-                    c.DataType = typeof (Decimal);
+                    c.DataType = typeof(Decimal);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.AllowEdit;
-                    c.CellClickAction = CellClickAction.Edit;
+                    c.CellClickAction = CellClickAction.Edit; 
                 }
                 else
                 {

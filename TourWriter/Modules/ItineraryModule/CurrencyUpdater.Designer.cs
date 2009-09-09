@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             Infragistics.Win.Appearance appearance1 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance2 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance3 = new Infragistics.Win.Appearance();
@@ -46,6 +47,8 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.txtRateAdjustment = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblLocalCurrency = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
@@ -111,7 +114,7 @@
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridBookings.Location = new System.Drawing.Point(12, 12);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(496, 272);
+            this.gridBookings.Size = new System.Drawing.Size(498, 243);
             this.gridBookings.TabIndex = 10;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -123,7 +126,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(433, 290);
+            this.btnCancel.Location = new System.Drawing.Point(435, 305);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 9;
@@ -134,7 +137,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(352, 290);
+            this.btnOk.Location = new System.Drawing.Point(354, 305);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 8;
@@ -145,35 +148,49 @@
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(271, 290);
+            this.btnUpdate.Location = new System.Drawing.Point(435, 261);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 11;
-            this.btnUpdate.Text = "Update";
+            this.btnUpdate.Text = "Load";
+            this.toolTip1.SetToolTip(this.btnUpdate, "Get latest exchange rates");
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // txtRateAdjustment
             // 
-            this.txtRateAdjustment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtRateAdjustment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.txtRateAdjustment.FormatString = "##0\\.00%";
-            this.txtRateAdjustment.Location = new System.Drawing.Point(119, 291);
+            this.txtRateAdjustment.Location = new System.Drawing.Point(355, 262);
             this.txtRateAdjustment.MaskInput = "-nnn.nn %";
             this.txtRateAdjustment.Name = "txtRateAdjustment";
             this.txtRateAdjustment.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtRateAdjustment.PromptChar = ' ';
             this.txtRateAdjustment.Size = new System.Drawing.Size(60, 21);
             this.txtRateAdjustment.TabIndex = 12;
+            this.toolTip1.SetToolTip(this.txtRateAdjustment, "Example: enter 5 to add a 5% buffer to the default exchange rate");
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 295);
+            this.label1.Location = new System.Drawing.Point(295, 266);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 13);
+            this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Adjust currency rate";
+            this.label1.Text = "Adjustment";
+            this.toolTip1.SetToolTip(this.label1, "Example: enter 5 to add a 5% buffer to the default exchange rate");
+            // 
+            // lblLocalCurrency
+            // 
+            this.lblLocalCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblLocalCurrency.AutoSize = true;
+            this.lblLocalCurrency.Location = new System.Drawing.Point(12, 266);
+            this.lblLocalCurrency.Name = "lblLocalCurrency";
+            this.lblLocalCurrency.Size = new System.Drawing.Size(79, 13);
+            this.lblLocalCurrency.TabIndex = 14;
+            this.lblLocalCurrency.Text = "Your currency: ";
+            this.toolTip1.SetToolTip(this.lblLocalCurrency, "You local currency code");
             // 
             // CurrencyUpdater
             // 
@@ -181,7 +198,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(520, 325);
+            this.ClientSize = new System.Drawing.Size(522, 340);
+            this.Controls.Add(this.lblLocalCurrency);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtRateAdjustment);
             this.Controls.Add(this.btnUpdate);
@@ -208,5 +226,7 @@
         private System.Windows.Forms.Button btnUpdate;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtRateAdjustment;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label lblLocalCurrency;
     }
 }
