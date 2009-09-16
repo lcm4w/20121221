@@ -1,6 +1,10 @@
 using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Net.Mail;
 using System.Threading;
+using System.Windows.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Utilities.Xml;
@@ -162,58 +166,45 @@ namespace TourWriter.Services
             {
                 // Set some default values.
                 const string emailTo = "app@tourwriter.com";
-                string emailFrom = "client.app@tourwriter.com";
-                string installId = "[failed to load]";
-                string appVersion = "[failed to load]";
-                string dbVersion = "[failed to load]";
-                string connection = "[failed to load]";
+                string emailFrom;
+                string installId;
+                string appVersion;
+                string dbVersion;
+                string connection;
 
-                try
-                {
-                    emailFrom = Cache.User.Email;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    installId = Cache.ToolSet.AppSettings[0].InstallID.ToString();
-                }
-                catch
-                {
-                }
-                try
-                {
-                    appVersion = AssemblyInfo.FileVersion;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    dbVersion = Cache.ToolSet.AppSettings[0].VersionNumber;
-                }
-                catch
-                {
-                }
-                try
-                {
-                    connection = String.Format("{0}\\{1}", App.Servername, Cache.User.UserName);
-                }
-                catch
-                {
-                }
+                try { emailFrom = Cache.User.Email; }
+                catch { emailFrom = "client.app@tourwriter.com"; }
+                try { installId = Cache.ToolSet.AppSettings[0].InstallID.ToString(); }
+                catch { installId = "[failed to load]";  }
+                try { appVersion = AssemblyInfo.FileVersion; }
+                catch { appVersion = "[failed to load]"; }
+                try { dbVersion = Cache.ToolSet.AppSettings[0].VersionNumber; }
+                catch { dbVersion = "[failed to load]"; }
+                try { connection = String.Format("{0}\\{1}", App.Servername, Cache.User.UserName); }
+                catch { connection = "[failed to load]"; }
 
                 var errorMsg = new ErrorMessage
                                    {
-                                       Type = ("ClientApp" + (isSilentError ? ".Silent" : "")),
+                                       // tourwriter
+                                       ErrorType = ("ClientApp" + (isSilentError ? ".Silent" : "")),
+                                       TimeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"),
+                                       UtcTime = DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm:ss"),
                                        InstallId = installId,
                                        AppVersion = appVersion,
                                        DbVersion = dbVersion,
+                                       Connection = connection,
+
+                                       // system
+                                       ApplicationName = Application.ProductName,
+                                       ComputerName = SystemInformation.ComputerName,
+                                       UserName = SystemInformation.UserName,
                                        OsVersion = Environment.OSVersion.VersionString,
                                        NetVersion = App.GetDotNetVersion().ToString(),
-                                       UserConnection = connection,
-                                       TimeStamp = DateTime.UtcNow.ToString(),
+                                       Culture = CultureInfo.CurrentCulture.Name,
+                                       Resolution = SystemInformation.PrimaryMonitorSize.ToString(),
+                                       ApplicationUpTime = (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString(),
+
+                                       // message
                                        Message = message,
                                        Detail = detail
                                    };
@@ -233,9 +224,8 @@ namespace TourWriter.Services
 
                 emailMsg.Send();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                var e = ex;
                 if (!isSilentError)
                 {
                     App.ShowError(
@@ -244,6 +234,5 @@ namespace TourWriter.Services
                 }
             }
         }
-
     }
 }
