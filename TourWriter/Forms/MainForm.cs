@@ -340,6 +340,7 @@ namespace TourWriter.Forms
                     if (e.Button == MouseButtons.Left)
                     {
                         _dragBoxFromMouseDown = App.DragDrop_SetDragStartPosition(e.X, e.Y);
+                        node.BringIntoView();
                     }
                     // enable select node on right-click
                     else if (e.Button == MouseButtons.Right)
