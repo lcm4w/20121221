@@ -193,6 +193,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grid_KeyPress);
             this.grid.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_CellChange);
             this.grid.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.grid_DoubleClickRow);
+            this.grid.BeforeRowsDeleted += new Infragistics.Win.UltraWinGrid.BeforeRowsDeletedEventHandler(grid_BeforeRowsDeleted);
             // 
             // label3
             // 

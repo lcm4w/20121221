@@ -852,6 +852,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
+
         private void grid_KeyPress(object sender, KeyPressEventArgs e)
         {
             base.OnKeyPress(e);
@@ -905,33 +906,48 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 AddNewBooking(supplierId);
             }
         }
+        
+        private void grid_BeforeRowsDeleted(object sender, BeforeRowsDeletedEventArgs e)
+        {
+            e.DisplayPromptMsg = false;
+            if (!_isDeleteButtonPress)
+            {
+                // override grids default DEL key behaviour
+                e.Cancel = true;
+                btnDelete.PerformClick();
+            }
+        }
 
+        private bool _isDeleteButtonPress;
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (grid.ActiveRow == null || grid.ActiveRow.IsGroupByRow)
-                return;
+            if (grid.ActiveRow != null && grid.ActiveRow.IsGroupByRow) return;
 
-            if (grid.ActiveRow.ParentRow != null)
+            if (grid.ActiveRow != null && grid.ActiveRow.ParentRow != null)
                 grid.ActiveRow.ParentRow.Expanded = true;
 
+            _isDeleteButtonPress = true;
+            DeleteSelectedBookingRows();
+            _isDeleteButtonPress = false;
+        }
 
-            if (App.AskDeleteRow())
+        private void DeleteSelectedBookingRows()
+        {
+            if (grid.Selected.Rows.Count == 0 && grid.ActiveRow != null)
+                grid.ActiveRow.Selected = true;
+            var rows = grid.Selected.Rows;
+
+            var doDelete = rows.Count == 1 ? App.AskDeleteRow() : rows.Count > 1 ? App.AskDeleteRows(rows.Count) : false;
+            if (!doDelete) return;
+
+            for (var i = rows.Count-1; i >= 0; i--)
             {
-                // Remember the parent line id.
-                int lineId = (int)grid.ActiveRow.Cells["PurchaseLineID"].Value;
+                var id = (int)rows[i].Cells["PurchaseLineID"].Value;
+                var line = itinerarySet.PurchaseLine.FindByPurchaseLineID(id);
 
-                // Delete the item.
-                GridHelper.DeleteActiveRow(grid, true);
-
-                // Handle empty booking.
-                ItinerarySet.PurchaseLineRow line = itinerarySet.PurchaseLine.FindByPurchaseLineID(lineId);
-                if (line.GetPurchaseItemRows().Length == 0)
-                {
-                    if (App.AskYesNo("This booking is now empty, do you want to delete the empty booking?"))
-                    {
-                        line.Delete();
-                    }
-                }
+                rows[i].Delete(false);
+                if (line.GetPurchaseItemRows().Length == 0) 
+                    line.Delete();
             }
         }
 
