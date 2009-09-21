@@ -16,13 +16,15 @@ namespace TourWriter.Modules
     /// </summary>
     public class ModuleBase : Form
     {
+        protected bool _doLicenseCheck = true;
+
         private const string MethodAccessException =
             "Base class does not implement this method or operation.";
 
         protected string displayTypeName;
         private UltraLabel ultraLabel1;
         private UltraLabel ultraLabel2;
-        private readonly Container components = null;
+        private readonly Container components;
         private MainForm MainForm
         {
             get { return MdiParent as MainForm; }
@@ -62,10 +64,8 @@ namespace TourWriter.Modules
 
         private void ModuleBase_Load(object sender, EventArgs e)
         {
-            if (!DesignMode)
-            {
+            if (_doLicenseCheck && !DesignMode)
                 Services.LicenseService.CheckLicense();
-            }
         }
 
         private void ModuleBase_Shown(object sender, EventArgs e)
