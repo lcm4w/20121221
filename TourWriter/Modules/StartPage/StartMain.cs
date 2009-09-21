@@ -10,7 +10,8 @@ namespace TourWriter.Modules.StartPage
 
         public StartMain()
         {
-            Icon = TourWriter.Properties.Resources.TourWriter16;
+            _doLicenseCheck = false;
+            Icon = Properties.Resources.TourWriter16;
             InitializeComponent();
             menuStrip1.Visible = false;
             toolStrip1.Visible = false;

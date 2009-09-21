@@ -68,6 +68,7 @@ namespace TourWriter.Forms
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            Load_StartPage();
             Application.DoEvents();
             Login();
         }
@@ -86,7 +87,6 @@ namespace TourWriter.Forms
                 case DialogResult.OK:
                     {
                         ApplicationUpdateService.StartUpdateMonitor();
-                        Load_StartPage();
                         InitialiseMenu(ItineraryMenu);
                         InitialiseMenu(SupplierMenu);
                         InitialiseMenu(ContactMenu);
