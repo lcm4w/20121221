@@ -1055,6 +1055,10 @@ namespace TourWriter.Modules.SupplierModule
             // show/hide columns 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
+                if (c.Key == "StartTime")
+                {
+                    c.SortIndicator = SortIndicator.Ascending;
+                }
                 if (c.Key == "StartTime" || c.Key == "EndTime")
                 {
                     c.Header.Caption = "";

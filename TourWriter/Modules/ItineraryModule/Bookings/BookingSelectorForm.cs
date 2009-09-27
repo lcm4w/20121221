@@ -498,15 +498,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             else
             {   // create list
                 list = gridBookings.DisplayLayout.ValueLists.Add(key);
-                list.SortStyle = ValueListSortStyle.Ascending;
                 list.ValueListItems.Add(DBNull.Value, "(none)");
 
-                var times = supplierSet.Option.FindByOptionID(e.OptionID).RateRow.ServiceRow.GetServiceTimeRows();
+                var times = supplierSet.Option.FindByOptionID(e.OptionID).RateRow.ServiceRow.
+                    GetServiceTimeRows().Where(t => t.RowState != DataRowState.Deleted && !t.IsStartTimeNull()).OrderBy(t => t.StartTime);
+
                 foreach (var time in times)
                 {
-                    if (time.IsStartTimeNull()) continue;
-                    list.ValueListItems.Add(time.StartTime,
-                        time.StartTime.ToShortTimeString() + (!time.IsEndTimeNull() ? " (out: " + time.EndTime.ToShortTimeString() + ")" : ""));
+                    var text =
+                        time.StartTime.ToShortTimeString() +
+                        (!time.IsEndTimeNull() ? " (out: " + time.EndTime.ToShortTimeString() + ")" : "") +
+                        (!time.IsCommentNull() && !string.IsNullOrEmpty(time.Comment) ? ", " + time.Comment : "");
+                    list.ValueListItems.Add(time.StartTime, text);
                 }
             }
             if (list.ValueListItems.Count <= 1) return;
