@@ -1,3 +1,5 @@
+using Timer=System.Threading.Timer;
+
 namespace TourWriter.Modules.StartPage
 {
 	/// <summary>
@@ -5,8 +7,10 @@ namespace TourWriter.Modules.StartPage
 	/// </summary>
 	public partial class StartMain : ModuleBase
 	{
-        private const string tagText = "Start page";
-		private const string headerText = "Welome to TourWriter";
+        private Timer _timer;
+        private const int TimerPeriod = 30 * 60000; // 30 min
+        private const string TagText = "Start page";
+		private const string HeaderText = "Welome to TourWriter";
 
         public StartMain()
         {
@@ -20,18 +24,32 @@ namespace TourWriter.Modules.StartPage
         private void StartMain_Load(object sender, System.EventArgs e)
         {
             LoadUrl(Properties.Settings.Default.AppStartPageUri);
-            Text = headerText;
+            Text = HeaderText;
         }
 
         private void LoadUrl(string url)
         {
+            _timer = null;
             webBrowser1.Navigate(url);
+            StartRefreshTimer();
         }
-        
+
+        internal void StartRefreshTimer()
+        {
+            if (_timer == null) _timer = new Timer(RefreshTimerFired, null, TimerPeriod, TimerPeriod);
+        }
+
+        private void RefreshTimerFired(object state)
+        {
+            if (webBrowser1.IsDisposed) return;
+
+            if (!webBrowser1.Url.Equals("about:blank"))
+                webBrowser1.Refresh();
+        }
 
         protected override string GetDisplayName()
         {
-            return tagText;
+            return TagText;
         }
 
         protected override bool IsDataDirty()
@@ -39,17 +57,6 @@ namespace TourWriter.Modules.StartPage
             return false;
         }
 	    
-
-        private void webBrowser1_ProgressChanged(object sender, System.Windows.Forms.WebBrowserProgressChangedEventArgs e)
-        {
-            ProgressBar.Value = (int) (((double) e.CurrentProgress/e.MaximumProgress)*100);
-        }
-
-        private void webBrowser1_DocumentCompleted(object sender, System.Windows.Forms.WebBrowserDocumentCompletedEventArgs e)
-        {
-            ProgressBar.Value = ProgressBar.Minimum;
-        }
-
         private void menuClose_Click(object sender, System.EventArgs e)
         {
             Close();
@@ -59,6 +66,11 @@ namespace TourWriter.Modules.StartPage
         private void menuHelp_Click(object sender, System.EventArgs e)
         {
             App.ShowHelp();
+        }
+
+        private void StartMain_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        {
+            _timer.Dispose();
         }
 	}
 }

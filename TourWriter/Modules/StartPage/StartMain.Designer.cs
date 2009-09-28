@@ -57,8 +57,6 @@ namespace TourWriter.Modules.StartPage
             this.webBrowser1.Size = new System.Drawing.Size(465, 267);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.Url = new System.Uri("", System.UriKind.Relative);
-            this.webBrowser1.ProgressChanged += new System.Windows.Forms.WebBrowserProgressChangedEventHandler(this.webBrowser1_ProgressChanged);
-            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
             // panel1
             // 
@@ -165,6 +163,7 @@ namespace TourWriter.Modules.StartPage
             this.Name = "StartMain";
             this.Text = "Welcome to TourWriter";
             this.Load += new System.EventHandler(this.StartMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StartMain_FormClosing);
             this.Controls.SetChildIndex(this.menuStrip1, 0);
             this.Controls.SetChildIndex(this.toolStrip1, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
