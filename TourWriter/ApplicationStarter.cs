@@ -43,24 +43,14 @@ namespace TourWriter
         {
             if (ApplicationUpdateService.CheckForLocalUpdate())
             {
-                SplashScreenText = "Update found...";
+                SplashScreenText = "Installing update...";
                 Thread.Sleep(1000);
-                
-                if (App.AskYesNoThreadSafe(SplashScreen, "Update ready to install, click YES to install it now"))
-                {
-                    SplashScreenText = "Restarting...";
-                    Thread.Sleep(1000);
+                SplashScreenText = "Restarting...";
+                Thread.Sleep(1000);
 
-                    RunUpdate();
-                    Application.Exit();
-                    Environment.Exit(0);
-                }
-                else
-                {
-                    SplashScreenText = "Loading TourWriter...";
-                    Thread.Sleep(1000);
-                    RunApplication();
-                }
+                RunUpdate();
+                Application.Exit();
+                Environment.Exit(0);
             }
             else
             {
