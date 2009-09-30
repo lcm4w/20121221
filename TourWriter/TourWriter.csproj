@@ -1516,6 +1516,7 @@
     <None Include="Resources\web_download.png" />
     <None Include="Resources\warn.ico" />
     <None Include="Resources\Transfer.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.09.30.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.09.18.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.08.08.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.08.02.sql" />
