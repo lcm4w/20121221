@@ -156,19 +156,29 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
 		
 		private UltraTreeNode AddDaySectionNode(DateTime date)
 		{
-			UltraTreeNode node;
+			UltraTreeNode node = null;
 
-			string key = String.Format("{0}~{1}",
-				FileBuilderAdvanced.DaysSectionNodeKey, date.ToShortDateString());
+		    string key = String.Format("{0}~{1}",
+		                               FileBuilderAdvanced.DaysSectionNodeKey, date.ToShortDateString());
 			
 			// check for existing node
-			if (tree.Nodes[0].Nodes.Exists(key))
+            if (tree.Nodes[0].Nodes.Exists(key))
+            {
+                node = tree.Nodes[0].Nodes[key];
+            }
+            else
+            {
+                foreach (var n in tree.Nodes[0].Nodes)
+                    if (IsDaySectionNode(n) && GetDaySectionDate(n) == date)
+                    {
+                        node = n;
+                        break;
+                    }
+            }
+
+		    if (node == null) // add new node, sorting already taken care of
 			{
-				node = tree.Nodes[0].Nodes[key];
-			}
-			else // add new node, sorting already taken care of
-			{
-				string text = String.Format("{0} :", date.ToShortDateString());
+			    string text = String.Format("{0} :", date.ToShortDateString());
 				node = tree.Nodes[0].Nodes.Add(key, text);
 			}
 			// set appearance
