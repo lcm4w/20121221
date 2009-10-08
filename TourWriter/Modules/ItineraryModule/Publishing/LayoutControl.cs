@@ -76,16 +76,11 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             // Update itinerary name
             if (treeLayout.Nodes.Count > 0)
             {
-                ItinerarySet.ItineraryPubFileRow pubFile =
-                    itinerarySet.ItineraryPubFile.FindByItineraryPubFileID(publisherFileId);
-
-                treeLayout.Nodes[0].Text = (!pubFile.IsItineraryPubFileNameNull())
-                                           ? pubFile.ItineraryPubFileName
-                                           : String.Empty;
+                var pubFile = itinerarySet.ItineraryPubFile.FindByItineraryPubFileID(publisherFileId);
+                treeLayout.Nodes[0].Text = (!pubFile.IsItineraryPubFileNameNull()) ? pubFile.ItineraryPubFileName : String.Empty;
+                treeLayout.Nodes[0].CollapseAll();
+                treeLayout.Nodes[0].Expanded = true;
             }
-            // Set display
-            treeLayout.Nodes[0].CollapseAll();
-            treeLayout.Nodes[0].Expanded = true;
             btnExpand.Text = "Expand";
 
             // Add custom sort class
