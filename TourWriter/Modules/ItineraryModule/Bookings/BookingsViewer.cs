@@ -20,6 +20,7 @@ using TourWriter.Services;
 using TourWriter.Utilities;
 using ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle;
 using ColumnStyle = Infragistics.Win.UltraWinGrid.ColumnStyle;
+using System.Linq;
 
 namespace TourWriter.Modules.ItineraryModule.Bookings
 {
@@ -56,6 +57,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // TODO: flags hidden for now
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
+
+            RefreshEmailTemplateMenu();
         }
 
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -64,6 +67,42 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 btnLockEdit.Enabled = AppPermissions.UserHasPermission(
                     AppPermissions.Permissions.AccountingEdit);
+            }
+        }
+
+        private void RefreshEmailTemplateMenu()
+        {
+            btnBookings.DropDownItems.Clear();
+
+            AddEmailTemplateMenuItem(btnBookings, null); // default
+            
+            var templates = Cache.ToolSet.Template.Where(t => t.RowState != DataRowState.Deleted &&
+                t.ParentTemplateCategoryID == App.TemplateCategoryBookingEmail).ToList();
+            if (templates.Count() > 0)
+            {
+                btnBookings.DropDownItems.Add(new ToolStripSeparator());
+                foreach (var template in templates)
+                {
+                    var customTemplateButton = new ToolStripMenuItem(template.TemplateName);
+                    AddEmailTemplateMenuItem(customTemplateButton, template);
+                    btnBookings.DropDownItems.Add(customTemplateButton);
+                }
+            }
+            btnBookings.DropDownItems.Add(new ToolStripSeparator());
+            btnBookings.DropDownItems.Add("Add template...", null, btnAddNewTemplate_Click);
+        }
+
+        private void AddEmailTemplateMenuItem(ToolStripDropDownItem parent, ToolSet.TemplateRow customTemplate)
+        {
+            var b1 = parent.DropDownItems.Add("Book all..", null, btnBookAll_Click);
+            var b2 = parent.DropDownItems.Add("Book selected...", null, btnBookSelected_Click);
+
+            if (customTemplate != null)
+            {
+                b1.Tag = b2.Tag = customTemplate.FilePath;
+                parent.DropDownItems.Add(new ToolStripSeparator());
+                var b = parent.DropDownItems.Add("Remove template", null, btnRemoveTemplate_Click);
+                b.Tag = customTemplate.TemplateID;
             }
         }
 
@@ -268,9 +307,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private void SendBookingRequest(IEnumerable<int> idList)
+        private void SendBookingRequest(IEnumerable<int> idList, string defaultTemplate)
         {
-            BookingEmailForm bookingEmailer = new BookingEmailForm(itinerarySet, idList);
+            var bookingEmailer = new BookingEmailForm(itinerarySet, idList, defaultTemplate);
             bookingEmailer.ShowDialog();
         }
 
@@ -467,6 +506,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 row.Cells["Flags"].Value = ImageHelper.CombineBitmaps(flagImageList);
                 row.Cells["Flags"].ToolTipText = message;
             }
+        }
+
+        private static void AddTemplate(string name, string file)
+        {
+            var template = Cache.ToolSet.Template.NewTemplateRow();
+            template.TemplateName = name;
+            template.FilePath = file;
+            template.ParentTemplateCategoryID = App.TemplateCategoryBookingEmail;
+            Cache.ToolSet.Template.AddTemplateRow(template);
         }
 
         #region Events
@@ -1004,9 +1052,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnBookAll_Click(object sender, EventArgs e)
         {
-            List<int> idList = new List<int>();
-
-            foreach (ItinerarySet.PurchaseLineRow row in itinerarySet.PurchaseLine)
+            var idList = new List<int>();
+            foreach (var row in itinerarySet.PurchaseLine)
             {
                 if (row.RowState != DataRowState.Deleted &&
                     row.GetPurchaseItemRows().Length > 0)
@@ -1014,9 +1061,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     idList.Add(row.PurchaseLineID); // don't add empty bookings
                 }
             }
-
-            if (idList.Count > 0)
-                SendBookingRequest(idList);
+            var item = (ToolStripItem)sender;
+            var templateFilePath = (string)item.Tag;
+            if (idList.Count > 0) SendBookingRequest(idList, templateFilePath);
         }
 
         private void btnBookSelected_Click(object sender, EventArgs e)
@@ -1024,20 +1071,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (grid.Selected.Rows.Count == 0 && grid.ActiveRow != null)
                 grid.ActiveRow.Selected = true; // Sometimes a row is active but not selected
 
-            List<int> idList = new List<int>();
+            var idList = new List<int>();
 
-            foreach (UltraGridRow row in grid.Selected.Rows)
+            foreach (var row in grid.Selected.Rows)
             {
-                if (row.IsGroupByRow)
-                    continue;
+                if (row.IsGroupByRow) continue;
 
-                int id = (int)row.Cells["PurchaseLineID"].Value;
-                if (!idList.Contains(id))
-                    idList.Add(id);
+                var id = (int)row.Cells["PurchaseLineID"].Value;
+                if (!idList.Contains(id)) idList.Add(id);
             }
-
-            if (idList.Count > 0)
-                SendBookingRequest(idList);
+            var item = (ToolStripItem)sender;
+            var templateFilePath = (string)item.Tag;
+            if (idList.Count > 0) SendBookingRequest(idList, templateFilePath);
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -1297,6 +1342,30 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (row != null)
                 {                    
                     grid.ContextMenuStrip = null;
+                }
+            }
+        }
+
+        private void btnAddNewTemplate_Click(object sender, EventArgs e)
+        {
+            var addTemplateForm = new AddBookingTemplateForm();
+            if (addTemplateForm.ShowDialog() == DialogResult.OK)
+            {
+                AddTemplate(addTemplateForm.TemplateName, addTemplateForm.TemplateFile);
+                RefreshEmailTemplateMenu();
+            }
+        }
+
+        private void btnRemoveTemplate_Click(object sender, EventArgs e)
+        {
+            int templateId;
+            if (int.TryParse( ((ToolStripItem)sender).Tag.ToString(), out templateId))
+            {
+                var row = Cache.ToolSet.Template.FindByTemplateID(templateId);
+                if (row != null && App.AskDeleteRow())
+                {
+                    Cache.ToolSet.Template.RemoveTemplateRow(row);
+                    RefreshEmailTemplateMenu();
                 }
             }
         }

@@ -350,83 +350,72 @@ namespace TourWriter.Modules.ItineraryModule
 
         protected override void SaveDataChanges()
         {
-            if (!toolSave.Enabled)
+            if (!toolSave.Enabled) { App.ShowError("Cannot save this itinerary because it is read only."); return; }
+            if (!Validate() || !App.ShowCheckPermission(AppPermissions.Permissions.ItineraryEdit)) return;
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
             {
-                App.ShowError("Cannot save this itinerary because it is read only.");
-                return;
-            }
-
-            if (!Validate())
-                return;
-
-            if (!App.ShowCheckPermission(AppPermissions.Permissions.ItineraryEdit))
-                return;
-
-            if (IsDataDirty())
-            {
-                try
+                if (IsDataDirty())
                 {
-                    Cursor.Current = Cursors.WaitCursor;
-
-                    // temporarily detach event handlers
-                    SetEventHandlers(false);
-
-                    Itinerary i = new Itinerary();
-
-                    // take a copy of the lookup tables
-                    DataTable supplierLookup = itinerarySet.SupplierLookup.Copy();
-                    DataTable optionLookup = itinerarySet.OptionLookup.Copy();
-
-                    // Get data changes.
-                    ItinerarySet changes = (ItinerarySet)itinerarySet.GetChanges();
-                    if (changes != null)
+                    try
                     {
-                        // Save data changes.
-                        ItinerarySet fresh = i.SaveItinerarySet(changes);
+                        SetEventHandlers(false); // temporarily detach event handlers
 
-                        // merge the lookup tables
-                        fresh.SupplierLookup.Merge(supplierLookup, true);
-                        fresh.OptionLookup.Merge(optionLookup, true);
-                        fresh.SupplierLookup.AcceptChanges();
-                        fresh.OptionLookup.AcceptChanges();
+                        var i = new Itinerary();
 
-                        // Handle any errors.
-                        if (App.DataSet_CheckForErrors(fresh) && App.DataSet_AskSaveDeleteConstraints(fresh))
+                        // take a copy of the lookup tables
+                        var supplierLookup = itinerarySet.SupplierLookup.Copy();
+                        var optionLookup = itinerarySet.OptionLookup.Copy();
+
+                        // Get data changes.
+                        var changes = (ItinerarySet) itinerarySet.GetChanges();
+                        if (changes != null)
                         {
-                            itinerarySet = fresh;
-                            SaveDataChanges();
-                            return;
+                            // Save data changes.
+                            ItinerarySet fresh = i.SaveItinerarySet(changes);
+
+                            // merge the lookup tables
+                            fresh.SupplierLookup.Merge(supplierLookup, true);
+                            fresh.OptionLookup.Merge(optionLookup, true);
+                            fresh.SupplierLookup.AcceptChanges();
+                            fresh.OptionLookup.AcceptChanges();
+
+                            // Handle any errors.
+                            if (App.DataSet_CheckForErrors(fresh) && App.DataSet_AskSaveDeleteConstraints(fresh))
+                            {
+                                itinerarySet = fresh;
+                                SaveDataChanges();
+                                return;
+                            }
+                            // Clear dataset and merge to maintain any databindings
+                            itinerarySet.Clear();
+                            itinerarySet.Merge(fresh, false);
+                            bookingsViewer.SetGridExpanded();
                         }
+                        // Update main form
+                        UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
+                        SetDataCleanName();
 
-                        // Clear dataset and merge to maintain any databindings
-                        itinerarySet.Clear();
-                        itinerarySet.Merge(fresh, false);
-                        bookingsViewer.SetGridExpanded();
+                        accounting1.RefreshRequired = true;
                     }
-
-                    // Save the toolset.
-                    if (Cache.ToolSet != null && Cache.ToolSet.HasChanges())
+                    finally
                     {
-                        Cache.SaveToolSet();
-                        reportControl.RefreshReportExplorer();
-                        reportControl.FilterReportExplorer("Itinerary");
+                        SetEventHandlers(true); // re-attach the event handlers
                     }
-
-                    // Update main form
-                    UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
-                    SetDataCleanName();
-
-                    accounting1.RefreshRequired = true;
                 }
-                finally
+                // Save the toolset.
+                if (Cache.ToolSet != null && Cache.ToolSet.HasChanges())
                 {
-                    Cursor.Current = Cursors.Default;
-
-                    // re-attach the event handlers
-                    SetEventHandlers(true);
+                    Cache.SaveToolSet();
+                    reportControl.RefreshReportExplorer();
+                    reportControl.FilterReportExplorer("Itinerary");
                 }
             }
-
+            finally
+            {
+                Cursor.Current = Cursors.Default;
+            }
         }
 
         protected override void CancelDataChanges()

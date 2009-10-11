@@ -27,6 +27,7 @@ namespace TourWriter
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
         internal const string DataErrorPKDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
 
+        internal const int TemplateCategoryBookingEmail = 5;
         internal const string PricingOptionNetMarkupText = "nm";
         internal const string PricingOptionNetGrossText = "ng";
         internal const string PricingOptionGrossCommissionText = "gc";

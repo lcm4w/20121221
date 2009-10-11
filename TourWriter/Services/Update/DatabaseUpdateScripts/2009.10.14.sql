@@ -1,8 +1,6 @@
 /*
-TourWriter database update script, from version 2009.09.18 to 2009.09.30
+TourWriter database update script, from version 2009.09.18 to 2009.10.14
 */
-GO
-if ('2009.09.30' <= (select VersionNumber from AppSettings)) return
 GO
 SET NUMERIC_ROUNDABORT OFF
 GO
@@ -19,6 +17,68 @@ GO
 SET ANSI_NULLS ON
 GO
 ----------------------------------------------------------------------------------------
+GO
+PRINT N'Altering dbo.ItinerarySaleAllocationDetail...';
+GO
+ALTER VIEW [dbo].[ItinerarySaleAllocationDetail]
+AS
+select
+	itin.*,
+	sale.ItinerarySaleID,
+	sale.Comments,
+	sale.SaleDate,
+	stype.ServiceTypeName,
+	alloc.Amount as SaleAmount,
+	case when itin.ItineraryMarkup = -100 then 0 else
+		cast(alloc.Amount*100/(100+itin.ItineraryMarkup) as money) end as SaleNet,
+	case when itin.ItineraryMarkup = -100 then 0 else
+		cast(alloc.Amount - (alloc.Amount*100/(100+itin.ItineraryMarkup)) as money) end as SaleYield,		
+	case when grossTax.Amount = -100 then 0 else
+	    cast(alloc.Amount - (alloc.Amount*100/(100+grossTax.Amount)) as money) end as SaleTaxAmount,	
+	grossTax.TaxTypeCode as SaleTaxTypeCode,
+	grossAct.AccountingCategoryCode as AccountingCategoryCode,
+	sale.IsLockedAccounting
+from ItinerarySaleAllocation alloc
+right outer join ItinerarySale sale on alloc.ItinerarySaleID = sale.ItinerarySaleID
+left outer join dbo.ItineraryDetail itin on sale.ItineraryID = itin.ItineraryID
+left outer join ServiceType stype on alloc.ServiceTypeID = stype.ServiceTypeID
+left outer join AccountingCategory as grossAct on stype.GrossAccountingCategoryID = grossAct.AccountingCategoryID
+left outer join TaxType as grossTax on stype.GrossTaxTypeID = grossTax.TaxTypeID;
+
+GO
+PRINT N'Altering dbo.ItinerarySaleDetail...';
+
+GO
+ALTER VIEW [dbo].[ItinerarySaleDetail]
+AS
+select
+	itin.*,
+	sale.ItinerarySaleID,
+	sale.SaleDate,
+	sale.Comments as SaleComments,
+	sale.IsLockedAccounting as SaleIsLockedAccounting,
+	cost.SaleAmount,
+	cost.SaleNet,
+	cost.SaleAmount-cost.SaleNet as SaleYield
+from ItinerarySale sale
+left outer join dbo.ItineraryDetail itin on sale.ItineraryID = itin.ItineraryID
+left outer join
+(
+	select
+		alloc.ItinerarySaleID, 
+		sum(alloc.Amount) as SaleAmount,		
+		sum(cast(
+				case when itin.ItineraryMarkup = -100 then 0 else alloc.Amount*100/(100 + itin.ItineraryMarkup) end
+			as money)) as SaleNet		
+	from ItinerarySaleAllocation alloc
+	left outer join ItinerarySale sale on alloc.ItinerarySaleID = sale.ItinerarySaleID
+	left outer join dbo.ItineraryDetail itin on sale.ItineraryID = itin.ItineraryID
+	group by alloc.ItinerarySaleID
+) cost on cost.ItinerarySaleID = sale.ItinerarySaleID;
+
+GO
+PRINT N'Altering dbo.PurchaseItemDetail...';
+
 GO
 ALTER VIEW [dbo].[PurchaseItemDetail]
 AS
@@ -101,7 +161,21 @@ GO
 EXECUTE sp_refreshview N'dbo.PurchaseItemPaymentsDetail';
 GO
 ----------------------------------------------------------------------------------------
+PRINT N'Adding to [dbo].[TemplateCategory]...'
+SET NOCOUNT ON;
+SET XACT_ABORT ON;
+GO
+SET IDENTITY_INSERT [dbo].[TemplateCategory] ON;
+BEGIN TRANSACTION;
+INSERT INTO [dbo].[TemplateCategory]([TemplateCategoryID], [TemplateCategoryName], [ParentTemplateCategoryID])
+SELECT '5', 'Booking Email', NULL
+COMMIT;
+RAISERROR (N'[dbo].[TemplateCategory]: Insert Batch: 1.....Done!', 10, 1) WITH NOWAIT;
+GO
+SET IDENTITY_INSERT [dbo].[TemplateCategory] OFF;
+GO
+
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2009.09.30'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2009.10.14'
 GO

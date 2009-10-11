@@ -79,6 +79,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnMoveDates = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdateCurrency = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLockEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnEditFlags = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExportExcel = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,8 +88,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnResetGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnBookings = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnBookAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnBookThis = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnExpand = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -98,7 +97,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnEditFlags = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).BeginInit();
@@ -186,6 +184,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDown);
             this.grid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grid_MouseUp);
             this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
+            this.grid.BeforeRowsDeleted += new Infragistics.Win.UltraWinGrid.BeforeRowsDeletedEventHandler(this.grid_BeforeRowsDeleted);
             this.grid.BeforeSelectChange += new Infragistics.Win.UltraWinGrid.BeforeSelectChangeEventHandler(this.grid_BeforeSelectChange);
             this.grid.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_AfterCellListCloseUp);
             this.grid.BeforeRowActivate += new Infragistics.Win.UltraWinGrid.RowEventHandler(this.grid_BeforeRowActivate);
@@ -193,7 +192,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grid_KeyPress);
             this.grid.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_CellChange);
             this.grid.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.grid_DoubleClickRow);
-            this.grid.BeforeRowsDeleted += new Infragistics.Win.UltraWinGrid.BeforeRowsDeletedEventHandler(grid_BeforeRowsDeleted);
             // 
             // label3
             // 
@@ -534,10 +532,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnAdd,
             this.btnDelete});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(515, 3);
+            this.myToolStrip1.Location = new System.Drawing.Point(484, 3);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(310, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(341, 25);
             this.myToolStrip1.TabIndex = 104;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -584,6 +582,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnLockEdit.Text = "Show lock bookings column";
             this.btnLockEdit.ToolTipText = "Set bookings to read-only so they cannot be changed";
             this.btnLockEdit.Click += new System.EventHandler(this.btnLockEdit_Click);
+            // 
+            // btnEditFlags
+            // 
+            this.btnEditFlags.Name = "btnEditFlags";
+            this.btnEditFlags.Size = new System.Drawing.Size(224, 22);
+            this.btnEditFlags.Text = "Edit flags";
+            this.btnEditFlags.Click += new System.EventHandler(this.btnEditFlags_Click);
             // 
             // toolStripSeparator6
             // 
@@ -635,32 +640,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnBookings
             // 
             this.btnBookings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnBookings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnBookAll,
-            this.btnBookThis});
             this.btnBookings.Image = ((System.Drawing.Image)(resources.GetObject("btnBookings.Image")));
             this.btnBookings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnBookings.Name = "btnBookings";
             this.btnBookings.Size = new System.Drawing.Size(96, 22);
             this.btnBookings.Text = "Make booking";
             this.btnBookings.ToolTipText = "Send booking request";
-            this.btnBookings.Click += new System.EventHandler(this.btnBookings_Click);
-            // 
-            // btnBookAll
-            // 
-            this.btnBookAll.Name = "btnBookAll";
-            this.btnBookAll.Size = new System.Drawing.Size(156, 22);
-            this.btnBookAll.Text = "Book all...";
-            this.btnBookAll.ToolTipText = "Send request for all bookings";
-            this.btnBookAll.Click += new System.EventHandler(this.btnBookAll_Click);
-            // 
-            // btnBookThis
-            // 
-            this.btnBookThis.Name = "btnBookThis";
-            this.btnBookThis.Size = new System.Drawing.Size(156, 22);
-            this.btnBookThis.Text = "Book selected...";
-            this.btnBookThis.ToolTipText = "Send request for the selected booking(s)";
-            this.btnBookThis.Click += new System.EventHandler(this.btnBookSelected_Click);
             // 
             // toolStripSeparator3
             // 
@@ -742,13 +727,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.ToolTipText = "Delete selected booking and related items";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // btnEditFlags
-            // 
-            this.btnEditFlags.Name = "btnEditFlags";
-            this.btnEditFlags.Size = new System.Drawing.Size(224, 22);
-            this.btnEditFlags.Text = "Edit flags";
-            this.btnEditFlags.Click += new System.EventHandler(this.btnEditFlags_Click);
-            // 
             // BookingsViewer
             // 
             this.AutoScroll = true;
@@ -803,8 +781,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripButton btnExpand;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripDropDownButton btnBookings;
-        private System.Windows.Forms.ToolStripMenuItem btnBookThis;
-        private System.Windows.Forms.ToolStripMenuItem btnBookAll;
         private System.Windows.Forms.ToolStripButton btnEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtGrossOverride;
