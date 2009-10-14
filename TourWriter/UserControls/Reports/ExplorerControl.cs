@@ -257,7 +257,7 @@ namespace TourWriter.UserControls.Reports
             {
                 int categoryId = Convert.ToInt32(node.Name.Replace("ReportCategory.", String.Empty));
                 var category = Cache.ToolSet.TemplateCategory.FindByTemplateCategoryID(categoryId);
-                category.Delete();
+                if (category != null) category.Delete();
             }
         }
 

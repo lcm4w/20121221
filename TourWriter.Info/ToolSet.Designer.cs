@@ -95,9 +95,11 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationServiceTypeServiceConfigType;
         
-        private global::System.Data.DataRelation relationCurrencyCurrencyRateTo;
+        private global::System.Data.DataRelation relationTemplateCategory_Template;
         
         private global::System.Data.DataRelation relationCurrencyCurrencyRateFrom;
+        
+        private global::System.Data.DataRelation relationCurrencyCurrencyRateTo;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -887,8 +889,9 @@ namespace TourWriter.Info {
             this.relationStateRegion = this.Relations["StateRegion"];
             this.relationRegionCity = this.Relations["RegionCity"];
             this.relationServiceTypeServiceConfigType = this.Relations["ServiceTypeServiceConfigType"];
-            this.relationCurrencyCurrencyRateTo = this.Relations["CurrencyCurrencyRateTo"];
+            this.relationTemplateCategory_Template = this.Relations["TemplateCategory_Template"];
             this.relationCurrencyCurrencyRateFrom = this.Relations["CurrencyCurrencyRateFrom"];
+            this.relationCurrencyCurrencyRateTo = this.Relations["CurrencyCurrencyRateTo"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -990,16 +993,23 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("CurrencyCurrencyRateTo", new global::System.Data.DataColumn[] {
-                        this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
-                        this.tableCurrencyRate.CurrencyCodeToColumn});
-            this.tableCurrencyRate.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("TemplateCategory_Template", new global::System.Data.DataColumn[] {
+                        this.tableTemplateCategory.TemplateCategoryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplate.ParentTemplateCategoryIDColumn});
+            this.tableTemplate.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("CurrencyCurrencyRateFrom", new global::System.Data.DataColumn[] {
                         this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
                         this.tableCurrencyRate.CurrencyCodeFromColumn});
+            this.tableCurrencyRate.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("CurrencyCurrencyRateTo", new global::System.Data.DataColumn[] {
+                        this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
+                        this.tableCurrencyRate.CurrencyCodeToColumn});
             this.tableCurrencyRate.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1020,14 +1030,18 @@ namespace TourWriter.Info {
                         this.tableServiceType.ServiceTypeIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableServiceConfigType.ServiceTypeIDColumn}, false);
             this.Relations.Add(this.relationServiceTypeServiceConfigType);
-            this.relationCurrencyCurrencyRateTo = new global::System.Data.DataRelation("CurrencyCurrencyRateTo", new global::System.Data.DataColumn[] {
-                        this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
-                        this.tableCurrencyRate.CurrencyCodeToColumn}, false);
-            this.Relations.Add(this.relationCurrencyCurrencyRateTo);
+            this.relationTemplateCategory_Template = new global::System.Data.DataRelation("TemplateCategory_Template", new global::System.Data.DataColumn[] {
+                        this.tableTemplateCategory.TemplateCategoryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTemplate.ParentTemplateCategoryIDColumn}, false);
+            this.Relations.Add(this.relationTemplateCategory_Template);
             this.relationCurrencyCurrencyRateFrom = new global::System.Data.DataRelation("CurrencyCurrencyRateFrom", new global::System.Data.DataColumn[] {
                         this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
                         this.tableCurrencyRate.CurrencyCodeFromColumn}, false);
             this.Relations.Add(this.relationCurrencyCurrencyRateFrom);
+            this.relationCurrencyCurrencyRateTo = new global::System.Data.DataRelation("CurrencyCurrencyRateTo", new global::System.Data.DataColumn[] {
+                        this.tableCurrency.CurrencyCodeColumn}, new global::System.Data.DataColumn[] {
+                        this.tableCurrencyRate.CurrencyCodeToColumn}, false);
+            this.Relations.Add(this.relationCurrencyCurrencyRateTo);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9735,13 +9749,16 @@ namespace TourWriter.Info {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public TemplateRow AddTemplateRow(string TemplateName, string FilePath, int ParentTemplateCategoryID) {
+            public TemplateRow AddTemplateRow(string TemplateName, string FilePath, TemplateCategoryRow parentTemplateCategoryRowByTemplateCategory_Template) {
                 TemplateRow rowTemplateRow = ((TemplateRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         TemplateName,
                         FilePath,
-                        ParentTemplateCategoryID};
+                        null};
+                if ((parentTemplateCategoryRowByTemplateCategory_Template != null)) {
+                    columnValuesArray[3] = parentTemplateCategoryRowByTemplateCategory_Template[0];
+                }
                 rowTemplateRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowTemplateRow);
                 return rowTemplateRow;
@@ -12927,22 +12944,22 @@ namespace TourWriter.Info {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public CurrencyRateRow[] GetCurrencyRateRowsByCurrencyCurrencyRateTo() {
-                if ((this.Table.ChildRelations["CurrencyCurrencyRateTo"] == null)) {
-                    return new CurrencyRateRow[0];
-                }
-                else {
-                    return ((CurrencyRateRow[])(base.GetChildRows(this.Table.ChildRelations["CurrencyCurrencyRateTo"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public CurrencyRateRow[] GetCurrencyRateRowsByCurrencyCurrencyRateFrom() {
                 if ((this.Table.ChildRelations["CurrencyCurrencyRateFrom"] == null)) {
                     return new CurrencyRateRow[0];
                 }
                 else {
                     return ((CurrencyRateRow[])(base.GetChildRows(this.Table.ChildRelations["CurrencyCurrencyRateFrom"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public CurrencyRateRow[] GetCurrencyRateRowsByCurrencyCurrencyRateTo() {
+                if ((this.Table.ChildRelations["CurrencyCurrencyRateTo"] == null)) {
+                    return new CurrencyRateRow[0];
+                }
+                else {
+                    return ((CurrencyRateRow[])(base.GetChildRows(this.Table.ChildRelations["CurrencyCurrencyRateTo"])));
                 }
             }
         }
@@ -13449,6 +13466,16 @@ namespace TourWriter.Info {
             public void SetParentTemplateCategoryIDNull() {
                 this[this.tableTemplateCategory.ParentTemplateCategoryIDColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public TemplateRow[] GetTemplateRows() {
+                if ((this.Table.ChildRelations["TemplateCategory_Template"] == null)) {
+                    return new TemplateRow[0];
+                }
+                else {
+                    return ((TemplateRow[])(base.GetChildRows(this.Table.ChildRelations["TemplateCategory_Template"])));
+                }
+            }
         }
         
         /// <summary>
@@ -13512,6 +13539,16 @@ namespace TourWriter.Info {
                 }
                 set {
                     this[this.tableTemplate.ParentTemplateCategoryIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public TemplateCategoryRow TemplateCategoryRow {
+                get {
+                    return ((TemplateCategoryRow)(this.GetParentRow(this.Table.ParentRelations["TemplateCategory_Template"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["TemplateCategory_Template"]);
                 }
             }
             
@@ -13636,22 +13673,22 @@ namespace TourWriter.Info {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public CurrencyRow CurrencyRowByCurrencyCurrencyRateTo {
-                get {
-                    return ((CurrencyRow)(this.GetParentRow(this.Table.ParentRelations["CurrencyCurrencyRateTo"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["CurrencyCurrencyRateTo"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public CurrencyRow CurrencyRowByCurrencyCurrencyRateFrom {
                 get {
                     return ((CurrencyRow)(this.GetParentRow(this.Table.ParentRelations["CurrencyCurrencyRateFrom"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["CurrencyCurrencyRateFrom"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public CurrencyRow CurrencyRowByCurrencyCurrencyRateTo {
+                get {
+                    return ((CurrencyRow)(this.GetParentRow(this.Table.ParentRelations["CurrencyCurrencyRateTo"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["CurrencyCurrencyRateTo"]);
                 }
             }
             

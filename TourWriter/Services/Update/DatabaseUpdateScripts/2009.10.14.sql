@@ -174,7 +174,10 @@ RAISERROR (N'[dbo].[TemplateCategory]: Insert Batch: 1.....Done!', 10, 1) WITH N
 GO
 SET IDENTITY_INSERT [dbo].[TemplateCategory] OFF;
 GO
-
+PRINT N'Cleaning [dbo].[Template]...'
+GO
+delete from Template where ParentTemplateCategoryID < 0
+GO
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
 UPDATE [dbo].[AppSettings] SET [VersionNumber]='2009.10.14'
