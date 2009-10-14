@@ -7,8 +7,7 @@
     <ProjectGuid>{6270B95D-545C-4E53-A866-22F0E3C4BF26}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Resources\tw16.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>TourWriter</AssemblyName>
