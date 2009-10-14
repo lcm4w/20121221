@@ -26,12 +26,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly ItinerarySet itinerarySet;
         private readonly List<BookingEmailInfo> emailList;
 
+        private string _templateFile;
         private TemplateForm _templateForm;
         private EmailForm _emailForm;
         private SendForm _sendForm;
 
 
         public BookingEmailForm(ItinerarySet itinerarySet, IEnumerable<int> purchaseLineIdList)
+            : this (itinerarySet, purchaseLineIdList, "") { }
+
+        public BookingEmailForm(ItinerarySet itinerarySet, IEnumerable<int> purchaseLineIdList, string defaultTemplate)
         {
             InitializeComponent();
 
@@ -39,10 +43,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             Location = Settings.Default.EmailEditorLocation;
 
             this.itinerarySet = itinerarySet;
+            _templateFile = defaultTemplate;
             emailList = new List<BookingEmailInfo>();
-            foreach (int id in purchaseLineIdList)
+            foreach (var id in purchaseLineIdList)
             {
-                ItinerarySet.PurchaseLineRow row = itinerarySet.PurchaseLine.FindByPurchaseLineID(id);
+                var row = itinerarySet.PurchaseLine.FindByPurchaseLineID(id);
                 emailList.Add(new BookingEmailInfo(row));
             }
         }
@@ -58,7 +63,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             {
                 if (_templateForm == null)
                 {
-                    _templateForm = new TemplateForm(itinerarySet.Itinerary[0].ItineraryName);
+                    _templateForm = new TemplateForm(itinerarySet.Itinerary[0].ItineraryName, _templateFile);
                     AddControlToMainPanel(_templateForm);
                 }
                 return _templateForm;
@@ -224,22 +229,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            if(emailList.Count == 0)
-            {
-                SaveSettings();
-                Close();
-            }
-            else if (sendForm.IsSending)
+            if (sendForm.IsSending)
             {
                 sendForm.StopSendProcess();
             }
             else
             {
-                if (App.AskYesNo("Click YES to cancel emails and close this window"))
-                {
-                    SaveSettings();
-                    Close();
-                }
+                SaveSettings();
+                Close();
             }
         }
         

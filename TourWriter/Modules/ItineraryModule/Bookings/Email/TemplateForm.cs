@@ -12,97 +12,55 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
     /// </summary>
     public partial class TemplateForm : UserControl
     {
-        private TemplateSettings templateSettings;
-        private const string DefaultTemplateFile = "TourWriter.Email.BookingRequest.html";
         private const string DefaultSubject = "Booking request for {0}";
-        private const string ErrorText =
-            "<html><body>Default template text not found...</body></html>";
-        
-        public TemplateForm(string itineraryName)
+        private const string ErrorText = "<html><body>Default template text not found...</body></html>";
+        private readonly string _defaultTemplateFile = Path.Combine(
+            Services.ExternalFilesHelper.GetTemplateFolder(), "TourWriter.Email.BookingRequest.html");
+        private readonly string _templateFile;
+        private TemplateSettings _templateSettings;
+
+
+        public TemplateForm(string itineraryName) : this (itineraryName, "") { }
+
+        public TemplateForm(string itineraryName, string templateFile)
         {
             InitializeComponent();
-
-            webBody.Navigate("about:blank");
-            webBody.Document.Write(LoadDefaultTemplate());
-            webBody.Document.Body.SetAttribute("contenteditable", "true");
-
-            txtFrom.Text = Cache.User.Email;
-            txtSubject.Text = String.Format(DefaultSubject, itineraryName);
-            txtTemplate.Text = DefaultTemplateFile;
-
             chkSaveCopy.Checked = Settings.Default.EmailerSaveWhenSent;
             chkBccSender.Checked = Settings.Default.EmailerBccSender;
             chkShowBookingPrice.Checked = Settings.Default.BookingEmailShowPrice;
             chkReadReceipt.Checked = Settings.Default.EmailerReadReceipt;
+
+            _templateFile = !string.IsNullOrEmpty(templateFile) ? 
+                Services.ExternalFilesHelper.ConvertToAbsolutePath(templateFile) : EnsureDefaultTemplate();
+
+            txtFrom.Text = Cache.User.Email;
+            txtSubject.Text = String.Format(DefaultSubject, itineraryName);
+            txtTemplate.Text = _templateFile;
+
+            LoadTemplateFile(_templateFile);
         }
 
-        public TemplateSettings GetTemplateSettings()
+        private void LoadTemplateFile(string file)
         {
-            if (templateSettings == null)
+            webBody.Navigate("about:blank");
+
+            if (webBody.Document != null)
             {
-                templateSettings = new TemplateSettings();
-            }
-            templateSettings.From = txtFrom.Text;
-            templateSettings.Bcc = ((chkBccSender.Checked) ? txtBcc.Text : String.Empty);
-            ;
-            templateSettings.Subject = txtSubject.Text;
-            templateSettings.SaveToFile = chkSaveCopy.Checked;
-            templateSettings.ShowPrices = chkShowBookingPrice.Checked;
-            templateSettings.ReadReceipt = chkReadReceipt.Checked;
-            templateSettings.Body = TemplateSettings.ReplaceBodyHtml(
-                webBody.DocumentText, webBody.Document.Body.OuterHtml);
+                webBody.Document.OpenNew(false);
+                webBody.Document.Write(ReadTemplate(file));
 
-            return templateSettings;
-        }
-
-
-        private static string LoadDefaultTemplate()
-        {
-            string fileName = Path.Combine(
-                Services.ExternalFilesHelper.GetTemplateFolder(),
-                DefaultTemplateFile);
-
-            try
-            {
-                if (!File.Exists(fileName))
-                {
-                    string msg = "The default template file was not found.\r\nDo you want to create it?";
-                    if (App.AskYesNo(msg))
-                    {
-                        string path = Path.GetDirectoryName(fileName);
-                        try
-                        {
-                            if (!Directory.Exists(path))
-                                Directory.CreateDirectory(path);
-
-                            TextWriter writer = new StreamWriter(fileName);
-                            writer.Write(Resources.EmailHtmlTemplate);
-                            writer.Close();
-                            App.ShowInfo("File created to: " + fileName);
-                        }
-                        catch (DirectoryNotFoundException)
-                        {
-                            App.ShowError("Failed to connect to default template directory: " + path);
-                            return ErrorText;
-                        }
-                    }
-                }
-                return ReadTemplateText(fileName);
-            }
-            catch (Exception ex)
-            {
-                App.Error(ex);
-                return ErrorText;
+                if (webBody.Document.Body != null)
+                    webBody.Document.Body.SetAttribute("contenteditable", "true");
             }
         }
 
-        private static string ReadTemplateText(string templateFile)
+        private static string ReadTemplate(string templateFile)
         {
             if (!File.Exists(templateFile))
                 return ErrorText;
 
             StreamReader sr = null;
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             try
             {
@@ -126,30 +84,65 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return sb.ToString();
         }
 
+        private string EnsureDefaultTemplate()
+        {
+            if (!File.Exists(_defaultTemplateFile) &&
+                App.AskYesNo("The default template file was not found.\r\nDo you want to create it?"))
+            {
+                var path = Path.GetDirectoryName(_defaultTemplateFile);
+                try
+                {
+                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+                    TextWriter writer = new StreamWriter(_defaultTemplateFile);
+                    writer.Write(Resources.EmailHtmlTemplate);
+                    writer.Close();
+                    App.ShowInfo("File created: " + _defaultTemplateFile);
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    App.ShowError("Failed to connect to default template directory: " + path);
+                    return ErrorText;
+                }
+                catch (Exception ex)
+                {
+                    App.Error(ex);
+                    return ErrorText;
+                }
+            }
+            return _defaultTemplateFile;
+        }
+        
+        public TemplateSettings GetTemplateSettings()
+        {
+            if (_templateSettings == null) _templateSettings = new TemplateSettings();
+            _templateSettings.From = txtFrom.Text;
+            _templateSettings.Bcc = ((chkBccSender.Checked) ? txtBcc.Text : String.Empty);
+            _templateSettings.Subject = txtSubject.Text;
+            _templateSettings.SaveToFile = chkSaveCopy.Checked;
+            _templateSettings.ShowPrices = chkShowBookingPrice.Checked;
+            _templateSettings.ReadReceipt = chkReadReceipt.Checked;
+            if (webBody.Document != null && webBody.Document.Body != null)
+                _templateSettings.Body = TemplateSettings.ReplaceBodyHtml(webBody.DocumentText, webBody.Document.Body.OuterHtml);
+
+            return _templateSettings;
+        }
+
         #region Events
 
         private void chkBccSender_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkBccSender.Checked)
-                txtBcc.Text = Cache.User.Email;
-
-            else
-                txtBcc.Text = String.Empty;
+            txtBcc.Text = chkBccSender.Checked ? Cache.User.Email : String.Empty;
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            string file = App.SelectExternalFile(
+            var file = App.SelectExternalFile(
                 false, "Select email template", "HTML files (*.html;*.htm)|*.html;*.htm|All files (*.*)|*.*", 0);
-
-            if (file == null)
-                return;
+            if (file == null) return;
 
             txtTemplate.Text = file;
-
-            webBody.Document.OpenNew(false);
-            webBody.Document.Write(ReadTemplateText(txtTemplate.Text));
-            webBody.Document.Body.SetAttribute("contenteditable", "true");
+            LoadTemplateFile(file);
         }
 
         #endregion
