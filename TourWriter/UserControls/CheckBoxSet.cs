@@ -122,8 +122,8 @@ namespace TourWriter.UserControls
 			foreach(DataRow dr in table.Rows)
 			{
                 // don't add rows that have been soft deleted
-                if (table.Columns.Contains("IsDeleted") &&
-                    (dr["IsDeleted"] != DBNull.Value && (bool)dr["IsDeleted"]))
+                if (dr.RowState == DataRowState.Deleted ||
+                    (table.Columns.Contains("IsDeleted") && (dr["IsDeleted"] != DBNull.Value && (bool)dr["IsDeleted"])))
                 {
                     continue;
                 }
