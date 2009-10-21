@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.IO;
 using System.Windows.Forms;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Services;
@@ -19,6 +18,8 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
 		private const string MergeFieldDayLocation = "[!DayLocation]";
 		private const string MergeFieldDayText     = "[!DayText]";
 	    private const string MergeFieldLineBreak   = "[!LineBreak]";
+
+
 		// node keys, each node has key set to one of these type indicators 
 		public const string FrontSectionNodeKey = "Front";
 		public const string DaysSectionNodeKey  = "Day";
@@ -235,7 +236,7 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
 			    // fill template placeholders
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayNumber, ((dayDate - startDate).Days + 1).ToString());
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayName, dayDate.ToString("dddd"));
-                WordHelper.FindAndReplace(dayDoc, MergeFieldDayDate, dayDate.ToString("dd MMMM yyyy"));
+                WordHelper.InsertDateText(dayDoc, dayDate);
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayLocation, LayoutHelper.GetDaySectionLocation(dayNode));
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayText, textDoc, _setFontToTemplate);
 

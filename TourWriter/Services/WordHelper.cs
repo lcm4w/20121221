@@ -1,4 +1,5 @@
 using System;
+using System.Text.RegularExpressions;
 using Word;
 namespace TourWriter.Services
 {
@@ -227,6 +228,40 @@ namespace TourWriter.Services
                 dst.TypeBackspace();
             }
             return true;
+        }
+
+        internal static bool InsertDateText(Document doc, DateTime date)
+        {
+            // bit of a quick-and-dirty to enable custom formatting of date text
+
+            doc.Select();
+            var selection = doc.Application.Selection;
+
+            selection.Find.ClearFormatting();
+            selection.Find.MatchWildcards = true;
+            selection.Find.Text = @"[\[][\!]DayDate(*)[\]]";
+
+            var found = false;
+            while (true)
+            {
+                object searchAll = WdFindWrap.wdFindContinue;
+                object replaceNone = WdReplace.wdReplaceNone;
+                selection.Find.Execute(
+                    ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref searchAll,
+                    ref missing, ref missing, ref replaceNone, ref missing, ref missing, ref missing, ref missing);
+
+                if (!selection.Find.Found) break;
+
+                // get date format string
+                const string pattern = @"(?<=\[\!DayDate\((?:\s*)(?:\""|\'|“|‘)).*(?=(?:\""|\'|”|’)\)(?:\s*)\])";
+                var format = Regex.Match(selection.Text, pattern).Value;
+                if (string.IsNullOrEmpty(format))
+                    format = "dd MMMM yyyy";
+
+                selection.Text = date.ToString(format);
+                found = true;
+            }
+            return found;
         }
         
         internal static void CloseDocumentWithoutSaving(Document doc)
