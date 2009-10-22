@@ -31,8 +31,11 @@ namespace TourWriter.UserControls.Reports
 
         private void LoadEditorControls()
         {
+            var added = new List<string>();
             foreach (var sqlExpression in _rdlcHelper.GetSqlExpressions())
             {
+                if (added.Contains(sqlExpression.ParameterName)) continue;
+                added.Add(sqlExpression.ParameterName);
                 var editor = new OptionEdit(sqlExpression, _defaultParams);
                 pnlLayout.Controls.Add(editor);
             }
