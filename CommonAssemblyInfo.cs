@@ -14,4 +14,4 @@ using System.Reflection;
 [assembly: AssemblyCopyright("Copyright (c)")]
 [assembly: AssemblyVersion("9999.0")]
 [assembly: AssemblyFileVersion("9999.0.0.0")]
-[assembly: AssemblyInformationalVersion("9999.0.0.0 (DEV build)")]
+[assembly: AssemblyInformationalVersion("9999.0.0.0")]

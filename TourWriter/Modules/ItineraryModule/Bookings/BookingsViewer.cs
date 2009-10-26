@@ -58,7 +58,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // TODO: flags hidden for now
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
 
-            RefreshEmailTemplateMenu();
         }
 
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -67,6 +66,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 btnLockEdit.Enabled = AppPermissions.UserHasPermission(
                     AppPermissions.Permissions.AccountingEdit);
+                RefreshEmailTemplateMenu();
             }
         }
 

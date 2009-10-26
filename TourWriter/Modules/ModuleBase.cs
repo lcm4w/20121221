@@ -24,7 +24,7 @@ namespace TourWriter.Modules
         protected string displayTypeName;
         private UltraLabel ultraLabel1;
         private UltraLabel ultraLabel2;
-        private readonly Container components;
+        private readonly Container components = null;
         private MainForm MainForm
         {
             get { return MdiParent as MainForm; }
