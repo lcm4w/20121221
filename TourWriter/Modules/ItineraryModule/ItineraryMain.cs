@@ -410,6 +410,7 @@ namespace TourWriter.Modules.ItineraryModule
                     Cache.SaveToolSet();
                     reportControl.RefreshReportExplorer();
                     reportControl.FilterReportExplorer("Itinerary");
+                    bookingsViewer.RefreshEmailTemplateMenu();
                 }
             }
             finally

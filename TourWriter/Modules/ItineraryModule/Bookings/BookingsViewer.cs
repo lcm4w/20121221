@@ -70,14 +70,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private void RefreshEmailTemplateMenu()
+        internal void RefreshEmailTemplateMenu()
         {
             btnBookings.DropDownItems.Clear();
 
             AddEmailTemplateMenuItem(btnBookings, null); // default
-            
+
             var templates = Cache.ToolSet.Template.Where(t => t.RowState != DataRowState.Deleted &&
-                t.ParentTemplateCategoryID == App.TemplateCategoryBookingEmail).ToList();
+                t.ParentTemplateCategoryID == App.TemplateCategoryBookingEmail).OrderBy(t => t.TemplateName).ToList();
             if (templates.Count() > 0)
             {
                 btnBookings.DropDownItems.Add(new ToolStripSeparator());
@@ -1364,7 +1364,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var row = Cache.ToolSet.Template.FindByTemplateID(templateId);
                 if (row != null && App.AskDeleteRow())
                 {
-                    Cache.ToolSet.Template.RemoveTemplateRow(row);
+                    row.Delete();
                     RefreshEmailTemplateMenu();
                 }
             }
