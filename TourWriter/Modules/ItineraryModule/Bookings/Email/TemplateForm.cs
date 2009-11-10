@@ -37,13 +37,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             txtSubject.Text = String.Format(DefaultSubject, itineraryName);
             txtTemplate.Text = _templateFile;
 
+            webBody.Navigate("about:blank");
             LoadTemplateFile(_templateFile);
         }
 
         private void LoadTemplateFile(string file)
         {
-            webBody.Navigate("about:blank");
-
             if (webBody.Document != null)
             {
                 webBody.Document.OpenNew(false);
