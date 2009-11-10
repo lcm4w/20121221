@@ -306,6 +306,9 @@
     <Compile Include="Forms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\OptionConfigs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Modules\DataExtract\UserControls\ContactExport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1039,6 +1042,9 @@
     <EmbeddedResource Include="Modules\AdminModule\UserControls\DbBackup.resx">
       <DependentUpon>DbBackup.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\OptionConfigs.resx">
+      <DependentUpon>OptionConfigs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\AdminModule\UserControls\LicenseManager.resx">
       <DependentUpon>LicenseManager.cs</DependentUpon>

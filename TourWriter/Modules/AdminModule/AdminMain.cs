@@ -294,11 +294,12 @@ namespace TourWriter.Modules.AdminModule
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem8 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem9 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem10 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
-            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup ultraExplorerBarGroup3 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem11 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
+            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup ultraExplorerBarGroup3 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem12 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem13 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem14 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
+            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem15 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminMain));
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -320,7 +321,6 @@ namespace TourWriter.Modules.AdminModule
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AdminMenu)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -395,14 +395,17 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem6.Key = "ServiceConfigs";
             ultraExplorerBarItem6.Text = "Service configs";
             ultraExplorerBarItem6.ToolTipText = "Setup the various service types and their configurations";
-            ultraExplorerBarItem7.Key = "Locations";
-            ultraExplorerBarItem7.Text = "Locations";
-            ultraExplorerBarItem8.Key = "AgentLabels";
-            ultraExplorerBarItem8.Text = "Agent labels";
-            ultraExplorerBarItem9.Key = "Currency";
-            ultraExplorerBarItem9.Text = "Currencies";
-            ultraExplorerBarItem10.Key = "Accounting";
-            ultraExplorerBarItem10.Text = "Accounting setup";
+            ultraExplorerBarItem7.Key = "OptionConfigs";
+            ultraExplorerBarItem7.Text = "Option configs";
+            ultraExplorerBarItem7.ToolTipText = "Set up Option types and configurations";
+            ultraExplorerBarItem8.Key = "Locations";
+            ultraExplorerBarItem8.Text = "Locations";
+            ultraExplorerBarItem9.Key = "AgentLabels";
+            ultraExplorerBarItem9.Text = "Agent labels";
+            ultraExplorerBarItem10.Key = "Currency";
+            ultraExplorerBarItem10.Text = "Currencies";
+            ultraExplorerBarItem11.Key = "Accounting";
+            ultraExplorerBarItem11.Text = "Accounting setup";
             ultraExplorerBarGroup2.Items.AddRange(new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem[] {
             ultraExplorerBarItem4,
             ultraExplorerBarItem5,
@@ -410,26 +413,27 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem7,
             ultraExplorerBarItem8,
             ultraExplorerBarItem9,
-            ultraExplorerBarItem10});
+            ultraExplorerBarItem10,
+            ultraExplorerBarItem11});
             ultraExplorerBarGroup2.Key = "DataSetup";
             ultraExplorerBarGroup2.Text = "Data setup";
-            ultraExplorerBarItem11.Key = "EmailSettings";
-            ultraExplorerBarItem11.Text = "Email settings";
-            ultraExplorerBarItem11.ToolTipText = "Configure email related settings";
-            ultraExplorerBarItem12.Key = "FolderSettings";
-            ultraExplorerBarItem12.Text = "Folder  settings";
-            ultraExplorerBarItem12.ToolTipText = "Set default folder paths etc...";
-            ultraExplorerBarItem13.Key = "DbBackup";
-            ultraExplorerBarItem13.Text = "Database";
-            ultraExplorerBarItem13.ToolTipText = "Perform backup action on the database";
-            ultraExplorerBarItem14.Key = "LicenseManager";
-            ultraExplorerBarItem14.Text = "Licensing";
-            ultraExplorerBarItem14.ToolTipText = "TourWriter subscription license";
+            ultraExplorerBarItem12.Key = "EmailSettings";
+            ultraExplorerBarItem12.Text = "Email settings";
+            ultraExplorerBarItem12.ToolTipText = "Configure email related settings";
+            ultraExplorerBarItem13.Key = "FolderSettings";
+            ultraExplorerBarItem13.Text = "Folder  settings";
+            ultraExplorerBarItem13.ToolTipText = "Set default folder paths etc...";
+            ultraExplorerBarItem14.Key = "DbBackup";
+            ultraExplorerBarItem14.Text = "Database";
+            ultraExplorerBarItem14.ToolTipText = "Perform backup action on the database";
+            ultraExplorerBarItem15.Key = "LicenseManager";
+            ultraExplorerBarItem15.Text = "Licensing";
+            ultraExplorerBarItem15.ToolTipText = "TourWriter subscription license";
             ultraExplorerBarGroup3.Items.AddRange(new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem[] {
-            ultraExplorerBarItem11,
             ultraExplorerBarItem12,
             ultraExplorerBarItem13,
-            ultraExplorerBarItem14});
+            ultraExplorerBarItem14,
+            ultraExplorerBarItem15});
             ultraExplorerBarGroup3.Key = "Administration";
             ultraExplorerBarGroup3.Text = "Administration";
             this.AdminMenu.Groups.AddRange(new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup[] {
@@ -590,7 +594,6 @@ namespace TourWriter.Modules.AdminModule
             this.Controls.SetChildIndex(this.panel2, 0);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.AdminMenu)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
