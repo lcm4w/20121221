@@ -8,18 +8,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     class QuoteTable : DataTable
     {
-        private readonly ItinerarySet itinerarySet;
+        private readonly ItinerarySet _itinerarySet;
         private enum CostTypes { Client, Staff, Foc };
 
         public QuoteTable(ItinerarySet itinerarySet, IEnumerable<ToolSet.OptionTypeRow> optionTypes)
         {
-            this.itinerarySet = itinerarySet;
+            _itinerarySet = itinerarySet;
 
             if (Columns.Count == 0)
                 BuildTableSchema(itinerarySet.ItineraryPax, optionTypes);
         }
 
-        private static List<List<ItinerarySet.PurchaseItemRow>> GetPurchaseItemGroups(DataTable items)
+        private static IEnumerable<List<ItinerarySet.PurchaseItemRow>> GetPurchaseItemGroups(DataTable items)
         {
             // NOTE: based grouping on common PurchaseLineId then RateId, eg all options with common RateId.
 
@@ -65,6 +65,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // service info
             Columns.AddRange(new[]
                                  {
+                                     new DataColumn("PurchaseItemID", typeof (string)),
                                      new DataColumn("SupplierName", typeof (String)),
                                      new DataColumn("ServiceName", typeof (String)),
                                      new DataColumn("ServiceType", typeof (String)),
@@ -142,11 +143,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         }
 
         private DataColumn GetPaxColumn(ItinerarySet.ItineraryPaxRow key)
-        {
-            foreach (DataColumn c in Columns)
-                if (c is PaxColumn && ((PaxColumn)c).Key == key)
-                    return c;
-            return null;
+        {            
+            return Columns.Cast<DataColumn>().FirstOrDefault(c => c is PaxColumn && ((PaxColumn) c).Key == key);
         }
 
         private SuppliementsColumn GetSuppliementsColumn(int key)
@@ -181,11 +179,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     var totalGross = item.Gross*(decimal) item.NumberOfDays;
                     row["Gross"] = totalGross + (row["Gross"] != DBNull.Value ? (decimal)row["Gross"] : 0);
-                    RowPopulatePax(row, item, costType);
+                    RowPopulatePaxColumns(row, item, costType);
                 }
                 if (addSupplimentItem)
                 {
-                    RowPopulateSuppliment(row, item);
+                    RowPopulateSupplimentColumns(row, item);
                 }
 
                 // validate
@@ -197,6 +195,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             row.ItemArray = new[]
                                 {
+                                    item.PurchaseItemID,
                                     item.PurchaseLineRow.SupplierName,
                                     item.ServiceName,
                                     item.ServiceTypeName,
@@ -206,21 +205,21 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                 };
         }
 
-        private void RowPopulatePax(DataRow row, ItinerarySet.PurchaseItemRow item, CostTypes costType)
+        private void RowPopulatePaxColumns(DataRow row, ItinerarySet.PurchaseItemRow item, CostTypes costType)
         {
-            foreach (ItinerarySet.ItineraryPaxRow pax in itinerarySet.ItineraryPax.Rows)
+            foreach (ItinerarySet.ItineraryPaxRow pax in _itinerarySet.ItineraryPax.Rows)
             {
                 var paxCol = GetPaxColumn(pax);
-                if (paxCol == null) return;
+                if (paxCol == null) continue;
 
                 var paxMultiplier = RowGetPaxChargeMultiplier(item, pax, costType);
-                var newVal = item.Gross * (decimal)item.NumberOfDays * paxMultiplier;
-                var oldVal = row[paxCol] != DBNull.Value ? (decimal) row[paxCol] : 0;
+                var newVal = (double)item.Gross * item.NumberOfDays * paxMultiplier;
+                var oldVal = row[paxCol] != DBNull.Value ? (double)row[paxCol] : 0;
                 row[paxCol] = oldVal + newVal;
             }
         }
 
-        private void RowPopulateSuppliment(DataRow row, ItinerarySet.PurchaseItemRow item)
+        private void RowPopulateSupplimentColumns(DataRow row, ItinerarySet.PurchaseItemRow item)
         {
             var supCol = GetSuppliementsColumn(item.OptionTypeID);
             if (supCol == null) return;
@@ -250,38 +249,51 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             return false;
         }
 
-        private decimal RowGetPaxChargeMultiplier(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax, CostTypes costType)
-        {
+        private double RowGetPaxChargeMultiplier(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax, CostTypes costType)
+        {   
+            var ovrride = item.GetItineraryPaxOverrideRows().
+                Where(o => o.ItineraryPaxID == pax.ItineraryPaxID && o.PurchaseItemID == item.PurchaseItemID).FirstOrDefault();
+
+            double memberRooms = ovrride != null && !ovrride.IsMemberRoomsNull() ? ovrride.MemberRooms : pax.MemberRooms;
+            double memberCount = ovrride != null && !ovrride.IsMemberCountNull() ? ovrride.MemberCount : pax.MemberCount;
+            double staffRooms = ovrride != null && !ovrride.IsStaffRoomsNull() ? ovrride.StaffRooms : pax.StaffRooms;
+            double staffCount = ovrride != null && !ovrride.IsStaffCountNull() ? ovrride.StaffCount : pax.StaffCount;
+
             switch (costType)
             {
                 case CostTypes.Client:
                     {
                         return
-                            (item.ChargeType == "ROOM") ? (decimal)pax.MemberRooms / pax.MemberCount :
-                            (item.ChargeType == "GROUP") ? (decimal)1 / pax.MemberCount :
+                            (item.ChargeType == "ROOM" ) ? (memberCount != 0 ? memberRooms / memberCount : 0) :
+                            (item.ChargeType == "GROUP") ? (memberCount != 0 ? 1 / memberCount : 0) :
                             1;
                     }
                 case CostTypes.Staff:
                     {
-                        return (decimal)pax.StaffCount / pax.MemberCount;
+                       // return memberCount != 0 ? staffRooms / memberCount : 0;
+
+                        return
+                            (item.ChargeType == "ROOM") ? (memberCount != 0 ? staffRooms / memberCount : 0) :
+                            (item.ChargeType == "PAX") ? (memberCount != 0 ? staffCount / memberCount : 0) :
+                            0;
                     }
                 case CostTypes.Foc:
                     {
                         var foc = RowGetPaxFocs(item, pax);
-                        return -(foc/pax.MemberCount);
+                        return memberCount != 0 ? -(foc/memberCount) : 0;
                     }
                 default: return 1;
             }
         }
 
-        private decimal RowGetPaxFocs(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax)
+        private double RowGetPaxFocs(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax)
         {
-            decimal qty = (item.ChargeType == "ROOM")
+            double qty = (item.ChargeType == "ROOM")
                               ? pax.MemberRooms + pax.StaffRooms // total rooms
                               : pax.MemberCount + pax.StaffCount;// total pax
 
             var q =
-                itinerarySet.ServiceFoc.Where(foc =>
+                _itinerarySet.ServiceFoc.Where(foc =>
                     foc.RowState != DataRowState.Deleted && foc.ServiceID == item.ServiceID && qty >= foc.UnitsUsed).
                     Select(foc => foc.UnitsFree);
 

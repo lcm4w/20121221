@@ -92,7 +92,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     Cursor = Cursors.WaitCursor;
                     Application.DoEvents();
                     supplierSet = new BusinessLogic.Supplier().GetSupplierSet(supplierId);
-                    serviceEditor1.SupplierSet = supplierSet;
+                    serviceEditor1.SupplierSet = supplierSet; 
+                    tempItinerarySet.ItineraryPaxOverride.Clear();
                     tempItinerarySet.PurchaseItem.Clear();
                 }
                 catch (Exception ex)

@@ -66,6 +66,8 @@ namespace TourWriter.Info {
         
         private ServiceFocDataTable tableServiceFoc;
         
+        private ItineraryPaxOverrideDataTable tableItineraryPaxOverride;
+        
         private global::System.Data.DataRelation relationPaymentTermItinerary;
         
         private global::System.Data.DataRelation relationItineraryItineraryPax;
@@ -97,6 +99,10 @@ namespace TourWriter.Info {
         private global::System.Data.DataRelation relationFK_ItineraryMember_ItineraryPayment;
         
         private global::System.Data.DataRelation relationItinerarySaleItinerarySaleAllocation;
+        
+        private global::System.Data.DataRelation relationFK_ItineraryPax_ItineraryPaxOverride;
+        
+        private global::System.Data.DataRelation relationFK_PurchaseItem_ItineraryPaxOverride;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -188,6 +194,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ServiceFoc"] != null)) {
                     base.Tables.Add(new ServiceFocDataTable(ds.Tables["ServiceFoc"]));
+                }
+                if ((ds.Tables["ItineraryPaxOverride"] != null)) {
+                    base.Tables.Add(new ItineraryPaxOverrideDataTable(ds.Tables["ItineraryPaxOverride"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -419,6 +428,16 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ItineraryPaxOverrideDataTable ItineraryPaxOverride {
+            get {
+                return this.tableItineraryPaxOverride;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -546,6 +565,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ServiceFoc"] != null)) {
                     base.Tables.Add(new ServiceFocDataTable(ds.Tables["ServiceFoc"]));
+                }
+                if ((ds.Tables["ItineraryPaxOverride"] != null)) {
+                    base.Tables.Add(new ItineraryPaxOverrideDataTable(ds.Tables["ItineraryPaxOverride"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -706,6 +728,12 @@ namespace TourWriter.Info {
                     this.tableServiceFoc.InitVars();
                 }
             }
+            this.tableItineraryPaxOverride = ((ItineraryPaxOverrideDataTable)(base.Tables["ItineraryPaxOverride"]));
+            if ((initTable == true)) {
+                if ((this.tableItineraryPaxOverride != null)) {
+                    this.tableItineraryPaxOverride.InitVars();
+                }
+            }
             this.relationPaymentTermItinerary = this.Relations["PaymentTermItinerary"];
             this.relationItineraryItineraryPax = this.Relations["ItineraryItineraryPax"];
             this.relationItineraryItineraryMarginOverride = this.Relations["ItineraryItineraryMarginOverride"];
@@ -722,6 +750,8 @@ namespace TourWriter.Info {
             this.relationItineraryItineraryPubFile = this.Relations["ItineraryItineraryPubFile"];
             this.relationFK_ItineraryMember_ItineraryPayment = this.Relations["FK_ItineraryMember_ItineraryPayment"];
             this.relationItinerarySaleItinerarySaleAllocation = this.Relations["ItinerarySaleItinerarySaleAllocation"];
+            this.relationFK_ItineraryPax_ItineraryPaxOverride = this.Relations["FK_ItineraryPax_ItineraryPaxOverride"];
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -775,6 +805,8 @@ namespace TourWriter.Info {
             base.Tables.Add(this.tableItinerarySaleAllocation);
             this.tableServiceFoc = new ServiceFocDataTable();
             base.Tables.Add(this.tableServiceFoc);
+            this.tableItineraryPaxOverride = new ItineraryPaxOverrideDataTable();
+            base.Tables.Add(this.tableItineraryPaxOverride);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermItinerary", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
@@ -888,6 +920,20 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.ItineraryPaxIDColumn});
+            this.tableItineraryPaxOverride.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn});
+            this.tableItineraryPaxOverride.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             this.relationPaymentTermItinerary = new global::System.Data.DataRelation("PaymentTermItinerary", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItinerary.PaymentTermIDColumn}, false);
@@ -952,6 +998,14 @@ namespace TourWriter.Info {
                         this.tableItinerarySale.ItinerarySaleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItinerarySaleAllocation.ItinerarySaleIDColumn}, false);
             this.Relations.Add(this.relationItinerarySaleItinerarySaleAllocation);
+            this.relationFK_ItineraryPax_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.ItineraryPaxIDColumn}, false);
+            this.Relations.Add(this.relationFK_ItineraryPax_ItineraryPaxOverride);
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
+            this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1082,6 +1136,12 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeItineraryPaxOverride() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void SchemaChanged(object sender, global::System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == global::System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
@@ -1197,6 +1257,9 @@ namespace TourWriter.Info {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void ServiceFocRowChangeEventHandler(object sender, ServiceFocRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void ItineraryPaxOverrideRowChangeEventHandler(object sender, ItineraryPaxOverrideRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -2523,7 +2586,7 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryPaxRow AddItineraryPaxRow(string ItineraryPaxName, ItineraryRow parentItineraryRowByItineraryItineraryPax, int MemberCount, int MemberRooms, int StaffCount, int StaffRooms) {
+            public ItineraryPaxRow AddItineraryPaxRow(string ItineraryPaxName, ItineraryRow parentItineraryRowByItineraryItineraryPax, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms) {
                 ItineraryPaxRow rowItineraryPaxRow = ((ItineraryPaxRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2585,11 +2648,11 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnItineraryID);
                 this.columnMemberCount = new global::System.Data.DataColumn("MemberCount", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMemberCount);
-                this.columnMemberRooms = new global::System.Data.DataColumn("MemberRooms", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnMemberRooms = new global::System.Data.DataColumn("MemberRooms", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMemberRooms);
                 this.columnStaffCount = new global::System.Data.DataColumn("StaffCount", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStaffCount);
-                this.columnStaffRooms = new global::System.Data.DataColumn("StaffRooms", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnStaffRooms = new global::System.Data.DataColumn("StaffRooms", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStaffRooms);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryPaxID}, true));
@@ -10097,6 +10160,342 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class ItineraryPaxOverrideDataTable : global::System.Data.TypedTableBase<ItineraryPaxOverrideRow> {
+            
+            private global::System.Data.DataColumn columnPurchaseItemID;
+            
+            private global::System.Data.DataColumn columnItineraryPaxID;
+            
+            private global::System.Data.DataColumn columnMemberCount;
+            
+            private global::System.Data.DataColumn columnMemberRooms;
+            
+            private global::System.Data.DataColumn columnStaffCount;
+            
+            private global::System.Data.DataColumn columnStaffRooms;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideDataTable() {
+                this.TableName = "ItineraryPaxOverride";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ItineraryPaxOverrideDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected ItineraryPaxOverrideDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PurchaseItemIDColumn {
+                get {
+                    return this.columnPurchaseItemID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItineraryPaxIDColumn {
+                get {
+                    return this.columnItineraryPaxID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MemberCountColumn {
+                get {
+                    return this.columnMemberCount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MemberRoomsColumn {
+                get {
+                    return this.columnMemberRooms;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StaffCountColumn {
+                get {
+                    return this.columnStaffCount;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StaffRoomsColumn {
+                get {
+                    return this.columnStaffRooms;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow this[int index] {
+                get {
+                    return ((ItineraryPaxOverrideRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ItineraryPaxOverrideRowChangeEventHandler ItineraryPaxOverrideRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ItineraryPaxOverrideRowChangeEventHandler ItineraryPaxOverrideRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ItineraryPaxOverrideRowChangeEventHandler ItineraryPaxOverrideRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ItineraryPaxOverrideRowChangeEventHandler ItineraryPaxOverrideRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddItineraryPaxOverrideRow(ItineraryPaxOverrideRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow AddItineraryPaxOverrideRow(PurchaseItemRow parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride, ItineraryPaxRow parentItineraryPaxRowByFK_ItineraryPax_ItineraryPaxOverride, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms) {
+                ItineraryPaxOverrideRow rowItineraryPaxOverrideRow = ((ItineraryPaxOverrideRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        MemberCount,
+                        MemberRooms,
+                        StaffCount,
+                        StaffRooms};
+                if ((parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride != null)) {
+                    columnValuesArray[0] = parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride[0];
+                }
+                if ((parentItineraryPaxRowByFK_ItineraryPax_ItineraryPaxOverride != null)) {
+                    columnValuesArray[1] = parentItineraryPaxRowByFK_ItineraryPax_ItineraryPaxOverride[0];
+                }
+                rowItineraryPaxOverrideRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowItineraryPaxOverrideRow);
+                return rowItineraryPaxOverrideRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow FindByPurchaseItemIDItineraryPaxID(int PurchaseItemID, int ItineraryPaxID) {
+                return ((ItineraryPaxOverrideRow)(this.Rows.Find(new object[] {
+                            PurchaseItemID,
+                            ItineraryPaxID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                ItineraryPaxOverrideDataTable cln = ((ItineraryPaxOverrideDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new ItineraryPaxOverrideDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnPurchaseItemID = base.Columns["PurchaseItemID"];
+                this.columnItineraryPaxID = base.Columns["ItineraryPaxID"];
+                this.columnMemberCount = base.Columns["MemberCount"];
+                this.columnMemberRooms = base.Columns["MemberRooms"];
+                this.columnStaffCount = base.Columns["StaffCount"];
+                this.columnStaffRooms = base.Columns["StaffRooms"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnPurchaseItemID = new global::System.Data.DataColumn("PurchaseItemID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPurchaseItemID);
+                this.columnItineraryPaxID = new global::System.Data.DataColumn("ItineraryPaxID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItineraryPaxID);
+                this.columnMemberCount = new global::System.Data.DataColumn("MemberCount", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMemberCount);
+                this.columnMemberRooms = new global::System.Data.DataColumn("MemberRooms", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMemberRooms);
+                this.columnStaffCount = new global::System.Data.DataColumn("StaffCount", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStaffCount);
+                this.columnStaffRooms = new global::System.Data.DataColumn("StaffRooms", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStaffRooms);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnPurchaseItemID,
+                                this.columnItineraryPaxID}, true));
+                this.columnPurchaseItemID.AllowDBNull = false;
+                this.columnItineraryPaxID.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow NewItineraryPaxOverrideRow() {
+                return ((ItineraryPaxOverrideRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new ItineraryPaxOverrideRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(ItineraryPaxOverrideRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ItineraryPaxOverrideRowChanged != null)) {
+                    this.ItineraryPaxOverrideRowChanged(this, new ItineraryPaxOverrideRowChangeEvent(((ItineraryPaxOverrideRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ItineraryPaxOverrideRowChanging != null)) {
+                    this.ItineraryPaxOverrideRowChanging(this, new ItineraryPaxOverrideRowChangeEvent(((ItineraryPaxOverrideRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ItineraryPaxOverrideRowDeleted != null)) {
+                    this.ItineraryPaxOverrideRowDeleted(this, new ItineraryPaxOverrideRowChangeEvent(((ItineraryPaxOverrideRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ItineraryPaxOverrideRowDeleting != null)) {
+                    this.ItineraryPaxOverrideRowDeleting(this, new ItineraryPaxOverrideRowChangeEvent(((ItineraryPaxOverrideRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveItineraryPaxOverrideRow(ItineraryPaxOverrideRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ItinerarySet ds = new ItinerarySet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "ItineraryPaxOverrideDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class PaymentTermRow : global::System.Data.DataRow {
@@ -11499,13 +11898,13 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int MemberRooms {
+            public double MemberRooms {
                 get {
                     if (this.IsMemberRoomsNull()) {
-                        return 0;
+                        return 0D;
                     }
                     else {
-                        return ((int)(this[this.tableItineraryPax.MemberRoomsColumn]));
+                        return ((double)(this[this.tableItineraryPax.MemberRoomsColumn]));
                     }
                 }
                 set {
@@ -11531,13 +11930,13 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int StaffRooms {
+            public double StaffRooms {
                 get {
                     if (this.IsStaffRoomsNull()) {
-                        return 0;
+                        return 0D;
                     }
                     else {
-                        return ((int)(this[this.tableItineraryPax.StaffRoomsColumn]));
+                        return ((double)(this[this.tableItineraryPax.StaffRoomsColumn]));
                     }
                 }
                 set {
@@ -11602,6 +12001,17 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStaffRoomsNull() {
                 this[this.tableItineraryPax.StaffRoomsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow[] GetItineraryPaxOverrideRows() {
+                if ((this.Table.ChildRelations["FK_ItineraryPax_ItineraryPaxOverride"] == null)) {
+                    return new ItineraryPaxOverrideRow[0];
+                }
+                else {
+                    return ((ItineraryPaxOverrideRow[])(base.GetChildRows(this.Table.ChildRelations["FK_ItineraryPax_ItineraryPaxOverride"])));
+                }
             }
         }
         
@@ -12904,6 +13314,17 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGrossTotalConvertedNull() {
                 this[this.tablePurchaseItem.GrossTotalConvertedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow[] GetItineraryPaxOverrideRows() {
+                if ((this.Table.ChildRelations["FK_PurchaseItem_ItineraryPaxOverride"] == null)) {
+                    return new ItineraryPaxOverrideRow[0];
+                }
+                else {
+                    return ((ItineraryPaxOverrideRow[])(base.GetChildRows(this.Table.ChildRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16887,6 +17308,177 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class ItineraryPaxOverrideRow : global::System.Data.DataRow {
+            
+            private ItineraryPaxOverrideDataTable tableItineraryPaxOverride;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ItineraryPaxOverrideRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableItineraryPaxOverride = ((ItineraryPaxOverrideDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int PurchaseItemID {
+                get {
+                    return ((int)(this[this.tableItineraryPaxOverride.PurchaseItemIDColumn]));
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.PurchaseItemIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ItineraryPaxID {
+                get {
+                    return ((int)(this[this.tableItineraryPaxOverride.ItineraryPaxIDColumn]));
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.ItineraryPaxIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int MemberCount {
+                get {
+                    try {
+                        return ((int)(this[this.tableItineraryPaxOverride.MemberCountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MemberCount\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.MemberCountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double MemberRooms {
+                get {
+                    try {
+                        return ((double)(this[this.tableItineraryPaxOverride.MemberRoomsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MemberRooms\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.MemberRoomsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int StaffCount {
+                get {
+                    try {
+                        return ((int)(this[this.tableItineraryPaxOverride.StaffCountColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StaffCount\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.StaffCountColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double StaffRooms {
+                get {
+                    try {
+                        return ((double)(this[this.tableItineraryPaxOverride.StaffRoomsColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StaffRooms\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.StaffRoomsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxRow ItineraryPaxRow {
+                get {
+                    return ((ItineraryPaxRow)(this.GetParentRow(this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseItemRow PurchaseItemRow {
+                get {
+                    return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMemberCountNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.MemberCountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMemberCountNull() {
+                this[this.tableItineraryPaxOverride.MemberCountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMemberRoomsNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.MemberRoomsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMemberRoomsNull() {
+                this[this.tableItineraryPaxOverride.MemberRoomsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStaffCountNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.StaffCountColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStaffCountNull() {
+                this[this.tableItineraryPaxOverride.StaffCountColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStaffRoomsNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.StaffRoomsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStaffRoomsNull() {
+                this[this.tableItineraryPaxOverride.StaffRoomsColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -17586,6 +18178,40 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ServiceFocRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class ItineraryPaxOverrideRowChangeEvent : global::System.EventArgs {
+            
+            private ItineraryPaxOverrideRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRowChangeEvent(ItineraryPaxOverrideRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryPaxOverrideRow Row {
                 get {
                     return this.eventRow;
                 }
