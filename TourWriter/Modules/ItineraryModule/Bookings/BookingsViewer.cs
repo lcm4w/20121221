@@ -1370,6 +1370,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
+        private void paxOverrideMenuItem_Click(object sender, EventArgs e)
+        {
+            if (grid.ActiveRow == null) return;
+
+            var id = Convert.ToInt32(grid.ActiveRow.Cells["PurchaseItemID"].Value);
+            new ItineraryPaxOverride(itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == id).FirstOrDefault()).ShowDialog();
+        }
+
         #endregion
     }
 

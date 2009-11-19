@@ -96,7 +96,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton(); 
+            this.paxOverrideMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).BeginInit();
@@ -471,6 +472,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.editToolStripMenuItem,
             this.copyToolStripMenuItem,
             this.deleteToolStripMenuItem,
+            this.paxOverrideMenuItem,
             this.changeOptionToolStripMenuItem,
             this.editFlagsToolStripMenuItem});
             this.bookingGridMenu.Name = "contextMenuStrip1";
@@ -727,6 +729,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.ToolTipText = "Delete selected booking and related items";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // paxOverrideMenuItem
+            // 
+            this.paxOverrideMenuItem.Name = "paxOverrideMenuItem";
+            this.paxOverrideMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.paxOverrideMenuItem.Text = "Pax override";
+            this.paxOverrideMenuItem.Click += new System.EventHandler(this.paxOverrideMenuItem_Click);
+            // 
             // BookingsViewer
             // 
             this.AutoScroll = true;
@@ -824,5 +833,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripMenuItem changeOptionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editFlagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnEditFlags;
+        private System.Windows.Forms.ToolStripMenuItem paxOverrideMenuItem;
     }
 }
