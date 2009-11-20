@@ -272,6 +272,14 @@ namespace TourWriter.Services
             #endregion
         }
 
+        internal static void DisableRowSelect(UltraGrid grid)
+        {
+            grid.DisplayLayout.Override.ActiveRowAppearance.BackColor = grid.DisplayLayout.Override.RowAppearance.BackColor;
+            grid.DisplayLayout.Override.ActiveRowAppearance.ForeColor = grid.DisplayLayout.Override.RowAppearance.ForeColor;
+            grid.DisplayLayout.Override.SelectedRowAppearance.BackColor = grid.DisplayLayout.Override.RowAppearance.BackColor;
+            grid.DisplayLayout.Override.SelectedRowAppearance.ForeColor = grid.DisplayLayout.Override.RowAppearance.ForeColor;
+        }
+
         /// <summary>
         /// Sets the default group appearance of a grid.
         /// </summary>
