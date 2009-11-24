@@ -1372,6 +1372,7 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.11.24.sql" />
     <None Include="Resources\Run.bmp" />
     <None Include="Resources\Refresh.bmp" />
     <None Include="Resources\Save.bmp" />
