@@ -43,8 +43,15 @@ namespace TourWriter.Modules.StartPage
         {
             if (webBrowser1.IsDisposed) return;
 
-            if (!webBrowser1.Url.Equals("about:blank"))
-                webBrowser1.Refresh();
+            try
+            {
+                if (!webBrowser1.Url.Equals("about:blank"))
+                    webBrowser1.Refresh();
+            }
+            catch (System.Exception ex)
+            {
+                TourWriter.Services.ErrorHelper.SendEmail(ex, true);
+            }
         }
 
         protected override string GetDisplayName()
