@@ -161,8 +161,6 @@ namespace TourWriter.Forms
         {
             MenuHelper m = new MenuHelper(this, menu);
             m.HandleMenuItem_Open(node);
-
-            MenuHelper.RefreshSort(menu);
         }
 
         private void HandleMenuItem_Open(UltraTree menu, SelectedNodesCollection nodes)
