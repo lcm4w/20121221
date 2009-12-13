@@ -91,6 +91,11 @@ namespace TourWriter.Modules.SupplierModule
             get { return gridServices; }
         }
 
+        internal UltraGrid OptionsGrid
+        {
+            get { return gridOptions; }
+        }
+
         internal DateTime DefaultDate
         {
             get { return defaultDate; }

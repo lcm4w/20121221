@@ -89,7 +89,7 @@ namespace TourWriter.Forms
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (SelectedOption == null)
+            if (SelectedOption == null || serviceEditor1.OptionsGrid.Rows.VisibleRowCount == 0)
             {
                 App.ShowError("Please select an option.");
                 DialogResult = DialogResult.None;
