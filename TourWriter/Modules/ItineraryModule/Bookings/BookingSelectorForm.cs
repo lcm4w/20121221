@@ -209,7 +209,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 var item = tempItinerarySet.PurchaseItem[tempItinerarySet.PurchaseItem.Count - 1];
                 if (!item.IsQuantityNull()) qty = item.Quantity;
-                if (item.IsNumberOfDaysNull()) days = item.NumberOfDays;
+                if (!item.IsNumberOfDaysNull()) days = item.NumberOfDays;
             }
             
             // add item.
