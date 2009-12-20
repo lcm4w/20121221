@@ -1451,7 +1451,7 @@ namespace TourWriter.Modules.SupplierModule
 
             int id = supplierSet.Supplier[0].PaymentTermID;
             SupplierSet.PaymentTermRow row = supplierSet.PaymentTerm.FindByPaymentTermID(id);
-            txtPaymentTerms.Text = row.GetCustomText(Cache.ToolSet.PaymentDue);
+            if (row != null) txtPaymentTerms.Text = row.GetCustomText(Cache.ToolSet.PaymentDue);
         }
 
         /// <summary>
