@@ -267,12 +267,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private void ClearSendEmails()
         {
-            for (int i = grid.Rows.Count - 1; i > -1; i--)
+            for (var i = grid.Rows.Count - 1; i > -1; i--)
             {
-                EmailMessage email =
-                    ((BookingEmailInfo)grid.Rows[i].Cells["BookingEmailInfo"].Value).EmailMessage;
+                var o = grid.Rows[i].Cells["BookingEmailInfo"].Value;
+                if (o == null) continue;
 
-                if (email._Status == EmailMessage.StatusType.Sent)
+                if (((BookingEmailInfo)o).EmailMessage._Status == EmailMessage.StatusType.Sent)
                 {
                     grid.Rows[i].Delete(false);
                 }
