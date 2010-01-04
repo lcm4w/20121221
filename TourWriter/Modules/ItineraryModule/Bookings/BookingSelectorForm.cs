@@ -202,23 +202,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             SupplierSet.OptionRow option = supplierSet.Option.FindByOptionID(optionId);
             SupplierSet.ServiceRow service = option.RateRow.ServiceRow;
             ToolSet.ServiceTypeRow stype = Cache.ToolSet.ServiceType.FindByServiceTypeID(service.ServiceTypeID);
-
-            // get defaults
-            double? qty = null, days = null;
-            if (tempItinerarySet.PurchaseItem.Count > 0)
-            {
-                var item = tempItinerarySet.PurchaseItem[tempItinerarySet.PurchaseItem.Count - 1];
-                if (!item.IsQuantityNull()) qty = item.Quantity;
-                if (!item.IsNumberOfDaysNull()) days = item.NumberOfDays;
-            }
             
             // add item.
             var newItem = tempItinerarySet.PurchaseItem.Add(
                 supplierSet,
                 purchaseLine.PurchaseLineID,
                 service.ServiceName + ((option.OptionName != "") ? (", " + option.OptionName) : ""),
-                qty,
-                days,
+                null,
+                null,
                 option.Net,
                 option.Gross,
                 GetNextDefaultDate(),
