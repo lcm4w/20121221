@@ -36,7 +36,17 @@ namespace TourWriter.UserControls.Reports
             {
                 if (added.Contains(sqlExpression.ParameterName)) continue;
                 added.Add(sqlExpression.ParameterName);
-                var editor = new OptionEdit(sqlExpression, _defaultParams);
+
+                OptionEdit editor;
+                try
+                {
+                    editor = new OptionEdit(sqlExpression, _defaultParams);
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    throw new KeyNotFoundException(string.Format(
+                        "Sql parameter '{0}' not found for report file '{1}'", sqlExpression.ParameterName, _reportFile), ex);
+                }
                 pnlLayout.Controls.Add(editor);
             }
         }
