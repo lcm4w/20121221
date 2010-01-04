@@ -824,8 +824,12 @@ namespace TourWriter.Forms
                 if (!collection.Exists(node.Key))
                     collection.Add(node);
 
+                _menu.SelectedNodes.Clear();
+                _menu.ActiveNode = null;
+
                 node.Selected = true;
                 node.BringIntoView();
+                _menu.ActiveNode = node;
             }
             catch (ArgumentException ex)
             {
