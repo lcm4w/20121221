@@ -439,18 +439,20 @@ namespace TourWriter.Forms
                         <req>
                             <sid>{0}</sid>
                             <app>{1}</app>
-                            <db>{2}</db>
-                            <os>{3}</os>
-                            <net>{4}</net>
-                            <lic>{5}</lic>
-                            <exp>{6}</exp>
-                            <pid>{7}</pid>
-                            <uid>{8}</uid>
-                            <uem>{9}</uem>
-                            <act>{10}</act>
+                            <rev>{2}</rev>
+                            <db>{3}</db>
+                            <os>{4}</os>
+                            <net>{5}</net>
+                            <lic>{6}</lic>
+                            <exp>{7}</exp>
+                            <pid>{8}</pid>
+                            <uid>{9}</uid>
+                            <uem>{10}</uem>
+                            <act>{11}</act>
                         </req>".Replace(Environment.NewLine, "").Replace(" ", ""),
                     Info.VersionInfo.GetInstallId(),
                     AssemblyInfo.FileVersion,
+                    AssemblyInfo.RevisionNumber,
                     Cache.ToolSet.AppSettings[0].VersionNumber,
                     Environment.OSVersion.Version,
                     App.GetDotNetVersion(),

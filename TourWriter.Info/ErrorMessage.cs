@@ -11,6 +11,7 @@ namespace TourWriter.Info
         public string UtcTime;
         public string InstallId;
         public string AppVersion;
+        public string Revision;
         public string DbVersion;
         public string Connection;
 

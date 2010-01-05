@@ -169,6 +169,7 @@ namespace TourWriter.Services
                 string emailFrom;
                 string installId;
                 string appVersion;
+                string revision;
                 string dbVersion;
                 string connection;
 
@@ -176,6 +177,8 @@ namespace TourWriter.Services
                 catch { emailFrom = "client.app@tourwriter.com"; }
                 try { installId = Cache.ToolSet.AppSettings[0].InstallID.ToString(); }
                 catch { installId = "[failed to load]";  }
+                try { revision = AssemblyInfo.RevisionNumber; }
+                catch { revision = "[failed to load]"; }
                 try { appVersion = AssemblyInfo.FileVersion; }
                 catch { appVersion = "[failed to load]"; }
                 try { dbVersion = Cache.ToolSet.AppSettings[0].VersionNumber; }
@@ -191,6 +194,7 @@ namespace TourWriter.Services
                                        UtcTime = DateTime.UtcNow.ToString("yyyy/MM/dd HH:mm:ss"),
                                        InstallId = installId,
                                        AppVersion = appVersion,
+                                       Revision = revision,
                                        DbVersion = dbVersion,
                                        Connection = connection,
 

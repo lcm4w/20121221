@@ -1,4 +1,6 @@
 using System.Reflection;
+using System.Text.RegularExpressions;
+
 //
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -137,6 +139,15 @@ public class AssemblyInfo
             if (assembly.Location == null) return "0";
             var fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.ProductVersion;
+        }
+    }
+
+    public static string RevisionNumber
+    {
+        get
+        {
+            const string pattern = @"(\w*)(?=\))";
+            return Regex.Match(InformationalVersion, pattern).Value;
         }
     }
 }
