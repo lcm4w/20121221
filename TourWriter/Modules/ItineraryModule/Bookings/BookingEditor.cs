@@ -638,9 +638,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellClickAction = CellClickAction.Edit;
                 }
+                else if (c.Key == "NetTotalConverted")
+                {
+                    c.Header.Caption = "Net";
+                    c.Header.ToolTipText = "Total net cost of item, in your currency";
+                    c.Format = "c";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
                 else if (c.Key == "GrossTotalConverted")
                 {
-                    c.Header.Caption = "Total";
+                    c.Header.Caption = "Gross";
                     c.Header.ToolTipText = "Total gross cost of item, in your currency";
                     c.Format = "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
@@ -656,6 +663,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["StartDate"].Width = 40;
             e.Layout.Bands[0].Columns["NumberOfDays"].Width = 10;
             e.Layout.Bands[0].Columns["Quantity"].Width = 10;
+            e.Layout.Bands[0].Columns["NetTotalConverted"].Width = 40;
             e.Layout.Bands[0].Columns["GrossTotalConverted"].Width = 40;
 
             int index = 0;
@@ -665,6 +673,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["StartDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["NetTotalConverted"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossTotalConverted"].Header.VisiblePosition = index;
 
             //// appearance
