@@ -342,12 +342,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
 		private void DataBind()
 		{
-			gridUsers.SetDataBinding(userSet, "User");			
-			txtUsername.DataBindings.Add( "Text", userSet, "User.Username");
-		    txtDisplayName.DataBindings.Add("Text", userSet, "User.DisplayName");
-			txtEmail.DataBindings.Add("Text", userSet, "User.Email");		
+            userSet.User.DefaultView.RowFilter = App.IsDebugMode ? "" : "UserName <> 'admin'";
+		    gridUsers.DataSource = userSet.User.DefaultView;
 
-			chkDisable.DataBindings.Add("Checked", userSet, "User.IsRecordActive");
+            txtUsername.DataBindings.Add("Text", userSet.User.DefaultView, "Username");
+            txtDisplayName.DataBindings.Add("Text", userSet.User.DefaultView, "DisplayName");
+            txtEmail.DataBindings.Add("Text", userSet.User.DefaultView, "Email");
+
+            chkDisable.DataBindings.Add("Checked", userSet.User.DefaultView, "IsRecordActive");
 		}
 		
 		private void EndEdits()
