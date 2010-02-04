@@ -783,7 +783,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.txtDisplayName.Location = new System.Drawing.Point(97, 42);
             this.txtDisplayName.Name = "txtDisplayName";
             this.txtDisplayName.Size = new System.Drawing.Size(250, 21);
-            this.txtDisplayName.TabIndex = 142;
+            this.txtDisplayName.TabIndex = 2;
             this.toolTip1.SetToolTip(this.txtDisplayName, "This overrides the Itinerary name so that you can show a \'friendly\' name to the c" +
                     "lients (bookings, vouchers, etc)");
             // 
