@@ -351,5 +351,17 @@ namespace TourWriter.Properties {
                 this["BookingSelectorGridHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EmailEditorSkipTemplate {
+            get {
+                return ((bool)(this["EmailEditorSkipTemplate"]));
+            }
+            set {
+                this["EmailEditorSkipTemplate"] = value;
+            }
+        }
     }
 }

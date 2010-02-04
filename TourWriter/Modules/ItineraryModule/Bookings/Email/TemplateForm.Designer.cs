@@ -28,8 +28,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.errorProv = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProv = new System.Windows.Forms.ErrorProvider();
             this.txtFrom = new System.Windows.Forms.TextBox();
             this.txtSubject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,7 +44,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.btnBrowse = new System.Windows.Forms.Button();
             this.webBody = new System.Windows.Forms.WebBrowser();
             this.chkReadReceipt = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).BeginInit();
+            this.chkSkip = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.SuspendLayout();
             // 
             // errorProv
@@ -75,9 +75,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(326, 13);
+            this.label1.Size = new System.Drawing.Size(376, 13);
             this.label1.TabIndex = 30;
-            this.label1.Text = "These details will be used as the template to build all the emails from";
+            this.label1.Text = "These details will be used as the template to build the booking email messages";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // chkSaveCopy
@@ -203,10 +203,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkReadReceipt.Text = "Include a read receipt";
             this.chkReadReceipt.UseVisualStyleBackColor = true;
             // 
+            // chkSkip
+            // 
+            this.chkSkip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSkip.AutoSize = true;
+            this.chkSkip.Location = new System.Drawing.Point(419, 8);
+            this.chkSkip.Name = "chkSkip";
+            this.chkSkip.Size = new System.Drawing.Size(93, 17);
+            this.chkSkip.TabIndex = 41;
+            this.chkSkip.Text = "Skip this page";
+            this.toolTip1.SetToolTip(this.chkSkip, "Go straight to the next page when window opens");
+            this.chkSkip.UseVisualStyleBackColor = true;
+            // 
             // TemplateForm
             // 
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.chkSkip);
             this.Controls.Add(this.chkReadReceipt);
             this.Controls.Add(this.webBody);
             this.Controls.Add(this.btnBrowse);
@@ -224,7 +237,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.Controls.Add(this.txtFrom);
             this.Name = "TemplateForm";
             this.Size = new System.Drawing.Size(591, 453);
-            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,5 +259,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.WebBrowser webBody;
         private System.Windows.Forms.CheckBox chkReadReceipt;
+        private System.Windows.Forms.CheckBox chkSkip;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

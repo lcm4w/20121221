@@ -38,7 +38,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         public BookingEmailForm(ItinerarySet itinerarySet, IEnumerable<int> purchaseLineIdList, string defaultTemplate)
         {
             InitializeComponent();
-
             Size = Settings.Default.EmailEditorSize;
             Location = Settings.Default.EmailEditorLocation;
 
@@ -54,7 +53,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private void BookingEmailForm_Load(object sender, EventArgs e)
         {
+            btnNextOrSend.Select();
             SetActiveWindow(ActiveWindow.Template, ActiveWindow.None);
+            if (_templateForm.SkipTemplate) btnNextOrSend.PerformClick();
         }
 
         private TemplateForm templateForm
@@ -64,6 +65,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 if (_templateForm == null)
                 {
                     _templateForm = new TemplateForm(itinerarySet.Itinerary[0].ItineraryName, _templateFile);
+                    _templateForm.SkipTemplate = Settings.Default.EmailEditorSkipTemplate;
                     AddControlToMainPanel(_templateForm);
                 }
                 return _templateForm;
@@ -170,6 +172,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             Settings.Default.EmailerBccSender = (templateSettings.Bcc.Length > 0);
             Settings.Default.BookingEmailShowPrice = templateSettings.ShowPrices;
             Settings.Default.EmailerReadReceipt = templateSettings.ReadReceipt;
+            Settings.Default.EmailEditorSkipTemplate = _templateForm.SkipTemplate;
             Settings.Default.Save();
         }
 

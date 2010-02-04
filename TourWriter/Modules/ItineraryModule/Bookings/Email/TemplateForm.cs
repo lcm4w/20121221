@@ -12,6 +12,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
     /// </summary>
     public partial class TemplateForm : UserControl
     {
+        public bool SkipTemplate
+        {
+            get { return chkSkip.Checked; }
+            set { chkSkip.Checked = value; }
+        }
         private const string DefaultSubject = "Booking request for {0}";
         private const string ErrorText = "<html><body>Default template text not found...</body></html>";
         private readonly string _defaultTemplateFile = Path.Combine(
