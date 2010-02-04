@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
@@ -30,6 +31,29 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly string tagClientNotes = "[!ClientNotes]";
         private readonly string tagUserName = "[!UserName]";
         private readonly string tagUserEmail = "[!UserEmail]";
+        
+        private const string BookingDetailStartTag = "[!BookingDetailStart]";
+        private const string ItemCountTag = "[!ItemCount]";
+        private const string ItemNameTag = "[!ItemName]";
+        private const string ItemDescTag = "[!ItemDesc]";
+        private const string ItemStartTextTag = "[!ItemStartText]";
+        private const string ItemStartDateTag = "[!ItemStartDate]";
+        private const string ItemEndDateStartTag = "[!ItemEndDateStart]";
+        private const string ItemEndTextTag = "[!ItemEndText]";
+        private const string ItemEndDateTag = "[!ItemEndDate]";
+        private const string ItemLengthTextTag = "[!ItemLengthText]";
+        private const string ItemLengthTag = "[!ItemLength]";
+        private const string ItemEndDateEndTag = "[!ItemEndDateEnd]";
+        private const string ItemQuantityTag = "[!ItemQuantity]";
+        private const string ItemReferenceStartTag = "[!ItemReferenceStart]";
+        private const string ItemReferenceTag = "[!ItemReference]";
+        private const string ItemReferenceEndTag = "[!ItemReferenceEnd]";
+        private const string ItemPriceStartTag = "[!ItemPriceStart]";
+        private const string ItemPriceTag = "[!ItemPrice]";
+        private const string ItemCommissionTag = "[!ItemCommission]";
+        private const string ItemTotalTag = "[!ItemTotal]";
+        private const string ItemPriceEndTag = "[!ItemPriceEnd]";
+        private const string BookingDetailEndTag = "[!BookingDetailEnd]";
 
         private bool showPrices;
         private int supplierId;
@@ -138,13 +162,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, tagSupplierName, supplier.SupplierName);
             template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
             template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
-            template = ReplaceTag(template, tagBookingDetails, BuildBookingDetails(PurchaseLine));
+            template = ReplaceBookingDetailsTag(template);
             template = ReplaceTag(template, tagBookingNotes, BuildBookingNotes(PurchaseLine));
             template = ReplaceTag(template, tagClientNotes, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
             template = ReplaceTag(template, tagUserName, Cache.User.DisplayName);
             template = ReplaceTag(template, tagUserEmail, Cache.User.Email);
 
             return template;
+        }
+
+        private string  ReplaceBookingDetailsTag(string template)
+        {
+            if (template.Contains(BookingDetailStartTag))
+            {
+                return InsertCustomBookingDetails(template, purchaseLine);
+            }
+            return ReplaceTag(template, tagBookingDetails, BuildBookingDetails(PurchaseLine));
         }
 
         private string BuildBookingDetails(ItinerarySet.PurchaseLineRow line)
@@ -198,6 +231,78 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 sbDetails.AppendLine(NewTable(heading, htmlTableTemplate, sb.ToString()));
             }
             return sbDetails.ToString();
+        }
+
+        private string InsertCustomBookingDetails(string template, ItinerarySet.PurchaseLineRow line)
+        {
+            var detailStart = template.IndexOf(BookingDetailStartTag);
+            var detailEnd = template.IndexOf(BookingDetailEndTag) + BookingDetailEndTag.Length;
+            var detailTemplate = template.Substring(detailStart, detailEnd - detailStart);
+
+            var endDateStart = template.IndexOf(ItemEndDateStartTag);
+            var endDateEnd = template.IndexOf(ItemEndDateEndTag) + ItemEndDateEndTag.Length;
+            var endDateTemplate = template.Substring(endDateStart, endDateEnd - endDateStart);
+            
+            var refStart = template.IndexOf(ItemReferenceStartTag);
+            var refEnd = template.IndexOf(ItemReferenceEndTag) + ItemReferenceEndTag.Length;
+            var refTemplate = template.Substring(refStart, refEnd - refStart);
+
+            var priceStart = detailTemplate.IndexOf(ItemPriceStartTag);
+            var priceEnd = detailTemplate.IndexOf(ItemPriceEndTag) + ItemPriceEndTag.Length;
+            var priceTemplate = detailTemplate.Substring(priceStart, priceEnd - priceStart);
+            
+            var i = 1;
+            string bookingDetail = "", detailText;
+            var items = new ArrayList(line.GetPurchaseItemRows());
+            items.Sort(new DateTimeSortComparer());
+            foreach (var item in items.OfType<ItinerarySet.PurchaseItemRow>())
+            {
+                detailText = detailTemplate.Replace(BookingDetailStartTag, "").Replace(BookingDetailEndTag, "");
+                var showEndDate = (!item.IsStartDateNull() && !item.IsNumberOfDaysNull() && item.NumberOfDays >= 1);
+
+                detailText = ReplaceTag(detailText, ItemCountTag, i++.ToString());
+                detailText = ReplaceTag(detailText, ItemNameTag, GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName());
+                detailText = ReplaceTag(detailText, ItemDescTag, item.PurchaseItemName);
+                detailText = ReplaceTag(detailText, ItemStartTextTag, GetBookingStartName(item.PurchaseItemID));
+                detailText = ReplaceTag(detailText, ItemStartDateTag, GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, "d MMMM yyyy"));
+
+                var endDateText = "";
+                if (showEndDate)
+                {
+                    endDateText = endDateTemplate.Replace(ItemEndDateStartTag, "").Replace(ItemEndDateEndTag, "");
+                    endDateText = ReplaceTag(endDateText, ItemEndTextTag, GetBookingEndName(item.PurchaseItemID));
+                    endDateText = ReplaceTag(endDateText, ItemEndDateTag, GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, "d MMMM yyyy", null));
+                    endDateText = ReplaceTag(endDateText, ItemLengthTextTag, GetNumberOfDaysName(item.ServiceTypeID));
+                    endDateText = ReplaceTag(endDateText, ItemLengthTag, item.NumberOfDays.ToString());
+                }
+                detailText = detailText.Replace(endDateTemplate, endDateText);
+
+                detailText = ReplaceTag(detailText, ItemQuantityTag, !item.IsQuantityNull() ? item.Quantity.ToString() : "");
+
+                var refText = "";
+                if (!item.IsBookingReferenceNull())
+                {
+                    refText = refTemplate.Replace(ItemReferenceStartTag, "").Replace(ItemReferenceEndTag, "");
+                    refText = ReplaceTag(refText, ItemReferenceTag, item.BookingReference);
+                }
+                detailText = detailText.Replace(refTemplate, refText);
+
+                var priceText = "";
+                if (showPrices)
+                {
+                    string comm = "", price = "", total = ""; GetBookingPrices(item, ref price, ref comm, ref total);
+
+                    priceText = priceTemplate.Replace(ItemPriceStartTag, "").Replace(ItemPriceEndTag, "");
+                    priceText = ReplaceTag(priceText, ItemPriceTag, price != "0" ? price : "");
+                    priceText = ReplaceTag(priceText, ItemCommissionTag, !string.IsNullOrEmpty(comm) ? comm : "");
+                    priceText = ReplaceTag(priceText, ItemTotalTag, !string.IsNullOrEmpty(total) ? total : "");
+                }
+                detailText = detailText.Replace(priceTemplate, priceText);
+
+                bookingDetail += detailText;
+            }
+            template = template.Replace(detailTemplate, bookingDetail);
+            return template;
         }
 
         private string BuildBookingNotes(ItinerarySet.PurchaseLineRow line)
