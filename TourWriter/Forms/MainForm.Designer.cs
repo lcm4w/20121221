@@ -74,6 +74,9 @@ namespace TourWriter.Forms
             this.contextMenuNew = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuNewFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuCancelPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -188,6 +191,9 @@ namespace TourWriter.Forms
             this.contextMenuSeparator1,
             this.contextMenuAdd,
             this.contextMenuCopy,
+            this.contextMenuCut,
+            this.contextMenuPaste,
+            this.contextMenuCancelPaste,
             this.contextMenuDelete,
             this.contextMenuRename,
             this.contextMenuSeparator2,
@@ -198,6 +204,7 @@ namespace TourWriter.Forms
             this.contextMenuNavigation.OwnerItem = this.menuContacts;
             resources.ApplyResources(this.contextMenuNavigation, "contextMenuNavigation");
             this.contextMenuNavigation.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
+            this.contextMenuNavigation.LostFocus += new System.EventHandler(contextMenuNavigation_LostFocus);
             // 
             // contextMenuOpen
             // 
@@ -240,6 +247,32 @@ namespace TourWriter.Forms
             this.contextMenuCopy.Name = "contextMenuCopy";
             resources.ApplyResources(this.contextMenuCopy, "contextMenuCopy");
             this.contextMenuCopy.Click += new System.EventHandler(this.contextMenuCopy_Click);
+            // 
+            // contextMenuCut
+            // 
+            this.contextMenuCut.Image = global::TourWriter.Properties.Resources.PageCut;
+            this.contextMenuCut.Name = "contextMenuCut";
+            this.contextMenuCut.Text = "Cut";
+            resources.ApplyResources(this.contextMenuCut, "contextMenuCut");
+            this.contextMenuCut.Click += new System.EventHandler(this.contextMenuCut_Click);
+            // 
+            // contextMenuPaste
+            // 
+            this.contextMenuPaste.Image = global::TourWriter.Properties.Resources.PagePaste;
+            this.contextMenuPaste.Name = "contextMenuPaste";
+            this.contextMenuPaste.Text = "Paste";
+            resources.ApplyResources(this.contextMenuPaste, "contextMenuPaste");
+            this.contextMenuPaste.Click += new System.EventHandler(this.contextMenuPaste_Click);
+            this.contextMenuPaste.Enabled = false;
+            // 
+            // contextMenuCancelPaste
+            // 
+            this.contextMenuCancelPaste.Image = global::TourWriter.Properties.Resources.PagePaste;
+            this.contextMenuCancelPaste.Name = "contextMenuCancelPaste";
+            this.contextMenuCancelPaste.Text = "Cancel Paste (ESC)";
+            resources.ApplyResources(this.contextMenuCancelPaste, "contextMenuCancelPaste");
+            this.contextMenuCancelPaste.Click += new System.EventHandler(this.contextMenuCancelPaste_Click);
+            this.contextMenuCancelPaste.Visible = false;
             // 
             // contextMenuDelete
             // 
@@ -880,6 +913,9 @@ namespace TourWriter.Forms
         private System.Windows.Forms.ToolStripMenuItem contextMenuNew;
         private System.Windows.Forms.ToolStripMenuItem contextMenuNewFolder;
         private System.Windows.Forms.ToolStripMenuItem contextMenuCopy;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuCut;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuPaste;
+        private System.Windows.Forms.ToolStripMenuItem contextMenuCancelPaste;
         private System.Windows.Forms.ToolStripMenuItem contextMenuDelete;
         private System.Windows.Forms.ToolStripMenuItem contextMenuRename;
         private System.Windows.Forms.ToolStripSeparator contextMenuSeparator2;

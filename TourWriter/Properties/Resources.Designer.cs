@@ -354,6 +354,13 @@ namespace TourWriter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap PageCut {
+            get {
+                object obj = ResourceManager.GetObject("PageCut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap PageDelete {
             get {
                 object obj = ResourceManager.GetObject("PageDelete", resourceCulture);
@@ -378,6 +385,13 @@ namespace TourWriter.Properties {
         internal static System.Drawing.Bitmap PageGo {
             get {
                 object obj = ResourceManager.GetObject("PageGo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PagePaste {
+            get {
+                object obj = ResourceManager.GetObject("PagePaste", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

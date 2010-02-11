@@ -139,8 +139,18 @@ namespace TourWriter.Forms
 
         private void HandleMenu_RepositionNodes(UltraTree menu, UltraTreeNode dropNode, SelectedNodesCollection selectedNodes)
         {
-            MenuHelper m = new MenuHelper(this, menu);
-            m.HandleMenu_RepositionNodes(dropNode, selectedNodes);
+            var m = new MenuHelper(this, menu);
+            var moveNodes = new UltraTreeNode[selectedNodes.Count];
+            selectedNodes.CopyTo(moveNodes, 0);
+
+            if (!MenuHelper.IsNodeMenuFolder(dropNode))
+                dropNode = dropNode.Parent;
+            HandleMenuItem_Open(menu, dropNode);
+            dropNode.Expanded = true;
+            menu.ActiveNode = null;
+            menu.SelectedNodes.Clear();
+
+            m.HandleMenu_RepositionNodes(dropNode, moveNodes);
 
             MenuHelper.RefreshSort(menu);
         }
@@ -169,12 +179,51 @@ namespace TourWriter.Forms
             MenuHelper.RefreshSort(menu);
         }
 
-        private void HandleMenuItem_Copy(UltraTree menu, SelectedNodesCollection nodes)
+        private UltraTreeNode[] _menuActionCutNodes;
+        private void HandleMenuItem_StartCopyOrCut(SelectedNodesCollection nodes, bool disableSelectedNodes)
         {
-            MenuHelper m = new MenuHelper(this, menu);
-            m.HandleMenuItem_Copy(nodes);
+            HandleMenuItem_EndCopyOrCut(); // cancel pending
 
-            MenuHelper.RefreshSort(menu);
+            _menuActionCutNodes = new UltraTreeNode[nodes.Count];
+            nodes.CopyTo(_menuActionCutNodes, 0);
+            if (disableSelectedNodes)
+                foreach (var node in _menuActionCutNodes) node.Enabled = false;
+            contextMenuPaste.Text = disableSelectedNodes ? "Paste (cut)" : "Paste (copy)";
+            contextMenuPaste.Enabled = true;
+            contextMenuCancelPaste.Visible = true;
+        }
+
+        private void HandleMenuItem_EndCopyOrCut()
+        {
+            if (_menuActionCutNodes == null) return;
+            foreach (var node in _menuActionCutNodes) node.Enabled = true;
+            _menuActionCutNodes = null;
+            contextMenuPaste.Text = "Paste";
+            contextMenuPaste.Enabled = false;
+            contextMenuCancelPaste.Visible = false;
+        }
+
+        private void HandleMenuItem_Paste(UltraTree menu, SelectedNodesCollection nodes)
+        {
+            if (_menuActionCutNodes != null && _menuActionCutNodes.Length > 0)
+            {
+                var m = new MenuHelper(this, menu);
+                var parentNode = nodes[0]; // restrict copy/cut to single target node
+                if (!MenuHelper.IsNodeMenuFolder(parentNode))
+                    parentNode = parentNode.Parent;
+                HandleMenuItem_Open(menu, parentNode);
+                parentNode.Expanded = true;
+                menu.ActiveNode = null;
+                menu.SelectedNodes.Clear();
+
+                var isCopyNotCut = _menuActionCutNodes[0].Enabled;
+                if (isCopyNotCut)
+                    m.HandleMenuItem_Copy(parentNode, _menuActionCutNodes);
+                else
+                    m.HandleMenu_RepositionNodes(parentNode, _menuActionCutNodes);
+
+                MenuHelper.RefreshSort(menu);
+            }
         }
 
         private void HandleMenuItem_Rename(UltraTree menu, UltraTreeNode node, string newName)
@@ -228,13 +277,13 @@ namespace TourWriter.Forms
 
         private void Menu_AfterSelect(object sender, SelectEventArgs e)
         {
-            if (sender is UltraTree)
-            {
-                // this keeps selected and active node in sync when dragging nodes
-                UltraTree ultraTree = sender as UltraTree;
-                if (e.NewSelections.Count == 1)
-                    ultraTree.ActiveNode = e.NewSelections[0];
-            }
+            //if (sender is UltraTree)
+            //{
+            //    // this keeps selected and active node in sync when dragging nodes
+            //    UltraTree ultraTree = sender as UltraTree;
+            //    if (e.NewSelections.Count == 1)
+            //        ultraTree.ActiveNode = e.NewSelections[0];
+            //}
         }
 
         private void Menu_BeforeExpand(object sender, CancelableNodeEventArgs e)
@@ -416,12 +465,6 @@ namespace TourWriter.Forms
                 else
                 {
                     e.Effect = DragDropEffects.Move;
-
-                    // only expand if childnodes already loaded, as loading from
-                    // the db while in a drag operation will cause problems
-                    // TODO: Use thread if loading from db.
-                    if (dropNode.HasNodes)
-                        dropNode.Expanded = true;
                 }
             }
         }
@@ -540,7 +583,12 @@ namespace TourWriter.Forms
 
         internal void Load_SearchForm()
         {
-            LoadMdiForm(typeof(SearchMain), new UltraTreeNode("SearchMain"));
+            var type =
+                ItineraryMenu.Focused ? NavigationTreeItemInfo.ItemTypes.Itinerary :
+                SupplierMenu.Focused ? NavigationTreeItemInfo.ItemTypes.Supplier :
+                ContactMenu.Focused ? NavigationTreeItemInfo.ItemTypes.Contact :
+                /* default */        NavigationTreeItemInfo.ItemTypes.Itinerary;
+            Load_SearchForm(type);
         }
 
         internal void Load_SearchForm(NavigationTreeItemInfo.ItemTypes menuType)
@@ -725,12 +773,49 @@ namespace TourWriter.Forms
                 navPane.Groups["Additional"].Items["Reports"].Visible = App.IsDebugMode;
                 return;
             }
+
             // [CTRL + F]
-            if (e.Equals(new KeyDefinition(true, false, false, Keys.F, Utilities.KeyHook.KeyState.KeyDown))	)
+            if (e.Equals(new KeyDefinition(true, false, false, Keys.F, Utilities.KeyHook.KeyState.KeyDown)))
             {
-				Load_SearchForm();
-				return;
-			}
+                Load_SearchForm();
+                return;
+            }
+
+            // menus
+            var menu = GetNavigationMenuTree(currentNavigationMenuType);
+            if (menu.Focused)
+            {
+                // CTRL+X
+                if (e.Equals(new KeyDefinition(true, false, false, Keys.X, Utilities.KeyHook.KeyState.KeyDown)))
+                {
+                    if (!(menu.ActiveNode == menu.Nodes[0]))
+                        contextMenuCut.PerformClick();
+                    return;
+                }
+
+                // CTRL+C
+                if (e.Equals(new KeyDefinition(true, false, false, Keys.C, Utilities.KeyHook.KeyState.KeyDown)))
+                {
+                    if (!(menu.ActiveNode == menu.Nodes[0] || MenuHelper.IsNodeMenuFolder(menu.ActiveNode)))
+                        contextMenuCopy.PerformClick();
+                    return;
+                }
+
+                // CTRL+V
+                if (e.Equals(new KeyDefinition(true, false, false, Keys.V, Utilities.KeyHook.KeyState.KeyDown)))
+                {
+                    if (contextMenuPaste.Enabled)
+                        contextMenuPaste.PerformClick();
+                    return;
+                }
+
+                // ESC
+                if (e.Equals(new KeyDefinition(false, false, false, Keys.Escape, Utilities.KeyHook.KeyState.KeyDown)))
+                {
+                    contextMenuCancelPaste.PerformClick();
+                    return;
+                }
+            }
         }
 
         #endregion
@@ -954,6 +1039,11 @@ namespace TourWriter.Forms
         }
 
 
+        private void contextMenuNavigation_LostFocus(object sender, System.EventArgs e)
+        {
+            HandleMenuItem_EndCopyOrCut();
+        }
+
         private void contextMenu_Opening(object sender, CancelEventArgs e)
         {
             SetCurrentNavigationMenuType(sender);
@@ -962,15 +1052,15 @@ namespace TourWriter.Forms
             if (currentNavigationTree != null)
             {
                 // Set enabled controls, depending on navigation item selection.
-                bool isItemSelected =
-                    (currentNavigationTree.ActiveNode != currentNavigationTree.Nodes[0]) &&
-                    (currentNavigationTree.SelectedNodes.Count > 0);
-                contextMenuOpen.Enabled = isItemSelected;
-                contextMenuDelete.Enabled = isItemSelected;
-                contextMenuRename.Enabled = isItemSelected;
-                contextMenuSeparator1.Enabled = isItemSelected;
-                contextMenuCopy.Enabled =
-                    isItemSelected && !MenuHelper.IsNodeMenuFolder(currentNavigationTree.ActiveNode);
+                bool isTopNode = currentNavigationTree.ActiveNode == currentNavigationTree.Nodes[0];
+                bool isValid = !isTopNode && (currentNavigationTree.SelectedNodes.Count > 0);
+                contextMenuOpen.Enabled = isValid;
+                contextMenuDelete.Enabled = isValid;
+                contextMenuRename.Enabled = isValid;
+                contextMenuSeparator1.Enabled = isValid;
+                contextMenuCopy.Enabled = isValid && !MenuHelper.IsNodeMenuFolder(currentNavigationTree.ActiveNode);
+                contextMenuCut.Enabled = isValid;
+                contextMenuPaste.Enabled = currentNavigationTree.SelectedNodes.Count > 0 && _menuActionCutNodes != null && _menuActionCutNodes.Length > 0;
 
                 // Set control appearance, depending on selected navigation menu.
                 switch (currentNavigationMenuType)
@@ -993,6 +1083,7 @@ namespace TourWriter.Forms
 
         private void contextMenuOpen_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
@@ -1003,6 +1094,7 @@ namespace TourWriter.Forms
 
         private void contextMenuNew_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             NavigationTreeItemInfo.ItemTypes? contextType = GetNavigationMenuItemType(currentNavigationMenuType);
             if (contextTree != null && contextType.HasValue)
@@ -1014,6 +1106,7 @@ namespace TourWriter.Forms
 
         private void contextMenuNewFolder_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
@@ -1021,19 +1114,48 @@ namespace TourWriter.Forms
                 HandleMenuItem_Create(contextTree, NavigationTreeItemInfo.ItemTypes.Folder);
             }
         }
-
+        
         private void contextMenuCopy_Click(object sender, EventArgs e)
+        {
+            HandleMenuItem_EndCopyOrCut();
+            var contextTree = GetNavigationMenuTree(currentNavigationMenuType);
+            if (contextTree != null)
+            {
+                SetActiveNavigationMenu(currentNavigationMenuType);
+                HandleMenuItem_StartCopyOrCut(contextTree.SelectedNodes, false);
+            }
+        }
+
+        private void contextMenuCut_Click(object sender, EventArgs e)
+        {
+            HandleMenuItem_EndCopyOrCut();
+            var contextTree = GetNavigationMenuTree(currentNavigationMenuType);
+            if (contextTree != null)
+            {
+                SetActiveNavigationMenu(currentNavigationMenuType);
+                HandleMenuItem_StartCopyOrCut(contextTree.SelectedNodes, true);
+            }
+        }
+
+        private void contextMenuPaste_Click(object sender, EventArgs e)
         {
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
                 SetActiveNavigationMenu(currentNavigationMenuType);
-                HandleMenuItem_Copy(contextTree, contextTree.SelectedNodes);
+                HandleMenuItem_Paste(contextTree, contextTree.SelectedNodes);
+                HandleMenuItem_EndCopyOrCut();
             }
+        }
+
+        private void contextMenuCancelPaste_Click(object sender, EventArgs e)
+        {
+            HandleMenuItem_EndCopyOrCut();
         }
 
         private void contextMenuDelete_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
@@ -1044,6 +1166,7 @@ namespace TourWriter.Forms
 
         private void contextMenuRename_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
@@ -1054,6 +1177,7 @@ namespace TourWriter.Forms
 
         private void contextMenuSearch_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             NavigationTreeItemInfo.ItemTypes? contextType = GetNavigationMenuItemType(currentNavigationMenuType);
             if (contextType.HasValue)
             {
@@ -1064,6 +1188,7 @@ namespace TourWriter.Forms
 
         private void contextMenuRefresh_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             UltraTree contextTree = GetNavigationMenuTree(currentNavigationMenuType);
             if (contextTree != null)
             {
@@ -1074,12 +1199,14 @@ namespace TourWriter.Forms
 
         private void contextMenuEmailCategories_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             CategorySelector categorySelector = new CategorySelector();
             categorySelector.ShowDialog();
         }
 
         private void contextMenuEmailSelected_Click(object sender, EventArgs e)
         {
+            HandleMenuItem_EndCopyOrCut();
             List<int> idList = new List<int>();
 
             foreach (UltraTreeNode node in treeContacts.SelectedNodes)

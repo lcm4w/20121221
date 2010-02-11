@@ -126,34 +126,30 @@ namespace TourWriter.Forms
             }
 		}
 
-		internal void HandleMenuItem_Copy(SelectedNodesCollection selectedNodes)
-		{
-            // Isolate the nodes before processing.
-            UltraTreeNode[] nodes = new UltraTreeNode[selectedNodes.Count];
-            selectedNodes.CopyTo(nodes, 0);
+        internal void HandleMenuItem_Copy(UltraTreeNode targetNode, UltraTreeNode[] sourceNodes)
+        {
+            if (!IsNodeMenuFolder(targetNode)) targetNode = targetNode.Parent;
+            if (targetNode == null) return;
 
             // check permissions and copy
-            foreach (UltraTreeNode node in nodes)
+            foreach (var sourceNode in sourceNodes)
             {
                 if (_menu.Equals(_mainForm.ItineraryMenu) &&
                     App.ShowCheckPermission(Services.AppPermissions.Permissions.ItineraryEdit))
                 {
-                    if (!IsNodeMenuFolder(node))
-                        Itinerary_Copy(node);
+                    Itinerary_Copy(targetNode, sourceNode);
                 }
 
                 else if (_menu.Equals(_mainForm.SupplierMenu) &&
                          App.ShowCheckPermission(Services.AppPermissions.Permissions.SupplierEdit))
                 {
-                    if (!IsNodeMenuFolder(node))
-                        Supplier_Copy(node);
+                    Supplier_Copy(targetNode, sourceNode);
                 }
 
                 else if (_menu.Equals(_mainForm.ContactMenu) &&
                          App.ShowCheckPermission(Services.AppPermissions.Permissions.ContactEdit))
                 {
-                    if (!IsNodeMenuFolder(node))
-                        Contact_Copy(node);
+                    Contact_Copy(targetNode, sourceNode);
                 }
             }
 		}
@@ -189,7 +185,6 @@ namespace TourWriter.Forms
 					Contact_Rename(node);
 			}
 		}
-
 
         internal void HandleMenuItem_Delete(UltraTreeNode[] nodes)
         {
@@ -228,7 +223,6 @@ namespace TourWriter.Forms
 					Contact_Delete(node);
 			}
 		}
-				
 
 		internal void HandleMenu_LoadChildListAndParentTree(UltraTreeNode node)
 		{	
@@ -279,7 +273,7 @@ namespace TourWriter.Forms
 			}
 		}
 
-		internal void HandleMenu_RepositionNodes(UltraTreeNode dropNode, SelectedNodesCollection selectedNodes)
+        internal void HandleMenu_RepositionNodes(UltraTreeNode dropNode, UltraTreeNode[] selectedNodes)
 		{
 			if(!IsNodeMenuFolder(dropNode))
 				dropNode = dropNode.Parent;
@@ -297,7 +291,7 @@ namespace TourWriter.Forms
 			// move the node(s)
 			UltraTreeNode moveNode = null;
 			NavigationTreeItemInfo  moveInfo;
-			for (int i = 0; i<= (selectedNodes.Count - 1); i++)
+			for (int i = 0; i<= (selectedNodes.Length - 1); i++)
 			{
 				moveNode = selectedNodes[i];
 				moveInfo = moveNode.Tag as NavigationTreeItemInfo;
@@ -307,22 +301,19 @@ namespace TourWriter.Forms
 				if(moveInfo.ParentFolderID == dropNodeId)
 					continue; // no change to position
 	
-				if((dropNodeId != moveInfo.ItemID && dropNode.FullPath == moveNode.FullPath) ||  
+				if ((dropNodeId != moveInfo.ItemID && dropNode.FullPath == moveNode.FullPath) ||  
 					dropNode.FullPath.IndexOf(moveNode.FullPath) == -1) // not descendant of itself
 				{
-					moveNode.Reposition(dropNode.Nodes);				
-					moveInfo.ParentFolderID = dropNodeId;
+                    moveNode.Remove();
+                    dropNode.Nodes.Add(moveNode);
+				    moveNode.Enabled = true;
+                    moveNode.Selected = true;
+				    _menu.ActiveNode = moveNode;
+                    moveInfo.ParentFolderID = dropNodeId;
 
                     NavigationTreeItemInfo navigationTree = new NavigationTreeItemInfo();
 					navigationTree.SetParentFolderID(moveInfo.ItemID, dropNodeId, moveInfo.ItemType);					
 				}
-			}
-			// select (last) moved node
-			if(moveNode != null)
-			{				
-				_menu.ActiveNode = moveNode;
-				moveNode.Selected = true;
-				moveNode.BringIntoView();
 			}
 		}
 		
@@ -459,29 +450,28 @@ namespace TourWriter.Forms
 				node.Remove();				
 		}
 
-		private void Itinerary_Copy(UltraTreeNode node)
+        private void Itinerary_Copy(UltraTreeNode targetNode, UltraTreeNode sourceNode)
 		{
-			NavigationTreeItemInfo info = node.Tag as NavigationTreeItemInfo;
-
-			string newItineraryName = "Copy of " + node.Text;
-			int copyItineraryID = info.ItemID;
+            var info = (NavigationTreeItemInfo)sourceNode.Tag;
+            var newItineraryName = sourceNode.Text + " - Copy";
+			var copyItineraryId = info.ItemID;
 
 			// create itinerary copy
-			Itinerary i = new Itinerary();
-			int itineraryID = i.Copy(copyItineraryID, newItineraryName, TourWriter.Global.Cache.User.UserID);
+			var i = new Itinerary();
+			var newItineraryId = i.Copy(copyItineraryId, newItineraryName, Global.Cache.User.UserID);
 
 			// update info with new args
 			info = info.Copy();
-			info.ItemID = itineraryID;
+            info.ItemID = newItineraryId;
 			info.ItemName = newItineraryName;
 
             // create node
-            UltraTreeNode newNode = Menu_BuildNode(info);
-            AddNodeAndSelect(node.Parent.Nodes, newNode);
-            node.Selected = false;
+            sourceNode.Selected = false;
+            var newNode = Menu_BuildNode(info);
+            AddNodeAndSelect(targetNode.Nodes, newNode);
 		}
 
-		private void Itinerary_Rename(UltraTreeNode node)
+	    private void Itinerary_Rename(UltraTreeNode node)
 		{				
 			int id = (node.Tag as NavigationTreeItemInfo).ItemID;
 			Itinerary i = new Itinerary();
@@ -546,29 +536,28 @@ namespace TourWriter.Forms
             }
 		}
 
-		private void Supplier_Copy(UltraTreeNode node)
-		{			
-			NavigationTreeItemInfo info = node.Tag as NavigationTreeItemInfo;
+        private void Supplier_Copy(UltraTreeNode targetNode, UltraTreeNode sourceNode)
+		{		
+            var info = (NavigationTreeItemInfo)sourceNode.Tag;
+            var newSupplierName = sourceNode.Text + " - Copy";
+            var copySupplierId = info.ItemID;
 
-			string newSupplierName = "Copy of " + node.Text;
-			int copySupplierID = info.ItemID;
+            // create itinerary copy
+            var i = new Supplier();
+            var newSupplierId = i.Copy(copySupplierId, newSupplierName, Global.Cache.User.UserID);
 
-			// create supplier copy
-			Supplier s = new Supplier();
-			int supplierID = s.Copy(copySupplierID, newSupplierName, TourWriter.Global.Cache.User.UserID);
-
-			// update info with new args
-			info = info.Copy();
-			info.ItemID = supplierID;
-			info.ItemName = newSupplierName;
+            // update info with new args
+            info = info.Copy();
+            info.ItemID = newSupplierId;
+            info.ItemName = newSupplierName;
 
             // create node
-            UltraTreeNode newNode = Menu_BuildNode(info);
-            AddNodeAndSelect(node.Parent.Nodes, newNode);
-            node.Selected = false;
+            var newNode = Menu_BuildNode(info);
+            AddNodeAndSelect(targetNode.Nodes, newNode);
+            sourceNode.Selected = false;
 		}
 
-		private void Supplier_Rename(UltraTreeNode node)
+	    private void Supplier_Rename(UltraTreeNode node)
 		{				
 			int id = (node.Tag as NavigationTreeItemInfo).ItemID;
 			Supplier s = new Supplier();
@@ -614,29 +603,28 @@ namespace TourWriter.Forms
 				node.Remove();				
 		}
 
-		private void Contact_Copy(UltraTreeNode node)
-		{			
-			NavigationTreeItemInfo info = node.Tag as NavigationTreeItemInfo;
+        private void Contact_Copy(UltraTreeNode targetNode, UltraTreeNode sourceNode)
+		{	
+            var info = (NavigationTreeItemInfo)sourceNode.Tag;
+            var newContactName = sourceNode.Text + " - Copy";
+            var copyContactId = info.ItemID;
 
-			string newContactName = "Copy of " + node.Text;
-			int copyContactID = info.ItemID;
+            // create itinerary copy
+            var i = new Contact();
+            var newContactId = i.Copy(copyContactId, newContactName, Global.Cache.User.UserID);
 
-			// create contact copy
-			Contact c = new Contact();
-			int contactID = c.Copy(copyContactID, newContactName, TourWriter.Global.Cache.User.UserID);
-
-			// update info with new args
-			info = info.Copy();
-			info.ItemID = contactID;
-			info.ItemName = newContactName;
+            // update info with new args
+            info = info.Copy();
+            info.ItemID = newContactId;
+            info.ItemName = newContactName;
 
             // create node
-            UltraTreeNode newNode = Menu_BuildNode(info);
-            AddNodeAndSelect(node.Parent.Nodes, newNode);
-            node.Selected = false;
+            var newNode = Menu_BuildNode(info);
+            AddNodeAndSelect(targetNode.Nodes, newNode);
+            sourceNode.Selected = false;
 		}
 
-		private void Contact_Rename(UltraTreeNode node)
+	    private void Contact_Rename(UltraTreeNode node)
 		{				
 			int id = (node.Tag as NavigationTreeItemInfo).ItemID;
 			Contact c = new Contact();
@@ -823,10 +811,6 @@ namespace TourWriter.Forms
             {
                 if (!collection.Exists(node.Key))
                     collection.Add(node);
-
-                _menu.SelectedNodes.Clear();
-                _menu.ActiveNode = null;
-
                 node.Selected = true;
                 node.BringIntoView();
                 _menu.ActiveNode = node;
