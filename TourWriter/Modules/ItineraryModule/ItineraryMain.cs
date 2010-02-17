@@ -71,6 +71,8 @@ namespace TourWriter.Modules.ItineraryModule
 
             txtArriveDate.Value = DateTime.Now;
             txtDepartDate.Value = DateTime.Now;
+
+            if (!App.IsDebugMode) tabControlAdditional.Tabs["Reports"].Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
         }
 
         void tabControl_Main_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)

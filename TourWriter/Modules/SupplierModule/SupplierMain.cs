@@ -43,6 +43,8 @@ namespace TourWriter.Modules.SupplierModule
             // Hide menus as they are merged with MdiParent form
             menuStrip1.Visible = false;
             toolStrip1.Visible = false;
+
+            if (!App.IsDebugMode) tabsAdditional.Tabs["Reports"].Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
         }
 
         private void SupplierMain_Load(object sender, EventArgs e)
