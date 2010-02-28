@@ -1,3 +1,4 @@
+using System;
 using Timer=System.Threading.Timer;
 
 namespace TourWriter.Modules.StartPage
@@ -21,7 +22,7 @@ namespace TourWriter.Modules.StartPage
             toolStrip1.Visible = false;
         }
 
-        private void StartMain_Load(object sender, System.EventArgs e)
+        private void StartMain_Load(object sender, EventArgs e)
         {
             LoadUrl(Properties.Settings.Default.AppStartPageUri);
             Text = HeaderText;
@@ -48,9 +49,10 @@ namespace TourWriter.Modules.StartPage
                 if (!webBrowser1.Url.Equals("about:blank"))
                     webBrowser1.Refresh();
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                TourWriter.Services.ErrorHelper.SendEmail(ex, true);
+                if (!(ex is AccessViolationException)) // The crappy "Attempted to read or write protected memory" error
+                    Services.ErrorHelper.SendEmail(ex, true);
             }
         }
 
@@ -64,13 +66,13 @@ namespace TourWriter.Modules.StartPage
             return false;
         }
 	    
-        private void menuClose_Click(object sender, System.EventArgs e)
+        private void menuClose_Click(object sender, EventArgs e)
         {
             Close();
 
         }
 
-        private void menuHelp_Click(object sender, System.EventArgs e)
+        private void menuHelp_Click(object sender, EventArgs e)
         {
             App.ShowHelp();
         }
