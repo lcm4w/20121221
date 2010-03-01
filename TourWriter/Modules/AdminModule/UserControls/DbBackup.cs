@@ -390,13 +390,15 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
                 if (ex.ToString().Contains("Operating system error 5(Access is denied.)"))
                 {
-                    var msg = "FAILED - Backup process does not have permission to write to that location.\r\n\r\n" +
-                              "Would you like to try the default backup location?";
-                    
+                    const string msg = "Backup process does not have permission to write to that location.\r\n\r\n" +
+                                       "Would you like to try the default database server backup location?";
+
                     if (App.AskYesNo(msg))
                     {
-                        txtBackupFile.Text = Path.Combine(Info.Services.DatabaseHelper.GetDefaultBackupDir(),
-                                                          Path.GetFileName(txtBackupFile.Text));
+                        var path = Info.Services.DatabaseHelper.GetDefaultBackupDir();
+                        App.ShowInfo("Using default path on server: " + path +
+                                     ".\r\n\r\nNote: this is the location on the database server, not on your computer.");
+                        txtBackupFile.Text = Path.Combine(path, Path.GetFileName(txtBackupFile.Text));
                     }
                 }
                 else
