@@ -26,7 +26,7 @@ namespace TourWriter.Info.Services
                 ds.Tables[0].TableName = "temp"; // set default tablename
 
             SqlHelper.FillDataset(ConnectionString.GetConnectionString(), CommandType.StoredProcedure,
-                storedProcName, ds, new string[] { ds.Tables[0].TableName }, parameters);
+                storedProcName, ds, new[] { ds.Tables[0].TableName }, parameters);
 
             return ds.Tables[0];
         }
@@ -218,14 +218,18 @@ namespace TourWriter.Info.Services
 					// supplied table names
 					if((tableNames != null) && (tableNames.Length > 0)) 
 					{
-						for(int i=0; i<tableNames.Length; i++)
+						for (var i=0; i<tableNames.Length; i++)
 							SaveTable(conn, dataSet, tableNames[i]);
 					}
 					// use table names from dataset
 					else 
 					{
-						foreach(DataTable table in dataSet.GetChanges().Tables)
-							SaveTable(conn, dataSet, table.TableName);
+					    var changes = dataSet.GetChanges();
+                        if (changes != null)
+                        {
+                            foreach (DataTable table in changes.Tables)
+                                SaveTable(conn, dataSet, table.TableName);
+                        }
 					}
 				}
 			}
