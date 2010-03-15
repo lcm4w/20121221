@@ -337,7 +337,7 @@ namespace TourWriter.Modules.ItineraryModule
                 int purchaseItemId = Convert.ToInt32(row.Cells["PurchaseItemID"].Value);
                 ItinerarySet.PurchaseItemRow purchaseItem =
                     itinerarySet.PurchaseItem.FindByPurchaseItemID(purchaseItemId);
-                purchaseItem.IsLockedAccounting = true;
+                if (purchaseItem != null) purchaseItem.IsLockedAccounting = true;
             }
         }
 

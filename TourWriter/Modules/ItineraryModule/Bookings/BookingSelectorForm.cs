@@ -337,6 +337,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             foreach (ItinerarySet.PurchaseItemRow item in tempItinerarySet.PurchaseItem)
             {
+                if (item == null) continue;
                 var option = supplierSet.Option.FindByOptionID(item.OptionID);
                 var service = option.RateRow.ServiceRow;
 
