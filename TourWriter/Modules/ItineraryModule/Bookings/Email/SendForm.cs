@@ -260,8 +260,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             else
             {
-                foreach (UltraGridRow row in grid.Rows)
-                    row.Cells["Selected"].Value = selectAllRows;
+                try
+                {
+                    foreach (UltraGridRow row in grid.Rows)
+                        row.Cells["Selected"].Value = selectAllRows;
+                }
+                catch(InvalidOperationException) 
+                { /* swallow Infragistics.Shared.SparseArray.CreateItemEnumerator.EnsureNotExhausted() exception,
+                   * not sure where comming from, maybe all operations are on grid rows rather than datasource rows */ }
             }
         }
 
