@@ -331,8 +331,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			// prepare defaults
 			if(toolSet.AppSettings.Rows.Count == 0)
 				toolSet.AppSettings.AddAppSettingsRow(toolSet.AppSettings.NewAppSettingsRow());
-			if(toolSet.AppSettings[0].IsLastDbBackupNameNull() || toolSet.AppSettings[0].LastDbBackupName == "")			
-				toolSet.AppSettings[0].LastDbBackupName = "C:\\TourWriter.bak";	
+			if(toolSet.AppSettings[0].IsLastDbBackupNameNull() || toolSet.AppSettings[0].LastDbBackupName == "")
+                toolSet.AppSettings[0].LastDbBackupName = Path.Combine(Info.Services.DatabaseHelper.GetDefaultBackupDir(), "TourWriter.bak");	
 	
 			// set binding
 			txtBackupFile.DataBindings.Add("Text", toolSet, "AppSettings.LastDbBackupName");	
@@ -340,6 +340,34 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			txtLastBackupDate.DataBindings.Add("Text", toolSet, "AppSettings.LastDbBackupDate");		
 
 		}
+
+        private void DoBackup(string backupfile)
+        {
+            Cursor = Cursors.WaitCursor;
+
+            var processDate = DateTime.Now;
+            if (chkAddExtension.Checked)
+            {
+                string dateInsert = processDate.ToString("_yyyy-MM-dd_H-mm-ss");
+
+                if (backupfile.LastIndexOf(".") > -1)
+                    backupfile = backupfile.Insert(backupfile.LastIndexOf("."), dateInsert);
+                else
+                    backupfile = backupfile + dateInsert;
+            }
+
+            Application.DoEvents();
+            Info.Services.DatabaseHelper.Backup(backupfile);
+
+            // save backup details
+            txtLastBackupFile.Value = backupfile;
+            txtLastBackupDate.Value = processDate;
+            toolSet.AppSettings[0].LastDbBackupDate = processDate;
+            toolSet.AppSettings[0].LastDbBackupFile = backupfile;
+            toolSet.AppSettings[0].LastDbBackupName = txtBackupFile.Text;
+            App.ShowInfo(App.GetResourceString("ShowDatabaseBackupSuccess"));
+            Cursor = Cursors.Default;
+        }
 		
 		private void btnBackupFile_Click(object sender, EventArgs e)
 		{
@@ -355,54 +383,19 @@ namespace TourWriter.Modules.AdminModule.UserControls
 				App.ShowError("File name is not valid");
 				return;
 			}
-
-			// perform backup
-            Cursor = Cursors.WaitCursor;
 			try
             {
-                DateTime processDate = DateTime.Now;
-                string backupfile = txtBackupFile.Text;
-                if (chkAddExtension.Checked)
-                {
-                    string dateInsert = processDate.ToString("_yyyy-MM-dd_H-mm-ss");
-
-                    if (backupfile.LastIndexOf(".") > -1)
-                        backupfile = backupfile.Insert(backupfile.LastIndexOf("."), dateInsert);
-                    else
-                        backupfile = backupfile + dateInsert;
-                }
-
-                Application.DoEvents();
-                Info.Services.DatabaseHelper.Backup(backupfile);
-
-                // save backup details
-                txtLastBackupFile.Value = backupfile;
-                txtLastBackupDate.Value = processDate;
-                toolSet.AppSettings[0].LastDbBackupDate = processDate;
-                toolSet.AppSettings[0].LastDbBackupFile = backupfile;
-                toolSet.AppSettings[0].LastDbBackupName = txtBackupFile.Text;
-
-				App.ShowInfo(App.GetResourceString("ShowDatabaseBackupSuccess"));
+                DoBackup(txtBackupFile.Text);
 			}
 			catch(Exception ex)
             {
                 Cursor = Cursors.Default;
 
-                if (ex.ToString().Contains("Operating system error 5(Access is denied.)"))
-                {
-                    const string msg = "Backup process does not have permission to write to that location.\r\n\r\n" +
-                                       "Would you like to try the default database server backup location?";
-
-                    if (App.AskYesNo(msg))
-                    {
-                        var path = Info.Services.DatabaseHelper.GetDefaultBackupDir();
-                        App.ShowInfo("Using default path on server: " + path +
-                                     ".\r\n\r\nNote: this is the location on the database server, not on your computer.");
-                        txtBackupFile.Text = Path.Combine(path, Path.GetFileName(txtBackupFile.Text));
-                    }
-                }
-                else
-                    App.Error(App.GetResourceString("ShowDatabaseBackupFailed"), ex);
+                App.Error(App.GetResourceString("ShowDatabaseBackupFailed"), ex);
+                txtBackupFile.Text = Path.Combine(Info.Services.DatabaseHelper.GetDefaultBackupDir(), Path.GetFileName(txtBackupFile.Text));
+                var msg = "Would you like to try to backup to the default backup location on the server?\r\n" + txtBackupFile.Text +
+                             ".\r\n\r\nNOTE: this is the location on the database server, not your computer (unless it is the server).";
+                if (App.AskYesNo(msg)) DoBackup(txtBackupFile.Text);
 			}
 			finally
 			{
