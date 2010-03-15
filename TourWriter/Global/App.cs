@@ -180,10 +180,15 @@ namespace TourWriter
 
         internal static void OpenUrl(string url)
         {
-            Process p = new Process();
-            p.StartInfo.FileName = GetDefaultBrowser();
-            p.StartInfo.Arguments = url;
-            p.Start();
+            try
+            {
+                var p = new Process {StartInfo = {FileName = GetDefaultBrowser(), Arguments = url}};
+                p.Start();
+            }
+            catch (Exception ex)
+            {
+                Error("Failed to start default web browser on this computer", ex, false);
+            }
         }
 
         internal static string GetDefaultBrowser()
