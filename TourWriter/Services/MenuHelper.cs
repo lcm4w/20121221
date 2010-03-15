@@ -512,21 +512,18 @@ namespace TourWriter.Forms
 
 		private void Supplier_Delete(UltraTreeNode node)
 		{
-            Supplier s = new Supplier();
-		    int id = (node.Tag as NavigationTreeItemInfo).ItemID;
-            
+            var s = new Supplier();
+		    var id = (node.Tag as NavigationTreeItemInfo).ItemID;
             try
             {
-                if (s.Delete(id))
-                    node.Remove();
+                if (s.Delete(id)) node.Remove();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
                 if (ex.Message.Contains(App.DataErrorPKDeleteConflictText))
                 {
-                    SupplierSet ds = s.GetSupplierSet(id);
+                    var ds = s.GetSupplierSet(id);
                     ds.Supplier[0].IsDeleted = true;
-
                     if (App.DataSet_AskSaveDeleteConstraints(ds))
                     {
                         s.SaveSupplierSet(ds);
@@ -597,10 +594,26 @@ namespace TourWriter.Forms
 		}
 
 		private void Contact_Delete(UltraTreeNode node)
-		{			
-			Contact c = new Contact();
-			if(c.Delete((node.Tag as NavigationTreeItemInfo).ItemID))
-				node.Remove();				
+        {
+            var c = new Contact();
+            var id = (node.Tag as NavigationTreeItemInfo).ItemID;
+            try
+            {
+    			if (c.Delete(id)) node.Remove();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                if (ex.Message.Contains(App.DataErrorPKDeleteConflictText))
+                {
+                    var ds = c.GetContactSet(id);
+                    ds.Contact[0].IsDeleted = true;
+                    if (App.DataSet_AskSaveDeleteConstraints(ds))
+                    {
+                        c.SaveContactSet(ds);
+                        node.Remove();
+                    }
+                }
+            }
 		}
 
         private void Contact_Copy(UltraTreeNode targetNode, UltraTreeNode sourceNode)
