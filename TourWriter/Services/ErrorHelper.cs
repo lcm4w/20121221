@@ -81,13 +81,12 @@ namespace TourWriter.Services
             {
                 return true;
             }
-            if (ex is System.ComponentModel.Win32Exception &&
-                ex.Message.ToLower().Contains("no application is associated with the specified file for this operation"))
-            {
-                return true;
-            }
-            if (ex is System.ComponentModel.Win32Exception &&
-                ex.Message.ToLower().Contains("network path was not found"))
+            if (ex is System.ComponentModel.Win32Exception && (
+                ex.Message.ToLower().Contains("network path was not found") ||
+                ex.Message.ToLower().Contains("network name cannot be found") ||
+                ex.Message.ToLower().Contains("system cannot find the device specified") ||
+                ex.Message.ToLower().Contains("no application is associated with the specified file")
+                ))
             {
                 return true;
             }
