@@ -6,6 +6,7 @@ using System.IO;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.Global;
 using TourWriter.UserControls;
+using System.Linq;
 
 namespace TourWriter.Services
 {
@@ -60,20 +61,17 @@ namespace TourWriter.Services
 
                 if (allocationsTable.Rows.Count == 0)
                     return;
-
-                // remove rows that aren't selected
-                for (int i = salesTable.Rows.Count - 1; i >= 0; i--)
+                
+                // remove unselected rows from allocations table
+                foreach (var parentRow in from parentRow in salesTable.Rows.Cast<DataRow>()
+                                          let unselected = !Convert.ToBoolean(parentRow["IsSelected"].ToString().ToLower())
+                                          where unselected select parentRow)
                 {
-                    bool isSelected = Convert.ToBoolean(salesTable.Rows[i]["IsSelected"]);
-                    if (!isSelected)
+                    for (var i = allocationsTable.Rows.Count; i > 0; i--)
                     {
-                        // delete all sale detail rows that match the unselected sale row's id
-                        // and ones that have no service type allocation
-                        int saleId = Convert.ToInt32(salesTable.Rows[i]["ItinerarySaleID"]);
-                        DataRow[] results = allocationsTable.Select("ItinerarySaleID = " + saleId);
-
-                        foreach (DataRow row in results)
-                            row.Delete();
+                        var childRow = allocationsTable.Rows[i-1];
+                        var match = Convert.ToInt32(parentRow["ItinerarySaleID"].ToString()) == Convert.ToInt32(childRow["ItinerarySaleID"].ToString());
+                        if (match) childRow.Delete();
                     }
                 }
 
