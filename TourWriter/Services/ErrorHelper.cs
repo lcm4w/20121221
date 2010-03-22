@@ -43,10 +43,10 @@ namespace TourWriter.Services
         internal static bool IsServerConnectionError(Exception ex)
         {
             if (ex is System.Data.SqlClient.SqlException &&
-                (ex.Message.ToLower().Contains("error: 0") ||       // An existing connection was forcibly closed by the remote host...
-                 ex.Message.ToLower().Contains("error: 26") ||      // Error Locating Server/Instance Specified...
-                 ex.Message.ToLower().Contains("error: 40") ||      // Could not open a connection to SQL Server...
-                 ex.Message.ToLower().Contains("timeout expired"))) // System.Data.SqlClient.SqlException: Timeout expired.
+               (ex.Message.ToLower().Contains("error: 0") ||       // An existing connection was forcibly closed by the remote host...
+                ex.Message.ToLower().Contains("error: 26") ||      // Error Locating Server/Instance Specified...
+                ex.Message.ToLower().Contains("error: 40") ||      // Could not open a connection to SQL Server...
+                ex.Message.ToLower().Contains("timeout expired"))) // System.Data.SqlClient.SqlException: Timeout expired.
             {
                 return true;
             }
@@ -58,9 +58,26 @@ namespace TourWriter.Services
             return false;
         }
 
+        internal static bool IsWebServerConnectionError(Exception ex)
+        {
+            if (ex is System.Net.WebException &&
+               (ex.Message.ToLower().Contains("underlying connection was closed") ||
+                ex.Message.ToLower().Contains("operation has timed out")))
+            {
+                return true;
+            }
+            if (ex is System.Net.Sockets.SocketException &&
+               (ex.Message.ToLower().Contains("unreachable network") ||
+                ex.Message.ToLower().Contains("no connection could be made")))
+            {
+                return true;
+            }
+            return false;
+        }
+
         internal static bool IsFileAccessError(Exception ex)
         {
-            if (ex is System.IO.IOException &&
+            if (ex is IOException &&
                 ex.Message.ToLower().Contains("process cannot access the file"))
             {
                 return true;
