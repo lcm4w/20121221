@@ -17,7 +17,7 @@ namespace TourWriter.Forms
 {
     internal partial class UpdateForm : Form
     {
-        private const string MinUpdateableVersion = "2009.3.1"; // post infragistics 2008.3
+        private const string MinUpdateableVersion = "2009.9.29"; // post ReportServices v10
         private UiState currentState;
         private readonly WebClient webClient;
         private ApplicationUpdateService.AppUpdateResponse updateReponse;
@@ -196,7 +196,7 @@ namespace TourWriter.Forms
                     }
                 case UiState.FullInstall:
                     {
-                        lblTitle.Text = "New TourWriter update available, but you must run full setup to update. Download now using your internet browser?";
+                        lblTitle.Text = "New version is available, but requires a full install. Do you want to start the download now? (web browser will open)";
                         btnOk.Enabled = true;
                         btnOk.Focus();
                         panelOptions.Visible = true;
