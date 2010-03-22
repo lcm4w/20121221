@@ -46,6 +46,7 @@ namespace TourWriter.UserControls.Reports
         {
             try
             {
+                btnRefresh.Enabled = btnOptions.Enabled = btnEmail.Enabled = false;
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.WaitCursor;
                 else Cursor = Cursors.WaitCursor;
                 Application.DoEvents();
@@ -82,8 +83,9 @@ namespace TourWriter.UserControls.Reports
                 // set data
                 foreach (var dataSource in _dataSources)
                 {
-                    reportViewer.LocalReport.DataSources.Add(
-                        new ReportDataSource(dataSource.Key, GetData(dataSource.Value)));  
+                    var sql = dataSource.Value;
+                    var data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
+                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));  
                 }
                 reportViewer.RefreshReport();
             }
@@ -98,6 +100,7 @@ namespace TourWriter.UserControls.Reports
             }
             finally
             {
+                btnRefresh.Enabled = btnOptions.Enabled = btnEmail.Enabled = true;
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.Default;
                 else Cursor = Cursors.Default;
             }
@@ -108,19 +111,6 @@ namespace TourWriter.UserControls.Reports
         {
             if (ReportOptions.ShowDialog() == DialogResult.OK)
                 RunReport();
-        }
-
-        private DataTable GetData(string sql)
-        {
-            try
-            {
-                Invoke(new MethodInvoker(delegate { Cursor = Cursors.WaitCursor; }));
-                return DataSetHelper.FillDataSetFromSql(sql).Tables[0];
-            }
-            finally
-            {
-                Invoke(new MethodInvoker(delegate { Cursor = Cursors.Default; }));
-            }
         }
 
         private void SendEmail()
