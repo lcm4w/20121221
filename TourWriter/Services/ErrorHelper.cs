@@ -62,6 +62,7 @@ namespace TourWriter.Services
         {
             if (ex is System.Net.WebException &&
                (ex.Message.ToLower().Contains("underlying connection was closed") ||
+                ex.Message.ToLower().Contains("name could not be resolved") ||
                 ex.Message.ToLower().Contains("operation has timed out")))
             {
                 return true;
