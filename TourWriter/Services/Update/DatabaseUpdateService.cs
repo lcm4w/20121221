@@ -21,31 +21,22 @@ namespace TourWriter.Services.Update
         /// </summary>
         internal static bool RunVersionCheck()
         {
-            try
+            var dbVersion = VersionInfo.GetDatabaseVersion();
+            foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames())
             {
-                var dbVersion = VersionInfo.GetDatabaseVersion();
-                foreach (string resourceName in Assembly.GetExecutingAssembly().GetManifestResourceNames())
+                if (resourceName.StartsWith(UpgradeScriptsPath))
                 {
-                    if (resourceName.StartsWith(UpgradeScriptsPath))
-                    {
-                        Version updVersion = GetUpdateScriptVersion(resourceName);
-                        if (updVersion == dbVersion) return false; // found update script for current db version
-                    }
+                    Version updVersion = GetUpdateScriptVersion(resourceName);
+                    if (updVersion == dbVersion) return false; // found update script for current db version
                 }
-                var accept = App.AskYesNoThreadSafe(
-                    App.MainForm,
-                    "IMPORTANT - TourWriter update is required!\r\n\r\n" +
-                    "Your application is older and may be incompatible with your database version, probably because another user has already updated.\r\n\r\n" +
-                    "Please click YES to update your TourWriter now...");
+            }
+            var accept = App.AskYesNoThreadSafe(
+                App.MainForm,
+                "IMPORTANT - TourWriter update is required!\r\n\r\n" +
+                "Your application is older and may be incompatible with your database version, probably because another user has already updated.\r\n\r\n" +
+                "Please click YES to update your TourWriter now...");
 
-                return accept;
-            }
-            catch (Exception ex)
-            {
-                if (!ErrorHelper.IsServerConnectionError(ex))
-                    ErrorHelper.SendEmail(ex, true);
-                return false;
-            }
+            return accept;
         }
 
         /// <summary>

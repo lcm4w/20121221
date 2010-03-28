@@ -40,7 +40,10 @@ namespace TourWriter.Services.Update
                     DatabaseUpdateService.RunDatabaseUpdate();
                     doDbForcedUpdate = false;
                 }
-                else doDbForcedUpdate = DatabaseUpdateService.RunVersionCheck();
+                else
+                {
+                    try { doDbForcedUpdate = DatabaseUpdateService.RunVersionCheck(); } catch { doDbForcedUpdate = false; }
+                }
 
                 if (timerCount%appTimerMultiple == 0)
                 {

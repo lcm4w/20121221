@@ -43,10 +43,11 @@ namespace TourWriter.Services
         internal static bool IsServerConnectionError(Exception ex)
         {
             if (ex is System.Data.SqlClient.SqlException &&
-               (ex.Message.ToLower().Contains("error: 0") ||       // An existing connection was forcibly closed by the remote host...
-                ex.Message.ToLower().Contains("error: 26") ||      // Error Locating Server/Instance Specified...
-                ex.Message.ToLower().Contains("error: 40") ||      // Could not open a connection to SQL Server...
-                ex.Message.ToLower().Contains("timeout expired"))) // System.Data.SqlClient.SqlException: Timeout expired.
+               (ex.Message.ToLower().Contains("error: 0") ||  // An existing connection was forcibly closed by the remote host...
+                ex.Message.ToLower().Contains("error: 26") || // Error Locating Server/Instance Specified...
+                ex.Message.ToLower().Contains("error: 40") || // Could not open a connection to SQL Server...
+                ex.Message.ToLower().Contains("timeout expired") ||
+                ex.Message.ToLower().Contains("unable to open the physical file")))
             {
                 return true;
             }
@@ -61,7 +62,8 @@ namespace TourWriter.Services
         internal static bool IsWebServerConnectionError(Exception ex)
         {
             if (ex is System.Net.WebException &&
-               (ex.Message.ToLower().Contains("underlying connection was closed") ||
+               (ex.Message.ToLower().Contains("unable to connect to the remote server") ||
+                ex.Message.ToLower().Contains("underlying connection was closed") ||
                 ex.Message.ToLower().Contains("name could not be resolved") ||
                 ex.Message.ToLower().Contains("operation has timed out")))
             {
