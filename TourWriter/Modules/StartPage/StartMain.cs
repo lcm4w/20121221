@@ -9,7 +9,7 @@ namespace TourWriter.Modules.StartPage
 	public partial class StartMain : ModuleBase
 	{
         private Timer _timer;
-        private const int TimerPeriod = 30 * 60000; // 30 min
+        private const int TimerPeriod = 1000*60*60*4; // 4hrs
         private const string TagText = "Start page";
 		private const string HeaderText = "Welome to TourWriter";
 
@@ -49,11 +49,7 @@ namespace TourWriter.Modules.StartPage
                 if (!webBrowser1.Url.Equals("about:blank"))
                     webBrowser1.Refresh();
             }
-            catch (Exception ex)
-            {
-                if (!(ex is AccessViolationException)) // The crappy "Attempted to read or write protected memory" error
-                    Services.ErrorHelper.SendEmail(ex, true);
-            }
+            catch {}
         }
 
         protected override string GetDisplayName()
