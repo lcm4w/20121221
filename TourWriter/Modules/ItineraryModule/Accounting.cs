@@ -106,6 +106,9 @@ namespace TourWriter.Modules.ItineraryModule
 
             // add column renames
             GridColumnRenames.Add("PurchaseStatus", "Status");
+
+            // TODO: hiding Receipts tab, probably not required...
+            tabControl.Tabs["Receipts"].Visible = false; 
         }
 
         public void DataBind()

@@ -260,6 +260,7 @@ namespace TourWriter.Modules.ItineraryModule
             ultraTab1.TabPage = this.ultraTabPageControl23;
             ultraTab1.Text = "Sales";
             ultraTab2.TabPage = this.ultraTabPageControl1;
+            ultraTab2.Key = "Receipts";
             ultraTab2.Tag = "Receipts";
             ultraTab2.Text = "Receipts";
             ultraTab3.Key = "Purchases";
