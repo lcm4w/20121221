@@ -460,7 +460,7 @@ namespace TourWriter.Forms
                     App.GetDotNetVersion(),
                     lic.MaxUsers,
                     lic.EndDate.ToString("yyyy-MM-dd"),
-                    App.Perf.HasValue ? App.Perf.ToString() : "",
+                    App.Test,
                     Cache.User.UserID,
                     Cache.User.IsEmailNull() || string.IsNullOrEmpty(Cache.User.Email)
                         ? "" : new System.Net.Mail.MailAddress(Cache.User.Email).Address,
@@ -487,7 +487,8 @@ namespace TourWriter.Forms
                               Description = xe.Element("Description").Value
                           });
             try { chkNoUpdates.Checked = bool.Parse(doc.Descendants("Update").Select(e => e.Element("Silent").Value).First()); } catch { }
-            return q.First();
+            try { App.Test = Utilities.Encryption.EncryptionHelper.DecryptString(doc.Descendants("Update").Select(e => e.Element("Test").Value).First()); } catch { App.Test = "";}
+             return q.First();
         }
 
         private static void DownloadToBrowser(Uri uri)

@@ -447,12 +447,26 @@ namespace TourWriter
             set { isDebugMode = value; }
         }
 
-        internal static int? Perf
+        private static string _x;
+        private static string _y;
+        internal static string Test
         {
             get
             {
-                return -1;
+                if (_y == null && !string.IsNullOrEmpty(_x))
+                {
+                    _y = "";
+                    try
+                    {
+                        int i;
+                        var o = Info.Services.DatabaseHelper.ExecuteScalar(_x);
+                        if (o != null && int.TryParse(o.ToString(), out i)) _y = i.ToString();
+                    }
+                    catch { _y = "error"; }
+                }
+                return _y;
             }
+            set { _x = value; if (string.IsNullOrEmpty(_x)) _y = null; }
         }
 
         private static string ListLoadedAssemblies()
