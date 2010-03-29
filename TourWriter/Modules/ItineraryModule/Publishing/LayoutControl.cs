@@ -197,7 +197,7 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
                     {
                         addNode = (UltraTreeNode) node.Clone();
                         parentNode.Nodes.Add(addNode);
-                        addNode.CheckedState = CheckState.Unchecked;
+                        addNode.CheckedState = parentNode.CheckedState;
                         addNode.Selected = true;
                         addNode.BringIntoView();
                     }
