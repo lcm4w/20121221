@@ -127,33 +127,13 @@ namespace TourWriter.Modules.Search
 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
-                if (c.Key == "Name")
-                {
-                    c.Width = 100;
-                    c.Header.Caption = "Name";
-                    c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter;
-                    c.Band.SortedColumns.Add(c, false);
-                }
-                    // only for booking search
-                else if (c.Key == "BookingName")
-                {
-                    c.Width = 100;
-                    c.Header.Caption = "Booking name";
-                    c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter;
-                    c.Band.SortedColumns.Add(c, false);
-                }
-                else if (c.Key == "AddedOn")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Added on";
-                }
-                else if (c.Key == "AddedBy")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Added by";
-                }
-                else
+                if (c.Key == "ParentFolderID" || c.Key == "Type") 
                     c.Hidden = true;
+                
+                if (c.Key == "Name") 
+                    c.Band.SortedColumns.Add(c, false);
+
+                c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter; 
             }
 
             GridHelper.SetDefaultGridAppearance(e);
