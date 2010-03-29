@@ -14,7 +14,7 @@ namespace TourWriter.Services.Update
         /// Update args to hold application startup arguments.
         /// </summary>
         internal static string UpdateArgs;
-        internal static bool UpdateChecksVisible = true;
+        internal static bool UpdateChecksVisible; // = true;
         private static System.Threading.Timer timer;
         private static int timerCount;
         private const int timerInterval = 600000; // 10min
@@ -48,7 +48,7 @@ namespace TourWriter.Services.Update
                 if (timerCount%appTimerMultiple == 0)
                 {
                     var updater = new Forms.UpdateForm();
-                    if (timerCount == 0 || doDbForcedUpdate)
+                    if (doDbForcedUpdate) // (timerCount == 0 || doDbForcedUpdate)
                     {
                         updater.RunUpdate();
                     }

@@ -28,6 +28,7 @@ namespace TourWriter.Forms
         {
             InitializeComponent();
 
+            chkNoUpdates.Visible = false;
             chkNoUpdates.Checked = !Services.Update.ApplicationUpdateService.UpdateChecksVisible;
             webClient = new WebClient { CachePolicy = new RequestCachePolicy(RequestCacheLevel.Reload) };
             webClient.DownloadProgressChanged += DownloadProgressChanged;
@@ -137,7 +138,7 @@ namespace TourWriter.Forms
         private void chkNoUpdates_CheckedChanged(object sender, EventArgs e)
         {
             Services.Update.ApplicationUpdateService.UpdateChecksVisible = !chkNoUpdates.Checked;
-            chkNoUpdates.ForeColor = chkNoUpdates.Checked ? Color.Red : Color.Black;
+            //chkNoUpdates.ForeColor = chkNoUpdates.Checked ? Color.Red : Color.Black;
         }
 
         private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -474,7 +475,7 @@ namespace TourWriter.Forms
             return string.Format("{0}?tag={1}", Settings.Default.UpdateUri, tag);
         }
 
-        private static ApplicationUpdateService.AppUpdateResponse GetResponseObject(string responseXml)
+        private ApplicationUpdateService.AppUpdateResponse GetResponseObject(string responseXml)
         {
             var doc = XDocument.Parse(responseXml);
             var q = doc.Descendants("Update").Select(
@@ -485,6 +486,7 @@ namespace TourWriter.Forms
                               Signature = xe.Element("Signature").Value,
                               Description = xe.Element("Description").Value
                           });
+            try { chkNoUpdates.Checked = bool.Parse(doc.Descendants("Update").Select(e => e.Element("Silent").Value).First()); } catch { }
             return q.First();
         }
 
