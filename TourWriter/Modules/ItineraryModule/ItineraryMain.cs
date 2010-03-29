@@ -458,23 +458,26 @@ namespace TourWriter.Modules.ItineraryModule
             if (nodeCollection == null)
                 return;
 
-            for (int i = 0; i < nodeCollection.Count; i++)
+            //for (int i = 0; i < nodeCollection.Count; i++)
+            if (nodeCollection.Count > 0)
             {
+                var i = 0;
                 nodeInfo = nodeCollection[i].Tag as NavigationTreeItemInfo;
-                if (nodeInfo == null)
-                    continue;
 
-                if (nodeInfo.ItemType == NavigationTreeItemInfo.ItemTypes.Supplier)
+                if (nodeInfo != null)
                 {
-                    // Add supplier booking
-                    tabControl_Main.SelectedTab = tabControl_Main.Tabs["Bookings"];
-                    bookingsViewer.AddNewBooking(nodeInfo.ItemID);
-                }
-                else if (nodeInfo.ItemType == NavigationTreeItemInfo.ItemTypes.Contact)
-                {
-                    // Add contact
-                    tabControl_Main.SelectedTab = tabControl_Main.Tabs["Clients"];
-                    clientEditor.AddContact(nodeInfo.ItemID);
+                    if (nodeInfo.ItemType == NavigationTreeItemInfo.ItemTypes.Supplier)
+                    {
+                        // Add supplier booking
+                        tabControl_Main.SelectedTab = tabControl_Main.Tabs["Bookings"];
+                        bookingsViewer.AddNewBooking(nodeInfo.ItemID);
+                    }
+                    else if (nodeInfo.ItemType == NavigationTreeItemInfo.ItemTypes.Contact)
+                    {
+                        // Add contact
+                        tabControl_Main.SelectedTab = tabControl_Main.Tabs["Clients"];
+                        clientEditor.AddContact(nodeInfo.ItemID);
+                    }
                 }
             }
         }
