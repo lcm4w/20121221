@@ -113,7 +113,9 @@ namespace TourWriter.Modules.ItineraryModule
             agentBindingSource.DataSource = toolSet.Agent.DefaultView;
 
             toolSet.City.DefaultView.Sort = "CityName ASC";
-            toolSet.Agent.DefaultView.Sort = "AgentName ASC";
+            countryBindingSource.Sort = "CountryName ASC";
+            userBindingSource.Sort = "UserName ASC";
+            agentBindingSource.Sort = "AgentName ASC";
         }
 
         private void ItineraryLoad(object sender, EventArgs e)
