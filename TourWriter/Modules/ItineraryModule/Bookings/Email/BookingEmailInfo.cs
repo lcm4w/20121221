@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Mail;
@@ -19,7 +20,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         // email body table and row settings
         private readonly string htmlTableTemplate = "<table cellspacing=\"0\" cellpadding=\"0\">";
         private readonly string htmlRowTemplateBookings = "<tr valign=top><td width=20></td><td>{0}:&nbsp;&nbsp;</td><td>{1}</td></tr>";
-        private readonly string htmlRowTemplateNotes = "<tr valign=top><td width=20></td><td>{0}</td></tr>";
         
         // email body search-and-replace tags
         private readonly string tagHostName = "[!HostName]";
@@ -305,36 +305,20 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return template;
         }
 
-        private string BuildBookingNotes(ItinerarySet.PurchaseLineRow line)
+        private static string BuildBookingNotes(ItinerarySet.PurchaseLineRow line)
         {
-            StringBuilder sb = new StringBuilder();
-            if (!line.IsNoteToSupplierNull() && line.NoteToSupplier.Trim() != "")
-            {
-                string notes = line.NoteToSupplier;
-                notes = notes.Replace("\r\n", "<br>\r\n");
-                sb.AppendLine(NewTable(
-                    "Booking Note:", htmlTableTemplate, NewTableRow(htmlRowTemplateNotes, notes)));
-            }
-            return sb.ToString();
+            return line.NoteToSupplier.Replace("\r\n", "<br />");
         }
 
-        private string BuildClientNotes(ItinerarySet.ItineraryGroupDataTable groups)
+        private static string BuildClientNotes(IEnumerable<ItinerarySet.ItineraryGroupRow> groups)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (ItinerarySet.ItineraryGroupRow group in groups)
+            var note = "";
+            foreach (var group in groups)
             {
                 if (group.RowState != DataRowState.Deleted && !group.IsNoteToSupplierNull())
-                    sb.AppendLine(NewTableRow(htmlRowTemplateNotes, group.NoteToSupplier));
+                    note += group.NoteToSupplier + "<br />";
             }
-
-            if (sb.Length > 0)
-            {
-                string notes = sb.ToString();
-                notes = notes.Replace("\r\n", "<br>\r\n");
-                sb.Remove(0, sb.Length);
-                sb.AppendLine(NewTable("Client Note:", htmlTableTemplate, notes));
-            }
-            return sb.ToString();
+            return note.Replace("\r\n", "<br />");
         }
 
         private static string GetNumberOfDaysName(int serviceTypeId)
