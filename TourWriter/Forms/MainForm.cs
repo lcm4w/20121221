@@ -58,8 +58,8 @@ namespace TourWriter.Forms
             if (ItineraryMenu.Nodes.Count > 0)
                 ItineraryMenu.Nodes[0].Selected = true;
 
-            if (!App.IsDebugMode) menuGeneralReports.Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
-            if (!App.IsDebugMode) navPane.GetItemsByKey("ReportsOLD")[0].Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
+            //if (!App.IsDebugMode) menuGeneralReports.Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
+            //if (!App.IsDebugMode) navPane.GetItemsByKey("ReportsOLD")[0].Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -574,6 +574,7 @@ namespace TourWriter.Forms
 
         internal void Load_ReportsFormOLD()
         {
+            App.ShowInfo(App.OldReportsExpiringText);
             UltraTreeNode tag = new UltraTreeNode("ReportsMainOLD");
             LoadMdiForm(typeof(Modules.ReportsModule.old.GeneralReportsMain), tag);
         }

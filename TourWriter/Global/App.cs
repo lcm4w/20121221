@@ -26,6 +26,7 @@ namespace TourWriter
         internal const string UserlayoutFilename = "UserLayout.xml";
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
         internal const string DataErrorPKDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
+        internal const string OldReportsExpiringText = "NOTICE: this area (old reports) is due for removal with the next update, please use the new reports.\r\n\r\nIf you have any concerns, please contact TourWriter support at support@tourwriter.com";
 
         internal const int TemplateCategoryBookingEmail = 5;
         internal const string PricingOptionNetMarkupText = "nm";
