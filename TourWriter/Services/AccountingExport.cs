@@ -85,7 +85,7 @@ namespace TourWriter.Services
                 foreach (DataRow row in allocationsTable.Rows)
                 {
                     int saleId = Convert.ToInt32(row["ItinerarySaleID"]);
-                    var saleRows = salesTable.Select("ItinerarySaleID = " + saleId);
+                    var saleRows = salesTable.Select("ItinerarySaleID = '" + saleId + "'");
                     if (saleRows.Length > 0)
                         row["SaleStatus"] = saleRows[0]["Status"];
                 }
