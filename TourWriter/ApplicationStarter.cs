@@ -76,6 +76,12 @@ namespace TourWriter
         private static void RunUpdate()
         {
             Application.DoEvents();
+
+            // add 'updating' flag to args
+            if (ApplicationUpdateService.UpdateArgs == null) ApplicationUpdateService.UpdateArgs = "";
+            if (!ApplicationUpdateService.UpdateArgs.Contains(App.UpdatedStartParam))
+                ApplicationUpdateService.UpdateArgs += " " + App.UpdatedStartParam;
+
             string args = ApplicationUpdateService.UpdateArgs;
 
             if (!string.IsNullOrEmpty(args))

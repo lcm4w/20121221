@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Collections.Generic;
@@ -74,6 +75,9 @@ namespace TourWriter.Forms
             Load_StartPage();
             Application.DoEvents();
             Login();
+
+            if(Environment.GetCommandLineArgs().Where(s => s == App.UpdatedStartParam).Count() > 0) // check start args
+                App.ShowInfo("TourWriter was updated to version " + StatusBar_VersionText + "\r\n\r\nSee the TourWriter Start-page for details.");
         }
 
         private void Login()

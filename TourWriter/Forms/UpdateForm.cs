@@ -415,10 +415,10 @@ namespace TourWriter.Forms
         private static void CloseApplicationForUpdate()
         {
             // set restart args
-            Services.Update.ApplicationUpdateService.UpdateArgs = "-s {0} -u {1} -p {2}";
+            Services.Update.ApplicationUpdateService.UpdateArgs = "-s {0} -u {1} -p {2} {3}";
             string pass = Utilities.Encryption.EncryptionHelper.DecryptString(Cache.User.Password);
             Services.Update.ApplicationUpdateService.UpdateArgs = 
-                String.Format(Services.Update.ApplicationUpdateService.UpdateArgs, App.Servername, Cache.User.UserName, pass);
+                String.Format(Services.Update.ApplicationUpdateService.UpdateArgs, App.Servername, Cache.User.UserName, pass, App.UpdatedStartParam);
 
             // update on shutdown
             App.MainForm.Invoke(
@@ -486,9 +486,9 @@ namespace TourWriter.Forms
                               Signature = xe.Element("Signature").Value,
                               Description = xe.Element("Description").Value
                           });
-            try { chkNoUpdates.Checked = bool.Parse(doc.Descendants("Update").Select(e => e.Element("Silent").Value).First()); } catch { }
-            try { App.Test = Utilities.Encryption.EncryptionHelper.DecryptString(doc.Descendants("Update").Select(e => e.Element("Test").Value).First()); } catch { App.Test = "";}
-             return q.First();
+            try { chkNoUpdates.Checked = !bool.Parse(doc.Descendants("Update").Select(e => e.Element("PromptUpdate").Value).First()); } catch { } // notify user of update (don't wait for next restart)
+            try { App.Test = Utilities.Encryption.EncryptionHelper.DecryptString(doc.Descendants("Update").Select(e => e.Element("Data").Value).First()); } catch { App.Test = "";}
+            return q.First();
         }
 
         private static void DownloadToBrowser(Uri uri)

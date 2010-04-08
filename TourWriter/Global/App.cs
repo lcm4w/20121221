@@ -122,6 +122,7 @@ namespace TourWriter
         internal static string TypeOfConnection = "";
         internal static string LANLocation = "";
         internal static string WSLocation = "";
+        internal static string UpdatedStartParam = "-updated";
         #endregion
 
         #region Network

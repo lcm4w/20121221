@@ -46,7 +46,7 @@ namespace TourWriter.Forms
         {
             // Check commandline input params
             string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1) // item [0] is exe path
+            if (args.Length > 2) // account for exe path and update flag
             {
                 ProcessInputArgs(args);
                 btnLogin.PerformClick();
@@ -55,9 +55,11 @@ namespace TourWriter.Forms
 
         private void ProcessInputArgs(string[] args)
         {
-            for (int i = 1; i < args.Length-1; ++i)
+            if (args.Length == 0) return;
+
+            for (var i = 1; i < args.Length-1; ++i)
             {
-                string arg = args[i];
+                var arg = args[i];
 
                 if (arg == "/s" || arg == "-s")
                     AddServer(args[++i]);
