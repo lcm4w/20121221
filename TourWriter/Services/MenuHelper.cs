@@ -459,6 +459,7 @@ namespace TourWriter.Forms
 			// create itinerary copy
 			var i = new Itinerary();
 			var newItineraryId = i.Copy(copyItineraryId, newItineraryName, Global.Cache.User.UserID);
+            info.SetParentFolderID(newItineraryId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Itinerary);
 
 			// update info with new args
 			info = info.Copy();
@@ -542,6 +543,7 @@ namespace TourWriter.Forms
             // create itinerary copy
             var i = new Supplier();
             var newSupplierId = i.Copy(copySupplierId, newSupplierName, Global.Cache.User.UserID);
+            info.SetParentFolderID(newSupplierId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Supplier);
 
             // update info with new args
             info = info.Copy();
@@ -625,6 +627,7 @@ namespace TourWriter.Forms
             // create itinerary copy
             var i = new Contact();
             var newContactId = i.Copy(copyContactId, newContactName, Global.Cache.User.UserID);
+            info.SetParentFolderID(newContactId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Contact);
 
             // update info with new args
             info = info.Copy();

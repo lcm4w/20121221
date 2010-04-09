@@ -98,10 +98,8 @@ namespace TourWriter.Info
         /// </summary>
         public bool SetParentFolderID(int itemID, int parentFolderID, ItemTypes itemType)
         {
-            object o = SqlHelper.ExecuteNonQuery(ConnectionString.GetConnectionString(),
-
-                "_Menu_SetParentFolderID", itemID, parentFolderID, itemType.ToString());
-
+            object o = SqlHelper.ExecuteNonQuery(ConnectionString.GetConnectionString(), "_Menu_SetParentFolderID", itemID, parentFolderID, itemType.ToString());
+            ParentFolderID = parentFolderID;
             return (int)o > 0;
         }
         
