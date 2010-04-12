@@ -47,7 +47,8 @@ namespace TourWriter.Services
                 ex.Message.ToLower().Contains("error: 26") || // Error Locating Server/Instance Specified...
                 ex.Message.ToLower().Contains("error: 40") || // Could not open a connection to SQL Server...
                 ex.Message.ToLower().Contains("timeout expired") ||
-                ex.Message.ToLower().Contains("unable to open the physical file")))
+                ex.Message.ToLower().Contains("unable to open the physical file") ||
+                ex.Message.ToLower().Contains("server was not found or was not accessible")))
             {
                 return true;
             }

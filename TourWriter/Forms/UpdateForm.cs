@@ -92,7 +92,7 @@ namespace TourWriter.Forms
         private void HandleError(Exception ex)
         {
             if (Visible) SetUI(UiState.Error);
-            if (!Services.ErrorHelper.IsWebServerConnectionError(ex))
+            if (!Services.ErrorHelper.IsWebServerConnectionError(ex) && !Services.ErrorHelper.IsServerConnectionError(ex))
                 Services.ErrorHelper.SendEmail(ex, true);
         }
 
