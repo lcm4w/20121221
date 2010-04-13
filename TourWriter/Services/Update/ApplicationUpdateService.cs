@@ -48,13 +48,13 @@ namespace TourWriter.Services.Update
                 if (timerCount%appTimerMultiple == 0)
                 {
                     var updater = new Forms.UpdateForm();
-                    if (doDbForcedUpdate) // (timerCount == 0 || doDbForcedUpdate)
+                    if (doDbForcedUpdate) // (timerCount == 0 || doDbForcedUpdate) // TW just opened, or db forced update
                     {
-                        updater.RunUpdate();
+                        updater.RunUpdate(); // visible
                     }
                     else
                     {
-                        updater.RunInstall();
+                        updater.RunInstall(); // silent
                     }
                 }
             }

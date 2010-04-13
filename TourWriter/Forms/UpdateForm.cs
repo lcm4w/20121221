@@ -48,7 +48,10 @@ namespace TourWriter.Forms
                 if (IsUpdateAvailable)
                 {
                     if (IsFullSetupRequired)
+                    {
                         SetUI(UiState.FullInstall);
+                        chkNoUpdates.Checked = false;
+                    }
                     else
                     {
                         if (CheckForValidLocalUpdate(updateReponse))
@@ -70,7 +73,10 @@ namespace TourWriter.Forms
                 if (IsUpdateAvailable)
                 {
                     if (IsFullSetupRequired)
+                    {
                         SetUI(UiState.FullInstall);
+                        chkNoUpdates.Checked = false;
+                    }
                     else
                     {
                         if (CheckForValidLocalUpdate(updateReponse))
