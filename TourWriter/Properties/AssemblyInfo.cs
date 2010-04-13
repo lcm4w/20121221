@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -148,6 +150,17 @@ public class AssemblyInfo
         {
             const string pattern = @"(\w*)(?=\))";
             return Regex.Match(InformationalVersion, pattern).Value;
+        }
+    }
+
+    public static string AssemblyDirectory
+    {
+        get
+        {
+            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var uri = new UriBuilder(codeBase);
+            var path = Uri.UnescapeDataString(uri.Path);
+            return Path.GetDirectoryName(path);
         }
     }
 }
