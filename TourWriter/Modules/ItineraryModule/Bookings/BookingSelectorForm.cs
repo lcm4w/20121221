@@ -520,7 +520,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var optionId = (int)gridBookings.ActiveRow.Cells["OptionID"].Value;
                 GridHelper.DeleteActiveRow(gridBookings, true);
                 var option = supplierSet.Option.FindByOptionID(optionId);
-                option.IsSelected = false;
+                if (option != null) option.IsSelected = false;
             }
         }
 

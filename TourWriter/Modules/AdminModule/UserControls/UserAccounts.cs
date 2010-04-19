@@ -420,7 +420,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 				userSet.User.AddUserRow(r);
 
                 // give them a role by default
-                if (treeRoles.Nodes[0] != null)
+                if (treeRoles.Nodes.Count > 0 && treeRoles.Nodes[0] != null)
                 {
                     UserSet.RoleRow theRole = userSet.Role.FindByRoleID(int.Parse(treeRoles.Nodes[0].Key));
                     userSet.UserRole.AddUserRoleRow(
