@@ -13,7 +13,7 @@ namespace TourWriter
     /// </summary>
     public class ApplicationStarter : WindowsFormsApplicationBase
     {
-        private const bool isSingleInstance = true;
+        private const bool isSingleInstance = false; // when true, caused (for one client) ApplicationServices.CantStartSingleInstanceException at ApplicationEntryPoint.cs:line 29 [application.Run(args);]
         private string SplashScreenText
         {
             set
