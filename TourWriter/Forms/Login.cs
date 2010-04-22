@@ -81,16 +81,19 @@ namespace TourWriter.Forms
             getUserThread.RunWorkerAsync();
         }
 
-        private LoginResult Authenticate(string servername, string username, string password)
+        private LoginResult Authenticate(string connection, string username, string password)
         {
             LoginResult loginResult;
             authenticatedUser = null;
-            UserSet userSet = new UserSet();
+            var userSet = new UserSet();
 
             // get user info.
             try
             {
-                userSet.LoadSingle(servername, username, EncryptionHelper.EncryptString(password));
+                if (connection == App.RemoteConnectionName)
+                    userSet.AuthenticateRemote(Settings.Default.RemoteConnection, username, EncryptionHelper.EncryptString(password));
+                else
+                    userSet.AuthenticateLocal(connection, username, EncryptionHelper.EncryptString(password));
             }
             catch (Exception ex)
             {
@@ -205,15 +208,11 @@ namespace TourWriter.Forms
 
         private void ManageServers()
         {
-            ServerManager serverManager = new ServerManager();
-            serverManager.Width = Width;
-            serverManager.Server = tempServerName;
-
+            var serverManager = new ServerManager();
             if (serverManager.ShowDialog() == DialogResult.OK)
             {
-                AddServer(serverManager.Server);
+                AddServer(serverManager.ServerName);
             }
-            else cmbServers.Text = tempServerName;
         }
 
         private void AddServer(string servername)
@@ -282,11 +281,9 @@ namespace TourWriter.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (ValidateForm())
-            {
-                SetActivityDisplay(true);
-                Authenticate();
-            }
+            if (!ValidateForm()) return;
+            SetActivityDisplay(true);
+            Authenticate();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -308,11 +305,17 @@ namespace TourWriter.Forms
         void getUserThread_DoWork(object sender, DoWorkEventArgs e)
         {
             // Get server name on UI thread.
-            string severText = "";
-            Invoke(new MethodInvoker(delegate { severText = cmbServers.Text; }));
-
+            string connection = "";
+            string user = "";
+            string pass = "";
+            Invoke(new MethodInvoker(delegate
+                                         {
+                                             connection = cmbServers.Text;
+                                             user = txtUsername.Text;
+                                             pass = txtPassword.Text;
+                                         }));
             // Authenticate user.
-            e.Result = Authenticate(severText, txtUsername.Text, txtPassword.Text);
+            e.Result = Authenticate(connection, user, pass);
         }
 
         void getUserThread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

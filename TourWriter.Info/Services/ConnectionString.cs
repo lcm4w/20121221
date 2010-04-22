@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using TourWriter.Utilities.Encryption;
 
-
 namespace TourWriter.Info.Services
 {
     public class ConnectionString
@@ -21,29 +20,37 @@ namespace TourWriter.Info.Services
             return GetConnectionString();
         }
         
-        private static string serverName = "";
-        private const string DbEncUser = "PlBe8RoPBQg=";
-        private const string DbEncPass = "2xGuduvmNtY=";
+        private static string _connectionString = "";
+
+        // Sets the default connection string by building it up using the supplied server name and other default settings.
+        internal static void SetLocalConnectionString(string servername)
+        {
+            var connString = ConfigurationManager.ConnectionStrings["UserConnection"].ConnectionString;
+            var conn = new SqlConnectionStringBuilder(connString)
+            {
+                DataSource = servername,
+                UserID = EncryptionHelper.DecryptString("PlBe8RoPBQg="),
+                Password = EncryptionHelper.DecryptString("2xGuduvmNtY=")
+            };
+            _connectionString = conn.ToString();
+        }
+
+        // Sets the connection string from a full connection string. Decrypts datasource, userid, password if required.
+        internal static void SetRemoteConnectionString(string connectionString)
+        {
+            var conn = new SqlConnectionStringBuilder(connectionString);
+            try { conn.DataSource = EncryptionHelper.DecryptString(conn.DataSource); } catch {}
+            try { conn.UserID = EncryptionHelper.DecryptString(conn.UserID); } catch {}
+            try { conn.Password = EncryptionHelper.DecryptString(conn.Password); } catch {}
+            _connectionString = conn.ToString();
+        }
 
         internal static string GetConnectionString()
         {
-            if (serverName == "")
-                throw new ArgumentNullException(serverName, "Server name is not initialised in connection string.");
+            if (_connectionString == "")
+                throw new ArgumentNullException(_connectionString, "Database connection string is not initialized.");
 
-            return GetConnectionString(serverName);
-        }
-
-        internal static string GetConnectionString(string servername)
-        {
-            serverName = servername;
-            string connString = ConfigurationManager.ConnectionStrings["UserConnection"].ConnectionString;
-            var conn = new SqlConnectionStringBuilder(connString)
-                           {
-                               DataSource = serverName,
-                               UserID = EncryptionHelper.DecryptString(DbEncUser),
-                               Password = EncryptionHelper.DecryptString(DbEncPass)
-                           };
-            return conn.ToString();
+            return _connectionString;
         }
 
         internal static string GetSaConnectionString()

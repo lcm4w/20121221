@@ -5,25 +5,35 @@ namespace TourWriter.Info
 {
     partial class UserSet
     {
-        public void LoadSingle(string serverName, string username, string password)
+        // Authenticates to default database server using the server name.
+        public void AuthenticateLocal(string serverName, string username, string password)
         {
-            SqlParameter param1 = new SqlParameter("@Username", username);
-            SqlParameter param2 = new SqlParameter("@Password", password);
+            ConnectionString.SetLocalConnectionString(serverName);
+            Authenticate(username, password);
+        }
+
+        // Authenticates to a database server using the full connection string.
+        public void AuthenticateRemote(string connectionString, string username, string password)
+        {
+            ConnectionString.SetRemoteConnectionString(connectionString);
+            Authenticate(username, password);
+        }
+
+        private void Authenticate(string username, string password)
+        {
+            var param1 = new SqlParameter("@Username", username);
+            var param2 = new SqlParameter("@Password", password);
 
             Clear();
-            DataSetHelper.FillDataSet(
-                ConnectionString.GetConnectionString(serverName),
-                this, "_UserSet_Sel_ByUsernamePassword", param1, param2);
+            DataSetHelper.FillDataSet(ConnectionString.GetConnectionString(), this, "_UserSet_Sel_ByUsernamePassword", param1, param2);
         }
 
         public void LoadSingle(int id)
         {
-            SqlParameter param = new SqlParameter("@UserID", id);
+            var param = new SqlParameter("@UserID", id);
 
             Clear();
-            DataSetHelper.FillDataSet(
-                ConnectionString.GetConnectionString(),
-                this, "_UserSet_Sel_ByID", param);
+            DataSetHelper.FillDataSet(ConnectionString.GetConnectionString(), this, "_UserSet_Sel_ByID", param);
         }
 
         public void LoadAll()
@@ -41,7 +51,7 @@ namespace TourWriter.Info
             if(isSingleUser)
                 singleUserId = User[0].UserID;
 
-            UserSet changes = GetChanges() as UserSet;
+            var changes = GetChanges() as UserSet;
 
             DataSetHelper.SaveDataSet(ConnectionString.GetConnectionString(), changes);
             if (isSingleUser)
