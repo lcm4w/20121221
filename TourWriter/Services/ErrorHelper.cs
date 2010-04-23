@@ -43,8 +43,8 @@ namespace TourWriter.Services
         internal static bool IsServerConnectionError(Exception ex)
         {
             if (ex is System.Data.SqlClient.SqlException &&
-               (ex.Message.ToLower().Contains("error: 0") ||  // An existing connection was forcibly closed by the remote host...
-                ex.Message.ToLower().Contains("error: 26") || // Error Locating Server/Instance Specified...
+               (ex.Message.ToLower().Contains("transport-level error has occurred") ||
+                ex.Message.ToLower().Contains("server was not found or was not accessible") ||
                 ex.Message.ToLower().Contains("error: 40") || // Could not open a connection to SQL Server...
                 ex.Message.ToLower().Contains("timeout expired") ||
                 ex.Message.ToLower().Contains("unable to open the physical file") ||
@@ -73,6 +73,7 @@ namespace TourWriter.Services
             }
             if (ex is System.Net.Sockets.SocketException &&
                (ex.Message.ToLower().Contains("unreachable network") ||
+                ex.Message.ToLower().Contains("connection attempt failed") ||
                 ex.Message.ToLower().Contains("no connection could be made")))
             {
                 return true;
