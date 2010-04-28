@@ -13,7 +13,8 @@ namespace TourWriter.UserControls.Reports
         private const string RegexBottomMargin = @"(?<=<BottomMargin>)\d*\.?\d+(?=cm</BottomMargin>)";
         private const string RegexLeftMargin = @"(?<=<LeftMargin>)\d*\.?\d+(?=cm</LeftMargin>)";
         private const string RegexRightMargin = @"(?<=<RightMargin>)\d*\.?\d+(?=cm</RightMargin>)";
-        private const string RegexSpacing = "(?<=<Textbox Name=\"SpacerCell\">.*<Height>)\\d*\\.?\\d+(?=cm</Height>)";
+        private const string RegexSpacing = "(?<=<TablixRow>\r\n\\s*<Height>)\\d*\\.?\\d+(?=cm</Height>\r\n\\s*<TablixCells>\r\n\\s*<TablixCell>\r\n\\s*<CellContents>\r\n\\s*<Textbox Name=\"SpacerCell\">)";
+
         private const string RegexSqlExpression = @"(where|and|or) *\(? *(?<col>\w*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
         #endregion
 
