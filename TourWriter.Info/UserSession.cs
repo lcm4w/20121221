@@ -7,43 +7,34 @@ namespace TourWriter.Info
 {
     public class UserSession
     {
-        public DataSet GetSessions()
+        public static void AddOrUpdate(int userId, string computerName, int sessionTimeout, ref Guid sessionId, ref int sessionIndex, ref int sessionCount)
         {
-            return SqlHelper.ExecuteDataset(
-                ConnectionString.GetConnectionString(), "Login_Sel_All");
-        }
+            var param1 = new SqlParameter("@LoginID", SqlDbType.UniqueIdentifier);
+            var param2 = new SqlParameter("@UserID", SqlDbType.Int);
+            var param3 = new SqlParameter("@ComputerName", SqlDbType.VarChar);
+            var param4 = new SqlParameter("@SessionTimeout", SqlDbType.Int);
 
-        public Guid AddSession(Guid loginGuid, int userID, string computerName, int maxUsers)
-        {
-            SqlParameter param1 = new SqlParameter("@LoginID", SqlDbType.UniqueIdentifier);
-            SqlParameter param2 = new SqlParameter("@UserID", SqlDbType.Int);
-            SqlParameter param3 = new SqlParameter("@ComputerName", SqlDbType.VarChar);
-            SqlParameter param4 = new SqlParameter("@MaxUsers", SqlDbType.Int);
-            SqlParameter param5 = new SqlParameter("@NewGuid", SqlDbType.UniqueIdentifier);
-
-            param1.Value = loginGuid;
-            param2.Value = userID;
+            param1.Value = sessionId;
+            param2.Value = userId;
             param3.Value = computerName;
-            param4.Value = maxUsers;
-            param5.Direction = ParameterDirection.Output;
+            param4.Value = sessionTimeout;
 
-            object o = SqlHelper.ExecuteScalar(
-                ConnectionString.GetConnectionString(), 
-                "_User_CheckLogin", param1, param2, param3, param4, param5);
+            var dr = SqlHelper.ExecuteReader(ConnectionString.GetConnectionString(), "_Login_AddOrUpdate", param1, param2, param3, param4);
 
-            if (o != DBNull.Value)
-                return (Guid)o;
-            return Guid.Empty;
+            if (dr.HasRows)
+            {
+                dr.Read();
+                sessionId = dr.GetGuid(0);
+                sessionIndex = Convert.ToInt32(dr.GetInt64(1));
+                sessionCount = dr.GetInt32(2);
+            }
         }
 
-        public void RemoveSession(Guid loginGuid)
+        public static void Quit(string computerName)
         {
-            SqlParameter param1 = new SqlParameter("@LoginID", SqlDbType.UniqueIdentifier);
-            param1.Value = loginGuid;
-
-            SqlHelper.ExecuteScalar(
-                ConnectionString.GetConnectionString()
-                , "_User_RemoveLogin", param1);
+            SqlHelper.ExecuteNonQuery(ConnectionString.GetConnectionString(), CommandType.Text,
+                                      "update [Login] set Ended = 'true' where ComputerName = @ComputerName",
+                                      new SqlParameter("@ComputerName", SqlDbType.VarChar) {Value = computerName});
         }
     }
 }

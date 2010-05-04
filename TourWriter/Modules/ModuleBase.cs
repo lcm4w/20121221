@@ -65,7 +65,9 @@ namespace TourWriter.Modules
         private void ModuleBase_Load(object sender, EventArgs e)
         {
             if (_doLicenseCheck && !DesignMode)
-                Services.LicenseService.CheckLicense();
+            {
+                Services.LicenseService.CheckAsync();
+            }
         }
 
         private void ModuleBase_Shown(object sender, EventArgs e)

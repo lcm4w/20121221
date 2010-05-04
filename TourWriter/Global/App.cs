@@ -116,7 +116,6 @@ namespace TourWriter
                 true, false, true, Keys.D, Utilities.KeyHook.KeyState.KeyDown);	// [Shift + Alt + D]
 
         #region Application variables
-        internal static Guid LoginGuid = Guid.Empty;
         internal static string Servername;
         internal static string UsernameOnDisk = "";
         internal static string PasswordOnDisk = "";

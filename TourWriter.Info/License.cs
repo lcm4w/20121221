@@ -9,11 +9,8 @@ namespace TourWriter.Info
 	[Serializable]
 	public class License
     {
-        [XmlIgnore]
-        public const string LicenseExpiredMessage =
-            "Your TourWriter License expired on {0}.\r\nPlease contact TourWriter to renew your license";
 		[XmlIgnore]
-		public string   LocalLicenseID; // License ID as seen by the users database.
+        public string LocalLicenseID; // License ID as seen by the users database.
 
 		public string   LicenseID;		// License ID as seen by TourWriter.com database.
 		public string   LicenseType;	// Type of license ID.
@@ -68,7 +65,7 @@ namespace TourWriter.Info
 
         public void LoadFromDatabase()
         {
-            SqlDataReader dr = Services.SqlHelper.ExecuteReader(
+            var dr = Services.SqlHelper.ExecuteReader(
                 Services.ConnectionString.GetConnectionString(), "_License_GetLatest");
 
             if (dr.HasRows)

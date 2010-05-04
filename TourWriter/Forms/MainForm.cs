@@ -15,6 +15,7 @@ using Infragistics.Win.UltraWinScrollBar;
 using Infragistics.Win.UltraWinStatusBar;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Info;
+using TourWriter.Services;
 using TourWriter.Info.Services;
 using TourWriter.Modules.AdminModule;
 using TourWriter.Modules.ContactModule;
@@ -85,14 +86,14 @@ namespace TourWriter.Forms
             if (Global.Cache.UserSet != null)
                 Logout();
 
-            Login login = new Login();
-            login.ShowInTaskbar = false; // so can't seperate from parent
-            DialogResult loginResult = login.ShowDialog(this);
+            var login = new Login {ShowInTaskbar = false};
+            var loginResult = login.ShowDialog(this);
 
             switch (loginResult)
             {
                 case DialogResult.OK:
                     {
+                        LicenseService.CheckAsync();
                         ApplicationUpdateService.StartUpdateMonitor();
                         InitialiseMenu(ItineraryMenu);
                         InitialiseMenu(SupplierMenu);
@@ -935,7 +936,7 @@ namespace TourWriter.Forms
 
         private static void Logout()
         {
-            new UserSession().RemoveSession(App.LoginGuid);
+            LicenseService.QuitAsync();
         }
 
         internal UltraTree ItineraryMenu

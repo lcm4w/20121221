@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using TourWriter.Info;
 using TourWriter.Properties;
 
 namespace TourWriter.Forms
@@ -10,13 +9,13 @@ namespace TourWriter.Forms
     {
         private readonly int _secDelay;
 
-        public LicenseExpiredForm(DateTime expDate, int secDelay)
+        public LicenseExpiredForm(int secDelay, string message)
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;
 
             _secDelay = secDelay;
-            lblExpiredMessage.Text = String.Format(License.LicenseExpiredMessage, expDate.ToShortDateString());
+            lblExpiredMessage.Text = message;
         }
 
         private void LicenseExpiredForm_Load(object sender, EventArgs e)
