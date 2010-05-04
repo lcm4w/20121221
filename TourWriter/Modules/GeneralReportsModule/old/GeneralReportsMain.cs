@@ -356,7 +356,7 @@ namespace TourWriter.Modules.ReportsModule.old
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(608, 13);
             this.label11.TabIndex = 155;
-            this.label11.Text = "Please use new reports, this page will be removed when new reports complete";
+            this.label11.Text = "NOTE: This page will be removed in the future (once new reports are completed for you).";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GeneralReportsMain

@@ -26,8 +26,7 @@ namespace TourWriter
         internal const string UserlayoutFilename = "UserLayout.xml";
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
         internal const string DataErrorPKDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
-        internal const string OldReportsExpiringText = "NOTICE: this area (old reports) is due for removal with the next update, please use the new reports.\r\n\r\nIf you have any concerns, please contact TourWriter support at support@tourwriter.com";
-
+        
         internal const int TemplateCategoryBookingEmail = 5;
         internal const string PricingOptionNetMarkupText = "nm";
         internal const string PricingOptionNetGrossText = "ng";
@@ -123,6 +122,41 @@ namespace TourWriter
         internal static string LANLocation = "";
         internal static string WSLocation = "";
         internal static string UpdatedStartParam = "-updated";
+
+        internal static bool ShowOldReports
+        {
+            // TODO: Remove this when old reports gone
+            get
+            {
+                return App.IsDebugMode 
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "20D0DC7C-BE6B-4846-83C6-3CC580808959".ToLower() // wldr
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "49AD26FD-6582-493A-B998-B9BA244D082F".ToLower() // sc nz
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "BBE982AB-C8E2-4DB4-8EAC-06801A810540".ToLower() // sc aus
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "FC23968E-28B2-4AE0-AD28-06F6A9AB76A1".ToLower() // btb
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "60DF6FBE-6E29-4AC8-A27D-B4A65CB33B45".ToLower() // 3d
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "8A7E0397-40DC-4389-8A38-9E74A2C32E20".ToLower(); // szs
+
+                
+            }
+        }
         #endregion
 
         #region Network

@@ -338,7 +338,7 @@ namespace TourWriter.Modules.SupplierModule
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(810, 13);
             this.label30.TabIndex = 155;
-            this.label30.Text = "Please use new reports, this page will be removed when new reports complete";
+            this.label30.Text = "NOTE: This page will be removed in the future (once new reports are completed for you).";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // optReports

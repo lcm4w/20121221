@@ -44,8 +44,7 @@ namespace TourWriter.Modules.SupplierModule
             menuStrip1.Visible = false;
             toolStrip1.Visible = false;
 
-            tabsAdditional.ActiveTabChanged += (o, e) => { if (tabsAdditional.ActiveTab.Key == "Reports") App.ShowInfo(App.OldReportsExpiringText); };
-            //if (!App.IsDebugMode) tabsAdditional.Tabs["Reports"].Visible = false; // Hide old reports tab. TODO: remove (hidden 2010.2.17)
+            if (!App.ShowOldReports) tabsAdditional.Tabs["Reports"].Visible = false;
         }
 
         private void SupplierMain_Load(object sender, EventArgs e)
