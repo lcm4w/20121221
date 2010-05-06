@@ -1,5 +1,5 @@
 ﻿using System;
-using Shell32;
+using Ionic.Zip;
 using System.IO;
 using System.Threading;
 
@@ -26,7 +26,7 @@ namespace TourWriter.Services.Update
                 Directory.Move(targetDir, backupDir);
 
                 // update
-                DecompressArchive(sourceArchive, App.Path_CommonApplicationData);
+                ExtractArchive(sourceArchive, App.Path_CommonApplicationData);
                 App.Debug("Tempates archive decompressed to " + targetDir);
 
                 // tidy
@@ -40,12 +40,12 @@ namespace TourWriter.Services.Update
             }
         }
 
-        public static void DecompressArchive(string sourceArchive, string targetDir)
+        public static void ExtractArchive(string archive, string directory)
         {
-            var shell = new Shell();
-            var src = shell.NameSpace(sourceArchive);
-            var dst = shell.NameSpace(targetDir);
-            foreach (FolderItem f in src.Items()) dst.CopyHere(f, 0);
+            using (var zip = new ZipFile(archive))
+            {
+                zip.ExtractAll(directory, ExtractExistingFileAction.OverwriteSilently);
+            }
         }
     }
 }
