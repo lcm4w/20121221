@@ -43,7 +43,7 @@ namespace TourWriter.UserControls.Reports
             treeReports.Nodes.Clear();
 
             // add default reports
-            var node = new TreeNode { Text = "Default", Tag = "Default", ImageKey = "Folder", SelectedImageKey = "Folder", ContextMenu = null, ContextMenuStrip = null };
+            var node = new TreeNode { Text = "Standard", Tag = "Standard", ImageKey = "Folder", SelectedImageKey = "Folder", ContextMenu = null, ContextMenuStrip = null };
             treeReports.Nodes.Add(node);
             PopulateDefaultReportsList(node);
 
@@ -67,7 +67,7 @@ namespace TourWriter.UserControls.Reports
             foreach (var t in new DirectoryInfo(path).GetFiles().Where(f => f.Extension == ".rdl" || f.Extension == ".rdlc"))
             {
                 var name = Regex.Replace(t.Name.Replace(t.Extension, ""), "([A-Z])", " $1", RegexOptions.Compiled).Trim();
-                node.Nodes.Add(new TreeNode { Text = name, Name = t.FullName, Tag = "Default", ImageKey = "Report", SelectedImageKey = "Report", ContextMenu = null, ContextMenuStrip = null });
+                node.Nodes.Add(new TreeNode { Text = name, Name = t.FullName, Tag = "Standard", ImageKey = "Report", SelectedImageKey = "Report", ContextMenu = null, ContextMenuStrip = null });
             }
         }
         
@@ -168,7 +168,7 @@ namespace TourWriter.UserControls.Reports
 
         private static bool IsDefaultReport(TreeNode node)
         {
-            return node.Tag != null && node.Tag.ToString().ToLower().StartsWith("Default".ToLower());
+            return node.Tag != null && node.Tag.ToString().ToLower().StartsWith("Standard".ToLower());
         }
 
         private static bool IsReportNode(TreeNode node)
@@ -331,7 +331,7 @@ namespace TourWriter.UserControls.Reports
 
             if (node == destCategoryNode) return;
 
-            if (destNode.Text == "Default" || destCategoryNode.Text == "Default" || IsDefaultReport(node))
+            if (destNode.Text == "Standard" || destCategoryNode.Text == "Standard" || IsDefaultReport(node))
             {
                 //App.ShowInfo(DefaultReportsMessage);
                 return;
@@ -424,7 +424,7 @@ namespace TourWriter.UserControls.Reports
             if (node.ContextMenuStrip == null)
                 node.ContextMenuStrip = treeReportsContextMenu;
 
-            var isDefaultReports = node.Text == "Default" || IsDefaultReport(node);
+            var isDefaultReports = node.Text == "Standard" || IsDefaultReport(node);
             if (isDefaultReports)
             {
                 node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;

@@ -4625,17 +4625,3 @@ update [dbo].[Template] set ParentTemplateCategoryID = 4
 GO
 ALTER TABLE [dbo].[Template] ALTER COLUMN [ParentTemplateCategoryID] INT NOT NULL;
 GO
-
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Client locations', '\Templates\Reports\General\ClientLocations.rdlc', '1')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Itinerary yield', '\Templates\Reports\General\ItineraryYield.rdlc', '1')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Supplier purchases', '\Templates\Reports\General\SupplierPurchases.rdlc', '1')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Supplier rates', '\Templates\Reports\General\SupplierRates.rdlc', '1')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Client pricing', '\Templates\Reports\Itinerary\ClientPricing.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Client pricing detailed', '\Templates\Reports\Itinerary\ClientPricingDetailed.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Contact list', '\Templates\Reports\Itinerary\ContactList.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Pricing detailed', '\Templates\Reports\Itinerary\PricingDetailed.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Pricing summary', '\Templates\Reports\Itinerary\PricingSummary.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Supplier remittance', '\Templates\Reports\Itinerary\SupplierRemittance.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Voucher', '\Templates\Reports\Itinerary\Voucher.rdlc', '2')
-INSERT INTO [dbo].[Template]([TemplateName], [FilePath], [ParentTemplateCategoryID]) values ('Who used', '\Templates\Reports\Supplier\WhoUsed.rdlc', '3')
-GO
