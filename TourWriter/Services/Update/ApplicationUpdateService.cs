@@ -25,7 +25,10 @@ namespace TourWriter.Services.Update
         internal static void StartUpdateMonitor()
         {
             if (timer == null)
-                timer = new System.Threading.Timer(UpdateTimerFired, null, 0, timerInterval); 
+                timer = new System.Threading.Timer(UpdateTimerFired, null, 0, timerInterval);
+
+            // run templates update (if there is anything new to update)
+            TemplatesUpdateService.UpdateTemplatesAsync();
         }
 
         private static void UpdateTimerFired(object state)
