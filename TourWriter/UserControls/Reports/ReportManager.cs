@@ -15,14 +15,14 @@ namespace TourWriter.UserControls.Reports
             DefaultParameters = new Dictionary<string, object>();
         }
 
-        public void FilterReportExplorer(string categoryName)
+        public void PoplulateReportExplorer(ExplorerControl.ReportCategory reportCategory)
         {
-            reportExplorer.FilterReportTree(categoryName);
+            reportExplorer.PopulateReportTree(reportCategory);
         }
 
         public void RefreshReportExplorer()
         {
-            reportExplorer.RebuildReportTree();
+            reportExplorer.RefreshReportTree();
         }
 
         private void OpenReport(string reportName, string reportFile)

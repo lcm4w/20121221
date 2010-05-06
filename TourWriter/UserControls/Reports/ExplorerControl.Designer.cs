@@ -53,13 +53,14 @@
             this.treeReports.SelectedImageIndex = 0;
             this.treeReports.Size = new System.Drawing.Size(167, 338);
             this.treeReports.TabIndex = 129;
-            this.treeReports.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeReports_NodeMouseDoubleClick);
+            this.treeReports.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeReports_BeforeLabelEdit);
             this.treeReports.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeReports_AfterLabelEdit);
+            this.treeReports.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeReports_ItemDrag);
+            this.treeReports.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeReports_NodeMouseClick);
+            this.treeReports.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeReports_NodeMouseDoubleClick);
             this.treeReports.DragDrop += new System.Windows.Forms.DragEventHandler(this.treeReports_DragDrop);
             this.treeReports.DragEnter += new System.Windows.Forms.DragEventHandler(this.treeReports_DragEnter);
-            this.treeReports.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeReports_NodeMouseClick);
-            this.treeReports.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeReports_BeforeLabelEdit);
-            this.treeReports.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeReports_ItemDrag);
+            this.treeReports.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeReports_MouseDown);
             // 
             // treeReportsContextMenu
             // 
@@ -70,40 +71,41 @@
             this.menuRename,
             this.menuChangeReportFile});
             this.treeReportsContextMenu.Name = "treeReportsMenu";
-            this.treeReportsContextMenu.Size = new System.Drawing.Size(162, 136);
+            this.treeReportsContextMenu.Size = new System.Drawing.Size(170, 136);
+            this.treeReportsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.treeReportsContextMenu_Opening);
             // 
             // menuAddReport
             // 
             this.menuAddReport.Name = "menuAddReport";
-            this.menuAddReport.Size = new System.Drawing.Size(161, 22);
+            this.menuAddReport.Size = new System.Drawing.Size(169, 22);
             this.menuAddReport.Text = "Add report";
             this.menuAddReport.Click += new System.EventHandler(this.menuAddReport_Click);
             // 
             // menuAddCategory
             // 
             this.menuAddCategory.Name = "menuAddCategory";
-            this.menuAddCategory.Size = new System.Drawing.Size(161, 22);
+            this.menuAddCategory.Size = new System.Drawing.Size(169, 22);
             this.menuAddCategory.Text = "Add folder";
             this.menuAddCategory.Click += new System.EventHandler(this.menuAddCategory_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
-            this.menuDelete.Size = new System.Drawing.Size(161, 22);
+            this.menuDelete.Size = new System.Drawing.Size(169, 22);
             this.menuDelete.Text = "Remove";
             this.menuDelete.Click += new System.EventHandler(this.menuDelete_Click);
             // 
             // menuRename
             // 
             this.menuRename.Name = "menuRename";
-            this.menuRename.Size = new System.Drawing.Size(161, 22);
+            this.menuRename.Size = new System.Drawing.Size(169, 22);
             this.menuRename.Text = "Rename";
             this.menuRename.Click += new System.EventHandler(this.menuRename_Click);
             // 
             // menuChangeReportFile
             // 
             this.menuChangeReportFile.Name = "menuChangeReportFile";
-            this.menuChangeReportFile.Size = new System.Drawing.Size(161, 22);
+            this.menuChangeReportFile.Size = new System.Drawing.Size(169, 22);
             this.menuChangeReportFile.Text = "Change report file";
             this.menuChangeReportFile.Click += new System.EventHandler(this.menuChangeReportFile_Click);
             // 
@@ -113,12 +115,12 @@
             this.treeReportsImageList.ImageSize = new System.Drawing.Size(16, 16);
             this.treeReportsImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // ReportExplorer
+            // ExplorerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treeReports);
-            this.Name = "ReportExplorer";
+            this.Name = "ExplorerControl";
             this.Size = new System.Drawing.Size(167, 338);
             this.treeReportsContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);

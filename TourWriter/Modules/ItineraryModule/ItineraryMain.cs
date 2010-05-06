@@ -146,7 +146,7 @@ namespace TourWriter.Modules.ItineraryModule
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
-            reportControl.FilterReportExplorer("Itinerary");
+            reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
             // add event to track when data changed
             foreach (DataTable dt in itinerarySet.Tables)
@@ -413,7 +413,7 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     Cache.SaveToolSet();
                     reportControl.RefreshReportExplorer();
-                    reportControl.FilterReportExplorer("Itinerary");
+                    reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
                     bookingsViewer.RefreshEmailTemplateMenu();
                 }
             }
@@ -515,7 +515,7 @@ namespace TourWriter.Modules.ItineraryModule
                 // refresh the toolset
                 Cache.RefreshToolSet(false);
                 reportControl.RefreshReportExplorer();
-                reportControl.FilterReportExplorer("Itinerary");
+                reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
                 SetDataCleanName();
             }

@@ -33,7 +33,7 @@ namespace TourWriter.Modules.GeneralReportsModule
 
         private void InitializeReportMaster()
         {
-            reportControl.FilterReportExplorer("General");
+            reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.General);
         }
 
         private void RefreshData()
@@ -45,7 +45,7 @@ namespace TourWriter.Modules.GeneralReportsModule
             }
             Cache.RefreshToolSet(hasChanges);
             reportControl.RefreshReportExplorer();
-            reportControl.FilterReportExplorer("General");
+            reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.General);
 
             SetDataCleanName();
         }
@@ -63,7 +63,7 @@ namespace TourWriter.Modules.GeneralReportsModule
                 {
                     Cache.SaveToolSet();
                     reportControl.RefreshReportExplorer();
-                    reportControl.FilterReportExplorer("General");
+                    reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.General);
                 }
 
                 Text = Text.TrimStart('*');

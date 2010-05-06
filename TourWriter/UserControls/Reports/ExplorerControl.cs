@@ -3,6 +3,8 @@ using System.Collections;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
@@ -12,35 +14,26 @@ namespace TourWriter.UserControls.Reports
 {
     public partial class ExplorerControl : UserControl
     {
+        private const string DefaultReportsMessage = "Default reports cannot be changed.\r\n\r\nChanges are only allowed within the Custom folder.";
+        private ReportCategory _reportCategory;
+        public enum ReportCategory { General, Itinerary, Supplier }
         public event EventHandler<ReportDoubleClickEventArgs> ReportDoubleClick;
 
         public ExplorerControl()
         {
             InitializeComponent();
-
-            if (!App.IsInDesignMode)
-            {
+            if (!App.IsInDesignMode) 
                 InitializeImageList();
-                InitializeReportTree();
-            }
         }
-
-        public void FilterReportTree(string categoryName)
+        
+        public void PopulateReportTree(ReportCategory reportCategory)
         {
-            for (int i = treeReports.Nodes.Count - 1; i >= 0; i--)
-            {
-                var node = treeReports.Nodes[i];
-                if (node.Text != categoryName)
-                {
-                    node.Remove();
-                }
-            }
-
-            if (treeReports.Nodes.Count > 0)
-                treeReports.Nodes[0].Expand();
+            if (App.IsInDesignMode) return;
+            _reportCategory = reportCategory;
+            InitializeReportTree();
         }
 
-        public void RebuildReportTree()
+        public void RefreshReportTree()
         {
             InitializeReportTree();
         }
@@ -48,61 +41,85 @@ namespace TourWriter.UserControls.Reports
         private void InitializeReportTree()
         {
             treeReports.Nodes.Clear();
-            LoadReportCategories(treeReports.Nodes);
-            LoadReports(treeReports.Nodes);
-            RepositionNodes(treeReports.Nodes);
+
+            // add default reports
+            var node = new TreeNode { Text = "Default", Tag = "Default", ImageKey = "Folder", SelectedImageKey = "Folder", ContextMenu = null, ContextMenuStrip = null };
+            treeReports.Nodes.Add(node);
+            PopulateDefaultReportsList(node);
+
+            // add custom reports  
+            var parent = Cache.ToolSet.TemplateCategory.Where(
+                    t => t.RowState != DataRowState.Deleted && t.TemplateCategoryName == _reportCategory.ToString()).FirstOrDefault();
+            if (parent == null) return;
+            node = new TreeNode { Text = "Custom", ImageKey = "Folder", SelectedImageKey = "Folder", Name = "ReportCategory." + parent.TemplateCategoryID };
+            treeReports.Nodes.Add(node);
+            PopulateCustomReportsList(parent.TemplateCategoryID, node);
+
             treeReports.TreeViewNodeSorter = new TreeNodeComparer();
+            treeReports.ExpandAll();
         }
 
+        private void PopulateDefaultReportsList(TreeNode node)
+        {
+            var path = Path.Combine(Path.Combine(App.Path_DefaultTemplatesFolder, "Reports"), _reportCategory.ToString());
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+            foreach (var t in new DirectoryInfo(path).GetFiles().Where(f => f.Extension == ".rdl" || f.Extension == ".rdlc"))
+            {
+                var name = Regex.Replace(t.Name.Replace(t.Extension, ""), "([A-Z])", " $1", RegexOptions.Compiled).Trim();
+                node.Nodes.Add(new TreeNode { Text = name, Name = t.FullName, Tag = "Default", ImageKey = "Report", SelectedImageKey = "Report", ContextMenu = null, ContextMenuStrip = null });
+            }
+        }
+        
         private void InitializeImageList()
         {
             treeReportsImageList.Images.Add("Folder", Resources.Folder);
             treeReportsImageList.Images.Add("Report", Resources.Report);
         }
 
-        private void LoadReportCategories(TreeNodeCollection nodes)
+        private void PopulateCustomReportsList(int categoryId, TreeNode parent)
         {
-            foreach (var row in Cache.ToolSet.TemplateCategory)
+            foreach (var file in Cache.ToolSet.Template.Where(f => f.RowState != DataRowState.Deleted && f.ParentTemplateCategoryID == categoryId))
+                AddReportNode(parent, file);
+
+            foreach (var folder in Cache.ToolSet.TemplateCategory.Where(f => f.RowState != DataRowState.Deleted && 
+                !f.IsParentTemplateCategoryIDNull() && f.ParentTemplateCategoryID == categoryId).OrderBy(f => f.TemplateCategoryID))
             {
-                if (row.RowState == DataRowState.Deleted)
-                    continue;
+                var folderId = folder.TemplateCategoryID;
 
-                var node = new TreeNode();
-                node.Name = "ReportCategory." + row.TemplateCategoryID;
-                node.Text = row.TemplateCategoryName;
-                node.SelectedImageKey = node.ImageKey = "Folder";
-                node.ContextMenuStrip = treeReportsContextMenu;
-                if (!row.IsParentTemplateCategoryIDNull())
-                    node.Tag = row.ParentTemplateCategoryID;
+                var child = new TreeNode
+                               {
+                                   Name = "ReportCategory." + folderId,
+                                   Text = folder.TemplateCategoryName,
+                                   ImageKey = "Folder",
+                                   SelectedImageKey = "Folder",
+                                   ContextMenuStrip = treeReportsContextMenu
+                               };
+                if (!folder.IsParentTemplateCategoryIDNull())
+                    child.Tag = folder.ParentTemplateCategoryID;
+                parent.Nodes.Add(child);
 
-                nodes.Add(node);
+                PopulateCustomReportsList(folderId, child);
             }
         }
 
-        private void LoadReports(TreeNodeCollection nodes)
+        private TreeNode AddReportNode(TreeNode parent, ToolSet.TemplateRow report)
         {
-            foreach (var row in Cache.ToolSet.Template)
-            {
-                if (row.RowState == DataRowState.Deleted)
-                    continue;
+            var node = new TreeNode
+                           {
+                               Name = "Report." + report.TemplateID,
+                               Text = report.TemplateName,
+                               Tag = report.ParentTemplateCategoryID,
+                               ImageKey = "Report",
+                               SelectedImageKey = "Report",
+                               ContextMenuStrip = treeReportsContextMenu
+                           };
 
-                AddReportNode(nodes, row);
-            }
+            parent.Nodes.Add(node);
+            return node;
         }
 
-        private void AddReportNode(TreeNodeCollection nodes, ToolSet.TemplateRow report)
-        {
-            var node = new TreeNode();
-            node.Name = "Report." + report.TemplateID;
-            node.Text = report.TemplateName;
-            node.Tag = report.ParentTemplateCategoryID;
-            node.SelectedImageKey = node.ImageKey = "Report";
-            node.ContextMenuStrip = treeReportsContextMenu;
-
-            nodes.Add(node);
-        }
-
-        private void AddCategoryNode(TreeNodeCollection nodes, ToolSet.TemplateCategoryRow category)
+        private TreeNode AddCategoryNode(TreeNodeCollection nodes, ToolSet.TemplateCategoryRow category)
         {
             var node = new TreeNode();
             node.Name = "ReportCategory." + category.TemplateCategoryID;
@@ -112,31 +129,9 @@ namespace TourWriter.UserControls.Reports
             node.ContextMenuStrip = treeReportsContextMenu;
 
             nodes.Add(node);
+            return node;
         }
-
-        private static void RepositionNodes(TreeNodeCollection nodes)
-        {
-            for (int i = nodes.Count - 1; i >= 0; i--)
-            {
-                var node = nodes[i];
-                if (node.Tag == null)
-                    continue;
-
-                var categoryId = (int)node.Tag;
-                string key = "ReportCategory." + categoryId;
-                var nodesFound = nodes.Find(key, true);
-                if (nodesFound.Length == 0)
-                    continue;
-
-                var parentNode = nodesFound[0];
-
-                // move the node
-                node.Remove();
-                parentNode.Nodes.Add(node);
-            }
-            if (nodes.Count > 0) nodes[0].Expand();
-        }
-
+        
         private static TreeNode GetReportCategoryNode(TreeNode node)
         {
             if (!IsReportNode(node))
@@ -171,12 +166,17 @@ namespace TourWriter.UserControls.Reports
             return category;
         }
 
+        private static bool IsDefaultReport(TreeNode node)
+        {
+            return node.Tag != null && node.Tag.ToString().ToLower().StartsWith("Default".ToLower());
+        }
+
         private static bool IsReportNode(TreeNode node)
         {
             return (node.ImageKey == "Report");
         }
 
-        private void AddReport(string reportFile, TreeNode parentCategoryNode)
+        private TreeNode AddReport(string reportFile, TreeNode parentCategoryNode)
         {
             int categoryId = GetNodeID(parentCategoryNode);
 
@@ -187,13 +187,20 @@ namespace TourWriter.UserControls.Reports
             Cache.ToolSet.Template.AddTemplateRow(newReport);
 
             // add the new report to the tree
-            AddReportNode(parentCategoryNode.Nodes, newReport);
+            var newNode = AddReportNode(parentCategoryNode, newReport);
             parentCategoryNode.Expand();
+            return newNode;
         }
 
-        private void AddCategory(TreeNode parentCategoryNode)
+        private void AddCustomCategory()
         {
-            int categoryId = GetNodeID(parentCategoryNode);
+            var node = treeReports.SelectedNode;
+            if (node == null || IsDefaultReport(node))
+                foreach (var n in treeReports.Nodes.Cast<TreeNode>().Where(n => n.Text == "Custom")) node = n;
+            else
+                node = GetReportCategoryNode(node);
+
+            var categoryId = GetNodeID(node);
 
             var newCategory = Cache.ToolSet.TemplateCategory.NewTemplateCategoryRow();
             newCategory.ParentTemplateCategoryID = categoryId;
@@ -201,23 +208,30 @@ namespace TourWriter.UserControls.Reports
             Cache.ToolSet.TemplateCategory.AddTemplateCategoryRow(newCategory);
 
             // add the new report to the tree
-            AddCategoryNode(parentCategoryNode.Nodes, newCategory);
-            parentCategoryNode.Expand();
+            var newNode = AddCategoryNode(node.Nodes, newCategory);
+            node.Expand();
+            treeReports.SelectedNode = newNode;
+            newNode.BeginEdit();
         }
 
-        private void AddReportsToSelectedCategory()
+        private void AddCustomReport()
         {
-            var node = treeReports.SelectedNode ?? treeReports.Nodes[0];
+            var node = treeReports.SelectedNode;
+            if (treeReports.SelectedNode == null || IsDefaultReport(treeReports.SelectedNode))
+                foreach (var n in treeReports.Nodes.Cast<TreeNode>().Where(n => n.Text == "Custom")) node = n;
+
             var categoryNode = GetReportCategoryNode(node);
 
             string[] reportFiles = App.SelectExternalFiles(true, "Select report file(s)", "Reports (*.rdlc)|*.rdlc|All files (*.*)|*.*", 0);
             if (reportFiles == null)
                 return;
 
+            TreeNode newNode = null;
             foreach (string reportFile in reportFiles)
             {
-                AddReport(reportFile, categoryNode);
+                newNode = AddReport(reportFile, categoryNode);
             }
+            if (newNode != null) treeReports.SelectedNode = newNode;
         }
 
         private void DeleteSelectedNode()
@@ -275,14 +289,12 @@ namespace TourWriter.UserControls.Reports
 
         private void menuAddReport_Click(object sender, EventArgs e)
         {
-            AddReportsToSelectedCategory();
+            AddCustomReport();
         }
 
         private void menuAddCategory_Click(object sender, EventArgs e)
         {
-            var node = treeReports.SelectedNode ?? treeReports.Nodes[0];
-            var categoryNode = GetReportCategoryNode(node);
-            AddCategory(categoryNode);
+            AddCustomCategory();
         }
 
         private void menuDelete_Click(object sender, EventArgs e)
@@ -317,6 +329,14 @@ namespace TourWriter.UserControls.Reports
             var destNode = treeReports.GetNodeAt(location);
             var destCategoryNode = GetReportCategoryNode(destNode);
 
+            if (node == destCategoryNode) return;
+
+            if (destNode.Text == "Default" || destCategoryNode.Text == "Default" || IsDefaultReport(node))
+            {
+                //App.ShowInfo(DefaultReportsMessage);
+                return;
+            }
+
             // don't move the node if the destination node is a descendant of the node being moved
             var nodesFound = node.Nodes.Find(destCategoryNode.Name, true);
             if (nodesFound.Length > 0)
@@ -348,22 +368,22 @@ namespace TourWriter.UserControls.Reports
             if (!IsReportNode(e.Node))
                 return;
 
-            var report = GetReportRow(e.Node);
-            string reportName = report.TemplateName;
-            string reportPath = Cache.ToolSet.AppSettings[0].ExternalFilesPath + report.FilePath;
-            ReportDoubleClick(this, new ReportDoubleClickEventArgs(reportName, reportPath));
+            if (IsDefaultReport(e.Node))
+            {
+                ReportDoubleClick(this, new ReportDoubleClickEventArgs(e.Node.Text, e.Node.Name));
+            }
+            else
+            {
+                var report = GetReportRow(e.Node);
+                string reportName = report.TemplateName;
+                string reportPath = Cache.ToolSet.AppSettings[0].ExternalFilesPath + report.FilePath;
+                ReportDoubleClick(this, new ReportDoubleClickEventArgs(reportName, reportPath));
+            }
         }
 
         private void treeReports_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Button != MouseButtons.Right)
-                return;
-
             treeReports.SelectedNode = e.Node;
-
-            e.Node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = IsReportNode(e.Node);
-            e.Node.ContextMenuStrip.Items["menuDelete"].Visible = e.Node != treeReports.Nodes[0];
-            e.Node.ContextMenuStrip.Items["menuRename"].Visible = e.Node != treeReports.Nodes[0];
         }
 
         private void treeReports_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
@@ -387,6 +407,57 @@ namespace TourWriter.UserControls.Reports
         {
             if (e.Node == treeReports.Nodes[0])
                 e.CancelEdit = true;
+        }
+
+        private void treeReportsContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var node = treeReports.SelectedNode;
+
+            if (node == null)
+            {
+                treeReports.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
+                treeReports.ContextMenuStrip.Items["menuDelete"].Visible = false;
+                treeReports.ContextMenuStrip.Items["menuRename"].Visible = false;
+                return;
+            }
+
+            if (node.ContextMenuStrip == null)
+                node.ContextMenuStrip = treeReportsContextMenu;
+
+            var isDefaultReports = node.Text == "Default" || IsDefaultReport(node);
+            if (isDefaultReports)
+            {
+                node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
+                node.ContextMenuStrip.Items["menuDelete"].Visible = false;
+                node.ContextMenuStrip.Items["menuRename"].Visible = false;
+                //App.ShowInfo(DefaultReportsMessage);
+                return;
+            }
+
+            var isCustomReportParent = node.Text == "Custom";
+            if (isCustomReportParent)
+            {
+                node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
+                node.ContextMenuStrip.Items["menuDelete"].Visible = false;
+                node.ContextMenuStrip.Items["menuRename"].Visible = false;
+                return;
+            }
+
+            var isReport = IsReportNode(node) || node.Name.StartsWith("Report");
+            if (isReport)
+            {
+                node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = IsReportNode(node);
+                node.ContextMenuStrip.Items["menuDelete"].Visible = true;
+                node.ContextMenuStrip.Items["menuRename"].Visible = true;
+            }
+        }
+
+        private void treeReports_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                treeReports.SelectedNode = treeReports.GetNodeAt(e.X, e.Y);
+            } 
         }
 
         #endregion

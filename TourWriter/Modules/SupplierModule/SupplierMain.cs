@@ -59,7 +59,7 @@ namespace TourWriter.Modules.SupplierModule
                     dt.ColumnChanged += SupplierSet_ColumnChanged;
                     dt.RowDeleted += SupplierSet_RowDeleted;
                 }
-                reportControl.FilterReportExplorer("Supplier");
+                reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
                 reportControl.DefaultParameters.Add("@SupplierID", supplierSet.Supplier[0].SupplierID);
             }
 
@@ -126,7 +126,7 @@ namespace TourWriter.Modules.SupplierModule
                     {
                         Cache.SaveToolSet();
                         reportControl.RefreshReportExplorer();
-                        reportControl.FilterReportExplorer("Supplier");
+                        reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
                     }
 
                     UpdateMainForm(App.MainForm.SupplierMenu, supplierSet.Supplier[0].IsRecordActive);
@@ -183,7 +183,7 @@ namespace TourWriter.Modules.SupplierModule
                 // refresh the toolset
                 Cache.RefreshToolSet(false);
                 reportControl.RefreshReportExplorer();
-                reportControl.FilterReportExplorer("Supplier");
+                reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
 
                 SetDataCleanName();
             }

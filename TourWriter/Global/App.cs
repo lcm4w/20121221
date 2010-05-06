@@ -91,6 +91,17 @@ namespace TourWriter
             }
         }
 
+        internal static string Path_DefaultTemplatesFolder
+        {
+            get 
+            {
+                var fileInfo = new FileInfo(File_TempatesUpdateArchive);
+                var path = Path.Combine(Path_CommonApplicationData, fileInfo.Name.Replace(fileInfo.Extension, ""));
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                return path;
+            }
+        }
+
         internal static string Path_MyDocumentsDataFolder
         {
             get
@@ -109,6 +120,7 @@ namespace TourWriter
         internal static string File_UserSettingPathAndFile = Path.Combine(Path_UserApplicationData, UsersettingFilename);
         internal static string File_UserLayoutPathAndFile = Path.Combine(Path_UserApplicationData, UserlayoutFilename);
         internal static string File_UpdateExe = Path.Combine(Path_TempFolder, "TourWriterUpdate.exe");
+        internal static string File_TempatesUpdateArchive = Path.Combine(Application.StartupPath, "Templates.zip");
         
         internal static Utilities.KeyHook.KeyDefinition DebugKeyCombination =
             new Utilities.KeyHook.KeyDefinition(
