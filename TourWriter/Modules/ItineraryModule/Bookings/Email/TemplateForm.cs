@@ -19,25 +19,43 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         }
         private const string DefaultSubject = "Booking request for {0}";
         private const string ErrorText = "<html><body>Default template text not found...</body></html>";
-        private readonly string _defaultTemplateFile = Path.Combine(
-            Services.ExternalFilesHelper.GetTemplateFolder(), "TourWriter.Email.BookingRequest.html");
         private readonly string _templateFile;
         private TemplateSettings _templateSettings;
+        private string _defaultTemplate;
+        private string DefaultTemplate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_defaultTemplate))
+                {
+                    // try TourWriterData folder
+                    var template = Path.Combine(Services.ExternalFilesHelper.GetTemplateFolder(), "BookingRequest.html");
+                    if (!File.Exists(template))
+                        template = Path.Combine(Services.ExternalFilesHelper.GetTemplateFolder(), "TourWriter.Email.BookingRequest.html");
+
+                    // use default 
+                    if (!File.Exists(template))
+                        template = Path.Combine(App.Path_DefaultTemplatesFolder, "Email\\BookingRequest.html");
+                    _defaultTemplate = template;
+                }
+                return _defaultTemplate;
+            }
+        }
 
 
         public TemplateForm(string itineraryName) : this (itineraryName, "") { }
 
         public TemplateForm(string itineraryName, string templateFile)
         {
+            templateFile = Services.ExternalFilesHelper.ConvertToAbsolutePath(templateFile);
+            _templateFile = File.Exists(templateFile) ? templateFile : DefaultTemplate;
+
             InitializeComponent();
             chkSaveCopy.Checked = Settings.Default.EmailerSaveWhenSent;
             chkBccSender.Checked = Settings.Default.EmailerBccSender;
             chkShowBookingPrice.Checked = Settings.Default.BookingEmailShowPrice;
             chkReadReceipt.Checked = Settings.Default.EmailerReadReceipt;
-
-            _templateFile = !string.IsNullOrEmpty(templateFile) ? 
-                Services.ExternalFilesHelper.ConvertToAbsolutePath(templateFile) : EnsureDefaultTemplate();
-
+            
             txtFrom.Text = Cache.User.Email;
             txtSubject.Text = String.Format(DefaultSubject, itineraryName);
             txtTemplate.Text = _templateFile;
@@ -86,35 +104,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     sr.Close();
             }
             return sb.ToString();
-        }
-
-        private string EnsureDefaultTemplate()
-        {
-            if (!File.Exists(_defaultTemplateFile) &&
-                App.AskYesNo("The default template file was not found.\r\nDo you want to create it?"))
-            {
-                var path = Path.GetDirectoryName(_defaultTemplateFile);
-                try
-                {
-                    if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-                    TextWriter writer = new StreamWriter(_defaultTemplateFile);
-                    writer.Write(Resources.EmailHtmlTemplate);
-                    writer.Close();
-                    App.ShowInfo("File created: " + _defaultTemplateFile);
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    App.ShowError("Failed to connect to default template directory: " + path);
-                    return ErrorText;
-                }
-                catch (Exception ex)
-                {
-                    App.Error(ex);
-                    return ErrorText;
-                }
-            }
-            return _defaultTemplateFile;
         }
         
         public TemplateSettings GetTemplateSettings()
