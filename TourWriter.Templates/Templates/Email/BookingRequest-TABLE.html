@@ -1,0 +1,81 @@
+<html>
+<head>
+<style type="text/css">
+body { font-family: verdana; font-size: 10pt; color: black; }
+td   { font-family: verdana; font-size: 10pt; color: black; }
+</style>
+</head>
+<body>
+<p>
+Dear [!HostName],
+</p>
+
+<p>
+Please reserve and confirm the following bookings.
+</p>
+
+<p>
+Booking number: [!BookingID]
+</p>
+
+[!BookingDetailStart]<p>
+Booking [!ItemCount]
+<table cellspacing='0' cellpadding='0'>
+	<tr valign='top'>
+		<td width='20'></td><td>Name: </td><td>[!ItemName]</td>
+	</tr>
+	<tr valign='top'>
+		<td width='20'></td><td>Description: </td><td>[!ItemDesc]</td>
+	</tr>
+	<tr valign='top'>
+		<td width='20'></td><td>[!ItemStartText]: </td><td>[!ItemStartDate]</td>
+	</tr>
+    [!ItemEndDateStart]
+	<tr valign='top'>
+		<td width='20'></td><td>[!ItemEndText]: </td><td>[!ItemEndDate]</td>
+	</tr>
+	<tr valign='top'>
+		<td width='20'></td><td>[!ItemLengthText]: </td><td>[!ItemLength]</td>
+	</tr>
+    [!ItemEndDateEnd]
+	<tr valign='top'>
+		<td width='20'></td><td>Quantity: </td><td>[!ItemQuantity]</td>
+	</tr>
+    [!ItemReferenceStart]
+	<tr valign='top'>
+		<td width='20'></td><td>Your ref: </td><td>[!ItemReference]</td>
+	</tr>
+    [!ItemReferenceEnd]
+    [!ItemPriceStart]
+    <tr valign='top'>
+		<td width='20'></td><td>Price: </td><td>[!ItemPrice]</td>
+	</tr>
+    <tr valign='top'>
+		<td width='20'></td><td>Commission: </td><td>[!ItemCommission]</td>
+	</tr>
+	<tr valign='top'>
+		<td width='20'></td><td>Total Net: </td><td>[!ItemTotal]</td>
+	</tr>
+    [!ItemPriceEnd]
+</table></p>[!BookingDetailEnd]
+
+<p>
+Booking notes: [!BookingNotes]
+</p>
+
+<p>
+Client notes: [!ClientNotes]
+</p>
+
+<p>
+Regards,<br/>
+[!UserName]
+</p>
+
+<p>
+&nbsp;<br/>
+Email generated from <a href="http://www.tourwriter.com">TourWriter</a> - <i>taking the time out of travel itineraries</i>
+</p>
+
+</body>
+</html>
