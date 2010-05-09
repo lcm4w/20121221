@@ -545,7 +545,8 @@ CREATE PROCEDURE [dbo].[_Login_AddOrUpdate]
 	@SessionTimeout int
 AS
 
-declare @timestamp DateTime = getdate()
+declare @timestamp DateTime
+set @timestamp = getdate()
 
 -- update existing
 UPDATE [Login]
