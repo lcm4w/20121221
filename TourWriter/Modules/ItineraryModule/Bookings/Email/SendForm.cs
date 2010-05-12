@@ -276,7 +276,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             for (var i = grid.Rows.Count - 1; i > -1; i--)
             {
                 var o = grid.Rows[i].Cells["BookingEmailInfo"].Value;
-                if (o == null) continue;
+                if (o == null || ((BookingEmailInfo)o).EmailMessage == null) continue;
 
                 if (((BookingEmailInfo)o).EmailMessage._Status == EmailMessage.StatusType.Sent)
                 {
