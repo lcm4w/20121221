@@ -98,7 +98,8 @@ namespace TourWriter.Forms
         private void HandleError(Exception ex)
         {
             if (Visible) SetUI(UiState.Error);
-            if (!Services.ErrorHelper.IsWebServerConnectionError(ex) && !Services.ErrorHelper.IsServerConnectionError(ex))
+            if (!Services.ErrorHelper.IsWebServerConnectionError(ex) && !Services.ErrorHelper.IsServerConnectionError(ex) 
+                && !(ex is System.Data.SqlClient.SqlException && ex.ToString().ToLower().Contains("login failed for user")))
                 Services.ErrorHelper.SendEmail(ex, true);
         }
 
