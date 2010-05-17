@@ -56,27 +56,27 @@ IF @@TRANCOUNT = 0
     END
 
 
-GO
-PRINT N'Dropping [dbo].[_User_RemoveLogin]...';
+--GO
+--PRINT N'Dropping [dbo].[_User_RemoveLogin]...';
 
 
-GO
-DROP PROCEDURE [dbo].[_User_RemoveLogin];
+--GO
+--DROP PROCEDURE [dbo].[_User_RemoveLogin];
 
 
-GO
-IF @@ERROR <> 0
-   AND @@TRANCOUNT > 0
-    BEGIN
-        ROLLBACK;
-    END
+--GO
+--IF @@ERROR <> 0
+--   AND @@TRANCOUNT > 0
+--    BEGIN
+--        ROLLBACK;
+--    END
 
-IF @@TRANCOUNT = 0
-    BEGIN
-        INSERT  INTO #tmpErrors (Error)
-        VALUES                 (1);
-        BEGIN TRANSACTION;
-    END
+--IF @@TRANCOUNT = 0
+--    BEGIN
+--        INSERT  INTO #tmpErrors (Error)
+--        VALUES                 (1);
+--        BEGIN TRANSACTION;
+--    END
 
 
 GO
