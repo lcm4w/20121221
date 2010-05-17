@@ -105,8 +105,8 @@ namespace TourWriter.UserControls.Reports
             {
                 //------------------------------------------------------------------
                 // TODO: delete these from db (see end 2010.05.o4.sql) and remove this code. once new default reports have proved themselves.
-                // This loads the old default reports if new ones are not found
-                if (treeReports.Nodes[0].Nodes.Count == 0 && 
+                // This skips the old default reports if new ones exist
+                if (treeReports.Nodes[0].Nodes.Count > 0 &&
                    (file.FilePath == @"\Templates\Reports\General\ClientLocations.rdlc" ||
                     file.FilePath == @"\Templates\Reports\General\Itineraries by Agent.rdlc" ||
                     file.FilePath == @"\Templates\Reports\General\Itineraries by Country.rdlc" ||
@@ -123,7 +123,7 @@ namespace TourWriter.UserControls.Reports
                     file.FilePath == @"\Templates\Reports\Itinerary\PricingSummary.rdlc" ||
                     file.FilePath == @"\Templates\Reports\Itinerary\SupplierRemittance.rdlc" ||
                     file.FilePath == @"\Templates\Reports\Itinerary\Voucher.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Supplier\WhoUsed.rdlc"))
+                    file.FilePath == @"\Templates\Reports\Supplier\WhoUsed.rdlc")) continue;
                 //------------------------------------------------------------------
                 AddReportNode(parent, file);
             }
