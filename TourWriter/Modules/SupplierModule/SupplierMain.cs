@@ -44,7 +44,19 @@ namespace TourWriter.Modules.SupplierModule
             menuStrip1.Visible = false;
             toolStrip1.Visible = false;
 
+            ApplyLicenseStatus();
             if (!App.ShowOldReports) tabsAdditional.Tabs["Reports"].Visible = false;
+        }
+
+        public void ApplyLicenseStatus()
+        {
+            if (IsReadOnly)
+            {
+                menuSave.Enabled = false;
+                toolSave.Enabled = false;
+                menuRefresh.Enabled = false;
+                toolRefresh.Enabled = false;
+            }
         }
 
         private void SupplierMain_Load(object sender, EventArgs e)

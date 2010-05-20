@@ -72,7 +72,19 @@ namespace TourWriter.Modules.ItineraryModule
             txtArriveDate.Value = DateTime.Now;
             txtDepartDate.Value = DateTime.Now;
 
+            ApplyLicenseStatus();
             if (!App.ShowOldReports) tabControlAdditional.Tabs["Reports"].Visible = false;
+        }
+
+        public void ApplyLicenseStatus()
+        {
+            if (IsReadOnly)
+            {
+                menuSave.Enabled = false;
+                toolSave.Enabled = false;
+                menuRefresh.Enabled = false;
+                toolRefresh.Enabled = false;
+            }
         }
 
         void tabControl_Main_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
@@ -158,7 +170,11 @@ namespace TourWriter.Modules.ItineraryModule
             ProgressBar.Value = ProgressBar.Minimum;
             Application.DoEvents();
 
-            toolSave.Enabled = !isReadOnlyChecked;
+            toolSave.Enabled = toolSave.Enabled && !isReadOnlyChecked;
+            menuSave.Enabled = menuSave.Enabled && !isReadOnlyChecked;
+            toolRefresh.Enabled = toolRefresh.Enabled && !isReadOnlyChecked;
+            menuRefresh.Enabled = menuRefresh.Enabled && !isReadOnlyChecked;
+
             SetEventHandlers(true);
 
             // set permissions for read-only

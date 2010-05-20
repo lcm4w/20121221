@@ -8,6 +8,7 @@ using Infragistics.Win.UltraWinStatusBar;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Forms;
 using TourWriter.Info;
+using TourWriter.Services;
 
 namespace TourWriter.Modules
 {
@@ -32,6 +33,10 @@ namespace TourWriter.Modules
         protected ProgressBarInfo ProgressBar
         {
             get { return MainForm.StatusBar_ProgressBar; }
+        }
+        protected bool IsReadOnly
+        {
+            get { return LicenseService.ForceReadOnlyMode; }
         }
 
 

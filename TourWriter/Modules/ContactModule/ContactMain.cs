@@ -38,6 +38,7 @@ namespace TourWriter.Modules.ContactModule
             row.AddedBy = TourWriter.Global.Cache.User.UserID;
             row.AddedOn = DateTime.Now;
             contactSet.Contact.AddContactRow(row);
+            ApplyLicenseStatus();
         }
 
         public ContactMain(int contactID)
@@ -48,6 +49,15 @@ namespace TourWriter.Modules.ContactModule
             // get existing row
             Contact c = new Contact();
             contactSet = c.GetContactSet(contactID);
+            ApplyLicenseStatus();
+        }
+
+        public void ApplyLicenseStatus()
+        {
+            if (IsReadOnly)
+            {
+                toolSave.Enabled = false;
+            }
         }
 
         private void ContactMain_Load(object sender, EventArgs e)

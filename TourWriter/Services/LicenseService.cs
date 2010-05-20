@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using TourWriter.Forms;
-using System.ComponentModel;
 using TourWriter.Info;
 
 namespace TourWriter.Services
@@ -12,15 +11,16 @@ namespace TourWriter.Services
         public const string LicenseExpiredMessage =
             "Your TourWriter License expired on {0}.\r\nPlease contact TourWriter to renew your license";
         public const string LicenseOverrunMessage =
-            "Your TourWriter License ({0} users) has been exceeded ({1} online) for this session (last {2} minutes).";
+            "Your TourWriter License ({0} users) has been exceeded ({1} minute period). Data is readonly.";
 
-        private static Info.License _license;
+        private static License _license;
         private static Guid _sessionId = Guid.Empty;
         private static int _sessionIndex;
         private static int _sessionCount;
-        private const int SessionTimeout = 30; // minutes
+        private const int SessionTimeout = 60; // minutes
         private static DateTime _lastLicenseRefresh = DateTime.MinValue;
         private static DateTime _lastNotifiedDate = DateTime.MinValue;
+        internal static bool ForceReadOnlyMode;
 
 
         internal static void CheckAsync()
@@ -57,7 +57,7 @@ namespace TourWriter.Services
 
         private static void LoadLicense()
         {
-            _license = new Info.License();
+            _license = new License();
             _license.LoadFromDatabase();
         }
 
@@ -91,18 +91,18 @@ namespace TourWriter.Services
             var isExpired = notify;
 
             if (!notify) ValidateConnections(_license, ref notify, ref delay);
+            var isMaxed = !isExpired && notify;
+            
+            if (!notify) return; // all good
 
-            if (notify)
-            {
-                //_license = null; // force recheck in case new license gets loaded
-                _lastNotifiedDate = DateTime.Now;
-                var msg = isExpired
-                              ? string.Format(LicenseExpiredMessage, _license.EndDate.ToShortDateString())
-                              : string.Format(LicenseOverrunMessage, _license.MaxUsers, _sessionCount, SessionTimeout);
+            //_license = null; // force recheck in case new license gets loaded
+            _lastNotifiedDate = DateTime.Now;
+            var msg = isExpired
+                          ? string.Format(LicenseExpiredMessage, _license.EndDate.ToShortDateString())
+                          : string.Format(LicenseOverrunMessage, _license.MaxUsers, SessionTimeout);
 
-                var form = new LicenseExpiredForm(delay, msg);
-                App.MainForm.Invoke((MethodInvoker) (() => form.ShowDialog(App.MainForm)));
-            }
+            var form = new LicenseExpiredForm(delay, msg);
+            App.MainForm.Invoke((MethodInvoker) (() => form.ShowDialog(App.MainForm)));
         }
 
         private static void ValidateDates(DateTime expDate, ref bool notify, ref int delay)
@@ -121,85 +121,26 @@ namespace TourWriter.Services
             }
             else if (daysExpired <= 30)
             {
-                delay = 8;
+                delay = 12;
                 notify = _lastNotifiedDate.AddHours(3) < DateTime.Now;
             }
             else
             {
-                delay = 16;
+                delay = 60;
                 notify = true;
+                if (daysExpired > 60) ForceReadOnlyMode = true;
             }
         }
 
-        private static void ValidateConnections(Info.License license, ref bool notify, ref int delay)
+        private static void ValidateConnections(License license, ref bool notify, ref int delay)
         {
             if (_sessionIndex > license.MaxUsers) // this will notify exceeded users
             //if (_sessionCount > license.MaxUsers) // this will notify all users
             {
-                delay = 10;
-                notify = true;
-
-                // =======================================================================================
-                // TODO: override client notifications with this monitoring code instead
-                notify = false;
                 delay = 0;
-                var detail = string.Format("\r\ninsert into x ([computer],[user],[license],[connections],[index],[date]) values ('{0}','{1}',{2},{3},{4},'{5}')\r\n", 
-                    SystemInformation.ComputerName + "\\" + SystemInformation.UserName, Global.Cache.User.Email, license.MaxUsers, _sessionCount, _sessionIndex, DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                ErrorHelper.SendEmail("Max users exceeded", detail, true);
-                // =======================================================================================
+                notify = true;
+                ForceReadOnlyMode = true;
             }
         }
-
-        /*
-
-        #region OLD...
-        internal static void CheckAsync_OLD()
-        {
-            var licenseThread = new BackgroundWorker();
-            licenseThread.DoWork += LicenseThreadDoWork;
-            licenseThread.RunWorkerCompleted += LicenseThreadRunWorkerCompleted;
-            licenseThread.RunWorkerAsync();
-        }
-
-        static void LicenseThreadDoWork(object sender, DoWorkEventArgs e)
-        {
-            try
-            {
-                if (_license == null)
-                {
-                    var license = new Info.License();
-                    license.LoadFromDatabase();
-                    e.Result = license;
-                }
-
-                var refreshSession = DateTime.Now > _lastLicenseRefresh.AddMinutes(SessionTimeout);
-                if (refreshSession)
-                {
-                    //                    var sql = @"select LicenseID,LicenseFile,(select count(*) from [Login] where LastActiveDate > dateadd(minute, -20, getdate())) [Sessions]
-                    //                                from License where LicenseID = (select max(LicenseID) from License)";
-
-                    var computerName = SystemInformation.ComputerName + "\\" + SystemInformation.UserName;
-                    
-                    // An error occured: The stored procedure '_Login_AddOrUpdate' doesn't exist.
-                    UserSession.AddOrUpdate(Global.Cache.User.UserID, computerName, SessionTimeout,
-                        ref _sessionId, ref _sessionIndex, ref _sessionCount);
-                    _lastLicenseRefresh = DateTime.Now;
-                }
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                if (ErrorHelper.IsServerConnectionError(ex)) e.Result = null;
-                else throw;
-            }
-        }
-
-        static void LicenseThreadRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            _license = e.Result as Info.License;
-            ValidateLicense();
-        }
-        #endregion
-
-        */
     }
 }
