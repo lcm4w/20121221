@@ -116,9 +116,8 @@ namespace TourWriter.Forms
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(337, 31);
             this.label7.TabIndex = 16;
-            this.label7.Text = "Enter the connection details of an internet database server.\r\nTo use this connect" +
+            this.label7.Text = "Enter the connection details of a custom or internet database server.\r\nTo use this connect" +
                 "ion, you must be connected to the internet.\r\n\r\n";
-            this.toolTip1.SetToolTip(this.label7, "Enter the computer name of the local database server");
             // 
             // btnListServers
             // 
@@ -151,7 +150,7 @@ namespace TourWriter.Forms
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 20);
             this.label2.TabIndex = 17;
-            this.label2.Text = "Office database";
+            this.label2.Text = "Default database";
             // 
             // label3
             // 
@@ -162,7 +161,7 @@ namespace TourWriter.Forms
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(136, 20);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Internet database";
+            this.label3.Text = "Custom database";
             // 
             // ServerManager
             // 
