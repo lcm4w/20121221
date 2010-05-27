@@ -133,8 +133,8 @@ namespace TourWriter.Info
                 Services.ConnectionString.GetConnectionString(), "License_Ins", param1, param2, param3, param4);
 
             // set the install name from the license
-            string sql = String.Format("UPDATE AppSettings SET InstallName = '{0}'", LicenseType);
-            Services.SqlHelper.ExecuteNonQuery(Services.ConnectionString.GetConnectionString(), CommandType.Text, sql);
+            //string sql = String.Format("UPDATE AppSettings SET InstallName = '{0}'", LicenseType);
+            //Services.SqlHelper.ExecuteNonQuery(Services.ConnectionString.GetConnectionString(), CommandType.Text, sql);
         }
 
 		public void SaveAsXmlFile(string fileName)
