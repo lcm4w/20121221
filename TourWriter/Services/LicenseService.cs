@@ -92,7 +92,7 @@ namespace TourWriter.Services
 
             if (!notify) ValidateConnections(_license, ref notify, ref delay);
             var isMaxed = !isExpired && notify;
-            
+
             if (!notify) return; // all good
 
             //_license = null; // force recheck in case new license gets loaded
@@ -134,6 +134,8 @@ namespace TourWriter.Services
 
         private static void ValidateConnections(License license, ref bool notify, ref int delay)
         {
+            if (App.SkipFloatingLicenseCheck) return;
+
             if (_sessionIndex > license.MaxUsers) // this will notify exceeded users
             //if (_sessionCount > license.MaxUsers) // this will notify all users
             {
