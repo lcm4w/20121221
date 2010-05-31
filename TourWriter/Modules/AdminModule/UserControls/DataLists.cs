@@ -190,6 +190,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			AddDataList("Office departments (FIT, Tours,..)",		"Department",		"DepartmentName"		);
 			AddDataList("Office branches",							"Branch",			"BranchName"			);
             AddDataList("Contact categories",                       "ContactCategory",  "ContactCategoryName"   );
+            AddDataList("Content types",                            "ContentType",      "ContentTypeName"       );
 		}
 		
 		private void EndAllEdits()

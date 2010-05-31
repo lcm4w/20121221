@@ -19,8 +19,12 @@ namespace TourWriter.Info.Services
         /// <returns>The filled data table.</returns>
         public static DataTable FillDataTable(DataTable table, string storedProcName, params SqlParameter[] parameters)
         {
-            DataSet ds = new DataSet();
-            ds.Tables.Add(table);
+            var ds = table.DataSet;
+            if (ds == null)
+            {
+                ds = new DataSet();
+                ds.Tables.Add(table);
+            }
 
             if (string.IsNullOrEmpty(ds.Tables[0].TableName))
                 ds.Tables[0].TableName = "temp"; // set default tablename

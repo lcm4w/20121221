@@ -306,6 +306,7 @@ namespace TourWriter.Modules.SupplierModule
 
             serviceEditor1.SupplierSet = supplierSet;
             accounting1.SupplierSet = supplierSet;
+            contentControl1.SupplierSet = supplierSet;
 
             UpdatePaymentTermCustomText();
 

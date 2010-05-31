@@ -89,6 +89,7 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab10 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab1 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab2 = new Infragistics.Win.UltraWinTabControl.UltraTab();
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab12 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab3 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab4 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab5 = new Infragistics.Win.UltraWinTabControl.UltraTab();
@@ -252,6 +253,8 @@ namespace TourWriter.Modules.SupplierModule
             this.toolSave = new System.Windows.Forms.ToolStripButton();
             this.toolRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
+            this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl();
             this.ultraTabPageControl5.SuspendLayout();
             this.ultraTabPageControl7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.optReports)).BeginInit();
@@ -302,12 +305,13 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.ultraTabPageControl11.SuspendLayout();
             this.SuspendLayout();
             // 
             // ultraTabPageControl5
             // 
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
-            this.ultraTabPageControl5.Location = new System.Drawing.Point(2, 24);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
             this.ultraTabPageControl5.Size = new System.Drawing.Size(824, 491);
             // 
@@ -338,7 +342,8 @@ namespace TourWriter.Modules.SupplierModule
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(810, 13);
             this.label30.TabIndex = 155;
-            this.label30.Text = "NOTE: This page will be removed in the future (once new reports are completed for you).";
+            this.label30.Text = "NOTE: This page will be removed in the future (once new reports are completed for" +
+                " you).";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // optReports
@@ -575,8 +580,8 @@ namespace TourWriter.Modules.SupplierModule
             this.gridPublishing.Size = new System.Drawing.Size(809, 458);
             this.gridPublishing.TabIndex = 122;
             this.gridPublishing.Text = "ultraGrid1";
-            this.gridPublishing.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridPublishing_ClickCellButton);
             this.gridPublishing.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridPublishing_InitializeLayout);
+            this.gridPublishing.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridPublishing_ClickCellButton);
             this.gridPublishing.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.gridPublishing_DoubleClickRow);
             // 
             // myToolStrip1
@@ -701,8 +706,8 @@ namespace TourWriter.Modules.SupplierModule
             this.gridContact.Size = new System.Drawing.Size(809, 458);
             this.gridContact.TabIndex = 123;
             this.gridContact.Text = "ultraGrid1";
-            this.gridContact.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridContact_ClickCellButton);
             this.gridContact.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridContact_InitializeLayout);
+            this.gridContact.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridContact_ClickCellButton);
             this.gridContact.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.gridContact_DoubleClickRow);
             // 
             // tsRates
@@ -897,7 +902,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
+            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(828, 528);
             // 
@@ -1461,8 +1466,8 @@ namespace TourWriter.Modules.SupplierModule
             this.txtDefaultCheckout.Name = "txtDefaultCheckout";
             this.txtDefaultCheckout.Size = new System.Drawing.Size(68, 22);
             this.txtDefaultCheckout.TabIndex = 6;
-            this.txtDefaultCheckout.Enter += new System.EventHandler(this.txtDefaultCheckout_Enter);
             this.txtDefaultCheckout.Click += new System.EventHandler(this.txtDefaultCheckout_Click);
+            this.txtDefaultCheckout.Enter += new System.EventHandler(this.txtDefaultCheckout_Enter);
             // 
             // txtAccountingName
             // 
@@ -1522,8 +1527,8 @@ namespace TourWriter.Modules.SupplierModule
             this.txtDefaultMargin.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtDefaultMargin.Size = new System.Drawing.Size(68, 22);
             this.txtDefaultMargin.TabIndex = 7;
-            this.txtDefaultMargin.Enter += new System.EventHandler(this.txtDefaultMargin_Enter);
             this.txtDefaultMargin.Click += new System.EventHandler(this.txtDefaultMargin_Click);
+            this.txtDefaultMargin.Enter += new System.EventHandler(this.txtDefaultMargin_Enter);
             // 
             // label4
             // 
@@ -1550,8 +1555,8 @@ namespace TourWriter.Modules.SupplierModule
             this.txtDefaultCheckin.Name = "txtDefaultCheckin";
             this.txtDefaultCheckin.Size = new System.Drawing.Size(68, 22);
             this.txtDefaultCheckin.TabIndex = 5;
-            this.txtDefaultCheckin.Enter += new System.EventHandler(this.txtDefaultCheckin_Enter);
             this.txtDefaultCheckin.Click += new System.EventHandler(this.txtDefaultCheckin_Click);
+            this.txtDefaultCheckin.Enter += new System.EventHandler(this.txtDefaultCheckin_Enter);
             // 
             // label18
             // 
@@ -1962,7 +1967,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(828, 528);
             // 
@@ -1980,6 +1985,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl4);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl5);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl10);
+            this.tabsAdditional.Controls.Add(this.ultraTabPageControl11);
             this.tabsAdditional.Location = new System.Drawing.Point(0, 11);
             this.tabsAdditional.MinTabWidth = 70;
             this.tabsAdditional.Name = "tabsAdditional";
@@ -1997,9 +2003,12 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab2.Key = "Messages";
             ultraTab2.TabPage = this.ultraTabPageControl8;
             ultraTab2.Text = "Messages";
+            ultraTab12.Key = "Content";
+            ultraTab12.TabPage = this.ultraTabPageControl11;
+            ultraTab12.Text = "Publising Content";
             ultraTab3.Key = "Publishing";
             ultraTab3.TabPage = this.ultraTabPageControl9;
-            ultraTab3.Text = "Publishing";
+            ultraTab3.Text = "Publishing Links";
             ultraTab4.Key = "Contacts";
             ultraTab4.TabPage = this.ultraTabPageControl1;
             ultraTab4.Text = "Contacts";
@@ -2013,6 +2022,7 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab10,
             ultraTab1,
             ultraTab2,
+            ultraTab12,
             ultraTab3,
             ultraTab4,
             ultraTab5,
@@ -2109,7 +2119,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuClose});
             this.fileToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // toolStripSeparator2
@@ -2117,7 +2127,7 @@ namespace TourWriter.Modules.SupplierModule
             this.toolStripSeparator2.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator2.MergeIndex = 1;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
             // 
             // menuSave
             // 
@@ -2127,7 +2137,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuSave.MergeIndex = 2;
             this.menuSave.Name = "menuSave";
             this.menuSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.menuSave.Size = new System.Drawing.Size(136, 22);
+            this.menuSave.Size = new System.Drawing.Size(138, 22);
             this.menuSave.Text = "&Save";
             this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
             // 
@@ -2137,7 +2147,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuRefresh.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuRefresh.MergeIndex = 3;
             this.menuRefresh.Name = "menuRefresh";
-            this.menuRefresh.Size = new System.Drawing.Size(136, 22);
+            this.menuRefresh.Size = new System.Drawing.Size(138, 22);
             this.menuRefresh.Text = "&Refresh";
             this.menuRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
             // 
@@ -2146,7 +2156,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuClose.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuClose.MergeIndex = 4;
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(136, 22);
+            this.menuClose.Size = new System.Drawing.Size(138, 22);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -2157,7 +2167,7 @@ namespace TourWriter.Modules.SupplierModule
             this.toolStripSeparator4});
             this.debugToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.debugToolStripMenuItem.Text = "&Debug";
             // 
             // menuDebugSupplier
@@ -2165,7 +2175,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuDebugSupplier.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuDebugSupplier.MergeIndex = 0;
             this.menuDebugSupplier.Name = "menuDebugSupplier";
-            this.menuDebugSupplier.Size = new System.Drawing.Size(137, 22);
+            this.menuDebugSupplier.Size = new System.Drawing.Size(143, 22);
             this.menuDebugSupplier.Text = "Supplier data";
             this.menuDebugSupplier.Click += new System.EventHandler(this.menuDebugSupplier_Click);
             // 
@@ -2174,7 +2184,7 @@ namespace TourWriter.Modules.SupplierModule
             this.toolStripSeparator4.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator4.MergeIndex = 1;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(134, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(140, 6);
             // 
             // helpToolStripMenuItem
             // 
@@ -2182,7 +2192,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuHelp});
             this.helpToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // menuHelp
@@ -2192,7 +2202,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuHelp.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuHelp.MergeIndex = 1;
             this.menuHelp.Name = "menuHelp";
-            this.menuHelp.Size = new System.Drawing.Size(167, 22);
+            this.menuHelp.Size = new System.Drawing.Size(176, 22);
             this.menuHelp.Text = "Help for this screen";
             this.menuHelp.Click += new System.EventHandler(this.menuHelp_Click);
             // 
@@ -2229,7 +2239,7 @@ namespace TourWriter.Modules.SupplierModule
             this.toolRefresh.Image = global::TourWriter.Properties.Resources.Refresh;
             this.toolRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolRefresh.Name = "toolRefresh";
-            this.toolRefresh.Size = new System.Drawing.Size(65, 22);
+            this.toolRefresh.Size = new System.Drawing.Size(66, 22);
             this.toolRefresh.Text = "&Refresh";
             this.toolRefresh.ToolTipText = "Refresh data";
             this.toolRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
@@ -2239,10 +2249,25 @@ namespace TourWriter.Modules.SupplierModule
             this.toolHelp.Image = ((System.Drawing.Image)(resources.GetObject("toolHelp.Image")));
             this.toolHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolHelp.Name = "toolHelp";
-            this.toolHelp.Size = new System.Drawing.Size(48, 22);
+            this.toolHelp.Size = new System.Drawing.Size(52, 22);
             this.toolHelp.Text = "Help";
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
+            // 
+            // ultraTabPageControl11
+            // 
+            this.ultraTabPageControl11.Controls.Add(this.contentControl1);
+            this.ultraTabPageControl11.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl11.Name = "ultraTabPageControl11";
+            this.ultraTabPageControl11.Size = new System.Drawing.Size(824, 491);
+            // 
+            // contentControl1
+            // 
+            this.contentControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentControl1.Location = new System.Drawing.Point(0, 0);
+            this.contentControl1.Name = "contentControl1";
+            this.contentControl1.Size = new System.Drawing.Size(824, 491);
+            this.contentControl1.TabIndex = 0;
             // 
             // SupplierMain
             // 
@@ -2329,6 +2354,7 @@ namespace TourWriter.Modules.SupplierModule
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.ultraTabPageControl11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2489,5 +2515,7 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.Label label34;
         private Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit txtLatitude;
         private Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit txtLongitude;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl11;
+        private ContentControl contentControl1;
     }
 }

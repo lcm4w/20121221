@@ -145,6 +145,7 @@
     </Reference>
     <Reference Include="Microsoft.Vbe.Interop, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System">
       <Name>System</Name>
       <Private>False</Private>
@@ -269,6 +270,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\TourWriter.Info.SupplierSet.datasource" />
     <None Include="Resources\remove.bmp" />
     <None Include="Resources\plus.bmp">
       <SubType>Designer</SubType>
@@ -636,6 +638,12 @@
       <DependentUpon>Accounting.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\SupplierModule\AccountingDataLoad.cs" />
+    <Compile Include="Modules\SupplierModule\ContentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\ContentControl.Designer.cs">
+      <DependentUpon>ContentControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\SupplierModule\ExportToExcel.cs" />
     <Compile Include="Modules\SupplierModule\SupplierMain.Designer.cs">
       <DependentUpon>SupplierMain.cs</DependentUpon>
@@ -1155,6 +1163,9 @@
     <EmbeddedResource Include="Modules\Plugins\NzGst\GstAdjust.resx">
       <DependentUpon>GstAdjust.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\ContentControl.resx">
+      <DependentUpon>ContentControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modules\SupplierModule\SupplierSearch.resx">
       <DependentUpon>SupplierSearch.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1386,6 +1397,7 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.20.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.04.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.11.24.sql" />
     <None Include="Resources\Run.bmp" />
