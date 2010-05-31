@@ -641,6 +641,11 @@ namespace TourWriter.Forms
             }
         }
 
+        internal void Load_NzGstAdjust()
+        {
+            LoadMdiForm(typeof(Modules.Plugins.NzGst.GstAdjust), new UltraTreeNode("NzGstAdjust"));
+        }
+
         internal Form LoadMdiForm(string formType, UltraTreeNode formTag)
         {
             Assembly assembly = Assembly.LoadFrom(Assembly.GetExecutingAssembly().CodeBase);
@@ -1435,6 +1440,11 @@ namespace TourWriter.Forms
         private void menuReports_Click(object sender, EventArgs e)
         {
             Load_ReportsForm();
+        }
+
+        private void menuNzgst_Click(object sender, EventArgs e)
+        {
+            Load_NzGstAdjust();
         }
 
         #endregion

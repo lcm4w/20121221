@@ -617,6 +617,12 @@
     <Compile Include="Modules\ItineraryModule\SaleAllocationForm.Designer.cs">
       <DependentUpon>SaleAllocationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Plugins\NzGst\GstAdjust.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Plugins\NzGst\GstAdjust.designer.cs">
+      <DependentUpon>GstAdjust.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Search\SearchMain.Designer.cs">
       <DependentUpon>SearchMain.cs</DependentUpon>
     </Compile>
@@ -1145,6 +1151,9 @@
     <EmbeddedResource Include="Modules\ItineraryModule\Publishing\LayoutForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LayoutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Plugins\NzGst\GstAdjust.resx">
+      <DependentUpon>GstAdjust.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\SupplierModule\SupplierSearch.resx">
       <DependentUpon>SupplierSearch.cs</DependentUpon>

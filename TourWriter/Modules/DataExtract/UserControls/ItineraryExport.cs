@@ -110,7 +110,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
             band.Override.BorderStyleSummaryValue = UIElementBorderStyle.None;
             band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.GroupByRowsFooter;
             SummarySettings summary;
- 
+
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Net"]);
             summary.Key = "GroupNet";
             summary.DisplayFormat = "{0:c}";

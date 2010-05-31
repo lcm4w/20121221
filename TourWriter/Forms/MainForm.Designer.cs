@@ -111,6 +111,7 @@ namespace TourWriter.Forms
             this.menuAdditional = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReports = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuNzgst = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGeneralReports = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDataExtraction = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTourWriterData = new System.Windows.Forms.ToolStripMenuItem();
@@ -668,7 +669,8 @@ namespace TourWriter.Forms
             this.menuGeneralReports,
             this.menuDataExtraction,
             this.menuTourWriterData,
-            this.menuStartPage});
+            this.menuStartPage,
+            this.menuNzgst});
             this.menuAdditional.Name = "menuAdditional";
             resources.ApplyResources(this.menuAdditional, "menuAdditional");
             // 
@@ -685,6 +687,13 @@ namespace TourWriter.Forms
             this.menuReports.Name = "menuReports";
             resources.ApplyResources(this.menuReports, "menuReports");
             this.menuReports.Click += new System.EventHandler(this.menuReports_Click);
+            // 
+            // menuNzgst
+            // 
+            this.menuNzgst.Image = global::TourWriter.Properties.Resources.Calculator;
+            this.menuNzgst.Name = "menuNzgst";
+            resources.ApplyResources(this.menuNzgst, "menuNzgst");
+            this.menuNzgst.Click += new System.EventHandler(this.menuNzgst_Click);
             // 
             // menuGeneralReports
             // 
@@ -945,6 +954,7 @@ namespace TourWriter.Forms
         private System.Windows.Forms.ToolStripMenuItem contextMenuEmailSelected;
         private System.Windows.Forms.ToolStripMenuItem menuFeedback;
         private System.Windows.Forms.ToolStripMenuItem menuReports;
+        private System.Windows.Forms.ToolStripMenuItem menuNzgst;
         private System.Windows.Forms.ToolStripMenuItem menuTourWriterData;
     }
 }
