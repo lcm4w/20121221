@@ -1,15 +1,88 @@
 using System;
 using System.Data;
 using System.Windows.Forms;
+using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.Info;
 using TourWriter.Info.Services;
+using Resources = Infragistics.Win.UltraWinGrid.Resources;
 
 namespace TourWriter.Modules.Plugins.NzGst
 {
     public partial class GstAdjust : ModuleBase
     {
-        const string Sql = "select top (10) * from supplier";
+        #region sql
+        // ---------------------------------------------------------------------------------------------------------------
+        const string SupplierSql = @"
+select
+    s.ParentFolderId as SupplierFolderID,
+	s.SupplierID, 
+	SupplierName,
+	c.CountryName as Country,
+	v.ServiceName, 
+	ValidFrom, 
+	ValidTo, 
+	OptionName,
+	PricingOption,
+	case when PricingOption = 'nm' then (Gross - Net)/Net*100 else null end as Markup,	
+	case when PricingOption = 'gc' then (Gross - Net)/Gross*100 else null end as Commission,	
+	case when PricingOption = 'nm' or PricingOption = 'ng'	then Net else null end as Net,	
+	case when PricingOption = 'nm' or PricingOption = 'ng'	
+		then cast( ((Net * 100) / (100 + 12.5)) + 	(((Net * 100) / (100 + 12.5)) * 15/100) as money)
+		else null end as Net15,	
+	case when PricingOption = 'ng' or PricingOption = 'gc'	then Gross else null end as Gross,
+	case when PricingOption = 'ng' or PricingOption = 'gc'	
+		then cast( ((Gross * 100) / (100 + 12.5)) + (((Gross * 100) / (100 + 12.5)) * 15/100) as money)
+		else null end as Gross15	
+	--,GST_old      = ((Gross * 100) / (100 + 12.5)) * 12.5/100
+	--,Gross_exc	=  (Gross * 100) / (100 + 12.5)
+	--,GST_new	    = ((Gross * 100) / (100 + 12.5)) * 15/100
+	--,Gross_new	= ((Gross * 100) / (100 + 12.5)) + 
+	--			     (((Gross * 100) / (100 + 12.5)) * 15/100)				
+from [option] o
+inner join [rate] r on  o.RateID = r.RateID
+inner join [Service] v on r.ServiceID = v.ServiceID
+inner join [Supplier] s on v.SupplierID = s.SupplierID
+inner join [Country] c on s.CountryID = c.CountryID and c.CountryName like '%zealand%'
+where {0}
+--where ValidFrom <= '2010.10.1 00:00:00' and ValidTo >= '2010.10.1 00:00:00'
+--where ValidFrom >= '2010.10.1 00:00:00'
+and Gross is not null and Gross > 0
+order by SupplierName, ServiceName, ValidFrom, OptionName";
+
+        // ---------------------------------------------------------------------------------------------------------------
+        private const string ItinerarySql = @"
+select 
+	i.ParentFolderID as ItineraryFolderID,
+	s.ParentFolderID as SupplierFolderID,
+	i.ItineraryID,
+	i.ItineraryName,
+	i.GrossOverride,
+	t.ItineraryStatusName,
+    s.SupplierID,	
+    s.SupplierName, 
+	l.PurchaseLineName,
+	p.PurchaseItemName,
+	c.CountryName,
+	r.RequestStatusName,
+	p.Net,
+	cast( ((Net * 100) / (100 + 12.5)) + (((Net * 100) / (100 + 12.5)) * 15/100) as money) as Net15,	
+	p.Gross,	
+	cast( ((Gross * 100) / (100 + 12.5)) + (((Gross * 100) / (100 + 12.5)) * 15/100) as money) as Gross15		
+from PurchaseItem p
+inner join PurchaseLine l on p.PurchaseLineID = l.PurchaseLineID
+left join RequestStatus r on p.RequestStatusID = r.RequestStatusID
+inner join Itinerary i on l.ItineraryID = i.ItineraryID
+left join ItineraryStatus t on i.ItineraryStatusID = t.ItineraryStatusID
+inner join Supplier s on l.SupplierID = s.SupplierID
+inner join [Country] c on s.CountryID = c.CountryID and c.CountryName like '%zealand%'
+where {0}
+--where p.StartDate <= '2010.10.1 00:00:00' and EndDate >= '2010.10.1 00:00:00'
+--where StartDate >= '2010.10.1 00:00:00'
+and Gross is not null and Gross > 0
+order by i.ItineraryName, l.PurchaseLineName, StartDate";
+        // ---------------------------------------------------------------------------------------------------------------
+        #endregion
 
         public GstAdjust()
         {
@@ -20,7 +93,9 @@ namespace TourWriter.Modules.Plugins.NzGst
             
             grid.ExportFileName = "nz-gst.xls";
             grid.InitializeLayoutEvent += grid_InitializeLayout;
-            grid.UltraGrid.DoubleClickRow += grid_DoubleClickRow;
+            grid.UltraGrid.InitializeRow += grid_InitializeRow;
+            //grid.UltraGrid.DoubleClickRow += grid_DoubleClickRow;
+            grid.UltraGrid.MouseClick += gridBookings_MouseClick;
 
             comboBox1.Items.AddRange(new[]
                                          {
@@ -33,53 +108,18 @@ namespace TourWriter.Modules.Plugins.NzGst
             comboBox1.SelectedIndex = 0;
         }
 
-        #region Override methods
-        protected override bool IsDataDirty()
-        {
-            return false;
-        }
-
-        protected override string GetDisplayName()
-        {
-            return "Nz GST adjust";
-        }
-        #endregion
-
         private static string GetSql(int index)
         {
-            var supplierSql =
-                @"
-select
-	s.SupplierId, 
-	SupplierName, 
-	v.ServiceName, 
-	ValidFrom, 
-	ValidTo, 
-	OptionName,
-	PricingOption,
-	case when PricingOption = 'nm' or PricingOption = 'ng'	then Net else null end as Net,
-	case when PricingOption = 'nm'							then (Gross - Net)/Net*100 else null end as Markup,
-	case when PricingOption = 'ng' or PricingOption = 'gc'	then Gross else null end as Gross,
-	case when PricingOption = 'gc'							then (Gross - Net)/Gross*100 else null end as Commission			
-from [option] o
-inner join [rate] r on  o.RateID = r.RateID
-inner join [Service] v on r.ServiceID = v.ServiceID
-inner join [Supplier] s on v.SupplierID = s.SupplierID
-where {0} 
-and Gross is not null and Gross > 0
-order by SupplierName, ServiceName, ValidFrom, OptionName";
-
-
             switch (index)
             {
                 case 1:
-                    return string.Format(supplierSql, "ValidFrom <= '2010.10.1 00:00:00' and ValidTo >= '2010.10.1 00:00:00'");
+                    return string.Format(SupplierSql, "ValidFrom <= '2010.10.1 00:00:00' and ValidTo >= '2010.10.1 00:00:00'");
                 case 2:
-                    return string.Format(supplierSql, "ValidFrom >= '2010.10.1 00:00:00'");
+                    return string.Format(SupplierSql, "ValidFrom >= '2010.10.1 00:00:00'");
                 case 3:
-                    return "select top (2) * from itinerary";
+                    return string.Format(ItinerarySql, "StartDate <= '2010.10.1 00:00:00' and EndDate >= '2010.10.1 00:00:00'");
                 case 4:
-                    return "select top (2) * from itinerary";
+                    return string.Format(ItinerarySql, "StartDate >= '2010.10.1 00:00:00'");
             }
             return "";
         }
@@ -102,137 +142,75 @@ order by SupplierName, ServiceName, ValidFrom, OptionName";
             var ds = new DataSet();
             ds = DataSetHelper.FillDataset(ds, sql);
             var dv = ds.Tables[0].DefaultView;
-
             grid.DataSource = dv;
-
-            //if (grid.DataSource == null)
-            //{
-            //    grid.DataSource = dv;
-            //}
-            //else
-            //{
-            //    var dt = grid.DataSource as DataTable;
-            //    if (dt != null)
-            //    {
-            //        dt.Clear();
-            //        dt.Merge(dv.Table, false);
-            //    }
-            //}
         }
-        
-        private static void grid_DoubleClickRow(object sender, DoubleClickRowEventArgs e)
+
+        private bool _isSelectAll = true;
+        private void SelectAll()
         {
-            if (e.Row.GetType() == typeof(UltraGridEmptyRow) ||
-                e.Row.GetType() == typeof(UltraGridGroupByRow))
-                return;
-
-            if (e.Row.Cells.Exists("SupplierID"))
+            _isSelectAll = !_isSelectAll;
+            foreach (var row in grid.UltraGrid.Rows)
             {
-                var info = new NavigationTreeItemInfo((int) e.Row.Cells["SupplierID"].Value,
-                                                      (string) e.Row.Cells["SupplierName"].Value,
-                                                      NavigationTreeItemInfo.ItemTypes.Supplier,
-                                                      (int) e.Row.Cells["ParentFolderID"].Value, true);
+                if (row == null || row.GetType() == typeof(UltraGridEmptyRow) || row.GetType() == typeof(UltraGridGroupByRow))
+                    return;
 
-                var node = App.MainForm.BuildMenuNode(info);
-                App.MainForm.Load_SupplierForm(node);
-            }
-            else if (e.Row.Cells.Exists("ItineraryID"))
-            {
-                var info = new NavigationTreeItemInfo((int)e.Row.Cells["ItineraryID"].Value,
-                                                      (string)e.Row.Cells["ItineraryName"].Value,
-                                                      NavigationTreeItemInfo.ItemTypes.Itinerary,
-                                                      (int)e.Row.Cells["ParentFolderID"].Value, true);
-
-                var node = App.MainForm.BuildMenuNode(info);
-                App.MainForm.Load_ItineraryForm(node);
+                row.Cells["IsSelected"].Value = _isSelectAll;
             }
         }
 
         private static void grid_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
-            //foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
-            //{
-            //    c.CellActivation = Activation.NoEdit;
+            if (!e.Layout.Bands[0].Columns.Exists("IsSelected"))
+                e.Layout.Bands[0].Columns.Insert(0, "IsSelected");
 
-            //    if (c.Key == "ItineraryName")
-            //    {
-            //        c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter;
-            //    }
-            //    else if (c.Key == "ArriveDate")
-            //    {
-            //        c.CellAppearance.TextHAlign = HAlign.Right;
-            //        c.Format = App.GetLocalShortDateFormat() + " " + App.GetLocalShortTime24HrFormat();
-            //    }
-            //    else if (c.Key == "CreateDate")
-            //    {
-            //        c.CellAppearance.TextHAlign = HAlign.Right;
-            //        c.Format = App.GetLocalShortDateFormat();
-            //    }
-            //    else if (c.Key == "Net" || c.Key == "Gross" ||
-            //             c.Key == "Deposits" || c.Key == "Balance" || c.Key == "Margin")
-            //    {
-            //        c.Format = "c";
-            //        c.CellAppearance.TextHAlign = HAlign.Right;
-            //    }
-            //    else if (c.Key == "Yield")
-            //    {
-            //        c.Format = "##0.00\\%";
-            //        c.CellAppearance.TextHAlign = HAlign.Right;
-            //    }
-            //    else if (c.Key == "ItineraryID" || c.Key == "ParentFolderID")
-            //    {
-            //        c.Hidden = true;
-            //    }
-            //}
+            foreach (var c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "SupplierFolderID" || c.Key == "ItineraryFolderID") { c.Hidden = true; }
 
-            //grid_InitializeSummaries(e);
+                else if (c.Key == "IsSelected")
+                {
+                    c.Header.Caption = String.Empty;
+                    c.DataType = typeof(Boolean);
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.Header.Appearance.Image = Properties.Resources.CheckBox;
+                    c.Header.Appearance.ImageHAlign = HAlign.Center;
+                    c.Header.Appearance.ImageVAlign = VAlign.Middle;
+                    c.Width = 30;
+                    c.MaxWidth = 30;
+                    c.SortIndicator = SortIndicator.Disabled;
+                }
+                else if (c.Key.Contains("Net") || c.Key.Contains("Gross"))
+                {
+                    c.Format = "c";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+                else if (c.Key.Contains("Markup") || c.Key.Contains("Commission"))
+                {
+                    c.Format = "##0.00\\%";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+            }
         }
 
-        private static void grid_InitializeSummaries(InitializeLayoutEventArgs e)
+        private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
         {
-            //UltraGridBand band = e.Layout.Bands[0];
-            //band.Override.BorderStyleSummaryValue = UIElementBorderStyle.None;
-            //band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.GroupByRowsFooter;
-            //SummarySettings summary;
- 
-            //summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Net"]);
-            //summary.Key = "GroupNet";
-            //summary.DisplayFormat = "{0:c}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-
-            //summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Gross"]);
-            //summary.Key = "GroupGross";
-            //summary.DisplayFormat = "{0:c}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-
-            //summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Deposits"]);
-            //summary.Key = "GroupDeposits";
-            //summary.DisplayFormat = "{0:c}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-
-            //summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Balance"]);
-            //summary.Key = "GroupBalance";
-            //summary.DisplayFormat = "{0:c}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-
-            //summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Margin"]);
-            //summary.Key = "GroupMargin";
-            //summary.DisplayFormat = "{0:c}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-
-            //summary = band.Summaries.Add(SummaryType.Average, band.Columns["Yield"]);
-            //summary.Key = "GroupYield";
-            //summary.DisplayFormat = "{0:##0.00\\%}";
-            //summary.Appearance.TextHAlign = HAlign.Right;
-            //e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
+            if (e.Row.Cells["IsSelected"].Value == null)
+                e.Row.Cells["IsSelected"].Value = true;
         }
 
+        private void gridBookings_MouseClick(object sender, MouseEventArgs e)
+        {
+            var clickedElement = grid.UltraGrid.DisplayLayout.UIElement.ElementFromPoint(grid.UltraGrid.PointToClient(MousePosition));
+            if (clickedElement == null) return;
 
+            var headerElement = (HeaderUIElement)clickedElement.GetAncestor(typeof(HeaderUIElement));
+            if (headerElement == null) return;
+
+            var column = (UltraGridColumn)headerElement.GetContext(typeof(UltraGridColumn));
+            if (column.Key == "IsSelected") SelectAll();
+        }
+        
         private void btnLoad_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -245,10 +223,63 @@ order by SupplierName, ServiceName, ValidFrom, OptionName";
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            btnSupplier.Enabled = btnItinerary.Enabled = true;
 
             LoadData(comboBox1.SelectedIndex);
+            if (comboBox1.SelectedIndex < 3) btnItinerary.Enabled = false;
 
             Cursor = Cursors.Default;
         }
+
+        private void btnSupplier_Click(object sender, EventArgs e)
+        {
+            var row = grid.UltraGrid.ActiveRow;
+
+            if (row == null ||
+                row.GetType() == typeof(UltraGridEmptyRow) ||
+                row.GetType() == typeof(UltraGridGroupByRow))
+                return;
+
+            if (!row.Cells.Exists("SupplierID")) return;
+
+            var info = new NavigationTreeItemInfo((int)row.Cells["SupplierID"].Value,
+                                                  (string)row.Cells["SupplierName"].Value,
+                                                  NavigationTreeItemInfo.ItemTypes.Supplier,
+                                                  (int)row.Cells["SupplierFolderID"].Value, true);
+
+            var node = App.MainForm.BuildMenuNode(info);
+            App.MainForm.Load_SupplierForm(node);
+        }
+
+        private void btnItinerary_Click(object sender, EventArgs e)
+        {
+            var row = grid.UltraGrid.ActiveRow;
+
+            if (row == null ||
+                row.GetType() == typeof(UltraGridEmptyRow) ||
+                row.GetType() == typeof(UltraGridGroupByRow))
+                return;
+
+            if (!row.Cells.Exists("ItineraryID")) return;
+            var info = new NavigationTreeItemInfo((int)row.Cells["ItineraryID"].Value,
+                                                  (string)row.Cells["ItineraryName"].Value,
+                                                  NavigationTreeItemInfo.ItemTypes.Itinerary,
+                                                  (int)row.Cells["ItineraryFolderID"].Value, true);
+
+            var node = App.MainForm.BuildMenuNode(info);
+            App.MainForm.Load_ItineraryForm(node);
+        }
+        
+        #region Override methods
+        protected override bool IsDataDirty()
+        {
+            return false;
+        }
+
+        protected override string GetDisplayName()
+        {
+            return "Nz GST adjust";
+        }
+        #endregion
     }
 }

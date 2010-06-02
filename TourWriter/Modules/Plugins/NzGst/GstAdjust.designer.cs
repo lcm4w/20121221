@@ -31,12 +31,15 @@ namespace TourWriter.Modules.Plugins.NzGst
             this.txtTo = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.txtFrom = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.btnLoad = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grid = new TourWriter.UserControls.DataExtractGrid();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.btnItinerary = new System.Windows.Forms.Button();
+            this.btnSupplier = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.txtTo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFrom)).BeginInit();
             this.panel1.SuspendLayout();
@@ -44,7 +47,7 @@ namespace TourWriter.Modules.Plugins.NzGst
             // 
             // txtTo
             // 
-            this.txtTo.Location = new System.Drawing.Point(562, 14);
+            this.txtTo.Location = new System.Drawing.Point(58, 128);
             this.txtTo.Name = "txtTo";
             this.txtTo.Size = new System.Drawing.Size(87, 21);
             this.txtTo.TabIndex = 68;
@@ -52,7 +55,7 @@ namespace TourWriter.Modules.Plugins.NzGst
             // 
             // txtFrom
             // 
-            this.txtFrom.Location = new System.Drawing.Point(447, 14);
+            this.txtFrom.Location = new System.Drawing.Point(58, 101);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(87, 21);
             this.txtFrom.TabIndex = 67;
@@ -60,25 +63,17 @@ namespace TourWriter.Modules.Plugins.NzGst
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(388, 18);
+            this.label3.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(12, 478);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
+            this.label3.Size = new System.Drawing.Size(807, 13);
             this.label3.TabIndex = 69;
-            this.label3.Text = "Date from";
-            this.label3.Visible = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(540, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(16, 13);
-            this.label4.TabIndex = 70;
-            this.label4.Text = "to";
-            this.label4.Visible = false;
+            this.label3.Text = "Calculation used to adjust Net and Gross price: ((Amount*100) / (100+12.5)) + (((" +
+                "Amount*100) / (100+12.5)) * 15/100), eg remove old GST 12.5% then add new GST 15" +
+                "%.";
             // 
             // btnLoad
             // 
@@ -118,33 +113,79 @@ namespace TourWriter.Modules.Plugins.NzGst
             this.grid.DataSource = null;
             this.grid.ExportFileName = "";
             this.grid.GridEnabled = true;
-            this.grid.Location = new System.Drawing.Point(16, 42);
+            this.grid.Location = new System.Drawing.Point(16, 20);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(753, 529);
+            this.grid.Size = new System.Drawing.Size(805, 435);
             this.grid.TabIndex = 74;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.btnItinerary);
+            this.panel1.Controls.Add(this.btnSupplier);
             this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnLoad);
             this.panel1.Controls.Add(this.txtFrom);
-            this.panel1.Controls.Add(this.grid);
             this.panel1.Controls.Add(this.txtTo);
-            this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.grid);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 585);
+            this.panel1.Size = new System.Drawing.Size(836, 499);
             this.panel1.TabIndex = 77;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(13, 462);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(578, 13);
+            this.label2.TabIndex = 81;
+            this.label2.Text = "Filters used to select data: Dates as selected above, Supplier country contains \'" +
+                "zealand\', Gross price is a positive number.";
+            // 
+            // btnItinerary
+            // 
+            this.btnItinerary.Location = new System.Drawing.Point(572, 12);
+            this.btnItinerary.Name = "btnItinerary";
+            this.btnItinerary.Size = new System.Drawing.Size(75, 24);
+            this.btnItinerary.TabIndex = 80;
+            this.btnItinerary.Text = "Itinerary";
+            this.btnItinerary.UseVisualStyleBackColor = true;
+            this.btnItinerary.Click += new System.EventHandler(this.btnItinerary_Click);
+            // 
+            // btnSupplier
+            // 
+            this.btnSupplier.Location = new System.Drawing.Point(491, 12);
+            this.btnSupplier.Name = "btnSupplier";
+            this.btnSupplier.Size = new System.Drawing.Size(75, 24);
+            this.btnSupplier.TabIndex = 79;
+            this.btnSupplier.Text = "Supplier";
+            this.btnSupplier.UseVisualStyleBackColor = true;
+            this.btnSupplier.Click += new System.EventHandler(this.btnSupplier_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(413, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.TabIndex = 78;
+            this.label4.Text = "Open selected";
             // 
             // GstAdjust
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(784, 625);
+            this.ClientSize = new System.Drawing.Size(836, 539);
             this.Controls.Add(this.panel1);
             this.HeaderVisible = true;
             this.Name = "GstAdjust";
@@ -163,11 +204,14 @@ namespace TourWriter.Modules.Plugins.NzGst
         private Infragistics.Win.UltraWinEditors.UltraDateTimeEditor txtTo;
         private Infragistics.Win.UltraWinEditors.UltraDateTimeEditor txtFrom;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnLoad;
         private TourWriter.UserControls.DataExtractGrid grid;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnItinerary;
+        private System.Windows.Forms.Button btnSupplier;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
     }
 }
