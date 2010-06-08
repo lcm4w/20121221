@@ -24,8 +24,8 @@ select
 	ValidTo, 
 	OptionName,
 	PricingOption,
-	case when PricingOption = 'nm' then (Gross - Net)/Net*100 else null end as Markup,	
-	case when PricingOption = 'gc' then (Gross - Net)/Gross*100 else null end as Commission,	
+	case when (PricingOption = 'nm' and Net is not null and Net <> 0) then (Gross - Net)/Net*100 else null end as Markup,	
+	case when (PricingOption = 'gc' and Gross is not null and Gross <> 0) then (Gross - Net)/Gross*100 else null end as Commission,		
 	case when PricingOption = 'nm' or PricingOption = 'ng'	then Net else null end as Net,	
 	case when PricingOption = 'nm' or PricingOption = 'ng'	
 		then cast( ((Net * 100) / (100 + 12.5)) + 	(((Net * 100) / (100 + 12.5)) * 15/100) as money)
@@ -47,6 +47,7 @@ inner join [Country] c on s.CountryID = c.CountryID and c.CountryName like '%zea
 where {0}
 --where ValidFrom <= '2010.10.1 00:00:00' and ValidTo >= '2010.10.1 00:00:00'
 --where ValidFrom >= '2010.10.1 00:00:00'
+and o.GstUpdated is null or o.GstUpdated = 'false'
 and Gross is not null and Gross > 0
 order by SupplierName, ServiceName, ValidFrom, OptionName";
 
@@ -79,6 +80,7 @@ inner join [Country] c on s.CountryID = c.CountryID and c.CountryName like '%zea
 where {0}
 --where p.StartDate <= '2010.10.1 00:00:00' and EndDate >= '2010.10.1 00:00:00'
 --where StartDate >= '2010.10.1 00:00:00'
+and p.GstUpdated is null or p.GstUpdated = 'false'
 and Gross is not null and Gross > 0
 order by i.ItineraryName, l.PurchaseLineName, StartDate";
         // ---------------------------------------------------------------------------------------------------------------
