@@ -36,7 +36,8 @@ PRINT N'Dropping [dbo].[_User_RemoveLogin]...';
 
 
 GO
-DROP PROCEDURE [dbo].[_User_RemoveLogin];
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'_User_RemoveLogin') AND type in (N'P', N'PC'))
+	DROP PROCEDURE [dbo].[_User_RemoveLogin];
 
 
 GO
