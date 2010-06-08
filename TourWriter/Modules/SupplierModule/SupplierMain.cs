@@ -45,7 +45,8 @@ namespace TourWriter.Modules.SupplierModule
             toolStrip1.Visible = false;
 
             ApplyLicenseStatus();
-            if (!App.ShowOldReports) tabsAdditional.Tabs["Reports"].Visible = false;
+            tabsAdditional.Tabs["Reports"].Visible = App.ShowOldReports;
+            tabsAdditional.Tabs["Content"].Visible = App.ShowNewPublishing;
         }
 
         public void ApplyLicenseStatus()

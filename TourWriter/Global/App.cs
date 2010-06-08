@@ -172,6 +172,7 @@ namespace TourWriter
 
         internal static bool SkipFloatingLicenseCheck
         {
+            // TODO: Remove this when floating-users enforced for all
             get
             {
                 return App.IsDebugMode
@@ -187,6 +188,31 @@ namespace TourWriter
                        Cache.ToolSet.AppSettings.Rows.Count > 0 &&
                        Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
                        "3a3b7f02-ab2f-4604-a314-cfb6e46c99bc".ToLower(); // xfiji
+            }
+        }
+        
+        internal static bool ShowNewPublishing
+        {
+            // TODO: Remove this when new publishing released to all
+            get
+            {
+                return App.IsDebugMode
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "13b8e136-405f-402f-a4bb-3913879be702".ToLower() // dev
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "c34e1d19-1655-467c-a4b6-2cbbe6a19523".ToLower() // glenn
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "9e37e740-6731-4dda-972c-d68baeb25db7".ToLower() // andrea
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "575E7900-BF13-42D1-A661-2242510C3359".ToLower(); // te
             }
         }
         #endregion
