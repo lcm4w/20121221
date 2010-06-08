@@ -56,6 +56,11 @@ namespace TourWriter.UserControls.Reports
                     if (_defaultParameters.ContainsKey(SqlExpression.ParameterName))
                         editor.Text = _defaultParameters[SqlExpression.ParameterName].ToString();
                     break;
+                case "@ContentTypeID":
+                    label.Text = "Content Type";
+                    editor = new ComboBox { Width = 120, DropDownStyle = ComboBoxStyle.DropDownList, 
+                        DataSource = Cache.ToolSet.ContentType, ValueMember = "ContentTypeID", DisplayMember = "ContentTypeName" };
+                    break;
                 case "@ServiceTypeIDList":
                     label.Text = "Service types";
                     editor = new CheckBoxSet();
@@ -124,6 +129,9 @@ namespace TourWriter.UserControls.Reports
 
             if (editor is NumericUpDown)
                 return (editor as NumericUpDown).Value;
+
+            if (editor is ComboBox)
+                return (editor as ComboBox).SelectedValue ?? 0;
 
             if (editor is DateTimePicker)
                 return (editor as DateTimePicker).Value.Date;
