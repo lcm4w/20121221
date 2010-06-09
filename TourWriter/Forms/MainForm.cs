@@ -37,6 +37,10 @@ namespace TourWriter.Forms
     {
         public MainForm()
         {
+            // TODO: need to be smarter with this, set once on create?
+            try { Security.SetAcl(App.Path_CommonApplicationData, "Users", System.Security.AccessControl.FileSystemRights.FullControl); }
+            catch (Exception ex) { ErrorHelper.SendEmail(ex, true); }
+
             InitializeComponent();
 
             Icon = Properties.Resources.TourWriter16;
