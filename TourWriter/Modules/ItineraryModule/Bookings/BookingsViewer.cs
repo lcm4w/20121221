@@ -538,6 +538,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Layout.Bands[0].Columns.Add("GradeExternal");
             if (!e.Layout.Bands[0].Columns.Exists("Flags"))
                 e.Layout.Bands[0].Columns.Add("Flags");
+            if (!e.Layout.Bands[0].Columns.Exists("NetTotalBase"))
+                e.Layout.Bands[0].Columns.Add("NetTotalBase");
 
             // Show/hide columns 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
@@ -687,6 +689,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
                 }
+                else if (c.Key == "NetTotalBase")
+                {
+                    c.Header.Caption = "Total Base Net";
+                    c.Header.ToolTipText = "Total net cost of item, in supplier currency";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.CellActivation = Activation.NoEdit;
+                    c.TabStop = false;
+                }
                 else if (c.Key == "NetTotalConverted")
                 {
                     c.Header.Caption = "Total Net";
@@ -748,6 +758,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["Quantity"].Width = 10;
             e.Layout.Bands[0].Columns["Grade"].Width = 30;
             e.Layout.Bands[0].Columns["GradeExternal"].Width = 30;
+            e.Layout.Bands[0].Columns["NetTotalBase"].Width = 30;
             e.Layout.Bands[0].Columns["NetTotalConverted"].Width = 30;
             e.Layout.Bands[0].Columns["GrossTotalConverted"].Width = 30;
             e.Layout.Bands[0].Columns["IsLockedAccounting"].Width = 30;
@@ -772,6 +783,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Grade"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GradeExternal"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["NetTotalBase"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetTotalConverted"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossTotalConverted"].Header.VisiblePosition = index;
 
@@ -843,6 +855,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         = Cache.ToolSet.GradeExternal.FindByGradeExternalID((int) gradeExternalId);
                     e.Row.Cells["GradeExternal"].Value = (gradeExternal != null) ? gradeExternal.GradeExternalName : null;
                 }
+
+                // Set supplier currency format
+                var c = e.Row.Cells["CurrencyCode"].Value;
+                var item = itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == itemId).FirstOrDefault();
+                if (item != null && c != null && !string.IsNullOrEmpty(c.ToString()))
+                {
+                    e.Row.Cells["NetTotalBase"].Value = item.NetTotal.ToString(App.GetCurrencyFormat(c.ToString()));
+                }
+
                 SetFlags(e.Row);
 
                 // disable the row if it has been exported to accounting

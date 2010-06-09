@@ -960,7 +960,7 @@ namespace TourWriter
                     string s = "";
                     foreach (char c in currency.Symbol)
                         s += "\\" + c; // escape each char
-                    format = s + " ########.00";
+                    format = s + "########.00";
                 }
             }
             return format;
