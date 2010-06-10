@@ -41,6 +41,12 @@ namespace TourWriter.Forms
             }
             finally { Cursor = Cursors.Default; }
 
+            if (serviceEditor1.SupplierSet.Supplier.Rows.Count == 0)
+            {
+                App.ShowInfo("Failed to load Supplier with SupplierID: " + supplierId);
+                return;
+            }
+
             txtSupplierName.Text = serviceEditor1.SupplierSet.Supplier[0].SupplierName;
 
             SupplierSet.OptionRow option = serviceEditor1.SupplierSet.Option.FindByOptionID(optionId);
@@ -55,8 +61,6 @@ namespace TourWriter.Forms
             serviceEditor1.SetSelectedRateRow(rate.ValidFrom);
             SelectedOption = option;
             serviceEditor1.SetSelectedOptionRow(option.OptionID);
-
-            Cursor = Cursors.Default;
         }
 
         private void SaveSupplier()
