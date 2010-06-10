@@ -828,7 +828,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Row.Cells["PurchaseLineName"].Value = itinerarySet.PurchaseLine.FindByPurchaseLineID(
                     (int) e.Row.Cells["PurchaseLineID"].Value).PurchaseLineName;
 
-                int itemId = (int) e.Row.Cells["PurchaseItemID"].Value;
+                var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
+                var item = itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == itemId).FirstOrDefault();
 
                 // Set the city name.
                 int? cityId = itinerarySet.GetPurchaseItemCityId(itemId);
@@ -874,18 +875,21 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
 
                 // Set supplier currency format
-                var c = e.Row.Cells["CurrencyCode"].Value;
-                var item = itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == itemId).FirstOrDefault();
-                if (item != null && c != null && !string.IsNullOrEmpty(c.ToString()))
+                if (e.Row.Band.Columns.Exists("NetTotalBase") && e.Row.Band.Columns.Exists("CurrencyCode"))
                 {
-                    e.Row.Cells["NetTotalBase"].Value = item.NetTotal.ToString(App.GetCurrencyFormat(c.ToString()));
+                    var c = e.Row.Cells["CurrencyCode"].Value;
+                    if (item != null && c != null && !string.IsNullOrEmpty(c.ToString()))
+                    {
+                        e.Row.Cells["NetTotalBase"].Value = item.NetTotal.ToString(App.GetCurrencyFormat(c.ToString()));
+                    }
                 }
 
                 // Set default EndDate
-                e.Row.Cells["DefaultEndDate"].Value = e.Row.Cells["EndDate"].Value;
-                if (item != null && !item.IsStartDateNull() && !item.IsNumberOfDaysNull())
+                if (e.Row.Band.Columns.Exists("DefaultEndDate"))
                 {
-                    e.Row.Cells["DefaultEndDate"].Value = item.StartDate.Date.AddDays(item.NumberOfDays).ToShortDateString();
+                    e.Row.Cells["DefaultEndDate"].Value = e.Row.Cells["EndDate"].Value;
+                    if (item != null && !item.IsStartDateNull() && !item.IsNumberOfDaysNull())
+                        e.Row.Cells["DefaultEndDate"].Value = item.StartDate.Date.AddDays(item.NumberOfDays).ToShortDateString();
                 }
 
                 SetFlags(e.Row);
@@ -907,8 +911,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 if (ex.Message.Contains("Key not found"))
                 {
-                    bool resetLayout = App.AskYesNo("Problem found with bookings grid layout which may cause bookings to not display correctly. Resetting the grid layout should fix the problem.\r\n\r\nWould you like to reset now?");
-                    if (resetLayout)
+                    //bool resetLayout = App.AskYesNo("Problem found with bookings grid layout which may cause bookings to not display correctly. Resetting the grid layout should fix the problem.\r\n\r\nWould you like to reset now?");
+                    //if (resetLayout)
                         ResetGridLayout();
 
                     ErrorHelper.SendEmail(ex, true);
