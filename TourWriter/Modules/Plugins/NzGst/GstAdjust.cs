@@ -134,7 +134,7 @@ order by i.ItineraryName, l.PurchaseLineName, StartDate";
 	Net =   ((Net   * 100) / (100 + 12.5)) + (((Net   * 100) / (100 + 12.5)) * 15/100),
 	Gross = ((Gross * 100) / (100 + 12.5)) + (((Gross * 100) / (100 + 12.5)) * 15/100),
 	GstUpdated = 1 
-where {0}ID = {1};";
+where {0}ID = {1} and (GstUpdated is null or GstUpdated = 0);";
 
         // ---------------------------------------------------------------------------------------------------------------
         #endregion
