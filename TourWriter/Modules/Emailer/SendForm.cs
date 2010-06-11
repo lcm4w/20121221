@@ -450,8 +450,13 @@ namespace TourWriter.Modules.Emailer
                 {
                     if (email.Send())
                     {
-                        string filename = email.SaveToDisk();
-                        emailBuilder.RecordSavedEmail(email, filename);
+                        var emailStore = ExternalFilesHelper.GetEmailFolder();
+                        try
+                        {
+                            System.IO.Directory.CreateDirectory(emailStore);
+                            string filename = email.SaveToDisk(emailStore);
+                            emailBuilder.RecordSavedEmail(email, filename);
+                        } catch {}
                     }
                 }
                 else

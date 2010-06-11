@@ -118,7 +118,6 @@ namespace TourWriter.Services
         /// <returns>Path and name of the saved file.</returns>
         public string SaveToDisk(string saveToPath)
         {
-            Directory.CreateDirectory(saveToPath);
             var saveClient = new SmtpClient
                                  {
                                      DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,

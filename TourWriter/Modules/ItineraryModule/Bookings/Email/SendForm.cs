@@ -404,8 +404,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 {
                     if (email.Send())
                     {
-                        string filename = email.SaveToDisk();
-                        sendForm.RecordSavedEmail(email, filename);
+                        var emailStore = ExternalFilesHelper.GetEmailFolder();
+                        try
+                        {
+                            System.IO.Directory.CreateDirectory(emailStore);
+                            string filename = email.SaveToDisk(emailStore);
+                            sendForm.RecordSavedEmail(email, filename);
+                        } catch { }
                     }
                 }
                 else
