@@ -832,8 +832,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     (int) e.Row.Cells["PurchaseLineID"].Value).PurchaseLineName;
 
                 var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
-                var item = itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == itemId).FirstOrDefault();
-                if (item == null || item.RowState == DataRowState.Deleted) return;
+                var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == itemId).FirstOrDefault();
+                if (item == null) return;
 
                 // Set the city name.
                 int? cityId = itinerarySet.GetPurchaseItemCityId(itemId);
