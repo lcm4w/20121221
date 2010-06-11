@@ -115,8 +115,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 grid.DisplayLayout.ValueLists["StatusList"].SortStyle = ValueListSortStyle.Ascending;
                 grid.DisplayLayout.ValueLists["StatusList"].ValueListItems.Add(DBNull.Value, "(none)");
                 foreach (ToolSet.RequestStatusRow r in Cache.ToolSet.RequestStatus.Rows)
+                {
+                    if (r.RowState == DataRowState.Deleted) continue;
                     grid.DisplayLayout.ValueLists["StatusList"].ValueListItems.Add(r.RequestStatusID,
                                                                                    r.RequestStatusName);
+                }
             }
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
@@ -830,6 +833,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
                 var item = itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == itemId).FirstOrDefault();
+                if (item == null || item.RowState == DataRowState.Deleted) return;
 
                 // Set the city name.
                 int? cityId = itinerarySet.GetPurchaseItemCityId(itemId);
@@ -878,7 +882,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (e.Row.Band.Columns.Exists("NetTotalBase") && e.Row.Band.Columns.Exists("CurrencyCode"))
                 {
                     var c = e.Row.Cells["CurrencyCode"].Value;
-                    if (item != null && c != null && !string.IsNullOrEmpty(c.ToString()))
+                    if (c != null && !string.IsNullOrEmpty(c.ToString()))
                     {
                         e.Row.Cells["NetTotalBase"].Value = item.NetTotal.ToString(App.GetCurrencyFormat(c.ToString()));
                     }
@@ -888,7 +892,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (e.Row.Band.Columns.Exists("DefaultEndDate"))
                 {
                     e.Row.Cells["DefaultEndDate"].Value = e.Row.Cells["EndDate"].Value;
-                    if (item != null && !item.IsStartDateNull() && !item.IsNumberOfDaysNull())
+                    if (!item.IsStartDateNull() && !item.IsNumberOfDaysNull())
                         e.Row.Cells["DefaultEndDate"].Value = item.StartDate.Date.AddDays(item.NumberOfDays).ToShortDateString();
                 }
 
