@@ -215,6 +215,15 @@ namespace TourWriter
                        "575E7900-BF13-42D1-A661-2242510C3359".ToLower(); // te
             }
         }
+
+        internal static void SetVoucherNumberSeed()
+        {
+            if (Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "eca7f3ab-b8aa-4372-8292-7b4265450cdb".ToLower()) // poly-exp
+            {
+                const string sql = "if ((select max(PurchaseLineID) from PurchaseLine) < 1000) DBCC CHECKIDENT('PurchaseLine',RESEED,999)";
+                try { Info.Services.DatabaseHelper.RunScript(sql); } catch (Exception ex) { ErrorHelper.SendEmail(ex, true); }
+            }
+        }
         #endregion
 
         #region Network
