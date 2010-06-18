@@ -402,7 +402,7 @@ namespace TourWriter.UserControls.Reports
             {
                 var report = GetReportRow(e.Node);
                 string reportName = report.TemplateName;
-                string reportPath = Cache.ToolSet.AppSettings[0].ExternalFilesPath + report.FilePath;
+                string reportPath = Services.ExternalFilesHelper.ConvertToAbsolutePath(report.FilePath);// Cache.ToolSet.AppSettings[0].ExternalFilesPath + report.FilePath;
                 ReportDoubleClick(this, new ReportDoubleClickEventArgs(reportName, reportPath));
             }
         }
