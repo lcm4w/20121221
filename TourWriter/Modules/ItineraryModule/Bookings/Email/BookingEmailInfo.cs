@@ -24,6 +24,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         // email body search-and-replace tags
         private readonly string tagHostName = "[!HostName]";
         private readonly string tagSupplierName = "[!SupplierName]";
+        private readonly string tagItineraryName = "[!ItineraryName]";
+        private readonly string tagDisplayName = "[!DisplayName]";
         private readonly string tagItineraryID = "[!ItineraryID]";
         private readonly string tagBookingID = "[!BookingID]";
         private readonly string tagBookingDetails = "[!BookingDetails]";
@@ -160,6 +162,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, tagHostName,
                 (!supplier.IsHostNameNull() && supplier.HostName != "" ? supplier.HostName : "Reservations").Trim());
             template = ReplaceTag(template, tagSupplierName, supplier.SupplierName);
+            template = ReplaceTag(template, tagItineraryName, purchaseLine.ItineraryRow.ItineraryName);
+            template = ReplaceTag(template, tagDisplayName, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
             template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
             template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
             template = ReplaceBookingDetailsTag(template);
