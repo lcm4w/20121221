@@ -63,6 +63,8 @@ namespace TourWriter.Services
 
         private static void LoadSession()
         {
+            if (Global.Cache.User == null) return;
+
             var computerName = SystemInformation.ComputerName + "\\" + SystemInformation.UserName;
 
             try
