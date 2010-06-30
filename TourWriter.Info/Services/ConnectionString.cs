@@ -2,6 +2,7 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using TourWriter.Utilities.Encryption;
+using TravelMesh.C3.Client;
 
 namespace TourWriter.Info.Services
 {
@@ -34,10 +35,14 @@ namespace TourWriter.Info.Services
             };
             _connectionString = conn.ToString();
         }
-
-        // Sets the connection string from a full connection string. Decrypts datasource, userid, password if required.
+        
         internal static void SetRemoteConnectionString(string connectionString)
         {
+            if (C3.IsC3Key(connectionString))
+            {
+                _connectionString = C3.GetConnectionString(connectionString); 
+                return;
+            }
             var conn = new SqlConnectionStringBuilder(connectionString);
             try { conn.DataSource = EncryptionHelper.DecryptString(conn.DataSource); } catch {}
             try { conn.UserID = EncryptionHelper.DecryptString(conn.UserID); } catch {}
