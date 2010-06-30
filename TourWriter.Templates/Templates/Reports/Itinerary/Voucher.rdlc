@@ -196,6 +196,9 @@
                           <Height>2.65cm</Height>
                           <Width>7.5cm</Width>
                           <ZIndex>2</ZIndex>
+                          <Visibility>
+                            <Hidden>=iif((Parameters!LogoFile.Value = "" or Parameters!LogoFile.Value = "file:\\\"), true, false)</Hidden>
+                          </Visibility>
                           <Style />
                         </Image>
                         <Textbox Name="textbox11">

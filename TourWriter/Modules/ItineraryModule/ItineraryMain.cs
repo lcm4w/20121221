@@ -738,8 +738,8 @@ namespace TourWriter.Modules.ItineraryModule
 
             if (!reportControl.DefaultParameters.ContainsKey("@LogoFile"))
                 reportControl.DefaultParameters.Add("@LogoFile", "");
-            reportControl.DefaultParameters["@LogoFile"] = "file:\\\\\\" + 
-                (!agent.IsVoucherLogoFileNull() ? ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile) : "");
+            reportControl.DefaultParameters["@LogoFile"] = (!agent.IsVoucherLogoFileNull() ? 
+                "file:\\\\\\" + ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile) : "");
 
             if (!reportControl.DefaultParameters.ContainsKey("@AgentVoucherNote"))
                 reportControl.DefaultParameters.Add("@AgentVoucherNote", "");
