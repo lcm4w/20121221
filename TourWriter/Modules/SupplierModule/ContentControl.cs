@@ -119,6 +119,7 @@ namespace TourWriter.Modules.SupplierModule
                                       "*.jpg;*.jpeg;*.gif;*.png;*.bmp|All files (*.*)|*.*";
             var file = App.SelectExternalFile(true, "Choose image", fileFilter, 1);
             txtImage.Text = file;
+            srcContents.EndEdit();
         }
     }
 }
