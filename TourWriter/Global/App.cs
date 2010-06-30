@@ -164,9 +164,11 @@ namespace TourWriter
                        ||
                        Cache.ToolSet.AppSettings.Rows.Count > 0 &&
                        Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
-                       "8A7E0397-40DC-4389-8A38-9E74A2C32E20".ToLower(); // szs
-
-                
+                       "8A7E0397-40DC-4389-8A38-9E74A2C32E20".ToLower() // szs
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "7e18060b-4d24-4c6e-a1b9-55f4955f3fc8".ToLower(); // rest
             }
         }
 
