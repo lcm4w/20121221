@@ -423,7 +423,7 @@ namespace TourWriter.Forms
         {
             // set restart args
             Services.Update.ApplicationUpdateService.UpdateArgs = "-s {0} -u {1} -p {2} {3}";
-            string pass = Utilities.Encryption.EncryptionHelper.DecryptString(Cache.User.Password);
+            string pass = string.IsNullOrEmpty(Cache.User.Password) ? "" : Utilities.Encryption.EncryptionHelper.DecryptString(Cache.User.Password);
             Services.Update.ApplicationUpdateService.UpdateArgs = 
                 String.Format(Services.Update.ApplicationUpdateService.UpdateArgs, App.Servername, Cache.User.UserName, pass, App.UpdatedStartParam);
 
