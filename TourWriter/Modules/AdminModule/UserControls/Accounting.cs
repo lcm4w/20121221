@@ -72,7 +72,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             cmbMarkupContainer.ValueMember = "ServiceTypeID";
             cmbMarkupContainer.DisplayMember = "ServiceTypeName";
 
-            if (Cache.ToolSet.ServiceType.MarkupContainerRow != null)
+            if (Cache.ToolSet.ServiceType.MarkupContainerRow.RowState != DataRowState.Deleted && Cache.ToolSet.ServiceType.MarkupContainerRow != null)
             {
                 cmbMarkupContainer.SelectedIndex = GetMarkupContainerComboBoxIndexByPaymentTypeID(Cache.ToolSet.ServiceType.MarkupContainerRow.ServiceTypeID);
             }
