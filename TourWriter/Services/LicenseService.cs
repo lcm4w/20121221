@@ -64,22 +64,9 @@ namespace TourWriter.Services
         private static void LoadSession()
         {
             if (Global.Cache.User == null) return;
-
             var computerName = SystemInformation.ComputerName + "\\" + SystemInformation.UserName;
-
-            try
-            {
-                UserSession.AddOrUpdate(Global.Cache.User.UserID, computerName, SessionTimeout,
-                    ref _sessionId, ref _sessionIndex, ref _sessionCount);
-                _lastLicenseRefresh = DateTime.Now;
-            }
-            catch (InvalidOperationException ex)
-            {
-                if (ex.ToString().ToLower().Contains("stored procedure '_Login_AddOrUpdate' doesn't exist".ToLower()))
-                    return; // swallow, first run on 2010.05.04 db update will fail as sp does not exist until after update
-                throw; 
-            }
-
+            UserSession.AddOrUpdate(Global.Cache.User.UserID, computerName, SessionTimeout, ref _sessionId, ref _sessionIndex, ref _sessionCount);
+            _lastLicenseRefresh = DateTime.Now;
         }
 
         private static void ValidateLicense()
