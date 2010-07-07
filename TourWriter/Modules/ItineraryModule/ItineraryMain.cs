@@ -695,6 +695,7 @@ namespace TourWriter.Modules.ItineraryModule
         private void AutoPopulateNetOverrides()
         {
             var agentRow = Cache.AgentSet.Agent.FindByAgentID(itinerarySet.Itinerary[0].AgentID);
+            if (agentRow == null) return;
 
             // delete all existing override rows
             for (int i = itinerarySet.ItineraryMarginOverride.Rows.Count - 1; i >= 0; i--)
