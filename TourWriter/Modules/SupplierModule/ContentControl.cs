@@ -121,5 +121,10 @@ namespace TourWriter.Modules.SupplierModule
             txtImage.Text = file;
             srcContents.EndEdit();
         }
+
+        private void cmbTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            srcContentTypes.EndEdit();
+        }
     }
 }

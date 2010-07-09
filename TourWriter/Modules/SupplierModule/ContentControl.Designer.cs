@@ -123,6 +123,7 @@
             this.cmbTypes.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.srcContents, "ContentTypeId", true));
             this.cmbTypes.DataSource = this.srcContentTypes;
             this.cmbTypes.DisplayMember = "ContentTypeName";
+            this.cmbTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTypes.FormattingEnabled = true;
             this.cmbTypes.Location = new System.Drawing.Point(353, 25);
             this.cmbTypes.MinimumSize = new System.Drawing.Size(150, 0);
@@ -131,11 +132,13 @@
             this.cmbTypes.TabIndex = 139;
             this.toolTip1.SetToolTip(this.cmbTypes, "User display type (not used in reports)");
             this.cmbTypes.ValueMember = "ContentTypeId";
+            this.cmbTypes.SelectedIndexChanged += new System.EventHandler(this.cmbTypes_SelectedIndexChanged);
             // 
             // srcContentTypes
             // 
             this.srcContentTypes.DataMember = "ContentType";
             this.srcContentTypes.DataSource = typeof(TourWriter.Info.ToolSet);
+            this.srcContentTypes.Sort = "ContentTypeName";
             // 
             // txtHeading
             // 
