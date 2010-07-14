@@ -107,9 +107,6 @@ namespace TourWriter.Forms
                         // needs to load after db connection established
                         if (!App.ShowOldReports) menuGeneralReports.Visible = false;
                         if (!App.ShowOldReports) navPane.GetItemsByKey("ReportsOLD")[0].Visible = false;
-
-                        App.SetVoucherNumberSeed(); // TODO: temp for poly exp
-
                         break;
                     }
                 case DialogResult.Cancel:
