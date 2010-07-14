@@ -25,7 +25,7 @@ namespace TourWriter
         internal const string UsersettingFilename = "UserSettings.xml";
         internal const string UserlayoutFilename = "UserLayout.xml";
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
-        internal const string DataErrorPKDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
+        internal const string DataErrorPkDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
         
         internal const int TemplateCategoryBookingEmail = 5;
         internal const string PricingOptionNetMarkupText = "nm";

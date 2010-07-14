@@ -214,7 +214,7 @@ namespace TourWriter.Forms
 						}
 						#endregion
 					}
-					else if(dr.RowError.StartsWith(App.DataErrorPKDeleteConflictText))
+					else if(dr.RowError.StartsWith(App.DataErrorPkDeleteConflictText))
 					{						
 						#region PK_DELETE_CONFLICT
 

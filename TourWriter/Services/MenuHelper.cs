@@ -521,7 +521,7 @@ namespace TourWriter.Forms
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                if (ex.Message.Contains(App.DataErrorPKDeleteConflictText))
+                if (ex.Message.Contains(App.DataErrorPkDeleteConflictText))
                 {
                     var ds = s.GetSupplierSet(id);
                     ds.Supplier[0].IsDeleted = true;
@@ -605,7 +605,7 @@ namespace TourWriter.Forms
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                if (ex.Message.Contains(App.DataErrorPKDeleteConflictText))
+                if (ex.Message.Contains(App.DataErrorPkDeleteConflictText))
                 {
                     var ds = c.GetContactSet(id);
                     ds.Contact[0].IsDeleted = true;

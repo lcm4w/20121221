@@ -277,7 +277,7 @@ namespace TourWriter.Forms
             }
             catch (SqlException ex)
             {
-                if (ex.Message.StartsWith(App.DataErrorPKDeleteConflictText))
+                if (ex.Message.StartsWith(App.DataErrorPkDeleteConflictText))
                 {
                     App.Error("Cannot delete record as it is used elsewhere as a link to another record.", ex);
                 }
