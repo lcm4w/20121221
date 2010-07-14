@@ -125,10 +125,8 @@ namespace TourWriter.Services
 
         private static void ValidateConnections(License license, ref bool notify, ref int delay)
         {
-            if (App.SkipFloatingLicenseCheck) return;
-
-            if (_sessionIndex > license.MaxUsers) // this will notify exceeded users
-            //if (_sessionCount > license.MaxUsers) // this will notify all users
+            if (_sessionIndex > license.MaxUsers)   // notify exceeded users only
+            //if (_sessionCount > license.MaxUsers) // notify all users
             {
                 delay = 0;
                 notify = true;

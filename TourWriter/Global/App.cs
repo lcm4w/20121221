@@ -172,27 +172,6 @@ namespace TourWriter
                        "7e18060b-4d24-4c6e-a1b9-55f4955f3fc8".ToLower(); // rest
             }
         }
-
-        internal static bool SkipFloatingLicenseCheck
-        {
-            // TODO: Remove this when floating-users enforced for all
-            get
-            {
-                return App.IsDebugMode
-                       ||
-                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
-                       "20D0DC7C-BE6B-4846-83C6-3CC580808959".ToLower() // wldr
-                       ||
-                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
-                       "8A7E0397-40DC-4389-8A38-9E74A2C32E20".ToLower() // szs
-                       ||
-                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
-                       "3a3b7f02-ab2f-4604-a314-cfb6e46c99bc".ToLower(); // xfiji
-            }
-        }
         
         internal static bool ShowNewPublishing
         {
