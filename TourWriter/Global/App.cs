@@ -31,7 +31,8 @@ namespace TourWriter
         internal const string PricingOptionNetMarkupText = "nm";
         internal const string PricingOptionNetGrossText = "ng";
         internal const string PricingOptionGrossCommissionText = "gc";
-        internal const string RemoteConnectionName = "(internet server)";
+        internal const string RemoteConnectionName = "(custom server)";
+        internal const string AdminUserName = "admin";
 
         internal static void RefreshMenu(string menuName)
         {

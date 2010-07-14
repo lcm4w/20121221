@@ -342,7 +342,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
 		private void DataBind()
 		{
-            userSet.User.DefaultView.RowFilter = App.IsDebugMode ? "" : "UserName <> 'admin'";
+            userSet.User.DefaultView.RowFilter = App.IsDebugMode ? "" : string.Format("UserName <> '{0}'", App.AdminUserName);
 		    gridUsers.DataSource = userSet.User.DefaultView;
 
             txtUsername.DataBindings.Add("Text", userSet.User.DefaultView, "Username");

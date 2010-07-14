@@ -63,9 +63,11 @@ namespace TourWriter.Services
 
         private static void LoadSession()
         {
-            if (Global.Cache.User == null) return;
+            var user = Global.Cache.User;
+            if (user == null || user.UserName == App.AdminUserName) return; // don't log admin
+
             var computerName = SystemInformation.ComputerName + "\\" + SystemInformation.UserName;
-            UserSession.AddOrUpdate(Global.Cache.User.UserID, computerName, SessionTimeout, ref _sessionId, ref _sessionIndex, ref _sessionCount);
+            UserSession.AddOrUpdate(user.UserID, computerName, SessionTimeout, ref _sessionId, ref _sessionIndex, ref _sessionCount);
             _lastLicenseRefresh = DateTime.Now;
         }
 
