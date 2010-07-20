@@ -521,12 +521,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
             if (passwordChanged)
             {
-                int index = BindingContext[userSet, "User"].Position;
-                UserSet.UserRow user = userSet.User[index];
-
-                string password = EncryptionHelper.EncryptString(passwordEditor.Password);
-                if (password != user.Password)
-                    user.Password = password;
+                var id = (int)gridUsers.ActiveRow.Cells["UserID"].Value;
+                var user = userSet.User.FindByUserID(id);
+                var password = EncryptionHelper.EncryptString(passwordEditor.Password);
+                if (password != user.Password) user.Password = password;
             }
         }
 		#endregion

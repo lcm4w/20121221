@@ -303,9 +303,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
             if (passwordChanged)
             {
-                string password = EncryptionHelper.EncryptString(passwordEditor.Password);
-                if (password != Cache.User.Password)
-                    Cache.User.Password = password;
+                var password = EncryptionHelper.EncryptString(passwordEditor.Password);
+                if (password != Cache.User.Password) Cache.User.Password = password;
             }
         }
     }
