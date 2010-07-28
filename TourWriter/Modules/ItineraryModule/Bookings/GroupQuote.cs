@@ -214,7 +214,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 var paxMultiplier = RowGetPaxChargeMultiplier(item, pax, costType);
                 var newVal = (double)item.Gross * item.NumberOfDays * paxMultiplier;
-                var oldVal = row[paxCol] != DBNull.Value ? (double)row[paxCol] : 0;
+                var oldVal = row[paxCol] != DBNull.Value ? Convert.ToDouble(row[paxCol]) : 0;
                 row[paxCol] = oldVal + newVal;
             }
         }
