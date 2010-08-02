@@ -254,7 +254,8 @@ namespace TourWriter.Forms
 
         private void UpdateCheck()
         {
-            var reponse = webClient.DownloadString(new Uri(GetRequestString()));
+            var uri = new Uri(GetRequestString());
+            var reponse = webClient.DownloadString(uri);
             if (!string.IsNullOrEmpty(reponse))
                 updateReponse = GetResponseObject(reponse);
         }
