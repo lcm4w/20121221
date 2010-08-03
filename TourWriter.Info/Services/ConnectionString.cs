@@ -2,7 +2,6 @@ using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using TourWriter.Utilities.Encryption;
-using TravelMesh.C3.Client;
 
 namespace TourWriter.Info.Services
 {
@@ -38,9 +37,9 @@ namespace TourWriter.Info.Services
         
         internal static void SetRemoteConnectionString(string connectionString)
         {
-            if (C3.IsC3Key(connectionString))
+            if (TravelMesh.Cs.Client.Data.IsConnectionKey(connectionString))
             {
-                _connectionString = C3.GetConnectionString(connectionString); 
+                _connectionString = TravelMesh.Cs.Client.Data.GetConnectionString(connectionString); 
                 return;
             }
             var conn = new SqlConnectionStringBuilder(connectionString);
