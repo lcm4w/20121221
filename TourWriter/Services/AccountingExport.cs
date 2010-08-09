@@ -138,6 +138,21 @@ namespace TourWriter.Services
             if (dataTable.Rows.Count == 0)
                 return;
 
+            // new stuff...
+            //================================================================
+            var outfile = exportFileName.Insert(exportFileName.LastIndexOf("."), "-NEW");
+            var filtered = dataTable.Rows.Cast<DataRow>().
+                Where(row => row.RowState != DataRowState.Deleted).
+                Where(row => row.Table.Columns.Cast<DataColumn>().Any(col => row[col] != DBNull.Value));
+
+            if (filtered.Count() > 0)
+            {
+                Accounting.IExport ex = new Accounting.CsvExportMyob(filtered.CopyToDataTable(), templateFileName);
+                ex.ExportTo(outfile);
+            }
+            else App.ShowInfo("No rows to export: " + outfile);
+            //================================================================
+
             AccountingService accounting;
             if (groupColumn != null)
                 accounting = new AccountingService(dataTable, templateFileName, groupColumn);

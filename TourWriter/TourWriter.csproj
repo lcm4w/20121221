@@ -650,6 +650,9 @@
     </Compile>
     <Compile Include="Services\AccountingExport.cs" />
     <Compile Include="Services\AccountingService.cs" />
+    <Compile Include="Services\Accounting\CsvExportBase.cs" />
+    <Compile Include="Services\Accounting\CsvExportMyob.cs" />
+    <Compile Include="Services\Accounting\IExport.cs" />
     <Compile Include="Services\Security.cs" />
     <Compile Include="Services\CurrencyUpdateService.cs" />
     <Compile Include="Services\ErrorHelper.cs" />
