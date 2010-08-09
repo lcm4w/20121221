@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using TourWriter.Info.Services;
 
 namespace TourWriter.Info
@@ -987,37 +988,18 @@ namespace TourWriter.Info
         /// <summary>
         /// Get the service start date and time for this service, not including client early checkin time.
         /// </summary>
-        /// <param name="purchaseItemId"></param>
-        /// <returns>Date time string</returns>
-        public string GetPurchaseItemStartDateTimeString(int purchaseItemId)
-        {
-            return GetPurchaseItemStartDateTimeString(purchaseItemId, null);
-        }
-        /// <summary>
-        /// Get the service start date and time for this service, not including client early checkin time.
-        /// </summary>
         /// <param name="purchaseItemId">The purchase id</param>
-        /// <param name="dateFormat">The format for the date component, or null for default</param>
+        /// <param name="cultureInfo">The formatting info, or null for default</param>
         /// <returns>Date time string</returns>
-        public string GetPurchaseItemStartDateTimeString(int purchaseItemId, string dateFormat)
+        public string GetPurchaseItemStartDateTimeString(int purchaseItemId, CultureInfo cultureInfo)
         {
-            string s = "";
-            PurchaseItemRow item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
+            var item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
+            if (item.IsStartDateNull()) return "";
 
-            // Add start date.
-            if (!item.IsStartDateNull())
-            {
-                s += !string.IsNullOrEmpty(dateFormat) ?
-                    item.StartDate.ToString(dateFormat) :
-                    item.StartDate.ToShortDateString();
-            }
-            // Add start time.
-            if (!item.IsStartTimeNull())
-            {
-                if (s != "") s += " ";
-                s += " " + item.StartTime.ToShortTimeString();
-            }
-            return s;
+            if (item.IsStartTimeNull()) return string.Format(cultureInfo, "{0:D}", item.StartDate); // long date
+
+            var date = new DateTime(item.StartDate.Year, item.StartDate.Month, item.StartDate.Day, item.StartTime.Hour, item.StartTime.Minute, item.StartTime.Second);
+            return string.Format(cultureInfo, "{0:f}", date); // long time + short date
         }
 
         /// <summary>
@@ -1078,40 +1060,19 @@ namespace TourWriter.Info
         /// otherwise calculates it from the start date plus number of days.
         /// </summary>
         /// <param name="purchaseItemId">The purchase id</param>
-        /// <param name="dateFormat">The format for the date component, or null for default</param>
-        /// <param name="timeFormat">The format for the time component, or null for default</param>
+        /// <param name="cultureInfo">The format for the date component, or null for default</param>
         /// <returns>Date time string</returns>
-        public string GetPurchaseItemClientCheckoutDateTimeString(int purchaseItemId, string dateFormat, string timeFormat)
+        public string GetPurchaseItemClientCheckoutDateTimeString(int purchaseItemId, CultureInfo cultureInfo)
         {
-            string s = "";
-            PurchaseItemRow item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
+            var item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
 
-            // Add end date.
-            if (!item.IsEndDateNull()) // try to use end date override
-            {
-                s += !string.IsNullOrEmpty(dateFormat) ?
-                    item.EndDate.ToString(dateFormat) :
-                    item.EndDate.ToShortDateString();
-            }
-            else if (!item.IsStartDateNull()) // calculate booking end date
-            {
-                DateTime startDate = item.StartDate.Date.AddDays(!item.IsNumberOfDaysNull() ? item.NumberOfDays : 0);
-                s += !string.IsNullOrEmpty(dateFormat) ?
-                    startDate.ToString(dateFormat) :
-                    startDate.ToShortDateString();
-            }
+            var endDate = !item.IsEndDateNull() ? item.EndDate : // end date override
+                item.StartDate.Date.AddDays(!item.IsNumberOfDaysNull() ? item.NumberOfDays : 0); // calc from start date
 
-            // Add end time.
-            if (!item.IsEndTimeNull())
-            {
-                if (s != "")
-                    s += " ";
+            if (item.IsEndTimeNull()) return string.Format(cultureInfo, "{0:D}", endDate); // long date
 
-                s += !string.IsNullOrEmpty(timeFormat) ?
-                    item.EndTime.ToString(timeFormat) :
-                    item.EndTime.ToShortTimeString();
-            }
-            return s;
+            endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, item.EndTime.Hour, item.EndTime.Minute, item.EndTime.Second);
+            return string.Format(cultureInfo, "{0:f}", endDate); // long time + short date
         }
 
         #endregion

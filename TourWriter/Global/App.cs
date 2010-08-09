@@ -4,7 +4,9 @@ using System.Globalization;
 using System.IO;
 using System.Data;
 using System.Collections;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -922,7 +924,27 @@ namespace TourWriter
         {
             return GetLocalShortTimeMask().Replace(" tt", "");
         }
+        
+        /// <summary>
+        /// Gets the CultureInfo for a given Currency Code string. Eg: string.Format(GetCultureInfo("VND", "{0:C}", value);
+        /// </summary>
+        /// <param name="currencyCode"></param>
+        /// <returns>Matching CultureInfo, or default</returns>
+        internal static CultureInfo GetCultureInfo(string currencyCode)
+        {
+            if (!string.IsNullOrEmpty(currencyCode))
+            {
+                var cultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures).
+                    Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
 
+                if (cultureInfo == null)
+                    throw new ArgumentException("Currency code '" + cultureInfo + "' not found, check that it is a valid ISO 4217 code.", "CurrencyCode");
+
+                return cultureInfo;
+            }
+            return Thread.CurrentThread.CurrentCulture;
+        }
+        
         /// <summary>
         /// Gets the format string for a named currency code.
         /// </summary>

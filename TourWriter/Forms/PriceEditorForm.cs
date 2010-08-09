@@ -15,25 +15,21 @@ namespace TourWriter.Dialogs
             get { return grpOption.Value != null ? grpOption.Value.ToString() : ""; }
             set { grpOption.Value = value; }
         }
-
         public decimal Net
         {
             get { return decimal.Parse(txtNet.Value.ToString()); }
             set { txtNet.Value = value; }
         }
-
         public decimal Markup
         {
             get { return decimal.Parse(txtMarkup.Value.ToString()); }
             set { txtMarkup.Value = value; }
         }
-
         public decimal Gross
         {
             get { return decimal.Parse(txtGross.Value.ToString()); }
             set { txtGross.Value = value; }
         }
-        
         public decimal Commission
         {
             get { return decimal.Parse(txtCommission.Value.ToString()); }
@@ -52,12 +48,6 @@ namespace TourWriter.Dialogs
             SetCurrencyInfo(currencyCode);
 
             Icon = Resources.TourWriter16;
-
-            // add the currency symbol to the check boxes' display text
-            string symbol = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
-            chkRoundOne.Text = symbol + chkRoundOne.Text;
-            chkRoundFive.Text = symbol + chkRoundFive.Text;
-            chkRoundTen.Text = symbol + chkRoundTen.Text;
         }
 
         private void SetCurrencyInfo(string currencyCode)
@@ -76,6 +66,12 @@ namespace TourWriter.Dialogs
             string mask = App.GetCurrencyMask(currencyCode);
             txtNet.MaskInput = mask;
             txtGross.MaskInput = mask;
+
+            // add the currency symbol to the check boxes' display text
+            string symbol = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
+            chkRoundOne.Text = symbol + chkRoundOne.Text;
+            chkRoundFive.Text = symbol + chkRoundFive.Text;
+            chkRoundTen.Text = symbol + chkRoundTen.Text;
         }
 
         private void CostingDialog_Load(object sender, EventArgs e)

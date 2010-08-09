@@ -181,8 +181,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         {
             if (template.Contains(BookingDetailStartTag))
             {
+                // new email template, with custom booking details
                 return InsertCustomBookingDetails(template, purchaseLine);
             }
+            // handle old email templates (which don't allow custom booking details)
             return ReplaceTag(template, tagBookingDetails, BuildBookingDetails(PurchaseLine));
         }
 
@@ -203,7 +205,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             {
                 var item = (ItinerarySet.PurchaseItemRow)row;
 
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 string heading = "Booking" + ((dataView.Count > 1) ? " " + index++ : "");
                 string comm = "", price = "", total = "";
 
@@ -212,15 +214,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     GetBookingPrices(item, ref price, ref comm, ref total);
 
                 // create booking details
+                var cultureInfo = App.GetCultureInfo(item.CurrencyCode);
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Name", GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName()));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Description", item.PurchaseItemName));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
-                    GetBookingStartName(item.PurchaseItemID), 
-                    GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, "d MMMM yyyy")));
+                    GetBookingStartName(item.PurchaseItemID),
+                    GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, cultureInfo)));
                 if (showEndDate)
                     sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
-                        GetBookingEndName(item.PurchaseItemID), 
-                        GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, "d MMMM yyyy", null)));
+                        GetBookingEndName(item.PurchaseItemID),
+                        GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, cultureInfo)));
                 if (showEndDate)
                     sb.AppendLine(NewTableRow(htmlRowTemplateBookings, GetNumberOfDaysName(item.ServiceTypeID), item.NumberOfDays));
                 if (!item.IsQuantityNull())
@@ -263,6 +266,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             items.Sort(new DateTimeSortComparer());
             foreach (var item in items.OfType<ItinerarySet.PurchaseItemRow>())
             {
+                var cultureInfo = App.GetCultureInfo(item.CurrencyCode);
                 detailText = detailTemplate.Replace(BookingDetailStartTag, "").Replace(BookingDetailEndTag, "");
                 var showEndDate = (!item.IsStartDateNull() && !item.IsNumberOfDaysNull() && item.NumberOfDays >= 1);
 
@@ -270,14 +274,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 detailText = ReplaceTag(detailText, ItemNameTag, GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName());
                 detailText = ReplaceTag(detailText, ItemDescTag, item.PurchaseItemName);
                 detailText = ReplaceTag(detailText, ItemStartTextTag, GetBookingStartName(item.PurchaseItemID));
-                detailText = ReplaceTag(detailText, ItemStartDateTag, GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, "d MMMM yyyy"));
+                detailText = ReplaceTag(detailText, ItemStartDateTag, GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, cultureInfo));
 
                 var endDateText = "";
                 if (showEndDate)
                 {
                     endDateText = endDateTemplate.Replace(ItemEndDateStartTag, "").Replace(ItemEndDateEndTag, "");
                     endDateText = ReplaceTag(endDateText, ItemEndTextTag, GetBookingEndName(item.PurchaseItemID));
-                    endDateText = ReplaceTag(endDateText, ItemEndDateTag, GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, "d MMMM yyyy", null));
+                    endDateText = ReplaceTag(endDateText, ItemEndDateTag, GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, cultureInfo));
                     endDateText = ReplaceTag(endDateText, ItemLengthTextTag, GetNumberOfDaysName(item.ServiceTypeID));
                     endDateText = ReplaceTag(endDateText, ItemLengthTag, item.NumberOfDays.ToString());
                 }
@@ -296,7 +300,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 var priceText = "";
                 if (showPrices)
                 {
-                    string comm = "", price = "", total = ""; GetBookingPrices(item, ref price, ref comm, ref total);
+                    string comm = "", price = "", total = ""; 
+                    GetBookingPrices(item, ref price, ref comm, ref total);
 
                     priceText = priceTemplate.Replace(ItemPriceStartTag, "").Replace(ItemPriceEndTag, "");
                     priceText = ReplaceTag(priceText, ItemPriceTag, price != "0" ? price : "");
@@ -393,12 +398,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             return sb.ToString();
         }
-
-        private static string NewTableRow(string template, string text)
-        {
-            return String.Format(template, text);
-        }
-
+        
         private static string NewTableRow(string template, string description, object value)
         {
             return String.Format(template, description, value);
@@ -414,33 +414,29 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return purchaseLine.Table.DataSet as ItinerarySet;
         }
 
-        private void GetBookingPrices(
-            ItinerarySet.PurchaseItemRow item, ref string price, ref string commission, ref string total)
+        private void GetBookingPrices(ItinerarySet.PurchaseItemRow item, ref string price, ref string commission, ref string total)
         {
-            ItinerarySet.OptionLookupRow lookup = GetBookingItinerarySet().OptionLookup.FindByOptionID(item.OptionID);
-            if (lookup == null)
-                return;
+            var lookup = GetBookingItinerarySet().OptionLookup.FindByOptionID(item.OptionID);
+            if (lookup == null) return;
 
-            decimal net = !item.IsNetNull() ? item.Net : 0;
+            var cultureInfo = App.GetCultureInfo(item.CurrencyCode);
+            var net = !item.IsNetNull() ? item.Net : 0;
 
             if (lookup.PricingOption == "gc") // Gross plus Commission
             {
                 // Earning commission on gross, so show commission rate.
-                decimal gross = !item.IsGrossNull() ? item.Gross : 0;
-                decimal comm = GetBookingItinerarySet().GetCommission(net, gross);
+                var gross = !item.IsGrossNull() ? item.Gross : 0;
+                var comm = GetBookingItinerarySet().GetCommission(net, gross);
 
-                commission = (comm / 100).ToString("p");
-                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) +
-                        gross.ToString(App.GetCurrencyFormat(item.CurrencyCode));
+                commission = string.Format(cultureInfo, "{0:p}", comm/100);
+                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", gross);
             }
             else // Net, so no commission.
             {
                 commission = "";
-                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) +
-                        net.ToString(App.GetCurrencyFormat(item.CurrencyCode));
+                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", net);
             }
-            total = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) +
-                    item.NetTotal.ToString(App.GetCurrencyFormat(item.CurrencyCode));
+            total = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", item.NetTotal);
         }
 
         #endregion

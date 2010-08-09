@@ -84,9 +84,13 @@ namespace TourWriter.Reports.Itinerary
 
         private string GetDepartDateWithCustomFormat(ItinerarySet.PurchaseItemRow item)
         {
-            return itinerarySet.GetPurchaseItemClientCheckoutDateTimeString(
-                item.PurchaseItemID, dateFormat, "h:mmtt");
-		}
+            DateTime date;
+            var datetimeSting = itinerarySet.GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, System.Threading.Thread.CurrentThread.CurrentCulture);
+            if (DateTime.TryParse(datetimeSting, out date))
+                return date.ToString(dateFormat) + (date.Hour > 0 && date.Minute > 0 ? " " + date.ToString("h:mmtt") : "");
+
+            return string.Empty;
+        }
 
 
 		private void GroupHeader1_Format(object sender, EventArgs eArgs)
