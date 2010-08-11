@@ -757,6 +757,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     c.Hidden = true;
                     c.TabStop = false;
+                    c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True;
                 }
             }
 
@@ -882,10 +883,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (e.Row.Band.Columns.Exists("NetTotalBase") && e.Row.Band.Columns.Exists("CurrencyCode"))
                 {
                     var c = e.Row.Cells["CurrencyCode"].Value;
-                    if (c != null && !string.IsNullOrEmpty(c.ToString()))
-                    {
-                        e.Row.Cells["NetTotalBase"].Value = item.NetTotal.ToString(App.GetCurrencyFormat(c.ToString()));
-                    }
+                    e.Row.Cells["NetTotalBase"].Value = string.Format(App.GetCultureInfo(c.ToString()), "{0:C}", item.NetTotal);
                 }
 
                 // Set default EndDate

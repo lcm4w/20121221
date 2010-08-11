@@ -561,6 +561,16 @@ namespace TourWriter
             return strbuf.ToString();
         }
 
+        internal static void SetCultureInfo()
+        {
+            // var cultureInfo = new CultureInfo(1066); // Vietnamese Dong (VND)
+            // http://stackoverflow.com/questions/1071273/currency-formatting/1071302#1071302
+            if (Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull()) return;
+            var cultureInfo = App.GetCultureInfo(Cache.ToolSet.AppSettings[0].CurrencyCode);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        }
+
         /// <summary>
         /// Use in place of 'buggy' System.ComponentModel.Component.DesignMode
         /// </summary>
@@ -937,48 +947,11 @@ namespace TourWriter
                 var cultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures).
                     Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
 
-                if (cultureInfo == null)
-                    throw new ArgumentException("Currency code '" + cultureInfo + "' not found, check that it is a valid ISO 4217 code.", "CurrencyCode");
+                if (cultureInfo == null) ShowError("Currency Code not valid: " + currencyCode + ". Check that it is a valid ISO 4217 code.");
 
                 return cultureInfo;
             }
             return Thread.CurrentThread.CurrentCulture;
-        }
-        
-        /// <summary>
-        /// Gets the format string for a named currency code.
-        /// </summary>
-        /// <param name="currencyCode"></param>
-        /// <returns></returns>
-        internal static string GetCurrencyFormat(string currencyCode)
-        {
-            string format = "";
-            if (currencyCode == "" || currencyCode == Cache.ToolSet.AppSettings[0].CurrencyCode)
-            {
-                format = "c"; // local currency
-            }
-            else
-            {
-                Info.ToolSet.CurrencyRow currency = Cache.ToolSet.Currency.FindByCurrencyCode(currencyCode);
-                if (currency != null)
-                {
-                    string s = "";
-                    foreach (char c in currency.Symbol)
-                        s += "\\" + c; // escape each char
-                    format = s + "########.00";
-                }
-            }
-            return format;
-        }
-
-        /// <summary>
-        /// Gets the input mask for a named currency code.
-        /// </summary>
-        /// <param name="currencyCode"></param>
-        /// <returns></returns>
-        internal static string GetCurrencyMask(string currencyCode)
-        {
-            return "-nnnnnnnn.nn";
         }
 
         #endregion

@@ -325,7 +325,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
             if (gridAgentPaymentTerms.Columns[e.ColumnIndex].Name == "PurchaseTermButton")
             {
-                PaymentTermsEditor termsEditor = new PaymentTermsEditor();
+                PaymentTermsEditor termsEditor = new PaymentTermsEditor(System.Threading.Thread.CurrentThread.CurrentCulture);
                 InitializePaymentTermsEditor(termsEditor, PurchaseTermColumnName, agentId);
                 OpenPaymentTermsEditor(termsEditor, PurchaseTermColumnName, agentId);
                 UpdateCustomPaymentTermCell(PurchaseTermColumnName, e.RowIndex);
@@ -333,7 +333,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
             else if (gridAgentPaymentTerms.Columns[e.ColumnIndex].Name == "SaleTermButton")
             {
-                PaymentTermsEditor termsEditor = new PaymentTermsEditor();
+                PaymentTermsEditor termsEditor = new PaymentTermsEditor(System.Threading.Thread.CurrentThread.CurrentCulture);
                 InitializePaymentTermsEditor(termsEditor, SaleTermColumnName, agentId);
                 OpenPaymentTermsEditor(termsEditor, SaleTermColumnName, agentId);
                 UpdateCustomPaymentTermCell(SaleTermColumnName, e.RowIndex);

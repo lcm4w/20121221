@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using TourWriter.Services;
-using UnhandledExceptionEventArgs=System.UnhandledExceptionEventArgs;
 
 namespace TourWriter
 {
@@ -23,9 +22,9 @@ namespace TourWriter
                 // set application styles
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-
+                
                 // start applicaiton
-                ApplicationStarter application = new ApplicationStarter();
+                var application = new ApplicationStarter();
                 application.Run(args);
                 
             }

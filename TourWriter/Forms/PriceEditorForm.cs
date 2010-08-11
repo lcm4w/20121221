@@ -59,19 +59,20 @@ namespace TourWriter.Dialogs
             }
             else lblCurrencyInfo.Visible = false;
 
-            string format = App.GetCurrencyFormat(currencyCode);
-            txtNet.FormatString = format;
-            txtGross.FormatString = format;
+            var cultureInfo = App.GetCultureInfo(currencyCode);
+            txtNet.FormatProvider = cultureInfo;
+            txtGross.FormatProvider = cultureInfo;
+            txtMarkup.FormatProvider = cultureInfo;
+            txtCommission.FormatProvider = cultureInfo;
 
-            string mask = App.GetCurrencyMask(currencyCode);
-            txtNet.MaskInput = mask;
-            txtGross.MaskInput = mask;
-
-            // add the currency symbol to the check boxes' display text
-            string symbol = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol;
-            chkRoundOne.Text = symbol + chkRoundOne.Text;
-            chkRoundFive.Text = symbol + chkRoundFive.Text;
-            chkRoundTen.Text = symbol + chkRoundTen.Text;
+            txtMarkup.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
+            txtMarkup.MaskInput = "{LOC}-nnnn.nn";
+            txtNet.FormatString = "c";
+            txtNet.MaskInput = "{LOC}-nnnnnnnnnn.nn";
+            txtGross.FormatString = "c";
+            txtGross.MaskInput = "{LOC}-nnnnnnnnnn.nn";
+            txtCommission.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
+            txtCommission.MaskInput = "{LOC}-nnnn.nn";
         }
 
         private void CostingDialog_Load(object sender, EventArgs e)
@@ -202,6 +203,7 @@ namespace TourWriter.Dialogs
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            CalculatePrice(grpOption.Value.ToString());
             DialogResult = DialogResult.OK;
         }
 

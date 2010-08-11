@@ -1451,7 +1451,7 @@ namespace TourWriter.Modules.SupplierModule
         #region PaymentTerms
         private void btnPaymentTerms_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            PaymentTermsEditor termsEditor = new PaymentTermsEditor();
+            PaymentTermsEditor termsEditor = new PaymentTermsEditor(App.GetCultureInfo(null));
             InitializePaymentTermsEditor(termsEditor);
             OpenPaymentTermsEditor(termsEditor);
             UpdatePaymentTermCustomText();

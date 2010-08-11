@@ -79,7 +79,7 @@ namespace TourWriter.Forms
             Login();
 
             if(Environment.GetCommandLineArgs().Where(s => s == App.UpdatedStartParam).Count() > 0) // check start args
-                App.ShowInfo("TourWriter was updated to version " + StatusBar_VersionText + "\r\n\r\nSee the TourWriter Start-page for details.");
+                App.ShowInfo("TourWriter was updated to version " + StatusBar_VersionText + "\r\n\r\nSee the TourWriter Start-page for details if any.");
         }
 
         private void Login()
@@ -94,6 +94,7 @@ namespace TourWriter.Forms
             {
                 case DialogResult.OK:
                     {
+                        App.SetCultureInfo();
                         LicenseService.CheckAsync();
                         ApplicationUpdateService.StartUpdateMonitor();
                         InitialiseMenu(ItineraryMenu);
@@ -117,7 +118,7 @@ namespace TourWriter.Forms
                     }
             }
         }
-
+        
         #region Menu handling
 
         internal void InitialiseMenu(UltraTree menu)

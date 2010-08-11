@@ -1,48 +1,31 @@
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TourWriter.Info
 {
 
     public class DepositTypeList
     {
-        public static List<DepositType> depositType;
-
-        public static List<DepositType> DepositTypes
+        public static List<DepositType> GetDepositTypes(CultureInfo cultureInfo)
         {
-            get
-            {
-                if (depositType == null)
-                {
-                    depositType = new List<DepositType>();
-                    depositType.Add(new DepositType('c', "$"));
-                    depositType.Add(new DepositType('p', "%"));
-                }
-                return depositType;
-            }
+            return new List<DepositType>
+                       {
+                           new DepositType('c', cultureInfo.NumberFormat.CurrencySymbol),
+                           new DepositType('p', cultureInfo.NumberFormat.PercentSymbol)
+                       };
         }
     }
 
     public class DepositType
     {
-        private char _id;
-        private string _text;
+        public char Id { get; set; }
 
-        public char ID
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-
-        public string Text
-        {
-            get { return _text; }
-            set { _text = value; }
-        }
+        public string Text { get; set; }
 
         public DepositType(char id, string text)
         {
-            _id = id;
-            _text = text;
+            Id = id;
+            Text = text;
         }
     }
 }

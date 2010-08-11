@@ -564,12 +564,11 @@ namespace TourWriter.Modules.SupplierModule
             else lblCurrencyInfo.Visible = false;
 
             // Set currency symbol.
-            string format = App.GetCurrencyFormat(currencyCode);
-            gridOptions.DisplayLayout.Bands[0].Columns["Net"].Format = format;
-            gridOptions.DisplayLayout.Bands[0].Columns["Gross"].Format = format;
-            string mask = App.GetCurrencyMask(currencyCode);
-            gridOptions.DisplayLayout.Bands[0].Columns["Net"].MaskInput = mask;
-            gridOptions.DisplayLayout.Bands[0].Columns["Gross"].MaskInput = mask;
+            var cultureInfo = App.GetCultureInfo(currencyCode);
+            gridOptions.DisplayLayout.Bands[0].Columns["Net"].FormatInfo = cultureInfo;
+            gridOptions.DisplayLayout.Bands[0].Columns["Gross"].FormatInfo = cultureInfo;
+            gridOptions.DisplayLayout.Bands[0].Columns["Markup"].FormatInfo = cultureInfo;
+            gridOptions.DisplayLayout.Bands[0].Columns["Commission"].FormatInfo = cultureInfo;
             gridOptions.Refresh();
         }
 
@@ -748,7 +747,9 @@ namespace TourWriter.Modules.SupplierModule
 
         private void linkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            PaymentTermsEditor termsEditor = new PaymentTermsEditor();
+            if (gridServices.ActiveRow == null) return;
+            var service = supplierSet.Service.FindByServiceID((int)gridServices.ActiveRow.Cells["ServiceID"].Value);
+            var termsEditor = new PaymentTermsEditor(App.GetCultureInfo(service.CurrencyCode));
             InitializePaymentTermsEditor(termsEditor);
             OpenPaymentTermsEditor(termsEditor);
             UpdatePaymentTermCustomText();

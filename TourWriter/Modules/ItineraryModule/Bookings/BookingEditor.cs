@@ -211,10 +211,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
             ListViewItem listItem;
-            bool hasCurrencyInfo =
-                (!itemRow.IsCurrencyCodeNull() && itemRow.CurrencyCode != "");
-            string moneyFormat =
-                (hasCurrencyInfo) ? App.GetCurrencyFormat(itemRow.CurrencyCode) : "c";
+            var cultureInfo = App.GetCultureInfo(itemRow.CurrencyCode);
+            var hasCurrencyInfo = (!itemRow.IsCurrencyCodeNull() && itemRow.CurrencyCode != "");
 
             if (hasCurrencyInfo)
             {
@@ -226,24 +224,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             listItem = new ListViewItem();
             listItem.Text = "Net:";
-            listItem.SubItems.Add(itemRow.Net.ToString(moneyFormat));
+            listItem.SubItems.Add(string.Format(cultureInfo, "{0:C}", itemRow.Net));
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem();
             listItem.Text = "Markup:";
-            listItem.SubItems.Add(string.Format(
-                "{0:f2}%", itinerarySet.GetMarkup(itemRow.Net, itemRow.Gross)));
+            listItem.SubItems.Add(string.Format(cultureInfo, "{0:p}", itinerarySet.GetMarkup(itemRow.Net, itemRow.Gross) / 100));
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem();
             listItem.Text = "Gross:";
-            listItem.SubItems.Add(itemRow.Gross.ToString(moneyFormat));
+            listItem.SubItems.Add(string.Format(cultureInfo, "{0:C}", itemRow.Gross));
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem();
             listItem.Text = "Commission:";
-            listItem.SubItems.Add(string.Format(
-                "{0:f2}%", itinerarySet.GetCommission(itemRow.Net, itemRow.Gross)));
+            listItem.SubItems.Add(string.Format(cultureInfo, "{0:p}", itinerarySet.GetCommission(itemRow.Net, itemRow.Gross) / 100));
             listPrice.Items.Add(listItem);
 
             if (!itemRow.IsPaymentTermIDNull())
@@ -847,13 +843,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             if (gridItems.ActiveRow != null)
             {
-                PaymentTermsEditor termsEditor = new PaymentTermsEditor();
+                int purchaseItemID = (int)gridItems.ActiveRow.Cells["PurchaseItemID"].Value;
+                ItinerarySet.PurchaseItemRow item = itinerarySet.PurchaseItem.FindByPurchaseItemID(purchaseItemID);
+                PaymentTermsEditor termsEditor = new PaymentTermsEditor(App.GetCultureInfo(item.CurrencyCode));
                 InitializePaymentTermsEditor(termsEditor);
                 OpenPaymentTermsEditor(termsEditor);
 
-                int purchaseItemID = (int)gridItems.ActiveRow.Cells["PurchaseItemID"].Value;
-                ItinerarySet.PurchaseItemRow item =
-                    itinerarySet.PurchaseItem.FindByPurchaseItemID(purchaseItemID);
                 SetItemPriceInfo(item);
             }
         }

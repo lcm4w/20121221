@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
@@ -70,15 +71,15 @@ namespace TourWriter.Forms
 
         #endregion
 
-        public PaymentTermsEditor()
+        public PaymentTermsEditor(CultureInfo cultureInfo)
         {
             InitializeComponent();
 
             // do some data binding
             paymentDueBindingSource.DataSource = Cache.ToolSet.PaymentDue;
             paymentDueBindingSource2.DataSource = Cache.ToolSet.PaymentDue;
-            
-            cmbDepositType.DataSource = DepositTypeList.DepositTypes;
+
+            cmbDepositType.DataSource = DepositTypeList.GetDepositTypes(cultureInfo);
             cmbDepositType.DisplayMember = "Text";
             cmbDepositType.ValueMember = "ID";
 

@@ -69,9 +69,7 @@ namespace TourWriter.Dialogs
             // txtMarkup
             // 
             this.txtMarkup.Enabled = false;
-            this.txtMarkup.FormatString = "###\\.## %";
             this.txtMarkup.Location = new System.Drawing.Point(82, 56);
-            this.txtMarkup.MaskInput = "{LOC}-nnn.nn";
             this.txtMarkup.Name = "txtMarkup";
             this.txtMarkup.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtMarkup.PromptChar = ' ';
@@ -83,9 +81,7 @@ namespace TourWriter.Dialogs
             // txtNet
             // 
             this.txtNet.Enabled = false;
-            this.txtNet.FormatString = "c";
             this.txtNet.Location = new System.Drawing.Point(82, 32);
-            this.txtNet.MaskInput = "{LOC}-nnnnnn.nn";
             this.txtNet.Name = "txtNet";
             this.txtNet.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtNet.PromptChar = ' ';
@@ -97,9 +93,7 @@ namespace TourWriter.Dialogs
             // txtGross
             // 
             this.txtGross.Enabled = false;
-            this.txtGross.FormatString = "c";
             this.txtGross.Location = new System.Drawing.Point(82, 80);
-            this.txtGross.MaskInput = "{LOC}-nnnnnn.nn";
             this.txtGross.Name = "txtGross";
             this.txtGross.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtGross.PromptChar = ' ';
@@ -111,9 +105,7 @@ namespace TourWriter.Dialogs
             // txtCommission
             // 
             this.txtCommission.Enabled = false;
-            this.txtCommission.FormatString = "###\\.## %";
             this.txtCommission.Location = new System.Drawing.Point(82, 104);
-            this.txtCommission.MaskInput = "{LOC}-nnn.nn";
             this.txtCommission.Name = "txtCommission";
             this.txtCommission.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
             this.txtCommission.PromptChar = ' ';
