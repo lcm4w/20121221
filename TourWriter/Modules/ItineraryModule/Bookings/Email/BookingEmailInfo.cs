@@ -28,6 +28,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly string tagDisplayName = "[!DisplayName]";
         private readonly string tagAgentName = "[!AgentName]";
         private readonly string tagItineraryID = "[!ItineraryID]";
+        private readonly string tagCustomCode = "[!CustomID]";
         private readonly string tagBookingID = "[!BookingID]";
         private readonly string tagBookingDetails = "[!BookingDetails]";
         private readonly string tagBookingNotes = "[!BookingNotes]";
@@ -167,6 +168,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, tagDisplayName, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
             template = ReplaceTag(template, tagAgentName, !purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
             template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
+            template = ReplaceTag(template, tagCustomCode, !purchaseLine.ItineraryRow.IsCustomCodeNull() ? purchaseLine.ItineraryRow.CustomCode : "");
             template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
             template = ReplaceBookingDetailsTag(template);
             template = ReplaceTag(template, tagBookingNotes, BuildBookingNotes(PurchaseLine));
