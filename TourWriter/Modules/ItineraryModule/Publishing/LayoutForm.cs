@@ -33,7 +33,8 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             Location = Settings.Default.PublishingLayoutLocation;
 
             layoutControl1.LoadLayout(itinerarySetCopy, publisherFileId);
-            Text += ": " + itinerarySetCopy.ItineraryPubFile.FindByItineraryPubFileID(publisherFileId).ItineraryPubFileName;
+            var pubFile = itinerarySetCopy.ItineraryPubFile.FindByItineraryPubFileID(publisherFileId);
+            Text += ": " + (pubFile != null && !pubFile.IsItineraryPubFileNameNull() ? pubFile.ItineraryPubFileName : "<unnamed>");
         
         }
 
