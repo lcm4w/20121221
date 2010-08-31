@@ -444,17 +444,6 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             DocumentWriter.CreateDoc(tree.Nodes[0].Nodes, templateFile);
             return;
         }
-
-        private void chkUseNewDocCreator_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkUseNewDocCreator.Checked &&
-                !App.AskYesNo(
-                "Warning: new document creator functionality is still in BETA testing.\r\n\r\nUse anyway?"))
-            {
-                chkUseNewDocCreator.Checked = false;
-            }
-        }
-
         #endregion
     }
 }

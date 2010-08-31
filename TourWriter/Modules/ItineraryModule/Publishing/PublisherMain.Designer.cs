@@ -258,7 +258,6 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             this.chkUseNewDocCreator.Text = "Test the new document creator process";
             this.toolTip1.SetToolTip(this.chkUseNewDocCreator, "This option uses the new publishing process that is currently being tested");
             this.chkUseNewDocCreator.UseVisualStyleBackColor = true;
-            this.chkUseNewDocCreator.CheckedChanged += new System.EventHandler(this.chkUseNewDocCreator_CheckedChanged);
             // 
             // label3
             // 
