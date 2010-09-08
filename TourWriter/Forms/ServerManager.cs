@@ -86,8 +86,10 @@ namespace TourWriter.Forms
             }
             else if (!string.IsNullOrEmpty(txtRemoteConnection.Text))
             {
+                var cleanString = txtRemoteConnection.Text.Trim().Replace("\r\n", " ");
+
                 ServerName = App.RemoteConnectionName;
-                Properties.Settings.Default.RemoteConnection = txtRemoteConnection.Text;
+                Properties.Settings.Default.RemoteConnection = cleanString;
                 Properties.Settings.Default.Save();
             }
             DialogResult = DialogResult.OK;
