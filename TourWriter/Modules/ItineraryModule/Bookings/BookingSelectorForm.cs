@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
 using Infragistics.Win;
@@ -32,6 +33,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             Size = Settings.Default.BookingSelectorSize;
             Location = Settings.Default.BookingSelectorLocation;
             panel1.Height = Settings.Default.BookingSelectorGridHeight;
+            chkCurrency.Checked = Settings.Default.BookingSelectorCurrencyUpdate;
 
             this.itinerarySet = itinerarySet;
             tempItinerarySet = (ItinerarySet)itinerarySet.Copy();
@@ -229,6 +231,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 option.IsDefault,
                 service.CurrencyCode);
 
+            if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
             btnOk.Enabled = true;
             return newItem;
         }
@@ -326,6 +329,44 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             return newRow;
         }
 
+        static void UpdateCurrencyOnAddNewRow(object sender, DataRowChangeEventArgs e)
+        {
+            if (e.Action != DataRowAction.Add) return;
+
+            var row = e.Row as ItinerarySet.PurchaseItemRow;
+            if (row == null || row.IsCurrencyCodeNull()) return;
+
+            var local = CurrencyUpdateService.GetLocalCurrencyCode();
+            if (row.CurrencyCode.Trim().ToLower() == local.Trim().ToLower()) return;
+
+            var thread = new BackgroundWorker();
+            thread.DoWork +=
+                delegate(object o, DoWorkEventArgs args)
+                {
+                    try
+                    {
+                        var start = DateTime.Now;
+                        while ((DateTime.Now - start).TotalMilliseconds < 10000) // timeout in 10 sec
+                            args.Result = CurrencyUpdateService.GetRate(row.CurrencyCode, local);
+                    }
+                    catch { }
+                };
+            thread.RunWorkerCompleted +=
+                delegate(object o, RunWorkerCompletedEventArgs args)
+                {
+                    try
+                    {
+                        if (args.Result == null) return;
+                        row.CurrencyRate = decimal.Parse(args.Result.ToString());
+                        row.RecalculateTotals();
+                        App.Debug(string.Format("Updated PurchaseItem currency rate: {0}, {1}", row.CurrencyCode, args.Result));
+                    }
+                    catch { }
+                };
+            thread.RunWorkerAsync();
+        }
+
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (tempItinerarySet.PurchaseItem.Count == 0)
@@ -357,7 +398,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // possible merge conflicts with ItineraryMarginOverride table due to no idendtity seed on PK
                 tempItinerarySet.ItineraryMarginOverride.Clear();
 
+                itinerarySet.PurchaseItem.RowChanged += UpdateCurrencyOnAddNewRow; // when adding new purchase items, update the currency rate
                 itinerarySet.Merge(tempItinerarySet);
+                itinerarySet.PurchaseItem.RowChanged -= UpdateCurrencyOnAddNewRow;
             }
             catch (ConstraintException ex)
             {
@@ -376,7 +419,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             DialogResult = DialogResult.OK;
         }
-
+        
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -526,11 +569,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void BookingSelectorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Settings.Default.BookingSelectorSize =
-                WindowState == FormWindowState.Normal ? Size : RestoreBounds.Size;
-            Settings.Default.BookingSelectorLocation =
-                WindowState == FormWindowState.Normal ? Location : RestoreBounds.Location;
+            Settings.Default.BookingSelectorSize = WindowState == FormWindowState.Normal ? Size : RestoreBounds.Size;
+            Settings.Default.BookingSelectorLocation = WindowState == FormWindowState.Normal ? Location : RestoreBounds.Location;
             Settings.Default.BookingSelectorGridHeight = panel1.Height;
+            Settings.Default.BookingSelectorCurrencyUpdate = chkCurrency.Checked;
 
             Settings.Default.Save();
             App.ClearBindings(this);

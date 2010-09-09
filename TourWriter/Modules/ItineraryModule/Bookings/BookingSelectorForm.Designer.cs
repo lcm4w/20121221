@@ -70,6 +70,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.popupControler = new Infragistics.Win.Misc.UltraPopupControlContainer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkCurrency = new System.Windows.Forms.CheckBox();
             this.tabSearch.SuspendLayout();
             this.ultraTabPageControl1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -171,6 +172,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkCurrency);
             this.panel1.Controls.Add(this.chkIncrementDates);
             this.panel1.Controls.Add(this.lblBooking);
             this.panel1.Controls.Add(this.cmbBookings);
@@ -209,7 +211,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.cmbBookings.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
             this.cmbBookings.Location = new System.Drawing.Point(201, 24);
             this.cmbBookings.Name = "cmbBookings";
-            this.cmbBookings.Size = new System.Drawing.Size(247, 21);
+            this.cmbBookings.Size = new System.Drawing.Size(209, 21);
             this.cmbBookings.TabIndex = 146;
             this.toolTip1.SetToolTip(this.cmbBookings, "Choose where to add this item (eg add to existing booking)");
             this.cmbBookings.ValueChanged += new System.EventHandler(this.cmbBookings_ValueChanged);
@@ -409,6 +411,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
             // 
+            // chkCurrency
+            // 
+            this.chkCurrency.AutoSize = true;
+            this.chkCurrency.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkCurrency.Location = new System.Drawing.Point(433, 27);
+            this.chkCurrency.Name = "chkCurrency";
+            this.chkCurrency.Size = new System.Drawing.Size(105, 17);
+            this.chkCurrency.TabIndex = 149;
+            this.chkCurrency.Text = "Update currency";
+            this.toolTip1.SetToolTip(this.chkCurrency, "Update the currency exchange rate on load");
+            this.chkCurrency.UseVisualStyleBackColor = true;
+			this.chkCurrency.Visible = false;
+            // 
             // BookingSelectorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -474,5 +489,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbBookings;
         private System.Windows.Forms.Label lblBooking;
         private System.Windows.Forms.CheckBox chkIncrementDates;
+        private System.Windows.Forms.CheckBox chkCurrency;
     }
 }
