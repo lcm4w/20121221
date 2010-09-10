@@ -37,6 +37,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     SetDataBindings();
 
+                    GridHelper.SetNumberOfDaysPicker(gridItems);
+
                     CurrencyManager cm;
                     cm = BindingContext[BindingSource, "PurchaseLineID"] as CurrencyManager;
                     if (cm != null)

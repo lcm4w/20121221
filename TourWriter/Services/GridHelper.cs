@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
+using Infragistics.Win.UltraWinEditors;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.Global;
 
@@ -733,6 +734,58 @@ namespace TourWriter.Services
         private static DataTable ConvertToDataTable(IList<UltraGridRow> gridRows)
         {
             return ConvertToDataTable(gridRows, false);
+        }
+
+        /// <summary>
+        /// Sets a custom date picker dropdown for the NumberOfDays column
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="startDateColName"></param>
+        /// <param name="numberDayColName"></param>
+        internal static void SetNumberOfDaysPicker(UltraGrid grid)
+        {
+            const string startDateColName = "StartDate";
+            const string numberDayColName = "NumberOfDays";
+
+            var col = grid.DisplayLayout.Bands[0].Columns[numberDayColName];
+            col.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnCellActivate;
+            var editor = new UltraTextEditor();
+            var btn = new DropDownEditorButton();
+            editor.ButtonsRight.Add(btn);
+            var picker = new DateTimePicker();
+            btn.Control = picker;
+            col.EditorControl = editor;
+
+            editor.BeforeEditorButtonDropDown +=
+                delegate(object sender, BeforeEditorButtonDropDownEventArgs e)
+                {
+
+                    var cell = e.Context as UltraGridCell;
+                    if (cell == null || e.Button == null || cell.Row.Cells[startDateColName].Value == DBNull.Value) return;
+                    var p = (((DropDownEditorButton)e.Button).Control as DateTimePicker);
+                    if (p == null) return;
+
+                    var date = ((DateTime)cell.Row.Cells[startDateColName].Value);
+                    p.MinDate = date;
+                    if(cell.Value != DBNull.Value) p.Value = date.AddDays((double)cell.Value);
+
+                };
+            editor.AfterEditorButtonCloseUp +=
+                delegate(object sender, EditorButtonEventArgs e)
+                {
+                    var cell = e.Context as UltraGridCell;
+                    if (cell == null || e.Button == null || cell.Row.Cells[startDateColName].Value == DBNull.Value) return;
+                    var p = (((DropDownEditorButton)e.Button).Control as DateTimePicker);
+                    if (p == null) return;
+                    var date = ((DateTime)cell.Row.Cells[startDateColName].Value);
+                    cell.Row.Cells[numberDayColName].Value = (p.Value - date).Days;
+                };
+            picker.CloseUp +=
+                delegate
+                {
+                    var edit = grid.ActiveCell.EditorControlResolved as UltraTextEditor;
+                    if (edit != null) edit.CloseEditorButtonDropDowns(); // close parent
+                };
         }
     }
 }

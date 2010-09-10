@@ -38,6 +38,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.itinerarySet = itinerarySet;
             tempItinerarySet = (ItinerarySet)itinerarySet.Copy();
             gridBookings.DataSource = tempItinerarySet.PurchaseItem;
+            GridHelper.SetNumberOfDaysPicker(gridBookings);
 
             SetPage(PageType.Search);
         }

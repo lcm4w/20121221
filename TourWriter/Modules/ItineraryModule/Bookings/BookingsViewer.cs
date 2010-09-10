@@ -40,6 +40,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 itinerarySet = value;
                 SetDataBindings();
                 LoadGridLayout();
+                GridHelper.SetNumberOfDaysPicker(grid);
 
                 itinerarySet.Itinerary.ColumnChanged += Itinerary_ColumnChanged;
                 itinerarySet.PurchaseLine.ColumnChanged += PurchaseLine_ColumnChanged;
