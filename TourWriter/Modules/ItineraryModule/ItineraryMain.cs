@@ -232,6 +232,15 @@ namespace TourWriter.Modules.ItineraryModule
                 ProgressBar.Value = ProgressBar.Maximum;
                 Application.DoEvents();
             }
+            catch (ConstraintException ex)
+            {
+                var stream1 = new MemoryStream();
+                itinerarySet.WriteXml(stream1, XmlWriteMode.DiffGram);
+                stream1.Position = 0;
+                var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
+                ErrorHelper.SendEmail(ex, true, attach1);
+                throw;
+            }
             catch (Exception ex)
             {
                 if (ErrorHelper.IsServerConnectionError(ex))
@@ -418,6 +427,15 @@ namespace TourWriter.Modules.ItineraryModule
                         SetDataCleanName();
 
                         accounting1.RefreshRequired = true;
+                    }
+                    catch (ConstraintException ex)
+                    {
+                        var stream1 = new MemoryStream();
+                        itinerarySet.WriteXml(stream1, XmlWriteMode.DiffGram);
+                        stream1.Position = 0;
+                        var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
+                        ErrorHelper.SendEmail(ex, true, attach1);
+                        throw;
                     }
                     finally
                     {
