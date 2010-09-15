@@ -213,7 +213,7 @@
 + iif(not isnothing(Fields!CityName.Value) OR not isnothing(Fields!RegionName.Value), VBCRLF, "")
 + Fields!StateName.Value
 + iif(not isnothing(Fields!StateName.Value), VBCRLF, "")
-+ "Tel: " + Fields!FreePhone.Value + iif(not isnothing(Fields!FreePhone.Value), " or ", "") + Fields!Phone.Value</Value>
++ "Tel: " + Fields!FreePhone.Value + iif(not isnothing(Fields!FreePhone.Value) and Fields!FreePhone.Value &lt;&gt; "", " or ", "") + Fields!Phone.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -374,7 +374,7 @@
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Left</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -404,7 +404,7 @@
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Left</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -793,7 +793,7 @@
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Left</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -827,7 +827,7 @@
                                               </TextRun>
                                             </TextRuns>
                                             <Style>
-                                              <TextAlign>Right</TextAlign>
+                                              <TextAlign>Left</TextAlign>
                                             </Style>
                                           </Paragraph>
                                         </Paragraphs>
@@ -1288,7 +1288,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <Left>2cm</Left>
+                          <Left>2.2cm</Left>
                           <Height>0.4cm</Height>
                           <Width>2.19417cm</Width>
                           <Style />
@@ -1371,7 +1371,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=FormatDateTime(Today(), DateFormat.ShortDate)</Value>
+                                  <Value>=Today().ToString("d MMM yyyy")</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -1405,7 +1405,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <Left>6.1825cm</Left>
+                          <Left>6.4cm</Left>
                           <Height>0.4cm</Height>
                           <Width>1.97104cm</Width>
                           <ZIndex>5</ZIndex>
@@ -1486,7 +1486,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1cm</Height>
+              <Height>0.3937in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1563,7 +1563,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>PurchaseItemDetail</DataSetName>
-        <Height>9.25cm</Height>
+        <Height>9.24999cm</Height>
         <Width>17.2975cm</Width>
         <Style />
       </Tablix>
