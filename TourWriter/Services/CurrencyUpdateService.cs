@@ -94,13 +94,19 @@ namespace TourWriter.Services
             catch (Exception ex)
             {
                 // load error to the message field
-                currency.ErrorMessage = ex.ToString();
+                currency.ErrorMessage = ex.Message;
+                ErrorHelper.SendEmail(ex, true);
             }
             return currency;
         }
 
         private static double GetRateHttp(string fromCurrency, string toCurrency)
         {
+            if (App.IsDebugMode ||
+                Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "13b8e136-405f-402f-a4bb-3913879be702".ToLower() || // dev
+                Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower()) // te
+                return GetRateHttpTest(fromCurrency, toCurrency);
+
             string request = string.Format(updateUri, fromCurrency, toCurrency);
             string response = new WebClient().DownloadString(request);
 
@@ -147,6 +153,19 @@ namespace TourWriter.Services
                 object[] results = Invoke("ConversionRate", new object[] { FromCurrency, ToCurrency });
                 return ((double)(results[0]));
             }
+        }
+
+        private static double GetRateHttpTest(string fromCurrency, string toCurrency)
+        {
+            const string url = "http://finance.yahoo.com/d/quotes.csv?s={0}{1}=X&f=l1&e=.csv";
+
+            double result;
+            var client = new WebClient();
+            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; .NET CLR 2.0.50727;)");
+            var response = client.DownloadString(string.Format(url, fromCurrency, toCurrency));
+
+            App.Debug(string.Format("Called currency service: {0} -> {1} = {2}",fromCurrency,toCurrency,response));
+            return double.TryParse(response, out result) ? result : 0;
         }
     }
 }

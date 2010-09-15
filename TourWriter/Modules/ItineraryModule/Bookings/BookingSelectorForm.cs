@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
@@ -330,41 +331,41 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             return newRow;
         }
 
-        static void UpdateCurrencyOnAddNewRow(object sender, DataRowChangeEventArgs e)
+        private readonly List<ItinerarySet.PurchaseItemRow> _newRows = new List<ItinerarySet.PurchaseItemRow>();
+        void AddNewMergeRow(object sender, DataRowChangeEventArgs e)
         {
             if (e.Action != DataRowAction.Add) return;
-
             var row = e.Row as ItinerarySet.PurchaseItemRow;
             if (row == null || row.IsCurrencyCodeNull()) return;
+            _newRows.Add(row);
+        }
 
+        private void LoadCurrencyRatesForNewRows()
+        {
             var local = CurrencyUpdateService.GetLocalCurrencyCode();
-            if (row.CurrencyCode.Trim().ToLower() == local.Trim().ToLower()) return;
-
-            var thread = new BackgroundWorker();
-            thread.DoWork +=
-                delegate(object o, DoWorkEventArgs args)
+            var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != local.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
+            foreach (var c in codes)
+            {
+                var code = c;
+                var thread = new BackgroundWorker();
+                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyUpdateService.GetRate(code, local); } catch { } };
+                thread.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
                 {
                     try
                     {
-                        var start = DateTime.Now;
-                        while ((DateTime.Now - start).TotalMilliseconds < 10000) // timeout in 10 sec
-                            args.Result = CurrencyUpdateService.GetRate(row.CurrencyCode, local);
+                        decimal rate;
+                        if (!decimal.TryParse(args.Result.ToString(), out rate)) return;
+                        foreach (var item in _newRows.Where(x => x.CurrencyCode == code))
+                        {
+                            item.CurrencyRate = rate;
+                            item.RecalculateTotals();
+                            App.Debug(string.Format("Updated PurchaseItem currency rate {0}, {1}", code, args.Result));
+                        }
                     }
                     catch { }
                 };
-            thread.RunWorkerCompleted +=
-                delegate(object o, RunWorkerCompletedEventArgs args)
-                {
-                    try
-                    {
-                        if (args.Result == null) return;
-                        row.CurrencyRate = decimal.Parse(args.Result.ToString());
-                        row.RecalculateTotals();
-                        App.Debug(string.Format("Updated PurchaseItem currency rate: {0}, {1}", row.CurrencyCode, args.Result));
-                    }
-                    catch { }
-                };
-            thread.RunWorkerAsync();
+                thread.RunWorkerAsync();
+            }
         }
 
 
@@ -399,9 +400,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // possible merge conflicts with ItineraryMarginOverride table due to no idendtity seed on PK
                 tempItinerarySet.ItineraryMarginOverride.Clear();
 
-                itinerarySet.PurchaseItem.RowChanged += UpdateCurrencyOnAddNewRow; // when adding new purchase items, update the currency rate
+                itinerarySet.PurchaseItem.RowChanged += AddNewMergeRow; // will use to get currency rates
                 itinerarySet.Merge(tempItinerarySet);
-                itinerarySet.PurchaseItem.RowChanged -= UpdateCurrencyOnAddNewRow;
+                itinerarySet.PurchaseItem.RowChanged -= AddNewMergeRow;
+
+                if (chkCurrency.Checked) LoadCurrencyRatesForNewRows();
             }
             catch (ConstraintException ex)
             {

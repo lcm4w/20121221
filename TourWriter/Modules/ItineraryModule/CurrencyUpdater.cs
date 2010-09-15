@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Infragistics.Win;
@@ -7,6 +6,7 @@ using Infragistics.Win.UltraWinGrid;
 using TourWriter.Info;
 using TourWriter.Services;
 using Resources=TourWriter.Properties.Resources;
+using System.Linq;
 
 namespace TourWriter.Modules.ItineraryModule
 {
@@ -33,52 +33,41 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void UpdateCurrencies()
         {
-            var currencyList = new List<CurrencyUpdateService.Currency>();
-            foreach (UltraGridRow row in gridBookings.Rows)
-            {
-                if (!(bool)row.Cells["IsSelected"].Value)
-                    continue;
-
-                var currency = new CurrencyUpdateService.Currency();
-                currency.Key = row;
-                currency.FromCurrency = row.Cells["CurrencyCode"].Value.ToString();
-                currency.ToCurrency = _localCurrencyCode;
-                currencyList.Add(currency);
-            }
-
             try
             {
                 Cursor = Cursors.WaitCursor;
-                CurrencyUpdateService.GetRates(currencyList);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
 
-            foreach (var currency in currencyList)
-            {
-                UltraGridRow row = ((UltraGridRow)currency.Key);
-
-                decimal value = Convert.ToDecimal(txtRateAdjustment.Value);
-                decimal adjustment = 1 + ((value != 0) ? value / 100 : 0);
-                row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * adjustment, 4);
-
-                if (String.IsNullOrEmpty(currency.ErrorMessage))
+                var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().Where(x => (bool)x.Cells["IsSelected"].Value);
+                var currencies = selectedRows.Select(x => x.Cells["CurrencyCode"].Value.ToString()).Distinct().
+                    Select(x => new CurrencyUpdateService.Currency { FromCurrency = x, ToCurrency = _localCurrencyCode }).ToList();
+                foreach (var r in selectedRows) // reset rows
                 {
-                    // no errors
-                    row.Cells["Result"].Value = null;
-                    row.Cells["Result"].Appearance.Image = Resources.Tick;
-                }
-                else
-                {
-                    // there was an error
-                    row.Cells["Result"].Value = null;
-                    row.Cells["Result"].Appearance.Image = Resources.Cross;
+                    r.Cells["NewRate"].Value = null;
+                    r.Cells["Result"].Value = null;
+                    r.Cells["Result"].Appearance.Image = null;
                 }
 
-                row.Update();
+                CurrencyUpdateService.GetRates(currencies);
+                
+                var adjust = Convert.ToDecimal(txtRateAdjustment.Value);
+                adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
+
+                foreach (var c in currencies)
+                {
+                    var code = c;
+                    foreach (var row in selectedRows.Where(x => x.Cells["CurrencyCode"].Value.ToString() == code.FromCurrency)) // update rows
+                    {
+                        row.Cells["Result"].Appearance.Image = Resources.Tick;
+                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(code.Rate) * adjust, 4);
+                        if (!string.IsNullOrEmpty(c.ErrorMessage))
+                        {
+                            row.Cells["Result"].Value = c.ErrorMessage;
+                            row.Cells["Result"].Appearance.Image = Resources.Warning;
+                        }
+                    }
+                }
             }
+            finally { Cursor = Cursors.Default; }
         }
 
         private void SelectAll()
