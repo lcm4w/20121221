@@ -891,20 +891,20 @@ namespace TourWriter.Forms
         {
             if (e.Cancel != true) // no Mdi forms have cancelled...
             {
-                if (ShowAppClosingPrompt)
-                {
-                    // ask if close application
-                    DialogResult result = MessageBox.Show(
-                        App.GetResourceString("AskCloseApp"),
-                        App.GetResourceString("MessageCaption"),
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                //if (ShowAppClosingPrompt)
+                //{
+                //    // ask if close application
+                //    DialogResult result = MessageBox.Show(
+                //        App.GetResourceString("AskCloseApp"),
+                //        App.GetResourceString("MessageCaption"),
+                //        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    if (result == DialogResult.No)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
+                //    if (result == DialogResult.No)
+                //    {
+                //        e.Cancel = true;
+                //        return;
+                //    }
+                //}
 
                 if (Global.Cache.IsUserLoggedIn)
                 {
