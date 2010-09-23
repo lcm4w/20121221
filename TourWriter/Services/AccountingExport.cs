@@ -35,7 +35,7 @@ namespace TourWriter.Services
             }
 
             // do the export
-            ExportToCsv(purchasesTable, templateFileName, exportFileName, "PurchaseLineID");
+            ExportToCsv(purchasesTable, templateFileName, exportFileName);
         }
 
         public static void ExportSuppliersToCsv(AccountingGrid gridPurchases, DataTable supplierTable, string exportFileName)
@@ -130,56 +130,34 @@ namespace TourWriter.Services
             }
         }
 
-        /// <summary>
-        /// Exports a data table to csv using the AccountingService class, with a grouping column.
-        /// </summary>
-        private static void ExportToCsv(DataTable dataTable, string templateFileName, string exportFileName, string groupColumn)
+
+        private static Accounting.IExport GetAccountingInterface()
+        {
+            var type = Cache.ToolSet.AppSettings[0].AccountingSystem.ToLower();
+            if (type == "myob") return new Accounting.CsvExportMyob();
+            if (type == "xero") return new Accounting.CsvExportXero();
+            return new Accounting.CsvExportMyob();
+        }
+
+        private static void ExportToCsv(DataTable dataTable, string templateFileName, string exportFileName)
         {
             if (dataTable.Rows.Count == 0)
                 return;
 
-            // new stuff...
-            //================================================================
-            var outfile = exportFileName.Insert(exportFileName.LastIndexOf("."), "-NEW");
             var filtered = dataTable.Rows.Cast<DataRow>().
                 Where(row => row.RowState != DataRowState.Deleted).
                 Where(row => row.Table.Columns.Cast<DataColumn>().Any(col => row[col] != DBNull.Value));
 
             if (filtered.Count() > 0)
             {
-                Accounting.IExport ex = new Accounting.CsvExportMyob(filtered.CopyToDataTable(), templateFileName);
-                ex.ExportTo(outfile);
+                var ex = GetAccountingInterface();
+                ex.DataSource = filtered.CopyToDataTable();
+                ex.TemplateFile = templateFileName;
+                ex.ExportTo(exportFileName);
             }
-            else App.ShowInfo("No rows to export: " + outfile);
-            //================================================================
-
-            AccountingService accounting;
-            if (groupColumn != null)
-                accounting = new AccountingService(dataTable, templateFileName, groupColumn);
-            else
-                accounting = new AccountingService(dataTable, templateFileName);
-
-            accounting.ExportToCsv(exportFileName);
-
-            // notify the user of any invalid tags
-            if (accounting.InvalidTags.Count > 0)
-            {
-                string msg = String.Format("Template {0} contains invalid tags:\r\n", templateFileName);
-                foreach (string tag in accounting.InvalidTags)
-                {
-                    msg += "[!" + tag + "]\r\n";
-                }
-                App.ShowWarning(msg);
-            }
+            else App.ShowInfo("No rows to export: " + exportFileName);
         }
 
-        /// <summary>
-        /// Exports a data table to csv using the AccountingService class.
-        /// </summary>
-        private static void ExportToCsv(DataTable dataTable, string templateFileName, string exportFileName)
-        {
-            ExportToCsv(dataTable, templateFileName, exportFileName, null);
-        }
 
         private static bool ValidatePurchases(AccountingGrid gridPurchases)
         {

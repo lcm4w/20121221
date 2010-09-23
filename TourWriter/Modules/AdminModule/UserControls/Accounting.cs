@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -48,6 +49,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
             // sort agent list
             agentBindingSource.Sort = "IsDefaultAgent DESC, AgentName ASC ";
+
+            // accounting interface type
+            var list = new Dictionary<string, string> { { "", "" }, { "Myob", "Myob" }, { "Xero", "Xero" } };
+            cmbInterfaceType.DataSource = new BindingSource(list, null);
+            cmbInterfaceType.ValueMember = "Value";
+            cmbInterfaceType.DisplayMember = "Key";
+            cmbInterfaceType.DataBindings.Add("SelectedValue", Cache.ToolSet.AppSettings, "AccountingSystem");
         }
 
         private int GetMarkupContainerComboBoxIndexByPaymentTypeID(int serviceTypeId)

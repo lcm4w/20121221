@@ -6,8 +6,6 @@ namespace TourWriter.Services.Accounting
     {
         private const string GroupByColumnName = "PurchaseLineID";
 
-        public CsvExportMyob(DataTable dataSource, string templatename) : base(dataSource, templatename) { }
-
         public override void ExportTo(string filename)
         {
             var defineGroups = DataSource.Columns.Contains(GroupByColumnName);

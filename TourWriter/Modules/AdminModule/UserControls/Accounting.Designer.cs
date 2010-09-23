@@ -115,6 +115,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label22 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.cmbInterfaceType = new TourWriter.UserControls.NullableComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label23 = new System.Windows.Forms.Label();
             this.gridTemplates = new System.Windows.Forms.DataGridView();
@@ -195,8 +198,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridAgentPaymentTerms.TabIndex = 29;
             this.gridAgentPaymentTerms.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.gridAgentPaymentTerms_CellBeginEdit);
             this.gridAgentPaymentTerms.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAgentPaymentTerms_CellClick);
-            this.gridAgentPaymentTerms.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridAgentPaymentTerms_DataError);
             this.gridAgentPaymentTerms.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.grid_DataBindingComplete);
+            this.gridAgentPaymentTerms.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridAgentPaymentTerms_DataError);
             this.gridAgentPaymentTerms.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridAgentPaymentTerms_KeyUp);
             // 
             // agentNameDataGridViewTextBoxColumn
@@ -290,8 +293,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridTaxTypes.Name = "gridTaxTypes";
             this.gridTaxTypes.Size = new System.Drawing.Size(639, 176);
             this.gridTaxTypes.TabIndex = 55;
-            this.gridTaxTypes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridTaxTypes_DataError);
             this.gridTaxTypes.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.grid_DataBindingComplete);
+            this.gridTaxTypes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridTaxTypes_DataError);
             // 
             // TaxTypeName
             // 
@@ -362,8 +365,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridServiceTaxTypes.Size = new System.Drawing.Size(652, 125);
             this.gridServiceTaxTypes.TabIndex = 57;
             this.gridServiceTaxTypes.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.gridServiceTypes_CellBeginEdit);
-            this.gridServiceTaxTypes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridServiceTaxTypes_DataError);
             this.gridServiceTaxTypes.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.grid_DataBindingComplete);
+            this.gridServiceTaxTypes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridServiceTaxTypes_DataError);
             this.gridServiceTaxTypes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridServiceTaxTypes_KeyUp);
             // 
             // serviceTypeNameDataGridViewTextBoxColumn
@@ -730,8 +733,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridServiceCategoryCodes.Size = new System.Drawing.Size(652, 125);
             this.gridServiceCategoryCodes.TabIndex = 143;
             this.gridServiceCategoryCodes.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.gridServiceCategoryCodes_CellBeginEdit);
-            this.gridServiceCategoryCodes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridServiceCategoryCodes_DataError);
             this.gridServiceCategoryCodes.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.grid_DataBindingComplete);
+            this.gridServiceCategoryCodes.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridServiceCategoryCodes_DataError);
             this.gridServiceCategoryCodes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridServiceCategoryCodes_KeyUp);
             // 
             // dataGridViewTextBoxColumn1
@@ -985,11 +988,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabControl1.Location = new System.Drawing.Point(3, 6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(680, 746);
+            this.tabControl1.Size = new System.Drawing.Size(680, 788);
             this.tabControl1.TabIndex = 156;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label24);
+            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.cmbInterfaceType);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label22);
             this.tabPage1.Controls.Add(this.gridAgentPaymentTerms);
@@ -1007,10 +1013,37 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(672, 720);
+            this.tabPage1.Size = new System.Drawing.Size(672, 762);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.Location = new System.Drawing.Point(281, 722);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(388, 27);
+            this.label24.TabIndex = 158;
+            this.label24.Text = "Sets the Accounting interface to handle differences between specific Accounting s" +
+                "ystems.";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(10, 722);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(121, 13);
+            this.label25.TabIndex = 157;
+            this.label25.Text = "Accouting software type";
+            // 
+            // cmbInterfaceType
+            // 
+            this.cmbInterfaceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInterfaceType.FormattingEnabled = true;
+            this.cmbInterfaceType.Location = new System.Drawing.Point(154, 719);
+            this.cmbInterfaceType.Name = "cmbInterfaceType";
+            this.cmbInterfaceType.Size = new System.Drawing.Size(121, 21);
+            this.cmbInterfaceType.TabIndex = 156;
             // 
             // tabPage2
             // 
@@ -1025,7 +1058,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(672, 720);
+            this.tabPage2.Size = new System.Drawing.Size(672, 762);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Setup";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1112,7 +1145,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.Controls.Add(this.panelOfHiddenThings);
             this.Controls.Add(this.tabControl1);
             this.Name = "Accounting";
-            this.Size = new System.Drawing.Size(690, 755);
+            this.Size = new System.Drawing.Size(690, 803);
             ((System.ComponentModel.ISupportInitialize)(this.agentDefaultBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.paymentDueListBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAgentPaymentTerms)).EndInit();
@@ -1239,6 +1272,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private System.Windows.Forms.DataGridViewTextBoxColumn filePathColumn;
         private System.Windows.Forms.DataGridViewLinkColumn browseColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn templateIDDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private TourWriter.UserControls.NullableComboBox cmbInterfaceType;
 
     }
 }

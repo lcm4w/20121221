@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -8,17 +7,28 @@ namespace TourWriter.Services.Accounting
 {
     public abstract class CsvExportBase : IExport
     {
-        protected string TemplateText { get; set; }
-        protected DataTable DataSource { get; set; }
-        protected StringBuilder CsvContent { get; set; }
-        protected List<string> MoneyColumns = new List<string> {"", "", ""};
+        private string _templateFile;
+        private StringBuilder _csvContent;
 
-        protected CsvExportBase(DataTable dataSource, string templateFile)
+        public string TemplateFile
         {
-            DataSource = dataSource;
-            CsvContent = new StringBuilder();
-            TemplateText = ReadTemplateFile(templateFile);
+            get { return _templateFile; }
+            set
+            {
+                _templateFile = value;
+                TemplateText = ReadTemplateFile(value);
+            }
         }
+
+        protected StringBuilder CsvContent
+        {
+            get { return _csvContent ?? (_csvContent = new StringBuilder()); }
+        }
+
+        public string TemplateText { get; set; }
+
+        public DataTable DataSource { get; set; }
+
 
         public abstract void ExportTo(string filename);
         

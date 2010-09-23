@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+﻿using System.Data;
 
 namespace TourWriter.Services.Accounting
 {
     public class CsvExportXero : CsvExportBase
     {
         private const string SortByColumnName = "PurchaseLineID";
-
-        public CsvExportXero(DataTable dataSource, string templatename) : base(dataSource, templatename) { }
-
+        
         public override void ExportTo(string filename)
         {
-            // NOTE: this stuff needs to come from the database, eg: TotalNetExcl, TotalGrossExcl
-            //ProcessMoneyColumns();
-
             var hasSortCol = DataSource.Columns.Contains(SortByColumnName);
             if (hasSortCol) SortDataSource(SortByColumnName + " ASC");
 
