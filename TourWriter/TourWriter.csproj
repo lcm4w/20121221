@@ -1396,7 +1396,7 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.09.21.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.09.28.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.06.08.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.20.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.04.sql" />

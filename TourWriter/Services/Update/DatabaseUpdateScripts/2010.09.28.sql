@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2010.06.08')
+if ((select VersionNumber from AppSettings) <> '2010.06.08') AND ((select VersionNumber from AppSettings) <> '2010.09.21')
 	RAISERROR (N'Update script version is invalid for this db version',17,1)	
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
@@ -42,6 +42,12 @@ GO
 if not Exists(select * from sys.columns where Name = N'AccountingSystem' and Object_ID = Object_ID(N'AppSettings'))
 	ALTER TABLE [dbo].[AppSettings]
 		ADD [AccountingSystem] VARCHAR (50) NULL;
+
+GO
+
+if not Exists(select * from sys.columns where Name = N'CustomCodeFormat' and Object_ID = Object_ID(N'AppSettings'))
+	ALTER TABLE [dbo].[AppSettings]
+		ADD [CustomCodeFormat] VARCHAR (50) NULL;
 
 GO
 PRINT N'Altering [dbo].[AppSettings_Ins]...';
@@ -66,6 +72,7 @@ ALTER PROCEDURE [dbo].[AppSettings_Ins]
 	@ExternalFilesPath varchar(500),
 	@CancelledRequestStatusID int,
 	@AccountingSystem varchar(50),
+	@CustomCodeFormat varchar(50),
 	@AppSettingsID int OUTPUT
 AS
 INSERT [dbo].[AppSettings]
@@ -86,7 +93,8 @@ INSERT [dbo].[AppSettings]
 	[LastDbBackupName],
 	[ExternalFilesPath],
 	[CancelledRequestStatusID],
-	[AccountingSystem]
+	[AccountingSystem],
+	[CustomCodeFormat]
 )
 VALUES
 (
@@ -106,7 +114,8 @@ VALUES
 	@LastDbBackupName,
 	@ExternalFilesPath,
 	@CancelledRequestStatusID,
-	@AccountingSystem
+	@AccountingSystem,
+	@CustomCodeFormat
 )
 SELECT @AppSettingsID=SCOPE_IDENTITY()
 GO
@@ -136,7 +145,8 @@ SELECT
 	[ExternalFilesPath],
 	[CancelledRequestStatusID],
 	[RowVersion],
-	[AccountingSystem]
+	[AccountingSystem],
+	[CustomCodeFormat]
 FROM [dbo].[AppSettings]
 ORDER BY 
 	[AppSettingsID] ASC
@@ -168,7 +178,8 @@ SELECT
 	[ExternalFilesPath],
 	[CancelledRequestStatusID],
 	[RowVersion],
-	[AccountingSystem]
+	[AccountingSystem],
+	[CustomCodeFormat]
 FROM [dbo].[AppSettings]
 WHERE
 	[AppSettingsID] = @AppSettingsID
@@ -200,7 +211,8 @@ SELECT
 	[ExternalFilesPath],
 	[CancelledRequestStatusID],
 	[RowVersion],
-	[AccountingSystem]
+	[AccountingSystem],
+	[CustomCodeFormat]
 FROM [dbo].[AppSettings]
 WHERE
 	[InstallID] = @InstallID
@@ -228,7 +240,8 @@ ALTER PROCEDURE [dbo].[AppSettings_Upd]
 	@ExternalFilesPath varchar(500),
 	@CancelledRequestStatusID int,
 	@RowVersion timestamp,
-	@AccountingSystem varchar(50)
+	@AccountingSystem varchar(50),
+	@CustomCodeFormat varchar(50)
 AS
 UPDATE [dbo].[AppSettings]
 SET 
@@ -248,7 +261,8 @@ SET
 	[LastDbBackupName] = @LastDbBackupName,
 	[ExternalFilesPath] = @ExternalFilesPath,
 	[CancelledRequestStatusID] = @CancelledRequestStatusID,
-	[AccountingSystem] = @AccountingSystem
+	[AccountingSystem] = @AccountingSystem,
+	[CustomCodeFormat] = @CustomCodeFormat
 WHERE
 	[AppSettingsID] = @AppSettingsID
 	AND [RowVersion] = @RowVersion
@@ -335,10 +349,95 @@ GO
 EXECUTE sp_refreshview N'dbo.PurchaseItemPaymentsDetail';
 GO
 
+
+GO
+PRINT N'Altering [dbo].[_Itinerary_New]...';
+
+GO
+
+/** Create new base Itinerary **/
+
+ALTER PROCEDURE [dbo].[_Itinerary_New]
+	@ItineraryName varchar(100),
+	@ArriveDate datetime,
+	@ParentFolderID int,
+	@AddedOn datetime,
+	@AddedBy int
+AS
+SET NOCOUNT ON
+
+DECLARE @DefaultAgentID int
+SELECT @DefaultAgentID = (SELECT TOP 1 (AgentID) FROM Agent order by IsDefaultAgent desc)
+
+INSERT INTO [dbo].[Itinerary]
+(
+	[ItineraryName],
+	[ArriveDate],
+	[NetComOrMup],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AgentID],
+	[AddedOn],
+	[AddedBy],
+	[AssignedTo]
+)
+SELECT
+	@ItineraryName,
+	@ArriveDate,
+	ISNULL([NetComOrMup], 'mup'),
+	1,
+	@ParentFolderID,
+	@DefaultAgentID,
+	@AddedOn,
+	@AddedBy,
+	@AddedBy
+FROM Agent WHERE AgentID = @DefaultAgentID
+
+DECLARE @ItineraryID int
+SET @ItineraryID = SCOPE_IDENTITY()
+
+-- Update itinerary custom code
+update Itinerary 
+	set CustomCode = (select replace((select top(1) CustomCodeFormat from AppSettings), '[!ItineraryID]', @ItineraryID))
+where ItineraryID = @ItineraryID
+
+-- Add the first itinerary group
+INSERT [dbo].[ItineraryGroup]
+(
+	[ItineraryID],
+	[ItineraryGroupName],
+	[AddedOn],
+	[AddedBy]
+)
+VALUES
+(
+	@ItineraryID,
+	@ItineraryName,
+	@AddedOn,
+	@AddedBy
+)
+
+-- Add the default Agent margin overrides
+INSERT [dbo].[ItineraryMarginOverride]
+(
+	[ServiceTypeID],
+	[Margin],
+	[ItineraryID]
+)
+SELECT 
+	[ServiceTypeID], 
+	[Margin], 
+	@ItineraryID 
+FROM AgentMargin WHERE AgentID = @DefaultAgentID
+
+SELECT @ItineraryID
+
+GO
+
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2010.09.21'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2010.09.28'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
