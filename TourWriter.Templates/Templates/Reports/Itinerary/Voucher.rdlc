@@ -1371,7 +1371,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Today().ToString("d MMM yyyy")</Value>
+                                  <Value>=Today().ToString("d MMM yy")</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -1486,7 +1486,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.3937in</Height>
+              <Height>1.2cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1613,8 +1613,8 @@
     <PageWidth>21cm</PageWidth>
     <InteractiveHeight>11in</InteractiveHeight>
     <InteractiveWidth>8.5in</InteractiveWidth>
-    <LeftMargin>3cm</LeftMargin>
-    <TopMargin>1.5cm</TopMargin>
+    <LeftMargin>2cm</LeftMargin>
+    <TopMargin>1.2cm</TopMargin>
     <ColumnSpacing>1cm</ColumnSpacing>
     <Style />
   </Page>
