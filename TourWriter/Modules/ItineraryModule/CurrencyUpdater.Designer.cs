@@ -48,7 +48,8 @@
             this.txtRateAdjustment = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.lblLocalCurrency = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
@@ -114,7 +115,7 @@
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridBookings.Location = new System.Drawing.Point(12, 12);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(498, 243);
+            this.gridBookings.Size = new System.Drawing.Size(524, 417);
             this.gridBookings.TabIndex = 10;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -126,7 +127,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(435, 305);
+            this.btnCancel.Location = new System.Drawing.Point(461, 479);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 9;
@@ -137,18 +138,18 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(354, 305);
+            this.btnOk.Location = new System.Drawing.Point(380, 479);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 8;
-            this.btnOk.Text = "OK";
+            this.btnOk.Text = "Keep";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(435, 261);
+            this.btnUpdate.Location = new System.Drawing.Point(461, 435);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 11;
@@ -159,9 +160,9 @@
             // 
             // txtRateAdjustment
             // 
-            this.txtRateAdjustment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRateAdjustment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtRateAdjustment.FormatString = "##0\\.00%";
-            this.txtRateAdjustment.Location = new System.Drawing.Point(355, 262);
+            this.txtRateAdjustment.Location = new System.Drawing.Point(72, 436);
             this.txtRateAdjustment.MaskInput = "-nnn.nn %";
             this.txtRateAdjustment.Name = "txtRateAdjustment";
             this.txtRateAdjustment.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -172,25 +173,35 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(295, 266);
+            this.label1.Location = new System.Drawing.Point(12, 440);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "Adjustment";
             this.toolTip1.SetToolTip(this.label1, "Example: enter 5 to add a 5% buffer to the default exchange rate");
             // 
-            // lblLocalCurrency
+            // groupBox1
             // 
-            this.lblLocalCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblLocalCurrency.AutoSize = true;
-            this.lblLocalCurrency.Location = new System.Drawing.Point(12, 266);
-            this.lblLocalCurrency.Name = "lblLocalCurrency";
-            this.lblLocalCurrency.Size = new System.Drawing.Size(79, 13);
-            this.lblLocalCurrency.TabIndex = 14;
-            this.lblLocalCurrency.Text = "Your currency: ";
-            this.toolTip1.SetToolTip(this.lblLocalCurrency, "You local currency code");
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Location = new System.Drawing.Point(15, 469);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(521, 2);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label2.Location = new System.Drawing.Point(132, 440);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(169, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "(e.g. add margin to exchange rate)";
             // 
             // CurrencyUpdater
             // 
@@ -198,8 +209,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(522, 340);
-            this.Controls.Add(this.lblLocalCurrency);
+            this.ClientSize = new System.Drawing.Size(548, 514);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtRateAdjustment);
             this.Controls.Add(this.btnUpdate);
@@ -227,6 +239,7 @@
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtRateAdjustment;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label lblLocalCurrency;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

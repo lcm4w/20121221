@@ -8,10 +8,11 @@ using System.Web.Services;
 using System.Web.Services.Description;
 using System.Web.Services.Protocols;
 using TourWriter.Global;
+using TourWriter.Info;
 
 namespace TourWriter.Services
 {
-    class CurrencyUpdateService
+    class CurrencyService
     {
         private const string updateUri =
             @"http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency={0}&ToCurrency={1}";
@@ -26,21 +27,18 @@ namespace TourWriter.Services
         }
 
         /// <summary>
-        /// Gets the currency code from the AppSettings if it exists, otherwise gets it from the region info.
+        /// Gets the base Itinerary, TourWriter, or user currency
         /// </summary>
-        internal static string GetLocalCurrencyCode()
+        internal static string GetBaseCurrencyCode(ItinerarySet.ItineraryRow itinerary = null)
         {
-            string currencyCode;
-            if (!Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull())
-            {
-                currencyCode = Cache.ToolSet.AppSettings[0].CurrencyCode;
-            }
-            else
-            {
-                RegionInfo regionInfo = new RegionInfo(CultureInfo.CurrentCulture.LCID);
-                currencyCode = regionInfo.ISOCurrencySymbol;
-            }
-            return currencyCode;
+            // itinerary base currency
+            if (itinerary != null && !itinerary.IsBaseCurrencyNull()) return itinerary.BaseCurrency;
+
+            // TourWriter base currency
+            if (!Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull()) return Cache.ToolSet.AppSettings[0].CurrencyCode;
+            
+            // computer base currency
+            return new RegionInfo(CultureInfo.CurrentCulture.LCID).ISOCurrencySymbol;
         }
 
         /// <summary>
@@ -104,6 +102,8 @@ namespace TourWriter.Services
 
         private static double GetRateHttp(string fromCurrency, string toCurrency)
         {
+            if (fromCurrency.ToLower().Trim() == toCurrency.ToLower().Trim()) return 1;
+
             if (App.IsDebugMode ||
                 Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "13b8e136-405f-402f-a4bb-3913879be702".ToLower() || // dev
                 Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower() || // te

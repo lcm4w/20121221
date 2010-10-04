@@ -191,8 +191,10 @@ namespace TourWriter.Modules.ItineraryModule
 
             bookingsQuote.Enabled = App.EnableGroups;
             clientEditor.EnableGroups = App.EnableGroups;
-        }
 
+            SetItineraryCurrencyDisplays(itinerarySet.Itinerary[0].BaseCurrency);
+        }
+        
         private void ItineraryMain_Shown(object sender, EventArgs e)
         {
             if (chkReadOnly.CheckState == CheckState.Checked)
@@ -642,6 +644,32 @@ namespace TourWriter.Modules.ItineraryModule
                     e.Cancel = true;
                 }
             }
+        }
+
+
+        private void HandleItineraryCurrencyChanged(string currencyCode)
+        {
+            SetItineraryCurrencyDisplays(currencyCode);
+
+            var currs = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && !string.IsNullOrEmpty(x.CurrencyCode) && x.CurrencyCode != currencyCode);
+            if (currs.Count() > 0)
+            {
+                if (App.AskYesNo("Update Booking currency rates now?"))
+                {
+                    tabControl_Main.SelectedTab = tabControl_Main.Tabs["Bookings"];
+                    Application.DoEvents();
+
+                    bookingsViewer.RunCurrencyUpdater();
+                }
+            }
+        }
+
+        private void SetItineraryCurrencyDisplays(string currencyCode)
+        {
+            var bookingGridText = ""; // default if same as base currency
+            if (!string.IsNullOrEmpty(currencyCode) && currencyCode != CurrencyService.GetBaseCurrencyCode())
+                bookingGridText = "Base Currency: " + currencyCode;
+            bookingsViewer.SetItineraryCurrencyDisplays(bookingGridText);
         }
 
         #region Itinerary
@@ -1181,6 +1209,14 @@ namespace TourWriter.Modules.ItineraryModule
             txtDepartDate.DataBindings.Clear();
             txtDepartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
             txtDepartDate.DataBindings.Add(binding);
+        }
+        
+        private void cmbCurrency_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            var newCode = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : "";
+         //   itinerarySet.Itinerary.ColumnChanged
+//itinerarySet.Itinerary[0].BaseCurrency = newCode != "" ? newCode : null; // stupid fucking bindings, lets do their job for them
+            HandleItineraryCurrencyChanged(newCode);
         }
     }
 }

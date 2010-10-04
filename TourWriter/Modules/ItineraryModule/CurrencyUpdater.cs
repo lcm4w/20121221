@@ -24,9 +24,8 @@ namespace TourWriter.Modules.ItineraryModule
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
 
-            _localCurrencyCode = CurrencyUpdateService.GetLocalCurrencyCode();
-            lblLocalCurrency.Text += _localCurrencyCode;
-            purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", _localCurrencyCode);
+            _localCurrencyCode = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
+           // purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", _localCurrencyCode);
             
             gridBookings.DataSource = purchaseItemTable.DefaultView;
 
@@ -49,27 +48,29 @@ namespace TourWriter.Modules.ItineraryModule
                 Cursor = Cursors.WaitCursor;
 
                 var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().Where(x => (bool)x.Cells["IsSelected"].Value);
-                var currencies = selectedRows.Select(x => x.Cells["CurrencyCode"].Value.ToString()).Distinct().
-                    Select(x => new CurrencyUpdateService.Currency { FromCurrency = x, ToCurrency = _localCurrencyCode }).ToList();
-                foreach (var r in selectedRows) // reset rows
+                var toFromCurrencies = selectedRows.Select(x => x.Cells["CurrencyCode"].Value.ToString()).Distinct().
+                    Select(x => new CurrencyService.Currency { FromCurrency = x, ToCurrency = _localCurrencyCode }).ToList();
+
+                foreach (var r in selectedRows) // reset status
                 {
                     r.Cells["NewRate"].Value = null;
                     r.Cells["Result"].Value = null;
                     r.Cells["Result"].Appearance.Image = null;
                 }
 
-                CurrencyUpdateService.GetRates(currencies);
+                CurrencyService.GetRates(toFromCurrencies);
                 
                 var adjust = Convert.ToDecimal(txtRateAdjustment.Value);
                 adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
 
-                foreach (var c in currencies)
+                foreach (var c in toFromCurrencies)
                 {
-                    var code = c;
-                    foreach (var row in selectedRows.Where(x => x.Cells["CurrencyCode"].Value.ToString() == code.FromCurrency)) // update rows
+                    var currency = c;
+                    var updateRows = selectedRows.Where(x => x.Cells["CurrencyCode"].Value.ToString() == currency.FromCurrency);
+                    foreach (var row in updateRows)
                     {
                         row.Cells["Result"].Appearance.Image = Resources.Tick;
-                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(code.Rate) * adjust, 4);
+                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * adjust, 4);
                         if (!string.IsNullOrEmpty(c.ErrorMessage))
                         {
                             row.Cells["Result"].Value = c.ErrorMessage;
@@ -129,6 +130,8 @@ namespace TourWriter.Modules.ItineraryModule
         {
             if (!e.Layout.Bands[0].Columns.Exists("IsSelected"))
                 e.Layout.Bands[0].Columns.Add("IsSelected");
+            if (!e.Layout.Bands[0].Columns.Exists("BaseCurrency"))
+                e.Layout.Bands[0].Columns.Add("BaseCurrency");
             if (!e.Layout.Bands[0].Columns.Exists("Result"))
                 e.Layout.Bands[0].Columns.Add("Result");
             if (!e.Layout.Bands[0].Columns.Exists("PurchaseLineName"))
@@ -173,10 +176,17 @@ namespace TourWriter.Modules.ItineraryModule
                     c.Width = 120;
                     c.Header.Caption = "Item description";
                 }
+                else if (c.Key == "BaseCurrency")
+                {
+                    c.Width = 80;
+                    c.Header.Caption = "From";
+                    c.Header.ToolTipText = "Base currency of the itinerary";
+                }
                 else if (c.Key == "CurrencyCode")
                 {
                     c.Width = 80;
-                    c.Header.Caption = "Currency";
+                    c.Header.Caption = "To";
+                    c.Header.ToolTipText = "Currency of the booking or service";
                 }
                 else if (c.Key == "OldRate")
                 {
@@ -184,6 +194,7 @@ namespace TourWriter.Modules.ItineraryModule
                     c.Header.Caption = "Old rate";
                     c.DataType = typeof (Decimal);
                     c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.Header.ToolTipText = "Exchange rate before update";
                 }
                 else if (c.Key == "NewRate")
                 {
@@ -192,7 +203,8 @@ namespace TourWriter.Modules.ItineraryModule
                     c.DataType = typeof(Decimal);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.AllowEdit;
-                    c.CellClickAction = CellClickAction.Edit; 
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.Header.ToolTipText = "Exchange rate after update"; 
                 }
                 else
                 {
@@ -205,6 +217,7 @@ namespace TourWriter.Modules.ItineraryModule
             e.Layout.Bands[0].Columns["IsSelected"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["PurchaseLineName"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyCode"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["OldRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NewRate"].Header.VisiblePosition = index++;
@@ -215,6 +228,9 @@ namespace TourWriter.Modules.ItineraryModule
 
             // override defaults
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
+
+            // default sort
+            e.Layout.Bands[0].SortedColumns.Add("CurrencyCode", false);
         }
 
         private void gridBookings_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -229,8 +245,11 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["IsSelected"].Value = true;
             e.Row.Cells["Result"].ToolTipText = String.Empty;
             e.Row.Cells["PurchaseLineName"].Value = purchaseLine.PurchaseLineName;
+            e.Row.Cells["BaseCurrency"].Value = _localCurrencyCode;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
+            if (e.Row.Cells["CurrencyCode"].Value == DBNull.Value || string.IsNullOrEmpty(e.Row.Cells["CurrencyCode"].Value.ToString()))
+                e.Row.Cells["CurrencyCode"].Value = _localCurrencyCode;
         }
 
         private void gridBookings_MouseClick(object sender, MouseEventArgs e)

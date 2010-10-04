@@ -553,6 +553,9 @@ namespace TourWriter
             return strbuf.ToString();
         }
 
+        /// <summary>
+        /// Set CurrentCulture of the application to the database setting if exists.
+        /// </summary>
         internal static void SetCultureInfo()
         {
             // var cultureInfo = new CultureInfo(1066); // Vietnamese Dong (VND)

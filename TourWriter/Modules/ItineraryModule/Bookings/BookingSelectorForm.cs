@@ -340,15 +340,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             _newRows.Add(row);
         }
 
-        private void LoadCurrencyRatesForNewRows()
+        private void CurrencyUpdatesForNewRows()
         {
-            var local = CurrencyUpdateService.GetLocalCurrencyCode();
+            var local = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
             var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != local.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
             foreach (var c in codes)
             {
                 var code = c;
                 var thread = new BackgroundWorker();
-                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyUpdateService.GetRate(code, local); } catch { } };
+                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyService.GetRate(code, local); } catch { } };
                 thread.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
                 {
                     try
@@ -404,7 +404,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 itinerarySet.Merge(tempItinerarySet);
                 itinerarySet.PurchaseItem.RowChanged -= AddNewMergeRow;
 
-                if (chkCurrency.Checked) LoadCurrencyRatesForNewRows();
+                if (chkCurrency.Checked) CurrencyUpdatesForNewRows();
             }
             catch (ConstraintException ex)
             {

@@ -643,7 +643,7 @@
     <Compile Include="Services\Accounting\CsvExportMyob.cs" />
     <Compile Include="Services\Accounting\IExport.cs" />
     <Compile Include="Services\Security.cs" />
-    <Compile Include="Services\CurrencyUpdateService.cs" />
+    <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\ErrorHelper.cs" />
     <Compile Include="Services\DataTableExcelExporter.cs" />
     <Compile Include="Services\ExcelWriter.cs" />
@@ -1456,6 +1456,7 @@
   <ItemGroup>
     <None Include="Resources\user_add.png" />
     <None Include="Resources\world_go1.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.11.06.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.31.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.26.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.09.28.sql" />
