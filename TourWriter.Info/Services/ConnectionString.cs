@@ -37,9 +37,9 @@ namespace TourWriter.Info.Services
         
         internal static void SetRemoteConnectionString(string connectionString)
         {
-            if (TravelMesh.Cs.Client.Data.IsConnectionKey(connectionString))
+            if (System.Text.RegularExpressions.Regex.IsMatch(connectionString, @"tw_\w{8}:"))
             {
-                _connectionString = TravelMesh.Cs.Client.Data.GetConnectionString(connectionString); 
+                _connectionString = System.Text.Encoding.ASCII.GetString(Convert.FromBase64String(connectionString.Remove(0, 12)));
                 return;
             }
             var conn = new SqlConnectionStringBuilder(connectionString);
