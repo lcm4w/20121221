@@ -157,13 +157,13 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             ItinerarySet.ItineraryRow itinerary = itinerarySet.Itinerary[0];
             WordHelper.FindAndReplace(mainDoc, tagItineraryName, itinerary.ItineraryName);
             WordHelper.FindAndReplace(mainDoc, tagArriveDay, !itinerary.IsArriveDateNull() ? itinerary.ArriveDate.ToString("dddd") : "");
-            WordHelper.FindAndReplace(mainDoc, tagArriveDate, !itinerary.IsArriveDateNull() ? itinerary.ArriveDate.ToShortDateString() : "");
+            WordHelper.FindAndReplace(mainDoc, tagArriveDate, !itinerary.IsArriveDateNull() ? itinerary.ArriveDate.ToString("dd MMM yyyy") : "");
             WordHelper.FindAndReplace(mainDoc, tagArriveTime, !itinerary.IsArriveDateNull() ? itinerary.ArriveDate.ToShortTimeString() : "");
             WordHelper.FindAndReplace(mainDoc, tagArriveFlight, !itinerary.IsArriveFlightNull() ? itinerary.ArriveFlight : "");
             WordHelper.FindAndReplace(mainDoc, tagArriveInformation, !itinerary.IsArriveNoteNull() ? itinerary.ArriveNote : "");
 
             WordHelper.FindAndReplace(mainDoc, tagDepartDay, !itinerary.IsDepartDateNull() ? itinerary.DepartDate.ToString("dddd") : "");
-            WordHelper.FindAndReplace(mainDoc, tagDepartDate, !itinerary.IsDepartDateNull() ? itinerary.DepartDate.ToShortDateString() : "");
+            WordHelper.FindAndReplace(mainDoc, tagDepartDate, !itinerary.IsDepartDateNull() ? itinerary.DepartDate.ToString("dd MMM yyyy") : "");
             WordHelper.FindAndReplace(mainDoc, tagDepartTime, !itinerary.IsDepartDateNull() ? itinerary.DepartDate.ToShortTimeString() : "");
             WordHelper.FindAndReplace(mainDoc, tagDepartFlight, !itinerary.IsDepartFlightNull() ? itinerary.DepartFlight : "");
             WordHelper.FindAndReplace(mainDoc, tagDepartInformation, !itinerary.IsDepartNoteNull() ? itinerary.DepartNote : "");
@@ -186,9 +186,9 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
 
             WordHelper.FindAndReplaceInParagraphs(doc, tagLocation, location);
             WordHelper.FindAndReplaceInParagraphs(doc, tagDayNumber, dayNumber.ToString());
-            WordHelper.FindAndReplaceInParagraphs(doc, tagInDate, item.StartDate.ToShortDateString());
+            WordHelper.FindAndReplaceInParagraphs(doc, tagInDate, item.StartDate.ToString("dd MMM yyyy"));
             WordHelper.FindAndReplaceInParagraphs(doc, tagInTime, startTime);
-            WordHelper.FindAndReplaceInParagraphs(doc, tagOutDate, item.StartDate.AddDays(numberOfDays).ToShortDateString());
+            WordHelper.FindAndReplaceInParagraphs(doc, tagOutDate, item.StartDate.AddDays(numberOfDays).ToString("dd MMM yyyy"));
             WordHelper.FindAndReplaceInParagraphs(doc, tagOutTime, endTime);
             WordHelper.FindAndReplaceInParagraphs(doc, tagSupplier, supplier.SupplierName);
             WordHelper.FindAndReplaceInParagraphs(doc, tagDescription, item.PurchaseItemName);
