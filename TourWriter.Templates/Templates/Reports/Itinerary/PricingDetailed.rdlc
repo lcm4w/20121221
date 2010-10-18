@@ -1432,6 +1432,7 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1466,6 +1467,7 @@
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1803,6 +1805,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1837,6 +1840,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1870,6 +1874,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2325,6 +2330,7 @@
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3072,6 +3078,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3136,6 +3143,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3288,6 +3296,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3319,6 +3328,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3443,6 +3453,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3506,6 +3517,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3646,6 +3658,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3720,6 +3733,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3828,6 +3842,17 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
           <Value>Client locations</Value>
         </Values>
       </DefaultValue>
+      <Prompt>ReportName</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CultureCode">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>

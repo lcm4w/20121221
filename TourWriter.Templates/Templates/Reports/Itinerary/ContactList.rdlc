@@ -1031,6 +1031,17 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>
+    <ReportParameter Name="CultureCode">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportName</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
   </ReportParameters>
   <Width>19cm</Width>
   <Page>

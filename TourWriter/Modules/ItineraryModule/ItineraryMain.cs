@@ -157,6 +157,7 @@ namespace TourWriter.Modules.ItineraryModule
             publisher1.ItinerarySet = itinerarySet;
             accounting1.ItinerarySet = itinerarySet;
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
+            reportControl.DefaultParameters.Add("@CultureCode", App.GetCultureInfo(CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0])).Name);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);

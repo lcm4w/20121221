@@ -171,7 +171,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGross.Value, "PurchaseItemDetail"), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"))</Value>
+                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGross.Value, "PurchaseItemDetail"), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"), Parameters!CultureCode.Value)</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -790,6 +790,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -995,6 +996,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1444,6 +1446,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2116,6 +2119,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2245,6 +2249,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
                                 <Format>c</Format>
+                                <Language>=Parameters!CultureCode.Value</Language>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2379,6 +2384,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Format>c</Format>
+                  <Language>=Parameters!CultureCode.Value</Language>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -2431,10 +2437,21 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>
+    <ReportParameter Name="CultureCode">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportName</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
   </ReportParameters>
-  <Code>Function WarnIfHasPriceOverride(total1 as Double, total2 as Double)	
+  <Code>Function WarnIfHasPriceOverride(total1 as Double, total2 as Double, cultureCode as String)	
 	If (total1 &lt;&gt; total2) Then		
-		MsgBox("This report will not show the adjusted final price of " + total1.ToString("C") + vbCrLf + vbCrLf + "Instead it shows all booking prices and total sum of " + total2.ToString("C"),0,"Override Warning")     
+		MsgBox("This report will not show the adjusted final price of " + total1.ToString("c", System.Globalization.CultureInfo.GetCultureInfo(cultureCode)) + vbCrLf + vbCrLf + "Instead it shows all booking prices and total sum of " + total2.ToString("c", System.Globalization.CultureInfo.GetCultureInfo(cultureCode)),0,"Override Warning")     
 	End If
 End Function
 </Code>

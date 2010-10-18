@@ -1223,6 +1223,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Format>c</Format>
+                  <Language>=Parameters!CultureCode.Value</Language>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1253,6 +1254,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                   <Format>c</Format>
+                  <Language>=Parameters!CultureCode.Value</Language>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1282,6 +1284,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
 	iif(not isnothing(First(Fields!ItineraryGross.Value)), First(Fields!ItineraryGross.Value), 0))</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
+                  <Language>=Parameters!CultureCode.Value</Language>
                   <FontWeight>Bold</FontWeight>
                   <Format>c</Format>
                 </Style>
@@ -1357,6 +1360,17 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
       <Hidden>true</Hidden>
     </ReportParameter>
     <ReportParameter Name="AgentClientFooter">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value />
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportName</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CultureCode">
       <DataType>String</DataType>
       <DefaultValue>
         <Values>
