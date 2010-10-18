@@ -834,7 +834,7 @@
     <ColumnSpacing>1cm</ColumnSpacing>
     <Style />
   </Page>
-  <Language>en-NZ</Language>
+  <Language>=User.Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportID>fb8f8aba-5316-4d46-b833-c8c51e820ec0</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>

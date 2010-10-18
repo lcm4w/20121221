@@ -856,7 +856,7 @@
     </ReportItems>
     <Height>27.75cm</Height>
   </Body>
-  <Language>en-NZ</Language>
+  <Language>=User.Language</Language>
   <PageFooter>
     <PrintOnFirstPage>true</PrintOnFirstPage>
     <ReportItems>

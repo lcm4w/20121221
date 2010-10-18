@@ -3343,7 +3343,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
     <ColumnSpacing>1cm</ColumnSpacing>
     <Style />
   </Page>
-  <Language>en-NZ</Language>
+  <Language>=User.Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportID>eff67c7a-44fa-4c85-9116-a6dfb4bd2fa6</rd:ReportID>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
