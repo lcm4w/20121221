@@ -166,7 +166,10 @@ namespace TourWriter.Modules.ContactModule
                     App.DataSet_CheckForErrors(fresh);
                     if (App.DataSet_AskSaveDeleteConstraints(fresh))
                     {
-                        contactSet = fresh;
+                        // clear and merge to maintain any databindings
+                        contactSet.Clear();
+                        contactSet.Merge(fresh, false);
+                        // and save again
                         SaveDataChanges();
                         return;
                     }

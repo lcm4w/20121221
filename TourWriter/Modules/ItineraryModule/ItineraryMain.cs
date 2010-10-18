@@ -413,7 +413,10 @@ namespace TourWriter.Modules.ItineraryModule
                             // Handle any errors.
                             if (App.DataSet_CheckForErrors(fresh) && App.DataSet_AskSaveDeleteConstraints(fresh))
                             {
-                                itinerarySet = fresh;
+                                // Clear dataset and merge to maintain any databindings
+                                itinerarySet.Clear();
+                                itinerarySet.Merge(fresh, false);
+                                // and save again
                                 SaveDataChanges();
                                 return;
                             }

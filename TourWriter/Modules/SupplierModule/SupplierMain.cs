@@ -125,7 +125,10 @@ namespace TourWriter.Modules.SupplierModule
                         App.DataSet_CheckForErrors(fresh);
                         if (App.DataSet_AskSaveDeleteConstraints(fresh))
                         {
-                            supplierSet = fresh;
+                            // clear and merge to maintain data bindings
+                            supplierSet.Clear();
+                            supplierSet.Merge(fresh, false);
+                            // and save again
                             SaveDataChanges();
                             return;
                         }
