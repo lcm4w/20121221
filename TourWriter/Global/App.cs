@@ -22,7 +22,7 @@ namespace TourWriter
     /// </summary>
     internal class App
     {
-        internal const string HelpFilename = "TourWriter.chm";
+        internal const string HelpFilename = "TourWriterHelp.chm";
         internal const string AppsettingFilename = "AppSettings.xml"; // used also in BLLBase	
         internal const string UsersettingFilename = "UserSettings.xml";
         internal const string UserlayoutFilename = "UserLayout.xml";
