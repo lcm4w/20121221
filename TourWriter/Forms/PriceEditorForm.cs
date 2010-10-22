@@ -60,6 +60,7 @@ namespace TourWriter.Dialogs
             else lblCurrencyInfo.Visible = false;
 
             var cultureInfo = App.GetCultureInfo(currencyCode);
+            if (cultureInfo == null) throw new NullReferenceException("CultureInfo not found for currencyCode: " + currencyCode);
             txtNet.FormatProvider = cultureInfo;
             txtGross.FormatProvider = cultureInfo;
             txtMarkup.FormatProvider = cultureInfo;
