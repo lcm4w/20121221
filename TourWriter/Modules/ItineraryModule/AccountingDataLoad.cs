@@ -39,7 +39,7 @@ namespace TourWriter.Modules.ItineraryModule
                           {
                               CreateThread(PurchasesDataSet, string.Format(PurchasesSql, itineraryId)),
                               CreateThread(AllocationsDataSet, string.Format(AllocationsSql, itineraryId)),
-                              CreateThread(ReceiptsDataSet, string.Format(ReceiptsSql, itineraryId)),
+                              //CreateThread(ReceiptsDataSet, string.Format(ReceiptsSql, itineraryId)),
                               CreateThread(ServiceTypesDataSet, string.Format(ServiceTypesSql, itineraryId))
                           };
 

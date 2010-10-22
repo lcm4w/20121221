@@ -112,7 +112,7 @@
             // txtClients
             // 
             this.txtClients.Enabled = false;
-            this.txtClients.Location = new System.Drawing.Point(23, 140);
+            this.txtClients.Location = new System.Drawing.Point(23, 91);
             this.txtClients.Name = "txtClients";
             this.txtClients.Size = new System.Drawing.Size(259, 20);
             this.txtClients.TabIndex = 8;
@@ -139,7 +139,7 @@
             // chkClients
             // 
             this.chkClients.AutoSize = true;
-            this.chkClients.Location = new System.Drawing.Point(6, 117);
+            this.chkClients.Location = new System.Drawing.Point(6, 68);
             this.chkClients.Name = "chkClients";
             this.chkClients.Size = new System.Drawing.Size(205, 17);
             this.chkClients.TabIndex = 1;
@@ -150,21 +150,23 @@
             // chkPayments
             // 
             this.chkPayments.AutoSize = true;
-            this.chkPayments.Location = new System.Drawing.Point(6, 68);
+            this.chkPayments.Location = new System.Drawing.Point(6, 117);
             this.chkPayments.Name = "chkPayments";
             this.chkPayments.Size = new System.Drawing.Size(262, 17);
             this.chkPayments.TabIndex = 0;
             this.chkPayments.Text = "Payments - exports all the received payments data";
             this.chkPayments.UseVisualStyleBackColor = true;
+            this.chkPayments.Visible = false;
             this.chkPayments.CheckedChanged += new System.EventHandler(this.chkPayments_CheckedChanged);
             // 
             // txtPayments
             // 
             this.txtPayments.Enabled = false;
-            this.txtPayments.Location = new System.Drawing.Point(23, 91);
+            this.txtPayments.Location = new System.Drawing.Point(23, 140);
             this.txtPayments.Name = "txtPayments";
             this.txtPayments.Size = new System.Drawing.Size(259, 20);
             this.txtPayments.TabIndex = 7;
+            this.txtPayments.Visible = false;
             // 
             // grpPurchases
             // 

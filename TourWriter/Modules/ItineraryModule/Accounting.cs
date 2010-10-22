@@ -166,7 +166,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             gridPurchases.InitializeLayoutEvent += gridPurchases_InitializeLayoutEvent;
             gridAllocations.InitializeLayoutEvent += gridAllocations_InitializeLayoutEvent;
-            gridPayments.InitializeLayoutEvent += gridPayments_InitializeLayoutEvent;
+            //gridPayments.InitializeLayoutEvent += gridPayments_InitializeLayoutEvent;
             gridSales.InitializeLayoutEvent += gridSales_InitializeLayoutEvent;
 
             gridSales.UltraGrid.DoubleClickRow += gridSales_DoubleClickRow;
@@ -188,7 +188,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             App.PrepareDataTableForExport(data.PurchasesDataSet.Tables[0]);
             App.PrepareDataTableForExport(data.AllocationsDataSet.Tables[0]);
-            App.PrepareDataTableForExport(data.ReceiptsDataSet.Tables[0]);
+            //App.PrepareDataTableForExport(data.ReceiptsDataSet.Tables[0]);
 
             gridPurchases.DataSource = data.PurchasesDataSet;
             gridAllocations.DataSource = data.AllocationsDataSet;
