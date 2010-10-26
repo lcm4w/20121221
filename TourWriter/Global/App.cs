@@ -569,7 +569,7 @@ namespace TourWriter
         {
             // var cultureInfo = new CultureInfo(1066); // Vietnamese Dong (VND)
             // http://stackoverflow.com/questions/1071273/currency-formatting/1071302#1071302
-            if (Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull()) return;
+            if (Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull() || string.IsNullOrEmpty(Cache.ToolSet.AppSettings[0].CurrencyCode.Trim())) return;
             var cultureInfo = App.GetCultureInfo(Cache.ToolSet.AppSettings[0].CurrencyCode);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
