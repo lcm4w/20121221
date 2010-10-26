@@ -92,6 +92,8 @@ namespace TourWriter.Services
                           ? string.Format(LicenseExpiredMessage, _license.EndDate.ToShortDateString())
                           : string.Format(LicenseOverrunMessage, _license.MaxUsers, SessionTimeout);
 
+            if (App.IsDebugMode && Global.Cache.User != null && Global.Cache.User.UserName == App.AdminUserName) return;
+
             var form = new LicenseExpiredForm(delay, msg);
             App.MainForm.Invoke((MethodInvoker) (() => form.ShowDialog(App.MainForm)));
         }
