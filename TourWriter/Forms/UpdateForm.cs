@@ -22,6 +22,7 @@ namespace TourWriter.Forms
         private readonly WebClient webClient;
         private ApplicationUpdateService.AppUpdateResponse updateReponse;
         internal enum UiState { Start, Check, None, Update, FullInstall, Download, Manual, Install, Error }
+        private Exception _error;
 
 
         internal UpdateForm()
@@ -97,6 +98,7 @@ namespace TourWriter.Forms
 
         private void HandleError(Exception ex)
         {
+            _error = ex;
             if (Visible) SetUI(UiState.Error);
             if (!Services.ErrorHelper.IsWebServerConnectionError(ex) && !Services.ErrorHelper.IsServerConnectionError(ex) 
                 && !(ex is System.Data.SqlClient.SqlException && ex.ToString().ToLower().Contains("login failed for user")))
@@ -243,10 +245,11 @@ namespace TourWriter.Forms
                     }
                 case UiState.Error:
                     {
-                        lblTitle.Text = "Update service failed to connect to server, please try again later";
+                        lblTitle.Text = "Error, the update check failed, please try again later";
                         btnOk.Enabled = false;
                         progressBar.Visible = false;
                         panelOptions.Visible = false;
+                        if (App.IsDebugMode && _error != null) App.Error(_error, true);
                         break;
                     }
             }
