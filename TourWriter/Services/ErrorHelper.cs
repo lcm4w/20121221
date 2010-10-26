@@ -228,7 +228,7 @@ namespace TourWriter.Services
                                        ComputerName = SystemInformation.ComputerName,
                                        UserName = SystemInformation.UserName,
                                        OsVersion = Environment.OSVersion.VersionString,
-                                       NetVersion = App.GetDotNetVersion().ToString(),
+                                       NetVersion = App.GetDotNetVersion(),
                                        Culture = CultureInfo.CurrentCulture.Name,
                                        Resolution = SystemInformation.PrimaryMonitorSize.ToString(),
                                        ApplicationUpTime = (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString(),

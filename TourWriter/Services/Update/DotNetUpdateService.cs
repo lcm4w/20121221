@@ -44,7 +44,9 @@ Start update now?
 
         private static bool DotNetUpdateRequired()
         {
-            return App.GetDotNetVersion() < UpdateVersion;
+            var s = App.GetDotNetVersion();
+            if (!s.Contains(".")) s += ".0";
+            return new Version(s) < UpdateVersion;
         }
     }
 }

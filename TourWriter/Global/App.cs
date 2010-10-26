@@ -487,24 +487,22 @@ namespace TourWriter
 
         #region System
 
-        internal static Version GetDotNetVersion()
+        internal static string GetDotNetVersion()
         {
             var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP");
             if (key == null) return null;
 
             var versions = key.GetSubKeyNames();
-            if (versions.Length == 0) throw new ApplicationException("No REG keys found for .NET versions");
+            if (versions.Length == 0) return "";
 
             var latest = key.OpenSubKey(versions[versions.Length - 1]);
-            if (latest == null) throw new ApplicationException(".NET version REG key is null");
+            if (latest == null) return "";
 
-            var s = latest.GetValue("Version") != null ? latest.GetValue("Version").ToString() : Regex.Match(latest.Name, @"(?<=v)(\d+\.?[\d\.]*)").Value;
-            if (!s.Contains('.')) s += ".0"; // Version class requires min 2 part number
-            try
-            {
-                return new Version(s);
-            }
-            catch { throw new ApplicationException("Failed to parse .NET version: " + s); }
+            if (latest.GetValue("Version") != null) 
+                return latest.GetValue("Version").ToString();
+
+            // HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4
+            return Regex.Match(latest.Name, @"(?<=\\v)(\d+\.?[\d\.]*)").Value;
         }
 
         #endregion

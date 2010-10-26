@@ -271,7 +271,7 @@ namespace TourWriter.Forms
                 lblAppVersion.Text = AssemblyInfo.InformationalVersion;
 			    lblDbVersion.Text = Cache.ToolSet.AppSettings[0].VersionNumber;
                 lblOsVersion.Text = Environment.OSVersion.VersionString;
-			    lblDotNetVersion.Text = App.GetDotNetVersion().ToString();
+			    lblDotNetVersion.Text = App.GetDotNetVersion();
                 lblDbVersion.Text = Cache.ToolSet.AppSettings[0].VersionNumber;
 				lblCopyright.Text = ai.Copyright;
 				lblDescription.Text = ai.Description;
