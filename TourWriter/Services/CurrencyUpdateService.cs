@@ -82,6 +82,8 @@ namespace TourWriter.Services
         /// <returns>The currency rate.</returns>
         internal static double? GetRate(string fromCurrency, string toCurrency)
         {
+            if (fromCurrency == toCurrency || string.IsNullOrEmpty(fromCurrency.Trim()) || string.IsNullOrEmpty(toCurrency.Trim()))
+                return null;
             return GetRateHttp(fromCurrency, toCurrency);
         }
 
