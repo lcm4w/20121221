@@ -214,8 +214,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 var paxMultiplier = RowGetPaxChargeMultiplier(item, pax, costType);
                 var newVal = (double)item.Gross * item.NumberOfDays * paxMultiplier;
-                var oldVal = row[paxCol] != DBNull.Value ? Convert.ToDouble(row[paxCol]) : 0;
-                row[paxCol] = oldVal + newVal;
+                try
+                {
+                    var oldVal = row[paxCol] != DBNull.Value && !string.IsNullOrEmpty(row[paxCol].ToString().Trim()) ? Convert.ToDouble(row[paxCol]) : 0;
+                    row[paxCol] = oldVal + newVal;
+                }
+                catch (InvalidCastException ex)
+                {
+                    throw new InvalidCastException("Failed to cast value to Double: " + row[paxCol], ex);
+                }
             }
         }
 
