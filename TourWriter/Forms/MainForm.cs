@@ -70,6 +70,9 @@ namespace TourWriter.Forms
             // set version display text
             var s = AssemblyInfo.FileVersion; 
             StatusBar_VersionText = "Version " + s.Substring(0, s.LastIndexOf('.'));
+
+            // TODO: 1/11/10, hide NZ GST updater, should be finished with now.
+            menuNzgst.Visible = false;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
