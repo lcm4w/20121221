@@ -505,6 +505,18 @@ namespace TourWriter
             return Regex.Match(latest.Name, @"(?<=\\v)(\d+\.?[\d\.]*)").Value;
         }
 
+        internal static void EnsureInstallId()
+        {
+            // update InstallID if database using default id.
+            if (Cache.ToolSet.AppSettings.Count > 0 &&
+                (Cache.ToolSet.AppSettings[0].IsInstallIDNull() || 
+                 Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "11111111-1111-1111-1111-111111111111".ToLower()))
+            {
+                Cache.ToolSet.AppSettings[0].InstallID = Guid.NewGuid();
+                Cache.SaveToolSet();
+            }
+        }
+
         #endregion
 
         #region Application
