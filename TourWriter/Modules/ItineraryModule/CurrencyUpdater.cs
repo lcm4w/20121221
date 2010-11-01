@@ -29,6 +29,19 @@ namespace TourWriter.Modules.ItineraryModule
             purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", _localCurrencyCode);
             
             gridBookings.DataSource = purchaseItemTable.DefaultView;
+
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull())
+            {
+                var agent = Global.Cache.ToolSet.Agent.FindByAgentID(itinerarySet.Itinerary[0].AgentID);
+                if (agent != null && agent.Table.Columns.Contains("DefaultCurrencyMargin"))
+                {
+                    var margin = agent["DefaultCurrencyMargin"];
+                    if (margin != null)
+                        txtRateAdjustment.Value = decimal.Parse(margin.ToString());
+                            
+                }
+            }
+            //txtRateAdjustment.Value
         }
 
         private void UpdateCurrencies()
