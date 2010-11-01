@@ -106,7 +106,8 @@ namespace TourWriter.Services
         {
             if (App.IsDebugMode ||
                 Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "13b8e136-405f-402f-a4bb-3913879be702".ToLower() || // dev
-                Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower()) // te
+                Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower() || // te
+                Cache.ToolSet.AppSettings.Rows.Count > 0 && Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "aa08e99f-8e02-4b7d-882a-e36eadd213de".ToLower()) // harald
                 return GetRateHttpTest(fromCurrency, toCurrency);
 
             string request = string.Format(updateUri, fromCurrency, toCurrency);
