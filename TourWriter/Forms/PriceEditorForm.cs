@@ -204,6 +204,7 @@ namespace TourWriter.Dialogs
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (grpOption.Value == null) return;
             CalculatePrice(grpOption.Value.ToString());
             DialogResult = DialogResult.OK;
         }

@@ -36,12 +36,10 @@ namespace TourWriter.Modules.ItineraryModule
                 if (agent != null && agent.Table.Columns.Contains("DefaultCurrencyMargin"))
                 {
                     var margin = agent["DefaultCurrencyMargin"];
-                    if (margin != null)
-                        txtRateAdjustment.Value = decimal.Parse(margin.ToString());
+                    if (margin != DBNull.Value) txtRateAdjustment.Value = decimal.Parse(margin.ToString());
                             
                 }
             }
-            //txtRateAdjustment.Value
         }
 
         private void UpdateCurrencies()
