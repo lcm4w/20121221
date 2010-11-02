@@ -216,7 +216,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     GetBookingPrices(item, ref price, ref comm, ref total);
 
                 // create booking details
-                var cultureInfo = App.GetCultureInfo(item.CurrencyCode);
+                var cultureInfo = App.GetCultureInfo("GBP");// item.CurrencyCode); TODO: need to base of local (Ireland), not currency code (EUR)!
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Name", GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName()));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Description", item.PurchaseItemName));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
@@ -268,7 +268,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             items.Sort(new DateTimeSortComparer());
             foreach (var item in items.OfType<ItinerarySet.PurchaseItemRow>())
             {
-                var cultureInfo = App.GetCultureInfo(item.CurrencyCode);
+                var cultureInfo = App.GetCultureInfo("GBP");// item.CurrencyCode); TODO: need to base of local (Ireland), not currency code (EUR)!
                 detailText = detailTemplate.Replace(BookingDetailStartTag, "").Replace(BookingDetailEndTag, "");
                 var showEndDate = (!item.IsStartDateNull() && !item.IsNumberOfDaysNull() && item.NumberOfDays >= 1);
 
