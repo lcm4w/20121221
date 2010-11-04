@@ -113,15 +113,15 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
             // write days files
             foreach (var day in daysList)
             {
-                var inputCulture = Application.CurrentInputLanguage.Culture;
+                //var inputCulture = Application.CurrentInputLanguage.Culture;
 
                 // populate tags
                 if (Find(document, MergeFieldDayNumber))
                     document.Application.Selection.Text = (daysList.IndexOf(day) + 1).ToString();
                 if (Find(document, MergeFieldDayName))
-                    document.Application.Selection.Text = day.Date.ToString("dddd", inputCulture);
+                    document.Application.Selection.Text = day.Date.ToString("dddd", new System.Globalization.CultureInfo("en-GB"));//, inputCulture);
                 if (Find(document, MergeFieldDayDate))
-                    document.Application.Selection.Text = day.Date.ToString("dd MMMM yyyy", inputCulture);
+                    document.Application.Selection.Text = day.Date.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("en-GB"));//, inputCulture);
                 if (Find(document, MergeFieldDayLocation))
                     document.Application.Selection.Text = day.Location;
                 if (Find(document, MergeFieldPageBreak))
