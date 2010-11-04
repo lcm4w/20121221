@@ -963,7 +963,7 @@ namespace TourWriter
                 var cultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures).
                     Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
 
-                if (cultureInfo == null) ShowError("Currency Code not valid: " + currencyCode + ". Check that it is a valid ISO 4217 code.");
+                if (cultureInfo != null) //ShowError("Currency Code not valid: " + currencyCode + ". Check that it is a valid ISO 4217 code.");
 
                 return cultureInfo;
             }
