@@ -648,11 +648,15 @@ namespace TourWriter.Modules.ItineraryModule
                 if (hasBookings)
                 {
                     DateKickerForm dateKicker = new DateKickerForm(itinerarySet, dayOffset, true);
-                    if(dateKicker.ShowDialog() != DialogResult.OK)
+                    if(dateKicker.ShowDialog() == DialogResult.OK)
+                    {
+                        bookingsViewer.RefreshGrid();
+                        bookingsViewer.RecalculateFinalPricing();
+                    }
+                    else // reset dates
                     {
                         txtArriveDate.Value = ((DateTime) txtArriveDate.Value).AddDays(-(dayOffset));
-                        if (txtDepartDate.Value != null)
-                            txtDepartDate.Value = ((DateTime)txtDepartDate.Value).AddDays(-(dayOffset));
+                        if (txtDepartDate.Value != null) txtDepartDate.Value = ((DateTime)txtDepartDate.Value).AddDays(-(dayOffset));
                     }
                 }
                 // sync datasource

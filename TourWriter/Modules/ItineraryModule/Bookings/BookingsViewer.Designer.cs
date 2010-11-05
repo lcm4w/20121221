@@ -181,7 +181,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.TabIndex = 0;
             this.grid.Text = "ultraGrid1";
             this.grid.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
-            this.grid.BeforeCellUpdate += new Infragistics.Win.UltraWinGrid.BeforeCellUpdateEventHandler(this.grid_BeforeCellUpdate);
+            grid.BeforeExitEditMode += new Infragistics.Win.UltraWinGrid.BeforeExitEditModeEventHandler(this.grid_BeforeExitEditMode);
             this.grid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDown);
             this.grid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grid_MouseUp);
             this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);

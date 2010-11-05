@@ -1190,7 +1190,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void btnMoveDates_Click(object sender, EventArgs e)
         {
             DateKickerForm dateKicker = new DateKickerForm(itinerarySet, 0, false);
-            dateKicker.ShowDialog();
+            if (dateKicker.ShowDialog() == DialogResult.OK)
+            {
+                RefreshGrid();
+                RecalculateFinalPricing();
+            }
         }
 
         private void btnResetGrid_Click(object sender, EventArgs e)
@@ -1278,28 +1282,37 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private void grid_BeforeCellUpdate(object sender, BeforeCellUpdateEventArgs e)
+
+
+        private void grid_BeforeExitEditMode(object sender, Infragistics.Win.UltraWinGrid.BeforeExitEditModeEventArgs e)
         {
-            // update booking rates when date changes
-            if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved.Value != DBNull.Value)
+            var activeCell = grid.ActiveCell;
+            if (activeCell != null && activeCell.Column.Key == "StartDate")
             {
-                if (App.AskYesNo("Auto-update rate also?"))
+                DateTime newDate, origDate;
+                if (activeCell.Value != null && !(activeCell.Value is DBNull) &&
+                    activeCell.EditorResolved != null && !(activeCell.EditorResolved.Value is DBNull) && 
+                    DateTime.TryParse(activeCell.EditorResolved.Value.ToString(), out newDate) &&
+                    DateTime.TryParse(activeCell.Value.ToString(), out origDate) &&
+                    newDate != origDate &&
+                    App.AskYesNo("Auto-update rate also?"))
                 {
-                    e.Cancel = true; // let the date kicker handle the date change
-
-                    int delta = (((DateTime)e.NewValue).Date -
-                                ((DateTime)e.Cell.Row.Cells["StartDate"].Value).Date).Days;
-
-                    DateKickerForm dateKicker = new DateKickerForm(itinerarySet, delta, true);
-                    dateKicker.SetSelectedRow((int)e.Cell.Row.Cells["PurchaseItemID"].Value);
-                    dateKicker.ShowDialog();
+                    var delta = (newDate.Date - origDate.Date).Days;
+                    var dateKicker = new DateKickerForm(itinerarySet, delta, true);
+                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value);
+                    if (dateKicker.ShowDialog() == DialogResult.OK)
+                    {
+                        RecalculateFinalPricing();
+                        RefreshGrid();
+                    }
                 }
             }
         }
 
         private void grid_AfterCellListCloseUp(object sender, CellEventArgs e)
         {
-            if (e.Cell.Column.Key == "StartDate") e.Cell.Row.Update(); // fire immediate update
+            if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved != null) 
+                e.Cell.EditorResolved.ExitEditMode(true, true);
         }
 
         private void BookingsViewer_Leave(object sender, EventArgs e)
