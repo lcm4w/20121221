@@ -47,6 +47,7 @@ namespace TourWriter.Modules.SupplierModule
             ApplyLicenseStatus();
             tabsAdditional.Tabs["Reports"].Visible = App.ShowOldReports;
             tabsAdditional.Tabs["Content"].Visible = App.ShowNewPublishing;
+            tabsAdditional.Tabs["Export"].Visible = false;
         }
 
         public void ApplyLicenseStatus()
