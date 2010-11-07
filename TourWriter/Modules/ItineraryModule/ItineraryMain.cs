@@ -226,6 +226,11 @@ namespace TourWriter.Modules.ItineraryModule
                     int id = navigationTreeItem.ItemID;
                     Itinerary i = new Itinerary();
                     itinerarySet.Merge(i.GetItinerarySet(id, ds), false);
+                    
+                    // refresh menu node (new itins might have name set from custom code in db when created)
+                    MenuNode.Visible = true;
+                    if (itinerarySet.Itinerary.Count > 0 && MenuNode.Text != itinerarySet.Itinerary[0].ItineraryName)
+                        MenuNode.Text = itinerarySet.Itinerary[0].ItineraryName; 
                 }
 
                 // end progress

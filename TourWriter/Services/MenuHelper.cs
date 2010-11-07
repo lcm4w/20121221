@@ -435,6 +435,7 @@ namespace TourWriter.Forms
 
 			// create menu node
 			UltraTreeNode node = Menu_BuildNode(info);
+            node.Visible = false; // hide until itin opens, to save double sorting if name changes (db can set name when created)
 			PlaceNewNode_ByPosition_AndSelect(positionNode, node);
 		}
 
