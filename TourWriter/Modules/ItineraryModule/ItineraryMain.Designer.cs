@@ -1136,7 +1136,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.headerLabel2.Size = new System.Drawing.Size(330, 16);
             this.headerLabel2.TabIndex = 133;
             this.headerLabel2.TextHAlign = Infragistics.Win.HAlign.Default;
-            this.headerLabel2.TextString = "Departure";
+            this.headerLabel2.TextString = "Itinerary End";
             this.headerLabel2.TextVAlign = Infragistics.Win.VAlign.Middle;
             // 
             // headerLabel1
@@ -1146,7 +1146,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.headerLabel1.Size = new System.Drawing.Size(340, 16);
             this.headerLabel1.TabIndex = 132;
             this.headerLabel1.TextHAlign = Infragistics.Win.HAlign.Default;
-            this.headerLabel1.TextString = "Arrival";
+            this.headerLabel1.TextString = "Itinerary Start";
             this.headerLabel1.TextVAlign = Infragistics.Win.VAlign.Middle;
             // 
             // label19
@@ -1211,7 +1211,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 32);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Arrival Note";
+            this.label5.Text = "Note";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label4
@@ -1243,7 +1243,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(40, 32);
             this.label6.TabIndex = 8;
-            this.label6.Text = "Depart Note";
+            this.label6.Text = "Note";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label7
