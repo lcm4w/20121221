@@ -191,6 +191,11 @@ namespace TourWriter.Modules.SupplierModule
 
                 // refresh supplier
                 Supplier s = new Supplier();
+                if (supplierSet.Supplier.Count == 0)
+                {
+                    App.ShowError("Supplier may not have opened, please close and open again");
+                    return;
+                }
                 SupplierSet fresh = s.GetSupplierSet(supplierSet.Supplier[0].SupplierID);
 
                 // clear current and merge to maintain databindings

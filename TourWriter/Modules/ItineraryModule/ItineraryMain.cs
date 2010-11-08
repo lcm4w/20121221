@@ -548,6 +548,11 @@ namespace TourWriter.Modules.ItineraryModule
 
                 // refresh itinerary
                 Itinerary s = new Itinerary();
+                if (itinerarySet.Itinerary.Count == 0)
+                {
+                    App.ShowError("Itinerary may not have opened, please close and open again");
+                    return;
+                }
                 ItinerarySet fresh = s.GetItinerarySet(itinerarySet.Itinerary[0].ItineraryID, new ItinerarySet());
 
                 // clear current and merge to maintain databindings
