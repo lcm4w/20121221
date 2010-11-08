@@ -1568,6 +1568,7 @@
     <None Include="Resources\page_go.png" />
     <None Include="Resources\cut.png" />
     <None Include="Resources\page_paste.png" />
+    <Content Include="Resources\SaveClose.png" />
     <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />
     <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFinalPricing.txt" />
     <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFullPricing.txt" />

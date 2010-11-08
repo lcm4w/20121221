@@ -82,6 +82,7 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 menuSave.Enabled = false;
                 toolSave.Enabled = false;
+                toolSaveClose.Enabled = false;
                 menuRefresh.Enabled = false;
                 toolRefresh.Enabled = false;
             }
@@ -171,6 +172,7 @@ namespace TourWriter.Modules.ItineraryModule
             Application.DoEvents();
 
             toolSave.Enabled = toolSave.Enabled && !isReadOnlyChecked;
+            toolSaveClose.Enabled = toolSaveClose.Enabled && !isReadOnlyChecked;
             menuSave.Enabled = menuSave.Enabled && !isReadOnlyChecked;
             toolRefresh.Enabled = toolRefresh.Enabled && !isReadOnlyChecked;
             menuRefresh.Enabled = menuRefresh.Enabled && !isReadOnlyChecked;
@@ -276,6 +278,7 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     SaveDataChanges();
                     toolSave.Enabled = false;
+                    toolSaveClose.Enabled = false;
                 }
                 else
                 {
@@ -286,6 +289,7 @@ namespace TourWriter.Modules.ItineraryModule
             else
             {
                 toolSave.Enabled = true;
+                toolSaveClose.Enabled = true;
             }
         }
 
@@ -1107,6 +1111,12 @@ namespace TourWriter.Modules.ItineraryModule
         private void menuRefresh_Click(object sender, EventArgs e)
         {
             ItinerarySet_Refresh();
+        }
+
+        private void menuSaveClose_Click(object sender, EventArgs e)
+        {
+            SaveDataChanges();
+            Close();
         }
 
         private void menuClose_Click(object sender, EventArgs e)

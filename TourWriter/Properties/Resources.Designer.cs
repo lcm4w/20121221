@@ -396,6 +396,13 @@ namespace TourWriter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SaveClose {
+            get {
+                object obj = ResourceManager.GetObject("SaveClose", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Splash {
             get {
                 object obj = ResourceManager.GetObject("Splash", resourceCulture);

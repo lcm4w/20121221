@@ -215,6 +215,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolSave = new System.Windows.Forms.ToolStripButton();
             this.toolRefresh = new System.Windows.Forms.ToolStripButton();
+            this.toolSaveClose = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.ultraTabPageControl12.SuspendLayout();
@@ -1689,6 +1690,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolStripSeparator3,
             this.toolSave,
             this.toolRefresh,
+            this.toolSaveClose,
             this.toolHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 64);
             this.toolStrip1.Name = "toolStrip1";
@@ -1707,7 +1709,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolSave.Name = "toolSave";
             this.toolSave.Size = new System.Drawing.Size(51, 22);
             this.toolSave.Text = "&Save";
-            this.toolSave.ToolTipText = "Save changes";
+            this.toolSave.ToolTipText = "Save changes (CTRL+S)";
             this.toolSave.Click += new System.EventHandler(this.menuSave_Click);
             // 
             // toolRefresh
@@ -1719,6 +1721,15 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolRefresh.Text = "&Refresh";
             this.toolRefresh.ToolTipText = "Refresh data";
             this.toolRefresh.Click += new System.EventHandler(this.menuRefresh_Click);
+            // 
+            // toolSave
+            // 
+            this.toolSaveClose.Image = ((System.Drawing.Image)(resources.GetObject("toolSaveClose.Image")));
+            this.toolSaveClose.Name = "toolSave";
+            this.toolSaveClose.Size = new System.Drawing.Size(51, 22);
+            this.toolSaveClose.Text = "Save && &Close";
+            this.toolSaveClose.ToolTipText = "Save and Close Itinerary";
+            this.toolSaveClose.Click += new System.EventHandler(this.menuSaveClose_Click);
             // 
             // toolHelp
             // 
@@ -1901,6 +1912,7 @@ namespace TourWriter.Modules.ItineraryModule
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripButton toolSave;
         private ToolStripButton toolRefresh;
+        private ToolStripButton toolSaveClose;
         private ToolStripButton toolHelp;
         private ToolStripSeparator toolStripSeparator1;
         private BindingSource itinerarySourceBindingSource;

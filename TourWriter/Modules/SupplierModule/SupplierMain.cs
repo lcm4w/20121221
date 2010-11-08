@@ -56,6 +56,7 @@ namespace TourWriter.Modules.SupplierModule
             {
                 menuSave.Enabled = false;
                 toolSave.Enabled = false;
+                toolSaveClose.Enabled = false;
                 menuRefresh.Enabled = false;
                 toolRefresh.Enabled = false;
             }
@@ -1438,6 +1439,12 @@ namespace TourWriter.Modules.SupplierModule
         private void menuRefresh_Click(object sender, EventArgs e)
         {
             RefreshData();
+        }
+
+        private void menuSaveClose_Click(object sender, EventArgs e)
+        {
+            SaveDataChanges();
+            Close();
         }
 
         private void menuClose_Click(object sender, EventArgs e)
