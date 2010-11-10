@@ -1299,7 +1299,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     var delta = (newDate.Date - origDate.Date).Days;
                     var dateKicker = new DateKickerForm(itinerarySet, delta, true);
-                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value);
+                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value, true);
                     if (dateKicker.ShowDialog() == DialogResult.OK)
                     {
                         RecalculateFinalPricing();

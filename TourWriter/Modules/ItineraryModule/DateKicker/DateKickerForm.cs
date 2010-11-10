@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -41,9 +42,21 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
             gridBookings.DataSource = purchaseItemTable;
         }
 
-        public void SetSelectedRow(int purchaseItemId)
+        public void SetSelectedRow(int purchaseItemId, bool selectFollowingBookings)
         {
-            SetSelectedRows(new List<int> {purchaseItemId});
+            if (!selectFollowingBookings)
+                SetSelectedRows(new List<int> {purchaseItemId});
+            else
+            {
+                var item = purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == purchaseItemId).FirstOrDefault();
+                if (item != null)
+                {
+                    var items = purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted &&
+                        (x == item || x.StartDate > item.StartDate || (x.StartDate == item.StartDate && x.PurchaseItemID > purchaseItemId))).
+                        Select(x => x.PurchaseItemID);
+                    SetSelectedRows(items.ToList());
+                }
+            }
         }
 
         public void SetSelectedRows(List<int> purchaseItemIdList)
@@ -349,6 +362,10 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     c.Format = App.GetLocalShortDateFormat();
                     c.EditorControl = new UltraTextEditor();
                 }
+                else if (c.Key == "NumberOfDays")
+                {
+                    c.Header.Caption = "Days/Nts";
+                }
                 else if (c.Key == "OldNet")
                 {
                     c.Width = 80;
@@ -377,6 +394,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["OldDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["StartDate"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["OldNet"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Net"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Result"].Header.VisiblePosition = index;
