@@ -125,6 +125,13 @@ namespace TourWriter.Modules.SupplierModule
         private void cmbTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
             srcContentTypes.EndEdit();
+
+            // TODO: for TravelEssence, set name to type
+            if (Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower())
+            {
+                txtNames.Text = cmbTypes.Text;
+                srcContents.EndEdit();
+            }
         }
     }
 }
