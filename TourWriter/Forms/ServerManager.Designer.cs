@@ -103,6 +103,7 @@ namespace TourWriter.Forms
             this.txtRemoteConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtRemoteConnection.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRemoteConnection.Location = new System.Drawing.Point(16, 195);
             this.txtRemoteConnection.Multiline = true;
             this.txtRemoteConnection.Name = "txtRemoteConnection";
