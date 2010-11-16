@@ -758,8 +758,7 @@ namespace TourWriter.Modules.SupplierModule
         private void linkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (gridServices.ActiveRow == null) return;
-            var service = supplierSet.Service.FindByServiceID((int)gridServices.ActiveRow.Cells["ServiceID"].Value);
-            var termsEditor = new PaymentTermsEditor(App.GetCultureInfo(service.CurrencyCode));
+            var termsEditor = new PaymentTermsEditor();
             InitializePaymentTermsEditor(termsEditor);
             OpenPaymentTermsEditor(termsEditor);
             UpdatePaymentTermCustomText();

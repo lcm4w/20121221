@@ -6,12 +6,12 @@ namespace TourWriter.Info
 
     public class DepositTypeList
     {
-        public static List<DepositType> GetDepositTypes(CultureInfo cultureInfo)
+        public static List<DepositType> GetDepositTypes()
         {
             return new List<DepositType>
                        {
-                           new DepositType('c', cultureInfo.NumberFormat.CurrencySymbol),
-                           new DepositType('p', cultureInfo.NumberFormat.PercentSymbol)
+                           new DepositType('c', "fixed amount"),
+                           new DepositType('p', "percentage")
                        };
         }
     }

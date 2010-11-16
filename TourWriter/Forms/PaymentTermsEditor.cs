@@ -71,7 +71,7 @@ namespace TourWriter.Forms
 
         #endregion
 
-        public PaymentTermsEditor(CultureInfo cultureInfo)
+        public PaymentTermsEditor()
         {
             InitializeComponent();
 
@@ -79,7 +79,7 @@ namespace TourWriter.Forms
             paymentDueBindingSource.DataSource = Cache.ToolSet.PaymentDue;
             paymentDueBindingSource2.DataSource = Cache.ToolSet.PaymentDue;
 
-            cmbDepositType.DataSource = DepositTypeList.GetDepositTypes(cultureInfo);
+            cmbDepositType.DataSource = DepositTypeList.GetDepositTypes();
             cmbDepositType.DisplayMember = "Text";
             cmbDepositType.ValueMember = "ID";
 

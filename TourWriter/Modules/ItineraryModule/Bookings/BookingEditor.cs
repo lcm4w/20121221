@@ -847,7 +847,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 int purchaseItemID = (int)gridItems.ActiveRow.Cells["PurchaseItemID"].Value;
                 ItinerarySet.PurchaseItemRow item = itinerarySet.PurchaseItem.FindByPurchaseItemID(purchaseItemID);
-                PaymentTermsEditor termsEditor = new PaymentTermsEditor(App.GetCultureInfo(item.CurrencyCode));
+                PaymentTermsEditor termsEditor = new PaymentTermsEditor();
                 InitializePaymentTermsEditor(termsEditor);
                 OpenPaymentTermsEditor(termsEditor);
 

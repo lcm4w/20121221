@@ -156,7 +156,7 @@ namespace TourWriter.Forms
             this.cmbDepositType.FormattingEnabled = true;
             this.cmbDepositType.Location = new System.Drawing.Point(140, 49);
             this.cmbDepositType.Name = "cmbDepositType";
-            this.cmbDepositType.Size = new System.Drawing.Size(40, 21);
+            this.cmbDepositType.Size = new System.Drawing.Size(150, 21);
             this.cmbDepositType.TabIndex = 10;
             // 
             // chkDepositRequired
