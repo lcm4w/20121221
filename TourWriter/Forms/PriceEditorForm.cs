@@ -59,21 +59,21 @@ namespace TourWriter.Dialogs
             }
             else lblCurrencyInfo.Visible = false;
 
-            var cultureInfo = App.GetCultureInfo(currencyCode);
-            if (cultureInfo == null) throw new NullReferenceException("CultureInfo not found for currencyCode: " + currencyCode);
-            txtNet.FormatProvider = cultureInfo;
-            txtGross.FormatProvider = cultureInfo;
-            txtMarkup.FormatProvider = cultureInfo;
-            txtCommission.FormatProvider = cultureInfo;
+            //var cultureInfo = App.GetCultureInfo(currencyCode);
+            //if (cultureInfo == null) throw new NullReferenceException("CultureInfo not found for currencyCode: " + currencyCode);
+            //txtNet.FormatProvider = cultureInfo;
+            //txtGross.FormatProvider = cultureInfo;
+            //txtMarkup.FormatProvider = cultureInfo;
+            //txtCommission.FormatProvider = cultureInfo;
 
-            txtMarkup.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
-            txtMarkup.MaskInput = "{LOC}-nnnn.nn";
-            txtNet.FormatString = "c";
-            txtNet.MaskInput = "{LOC}-nnnnnnnnnn.nn";
-            txtGross.FormatString = "c";
-            txtGross.MaskInput = "{LOC}-nnnnnnnnnn.nn";
-            txtCommission.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
-            txtCommission.MaskInput = "{LOC}-nnnn.nn";
+            //txtMarkup.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
+            //txtMarkup.MaskInput = "{LOC}-nnnn.nn";
+            //txtNet.FormatString = "c";
+            //txtNet.MaskInput = "{LOC}-nnnnnnnnnn.nn";
+            //txtGross.FormatString = "c";
+            //txtGross.MaskInput = "{LOC}-nnnnnnnnnn.nn";
+            //txtCommission.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
+            //txtCommission.MaskInput = "{LOC}-nnnn.nn";
         }
 
         private void CostingDialog_Load(object sender, EventArgs e)

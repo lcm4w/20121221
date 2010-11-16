@@ -53,6 +53,8 @@ namespace TourWriter.Dialogs
             this.ultraGroupBox2 = new Infragistics.Win.Misc.UltraGroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarkup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGross)).BeginInit();
@@ -172,6 +174,8 @@ namespace TourWriter.Dialogs
             // 
             // ultraGroupBox1
             // 
+            this.ultraGroupBox1.Controls.Add(this.label3);
+            this.ultraGroupBox1.Controls.Add(this.label2);
             this.ultraGroupBox1.Controls.Add(this.pnlRounding);
             this.ultraGroupBox1.Controls.Add(this.lblCurrencyInfo);
             this.ultraGroupBox1.Controls.Add(this.txtMarkup);
@@ -249,16 +253,19 @@ namespace TourWriter.Dialogs
             // lblCurrencyInfo
             // 
             this.lblCurrencyInfo.AutoSize = true;
-            this.lblCurrencyInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrencyInfo.Location = new System.Drawing.Point(79, 14);
+            this.lblCurrencyInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrencyInfo.ForeColor = System.Drawing.Color.Blue;
+            this.lblCurrencyInfo.Location = new System.Drawing.Point(99, 14);
             this.lblCurrencyInfo.Name = "lblCurrencyInfo";
-            this.lblCurrencyInfo.Size = new System.Drawing.Size(91, 13);
+            this.lblCurrencyInfo.Size = new System.Drawing.Size(78, 13);
             this.lblCurrencyInfo.TabIndex = 128;
             this.lblCurrencyInfo.Text = "Currency: NZD";
+            this.lblCurrencyInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // grpOption
             // 
             this.grpOption.BackColor = System.Drawing.Color.Transparent;
+            this.grpOption.BackColorInternal = System.Drawing.Color.Transparent;
             this.grpOption.BorderStyle = Infragistics.Win.UIElementBorderStyle.None;
             valueListItem1.DataValue = "";
             valueListItem1.DisplayText = "<Net and Markup>";
@@ -297,6 +304,26 @@ namespace TourWriter.Dialogs
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(420, 223);
             this.panel2.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(176, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(15, 13);
+            this.label2.TabIndex = 130;
+            this.label2.Text = "%";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(176, 109);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(15, 13);
+            this.label3.TabIndex = 131;
+            this.label3.Text = "%";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PriceEditorForm
             // 
@@ -355,5 +382,7 @@ namespace TourWriter.Dialogs
         private System.Windows.Forms.CheckBox chkRoundTen;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.CheckBox chkRoundFive;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
