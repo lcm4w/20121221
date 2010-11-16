@@ -574,12 +574,12 @@ namespace TourWriter.Modules.SupplierModule
             else lblCurrencyInfo.Visible = false;
 
             // Set currency symbol.
-            var cultureInfo = App.GetCultureInfo(currencyCode);
-            gridOptions.DisplayLayout.Bands[0].Columns["Net"].FormatInfo = cultureInfo;
-            gridOptions.DisplayLayout.Bands[0].Columns["Gross"].FormatInfo = cultureInfo;
-            gridOptions.DisplayLayout.Bands[0].Columns["Markup"].FormatInfo = cultureInfo;
-            gridOptions.DisplayLayout.Bands[0].Columns["Commission"].FormatInfo = cultureInfo;
-            gridOptions.Refresh();
+            //var cultureInfo = App.GetCultureInfo(currencyCode);
+            //gridOptions.DisplayLayout.Bands[0].Columns["Net"].FormatInfo = cultureInfo;
+            //gridOptions.DisplayLayout.Bands[0].Columns["Gross"].FormatInfo = cultureInfo;
+            //gridOptions.DisplayLayout.Bands[0].Columns["Markup"].FormatInfo = cultureInfo;
+            //gridOptions.DisplayLayout.Bands[0].Columns["Commission"].FormatInfo = cultureInfo;
+            //gridOptions.Refresh();
         }
 
         private void UpdateServiceTypeConfigs(int serviceId, int serviceTypeId, bool deleteExistingConfigsForService)
@@ -1403,7 +1403,7 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     c.Header.ToolTipText = "Net price";
                     c.Width = 30;
-                    c.Format = "c";
+                    c.Format = "##0.00";// "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellAppearance.ForeColor = SystemColors.ControlDarkDark;
                     if (!allowEditing)
@@ -1433,7 +1433,7 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     c.Header.ToolTipText = "Gross price";
                     c.Width = 30;
-                    c.Format = "c";
+                    c.Format = "##0.00";// "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellAppearance.ForeColor = SystemColors.ControlDarkDark;
                     if (!allowEditing)
@@ -1525,9 +1525,9 @@ namespace TourWriter.Modules.SupplierModule
                 decimal net = (decimal)e.Row.Cells["Net"].Value;
                 decimal gross = (decimal)e.Row.Cells["Gross"].Value;
                 e.Row.Cells["Markup"].Value =
-                    TourWriter.Info.Services.Common.CalcMarkupByNetGross(net, gross);
+                    Info.Services.Common.CalcMarkupByNetGross(net, gross);
                 e.Row.Cells["Commission"].Value =
-                    TourWriter.Info.Services.Common.CalcCommissionByNetGross(net, gross);
+                    Info.Services.Common.CalcCommissionByNetGross(net, gross);
             }
         }
 
