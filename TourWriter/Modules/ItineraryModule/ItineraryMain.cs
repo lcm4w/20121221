@@ -74,6 +74,8 @@ namespace TourWriter.Modules.ItineraryModule
 
             ApplyLicenseStatus();
             if (!App.ShowOldReports) tabControlAdditional.Tabs["Reports"].Visible = false;
+
+            tabControlAdditional.SelectedTabChanging += tabControlAdditional_SelectedTabChanging;
         }
 
         public void ApplyLicenseStatus()
@@ -87,26 +89,7 @@ namespace TourWriter.Modules.ItineraryModule
                 toolRefresh.Enabled = false;
             }
         }
-
-        void tabControl_Main_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
-        {
-            if (e.Tab.Key == "Additional")
-            {
-                if (tabControlAdditional.SelectedTab.Key == "Accounting")
-                {
-                    RefreshAccounting();
-                }
-            }
-        }
-
-        private void tabControlAdditional_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
-        {
-            if (e.Tab.Key == "Accounting")
-            {
-                RefreshAccounting();
-            }
-        }
-
+        
         private void RefreshAccounting()
         {
             CommitOpenEdits();
@@ -634,23 +617,13 @@ namespace TourWriter.Modules.ItineraryModule
             SetDataDirtyName();
         }
 
-        private void tabControlAdditional_SelectedTabChanging(object sender, SelectedTabChangingEventArgs e)
-        {
-            if (e.Tab.Key == "Accounting")
-            {
-                if (!AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingView) &&
-                    !AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingEdit))
-                {
-                    App.ShowError(App.GetResourceString("ShowPermissionDenied"));
-                    e.Cancel = true;
-                }
-            }
-        }
-
-
         private void HandleItineraryCurrencyChanged(string currencyCode)
         {
             SetItineraryCurrencyDisplays(currencyCode);
+
+            // refresh reports param
+            if (reportControl.DefaultParameters.ContainsKey("@CultureCode")) reportControl.DefaultParameters.Remove("@CultureCode");
+            reportControl.DefaultParameters.Add("@CultureCode", App.GetCultureInfo(CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0])).Name);
 
             var currs = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && !string.IsNullOrEmpty(x.CurrencyCode) && x.CurrencyCode != currencyCode);
             if (currs.Count() > 0)
@@ -773,7 +746,6 @@ namespace TourWriter.Modules.ItineraryModule
             }
         }
 
-
         private void txtArriveDate_CloseUp(object sender, EventArgs e)
         {
             Validate();
@@ -783,7 +755,58 @@ namespace TourWriter.Modules.ItineraryModule
         {
             Validate();
         }
+        
+        private void txtDepartDate_Enter(object sender, EventArgs e)
+        {
+            if (txtDepartDate.Value != null) return;
 
+            // default to arrive date
+            var binding = txtDepartDate.DataBindings[0];
+            txtDepartDate.DataBindings.Clear();
+            txtDepartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
+            txtDepartDate.DataBindings.Add(binding);
+        }
+
+        private void cmbCurrency_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            var newCode = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : "";
+            itinerarySet.Itinerary[0].BaseCurrency = newCode != "" ? newCode : null; // force binding
+            bookingsViewer.RefreshGrid();
+            HandleItineraryCurrencyChanged(newCode);
+        }
+        
+        private void tabControlAdditional_SelectedTabChanging(object sender, SelectedTabChangingEventArgs e)
+        {
+            if (e.Tab.Key == "Accounting")
+            {
+                if (!AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingView) &&
+                    !AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingEdit))
+                {
+                    App.ShowError(App.GetResourceString("ShowPermissionDenied"));
+                    e.Cancel = true;
+                }
+            }
+        }
+        
+        void tabControl_Main_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
+        {
+            if (e.Tab.Key == "Additional")
+            {
+                if (tabControlAdditional.SelectedTab.Key == "Accounting")
+                {
+                    RefreshAccounting();
+                }
+            }
+        }
+
+        private void tabControlAdditional_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
+        {
+            if (e.Tab.Key == "Accounting")
+            {
+                RefreshAccounting();
+            }
+        }
+        
         #region Agent
         private bool HasOverrides()
         {
@@ -1200,24 +1223,5 @@ namespace TourWriter.Modules.ItineraryModule
         }
 
         #endregion
-
-        private void txtDepartDate_Enter(object sender, EventArgs e)
-        {
-            if (txtDepartDate.Value != null) return;
-
-            // default to arrive date
-            var binding = txtDepartDate.DataBindings[0];
-            txtDepartDate.DataBindings.Clear();
-            txtDepartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
-            txtDepartDate.DataBindings.Add(binding);
-        }
-        
-        private void cmbCurrency_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            var newCode = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : "";
-         //   itinerarySet.Itinerary.ColumnChanged
-//itinerarySet.Itinerary[0].BaseCurrency = newCode != "" ? newCode : null; // stupid fucking bindings, lets do their job for them
-            HandleItineraryCurrencyChanged(newCode);
-        }
     }
 }

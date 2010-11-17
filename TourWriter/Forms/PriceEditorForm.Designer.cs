@@ -253,7 +253,7 @@ namespace TourWriter.Dialogs
             // lblCurrencyInfo
             // 
             this.lblCurrencyInfo.AutoSize = true;
-            this.lblCurrencyInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrencyInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCurrencyInfo.ForeColor = System.Drawing.Color.Blue;
             this.lblCurrencyInfo.Location = new System.Drawing.Point(99, 14);
             this.lblCurrencyInfo.Name = "lblCurrencyInfo";

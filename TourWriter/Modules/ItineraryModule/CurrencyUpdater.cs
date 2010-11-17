@@ -25,7 +25,7 @@ namespace TourWriter.Modules.ItineraryModule
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
 
             _localCurrencyCode = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-           // purchaseItemTable.DefaultView.RowFilter = String.Format("CurrencyCode <> '{0}'", _localCurrencyCode);
+            // purchaseItemTable.DefaultView.RowFilter = String.Format("ToCurrency <> '{0}'", _localCurrencyCode);
             
             gridBookings.DataSource = purchaseItemTable.DefaultView;
 
@@ -48,8 +48,8 @@ namespace TourWriter.Modules.ItineraryModule
                 Cursor = Cursors.WaitCursor;
 
                 var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().Where(x => (bool)x.Cells["IsSelected"].Value);
-                var toFromCurrencies = selectedRows.Select(x => x.Cells["CurrencyCode"].Value.ToString()).Distinct().
-                    Select(x => new CurrencyService.Currency { FromCurrency = x, ToCurrency = _localCurrencyCode }).ToList();
+                var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
+                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = _localCurrencyCode }).ToList();
 
                 foreach (var r in selectedRows) // reset status
                 {
@@ -66,7 +66,7 @@ namespace TourWriter.Modules.ItineraryModule
                 foreach (var c in toFromCurrencies)
                 {
                     var currency = c;
-                    var updateRows = selectedRows.Where(x => x.Cells["CurrencyCode"].Value.ToString() == currency.FromCurrency);
+                    var updateRows = selectedRows.Where(x => x.Cells["FromCurrency"].Value.ToString() == currency.FromCurrency);
                     foreach (var row in updateRows)
                     {
                         var noAdjust = c.Rate == 1 && c.FromCurrency.Trim().ToLower() == c.ToCurrency.Trim().ToLower();
@@ -131,8 +131,10 @@ namespace TourWriter.Modules.ItineraryModule
         {
             if (!e.Layout.Bands[0].Columns.Exists("IsSelected"))
                 e.Layout.Bands[0].Columns.Add("IsSelected");
-            if (!e.Layout.Bands[0].Columns.Exists("BaseCurrency"))
-                e.Layout.Bands[0].Columns.Add("BaseCurrency");
+            if (!e.Layout.Bands[0].Columns.Exists("FromCurrency"))
+                e.Layout.Bands[0].Columns.Add("FromCurrency");
+            if (!e.Layout.Bands[0].Columns.Exists("ToCurrency"))
+                e.Layout.Bands[0].Columns.Add("ToCurrency");
             if (!e.Layout.Bands[0].Columns.Exists("Result"))
                 e.Layout.Bands[0].Columns.Add("Result");
             if (!e.Layout.Bands[0].Columns.Exists("PurchaseLineName"))
@@ -177,17 +179,17 @@ namespace TourWriter.Modules.ItineraryModule
                     c.Width = 120;
                     c.Header.Caption = "Item description";
                 }
-                else if (c.Key == "BaseCurrency")
+                else if (c.Key == "FromCurrency")
                 {
                     c.Width = 80;
                     c.Header.Caption = "From";
-                    c.Header.ToolTipText = "Base currency of the itinerary";
+                    c.Header.ToolTipText = "Service or booking currency";
                 }
-                else if (c.Key == "CurrencyCode")
+                else if (c.Key == "ToCurrency")
                 {
                     c.Width = 80;
                     c.Header.Caption = "To";
-                    c.Header.ToolTipText = "Currency of the booking or service";
+                    c.Header.ToolTipText = "Itinerary currency";
                 }
                 else if (c.Key == "OldRate")
                 {
@@ -218,8 +220,8 @@ namespace TourWriter.Modules.ItineraryModule
             e.Layout.Bands[0].Columns["IsSelected"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["PurchaseLineName"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["CurrencyCode"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["FromCurrency"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["ToCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["OldRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NewRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Result"].Header.VisiblePosition = index;
@@ -231,7 +233,7 @@ namespace TourWriter.Modules.ItineraryModule
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
 
             // default sort
-            e.Layout.Bands[0].SortedColumns.Add("CurrencyCode", false);
+            e.Layout.Bands[0].SortedColumns.Add("ToCurrency", false);
         }
 
         private void gridBookings_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -239,18 +241,18 @@ namespace TourWriter.Modules.ItineraryModule
             if (e.ReInitialize)
                 return;
 
-            int purchaseLineId = (int)e.Row.Cells["PurchaseLineID"].Value;
-            ItinerarySet.PurchaseLineRow purchaseLine =
-                itinerarySet.PurchaseLine.FindByPurchaseLineID(purchaseLineId);
+            var purchaseLineId = (int)e.Row.Cells["PurchaseLineID"].Value;
+            var purchaseLine = itinerarySet.PurchaseLine.FindByPurchaseLineID(purchaseLineId);
 
             e.Row.Cells["IsSelected"].Value = true;
             e.Row.Cells["Result"].ToolTipText = String.Empty;
             e.Row.Cells["PurchaseLineName"].Value = purchaseLine.PurchaseLineName;
-            e.Row.Cells["BaseCurrency"].Value = _localCurrencyCode;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
-            if (e.Row.Cells["CurrencyCode"].Value == DBNull.Value || string.IsNullOrEmpty(e.Row.Cells["CurrencyCode"].Value.ToString()))
-                e.Row.Cells["CurrencyCode"].Value = _localCurrencyCode;
+            e.Row.Cells["ToCurrency"].Value = _localCurrencyCode;
+
+            var hasCurr = e.Row.Cells["CurrencyCode"].Value != DBNull.Value && !string.IsNullOrEmpty(e.Row.Cells["CurrencyCode"].Value.ToString().Trim());
+            e.Row.Cells["FromCurrency"].Value = hasCurr ? e.Row.Cells["CurrencyCode"].Value.ToString() : _localCurrencyCode;
         }
 
         private void gridBookings_MouseClick(object sender, MouseEventArgs e)
