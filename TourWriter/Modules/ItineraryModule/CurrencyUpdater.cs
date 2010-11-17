@@ -69,8 +69,9 @@ namespace TourWriter.Modules.ItineraryModule
                     var updateRows = selectedRows.Where(x => x.Cells["CurrencyCode"].Value.ToString() == currency.FromCurrency);
                     foreach (var row in updateRows)
                     {
+                        var noAdjust = c.Rate == 1 && c.FromCurrency.Trim().ToLower() == c.ToCurrency.Trim().ToLower();
                         row.Cells["Result"].Appearance.Image = Resources.Tick;
-                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * adjust, 4);
+                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * (noAdjust ? 1 : adjust), 4);
                         if (!string.IsNullOrEmpty(c.ErrorMessage))
                         {
                             row.Cells["Result"].Value = c.ErrorMessage;
