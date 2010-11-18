@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2010.10.26')
+if ((select VersionNumber from AppSettings) <> '2010.10.31')
 	RAISERROR (N'Update script version is invalid for this db version',17,1)	
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
