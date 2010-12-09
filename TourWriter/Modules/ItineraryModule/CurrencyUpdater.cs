@@ -47,7 +47,8 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 Cursor = Cursors.WaitCursor;
 
-                var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().Where(x => (bool)x.Cells["IsSelected"].Value);
+                var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().
+                    Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
                 var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
                     Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = _localCurrencyCode }).ToList();
 
