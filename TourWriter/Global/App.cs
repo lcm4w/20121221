@@ -554,16 +554,26 @@ namespace TourWriter
         }
 
         /// <summary>
-        /// Set CurrentCulture of the application to the database setting if exists.
+        /// Set the default currency symbol to the base currency code.
         /// </summary>
-        internal static void SetCultureInfo()
+        internal static void SetBaseCurrency()
         {
             // var cultureInfo = new CultureInfo(1066); // Vietnamese Dong (VND)
             // http://stackoverflow.com/questions/1071273/currency-formatting/1071302#1071302
+            // http://stackoverflow.com/questions/1389187/set-default-datetime-format-c
+
+
             if (Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull() || string.IsNullOrEmpty(Cache.ToolSet.AppSettings[0].CurrencyCode.Trim())) return;
-            var cultureInfo = App.GetCultureInfo(Cache.ToolSet.AppSettings[0].CurrencyCode);
-            Thread.CurrentThread.CurrentCulture = cultureInfo;
-            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
+            var code = Cache.ToolSet.AppSettings[0].CurrencyCode;
+            var ci = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == code).FirstOrDefault();
+            if (ci != null)
+            {
+                var clone = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                clone.NumberFormat.CurrencySymbol = ci.NumberFormat.CurrencySymbol;
+                Thread.CurrentThread.CurrentCulture = clone;
+            }
+            else ShowError("Failed to set base currency. CultureInfo not found for currency code: " + code + "\r\n\r\nUsing your default computer settings instead.");
         }
 
         /// <summary>
