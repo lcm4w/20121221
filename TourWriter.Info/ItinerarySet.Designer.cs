@@ -1691,8 +1691,6 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnBaseCurrency;
             
-            private global::System.Data.DataColumn columnOutputCurrency;
-            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryDataTable() {
@@ -2040,14 +2038,6 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn OutputCurrencyColumn {
-                get {
-                    return this.columnOutputCurrency;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2121,8 +2111,7 @@ namespace TourWriter.Info {
                         int AddedBy, 
                         byte[] RowVersion, 
                         bool IsDeleted, 
-                        string BaseCurrency, 
-                        string OutputCurrency) {
+                        string BaseCurrency) {
                 ItineraryRow rowItineraryRow = ((ItineraryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2163,8 +2152,7 @@ namespace TourWriter.Info {
                         AddedBy,
                         RowVersion,
                         IsDeleted,
-                        BaseCurrency,
-                        OutputCurrency};
+                        BaseCurrency};
                 if ((parentPaymentTermRowByPaymentTermItinerary != null)) {
                     columnValuesArray[19] = parentPaymentTermRowByPaymentTermItinerary[0];
                 }
@@ -2236,7 +2224,6 @@ namespace TourWriter.Info {
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnIsDeleted = base.Columns["IsDeleted"];
                 this.columnBaseCurrency = base.Columns["BaseCurrency"];
-                this.columnOutputCurrency = base.Columns["OutputCurrency"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2326,8 +2313,6 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnIsDeleted);
                 this.columnBaseCurrency = new global::System.Data.DataColumn("BaseCurrency", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBaseCurrency);
-                this.columnOutputCurrency = new global::System.Data.DataColumn("OutputCurrency", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOutputCurrency);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryID}, true));
                 this.columnItineraryID.AutoIncrement = true;
@@ -11371,22 +11356,6 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string OutputCurrency {
-                get {
-                    if (this.IsOutputCurrencyNull()) {
-                        return string.Empty;
-                    }
-                    else {
-                        return ((string)(this[this.tableItinerary.OutputCurrencyColumn]));
-                    }
-                }
-                set {
-                    this[this.tableItinerary.OutputCurrencyColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermItinerary"])));
@@ -11838,18 +11807,6 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBaseCurrencyNull() {
                 this[this.tableItinerary.BaseCurrencyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsOutputCurrencyNull() {
-                return this.IsNull(this.tableItinerary.OutputCurrencyColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetOutputCurrencyNull() {
-                this[this.tableItinerary.OutputCurrencyColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

@@ -94,8 +94,6 @@
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
               <xs:element name="BaseCurrency" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="BaseCurrency" msprop:Generator_ColumnVarNameInTable="columnBaseCurrency" msprop:Generator_ColumnPropNameInTable="BaseCurrencyColumn" msprop:Generator_UserColumnName="BaseCurrency" type="xs:string" minOccurs="0" />
-              <xs:element name="OutputCurrency" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="OutputCurrency" msprop:Generator_ColumnVarNameInTable="columnOutputCurrency" msprop:Generator_ColumnPropNameInTable="OutputCurrencyColumn" msprop:Generator_UserColumnName="OutputCurrency" type="xs:string" minOccurs="0" />
-
             </xs:sequence>
           </xs:complexType>
         </xs:element>
