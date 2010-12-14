@@ -153,11 +153,11 @@ namespace TourWriter.Info.Services
                 // deposit amount
                 if ((char)depositType == 'c')
                 {
-                    text += string.Format("{0:0.00} (fixed amount)", (decimal)depositAmount);
+                    text += string.Format("{0:f2} (fixed amount)", (decimal)depositAmount);
                 }
                 else if ((char)depositType == 'p')
                 {
-                    text += string.Format("{0:p} (percentage)", (decimal)depositAmount / 100);
+                    text += string.Format("{0:f2} % (percentage)", (decimal)depositAmount);
                 }
 
                 // deposit terms

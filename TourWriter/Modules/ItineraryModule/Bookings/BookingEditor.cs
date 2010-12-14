@@ -212,55 +212,43 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col1Width, HorizontalAlignment.Left);
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
-            ListViewItem listItem;
-            var cultureInfo = App.GetCultureInfo(itemRow.CurrencyCode);
-            var hasCurrencyInfo = (!itemRow.IsCurrencyCodeNull() && itemRow.CurrencyCode != "");
+            var currencyInfo = (!itemRow.IsCurrencyCodeNull() && itemRow.CurrencyCode != "")
+                                   ? string.Format(" ({0})", itemRow.CurrencyCode.ToUpper()) : "";
 
-            if (hasCurrencyInfo)
-            {
-                listItem = new ListViewItem();
-                listItem.Text = "Currency:";
-                listItem.SubItems.Add(itemRow.CurrencyCode);
-                listPrice.Items.Add(listItem);
-            }
-
-            listItem = new ListViewItem();
-            listItem.Text = "Net:";
-            listItem.SubItems.Add(string.Format(cultureInfo, "{0:C}", itemRow.Net));
+            var listItem = new ListViewItem {Text = "Net:"};
+            listItem.SubItems.Add(itemRow.Net.ToString("n2") + currencyInfo);
             listPrice.Items.Add(listItem);
 
-            listItem = new ListViewItem();
-            listItem.Text = "Markup:";
-            listItem.SubItems.Add(string.Format(cultureInfo, "{0:p}", itinerarySet.GetMarkup(itemRow.Net, itemRow.Gross) / 100));
+            listItem = new ListViewItem {Text = "Markup:"};
+            listItem.SubItems.Add(string.Format("{0:p}", itinerarySet.GetMarkup(itemRow.Net, itemRow.Gross) / 100));
             listPrice.Items.Add(listItem);
 
-            listItem = new ListViewItem();
-            listItem.Text = "Gross:";
-            listItem.SubItems.Add(string.Format(cultureInfo, "{0:C}", itemRow.Gross));
+            listItem = new ListViewItem {Text = "Gross:"};
+            listItem.SubItems.Add(itemRow.Gross.ToString("n2") + currencyInfo);
             listPrice.Items.Add(listItem);
 
-            listItem = new ListViewItem();
-            listItem.Text = "Commission:";
-            listItem.SubItems.Add(string.Format(cultureInfo, "{0:p}", itinerarySet.GetCommission(itemRow.Net, itemRow.Gross) / 100));
+            listItem = new ListViewItem {Text = "Commission:"};
+            listItem.SubItems.Add(string.Format("{0:p}", itinerarySet.GetCommission(itemRow.Net, itemRow.Gross) / 100));
             listPrice.Items.Add(listItem);
-
+            
             if (!itemRow.IsPaymentTermIDNull())
             {
-                listPrice.Items.Add(new ListViewItem("")); // blank line
+                listItem = new ListViewItem { Text = "Terms:" };
+                listPrice.Items.Add(listItem);
 
-                string depositTerms = itemRow.DepositTerms(Cache.ToolSet.PaymentDue);
-                if (!string.IsNullOrEmpty(depositTerms))
+                var terms = itinerarySet.PaymentTerm.FindByPaymentTermID(itemRow.PaymentTermID);
+                var text = Info.Services.Common.GetPaymentTermsFullText(terms.PaymentDueID, terms.PaymentDuePeriod,
+                                                             terms.DepositAmount,
+                                                             terms.DepositType,
+                                                             terms.DepositDueID, terms.DepositDuePeriod,
+                                                             Cache.ToolSet.PaymentDue);
+
+                foreach (var line in System.Text.RegularExpressions.Regex.Split(text, "\r\n"))
                 {
-                    listItem = new ListViewItem();
-                    listItem.Text = "Deposit:";
-                    listItem.SubItems.Add(depositTerms);
+                    listItem = new ListViewItem {Text = ""};
+                    listItem.SubItems.Add(line);
                     listPrice.Items.Add(listItem);
                 }
-
-                listItem = new ListViewItem();
-                listItem.Text = (!string.IsNullOrEmpty(depositTerms)) ? "Balance:" : "Payment:";
-                listItem.SubItems.Add(itemRow.PaymentTerms(Cache.ToolSet.PaymentDue));
-                listPrice.Items.Add(listItem);
             }
         }
 
