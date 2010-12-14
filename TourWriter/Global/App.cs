@@ -941,23 +941,22 @@ namespace TourWriter
         }
         
         /// <summary>
-        /// Gets the CultureInfo for a given Currency Code string. Eg: string.Format(GetCultureInfo("VND", "{0:C}", value);
+        /// Gets the culture code from: itinerary, or appsettings, or default "en-GB"
         /// </summary>
-        /// <param name="currencyCode"></param>
-        /// <returns>Matching CultureInfo, or default</returns>
-        internal static CultureInfo GetCultureInfo(string currencyCode)
+        /// <param name="itinerary"></param>
+        /// <returns></returns>
+        internal static CultureInfo GetBaseCultureInfo(DataSet itinerary)
         {
-            if (!string.IsNullOrEmpty(currencyCode))
-            {
-                if (currencyCode.Trim().ToUpper() == "EUR")
-                    return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(x => x.Name == "en-IE").FirstOrDefault();
-                
-                var cultureInfo = CultureInfo.GetCultures(CultureTypes.SpecificCultures).
-                    Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
+            const string code = "en-GB"; // default
 
-                if (cultureInfo != null) return cultureInfo;
-            }
-            return Thread.CurrentThread.CurrentCulture;
+            // TODO: introduce custom output culture codes -----------------------
+            //if (itinerary != null && itinerary is Info.ItinerarySet && !((Info.ItinerarySet)itinerary).Itinerary[0].IsBaseCultureCodeNull) 
+            //    code = ((Info.ItinerarySet)itinerary).Itinerary[0].BaseCultureCode;
+            //else if (!Cache.ToolSet.AppSettings[0].IsBaseCultureCodeNull)
+            //    code = Cache.ToolSet.AppSettings[0].BaseCultureCode;
+            // -------------------------------------------------------------------
+
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(x => x.Name == code).FirstOrDefault();
         }
 
         #endregion

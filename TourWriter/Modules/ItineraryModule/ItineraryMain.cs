@@ -140,7 +140,7 @@ namespace TourWriter.Modules.ItineraryModule
             publisher1.ItinerarySet = itinerarySet;
             accounting1.ItinerarySet = itinerarySet;
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
-            reportControl.DefaultParameters.Add("@CultureCode", App.GetCultureInfo(CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0])).Name);
+            reportControl.DefaultParameters.Add("@CultureCode", App.GetBaseCultureInfo(itinerarySet));
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
@@ -623,7 +623,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             // refresh reports param
             if (reportControl.DefaultParameters.ContainsKey("@CultureCode")) reportControl.DefaultParameters.Remove("@CultureCode");
-            reportControl.DefaultParameters.Add("@CultureCode", App.GetCultureInfo(CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0])).Name);
+            reportControl.DefaultParameters.Add("@CultureCode", App.GetBaseCultureInfo(itinerarySet));
 
             var currs = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && !string.IsNullOrEmpty(x.CurrencyCode) && x.CurrencyCode != currencyCode);
             if (currs.Count() > 0)
