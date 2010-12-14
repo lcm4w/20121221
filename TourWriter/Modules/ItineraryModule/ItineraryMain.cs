@@ -642,7 +642,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             var bookingGridText = ""; // default if same as base currency
             if (!string.IsNullOrEmpty(currencyCode) && currencyCode != CurrencyService.GetBaseCurrencyCode())
-                bookingGridText = "Base Currency: " + currencyCode;
+                bookingGridText = "Output Currency: " + currencyCode;
             bookingsViewer.SetItineraryCurrencyDisplays(bookingGridText);
         }
 
