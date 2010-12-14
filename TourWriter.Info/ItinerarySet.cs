@@ -569,45 +569,6 @@ namespace TourWriter.Info
                 get { return (!IsGrossNull() ? Gross : 0) * getUnitMultiplier(); }
             }
 
-            /// <summary>
-            /// Get the payment terms for a purchase item
-            /// </summary>
-            /// <param name="paymentDueTable">The payment terms data table</param>
-            /// <returns>The payment terms, or empty if none</returns>
-            public string PaymentTerms(ToolSet.PaymentDueDataTable paymentDueTable)
-            {
-                if (!IsPaymentTermIDNull())
-                {
-                    ItinerarySet itinerarySet = tablePurchaseItem.DataSet as ItinerarySet;
-                    if (itinerarySet != null)
-                    {
-                        PaymentTermRow paymentTerm = itinerarySet.PaymentTerm.FindByPaymentTermID(PaymentTermID);
-                        return paymentTerm.PaymentTermsText(paymentDueTable);
-                    }
-                }
-                return "";
-            }
-
-            /// <summary>
-            /// Get the deposit terms for a purchase item
-            /// </summary>
-            /// <param name="paymentDueTable">The payment terms data table</param>
-            /// <returns>The deposit terms, or empty if none</returns>
-            public string DepositTerms(ToolSet.PaymentDueDataTable paymentDueTable)
-            {
-                if (!IsPaymentTermIDNull())
-                {
-                    ItinerarySet itinerarySet = tablePurchaseItem.DataSet as ItinerarySet;
-                    if (itinerarySet != null)
-                    {
-                        PaymentTermRow paymentTerm = itinerarySet.PaymentTerm.FindByPaymentTermID(PaymentTermID);
-                        return paymentTerm.DepositTermsText(paymentDueTable);
-                    }
-                }
-                return "";
-            }
-
-
             private decimal calcTotalNetConverted()
             {
                 return NetTotal * (!IsCurrencyRateNull() ? CurrencyRate : 1);
@@ -642,54 +603,6 @@ namespace TourWriter.Info
                     (!IsDepositDueIDNull()) ? (int?)DepositDueID : null,
                     (!IsDepositDuePeriodNull()) ? (int?)DepositDuePeriod : null,
                     paymentDueTable);
-            }
-
-            /// <summary>
-            /// Gets a text representation of the payment terms data
-            /// </summary>
-            /// <param name="paymentDueTable">PaymentDue lookup table</param>
-            /// <returns>Payment terms</returns>
-            public string PaymentTermsText(ToolSet.PaymentDueDataTable paymentDueTable)
-            {
-                if (!IsPaymentDueIDNull())
-                {
-                    return string.Format("{0} {1}",
-                                          PaymentDuePeriod,
-                                          paymentDueTable.FindByPaymentDueID(PaymentDueID).PaymentDueName);
-                }
-                return "";
-            }
-
-            /// <summary>
-            /// Gets a text representation of the deposit terms data
-            /// </summary>
-            /// <param name="paymentDueTable">PaymentDue lookup table</param>
-            /// <returns>Deposit terms</returns>
-            public string DepositTermsText(ToolSet.PaymentDueDataTable paymentDueTable)
-            {
-                string text = String.Empty;
-
-                if (!IsDepositAmountNull())
-                {
-                    // deposit amount
-                    if (DepositType == 'c')
-                    {
-                        text += string.Format("{0:c}", DepositAmount);
-                    }
-                    else if (DepositType == 'p')
-                    {
-                        text += string.Format("{0:f2}%", DepositAmount);
-                    }
-
-                    // deposit terms
-                    if (!IsDepositDueIDNull())
-                    {
-                        text += string.Format(", {0} {1}",
-                                              DepositDuePeriod,
-                                              paymentDueTable.FindByPaymentDueID(DepositDueID).PaymentDueName);
-                    }
-                }
-                return text;
             }
         }
 
