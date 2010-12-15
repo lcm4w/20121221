@@ -22,7 +22,7 @@ namespace TourWriter.Services
         /// <summary>
         /// Gets the base Itinerary, TourWriter, or user currency
         /// </summary>
-        internal static string GetBaseCurrencyCode(ItinerarySet.ItineraryRow itinerary = null)
+        internal static string GetBaseCurrencyCode(ItinerarySet.ItineraryRow itinerary)
         {
             // itinerary base currency
             if (itinerary != null && !itinerary.IsBaseCurrencyNull()) return itinerary.BaseCurrency;
