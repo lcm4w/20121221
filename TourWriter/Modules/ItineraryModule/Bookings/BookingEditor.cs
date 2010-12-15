@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
@@ -237,12 +238,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 listPrice.Items.Add(listItem);
 
                 var terms = itinerarySet.PaymentTerm.FindByPaymentTermID(itemRow.PaymentTermID);
-                var text = Info.Services.Common.GetPaymentTermsFullText(terms.PaymentDueID, terms.PaymentDuePeriod,
-                                                             terms.DepositAmount,
-                                                             terms.DepositType,
-                                                             terms.DepositDueID, terms.DepositDuePeriod,
-                                                             Cache.ToolSet.PaymentDue);
-
+                var text = Info.Services.Common.GetPaymentTermsFullText( !terms.IsPaymentDueIDNull() ? terms.PaymentDueID : (int?)null,
+                                                                         !terms.IsPaymentDuePeriodNull() ? terms.PaymentDuePeriod : (int?)null,
+                                                                         !terms.IsDepositAmountNull() ? terms.DepositAmount : (decimal?)null,
+                                                                         !terms.IsDepositTypeNull() ? terms.DepositType : (char?)null,
+                                                                         !terms.IsDepositDueIDNull() ? terms.DepositDueID : (int?)null,
+                                                                         !terms.IsDepositDuePeriodNull() ? terms.DepositDuePeriod : (int?)null,
+                                                                         Cache.ToolSet.PaymentDue);
+               
                 foreach (var line in System.Text.RegularExpressions.Regex.Split(text, "\r\n"))
                 {
                     listItem = new ListViewItem {Text = ""};
@@ -574,6 +577,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (e.Layout.Bands.Exists("PurchaseItemPurchaseItemCharge"))
                 e.Layout.Bands["PurchaseItemPurchaseItemCharge"].Hidden = true;
 
+            if (!e.Layout.Bands[0].Columns.Exists("NetTotal"))
+                e.Layout.Bands[0].Columns.Add("NetTotal");
+            if (!e.Layout.Bands[0].Columns.Exists("BaseCurrency"))
+                e.Layout.Bands[0].Columns.Add("BaseCurrency");
+            if (!e.Layout.Bands[0].Columns.Exists("BookingCurrency"))
+                e.Layout.Bands[0].Columns.Add("BookingCurrency");
+
             // show/hide columns 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
@@ -624,19 +634,40 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellClickAction = CellClickAction.Edit;
                 }
-                else if (c.Key == "NetTotalConverted")
+                else if (c.Key == "NetTotal")
                 {
                     c.Header.Caption = "Net";
-                    c.Header.ToolTipText = "Total net cost of item, in your currency";
-                    c.Format = "c";
+                    c.Header.ToolTipText = "Total net cost of item, in their currency";
+                    c.Format = "#0.00";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
+                else if (c.Key == "BookingCurrency")
+                {
+                    c.Header.Caption = "Curr";
+                    c.Header.ToolTipText = "Currency of the item";
+                    c.CellActivation = Activation.NoEdit;
+                    c.TabStop = false;
+                }
+                //else if (c.Key == "NetTotalConverted")
+                //{
+                //    c.Header.Caption = "Final Net";
+                //    c.Header.ToolTipText = "Total net cost of item, in your currency";
+                //    c.Format = "c";
+                //    c.CellAppearance.TextHAlign = HAlign.Right;
+                //}
                 else if (c.Key == "GrossTotalConverted")
                 {
-                    c.Header.Caption = "Gross";
+                    c.Header.Caption = "Final Gross";
                     c.Header.ToolTipText = "Total gross cost of item, in your currency";
-                    c.Format = "c";
+                    c.Format = "#0.00";
                     c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+                else if (c.Key == "BaseCurrency")
+                {
+                    c.Header.Caption = "Curr";
+                    c.Header.ToolTipText = "Currency of the itinerary";
+                    c.CellActivation = Activation.NoEdit;
+                    c.TabStop = false;
                 }
                 else
                     c.Hidden = true;
@@ -649,8 +680,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["StartDate"].Width = 40;
             e.Layout.Bands[0].Columns["NumberOfDays"].Width = 10;
             e.Layout.Bands[0].Columns["Quantity"].Width = 10;
-            e.Layout.Bands[0].Columns["NetTotalConverted"].Width = 40;
+            e.Layout.Bands[0].Columns["NetTotal"].Width = 40;
+            e.Layout.Bands[0].Columns["BookingCurrency"].Width = 20;
+            //e.Layout.Bands[0].Columns["NetTotalConverted"].Width = 40;
             e.Layout.Bands[0].Columns["GrossTotalConverted"].Width = 40;
+            e.Layout.Bands[0].Columns["BaseCurrency"].Width = 20;
 
             int index = 0;
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
@@ -659,8 +693,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["StartDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["NetTotalConverted"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["GrossTotalConverted"].Header.VisiblePosition = index;
+            e.Layout.Bands[0].Columns["NetTotal"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["BookingCurrency"].Header.VisiblePosition = index++;
+            //e.Layout.Bands[0].Columns["NetTotalConverted"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["GrossTotalConverted"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
 
             //// appearance
             //e.Layout.AutoFitStyle = AutoFitStyle.ResizeAllColumns;
@@ -679,16 +716,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             GridHelper.SetDefaultGridAppearance(e);
             GridHelper.SetDefaultGroupByAppearance(e);
 
-            BookingsViewer.SetGridSummaries(e);
+            BookingsViewer.SetGridSummaries(e, CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]));
         }
 
         private void gridItems_InitializeRow(object sender, InitializeRowEventArgs e)
         {
             // disable the row if it has been exported to accounting
-            var isLocked = (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
-                            (bool) e.Row.Cells["IsLockedAccounting"].Value);
-
+            var isLocked = (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value && (bool) e.Row.Cells["IsLockedAccounting"].Value);
             e.Row.Activation = isLocked ? Activation.Disabled : Activation.AllowEdit;
+            
+            var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
+            var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == itemId).FirstOrDefault();
+            if (item == null) return;
+            if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal;
+
+            var baseCurrency = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
+            e.Row.Cells["BaseCurrency"].Value = baseCurrency;
+            e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? baseCurrency : item.CurrencyCode;
         }
 
         private void gridItems_AfterRowActivate(object sender, EventArgs e)

@@ -218,7 +218,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             grid.DisplayLayout.Bands[0].SummaryFooterCaption = _currencyDisplayText = text;
         }
 
-        internal static void SetGridSummaries(InitializeLayoutEventArgs e)
+        internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
         {
             UltraGridBand band = e.Layout.Bands[0];
             band.Override.BorderStyleSummaryValue = UIElementBorderStyle.None;
@@ -266,6 +266,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 summary.DisplayFormat = "{0:#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 summary.ToolTipText = "Total gross sum, in Itinerary currency";
+                summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
+                summary.SummaryDisplayArea = // fixed at bottom of grid
+                    SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
+            }
+
+            if (!band.Summaries.Exists("BaseCurrency"))
+            {
+                // Gross total.
+                summary = band.Summaries.Add(SummaryType.Formula, band.Columns["BaseCurrency"]);
+                summary.Key = "BaseCurrency";
+                summary.DisplayFormat = itineraryCurrencyCode;
+                summary.ToolTipText = "Output currency of the itinerary";
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
                 summary.SummaryDisplayArea = // fixed at bottom of grid
                     SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
@@ -936,7 +948,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;//.ResizeAllColumns;
 
-            SetGridSummaries(e);
+            SetGridSummaries(e, CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]));
         }
 
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
