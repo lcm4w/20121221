@@ -32,7 +32,8 @@ namespace TourWriter.Modules.DataExtract.UserControls
             {
                 return Global.Cache.ToolSet.AppSettings.Count > 0 && (
                        Global.Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "bbe982ab-c8e2-4db4-8eac-06801a810540".ToLower() ||    // sx
-                       Global.Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "49ad26fd-6582-493a-b998-b9ba244d082f".ToLower() );    // sx
+                       Global.Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "49ad26fd-6582-493a-b998-b9ba244d082f".ToLower() ||    // sx
+                       Global.Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "8a7e0397-40dc-4389-8a38-9e74a2c32e20".ToLower());     // sz
             }
         }
         
