@@ -118,6 +118,12 @@ namespace TourWriter.UserControls.Reports
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.Agent, "AgentID", "AgentName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
+                case "@ContactCategoryIDList":
+                    label.Text = "Contact Category";
+                    editor = new CheckBoxSet();
+                    (editor as CheckBoxSet).Initialise(Cache.ToolSet.ContactCategory, "ContactCategoryID", "ContactCategoryName", true);
+                    (editor as CheckBoxSet).CheckAll(true);
+                    break;
                 default:
                     Enabled = false;
                     throw new ArgumentException("Report sql parameter not recognised: " + SqlExpression.ParameterName);

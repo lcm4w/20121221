@@ -15,7 +15,7 @@ namespace TourWriter.UserControls.Reports
         private const string RegexRightMargin = @"(?<=<RightMargin>)\d*\.?\d+(?=cm</RightMargin>)";
         private const string RegexSpacing = "(?<=<TablixRow>\r\n\\s*<Height>)\\d*\\.?\\d+(?=cm</Height>\r\n\\s*<TablixCells>\r\n\\s*<TablixCell>\r\n\\s*<CellContents>\r\n\\s*<Textbox Name=\"SpacerCell\">)";
 
-        private const string RegexSqlExpression = @"(where|and|or) *\(? *(?<col>\w*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
+        private const string RegexSqlExpression = @"(where|and|or) *\(? *(?<col>[a-zA-Z.]*) (([a-zA-Z=<>!]* ){1,3})(?<param>@\w*) *\)?";
         #endregion
 
         private readonly string _rdlcFile;
