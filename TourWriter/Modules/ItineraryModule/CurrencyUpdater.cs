@@ -12,7 +12,6 @@ namespace TourWriter.Modules.ItineraryModule
 {
     public partial class CurrencyUpdater : Form
     {
-        private readonly string _baseCurrency;
         private readonly ItinerarySet itinerarySet;
         private readonly DataTable purchaseItemTable;
 
@@ -23,8 +22,6 @@ namespace TourWriter.Modules.ItineraryModule
 
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
-
-            _baseCurrency = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
             // purchaseItemTable.DefaultView.RowFilter = String.Format("ToCurrency <> '{0}'", _localCurrencyCode);
             
             gridBookings.DataSource = purchaseItemTable.DefaultView;
@@ -50,7 +47,7 @@ namespace TourWriter.Modules.ItineraryModule
                 var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().
                     Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
                 var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
-                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = _baseCurrency }).ToList();
+                    Select(from => new CurrencyService.Currency{FromCurrency = from, ToCurrency = CurrencyService.GetItineraryCurrencyCode(itinerarySet)}).ToList();
 
                 foreach (var r in selectedRows) // reset status
                 {
@@ -250,10 +247,8 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["PurchaseLineName"].Value = purchaseLine.PurchaseLineName;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
-            e.Row.Cells["ToCurrency"].Value = _baseCurrency;
-
-            var hasCurr = e.Row.Cells["CurrencyCode"].Value != DBNull.Value && !string.IsNullOrEmpty(e.Row.Cells["CurrencyCode"].Value.ToString().Trim());
-            e.Row.Cells["FromCurrency"].Value = hasCurr ? e.Row.Cells["CurrencyCode"].Value.ToString() : CurrencyService.GetBaseCurrencyCode(null);
+            e.Row.Cells["ToCurrency"].Value = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
+            e.Row.Cells["FromCurrency"].Value = CurrencyService.GetBookingCurrencyCode(e.Row.Cells["CurrencyCode"]);
         }
 
         private void gridBookings_MouseClick(object sender, MouseEventArgs e)

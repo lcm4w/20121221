@@ -215,7 +215,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private static string _currencyDisplayText = "";
         internal void SetItineraryCurrencyDisplays(string text)
         {
-            grid.DisplayLayout.Bands[0].Summaries["BaseCurrency"].DisplayFormat = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
+            grid.DisplayLayout.Bands[0].Summaries["BaseCurrency"].DisplayFormat = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
             grid.DisplayLayout.Bands[0].SummaryFooterCaption = _currencyDisplayText = text;
         }
 
@@ -949,7 +949,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;//.ResizeAllColumns;
 
-            SetGridSummaries(e, CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]));
+            SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCode(itinerarySet));
         }
 
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -1036,26 +1036,17 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     SetRowLocked(e.Row, false);
                     EnableDisableButtons(e.Row);
                 }
-                e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-                e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? CurrencyService.GetBaseCurrencyCode(null) : item.CurrencyCode;
-                 
-                //if (e.Row.Cells["CurrencyRate"].Value == DBNull.Value || string.IsNullOrEmpty(e.Row.Cells["CurrencyRate"].Value.ToString()))
-                //    e.Row.Cells["CurrencyRate"].Value = 1;
+                e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
+                e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetBookingCurrencyCode(item);
             }
             catch (ArgumentException ex)
             {
-                if (ex.Message.Contains("Key not found"))
+                if (ex.Message.Contains("Key not found")) 
                 {
-                    //bool resetLayout = App.AskYesNo("Problem found with bookings grid layout which may cause bookings to not display correctly. Resetting the grid layout should fix the problem.\r\n\r\nWould you like to reset now?");
-                    //if (resetLayout)
-                        ResetGridLayout();
-
+                    ResetGridLayout(); 
                     ErrorHelper.SendEmail(ex, true);
                 }
-                else
-                {
-                    throw;
-                }
+                else { throw; }
             }
         }
 

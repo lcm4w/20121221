@@ -342,13 +342,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void CurrencyUpdatesForNewRows()
         {
-            var local = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-            var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != local.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
+            var baseCurrency = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
+            var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != baseCurrency.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
             foreach (var c in codes)
             {
                 var code = c;
                 var thread = new BackgroundWorker();
-                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyService.GetRate(code, local); } catch { } };
+                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyService.GetRate(code, baseCurrency); } catch { } };
                 thread.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
                 {
                     try

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Threading;
+using Infragistics.Win.UltraWinGrid;
 using TourWriter.Global;
 using TourWriter.Info;
 
@@ -18,21 +19,36 @@ namespace TourWriter.Services
             public double Rate { get; set; }
             public string ErrorMessage { get; set; }
         }
+        
 
-        /// <summary>
-        /// Gets the base Itinerary, TourWriter, or user currency
-        /// </summary>
-        internal static string GetBaseCurrencyCode(ItinerarySet.ItineraryRow itinerary)
+        internal static string GetSystemCurrencyCode()
         {
-            // itinerary base currency
-            if (itinerary != null && !itinerary.IsBaseCurrencyNull()) return itinerary.BaseCurrency;
-
-            // TourWriter base currency
-            if (!Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull()) return Cache.ToolSet.AppSettings[0].CurrencyCode;
-            
-            // computer base currency
-            return new RegionInfo(CultureInfo.CurrentCulture.LCID).ISOCurrencySymbol;
+            return !Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull() ? 
+                Cache.ToolSet.AppSettings[0].CurrencyCode :                         // db setting
+                new RegionInfo(CultureInfo.CurrentCulture.LCID).ISOCurrencySymbol;  // user computer settings
         }
+        
+        internal static string GetItineraryCurrencyCode(ItinerarySet itinerarySet)
+        {
+            if (itinerarySet != null && itinerarySet.Itinerary.Count > 0 && !itinerarySet.Itinerary[0].IsBaseCurrencyNull())
+                return itinerarySet.Itinerary[0].BaseCurrency;
+            return GetSystemCurrencyCode();
+        }
+
+        internal static string GetBookingCurrencyCode(ItinerarySet.PurchaseItemRow purchaseItem)
+        {
+            if (purchaseItem != null && !purchaseItem.IsCurrencyCodeNull())
+                return purchaseItem.CurrencyCode;
+            return GetSystemCurrencyCode();
+        }
+
+        internal static string GetBookingCurrencyCode(UltraGridCell currencyCell)
+        {
+            if (currencyCell.Value != DBNull.Value && !string.IsNullOrEmpty(currencyCell.Value.ToString().Trim()))
+                return currencyCell.Value.ToString();
+            return GetSystemCurrencyCode();
+        }
+
 
         internal static List<Currency> GetRates(List<Currency> currencies)
         {

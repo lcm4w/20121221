@@ -716,7 +716,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             GridHelper.SetDefaultGridAppearance(e);
             GridHelper.SetDefaultGroupByAppearance(e);
 
-            BookingsViewer.SetGridSummaries(e, CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]));
+            BookingsViewer.SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCode(itinerarySet));
         }
 
         private void gridItems_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -730,8 +730,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (item == null) return;
             if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal;
 
-            e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-            e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? CurrencyService.GetBaseCurrencyCode(null) : item.CurrencyCode;
+            e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
+            e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetBookingCurrencyCode(item);
         }
 
         private void gridItems_AfterRowActivate(object sender, EventArgs e)

@@ -640,11 +640,8 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void SetItineraryCurrencyDisplays(string currencyCode)
         {
-            var bookingGridText = ""; // default if same as base currency
-            var baseCurrency = CurrencyService.GetBaseCurrencyCode(null);
-            if (!string.IsNullOrEmpty(currencyCode) && currencyCode != baseCurrency)
-                bookingGridText = "Output Currency: " + currencyCode;
-            bookingsViewer.SetItineraryCurrencyDisplays(bookingGridText);
+            bookingsViewer.SetItineraryCurrencyDisplays(
+                !string.IsNullOrEmpty(currencyCode) && currencyCode != CurrencyService.GetSystemCurrencyCode() ? "Output Currency: " + currencyCode : "");
         }
 
         #region Itinerary
