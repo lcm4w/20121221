@@ -636,7 +636,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "NetTotal")
                 {
-                    c.Header.Caption = "Net";
+                    c.Header.Caption = "Base Net";
                     c.Header.ToolTipText = "Total net cost of item, in their currency";
                     c.Format = "#0.00";
                     c.CellAppearance.TextHAlign = HAlign.Right;
@@ -730,9 +730,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (item == null) return;
             if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal;
 
-            var baseCurrency = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-            e.Row.Cells["BaseCurrency"].Value = baseCurrency;
-            e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? baseCurrency : item.CurrencyCode;
+            e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
+            e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? CurrencyService.GetBaseCurrencyCode(null) : item.CurrencyCode;
         }
 
         private void gridItems_AfterRowActivate(object sender, EventArgs e)

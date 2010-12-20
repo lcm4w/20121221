@@ -625,9 +625,9 @@ namespace TourWriter.Modules.ItineraryModule
             if (reportControl.DefaultParameters.ContainsKey("@CultureCode")) reportControl.DefaultParameters.Remove("@CultureCode");
             reportControl.DefaultParameters.Add("@CultureCode", App.GetBaseCultureInfo(itinerarySet));
 
-            var currs = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && !string.IsNullOrEmpty(x.CurrencyCode) && x.CurrencyCode != currencyCode);
-            if (currs.Count() > 0)
-            {
+            //var currs = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && !string.IsNullOrEmpty(x.CurrencyCode) && x.CurrencyCode != currencyCode);
+            //if (currs.Count() > 0)
+            //{
                 if (App.AskYesNo("Update Booking currency rates now?"))
                 {
                     tabControl_Main.SelectedTab = tabControl_Main.Tabs["Bookings"];
@@ -635,7 +635,7 @@ namespace TourWriter.Modules.ItineraryModule
 
                     bookingsViewer.RunCurrencyUpdater();
                 }
-            }
+            //}
         }
 
         private void SetItineraryCurrencyDisplays(string currencyCode)

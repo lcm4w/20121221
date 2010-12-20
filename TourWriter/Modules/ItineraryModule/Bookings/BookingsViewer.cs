@@ -215,6 +215,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private static string _currencyDisplayText = "";
         internal void SetItineraryCurrencyDisplays(string text)
         {
+            grid.DisplayLayout.Bands[0].Summaries["BaseCurrency"].DisplayFormat = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
             grid.DisplayLayout.Bands[0].SummaryFooterCaption = _currencyDisplayText = text;
         }
 
@@ -1035,9 +1036,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     SetRowLocked(e.Row, false);
                     EnableDisableButtons(e.Row);
                 }
-                var baseCurrency = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
-                e.Row.Cells["BaseCurrency"].Value = baseCurrency;
-                e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? baseCurrency : item.CurrencyCode;
+                e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetBaseCurrencyCode(itinerarySet.Itinerary[0]);
+                e.Row.Cells["BookingCurrency"].Value = item.IsCurrencyCodeNull() || string.IsNullOrEmpty(item.CurrencyCode) ? CurrencyService.GetBaseCurrencyCode(null) : item.CurrencyCode;
                  
                 //if (e.Row.Cells["CurrencyRate"].Value == DBNull.Value || string.IsNullOrEmpty(e.Row.Cells["CurrencyRate"].Value.ToString()))
                 //    e.Row.Cells["CurrencyRate"].Value = 1;
