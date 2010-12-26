@@ -40,6 +40,7 @@ namespace TourWriter.Forms
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cmbServers = new System.Windows.Forms.ComboBox();
+            this.btnSetup = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -49,9 +50,9 @@ namespace TourWriter.Forms
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "User name";
+            this.label1.Text = "Username";
             // 
             // txtUsername
             // 
@@ -63,7 +64,7 @@ namespace TourWriter.Forms
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(81, 104);
+            this.btnLogin.Location = new System.Drawing.Point(145, 123);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 4;
@@ -91,7 +92,7 @@ namespace TourWriter.Forms
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(162, 104);
+            this.btnCancel.Location = new System.Drawing.Point(226, 123);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 5;
@@ -102,11 +103,11 @@ namespace TourWriter.Forms
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 75);
+            this.label3.Location = new System.Drawing.Point(12, 83);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 13);
+            this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Server";
+            this.label3.Text = "Database";
             // 
             // errorProvider
             // 
@@ -115,7 +116,7 @@ namespace TourWriter.Forms
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TourWriter.Properties.Resources.ActivityIndicator;
-            this.pictureBox1.Location = new System.Drawing.Point(269, 95);
+            this.pictureBox1.Location = new System.Drawing.Point(77, 114);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.TabIndex = 10;
@@ -127,12 +128,21 @@ namespace TourWriter.Forms
             this.cmbServers.BackColor = System.Drawing.SystemColors.Control;
             this.cmbServers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbServers.FormattingEnabled = true;
-            this.cmbServers.Location = new System.Drawing.Point(77, 72);
+            this.cmbServers.Location = new System.Drawing.Point(77, 80);
             this.cmbServers.Name = "cmbServers";
-            this.cmbServers.Size = new System.Drawing.Size(223, 21);
+            this.cmbServers.Size = new System.Drawing.Size(180, 21);
             this.cmbServers.TabIndex = 3;
-            this.cmbServers.DropDown += new System.EventHandler(this.cmbServers_DropDown);
             this.cmbServers.TextChanged += new System.EventHandler(this.cmbServers_TextChanged);
+            // 
+            // btnSetup
+            // 
+            this.btnSetup.Location = new System.Drawing.Point(258, 80);
+            this.btnSetup.Name = "btnSetup";
+            this.btnSetup.Size = new System.Drawing.Size(43, 22);
+            this.btnSetup.TabIndex = 11;
+            this.btnSetup.Text = "Setup";
+            this.btnSetup.UseVisualStyleBackColor = true;
+            this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
             // 
             // Login
             // 
@@ -140,8 +150,9 @@ namespace TourWriter.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(318, 133);
+            this.ClientSize = new System.Drawing.Size(318, 155);
             this.ControlBox = false;
+            this.Controls.Add(this.btnSetup);
             this.Controls.Add(this.cmbServers);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
@@ -177,6 +188,7 @@ namespace TourWriter.Forms
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ComboBox cmbServers;
+        private System.Windows.Forms.Button btnSetup;
     }
 }
 

@@ -382,12 +382,6 @@
     <Compile Include="Forms\PaymentTermsEditor.Designer.cs">
       <DependentUpon>PaymentTermsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ServerManager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ServerManager.Designer.cs">
-      <DependentUpon>ServerManager.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\PriceEditorForm.Designer.cs">
       <DependentUpon>PriceEditorForm.cs</DependentUpon>
     </Compile>
@@ -672,11 +666,58 @@
     <Compile Include="UserControls\AccountingGrid.Designer.cs">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallConfigure.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallConfigure.Designer.cs">
+      <DependentUpon>InstallConfigure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallHelper.cs" />
+    <Compile Include="UserControls\DatabaseConnection\InstallSoftware.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallSoftware.Designer.cs">
+      <DependentUpon>InstallSoftware.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\IConnectionControl.cs" />
+    <Compile Include="UserControls\DatabaseConnection\InstallOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallOptions.Designer.cs">
+      <DependentUpon>InstallOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Local.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Local.Designer.cs">
+      <DependentUpon>Local.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Remote.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Remote.Designer.cs">
+      <DependentUpon>Remote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\UI.Designer.cs">
+      <DependentUpon>UI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\UserControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="UserControls\DataExtractGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\DataExtractGrid.designer.cs">
       <DependentUpon>DataExtractGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Start.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\Start.Designer.cs">
+      <DependentUpon>Start.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MyToolStrip.cs">
       <SubType>Component</SubType>
@@ -990,10 +1031,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>CurrencyRateEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ServerManager.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ServerManager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PriceEditorForm.resx">
       <DependentUpon>PriceEditorForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1265,6 +1302,27 @@
       <DependentUpon>CheckBoxSet.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallConfigure.resx">
+      <DependentUpon>InstallConfigure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallSoftware.resx">
+      <DependentUpon>InstallSoftware.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallOptions.resx">
+      <DependentUpon>InstallOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\Local.resx">
+      <DependentUpon>Local.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\Remote.resx">
+      <DependentUpon>Remote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\Start.resx">
+      <DependentUpon>Start.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\UI.resx">
+      <DependentUpon>UI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\GridCaption.resx">
       <SubType>Designer</SubType>
       <DependentUpon>GridCaption.cs</DependentUpon>
@@ -1396,6 +1454,8 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\user_add.png" />
+    <None Include="Resources\world_go1.png" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.31.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.26.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.09.28.sql" />
@@ -1568,7 +1628,9 @@
     <None Include="Resources\page_go.png" />
     <None Include="Resources\cut.png" />
     <None Include="Resources\page_paste.png" />
+    <None Include="Resources\database_add.png" />
     <Content Include="Resources\SaveClose.png" />
+    <None Include="Resources\server_go.png" />
     <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />
     <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFinalPricing.txt" />
     <Content Include="Resources\TourWriter.Reports.Itinerary.ClientFullPricing.txt" />

@@ -124,6 +124,7 @@ namespace TourWriter
         internal static string File_UserLayoutPathAndFile = Path.Combine(Path_UserApplicationData, UserlayoutFilename);
         internal static string File_UpdateExe = Path.Combine(Path_TempFolder, "TourWriterUpdate.exe");
         internal static string File_TempatesUpdateArchive = Path.Combine(Application.StartupPath, "Templates.zip");
+        internal static string File_DefaultDatabaseFile = Path.Combine(Application.StartupPath, "tw.dat");
         
         internal static Utilities.KeyHook.KeyDefinition DebugKeyCombination =
             new Utilities.KeyHook.KeyDefinition(

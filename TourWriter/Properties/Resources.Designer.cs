@@ -151,6 +151,13 @@ namespace TourWriter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap database_add {
+            get {
+                object obj = ResourceManager.GetObject("database_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);
@@ -403,6 +410,13 @@ namespace TourWriter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap server_go {
+            get {
+                object obj = ResourceManager.GetObject("server_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Splash {
             get {
                 object obj = ResourceManager.GetObject("Splash", resourceCulture);
@@ -452,6 +466,13 @@ namespace TourWriter.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap user_add {
+            get {
+                object obj = ResourceManager.GetObject("user_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Warning {
             get {
                 object obj = ResourceManager.GetObject("Warning", resourceCulture);
@@ -469,6 +490,13 @@ namespace TourWriter.Properties {
         internal static System.Drawing.Bitmap WebDownload {
             get {
                 object obj = ResourceManager.GetObject("WebDownload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap world_go {
+            get {
+                object obj = ResourceManager.GetObject("world_go", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -12,11 +12,9 @@ namespace TourWriter.Forms
     {
         #region Properties
 
-        private static readonly string newServerText = "<add server...>";
         private Exception serverError;
         private UserSet authenticatedUser;
         private BackgroundWorker getUserThread;
-        private string tempServerName;
         private enum LoginResult
         {
             Success,
@@ -36,7 +34,6 @@ namespace TourWriter.Forms
             UpgradeSettings();
             LoadSettings();
 
-            cmbServers.SelectedIndexChanged += cmbServers_SelectedIndexChanged;
             if (txtUsername.Text == "")
                 txtUsername.Select();
             else txtPassword.Select();
@@ -50,7 +47,10 @@ namespace TourWriter.Forms
             {
                 ProcessInputArgs(args);
                 btnLogin.PerformClick();
+                return;
             }
+            if (cmbServers.Items.Count == 0)
+                ManageServers(); // open connections UI.
         }
 
         private void ProcessInputArgs(string[] args)
@@ -106,10 +106,11 @@ namespace TourWriter.Forms
             {
                 loginResult = LoginResult.Failed;
             }
-            else if (userSet.User[0].IsRecordActive)
-            {
-                loginResult = LoginResult.Disabled;
-            }
+            // TODO: check should be !=
+            //else if (userSet.User[0].IsRecordActive)
+            //{
+            //    loginResult = LoginResult.Disabled;
+            //}
             else
             {
                 authenticatedUser = userSet;
@@ -181,7 +182,7 @@ namespace TourWriter.Forms
 
             errorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
 
-            if (string.IsNullOrEmpty(cmbServers.Text.Trim()) || cmbServers.Text == newServerText)
+            if (string.IsNullOrEmpty(cmbServers.Text.Trim()))
             {
                 errorProvider.SetError(cmbServers, "Server name is required");
                 cmbServers.Select();
@@ -208,17 +209,29 @@ namespace TourWriter.Forms
 
         private void ManageServers()
         {
-            var serverManager = new ServerManager();
-            if (serverManager.ShowDialog() == DialogResult.OK)
+            var dbForm = new UserControls.DatabaseConnection.Ui(new UserControls.DatabaseConnection.Start());
+            var dr = dbForm.ShowDialog();
+            if (dr == DialogResult.OK)
             {
-                AddServer(serverManager.ServerName);
+                var db = dbForm.DatabaseSetupResult;
+                if (db.IsLocalDatabase)
+                {
+                    AddServer(db.LocalServerName);
+                    txtUsername.Text = db.UserName;
+                }
+                else if (db.IsRemoteDatabase)
+                {
+                    AddServer(db.RemoteName);
+                    Settings.Default.RemoteConnection = db.RemoteConnection;
+                    Settings.Default.Save();
+                }
             }
         }
 
         private void AddServer(string servername)
         {
             // add if new
-            if (!cmbServers.Items.Contains(servername))
+            if (cmbServers.Items.Count == 0 || !cmbServers.Items.Contains(servername))
                 cmbServers.Items.Insert(0, servername);
                         
             // select it
@@ -252,8 +265,7 @@ namespace TourWriter.Forms
                 Settings.Default.ServerNameHistory.CopyTo(servers, 0);
                 cmbServers.Items.AddRange(servers);
             }
-            cmbServers.Items.Add(newServerText);
-            if (cmbServers.Items.Count > 1)
+            if (cmbServers.Items.Count > 0)
                 cmbServers.SelectedIndex = 0;
         }
 
@@ -290,18 +302,7 @@ namespace TourWriter.Forms
         {
             DialogResult = DialogResult.Cancel;
         }
-
-        private void cmbServers_DropDown(object sender, EventArgs e)
-        {
-            tempServerName = cmbServers.Text;
-        }
-
-        void cmbServers_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbServers.SelectedIndex == cmbServers.Items.Count - 1)
-                ManageServers();
-        }
-
+        
         void getUserThread_DoWork(object sender, DoWorkEventArgs e)
         {
             // Get server name on UI thread.
@@ -333,6 +334,11 @@ namespace TourWriter.Forms
         {
             if (cmbServers.Text != "")
                 errorProvider.SetError(cmbServers, "");
+        }
+
+        private void btnSetup_Click(object sender, EventArgs e)
+        {
+            ManageServers();
         }
 
         #endregion
