@@ -60,6 +60,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.label2 = new System.Windows.Forms.Label();
             this.txtCommission = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.txtSell = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
+            this.cmbCurrency = new TourWriter.UserControls.NullableComboBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -243,9 +245,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // txtPriceOverride
             // 
             this.txtPriceOverride.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.itineraryBindingSource, "GrossOverride", true));
-            this.txtPriceOverride.FormatString = "c";
+            this.txtPriceOverride.FormatString = "#0.00";
             this.txtPriceOverride.Location = new System.Drawing.Point(180, 35);
-            this.txtPriceOverride.MaskInput = "$  nnnnnnn.nn";
+            this.txtPriceOverride.MaskInput = "nnnnnnn.nn";
             this.txtPriceOverride.Name = "txtPriceOverride";
             this.txtPriceOverride.Nullable = true;
             this.txtPriceOverride.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -273,9 +275,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtGross2
             // 
-            this.txtGross2.FormatString = "c";
+            this.txtGross2.FormatString = "#0.00";
             this.txtGross2.Location = new System.Drawing.Point(86, 35);
-            this.txtGross2.MaskInput = "$  nnnnnnn.nn";
+            this.txtGross2.MaskInput = "nnnnnnn.nn";
             this.txtGross2.Name = "txtGross2";
             this.txtGross2.Nullable = true;
             this.txtGross2.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -314,9 +316,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtGross1
             // 
-            this.txtGross1.FormatString = "c";
+            this.txtGross1.FormatString = "#0.00";
             this.txtGross1.Location = new System.Drawing.Point(85, 35);
-            this.txtGross1.MaskInput = "$  nnnnnnn.nn";
+            this.txtGross1.MaskInput = "nnnnnnn.nn";
             this.txtGross1.Name = "txtGross1";
             this.txtGross1.Nullable = true;
             this.txtGross1.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -373,9 +375,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtSell
             // 
-            this.txtSell.FormatString = "c";
+            this.txtSell.FormatString = "#0.00";
             this.txtSell.Location = new System.Drawing.Point(143, 35);
-            this.txtSell.MaskInput = "$  nnnnnnn.nn";
+            this.txtSell.MaskInput = "nnnnnnn.nn";
             this.txtSell.Name = "txtSell";
             this.txtSell.Nullable = true;
             this.txtSell.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -384,6 +386,31 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtSell.TabIndex = 6;
             this.txtSell.TabStop = false;
             this.toolTip1.SetToolTip(this.txtSell, "Final sell price");
+            // 
+            // cmbCurrency
+            // 
+            this.cmbCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.cmbCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbCurrency.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.itineraryBindingSource, "BaseCurrency", true));
+            this.cmbCurrency.DisplayMember = "DisplayName";
+            this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCurrency.FormattingEnabled = true;
+            this.cmbCurrency.Location = new System.Drawing.Point(290, 35);
+            this.cmbCurrency.Name = "cmbCurrency";
+            this.cmbCurrency.Size = new System.Drawing.Size(120, 21);
+            this.cmbCurrency.TabIndex = 139;
+            this.toolTip1.SetToolTip(this.cmbCurrency, "The currency to convert all prices to");
+            this.cmbCurrency.ValueMember = "CurrencyCode";
+            this.cmbCurrency.SelectionChangeCommitted += new System.EventHandler(cmbCurrency_SelectionChangeCommitted);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(290, 19);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(24, 60);
+            this.label9.TabIndex = 139;
+            this.label9.Text = "Output Currency";
             // 
             // label8
             // 
@@ -410,11 +437,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox1.Controls.Add(this.txtCommission);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.cmbCurrency);
             this.groupBox1.Controls.Add(this.txtSell);
             this.groupBox1.Location = new System.Drawing.Point(474, 276);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(302, 62);
+            this.groupBox1.Size = new System.Drawing.Size(420, 62);
             this.groupBox1.TabIndex = 102;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Final price";
@@ -797,6 +826,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.BindingSource itineraryBindingSource;
         private System.Windows.Forms.GroupBox groupBox3;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtSell;
+        private System.Windows.Forms.ComboBox cmbCurrency;
+        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtGross2;

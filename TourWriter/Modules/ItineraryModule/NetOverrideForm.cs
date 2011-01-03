@@ -230,16 +230,18 @@ namespace TourWriter.Modules.ItineraryModule
                 }
                 else if (c.Key == "Net")
                 {
+                    c.Header.ToolTipText = "Total supplier net in Itinerary currency";
                     c.Band.SortedColumns.Add(c, true);
                     c.Width = 70;
                     c.MaxWidth = 70;
                     c.DataType = typeof(Decimal);
-                    c.Format = "c";
+                    c.Format = "#0.00";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                 }
                 else if (c.Key == "Markup")
                 {
+                    c.Header.ToolTipText = "Average supplier markup";
                     c.Width = 80;
                     c.MaxWidth = 80;
                     c.DataType = typeof(Decimal);
@@ -248,30 +250,10 @@ namespace TourWriter.Modules.ItineraryModule
                     c.CellActivation = Activation.NoEdit;
                     c.Hidden = true;
                     c.TabStop = false;
-                }
-                else if (c.Key == "Commission")
-                {
-                    c.Width = 80;
-                    c.MaxWidth = 80;
-                    c.DataType = typeof(Decimal);
-                    c.Format = "##0.00\\%";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellActivation = Activation.NoEdit;
-                    c.Hidden = true;
-                    c.TabStop = false;
-                }
-                else if (c.Key == "Gross")
-                {
-                    c.Hidden = !App.IsDebugMode;
-                    c.Width = 70;
-                    c.MaxWidth = 70;
-                    c.DataType = typeof(Decimal);
-                    c.Format = "c";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellActivation = Activation.NoEdit;
                 }
                 else if (c.Key == "Override")
                 {
+                    c.Header.ToolTipText = "Your override";
                     c.Width = 70;
                     c.MaxWidth = 70;
                     c.Format = "#0.00\\%";
@@ -280,9 +262,32 @@ namespace TourWriter.Modules.ItineraryModule
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
                 }
+
+                // -- hidden, but required for calcs --------------------------------------
+                else if (c.Key == "Commission")
+                {
+                    c.Hidden = true; // <<<<
+                    c.Width = 80;
+                    c.MaxWidth = 80;
+                    c.DataType = typeof(Decimal);
+                    c.Format = "##0.00\\%";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.CellActivation = Activation.NoEdit;
+                    c.TabStop = false;
+                }
+                else if (c.Key == "Gross")
+                {
+                    c.Hidden = !App.IsDebugMode; // <<<<
+                    c.Width = 70;
+                    c.MaxWidth = 70;
+                    c.DataType = typeof(Decimal);
+                    c.Format = "#0.00";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.CellActivation = Activation.NoEdit;
+                }
                 else if (c.Key == "Sell")
                 {
-                    c.Hidden = !App.IsDebugMode;
+                    c.Hidden = !App.IsDebugMode; // <<<<
                     c.Width = 70;
                     c.MaxWidth = 70;
                     c.DataType = typeof(Decimal);
@@ -291,6 +296,7 @@ namespace TourWriter.Modules.ItineraryModule
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                 }
+                // -------------------------------------------------------------------------
                 else
                 {
                     c.Hidden = true;
@@ -330,19 +336,19 @@ namespace TourWriter.Modules.ItineraryModule
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Net"]);
             summary.Key = "NetBaseTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:###,###,###.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Gross"]);
             summary.Key = "GrossBaseTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:###,###,###.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Sell"]);
             summary.Key = "SellTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:###,###,###.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
 
             summary = band.Summaries.Add(SummaryType.Formula, band.Columns["Markup"]);

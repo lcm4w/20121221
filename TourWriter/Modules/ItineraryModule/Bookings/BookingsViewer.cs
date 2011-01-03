@@ -127,6 +127,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
             SetNetOverrideText();
             SetPriceOverrideWarning();
+
+            cmbCurrency.DataSource = (ParentForm as ItineraryMain).CurrencyBindingSource;
         }
 
         private void LoadGridLayout()
@@ -404,9 +406,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             if (itinerarySet.Itinerary[0].HasPriceOverrides)
             {
-                overrideWarning.SetError(txtSell, "Adjusted sell price, base price has overrides.");
-                overrideWarning.SetIconAlignment(txtSell, ErrorIconAlignment.MiddleRight);
-                overrideWarning.SetIconPadding(txtSell, 25);
+                overrideWarning.SetError(label8, "Adjusted sell price, base price has overrides.");
+                overrideWarning.SetIconAlignment(label8, ErrorIconAlignment.BottomRight);
+                overrideWarning.SetIconPadding(label8, 3);
             }
             else
                 overrideWarning.SetError(txtSell, ""); // reset
@@ -466,7 +468,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             decimal net = itinerarySet.GetNetBasePrice();
             decimal yield = total - net;
             decimal yieldp = Common.CalcCommissionByNetGross(net, total);
-            txtCommission.Text = String.Format("{0} ({1})", yield.ToString("c"), (yieldp / 100).ToString("p"));
+            txtCommission.Text = String.Format("{0} ({1})", yield.ToString("#0.00"), (yieldp / 100).ToString("p"));
             txtSell.Value = total;
         }
 
@@ -1555,6 +1557,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             var id = Convert.ToInt32(grid.ActiveRow.Cells["PurchaseItemID"].Value);
             new ItineraryPaxOverride(itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == id).FirstOrDefault()).ShowDialog();
+        }
+
+
+        void cmbCurrency_SelectionChangeCommitted(object sender, System.EventArgs e)
+        {
+            (ParentForm as ItineraryMain).cmbCurrency_SelectionChangeCommitted(sender, e);
         }
 
         #endregion

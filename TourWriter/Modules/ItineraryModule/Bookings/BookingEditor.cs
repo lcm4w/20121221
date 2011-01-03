@@ -652,7 +652,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 //{
                 //    c.Header.Caption = "Final Net";
                 //    c.Header.ToolTipText = "Total net cost of item, in your currency";
-                //    c.Format = "c";
+                //    c.Format = "#0.00";
                 //    c.CellAppearance.TextHAlign = HAlign.Right;
                 //}
                 else if (c.Key == "GrossTotalConverted")

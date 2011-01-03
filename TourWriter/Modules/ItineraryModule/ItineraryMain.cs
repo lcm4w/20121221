@@ -58,6 +58,8 @@ namespace TourWriter.Modules.ItineraryModule
             get { return bookingsViewer; }
         }
 
+        public BindingSource CurrencyBindingSource { get { return currencyBindingSource; } }
+
         #endregion
 
         public ItineraryMain()
@@ -765,9 +767,10 @@ namespace TourWriter.Modules.ItineraryModule
             txtDepartDate.DataBindings.Add(binding);
         }
 
-        private void cmbCurrency_SelectionChangeCommitted(object sender, EventArgs e)
+        internal void cmbCurrency_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            var newCode = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : "";
+            var cmb = (ComboBox)sender;
+            var newCode = cmb.SelectedValue != null ? cmb.SelectedValue.ToString() : "";
             itinerarySet.Itinerary[0].BaseCurrency = newCode != "" ? newCode : null; // force binding
             bookingsViewer.RefreshGrid();
             HandleItineraryCurrencyChanged(newCode);
