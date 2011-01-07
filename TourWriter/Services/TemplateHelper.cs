@@ -106,7 +106,7 @@ namespace TourWriter.Services
         /// <returns></returns>
         private static string Replace(string text, string tag, string value)
         {
-            value = value.Trim(); // clean value
+            value = value.Trim().Replace("\r\n", " ").Replace("\n", " "); // clean value
             //value = "\"" + value.Replace("\"", "\"\"") + "\""; // escape value
             tag = "[!" + tag + "]";
             return text.Replace(tag, value);
