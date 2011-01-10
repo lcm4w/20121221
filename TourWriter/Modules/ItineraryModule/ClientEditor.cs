@@ -586,7 +586,7 @@ namespace TourWriter.Modules.ItineraryModule
                     c.MaxWidth = 80;
                     c.Header.Caption = "Amount";
                     c.Header.ToolTipText = "Value of payment";
-                    c.Format = "c";
+                    c.Format = "#0.00";
                     c.MaskInput = "{LOC}-nnnnnn.nn";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.AllowEdit;
@@ -627,7 +627,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Amount"]);
             summary.Key = "TotalAmount";
-            summary.DisplayFormat = "Total payments: {0:c}";
+            summary.DisplayFormat = "Total payments: {0:#0.00}";
             summary.SummaryPosition = SummaryPosition.Right;
             summary.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
             summary.Lines = 2;
