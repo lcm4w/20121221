@@ -421,7 +421,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             var lookup = GetBookingItinerarySet().OptionLookup.FindByOptionID(item.OptionID);
             if (lookup == null) return;
 
-            var cultureInfo = App.GetBaseCultureInfo(item.Table.DataSet);
+            var ccyCode = CurrencyService.GetBookingCurrencyCode(item);
+            var cultureInfo = CurrencyService.GetCultureInfoFromCurrencyCode(ccyCode);
+
             var net = !item.IsNetNull() ? item.Net : 0;
 
             if (lookup.PricingOption == "gc") // Gross plus Commission

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using Infragistics.Win.UltraWinGrid;
@@ -48,6 +49,18 @@ namespace TourWriter.Services
                 return currencyCell.Value.ToString();
             return GetSystemCurrencyCode();
         }
+
+        internal static CultureInfo GetCultureInfoFromCultureCode(string cultureCode)
+        {
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(x => x.Name == cultureCode).FirstOrDefault();
+        }
+
+        internal static CultureInfo GetCultureInfoFromCurrencyCode(string currencyCode)
+        {
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).
+                Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
+        }
+
 
 
         internal static List<Currency> GetRates(List<Currency> currencies)
