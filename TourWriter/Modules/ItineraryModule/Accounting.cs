@@ -394,7 +394,7 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 SummarySettings summary = band.Summaries.Add(SummaryType.Sum, band.Columns[column]);
                 summary.Key = summaryColumn;
-                summary.DisplayFormat = "{0:c}";
+                summary.DisplayFormat = "{0:#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
             }

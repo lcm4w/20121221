@@ -72,7 +72,7 @@ namespace TourWriter.Modules.ItineraryModule.ReportControls
                 decimal finalPrice = itinerarySet.GetGrossFinalPrice();
                 if (totalGross != finalPrice)
                 {
-                    App.ShowWarning(String.Format("This report shows the bookings total price of {0:c}.\r\n\r\nIt will not show the adjusted final price of {1:c}.", totalGross, finalPrice));
+                    App.ShowWarning(String.Format("This report shows the bookings total price of {0:#0.00}.\r\n\r\nIt will not show the adjusted final price of {1:#0.00}.", totalGross, finalPrice));
                 }
 
 				// create report

@@ -102,7 +102,7 @@ order by paymentduedate";
                 SummarySettings summary;
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["PaymentAmount"]);
                 summary.Key = "GroupPaymentAmounts";
-                summary.DisplayFormat = "{0:c}";
+                summary.DisplayFormat = "{0:#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
             }

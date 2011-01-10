@@ -76,7 +76,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     summary = band.Summaries.Add(SummaryType.Sum, band.Columns[c.Header.Caption]);
                     summary.Key = key;
-                    summary.DisplayFormat = "{0:c}";
+                    summary.DisplayFormat = "{0:#0.00}";
                     summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
                     e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 

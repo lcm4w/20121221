@@ -94,7 +94,7 @@ namespace TourWriter.Modules.ItineraryModule
             decimal markup = Common.CalcMarkupByNetGross(totalNet, sell);
             row["TotalMarkup"] = (markup / 100).ToString("p");
 
-            string commission = String.Format("{0:c} ({1:p})", (sell - totalNet), (sell != 0) ? (((sell - totalNet) / sell)) : 0);
+            string commission = String.Format("{0:#0.00} ({1:p})", (sell - totalNet), (sell != 0) ? (((sell - totalNet) / sell)) : 0);
             row["Commission"] = commission;
 
             string length = "0 days";

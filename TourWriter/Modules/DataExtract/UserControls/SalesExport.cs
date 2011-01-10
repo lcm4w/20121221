@@ -99,7 +99,7 @@ ORDER BY ServiceTypeName";
                 SummarySettings summary;
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Net"]);
                 summary.Key = "NetTotal";
-                summary.DisplayFormat = "{0:c}";
+                summary.DisplayFormat = "{0:#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
             }
@@ -108,7 +108,7 @@ ORDER BY ServiceTypeName";
                 SummarySettings summary;
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Gross"]);
                 summary.Key = "GrossTotal";
-                summary.DisplayFormat = "{0:c}";
+                summary.DisplayFormat = "{0:#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
             }

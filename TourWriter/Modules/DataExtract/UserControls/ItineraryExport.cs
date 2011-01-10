@@ -185,31 +185,31 @@ namespace TourWriter.Modules.DataExtract.UserControls
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Net"]);
             summary.Key = "GroupNet";
-            summary.DisplayFormat = "{0:c}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
             e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Gross"]);
             summary.Key = "GroupGross";
-            summary.DisplayFormat = "{0:c}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
             e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Deposits"]);
             summary.Key = "GroupDeposits";
-            summary.DisplayFormat = "{0:c}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
             e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Balance"]);
             summary.Key = "GroupBalance";
-            summary.DisplayFormat = "{0:c}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
             e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Margin"]);
             summary.Key = "GroupMargin";
-            summary.DisplayFormat = "{0:c}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.Appearance.TextHAlign = HAlign.Right;
             e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
 
