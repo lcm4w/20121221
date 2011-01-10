@@ -150,7 +150,9 @@ namespace TourWriter.Info
             }
             else
             {
-                total = GetNetBasePrice() * (1 + GetNetMarkup() / 100);
+                var net = GetNetBasePrice();
+                var mup = GetNetMarkup();
+                total = net + mup == 0 ? GetGrossBasePrice() : Common.CalcGrossByNetMarkup(net, mup);
 
                 if (!Itinerary[0].IsGrossMarkupNull())
                     total *= (1 + Itinerary[0].GrossMarkup / 100);
