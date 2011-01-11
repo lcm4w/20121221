@@ -55,6 +55,7 @@
               <xs:element name="AddedBy" msprop:Generator_UserColumnName="AddedBy" msprop:Generator_ColumnPropNameInRow="AddedBy" msprop:Generator_ColumnVarNameInTable="columnAddedBy" msprop:Generator_ColumnPropNameInTable="AddedByColumn" type="xs:int" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_UserColumnName="RowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_UserColumnName="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

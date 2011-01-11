@@ -94,6 +94,7 @@
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
               <xs:element name="BaseCurrency" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="BaseCurrency" msprop:Generator_ColumnVarNameInTable="columnBaseCurrency" msprop:Generator_ColumnPropNameInTable="BaseCurrencyColumn" msprop:Generator_UserColumnName="BaseCurrency" type="xs:string" minOccurs="0" />
+              <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -204,6 +205,7 @@
               <xs:element name="CurrencyCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCode" msprop:Generator_ColumnPropNameInTable="CurrencyCodeColumn" msprop:Generator_UserColumnName="CurrencyCode" type="xs:string" minOccurs="0" />
               <xs:element name="NetTotalConverted" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="NetTotalConverted" msprop:Generator_ColumnVarNameInTable="columnNetTotalConverted" msprop:Generator_ColumnPropNameInTable="NetTotalConvertedColumn" msprop:Generator_UserColumnName="NetTotalConverted" type="xs:decimal" minOccurs="0" />
               <xs:element name="GrossTotalConverted" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="GrossTotalConverted" msprop:Generator_ColumnVarNameInTable="columnGrossTotalConverted" msprop:Generator_ColumnPropNameInTable="GrossTotalConvertedColumn" msprop:Generator_UserColumnName="GrossTotalConverted" type="xs:decimal" minOccurs="0" />
+              <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -388,6 +390,7 @@
               <xs:element name="PricingOption" msprop:nullValue="gc" msprop:Generator_ColumnPropNameInRow="PricingOption" msprop:Generator_ColumnVarNameInTable="columnPricingOption" msprop:Generator_ColumnPropNameInTable="PricingOptionColumn" msprop:Generator_UserColumnName="PricingOption" type="xs:string" default="gc" minOccurs="0" />
               <xs:element name="ValidFrom" msprop:Generator_ColumnVarNameInTable="columnValidFrom" msprop:Generator_ColumnPropNameInRow="ValidFrom" msprop:Generator_ColumnPropNameInTable="ValidFromColumn" msprop:Generator_UserColumnName="ValidFrom" type="xs:date" minOccurs="0" />
               <xs:element name="ValidTo" msprop:Generator_ColumnVarNameInTable="columnValidTo" msprop:Generator_ColumnPropNameInRow="ValidTo" msprop:Generator_ColumnPropNameInTable="ValidToColumn" msprop:Generator_UserColumnName="ValidTo" type="xs:date" minOccurs="0" />
+              <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

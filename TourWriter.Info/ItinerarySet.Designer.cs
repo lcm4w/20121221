@@ -1691,6 +1691,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnBaseCurrency;
             
+            private global::System.Data.DataColumn columnLanguageCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryDataTable() {
@@ -2038,6 +2040,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LanguageCodeColumn {
+                get {
+                    return this.columnLanguageCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2111,7 +2121,8 @@ namespace TourWriter.Info {
                         int AddedBy, 
                         byte[] RowVersion, 
                         bool IsDeleted, 
-                        string BaseCurrency) {
+                        string BaseCurrency, 
+                        string LanguageCode) {
                 ItineraryRow rowItineraryRow = ((ItineraryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2152,7 +2163,8 @@ namespace TourWriter.Info {
                         AddedBy,
                         RowVersion,
                         IsDeleted,
-                        BaseCurrency};
+                        BaseCurrency,
+                        LanguageCode};
                 if ((parentPaymentTermRowByPaymentTermItinerary != null)) {
                     columnValuesArray[19] = parentPaymentTermRowByPaymentTermItinerary[0];
                 }
@@ -2224,6 +2236,7 @@ namespace TourWriter.Info {
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnIsDeleted = base.Columns["IsDeleted"];
                 this.columnBaseCurrency = base.Columns["BaseCurrency"];
+                this.columnLanguageCode = base.Columns["LanguageCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2313,6 +2326,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnIsDeleted);
                 this.columnBaseCurrency = new global::System.Data.DataColumn("BaseCurrency", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBaseCurrency);
+                this.columnLanguageCode = new global::System.Data.DataColumn("LanguageCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLanguageCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryID}, true));
                 this.columnItineraryID.AutoIncrement = true;
@@ -3610,6 +3625,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnGrossTotalConverted;
             
+            private global::System.Data.DataColumn columnLanguageCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseItemDataTable() {
@@ -3909,6 +3926,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LanguageCodeColumn {
+                get {
+                    return this.columnLanguageCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3976,7 +4001,8 @@ namespace TourWriter.Info {
                         bool IsDefaultOptionType, 
                         string CurrencyCode, 
                         decimal NetTotalConverted, 
-                        decimal GrossTotalConverted) {
+                        decimal GrossTotalConverted, 
+                        string LanguageCode) {
                 PurchaseItemRow rowPurchaseItemRow = ((PurchaseItemRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4011,7 +4037,8 @@ namespace TourWriter.Info {
                         IsDefaultOptionType,
                         CurrencyCode,
                         NetTotalConverted,
-                        GrossTotalConverted};
+                        GrossTotalConverted,
+                        LanguageCode};
                 if ((parentPurchaseLineRowByPurchaseLinePurchaseItem != null)) {
                     columnValuesArray[1] = parentPurchaseLineRowByPurchaseLinePurchaseItem[0];
                 }
@@ -4080,6 +4107,7 @@ namespace TourWriter.Info {
                 this.columnCurrencyCode = base.Columns["CurrencyCode"];
                 this.columnNetTotalConverted = base.Columns["NetTotalConverted"];
                 this.columnGrossTotalConverted = base.Columns["GrossTotalConverted"];
+                this.columnLanguageCode = base.Columns["LanguageCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4157,6 +4185,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnNetTotalConverted);
                 this.columnGrossTotalConverted = new global::System.Data.DataColumn("GrossTotalConverted", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGrossTotalConverted);
+                this.columnLanguageCode = new global::System.Data.DataColumn("LanguageCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLanguageCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey6", new global::System.Data.DataColumn[] {
                                 this.columnPurchaseItemID}, true));
                 this.columnPurchaseItemID.AutoIncrement = true;
@@ -7750,6 +7780,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnValidTo;
             
+            private global::System.Data.DataColumn columnLanguageCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public OptionLookupDataTable() {
@@ -7905,6 +7937,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LanguageCodeColumn {
+                get {
+                    return this.columnLanguageCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -7940,7 +7980,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public OptionLookupRow AddOptionLookupRow(int OptionID, string OptionName, int OptionTypeID, string ServiceName, int SupplierID, int ServiceTypeID, System.DateTime CheckinTime, System.DateTime CheckoutTime, int CheckinMinutesEarly, string CurrencyCode, decimal Net, decimal Gross, string PricingOption, System.DateTime ValidFrom, System.DateTime ValidTo) {
+            public OptionLookupRow AddOptionLookupRow(
+                        int OptionID, 
+                        string OptionName, 
+                        int OptionTypeID, 
+                        string ServiceName, 
+                        int SupplierID, 
+                        int ServiceTypeID, 
+                        System.DateTime CheckinTime, 
+                        System.DateTime CheckoutTime, 
+                        int CheckinMinutesEarly, 
+                        string CurrencyCode, 
+                        decimal Net, 
+                        decimal Gross, 
+                        string PricingOption, 
+                        System.DateTime ValidFrom, 
+                        System.DateTime ValidTo, 
+                        string LanguageCode) {
                 OptionLookupRow rowOptionLookupRow = ((OptionLookupRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         OptionID,
@@ -7957,7 +8013,8 @@ namespace TourWriter.Info {
                         Gross,
                         PricingOption,
                         ValidFrom,
-                        ValidTo};
+                        ValidTo,
+                        LanguageCode};
                 rowOptionLookupRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowOptionLookupRow);
                 return rowOptionLookupRow;
@@ -8002,6 +8059,7 @@ namespace TourWriter.Info {
                 this.columnPricingOption = base.Columns["PricingOption"];
                 this.columnValidFrom = base.Columns["ValidFrom"];
                 this.columnValidTo = base.Columns["ValidTo"];
+                this.columnLanguageCode = base.Columns["LanguageCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8037,6 +8095,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnValidFrom);
                 this.columnValidTo = new global::System.Data.DataColumn("ValidTo", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnValidTo);
+                this.columnLanguageCode = new global::System.Data.DataColumn("LanguageCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLanguageCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey10", new global::System.Data.DataColumn[] {
                                 this.columnOptionID}, true));
                 this.columnOptionID.AllowDBNull = false;
@@ -11356,6 +11416,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string LanguageCode {
+                get {
+                    if (this.IsLanguageCodeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableItinerary.LanguageCodeColumn]));
+                    }
+                }
+                set {
+                    this[this.tableItinerary.LanguageCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermItinerary"])));
@@ -11807,6 +11883,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBaseCurrencyNull() {
                 this[this.tableItinerary.BaseCurrencyColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLanguageCodeNull() {
+                return this.IsNull(this.tableItinerary.LanguageCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLanguageCodeNull() {
+                this[this.tableItinerary.LanguageCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13003,6 +13091,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string LanguageCode {
+                get {
+                    if (this.IsLanguageCodeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tablePurchaseItem.LanguageCodeColumn]));
+                    }
+                }
+                set {
+                    this[this.tablePurchaseItem.LanguageCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseLineRow PurchaseLineRow {
                 get {
                     return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
@@ -13357,6 +13461,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGrossTotalConvertedNull() {
                 this[this.tablePurchaseItem.GrossTotalConvertedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLanguageCodeNull() {
+                return this.IsNull(this.tablePurchaseItem.LanguageCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLanguageCodeNull() {
+                this[this.tablePurchaseItem.LanguageCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16278,6 +16394,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string LanguageCode {
+                get {
+                    if (this.IsLanguageCodeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableOptionLookup.LanguageCodeColumn]));
+                    }
+                }
+                set {
+                    this[this.tableOptionLookup.LanguageCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsOptionNameNull() {
                 return this.IsNull(this.tableOptionLookup.OptionNameColumn);
             }
@@ -16442,6 +16574,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetValidToNull() {
                 this[this.tableOptionLookup.ValidToColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLanguageCodeNull() {
+                return this.IsNull(this.tableOptionLookup.LanguageCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLanguageCodeNull() {
+                this[this.tableOptionLookup.LanguageCodeColumn] = global::System.Convert.DBNull;
             }
         }
         

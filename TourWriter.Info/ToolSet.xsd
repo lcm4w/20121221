@@ -195,6 +195,7 @@
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="AccountingSystem" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="AccountingSystem" msprop:Generator_ColumnVarNameInTable="columnAccountingSystem" msprop:Generator_ColumnPropNameInTable="AccountingSystemColumn" msprop:Generator_UserColumnName="AccountingSystem" type="xs:string" minOccurs="0" />
               <xs:element name="CustomCodeFormat" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CustomCodeFormat" msprop:Generator_ColumnVarNameInTable="columnCustomCodeFormat" msprop:Generator_ColumnPropNameInTable="CustomCodeFormatColumn" msprop:Generator_UserColumnName="CustomCodeFormat" type="xs:string" minOccurs="0" />
+              <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
