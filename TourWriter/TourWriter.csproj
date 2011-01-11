@@ -1456,6 +1456,7 @@
   <ItemGroup>
     <None Include="Resources\user_add.png" />
     <None Include="Resources\world_go1.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.01.11.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.11.06.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.31.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.26.sql" />
