@@ -1,12 +1,11 @@
 using System;
+using System.Collections;
+using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Data;
-using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -552,24 +551,7 @@ namespace TourWriter
             }
             return strbuf.ToString();
         }
-
-        /// <summary>
-        /// Set the default currency symbol to the base currency code.
-        /// </summary>
-        internal static void SetBaseCurrency()
-        {
-            // var cultureInfo = new CultureInfo(1066); // Vietnamese Dong (VND)
-            // http://stackoverflow.com/questions/1071273/currency-formatting/1071302#1071302
-            // http://stackoverflow.com/questions/1389187/set-default-datetime-format-c
-            
-            if (Cache.ToolSet.AppSettings[0].IsLanguageCodeNull() || string.IsNullOrEmpty(Cache.ToolSet.AppSettings[0].LanguageCode.Trim())) return;
-            var ci = CultureInfo.GetCultureInfo(Cache.ToolSet.AppSettings[0].LanguageCode);
-
-            var clone = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-            clone.NumberFormat.CurrencySymbol = ci.NumberFormat.CurrencySymbol;
-            Thread.CurrentThread.CurrentCulture = clone;
-        }
-
+        
         /// <summary>
         /// Use in place of 'buggy' System.ComponentModel.Component.DesignMode
         /// </summary>

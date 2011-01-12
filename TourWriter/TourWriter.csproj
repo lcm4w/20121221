@@ -642,6 +642,7 @@
     <Compile Include="Services\Accounting\CsvExportBase.cs" />
     <Compile Include="Services\Accounting\CsvExportMyob.cs" />
     <Compile Include="Services\Accounting\IExport.cs" />
+    <Compile Include="Services\LanguageService.cs" />
     <Compile Include="Services\Security.cs" />
     <Compile Include="Services\CurrencyService.cs" />
     <Compile Include="Services\ErrorHelper.cs" />
