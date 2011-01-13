@@ -216,7 +216,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     GetBookingPrices(item, ref price, ref comm, ref total);
 
                 // create booking details
-                var cultureInfo = App.GetBaseCultureInfo(itinerarySet);
+                var cultureInfo = LanguageService.GetItineraryLanguage(itinerarySet).CultureInfo;
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Name", GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName()));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Description", item.PurchaseItemName));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
@@ -268,7 +268,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             items.Sort(new DateTimeSortComparer());
             foreach (var item in items.OfType<ItinerarySet.PurchaseItemRow>())
             {
-                var cultureInfo = App.GetBaseCultureInfo( line.Table.DataSet);
+                var cultureInfo = LanguageService.GetBookingLanguage(item).CultureInfo;
                 detailText = detailTemplate.Replace(BookingDetailStartTag, "").Replace(BookingDetailEndTag, "");
                 var showEndDate = (!item.IsStartDateNull() && !item.IsNumberOfDaysNull() && item.NumberOfDays >= 1);
 

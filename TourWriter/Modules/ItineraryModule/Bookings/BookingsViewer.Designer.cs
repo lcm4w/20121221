@@ -245,7 +245,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // txtPriceOverride
             // 
             this.txtPriceOverride.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.itineraryBindingSource, "GrossOverride", true));
-            this.txtPriceOverride.FormatString = "#0.00";
+            this.txtPriceOverride.FormatString = "c";
             this.txtPriceOverride.Location = new System.Drawing.Point(180, 35);
             this.txtPriceOverride.MaskInput = "nnnnnnn.nn";
             this.txtPriceOverride.Name = "txtPriceOverride";
@@ -275,7 +275,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtGross2
             // 
-            this.txtGross2.FormatString = "#0.00";
+            this.txtGross2.FormatString = "c";
             this.txtGross2.Location = new System.Drawing.Point(86, 35);
             this.txtGross2.MaskInput = "nnnnnnn.nn";
             this.txtGross2.Name = "txtGross2";
@@ -316,7 +316,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtGross1
             // 
-            this.txtGross1.FormatString = "#0.00";
+            this.txtGross1.FormatString = "c";
             this.txtGross1.Location = new System.Drawing.Point(85, 35);
             this.txtGross1.MaskInput = "nnnnnnn.nn";
             this.txtGross1.Name = "txtGross1";
@@ -375,7 +375,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtSell
             // 
-            this.txtSell.FormatString = "#0.00";
+            this.txtSell.FormatString = "c";
             this.txtSell.Location = new System.Drawing.Point(143, 35);
             this.txtSell.MaskInput = "nnnnnnn.nn";
             this.txtSell.Name = "txtSell";
@@ -391,17 +391,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.cmbCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.cmbCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbCurrency.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.itineraryBindingSource, "BaseCurrency", true));
-            this.cmbCurrency.DisplayMember = "DisplayName";
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurrency.FormattingEnabled = true;
             this.cmbCurrency.Location = new System.Drawing.Point(290, 35);
             this.cmbCurrency.Name = "cmbCurrency";
-            this.cmbCurrency.Size = new System.Drawing.Size(120, 21);
+            this.cmbCurrency.Size = new System.Drawing.Size(200, 21);
             this.cmbCurrency.TabIndex = 139;
             this.toolTip1.SetToolTip(this.cmbCurrency, "The currency to convert all prices to");
-            this.cmbCurrency.ValueMember = "CurrencyCode";
-            this.cmbCurrency.SelectionChangeCommitted += new System.EventHandler(cmbCurrency_SelectionChangeCommitted);
             // 
             // label9
             // 
@@ -443,7 +439,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox1.Location = new System.Drawing.Point(474, 276);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(420, 62);
+            this.groupBox1.Size = new System.Drawing.Size(500, 62);
             this.groupBox1.TabIndex = 102;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Final price";

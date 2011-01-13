@@ -13,6 +13,9 @@ namespace TourWriter.Info
         public CultureInfo CultureInfo { get; set; }
         public RegionInfo RegionInfo { get; set; }
 
-        public override string ToString() { return string.Format("{0} ({1})", CountryName, LanguageName); }
+        public string FriendlyName { get { return string.Format("{0} ({1})", CountryName, LanguageName).Replace("()", ""); } }
+        public string FriendlyCurrencyName { get { return string.Format("{0}, {1}, {2}", FriendlyName, CurrencyCode, CurrencySymbol).Replace(", ,", ""); } }
+
+        public override string ToString() { return FriendlyName; }
     }
 }

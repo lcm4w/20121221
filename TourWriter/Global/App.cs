@@ -916,25 +916,6 @@ namespace TourWriter
             return GetLocalShortTimeMask().Replace(" tt", "");
         }
         
-        /// <summary>
-        /// Gets the culture code from: itinerary, or appsettings, or default "en-GB"
-        /// </summary>
-        /// <param name="itinerary"></param>
-        /// <returns></returns>
-        internal static CultureInfo GetBaseCultureInfo(DataSet itinerary)
-        {
-            const string code = "en-GB"; // default
-
-            // TODO: introduce custom output culture codes -----------------------
-            //if (itinerary != null && itinerary is Info.ItinerarySet && !((Info.ItinerarySet)itinerary).Itinerary[0].IsBaseCultureCodeNull) 
-            //    code = ((Info.ItinerarySet)itinerary).Itinerary[0].BaseCultureCode;
-            //else if (!Cache.ToolSet.AppSettings[0].IsBaseCultureCodeNull)
-            //    code = Cache.ToolSet.AppSettings[0].BaseCultureCode;
-            // -------------------------------------------------------------------
-
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(x => x.Name == code).FirstOrDefault();
-        }
-
         #endregion
 
         #region DataSet helper methods

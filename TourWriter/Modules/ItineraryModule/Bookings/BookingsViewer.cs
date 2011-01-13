@@ -58,7 +58,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // TODO: flags hidden for now
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
-
         }
 
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -122,13 +121,25 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                                                                    r.RequestStatusName);
                 }
             }
+            
+            cmbCurrency.DataSource = (ParentForm as ItineraryMain).CurrencyBindingSource.DataSource;// LanguageService.GetBindingList();
+            cmbCurrency.DisplayMember = "FriendlyCurrencyName";
+            cmbCurrency.ValueMember = "LanguageCode";
+            if (cmbCurrency.DataBindings.Count == 0) 
+                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "LanguageCode", true));
+            cmbCurrency.SelectedIndexChanged += (ParentForm as ItineraryMain).OnIntineraryLanguageChanged;
+            cmbCurrency.DropDownClosed += delegate {
+                                                  if (App.AskYesNo("Update currency rates also?")) {
+                                                      Application.DoEvents();
+                                                      RunCurrencyUpdater();
+                                                  }
+                                              };
+
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
             SetNetOverrideText();
             SetPriceOverrideWarning();
-
-            cmbCurrency.DataSource = (ParentForm as ItineraryMain).CurrencyBindingSource;
         }
 
         private void LoadGridLayout()
@@ -214,11 +225,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private static string _currencyDisplayText = "";
-        internal void SetItineraryCurrencyDisplays(string text)
+        internal void SetItineraryLanguageInfo()
         {
-            grid.DisplayLayout.Bands[0].Summaries["BaseCurrency"].DisplayFormat = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
-            grid.DisplayLayout.Bands[0].SummaryFooterCaption = _currencyDisplayText = text;
+            var lang = LanguageService.GetItineraryLanguage(itinerarySet);
+
+            RefreshGrid();
+            txtPriceOverride.FormatProvider = lang.CultureInfo;
+            txtGross2.FormatProvider = lang.CultureInfo;
+            txtGross1.FormatProvider = lang.CultureInfo;
+            txtSell.FormatProvider = lang.CultureInfo;
         }
 
         internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
@@ -228,11 +243,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
 
             // enable caption (shows blue text when itinerary currency diffent to base)
-            band.Override.SummaryFooterCaptionVisible = DefaultableBoolean.True;
-            band.SummaryFooterCaption = _currencyDisplayText;
-            band.Override.SummaryFooterCaptionAppearance.FontData.Bold = DefaultableBoolean.True;
-            band.Override.SummaryFooterCaptionAppearance.ForeColor = Color.Blue;
-            band.Override.SummaryFooterCaptionAppearance.TextHAlign = HAlign.Left;
+            //band.Override.SummaryFooterCaptionVisible = DefaultableBoolean.True;
+            //band.SummaryFooterCaption = _currencyDisplayText;
+            //band.Override.SummaryFooterCaptionAppearance.FontData.Bold = DefaultableBoolean.True;
+            //band.Override.SummaryFooterCaptionAppearance.ForeColor = Color.Blue;
+            //band.Override.SummaryFooterCaptionAppearance.TextHAlign = HAlign.Left;
 
             SummarySettings summary;
             if (!band.Summaries.Exists("GroupGross"))
@@ -240,7 +255,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // Group gross total. 
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["GrossTotalConverted"]);
                 summary.Key = "GroupGross";
-                summary.DisplayFormat = "{0:#0.00}";
+                summary.DisplayFormat = "{0:C}";// #0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 summary.ToolTipText = "Total gross sum, in Itinerary currency";
                 summary.SummaryDisplayArea = SummaryDisplayAreas.InGroupByRows; // group rows only
@@ -253,7 +268,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // Net total.
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["NetTotalConverted"]);
                 summary.Key = "NetTotalConverted";
-                summary.DisplayFormat = "{0:#0.00}";
+                summary.DisplayFormat = "{0:C}";// #0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 summary.ToolTipText = "Total net sum, in Itinerary currency";
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
@@ -266,7 +281,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // Gross total.
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["GrossTotalConverted"]);
                 summary.Key = "GrossTotalConverted";
-                summary.DisplayFormat = "{0:#0.00}";
+                summary.DisplayFormat = "{0:C}";// "#0.00}";
                 summary.Appearance.TextHAlign = HAlign.Right;
                 summary.ToolTipText = "Total gross sum, in Itinerary currency";
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
@@ -410,8 +425,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 overrideWarning.SetIconAlignment(label8, ErrorIconAlignment.BottomRight);
                 overrideWarning.SetIconPadding(label8, 3);
             }
-            else
-                overrideWarning.SetError(txtSell, ""); // reset
+            else overrideWarning.SetError(label8, ""); // reset
+        }
+
+        internal void SetLanguageOverrideWarning()
+        {
+            if (!string.IsNullOrEmpty(cmbCurrency.Text.Trim()))
+            {
+                overrideWarning.SetError(label9, "Using custom output currency");
+                overrideWarning.SetIconAlignment(label9, ErrorIconAlignment.BottomRight);
+                overrideWarning.SetIconPadding(label9, 3);
+            }
+            else overrideWarning.SetError(label9, ""); // reset
         }
 
         private void EditNetOverride()
@@ -449,8 +474,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             RecalculateFinalPricing();
         }
 
+        private decimal yieldAmount;
+        private decimal yieldPercent;
         public void RecalculateFinalPricing()
         {
+
             // net/gross adjustments
             if (!itinerarySet.Itinerary[0].IsNetMarginNull()
                 || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
@@ -466,10 +494,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // final sell
             decimal total = itinerarySet.GetGrossFinalPrice();
             decimal net = itinerarySet.GetNetBasePrice();
-            decimal yield = total - net;
-            decimal yieldp = Common.CalcCommissionByNetGross(net, total);
-            txtCommission.Text = String.Format("{0} ({1})", yield.ToString("#0.00"), (yieldp / 100).ToString("p"));
+            yieldAmount = total - net;
+            yieldPercent = Common.CalcCommissionByNetGross(net, total);
             txtSell.Value = total;
+            FormatFinalYieldText();
+        }
+
+        internal void FormatFinalYieldText()
+        {
+            var language = LanguageService.GetItineraryLanguage(itinerarySet);
+            txtCommission.Text = String.Format("{0} ({1})", yieldAmount.ToString("c", language.CultureInfo), (yieldPercent / 100).ToString("p"));
         }
 
         private int? GetSelectedPurchaseItemId()
@@ -589,10 +623,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Layout.Bands[0].Columns.Add("GradeExternal");
             if (!e.Layout.Bands[0].Columns.Exists("Flags"))
                 e.Layout.Bands[0].Columns.Add("Flags");
+            if (!e.Layout.Bands[0].Columns.Exists("NetUnit"))
+                e.Layout.Bands[0].Columns.Add("NetUnit");
+            if (!e.Layout.Bands[0].Columns.Exists("GrossUnit"))
+                e.Layout.Bands[0].Columns.Add("GrossUnit");
             if (!e.Layout.Bands[0].Columns.Exists("NetTotal"))
                 e.Layout.Bands[0].Columns.Add("NetTotal");
             if (!e.Layout.Bands[0].Columns.Exists("GrossTotal"))
                 e.Layout.Bands[0].Columns.Add("GrossTotal");
+            if (!e.Layout.Bands[0].Columns.Exists("NetFinal"))
+                e.Layout.Bands[0].Columns.Add("NetFinal");
+            if (!e.Layout.Bands[0].Columns.Exists("GrossFinal"))
+                e.Layout.Bands[0].Columns.Add("GrossFinal");
             if (!e.Layout.Bands[0].Columns.Exists("DefaultEndDate"))
                 e.Layout.Bands[0].Columns.Add("DefaultEndDate");
             if (!e.Layout.Bands[0].Columns.Exists("BaseCurrency"))
@@ -792,62 +834,59 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.NullText = "1.000";
                     c.Hidden = true; // default hide
                 }
-                else if (c.Key == "Net")
+                else if (c.Key == "NetUnit")
                 {
-                    c.Header.Caption = "Unit Net";
+                    c.Header.Caption = "Net-unit";
                     c.Header.ToolTipText = "Base net unit cost in Supplier base currency";
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Format = "#0.00";
                     c.Hidden = true; // default hide
                 }
-                else if (c.Key == "Gross")
+                else if (c.Key == "GrossUnit")
                 {
-                    c.Header.Caption = "Unit Gross";
+                    c.Header.Caption = "Gross-unit";
                     c.Header.ToolTipText = "Base gross unit cost in Supplier base currency";
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Format = "#0.00";
                     c.Hidden = true; // default hide
                 }
                 else if (c.Key == "NetTotal")
                 {
-                    c.Header.Caption = "Base Net";
+                    c.Header.Caption = "Net-base";
                     c.Header.ToolTipText = "Base net total cost in Supplier base currency";
-                    c.DataType = typeof(Decimal);
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Format = "#0.00";
-                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "GrossTotal")
                 {
-                    c.Header.Caption = "Base Gross";
+                    c.Header.Caption = "Gross-base";
                     c.Header.ToolTipText = "Base gross total cost in Supplier base currency";
-                    c.DataType = typeof(Decimal);
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Format = "#0.00";
-                    c.Hidden = true; // default hide
                 }
-                else if (c.Key == "NetTotalConverted")
+
+                else if (c.Key == "NetFinal")
                 {
-                    c.Header.Caption = "Final Net";
+                    c.Header.Caption = "Net-final";
                     c.Header.ToolTipText = "Final net total cost in Itinerary base currency";
-                    c.Format = "#0.00";
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
                 }
-                else if (c.Key == "GrossTotalConverted")
+                else if (c.Key == "GrossFinal")
                 {
-                    c.Header.Caption = "Final Gross";
+                    c.Header.Caption = "Gross-final";
                     c.Header.ToolTipText = "Final gross total cost in Itinerary base currency";
-                    c.Format = "#0.00";
+                    c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
@@ -865,7 +904,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "Flags")
                 {
-                    c.DataType = typeof (Bitmap);
+                    c.DataType = typeof(Bitmap);
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
                     // TODO: flags hidden for now (see line 57 too)
@@ -903,12 +942,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["BaseCurrency"].Width = 40;
             e.Layout.Bands[0].Columns["BookingCurrency"].Width = 40;
             e.Layout.Bands[0].Columns["CurrencyRate"].Width = 50;
-            e.Layout.Bands[0].Columns["Net"].Width = 70;
-            e.Layout.Bands[0].Columns["Gross"].Width = 70;
+            e.Layout.Bands[0].Columns["NetUnit"].Width = 70;
+            e.Layout.Bands[0].Columns["GrossUnit"].Width = 70;
             e.Layout.Bands[0].Columns["NetTotal"].Width = 70;
             e.Layout.Bands[0].Columns["GrossTotal"].Width = 70;
-            e.Layout.Bands[0].Columns["NetTotalConverted"].Width = 70;
-            e.Layout.Bands[0].Columns["GrossTotalConverted"].Width = 70;
+            e.Layout.Bands[0].Columns["NetFinal"].Width = 70;
+            e.Layout.Bands[0].Columns["GrossFinal"].Width = 70;
 
             int index = 0;
 
@@ -930,16 +969,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["StartTime"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["DefaultEndDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["BookingCurrency"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Net"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Gross"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["NetUnit"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["GrossUnit"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyRate"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["NetTotalConverted"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["GrossTotalConverted"].Header.VisiblePosition = index;
+            e.Layout.Bands[0].Columns["NetFinal"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index;
 
             // Set defaults
             GridHelper.SetDefaultGridAppearance(e);
@@ -956,8 +995,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
         {
-            if (e.Row.Band.Key != "PurchaseItem")
-                return;
+            if (e.Row.Band.Key != "PurchaseItem") return;
 
             try
             {
@@ -989,13 +1027,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     ToolSet.RegionRow region = Cache.ToolSet.Region.FindByRegionID((int) regionId);
                     if (region != null && region.RegionName != null)
-                    {
                         e.Row.Cells["RegionName"].Value = region.RegionName;
-                    }
                     else
-                    {
                         e.Row.Cells["RegionName"].Value = "<none>";
-                    }
                 }
                 // Set the grades
                 int? gradeId = itinerarySet.GetPurchaseItemGradeId(itemId);
@@ -1012,9 +1046,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     e.Row.Cells["GradeExternal"].Value = (gradeExternal != null) ? gradeExternal.GradeExternalName : null;
                 }
 
-                // Set base net/gross totals
-                if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal;
-                if (e.Row.Band.Columns.Exists("GrossTotal")) e.Row.Cells["GrossTotal"].Value = item.GrossTotal;
+                // set base prices
+                var bkLang = !item.IsCurrencyCodeNull() && item.CurrencyCode != "XPF" ?
+                    LanguageService.Languages.Where(x => x.CurrencyCode == item.CurrencyCode && x.LanguageName == "English").FirstOrDefault() ??
+                    LanguageService.Languages.Where(x => x.CurrencyCode == item.CurrencyCode).FirstOrDefault() :
+                    LanguageService.GetSystemLanguage();
+
+                var bkInfo = bkLang.CurrencyCode != LanguageService.GetSystemLanguage().CurrencyCode ? string.Format(" ({0})", bkLang.CurrencyCode) : "";
+                if (e.Row.Band.Columns.Exists("NetUnit")) e.Row.Cells["NetUnit"].Value = item.Net.ToString("c", bkLang.CultureInfo) + bkInfo;
+                if (e.Row.Band.Columns.Exists("GrossUnit")) e.Row.Cells["GrossUnit"].Value = item.Gross.ToString("c", bkLang.CultureInfo) + bkInfo;
+                if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal.ToString("c", bkLang.CultureInfo) + bkInfo;
+                if (e.Row.Band.Columns.Exists("GrossTotal")) e.Row.Cells["GrossTotal"].Value = item.GrossTotal.ToString("c", bkLang.CultureInfo) + bkInfo;
+
+                // set final prices
+                var itLang = LanguageService.GetItineraryLanguage(itinerarySet);
+                var itInfo = itLang.CurrencyCode != LanguageService.GetSystemLanguage().CurrencyCode ? string.Format(" ({0})", itLang.CurrencyCode) : "";
+                if (e.Row.Band.Columns.Exists("NetFinal")) e.Row.Cells["NetFinal"].Value = item.NetTotalConverted.ToString("c", itLang.CultureInfo) + itInfo;
+                if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = item.GrossTotalConverted.ToString("c", itLang.CultureInfo) + itInfo;
                 
                 // Set default EndDate
                 if (e.Row.Band.Columns.Exists("DefaultEndDate"))
@@ -1558,13 +1606,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var id = Convert.ToInt32(grid.ActiveRow.Cells["PurchaseItemID"].Value);
             new ItineraryPaxOverride(itinerarySet.PurchaseItem.Where(i => i.PurchaseItemID == id).FirstOrDefault()).ShowDialog();
         }
-
-
-        void cmbCurrency_SelectionChangeCommitted(object sender, System.EventArgs e)
-        {
-            (ParentForm as ItineraryMain).cmbCurrency_SelectionChangeCommitted(sender, e);
-        }
-
+        
         #endregion
     }
 

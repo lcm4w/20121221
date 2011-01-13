@@ -771,9 +771,6 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             this.cmbCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.cmbCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbCurrency.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.itineraryBindingSource, "BaseCurrency", true));
-            this.cmbCurrency.DataSource = this.currencyBindingSource;
-            this.cmbCurrency.DisplayMember = "DisplayName";
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurrency.FormattingEnabled = true;
             this.cmbCurrency.Location = new System.Drawing.Point(449, 389);
@@ -781,8 +778,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbCurrency.Size = new System.Drawing.Size(260, 21);
             this.cmbCurrency.TabIndex = 144;
             this.toolTip1.SetToolTip(this.cmbCurrency, "The currency to convert all prices to");
-            this.cmbCurrency.ValueMember = "CurrencyCode";
-            this.cmbCurrency.SelectionChangeCommitted +=new System.EventHandler(cmbCurrency_SelectionChangeCommitted);
             // 
             // itineraryBindingSource
             // 
@@ -792,8 +787,6 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             // currencyBindingSource
             // 
-            this.currencyBindingSource.DataMember = "Currency";
-            this.currencyBindingSource.DataSource = this.toolSet;
             // 
             // toolSet
             // 
