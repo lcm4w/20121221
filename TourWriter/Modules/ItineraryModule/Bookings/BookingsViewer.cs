@@ -558,6 +558,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             File.Delete(GridLayoutFileName);
             grid.DataSource = null;
             SetDataBindings();
+            SetItineraryLanguageInfo();
         }
 
         private void SetFlags(UltraGridRow row)
