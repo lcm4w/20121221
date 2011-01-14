@@ -845,7 +845,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "GrossUnit")
                 {
@@ -855,7 +854,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
-                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "NetTotal")
                 {
@@ -865,6 +863,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
+                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "GrossTotal")
                 {
@@ -874,6 +873,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
+                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "NetFinal")
                 {
