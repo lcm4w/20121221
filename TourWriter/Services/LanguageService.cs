@@ -48,8 +48,11 @@ namespace TourWriter.Services
 
         internal static Language GetBookingLanguage(ItinerarySet.PurchaseItemRow purchaseItem)
         {
-            var hasOverride = purchaseItem != null &&
-                              !purchaseItem.IsLanguageCodeNull() &&
+            // migration hack
+            if (purchaseItem.IsLanguageCodeNull() && !purchaseItem.IsCurrencyCodeNull() && !string.IsNullOrEmpty(purchaseItem.CurrencyCode.Trim()))
+                return GetLanguageFromCurrencyCode(purchaseItem.CurrencyCode);
+
+            var hasOverride = !purchaseItem.IsLanguageCodeNull() &&
                               !string.IsNullOrEmpty(purchaseItem.LanguageCode.Trim());
 
             return hasOverride ? GetLanguage(purchaseItem.LanguageCode.Trim()) : GetSystemLanguage();
@@ -119,5 +122,22 @@ namespace TourWriter.Services
 
             return list.OrderBy(x => x.CountryName).ToList();
         }
+
+        #region Migration Hacks
+
+        // migrating from CurrencyCode (USD) to LanguageCode (en-US)
+
+        /// <summary>
+        /// Get the 'English' language for a currency, or just the first.
+        /// </summary>
+        /// <param name="currencyCode"></param>
+        /// <returns></returns>
+        public static Language GetLanguageFromCurrencyCode(string currencyCode)
+        {
+            var list = Languages.Where(x => x.CurrencyCode == currencyCode);
+            return list.Where(x => x.LanguageName == "English").FirstOrDefault() ?? list.FirstOrDefault();
+        }
+
+        #endregion
     }
 }

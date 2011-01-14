@@ -118,6 +118,8 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void ItineraryLoad(object sender, EventArgs e)
         {
+            DataBind();
+
             LoadData();
             if (itinerarySet.Itinerary.Count == 0)
             {
@@ -132,6 +134,13 @@ namespace TourWriter.Modules.ItineraryModule
             optReport.CheckedIndex = 0;
             setAddedByInfo();
 
+            // reports
+            reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
+            reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
+            reportControl.DefaultParameters.Add("@LanguageCode", LanguageService.GetItineraryLanguage(itinerarySet).LanguageCode);
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
+            reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
+
             // bind user controls
             bookingsViewer.ItinerarySet = itinerarySet;
             bookingsViewer.SetBindingContext(BindingContext);
@@ -139,11 +148,6 @@ namespace TourWriter.Modules.ItineraryModule
             clientEditor.ItinerarySet = itinerarySet;
             publisher1.ItinerarySet = itinerarySet;
             accounting1.ItinerarySet = itinerarySet;
-            reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
-            reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            reportControl.DefaultParameters.Add("@LanguageCode", LanguageService.GetItineraryLanguage(itinerarySet).LanguageCode);
-            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
-            reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
             // add event to track when data changed
             foreach (DataTable dt in itinerarySet.Tables)
@@ -178,6 +182,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             bookingsViewer.SetLanguageOverrideWarning();
             bookingsViewer.RecalculateFinalPricing();
+            bookingsViewer.SetItineraryLanguageInfo();
         }
         
         private void ItineraryMain_Shown(object sender, EventArgs e)
