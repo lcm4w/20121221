@@ -89,6 +89,34 @@ namespace TourWriter.Services
                            })
                 );
 
+            // add French Republic pacific countries
+            var xpf = list.Where(x => x.LanguageCode == "fr-FR").FirstOrDefault();
+            var xpfCi = (CultureInfo)xpf.CultureInfo.Clone();
+            xpfCi.NumberFormat.CurrencySymbol = "F";
+
+            list.Add(new Language
+            {
+                CountryName = "French Polynesia",
+                LanguageName = "French",
+                LanguageCode = "fr-PF",
+                CurrencyName = "CFP franc",
+                CurrencyCode = "XPF",
+                CurrencySymbol = "F",
+                CultureInfo = xpfCi,
+                RegionInfo = xpf.RegionInfo,
+            });
+            list.Add(new Language
+            {
+                CountryName = "New Caledonia",
+                LanguageName = "French",
+                LanguageCode = "fr-NC",
+                CurrencyName = "CFP franc",
+                CurrencyCode = "XPF",
+                CurrencySymbol = "F",
+                CultureInfo = xpfCi,
+                RegionInfo = xpf.RegionInfo,
+            });
+
             return list.OrderBy(x => x.CountryName).ToList();
         }
     }
