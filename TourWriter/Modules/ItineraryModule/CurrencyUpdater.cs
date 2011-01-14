@@ -44,10 +44,12 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 Cursor = Cursors.WaitCursor;
 
+                var to = LanguageService.GetItineraryLanguage(itinerarySet).CurrencyCode;
+
                 var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().
                     Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
                 var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
-                    Select(from => new CurrencyService.Currency{FromCurrency = from, ToCurrency = CurrencyService.GetItineraryCurrencyCode(itinerarySet)}).ToList();
+                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = to }).ToList();
 
                 foreach (var r in selectedRows) // reset status
                 {
@@ -239,16 +241,16 @@ namespace TourWriter.Modules.ItineraryModule
             if (e.ReInitialize)
                 return;
 
-            var purchaseLineId = (int)e.Row.Cells["PurchaseLineID"].Value;
-            var purchaseLine = itinerarySet.PurchaseLine.FindByPurchaseLineID(purchaseLineId);
-
+            var id = (int)e.Row.Cells["PurchaseItemID"].Value;
+            var item = itinerarySet.PurchaseItem.Where(x => x.PurchaseItemID == id).FirstOrDefault();
+            
             e.Row.Cells["IsSelected"].Value = true;
             e.Row.Cells["Result"].ToolTipText = String.Empty;
-            e.Row.Cells["PurchaseLineName"].Value = purchaseLine.PurchaseLineName;
+            e.Row.Cells["PurchaseLineName"].Value = item.PurchaseLineRow.PurchaseLineName;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
-            e.Row.Cells["ToCurrency"].Value = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
-            e.Row.Cells["FromCurrency"].Value = CurrencyService.GetBookingCurrencyCode(e.Row.Cells["CurrencyCode"]);
+            e.Row.Cells["ToCurrency"].Value = LanguageService.GetItineraryLanguage(itinerarySet).CurrencyCode;
+            e.Row.Cells["FromCurrency"].Value = LanguageService.GetBookingLanguage(item).CurrencyCode;
         }
 
         private void gridBookings_MouseClick(object sender, MouseEventArgs e)

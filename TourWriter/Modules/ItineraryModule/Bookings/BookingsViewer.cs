@@ -129,7 +129,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (cmbCurrency.DataBindings.Count == 0) 
                 cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "LanguageCode", true));
             cmbCurrency.SelectedIndexChanged += (ParentForm as ItineraryMain).OnIntineraryLanguageChanged;
-            cmbCurrency.DropDownClosed += delegate {
+            cmbCurrency.SelectionChangeCommitted += delegate {
                                                   if (App.AskYesNo("Update currency rates also?")) {
                                                       Application.DoEvents();
                                                       RunCurrencyUpdater();
