@@ -253,7 +253,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
 
             SummarySettings summary;
-            if (!band.Summaries.Exists("GroupGross"))
+            if (!band.Summaries.Exists("GroupGross") && band.Columns.Exists("GrossTotalConverted"))
             {
                 // Group gross total. 
                 summary = band.Summaries.Add(SummaryType.Sum, band.Columns["GrossTotalConverted"]);
@@ -265,7 +265,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
                 e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
             }
-            if (!band.Summaries.Exists("NetFinal"))
+            if (!band.Summaries.Exists("NetFinal") && band.Columns.Exists("NetFinal"))
             {
                 // Net total.
                 summary = band.Summaries.Add(SummaryType.Formula, band.Columns["NetFinal"]);
@@ -279,7 +279,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
             }
 
-            if (!band.Summaries.Exists("GrossFinal"))
+            if (!band.Summaries.Exists("GrossFinal") && band.Columns.Exists("GrossFinal"))
             {
                 // Gross total.
                 summary = band.Summaries.Add(SummaryType.Formula, band.Columns["GrossFinal"]);
@@ -292,7 +292,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 summary.SummaryDisplayArea = // fixed at bottom of grid
                     SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
             }
-            if (!band.Summaries.Exists("BaseCurrency"))
+            if (!band.Summaries.Exists("BaseCurrency") && band.Columns.Exists("BaseCurrency"))
             {
                 // Gross total.
                 summary = band.Summaries.Add(SummaryType.Formula, band.Columns["BaseCurrency"]);
