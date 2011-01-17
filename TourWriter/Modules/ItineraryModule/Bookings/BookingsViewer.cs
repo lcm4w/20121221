@@ -600,10 +600,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var currencyUpdater = new CurrencyUpdater(itinerarySet);
 
             if (currencyUpdater.ShowDialog() != DialogResult.OK) return;
+
+            // update purchase item prices
+            itinerarySet.PurchaseItem.ColumnChanged -= PurchaseItem_ColumnChanged;
             foreach (var row in Enumerable.Where(itinerarySet.PurchaseItem, row => row.RowState != DataRowState.Deleted))
-            {
                 row.RecalculateTotals();
-            }
+            itinerarySet.PurchaseItem.ColumnChanged += PurchaseItem_ColumnChanged;
+            WarnIfPriceOverrideExists();
         }
 
         #region Events
