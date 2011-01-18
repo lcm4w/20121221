@@ -98,9 +98,8 @@ namespace TourWriter.Info.Services
             decimal? depositAmount, char? depositType, int? depositDueID, int? depositDuePeriod,
             ToolSet.PaymentDueDataTable paymentDueTable)
         {
-            string depositTerms = GetDepositTermsText(
-                depositAmount, depositType, depositDueID, depositDuePeriod, paymentDueTable);
-            string balanceTerms = GetPaymentTermsText(paymentDueID, paymentDuePeriod, paymentDueTable);
+            var depositTerms = GetDepositTermsText(depositAmount, depositType, depositDueID, depositDuePeriod, paymentDueTable);
+            var balanceTerms = GetPaymentTermsText(paymentDueID, paymentDuePeriod, paymentDueTable);
 
             if (string.IsNullOrEmpty(depositTerms))
             {
@@ -122,7 +121,7 @@ namespace TourWriter.Info.Services
         /// <param name="paymentDuePeriod"></param>
         /// <param name="paymentDueTable">PaymentDue lookup table</param>
         /// <returns>Payment or balance terms</returns>
-        public static string GetPaymentTermsText(int? paymentDueID, int? paymentDuePeriod,
+        private static string GetPaymentTermsText(int? paymentDueID, int? paymentDuePeriod,
             ToolSet.PaymentDueDataTable paymentDueTable)
         {
             if (paymentDueID.HasValue)
@@ -143,7 +142,7 @@ namespace TourWriter.Info.Services
         /// <param name="depositDuePeriod"></param>
         /// <param name="paymentDueTable">PaymentDue lookup table</param>
         /// <returns>Deposit terms</returns>
-        public static string GetDepositTermsText(decimal? depositAmount, char? depositType, 
+        private static string GetDepositTermsText(decimal? depositAmount, char? depositType, 
             int? depositDueID, int? depositDuePeriod, ToolSet.PaymentDueDataTable paymentDueTable)
         {
             string text = String.Empty;

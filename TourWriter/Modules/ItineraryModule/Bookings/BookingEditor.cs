@@ -219,11 +219,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col1Width, HorizontalAlignment.Left);
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
-            var currencyInfo = (!itemRow.IsCurrencyCodeNull() && itemRow.CurrencyCode != "")
-                                   ? string.Format(" ({0})", itemRow.CurrencyCode.ToUpper()) : "";
+            var lang = LanguageService.GetBookingLanguage(itemRow);
+            var currencyInfo = string.Format(" ({0})", lang.CurrencyCode);
 
             var listItem = new ListViewItem {Text = "Net:"};
-            listItem.SubItems.Add(itemRow.Net.ToString("n2") + currencyInfo);
+            listItem.SubItems.Add(itemRow.Net.ToString("c", lang.CultureInfo) + currencyInfo);
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Markup:"};
@@ -231,7 +231,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Gross:"};
-            listItem.SubItems.Add(itemRow.Gross.ToString("n2") + currencyInfo);
+            listItem.SubItems.Add(itemRow.Gross.ToString("c", lang.CultureInfo) + currencyInfo);
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Commission:"};
