@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -490,6 +491,31 @@ namespace TourWriter
                 Cache.ToolSet.AppSettings[0].InstallID = Guid.NewGuid();
                 Cache.SaveToolSet();
             }
+        }
+
+        internal static void SetSystemBaseCurrencyInfo()
+        {
+            if (Cache.ToolSet.AppSettings[0].IsLanguageCodeNull() || 
+                string.IsNullOrEmpty(Cache.ToolSet.AppSettings[0].LanguageCode.Trim())) return; // nothing to do
+
+            var code = Cache.ToolSet.AppSettings[0].LanguageCode.Trim();
+            var ciOverride = CultureInfo.CreateSpecificCulture(code);
+            if (Thread.CurrentThread.CurrentCulture.Name == ciOverride.Name) return; // nothing to do
+
+            var ciSystem = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            var nfSystem = ciSystem.NumberFormat;
+            var nfOverride = ciOverride.NumberFormat;
+
+            // set the currency properties
+            nfSystem.CurrencyDecimalDigits = nfOverride.CurrencyDecimalDigits;
+            nfSystem.CurrencyDecimalSeparator = nfOverride.CurrencyDecimalSeparator;
+            nfSystem.CurrencyGroupSeparator = nfOverride.CurrencyGroupSeparator;
+            nfSystem.CurrencyGroupSizes = nfOverride.CurrencyGroupSizes;
+            nfSystem.CurrencyNegativePattern = nfOverride.CurrencyNegativePattern;
+            nfSystem.CurrencyPositivePattern = nfOverride.CurrencyPositivePattern;
+            nfSystem.CurrencySymbol = nfOverride.CurrencySymbol;
+
+            Thread.CurrentThread.CurrentCulture = ciSystem;
         }
 
         #endregion
