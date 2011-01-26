@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using TourWriter.Properties;
+using TourWriter.Services;
 
 namespace TourWriter.Dialogs
 {
@@ -52,28 +53,15 @@ namespace TourWriter.Dialogs
 
         private void SetCurrencyInfo(string currencyCode)
         {
-            if (currencyCode != "")
-            {
-                lblCurrencyInfo.Visible = true;
-                lblCurrencyInfo.Text = string.Format("Currency: {0}", currencyCode.ToUpper());
-            }
-            else lblCurrencyInfo.Visible = false;
+            var currency = Currencies.Single(currencyCode);
+            var format = currency != null ? currency.PortableCurrencyPattern : "c";
+            var message = currency != null ? string.Format("Currency: {0}", currency.CurrencyCode) : "";
 
-            //var cultureInfo = App.GetCultureInfo(currencyCode);
-            //if (cultureInfo == null) throw new NullReferenceException("CultureInfo not found for currencyCode: " + currencyCode);
-            //txtNet.FormatProvider = cultureInfo;
-            //txtGross.FormatProvider = cultureInfo;
-            //txtMarkup.FormatProvider = cultureInfo;
-            //txtCommission.FormatProvider = cultureInfo;
+            lblCurrencyInfo.Visible = message.Length > 0;
+            lblCurrencyInfo.Text = message;
 
-            //txtMarkup.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
-            //txtMarkup.MaskInput = "{LOC}-nnnn.nn";
-            //txtNet.FormatString = "c";
-            //txtNet.MaskInput = "{LOC}-nnnnnnnnnn.nn";
-            //txtGross.FormatString = "c";
-            //txtGross.MaskInput = "{LOC}-nnnnnnnnnn.nn";
-            //txtCommission.FormatString = string.Format("###\\{0}## {1}", cultureInfo.NumberFormat.PercentDecimalSeparator, cultureInfo.NumberFormat.PercentSymbol);
-            //txtCommission.MaskInput = "{LOC}-nnnn.nn";
+            txtNet.FormatString = format;
+            txtGross.FormatString = format;
         }
 
         private void CostingDialog_Load(object sender, EventArgs e)
