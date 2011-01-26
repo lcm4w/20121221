@@ -160,10 +160,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             App.BindingsForceEndEdit(txtItemDays, "Value");
             
             // summaries
-            var itLang = LanguageService.GetItineraryLanguage(itinerarySet);
-            var itInfo = itLang.CurrencyCode != LanguageService.GetSystemLanguage().CurrencyCode ? string.Format(" ({0})", itLang.CurrencyCode) : "";
-            gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = "{0:c}" + itInfo;
-            gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormatProvider = itLang.CultureInfo;
+            var itinerary = itinerarySet.Itinerary[0];
+            var currencyInfo = Currencies.Single(itinerary.BaseCurrency);
+            var format = "{0:" + (currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c") + "}";
+            gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
         }
 
         private void OnPurchaseItemActivated(int purchaseItemId)
@@ -219,11 +219,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col1Width, HorizontalAlignment.Left);
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
-            var lang = LanguageService.GetBookingLanguage(itemRow);
-            var currencyInfo = string.Format(" ({0})", lang.CurrencyCode);
+            var hasOverride = !itemRow.IsCurrencyCodeNull() && !string.IsNullOrEmpty(itemRow.CurrencyCode.Trim());
+            var format = "{0:" + (hasOverride ? Currencies.Single(itemRow.CurrencyCode).PortableCurrencyPattern : "c") + "}";
 
             var listItem = new ListViewItem {Text = "Net:"};
-            listItem.SubItems.Add(itemRow.Net.ToString("c", lang.CultureInfo) + currencyInfo);
+            listItem.SubItems.Add(string.Format(format, itemRow.Net));
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Markup:"};
@@ -231,7 +231,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Gross:"};
-            listItem.SubItems.Add(itemRow.Gross.ToString("c", lang.CultureInfo) + currencyInfo);
+            listItem.SubItems.Add(string.Format(format, itemRow.Gross));
             listPrice.Items.Add(listItem);
 
             listItem = new ListViewItem {Text = "Commission:"};
@@ -697,17 +697,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (item == null) return;
 
             // set base prices
-            var bkLang = LanguageService.GetBookingLanguage(item);
-            var bkInfo = bkLang.CurrencyCode != LanguageService.GetSystemLanguage().CurrencyCode ||
-                         !item.PurchaseLineRow.ItineraryRow.IsLanguageCodeNull() ?
-                         string.Format(" ({0})", bkLang.CurrencyCode) : "";
-            if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = item.NetTotal.ToString("c", bkLang.CultureInfo) + bkInfo;
-            
+            var hasOverride = !item.IsCurrencyCodeNull() && !string.IsNullOrEmpty(item.CurrencyCode.Trim());
+            var format = "{0:" + (hasOverride ? Currencies.Single(item.CurrencyCode).PortableCurrencyPattern : "c") + "}";
+            if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.GrossTotal);
+
             // set final prices
-            var itLang = LanguageService.GetItineraryLanguage(itinerarySet);
-            var itInfo = itLang.CurrencyCode != LanguageService.GetSystemLanguage().CurrencyCode ? string.Format(" ({0})", itLang.CurrencyCode) : "";
-            if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = item.GrossTotalConverted.ToString("c", itLang.CultureInfo) + itInfo;
-                
+            var itinerary = item.PurchaseLineRow.ItineraryRow;
+            hasOverride = !itinerary.IsBaseCurrencyNull() && !string.IsNullOrEmpty(itinerary.BaseCurrency.Trim());
+            format = "{0:" + (hasOverride ? Currencies.Single(itinerary.BaseCurrency).PortableCurrencyPattern : "c") + "}";
+            if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
         }
 
         private void gridItems_AfterRowActivate(object sender, EventArgs e)
