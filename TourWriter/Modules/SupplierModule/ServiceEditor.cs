@@ -565,21 +565,16 @@ namespace TourWriter.Modules.SupplierModule
 
         private void UpdateServiceCurrencyInfo(string currencyCode)
         {
-            // Set currency label.
-            if (currencyCode != "")
-            {
-                lblCurrencyInfo.Visible = true;
-                lblCurrencyInfo.Text = string.Format("Currency: {0}", currencyCode.ToUpper());
-            }
-            else lblCurrencyInfo.Visible = false;
+            var currency = Currencies.Single(currencyCode);
+            var format = currency != null ? currency.PortableCurrencyPattern : "c";
+            var message = currency != null ? currency.CurrencyCode + ", " + currency.CurrencyName : "";
 
-            // Set currency symbol.
-            //var cultureInfo = App.GetCultureInfo(currencyCode);
-            //gridOptions.DisplayLayout.Bands[0].Columns["Net"].FormatInfo = cultureInfo;
-            //gridOptions.DisplayLayout.Bands[0].Columns["Gross"].FormatInfo = cultureInfo;
-            //gridOptions.DisplayLayout.Bands[0].Columns["Markup"].FormatInfo = cultureInfo;
-            //gridOptions.DisplayLayout.Bands[0].Columns["Commission"].FormatInfo = cultureInfo;
-            //gridOptions.Refresh();
+            lblCurrencyInfo.Visible = message.Length > 0;
+            lblCurrencyInfo.Text = message;
+
+            gridOptions.DisplayLayout.Bands[0].Columns["Net"].Format = format;
+            gridOptions.DisplayLayout.Bands[0].Columns["Gross"].Format = format;
+            gridOptions.Refresh();
         }
 
         private void UpdateServiceTypeConfigs(int serviceId, int serviceTypeId, bool deleteExistingConfigsForService)
@@ -1402,7 +1397,7 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     c.Header.ToolTipText = "Net price";
                     c.Width = 30;
-                    c.Format = "##0.00";// "c";
+                    c.Format = "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellAppearance.ForeColor = SystemColors.ControlDarkDark;
                     if (!allowEditing)
@@ -1432,7 +1427,7 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     c.Header.ToolTipText = "Gross price";
                     c.Width = 30;
-                    c.Format = "##0.00";// "c";
+                    c.Format = "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellAppearance.ForeColor = SystemColors.ControlDarkDark;
                     if (!allowEditing)
