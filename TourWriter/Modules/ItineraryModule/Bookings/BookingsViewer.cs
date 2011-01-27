@@ -230,16 +230,17 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             var itinerary = itinerarySet.Itinerary[0];
             var currencyInfo = Currencies.Single(itinerary.BaseCurrency);
+            var pattern = currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c";
 
             // final prices
-            var format = currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c";
+            var format = pattern;
             txtPriceOverride.FormatString = format;
             txtGross2.FormatString = format;
             txtGross1.FormatString = format;
             txtSell.FormatString = format;
 
             // grid summaries
-            format = "{0:" + (currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c") + "}";
+            format = "{0:" + pattern + "}";
             grid.DisplayLayout.Bands[0].Summaries["NetFinal"].DisplayFormat = format;
             grid.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
             
@@ -1061,7 +1062,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
 
                 // set base prices
-                var hasOverride = !item.IsCurrencyCodeNull() && !string.IsNullOrEmpty(item.CurrencyCode.Trim());
+                var hasOverride = Currencies.GetPurchaseItemCurrencyCode(item) != null;
                 var format = "{0:" + (hasOverride ? Currencies.Single(item.CurrencyCode).PortableCurrencyPattern : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetUnit")) e.Row.Cells["NetUnit"].Value = string.Format(format, item.Net);
                 if (e.Row.Band.Columns.Exists("GrossUnit")) e.Row.Cells["GrossUnit"].Value = string.Format(format, item.Gross);
@@ -1070,7 +1071,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 
                 // set final prices
                 var itinerary = item.PurchaseLineRow.ItineraryRow;
-                hasOverride = !itinerary.IsBaseCurrencyNull() && !string.IsNullOrEmpty(itinerary.BaseCurrency.Trim());
+                hasOverride = Currencies.GetItineraryCurrencyCode(itinerary) != null;
                 format = "{0:" + (hasOverride ? Currencies.Single(itinerary.BaseCurrency).PortableCurrencyPattern : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetFinal")) e.Row.Cells["NetFinal"].Value = string.Format(format, item.NetTotalConverted);
                 if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);

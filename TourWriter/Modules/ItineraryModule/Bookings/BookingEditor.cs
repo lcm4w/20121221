@@ -219,7 +219,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col1Width, HorizontalAlignment.Left);
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
-            var hasOverride = !itemRow.IsCurrencyCodeNull() && !string.IsNullOrEmpty(itemRow.CurrencyCode.Trim());
+            var hasOverride = Currencies.GetPurchaseItemCurrencyCode(itemRow) != null;
             var format = "{0:" + (hasOverride ? Currencies.Single(itemRow.CurrencyCode).PortableCurrencyPattern : "c") + "}";
 
             var listItem = new ListViewItem {Text = "Net:"};
@@ -697,13 +697,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (item == null) return;
 
             // set base prices
-            var hasOverride = !item.IsCurrencyCodeNull() && !string.IsNullOrEmpty(item.CurrencyCode.Trim());
+            var hasOverride = Currencies.GetPurchaseItemCurrencyCode(item) != null;
             var format = "{0:" + (hasOverride ? Currencies.Single(item.CurrencyCode).PortableCurrencyPattern : "c") + "}";
             if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.GrossTotal);
 
             // set final prices
             var itinerary = item.PurchaseLineRow.ItineraryRow;
-            hasOverride = !itinerary.IsBaseCurrencyNull() && !string.IsNullOrEmpty(itinerary.BaseCurrency.Trim());
+            hasOverride = Currencies.GetItineraryCurrencyCode(itinerary) != null;
             format = "{0:" + (hasOverride ? Currencies.Single(itinerary.BaseCurrency).PortableCurrencyPattern : "c") + "}";
             if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
         }
