@@ -6297,8 +6297,6 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnCustomCodeFormat;
             
-            private global::System.Data.DataColumn columnLanguageCode;
-            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public AppSettingsDataTable() {
@@ -6494,14 +6492,6 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LanguageCodeColumn {
-                get {
-                    return this.columnLanguageCode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6556,8 +6546,7 @@ namespace TourWriter.Info {
                         int CancelledRequestStatusID, 
                         byte[] RowVersion, 
                         string AccountingSystem, 
-                        string CustomCodeFormat, 
-                        string LanguageCode) {
+                        string CustomCodeFormat) {
                 AppSettingsRow rowAppSettingsRow = ((AppSettingsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -6579,8 +6568,7 @@ namespace TourWriter.Info {
                         CancelledRequestStatusID,
                         RowVersion,
                         AccountingSystem,
-                        CustomCodeFormat,
-                        LanguageCode};
+                        CustomCodeFormat};
                 rowAppSettingsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowAppSettingsRow);
                 return rowAppSettingsRow;
@@ -6630,7 +6618,6 @@ namespace TourWriter.Info {
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnAccountingSystem = base.Columns["AccountingSystem"];
                 this.columnCustomCodeFormat = base.Columns["CustomCodeFormat"];
-                this.columnLanguageCode = base.Columns["LanguageCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6676,8 +6663,6 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnAccountingSystem);
                 this.columnCustomCodeFormat = new global::System.Data.DataColumn("CustomCodeFormat", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCustomCodeFormat);
-                this.columnLanguageCode = new global::System.Data.DataColumn("LanguageCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLanguageCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ToolSetKey21", new global::System.Data.DataColumn[] {
                                 this.columnAppSettingsID}, true));
                 this.columnAppSettingsID.AutoIncrement = true;
@@ -13368,22 +13353,6 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string LanguageCode {
-                get {
-                    if (this.IsLanguageCodeNull()) {
-                        return string.Empty;
-                    }
-                    else {
-                        return ((string)(this[this.tableAppSettings.LanguageCodeColumn]));
-                    }
-                }
-                set {
-                    this[this.tableAppSettings.LanguageCodeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsInstallIDNull() {
                 return this.IsNull(this.tableAppSettings.InstallIDColumn);
             }
@@ -13608,18 +13577,6 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCustomCodeFormatNull() {
                 this[this.tableAppSettings.CustomCodeFormatColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLanguageCodeNull() {
-                return this.IsNull(this.tableAppSettings.LanguageCodeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLanguageCodeNull() {
-                this[this.tableAppSettings.LanguageCodeColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -151,7 +151,6 @@
     </Compile>
     <Compile Include="DepositTypeList.cs" />
     <Compile Include="ErrorMessage.cs" />
-    <Compile Include="Language.cs" />
     <Compile Include="NavigationTreeItemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConnectionString.cs" />

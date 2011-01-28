@@ -892,7 +892,7 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnIsDeleted;
             
-            private global::System.Data.DataColumn columnLanguageCode;
+            private global::System.Data.DataColumn columnCurrencyCode;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1153,9 +1153,9 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LanguageCodeColumn {
+            public global::System.Data.DataColumn CurrencyCodeColumn {
                 get {
-                    return this.columnLanguageCode;
+                    return this.columnCurrencyCode;
                 }
             }
             
@@ -1224,7 +1224,7 @@ namespace TourWriter.Info {
                         int AddedBy, 
                         byte[] RowVersion, 
                         bool IsDeleted, 
-                        string LanguageCode) {
+                        string CurrencyCode) {
                 AgentRow rowAgentRow = ((AgentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1255,7 +1255,7 @@ namespace TourWriter.Info {
                         AddedBy,
                         RowVersion,
                         IsDeleted,
-                        LanguageCode};
+                        CurrencyCode};
                 if ((parentPaymentTermRowByPaymentTermAgent != null)) {
                     columnValuesArray[11] = parentPaymentTermRowByPaymentTermAgent[0];
                 }
@@ -1319,7 +1319,7 @@ namespace TourWriter.Info {
                 this.columnAddedBy = base.Columns["AddedBy"];
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnIsDeleted = base.Columns["IsDeleted"];
-                this.columnLanguageCode = base.Columns["LanguageCode"];
+                this.columnCurrencyCode = base.Columns["CurrencyCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1381,8 +1381,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnRowVersion);
                 this.columnIsDeleted = new global::System.Data.DataColumn("IsDeleted", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsDeleted);
-                this.columnLanguageCode = new global::System.Data.DataColumn("LanguageCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLanguageCode);
+                this.columnCurrencyCode = new global::System.Data.DataColumn("CurrencyCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencyCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("AgentSetKey1", new global::System.Data.DataColumn[] {
                                 this.columnAgentID}, true));
                 this.columnAgentID.AutoIncrement = true;
@@ -1391,6 +1391,7 @@ namespace TourWriter.Info {
                 this.columnAgentID.Unique = true;
                 this.columnAgentName.AllowDBNull = false;
                 this.columnRowVersion.ReadOnly = true;
+                this.columnCurrencyCode.MaxLength = 3;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3497,17 +3498,17 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string LanguageCode {
+            public string CurrencyCode {
                 get {
-                    if (this.IsLanguageCodeNull()) {
+                    if (this.IsCurrencyCodeNull()) {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableAgent.LanguageCodeColumn]));
+                        return ((string)(this[this.tableAgent.CurrencyCodeColumn]));
                     }
                 }
                 set {
-                    this[this.tableAgent.LanguageCodeColumn] = value;
+                    this[this.tableAgent.CurrencyCodeColumn] = value;
                 }
             }
             
@@ -3847,14 +3848,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLanguageCodeNull() {
-                return this.IsNull(this.tableAgent.LanguageCodeColumn);
+            public bool IsCurrencyCodeNull() {
+                return this.IsNull(this.tableAgent.CurrencyCodeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLanguageCodeNull() {
-                this[this.tableAgent.LanguageCodeColumn] = global::System.Convert.DBNull;
+            public void SetCurrencyCodeNull() {
+                this[this.tableAgent.CurrencyCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
