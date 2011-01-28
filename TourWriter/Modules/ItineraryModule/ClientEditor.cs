@@ -35,6 +35,13 @@ namespace TourWriter.Modules.ItineraryModule
         public ClientEditor()
         {
             InitializeComponent();
+
+            // TODO: remove old currency stuff (was here just to user could store client currency)
+            label4.Visible = false;
+            cmbCurrency.Visible = false;
+            label5.Visible = false;
+            txtCurrencyRate.Visible = false;
+            btnUpdateRates.Visible = false;
         }
         
         // TODO: hidden group row required before can add clients/client notes etc
