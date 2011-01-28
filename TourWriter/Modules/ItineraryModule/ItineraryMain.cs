@@ -238,7 +238,7 @@ namespace TourWriter.Modules.ItineraryModule
                 //cmbCurrency.DataSource = currencyBindingSource;
                 //cmbCurrency.DisplayMember = "FriendlyName";
                 //cmbCurrency.ValueMember = "CurrencyCode";
-                //cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "BaseCurrency", true));
+                //cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "CurrencyCode", true));
                 //cmbCurrency.SelectedIndexChanged += OnIntineraryLanguageChanged;
                 cmbCurrency.Visible = false;
                 lblCurrency.Visible = false;
@@ -757,7 +757,7 @@ namespace TourWriter.Modules.ItineraryModule
         internal void OnIntineraryLanguageChanged(object sender, EventArgs e)
         {
             var val = ((ComboBox)sender).SelectedValue.ToString();
-            if (itinerarySet.Itinerary[0].BaseCurrency != val) itinerarySet.Itinerary[0].BaseCurrency = val; // force binding (only if changed, otherwise dataset will show false HasChanges)
+            if (itinerarySet.Itinerary[0].CurrencyCode != val) itinerarySet.Itinerary[0].CurrencyCode = val; // force binding (only if changed, otherwise dataset will show false HasChanges)
 
             // update UI
             bookingsViewer.SetItineraryLanguageInfo();

@@ -127,7 +127,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             cmbCurrency.DisplayMember = "FriendlyName";
             cmbCurrency.ValueMember = "CurrencyCode";
             if (cmbCurrency.DataBindings.Count == 0) 
-                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "BaseCurrency", true));
+                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "CurrencyCode", true));
             cmbCurrency.SelectedIndexChanged += (ParentForm as ItineraryMain).OnIntineraryLanguageChanged;
             cmbCurrency.SelectionChangeCommitted += delegate(object sender, EventArgs e)
                                                         {
@@ -232,7 +232,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         internal void SetItineraryLanguageInfo()
         {
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = Currencies.Single(itinerary.BaseCurrency);
+            var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
             var pattern = currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c";
 
             // final prices
@@ -513,7 +513,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         internal void FormatFinalYieldText()
         {
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = Currencies.Single(itinerary.BaseCurrency);
+            var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
             var format = "{0:" + (currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c") + "}";
             
             var amount = string.Format(format, yieldAmount);
@@ -1075,7 +1075,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // set final prices
                 var itinerary = item.PurchaseLineRow.ItineraryRow;
                 hasOverride = Currencies.GetItineraryCurrencyCode(itinerary) != null;
-                format = "{0:" + (hasOverride ? Currencies.Single(itinerary.BaseCurrency).PortableCurrencyPattern : "c") + "}";
+                format = "{0:" + (hasOverride ? Currencies.Single(itinerary.CurrencyCode).PortableCurrencyPattern : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetFinal")) e.Row.Cells["NetFinal"].Value = string.Format(format, item.NetTotalConverted);
                 if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
                 

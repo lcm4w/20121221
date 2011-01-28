@@ -35,7 +35,7 @@ namespace TourWriter.Services
         
         internal static string GetItineraryCurrencyCode(Info.ItinerarySet.ItineraryRow entity)
         {
-            return !entity.IsBaseCurrencyNull() && !string.IsNullOrEmpty(entity.BaseCurrency.Trim()) ? entity.BaseCurrency : null;
+            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? entity.CurrencyCode : null;
         }
         
         internal static string GetPurchaseItemCurrencyCode(Info.ItinerarySet.PurchaseItemRow entity)

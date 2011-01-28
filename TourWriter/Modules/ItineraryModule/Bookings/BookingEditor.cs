@@ -161,7 +161,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             
             // summaries
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = Currencies.Single(itinerary.BaseCurrency);
+            var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
             var format = "{0:" + (currencyInfo != null ? currencyInfo.PortableCurrencyPattern : "c") + "}";
             gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
         }
@@ -704,7 +704,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // set final prices
             var itinerary = item.PurchaseLineRow.ItineraryRow;
             hasOverride = Currencies.GetItineraryCurrencyCode(itinerary) != null;
-            format = "{0:" + (hasOverride ? Currencies.Single(itinerary.BaseCurrency).PortableCurrencyPattern : "c") + "}";
+            format = "{0:" + (hasOverride ? Currencies.Single(itinerary.CurrencyCode).PortableCurrencyPattern : "c") + "}";
             if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
         }
 

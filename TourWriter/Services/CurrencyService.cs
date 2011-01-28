@@ -31,8 +31,8 @@ namespace TourWriter.Services
         
         internal static string GetItineraryCurrencyCode(ItinerarySet itinerarySet)
         {
-            if (itinerarySet != null && itinerarySet.Itinerary.Count > 0 && !itinerarySet.Itinerary[0].IsBaseCurrencyNull())
-                return itinerarySet.Itinerary[0].BaseCurrency;
+            if (itinerarySet != null && itinerarySet.Itinerary.Count > 0 && !itinerarySet.Itinerary[0].IsCurrencyCodeNull())
+                return itinerarySet.Itinerary[0].CurrencyCode;
             return GetSystemCurrencyCode();
         }
 
