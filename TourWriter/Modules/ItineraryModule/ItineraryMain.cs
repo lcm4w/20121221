@@ -137,7 +137,7 @@ namespace TourWriter.Modules.ItineraryModule
             // reports
             reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            reportControl.DefaultParameters.Add("@LanguageCode", LanguageService.GetItineraryLanguage(itinerarySet).LanguageCode);
+            reportControl.DefaultParameters.Add("@CurrencyCode", Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
@@ -234,14 +234,14 @@ namespace TourWriter.Modules.ItineraryModule
                         MenuNode.Text = itinerarySet.Itinerary[0].ItineraryName; 
                 }
 
-                currencyBindingSource.DataSource = LanguageService.GetBindingList(); // also used by bookings grid
+                currencyBindingSource.DataSource = Currencies.All(); // also used by bookings grid
+                //cmbCurrency.DataSource = currencyBindingSource;
+                //cmbCurrency.DisplayMember = "FriendlyName";
+                //cmbCurrency.ValueMember = "CurrencyCode";
+                //cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "BaseCurrency", true));
+                //cmbCurrency.SelectedIndexChanged += OnIntineraryLanguageChanged;
                 cmbCurrency.Visible = false;
                 lblCurrency.Visible = false;
-                //cmbCurrency.DataSource = currencyBindingSource;
-                //cmbCurrency.DisplayMember = "FriendlyCurrencyName";
-                //cmbCurrency.ValueMember = "LanguageCode";
-                //cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "LanguageCode", true));
-                //cmbCurrency.SelectedIndexChanged += OnIntineraryLanguageChanged;
 
                 // end progress
                 ProgressBar.Value = ProgressBar.Maximum;
@@ -756,17 +756,16 @@ namespace TourWriter.Modules.ItineraryModule
         
         internal void OnIntineraryLanguageChanged(object sender, EventArgs e)
         {
-            var cmb = (ComboBox)sender;
-            var lang = (Language)cmb.SelectedItem;
-            if (lang == null) return;
-            itinerarySet.Itinerary[0].LanguageCode = lang.LanguageCode; // force binding
+            var val = ((ComboBox)sender).SelectedValue.ToString();
+            if (itinerarySet.Itinerary[0].BaseCurrency != val) itinerarySet.Itinerary[0].BaseCurrency = val; // force binding (only if changed, otherwise dataset will show false HasChanges)
 
+            // update UI
             bookingsViewer.SetItineraryLanguageInfo();
             bookingsViewer.FormatFinalYieldText();
 
             // set reports param
-            if (reportControl.DefaultParameters.ContainsKey("@LanguageCode")) reportControl.DefaultParameters.Remove("@LanguageCode");
-            reportControl.DefaultParameters.Add("@LanguageCode", lang.LanguageCode);
+            if (reportControl.DefaultParameters.ContainsKey("@CurrencyCode")) reportControl.DefaultParameters.Remove("@CurrencyCode");
+            reportControl.DefaultParameters.Add("@CurrencyCode", val);
         }
         
         private void tabControlAdditional_SelectedTabChanging(object sender, SelectedTabChangingEventArgs e)

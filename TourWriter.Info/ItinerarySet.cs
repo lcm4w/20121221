@@ -460,96 +460,44 @@ namespace TourWriter.Info
             }
 
             /// <summary>
-            /// Get the service start date and time for this service, not including client early checkin time.
+            /// Get the start date and time, and if specified include the Service early checkin time.
             /// </summary>
-            /// <returns>Date time string</returns>
-            public string GetStartDateTimeString()
+            public string GetPurchaseItemStartDateTimeString(string dateFormat, string timeFormat, bool includeEarlyCheckin)
             {
-                string s = "";
+                if (IsStartDateNull()) return "";
 
-                // Add start date.
-                if (!IsStartDateNull())
+                // date only
+                if (IsStartTimeNull()) return string.Format("{0:" + dateFormat + "}", StartDate);
+
+                // date and time
+                var datetime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, StartTime.Hour, StartTime.Minute, StartTime.Second);
+
+                // early checkin
+                if (includeEarlyCheckin)
                 {
-                    s += StartDate.ToShortDateString();
+                    var option = ((ItinerarySet)Table.DataSet).OptionLookup.FindByOptionID(OptionID);
+                    if (!option.IsCheckinMinutesEarlyNull()) datetime.AddMinutes(option.CheckinMinutesEarly);
                 }
-                // Add start time.
-                if (!IsStartTimeNull())
-                {
-                    if (s != "") s += " ";
-                    s += " " + StartTime.ToShortTimeString();
-                }
-                return s;
+                return string.Format("{0:" + dateFormat + " " + timeFormat + "}", datetime);
             }
 
             /// <summary>
-            /// Get the client checkin date and time, including the early arrival time.
+            /// Get the end date and time for this Service, from end-date override or else default.
             /// </summary>
-            /// <returns>Date time string</returns>
-            public string GetClientCheckinDateTimeString()
+            public string GetPurchaseItemEndDateTimeString(string dateFormat, string timeFormat)
             {
-                string s = "";
+                var endDate = !IsEndDateNull() ?
+                    EndDate : // end date override
+                    StartDate.Date.AddDays(!IsNumberOfDaysNull() ? NumberOfDays : 0); // calc from start date
 
-                // Add start date.
-                if (!IsStartDateNull())
-                {
-                    s += StartDate.ToShortDateString();
-                }
+                // date only
+                if (IsEndTimeNull()) return string.Format("{0:" + dateFormat + "}", endDate);
 
-                // Add start time.
-                if (!IsStartTimeNull())
-                {
-                    if (s != "") s += " ";
-
-                    ItinerarySet itinerarySet = Table.DataSet as ItinerarySet;
-                    if (itinerarySet != null)
-                    {
-                        // Include early checkin time.
-                        OptionLookupRow option = itinerarySet.OptionLookup.FindByOptionID(OptionID);
-
-                        if (!option.IsCheckinMinutesEarlyNull())
-                        {
-                            s += " " + StartTime.AddMinutes(-option.CheckinMinutesEarly).ToShortTimeString();
-                        }
-                        else
-                        {
-                            s += " " + StartTime.ToShortTimeString();
-                        }
-
-                    }
-                }
-                return s;
+                // date and time
+                endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, EndTime.Hour, EndTime.Minute, EndTime.Second);
+                return string.Format("{0:" + dateFormat + " " + timeFormat + "}", endDate);
             }
-
-            /// <summary>
-            /// Get the client checkout date and time. Uses the item end date override field if it is not null,
-            /// otherwise calculates it from the start date plus number of days.
-            /// </summary>
-            /// <returns>Date time string</returns>
-            public string GetClientCheckoutDateTimeString()
-            {
-                string s = "";
-                //PurchaseItemRow item = FindByPurchaseItemID(purchaseItemId);
-
-                // Add end date.
-                if (!IsEndDateNull()) // try to use end date override
-                {
-                    s += EndDate.ToShortDateString();
-                }
-                else if (!IsStartDateNull()) // calculate booking end date
-                {
-                    s += StartDate.Date.AddDays(
-                        !IsNumberOfDaysNull() ? NumberOfDays : 0).ToShortDateString();
-                }
-
-                // Add end time.
-                if (!IsEndTimeNull())
-                {
-                    if (s != "") s += " ";
-                    s += " " + EndTime.ToShortTimeString();
-                }
-                return s;
-            }
-
+            
             /// <summary>
             /// Forces recalculatation of calculated columns (total converted net and gross).
             /// </summary>
@@ -898,96 +846,6 @@ namespace TourWriter.Info
             if (!supplier.IsGradeExternalIDNull())
                 return supplier.GradeExternalID;
             return null;
-        }
-
-        /// <summary>
-        /// Get the service start date and time for this service, not including client early checkin time.
-        /// </summary>
-        /// <param name="purchaseItemId">The purchase id</param>
-        /// <param name="cultureInfo">The formatting info, or null for default</param>
-        /// <returns>Date time string</returns>
-        public string GetPurchaseItemStartDateTimeString(int purchaseItemId, CultureInfo cultureInfo)
-        {
-            var item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
-            if (item.IsStartDateNull()) return "";
-
-            if (item.IsStartTimeNull()) return string.Format(cultureInfo, "{0:D}", item.StartDate); // long date
-
-            var date = new DateTime(item.StartDate.Year, item.StartDate.Month, item.StartDate.Day, item.StartTime.Hour, item.StartTime.Minute, item.StartTime.Second);
-            return string.Format(cultureInfo, "{0:f}", date); // long time + short date
-        }
-
-        /// <summary>
-        /// Get the client checkin date and time, including the early arrival time.
-        /// </summary>
-        /// <param name="purchaseItemId">The purchase item id</param>
-        /// <returns>Date time string</returns>
-        public string GetPurchaseItemClientCheckinDateTimeString(int purchaseItemId)
-        {
-            return GetPurchaseItemClientCheckinDateTimeString(purchaseItemId, null, null);
-        }
-        /// <summary>
-        /// Get the client checkin date and time, including the early arrival time.
-        /// </summary>
-        /// <param name="purchaseItemId">The purchase item id</param>
-        /// <param name="dateFormat">The format for the date component, or null for default</param>
-        /// <param name="timeFormat">The format for the time component, or null for default</param>
-        /// <returns>Date time string</returns>
-        public string GetPurchaseItemClientCheckinDateTimeString(int purchaseItemId, string dateFormat, string timeFormat)
-        {
-            string s = "";
-            PurchaseItemRow item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
-
-            // Add start date.
-            if (!item.IsStartDateNull())
-            {
-                s += !string.IsNullOrEmpty(dateFormat) ?
-                    item.StartDate.ToString(dateFormat) :
-                    item.StartDate.ToShortDateString();
-            }
-
-            // Add start time.
-            if (!item.IsStartTimeNull())
-            {
-                if (s != "")
-                    s += " ";
-
-                // Include early checkin time.
-                OptionLookupRow option = OptionLookup.FindByOptionID(item.OptionID);
-                if (!option.IsCheckinMinutesEarlyNull())
-                {
-                    s += !string.IsNullOrEmpty(timeFormat) ?
-                        item.StartTime.AddMinutes(-option.CheckinMinutesEarly).ToString(timeFormat) :
-                        item.StartTime.AddMinutes(-option.CheckinMinutesEarly).ToShortTimeString();
-                }
-                else
-                {
-                    s += !string.IsNullOrEmpty(timeFormat) ?
-                        item.StartTime.ToString(timeFormat) :
-                        item.StartTime.ToShortTimeString();
-                }
-            }
-            return s;
-        }
-
-        /// <summary>
-        /// Get the client checkout date and time. Uses the item end date override field if it is not null,
-        /// otherwise calculates it from the start date plus number of days.
-        /// </summary>
-        /// <param name="purchaseItemId">The purchase id</param>
-        /// <param name="cultureInfo">The format for the date component, or null for default</param>
-        /// <returns>Date time string</returns>
-        public string GetPurchaseItemClientCheckoutDateTimeString(int purchaseItemId, CultureInfo cultureInfo)
-        {
-            var item = PurchaseItem.FindByPurchaseItemID(purchaseItemId);
-
-            var endDate = !item.IsEndDateNull() ? item.EndDate : // end date override
-                item.StartDate.Date.AddDays(!item.IsNumberOfDaysNull() ? item.NumberOfDays : 0); // calc from start date
-
-            if (item.IsEndTimeNull()) return string.Format(cultureInfo, "{0:D}", endDate); // long date
-
-            endDate = new DateTime(endDate.Year, endDate.Month, endDate.Day, item.EndTime.Hour, item.EndTime.Minute, item.EndTime.Second);
-            return string.Format(cultureInfo, "{0:f}", endDate); // long time + short date
         }
 
         #endregion

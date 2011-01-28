@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Services;
@@ -202,6 +204,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             rowList.AddRange(itinerarySet.PurchaseItem.Select("PurchaseLineID = " + line.PurchaseLineID));
             rowList.Sort(new DateTimeSortComparer());
 
+            const string dateFormat = "dddd, dd MMMM yyyy";
+            const string timeFormat = "HH:mm";
+
             int index = 1;
             foreach (var row in rowList)
             {
@@ -216,16 +221,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     GetBookingPrices(item, ref price, ref comm, ref total);
 
                 // create booking details
-                var cultureInfo = LanguageService.GetItineraryLanguage(itinerarySet).CultureInfo;
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Name", GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName()));
                 sb.AppendLine(NewTableRow(htmlRowTemplateBookings, "Description", item.PurchaseItemName));
-                sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
-                    GetBookingStartName(item.PurchaseItemID),
-                    GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, cultureInfo)));
+                sb.AppendLine(NewTableRow(htmlRowTemplateBookings, GetBookingStartName(item.PurchaseItemID), item.GetPurchaseItemStartDateTimeString(dateFormat, timeFormat, false)));
                 if (showEndDate)
-                    sb.AppendLine(NewTableRow(htmlRowTemplateBookings,
-                        GetBookingEndName(item.PurchaseItemID),
-                        GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, cultureInfo)));
+                    sb.AppendLine(NewTableRow(htmlRowTemplateBookings, GetBookingEndName(item.PurchaseItemID), item.GetPurchaseItemEndDateTimeString(dateFormat, timeFormat)));
                 if (showEndDate)
                     sb.AppendLine(NewTableRow(htmlRowTemplateBookings, GetNumberOfDaysName(item.ServiceTypeID), item.NumberOfDays));
                 if (!item.IsQuantityNull())
@@ -261,6 +261,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             var priceStart = detailTemplate.IndexOf(ItemPriceStartTag);
             var priceEnd = detailTemplate.IndexOf(ItemPriceEndTag) + ItemPriceEndTag.Length;
             var priceTemplate = detailTemplate.Substring(priceStart, priceEnd - priceStart);
+
+            const string dateFormat = "dddd, dd MMMM yyyy";
+            const string timeFormat = "HH:mm";
             
             var i = 1;
             string bookingDetail = "", detailText;
@@ -268,22 +271,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             items.Sort(new DateTimeSortComparer());
             foreach (var item in items.OfType<ItinerarySet.PurchaseItemRow>())
             {
-                var cultureInfo = LanguageService.GetBookingLanguage(item).CultureInfo;
                 detailText = detailTemplate.Replace(BookingDetailStartTag, "").Replace(BookingDetailEndTag, "");
                 var showEndDate = (!item.IsStartDateNull() && !item.IsNumberOfDaysNull() && item.NumberOfDays >= 1);
+                
+                var enEnCulture = CultureInfo.CreateSpecificCulture("en-UK");
 
                 detailText = ReplaceTag(detailText, ItemCountTag, i++.ToString());
                 detailText = ReplaceTag(detailText, ItemNameTag, GetBookingItinerarySet().Itinerary[0].GetDisplayNameOrItineraryName());
                 detailText = ReplaceTag(detailText, ItemDescTag, item.PurchaseItemName);
                 detailText = ReplaceTag(detailText, ItemStartTextTag, GetBookingStartName(item.PurchaseItemID));
-                detailText = ReplaceTag(detailText, ItemStartDateTag, GetBookingItinerarySet().GetPurchaseItemStartDateTimeString(item.PurchaseItemID, cultureInfo));
+                detailText = ReplaceTag(detailText, ItemStartDateTag, item.GetPurchaseItemStartDateTimeString(dateFormat, timeFormat, false));
 
                 var endDateText = "";
                 if (showEndDate)
                 {
                     endDateText = endDateTemplate.Replace(ItemEndDateStartTag, "").Replace(ItemEndDateEndTag, "");
                     endDateText = ReplaceTag(endDateText, ItemEndTextTag, GetBookingEndName(item.PurchaseItemID));
-                    endDateText = ReplaceTag(endDateText, ItemEndDateTag, GetBookingItinerarySet().GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, cultureInfo));
+                    endDateText = ReplaceTag(endDateText, ItemEndDateTag, item.GetPurchaseItemEndDateTimeString(dateFormat, timeFormat));
                     endDateText = ReplaceTag(endDateText, ItemLengthTextTag, GetNumberOfDaysName(item.ServiceTypeID));
                     endDateText = ReplaceTag(endDateText, ItemLengthTag, item.NumberOfDays.ToString());
                 }
@@ -421,9 +425,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             var lookup = GetBookingItinerarySet().OptionLookup.FindByOptionID(item.OptionID);
             if (lookup == null) return;
 
-            var ccyCode = CurrencyService.GetBookingCurrencyCode(item);
-            var cultureInfo = CurrencyService.GetCultureInfoFromCurrencyCode(ccyCode);
-
+            var currencyCode = Currencies.GetPurchaseItemCurrencyCode(item);
+            var format = currencyCode != null ?
+                "{0:" + string.Format("{0} ({1})", Currencies.Single(currencyCode).PortableCurrencyPattern, currencyCode) + "}" :
+                "{0:c}";
+            
             var net = !item.IsNetNull() ? item.Net : 0;
 
             if (lookup.PricingOption == "gc") // Gross plus Commission
@@ -432,15 +438,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 var gross = !item.IsGrossNull() ? item.Gross : 0;
                 var comm = GetBookingItinerarySet().GetCommission(net, gross);
 
-                commission = string.Format(cultureInfo, "{0:p}", comm/100);
-                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", gross);
+                commission = string.Format("{0:p}", comm/100);
+                price = string.Format(format, gross);
             }
             else // Net, so no commission.
             {
                 commission = "";
-                price = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", net);
+                price = string.Format(format, net);
             }
-            total = ((item.CurrencyCode != "") ? ("(" + item.CurrencyCode + ") ") : ("")) + string.Format(cultureInfo, "{0:C}", item.NetTotal);
+            total = string.Format(format, item.NetTotal);
         }
 
         #endregion

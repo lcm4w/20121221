@@ -163,6 +163,11 @@ namespace TourWriter.Services
             public string CurrencyName
             { get; private set; }
 
+            public string FriendlyName
+            {
+                get { return string.Format("{0}, {1}", CurrencyCode, CurrencyName); }
+            }
+
             public string LocalCurrencySign
             { get; private set; }
 
@@ -225,7 +230,7 @@ namespace TourWriter.Services
 
             public override string ToString()
             {
-                return string.Format("{0}, {1}", CurrencyCode, CurrencyName);
+                return FriendlyName;
             }
 
             private static string GetCurrencyPattern(int patternNum, string sign)

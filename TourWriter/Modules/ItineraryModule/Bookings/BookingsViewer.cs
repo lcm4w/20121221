@@ -122,19 +122,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                                                                    r.RequestStatusName);
                 }
             }
-            
-            cmbCurrency.DataSource = (ParentForm as ItineraryMain).CurrencyBindingSource.DataSource;// LanguageService.GetBindingList();
-            cmbCurrency.DisplayMember = "FriendlyCurrencyName";
-            cmbCurrency.ValueMember = "LanguageCode";
+
+            cmbCurrency.DataSource = (ParentForm as ItineraryMain).CurrencyBindingSource.DataSource;
+            cmbCurrency.DisplayMember = "FriendlyName";
+            cmbCurrency.ValueMember = "CurrencyCode";
             if (cmbCurrency.DataBindings.Count == 0) 
-                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "LanguageCode", true));
+                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "BaseCurrency", true));
             cmbCurrency.SelectedIndexChanged += (ParentForm as ItineraryMain).OnIntineraryLanguageChanged;
-            cmbCurrency.SelectionChangeCommitted += delegate {
-                                                  if (App.AskYesNo("Update currency rates also?")) {
-                                                      Application.DoEvents();
-                                                      RunCurrencyUpdater();
-                                                  }
-                                              };
+            cmbCurrency.SelectionChangeCommitted += delegate(object sender, EventArgs e)
+                                                        {
+                                                            //(ParentForm as ItineraryMain).OnIntineraryLanguageChanged(sender, e);
+                                                            //if (App.AskYesNo("Update currency rates also?"))
+                                                            //{
+                                                            //    Application.DoEvents();
+                                                            //    RunCurrencyUpdater();
+                                                            //}
+                                                        };
 
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;

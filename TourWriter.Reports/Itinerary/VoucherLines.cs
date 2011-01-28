@@ -78,14 +78,44 @@ namespace TourWriter.Reports.Itinerary
 	
 		private string GetArriveDateWithCustomFormat(ItinerarySet.PurchaseItemRow item)
 		{
-            return itinerarySet.GetPurchaseItemClientCheckinDateTimeString(
-                item.PurchaseItemID, dateFormat, "h:mmtt");
+		    const string timeFormat = "h:mmtt";
+            var s = "";
+
+            // Add start date.
+            if (!item.IsStartDateNull())
+            {
+                s += !string.IsNullOrEmpty(dateFormat) ?
+                    item.StartDate.ToString(dateFormat) :
+                    item.StartDate.ToShortDateString();
+            }
+
+            // Add start time.
+            if (!item.IsStartTimeNull())
+            {
+                if (s != "") s += " ";
+
+                // Include early checkin time.
+                var option = itinerarySet.OptionLookup.FindByOptionID(item.OptionID);
+                if (!option.IsCheckinMinutesEarlyNull())
+                {
+                    s += !string.IsNullOrEmpty(timeFormat) ?
+                        item.StartTime.AddMinutes(-option.CheckinMinutesEarly).ToString(timeFormat) :
+                        item.StartTime.AddMinutes(-option.CheckinMinutesEarly).ToShortTimeString();
+                }
+                else
+                {
+                    s += !string.IsNullOrEmpty(timeFormat) ?
+                        item.StartTime.ToString(timeFormat) :
+                        item.StartTime.ToShortTimeString();
+                }
+            }
+            return s;
 		}
 
         private string GetDepartDateWithCustomFormat(ItinerarySet.PurchaseItemRow item)
         {
             DateTime date;
-            var datetimeSting = itinerarySet.GetPurchaseItemClientCheckoutDateTimeString(item.PurchaseItemID, System.Threading.Thread.CurrentThread.CurrentCulture);
+            var datetimeSting = item.GetPurchaseItemEndDateTimeString("yyyy/MM/dd", "h:mmtt");
             if (DateTime.TryParse(datetimeSting, out date))
                 return date.ToString(dateFormat) + (date.Hour > 0 && date.Minute > 0 ? " " + date.ToString("h:mmtt") : "");
 
