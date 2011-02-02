@@ -1455,8 +1455,7 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\user_add.png" />
-    <None Include="Resources\world_go1.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.02.02.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.01.11.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.11.06.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.10.31.sql" />
@@ -1466,6 +1465,8 @@
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.20.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2010.05.04.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2009.11.24.sql" />
+    <None Include="Resources\user_add.png" />
+    <None Include="Resources\world_go1.png" />
     <None Include="Resources\Run.bmp" />
     <None Include="Resources\Refresh.bmp" />
     <None Include="Resources\Save.bmp" />

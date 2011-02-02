@@ -1,3 +1,4 @@
+
 /* TourWriter database update script */
 GO
 SET NUMERIC_ROUNDABORT OFF
@@ -24,8 +25,9 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2010.10.31')
+if ((select VersionNumber from AppSettings) <> '2011.01.11')
 	RAISERROR (N'Update script version is invalid for this db version',17,1)	
+
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
 IF @@TRANCOUNT=0 BEGIN INSERT INTO #tmpErrors (Error) SELECT 1 BEGIN TRANSACTION END
@@ -34,329 +36,194 @@ GO
 ----------------------------------------------------------------------------------------
 
 GO
+PRINT N'Altering [dbo].[Option]...';
+
+
+GO
+if not Exists(select * from sys.columns where Name = N'GstUpdated' and Object_ID = Object_ID(N'Option'))
+ALTER TABLE [dbo].[Option]
+    ADD [GstUpdated] BIT NULL;
+
+GO
+PRINT N'Altering [dbo].[PurchaseItem]...';
+
+
+GO
+if not Exists(select * from sys.columns where Name = N'GstUpdated' and Object_ID = Object_ID(N'PurchaseItem'))
+ALTER TABLE [dbo].[PurchaseItem]
+    ADD [GstUpdated] BIT NULL;
+
+GO
+PRINT N'Altering [dbo].[Agent]...';
+
+
+GO
+if Exists(select * from sys.columns where Name = N'LanguageCode' and Object_ID = Object_ID(N'Agent'))
+ALTER TABLE [dbo].[Agent] DROP COLUMN [LanguageCode];
+
+
+GO
+if not Exists(select * from sys.columns where Name = N'CurrencyCode' and Object_ID = Object_ID(N'Agent'))
+ALTER TABLE [dbo].[Agent]
+    ADD [CurrencyCode] CHAR (3) NULL;
+
+
+GO
+PRINT N'Altering [dbo].[AppSettings]...';
+
+
+GO
+if Exists(select * from sys.columns where Name = N'LanguageCode' and Object_ID = Object_ID(N'AppSettings'))
+ALTER TABLE [dbo].[AppSettings] DROP COLUMN [LanguageCode];
+
+
+GO
 PRINT N'Altering [dbo].[Itinerary]...';
 
 
 GO
-if not Exists(select * from sys.columns where Name = N'BaseCurrency' and Object_ID = Object_ID(N'Itinerary'))
+if Exists(select * from sys.columns where Name = N'BaseCurrency' and Object_ID = Object_ID(N'Itinerary'))
+ALTER TABLE [dbo].[Itinerary] DROP COLUMN [BaseCurrency]
+
+
+GO
+PRINT N'Altering [dbo].[Itinerary]...';
+
+GO
+if Exists(select * from sys.columns where Name = N'LanguageCode' and Object_ID = Object_ID(N'Itinerary'))
+ALTER TABLE [dbo].[Itinerary] DROP COLUMN [LanguageCode];
+
+
+GO
+if not Exists(select * from sys.columns where Name = N'CurrencyCode' and Object_ID = Object_ID(N'Itinerary'))
 ALTER TABLE [dbo].[Itinerary]
-    ADD [BaseCurrency] VARCHAR (5) NULL;
+    ADD [CurrencyCode] CHAR (3) NULL;
 
 
 GO
-PRINT N'Altering [dbo].[__RefreshViews]...';
+PRINT N'Altering [dbo].[Service]...';
 
 
 GO
+if Exists(select * from sys.columns where Name = N'LanguageCode' and Object_ID = Object_ID(N'Service'))
+ALTER TABLE [dbo].[Service] DROP COLUMN [LanguageCode];
 
-ALTER PROCEDURE [dbo].[__RefreshViews] AS
 
--- Refreshes all the views (eg. required after changing table structure etc).
-
-DECLARE @Table_Name varchar(100)
-
-DECLARE Refresh_Views CURSOR FOR
-SELECT Table_Name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'VIEW' AND TABLE_SCHEMA = 'dbo'
-	and Table_Name <> 'ViewsColumnList'
-OPEN Refresh_Views
-
-FETCH NEXT FROM Refresh_Views INTO @Table_Name
-WHILE @@FETCH_STATUS = 0
-BEGIN
-    EXEC sp_refreshview @Table_Name
-    FETCH NEXT FROM Refresh_Views INTO @Table_Name
-END
-
-CLOSE Refresh_Views
-DEALLOCATE Refresh_Views
 GO
-PRINT N'Altering [dbo].[_Itinerary_New]...';
+PRINT N'Altering [dbo].[_AgentSet_Sel_ByID]...';
 
 
 GO
 
-/** Create new base Itinerary **/
-
-ALTER PROCEDURE [dbo].[_Itinerary_New]
-	@ItineraryName varchar(100),
-	@ArriveDate datetime,
-	@ParentFolderID int,
-	@AddedOn datetime,
-	@AddedBy int
+/* Select from multiple tables for dataset fill command */
+ALTER PROCEDURE [dbo].[_AgentSet_Sel_ByID]
+	@AgentID int
 AS
 SET NOCOUNT ON
 
-DECLARE @DefaultAgentID int
-SELECT @DefaultAgentID = (SELECT TOP 1 (AgentID) FROM Agent order by IsDefaultAgent desc)
+-- PaymentTerm --
+SELECT
+	[PaymentTermID],
+	[PaymentDueID],
+	[PaymentDuePeriod],
+	[DepositAmount],
+	[DepositType],
+	[DepositDueID],
+	[DepositDuePeriod]
+FROM [dbo].[PaymentTerm]
+WHERE
+	[PaymentTermID] = (SELECT [PurchasePaymentTermID] FROM [Agent] WHERE [AgentID] = @AgentID)
+OR
+	[PaymentTermID] = (SELECT [SalePaymentTermID] FROM [Agent] WHERE [AgentID] = @AgentID)
 
-INSERT INTO [dbo].[Itinerary]
-(
-	[ItineraryName],
-	[ArriveDate],
-	[NetComOrMup],
-	[IsRecordActive],
-	[ParentFolderID],
+-- Agent --
+SELECT
 	[AgentID],
+	[AgentName],
+	[ParentAgentID],
+	[Address1],
+	[Address2],
+	[Address3],
+	[Phone],
+	[Fax],
+	[Email],
+	[TaxNumber],
+	[InvoiceNumberMask],
+	[PurchasePaymentTermID],
+	[SalePaymentTermID],
+	[LogoFile],
+	[VoucherLogoFile],
+	[NetComOrMup],
+	[Comments],
+	[AgentHeader],
+	[RequestFooter],
+	[ConfirmFooter],
+	[RemitFooter],
+	[ClientFooter],
+	[VoucherFooter],
+	[IsDefaultAgent],
 	[AddedOn],
 	[AddedBy],
-	[AssignedTo]
-)
+	[RowVersion],
+	[CurrencyCode]
+FROM [dbo].[Agent]
+WHERE
+	[AgentID] = @AgentID
+
+-- Contact --			
 SELECT
-	@ItineraryName,
-	@ArriveDate,
-	ISNULL([NetComOrMup], 'mup'),
-	1,
-	@ParentFolderID,
-	@DefaultAgentID,
-	@AddedOn,
-	@AddedBy,
-	@AddedBy
-FROM Agent WHERE AgentID = @DefaultAgentID
-
-DECLARE @ItineraryID int
-SET @ItineraryID = SCOPE_IDENTITY()
-
--- Update itinerary custom code
-if ((select top(1) CustomCodeFormat from AppSettings) is not null)
-begin
-	update Itinerary set
-		CustomCode = (select replace((select top(1) CustomCodeFormat from AppSettings), '[!ItineraryID]', @ItineraryID)),
-		ItineraryName = (select replace((select top(1) CustomCodeFormat from AppSettings), '[!ItineraryID]', @ItineraryID))
-	where ItineraryID = @ItineraryID
-end
-
--- Add the first itinerary group
-INSERT [dbo].[ItineraryGroup]
-(
-	[ItineraryID],
-	[ItineraryGroupName],
+	[ContactID],
+	[ContactName],
+	[Title],
+	[FirstName],
+	[LastName],
+	[StreetAddress],
+	[PostName],
+	[PostAddress],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[PostCode],
+	[WorkPhone],
+	[HomePhone],
+	[CellPhone],
+	[Fax],
+	[Email1],
+	[Email2],
+	[Website],
+	[BirthDate],
+	[Notes],
+	[ParentFolderID],
 	[AddedOn],
-	[AddedBy]
-)
-VALUES
-(
-	@ItineraryID,
-	@ItineraryName,
-	@AddedOn,
-	@AddedBy
-)
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Contact]
+WHERE
+	[ContactID] IN (
+		SELECT [ContactID] FROM [dbo].[AgentContact] 
+		WHERE [AgentID] = @AgentID )
 
--- Add the default Agent margin overrides
-INSERT [dbo].[ItineraryMarginOverride]
-(
+-- AgentContact --
+SELECT
+	[AgentID],
+	[ContactID],
+	[Description],
+	[IsDefaultContact],
+	[IsDefaultBilling]
+FROM [dbo].[AgentContact]
+WHERE
+	[AgentID] = @AgentID
+
+-- AgentMargin --
+SELECT
+	[AgentID],
 	[ServiceTypeID],
-	[Margin],
-	[ItineraryID]
-)
-SELECT 
-	[ServiceTypeID], 
-	[Margin], 
-	@ItineraryID 
-FROM AgentMargin WHERE AgentID = @DefaultAgentID
-
-SELECT @ItineraryID
-GO
-PRINT N'Altering [dbo].[_ItinerarySet_Copy_ByID]...';
-
-
-GO
-/** Copy Itinerary and related records **/
-
-ALTER PROCEDURE [dbo].[_ItinerarySet_Copy_ByID]
-    @OrigItineraryID int,
-    @NewItineraryName varchar(100),
-    @AddedOn datetime,
-    @AddedBy int
-AS
-SET NOCOUNT ON
-
-DECLARE @NewItineraryID int
-
--- Itinerary ----------------------------------------------
-INSERT [dbo].[Itinerary]
-(
-    [ItineraryName],
-    [CustomCode],
-    [ArriveDate],
-    [ArriveCityID],
-    [ArriveFlight],
-    [ArriveNote],
-    [DepartDate],
-    [DepartCityID],
-    [DepartFlight],
-    [DepartNote],
-    [NetComOrMup],
-	[NetMargin],
-	[GrossMarkup],
-    [GrossOverride],
-    [PricingNote],
-    [AgentID],
-    [ItineraryStatusID],
-    [ItinerarySourceID],
-    [CountryID],
-    [AssignedTo],
-    [DepartmentID],
-    [BranchID],
-	[PaxOverride],
-    [Comments],
-    [IsRecordActive],
-    [ParentFolderID],
-    [AddedOn],
-    [AddedBy],
-    [BaseCurrency]
-)
-SELECT
-    @NewItineraryName,
-    CustomCode,
-    ArriveDate,
-    ArriveCityID,
-    ArriveFlight,
-    ArriveNote,
-    DepartDate,
-    DepartCityID,
-    DepartFlight,
-    DepartNote,
-    NetComOrMup,
-	NetMargin,
-	GrossMarkup,
-    GrossOverride,
-    PricingNote,
-    AgentID,
-    ItineraryStatusID,
-    ItinerarySourceID,
-    CountryID,
-    AssignedTo,
-    DepartmentID,
-    BranchID,
-	PaxOverride,
-    Comments,
-    IsRecordActive,
-    ParentFolderID,
-    @AddedOn,
-    @AddedBy,
-    BaseCurrency
-FROM Itinerary WHERE ItineraryID = @OrigItineraryID
-
-SELECT @NewItineraryID=SCOPE_IDENTITY()
-
--- ItineraryMarginOverride ----------------------------------------------
-INSERT [dbo].[ItineraryMarginOverride]
-(
-    [ItineraryID],
-    [ServiceTypeID],
-    [Margin]
-)
-SELECT
-    @NewItineraryID,
-    ServiceTypeID,
-    Margin
-FROM ItineraryMarginOverride WHERE ItineraryID = @OrigItineraryID
-
--- ItineraryPubFile ----------------------------------------------
-INSERT [dbo].[ItineraryPubFile]
-(
-	[ItineraryPubFileName],
-	[ItineraryID],
-	[DayTemplateFile],
-	[Layout],
-	[AddedOn],
-	[AddedBy]
-)
-SELECT
-	[ItineraryPubFileName],
-	@NewItineraryID,
-	[DayTemplateFile],
-	[Layout],
-	[AddedOn],
-	[AddedBy]
-FROM [dbo].[ItineraryPubFile] WHERE [ItineraryID] = @OrigItineraryID
-
---=== Loop purchase lines ======================================
-DECLARE @NewPurchaseLineID int
-DECLARE @OrigPurchaseLineID int
-DECLARE PurchaseLineCursor CURSOR FOR 
-    SELECT PurchaseLineID FROM PurchaseLine WHERE ItineraryID = @OrigItineraryID
-
-OPEN PurchaseLineCursor
-FETCH NEXT FROM PurchaseLineCursor INTO @OrigPurchaseLineID
-
-WHILE @@FETCH_STATUS = 0
-BEGIN -- PurchaseLineCursor 
-    
-    INSERT [dbo].[PurchaseLine]
-    (
-        [ItineraryID],
-        [SupplierID],
-        [PurchaseLineName],
-        [Comments],
-        [NoteToSupplier],
-        [NoteToClient],
-        [Approved],
-        [SupplierReference],
-        [AddedOn],
-        [AddedBy]
-    )
-    SELECT
-        @NewItineraryID,
-        SupplierID,
-        PurchaseLineName,
-        Comments,
-        NoteToSupplier,
-        NoteToClient,
-        Approved,
-        SupplierReference,
-        @AddedOn,
-        @AddedBy
-    FROM PurchaseLine WHERE PurchaseLineID = @OrigPurchaseLineID
-    
-    SELECT @NewPurchaseLineID=SCOPE_IDENTITY()
-
-    -- PurchaseItem -----------------------------------------------------------------
-
-    INSERT [dbo].[PurchaseItem]
-    (
-        [PurchaseLineID],
-        [OptionID],
-        [BookingReference],
-        [PurchaseItemName],
-		[StartDate],
-		[StartTime],
-		[EndDate],
-		[EndTime],
-        [Net],
-        [Gross],
-        [Quantity],
-        [NumberOfDays],
-        [RequestStatusID],
-        [AddedOn],
-        [AddedBy]
-    )
-    SELECT
-        @NewPurchaseLineID,
-        OptionID,
-        BookingReference,
-        PurchaseItemName,
-		StartDate,
-		StartTime,
-		EndDate,
-		EndTime,
-        Net,
-        Gross,
-        Quantity,
-        NumberOfDays,
-        RequestStatusID,
-        @AddedOn,
-        @AddedBy
-    FROM PurchaseItem WHERE PurchaseLineID = @OrigPurchaseLineID
-
-    FETCH NEXT FROM PurchaseLineCursor INTO @OrigPurchaseLineID
-
-END -- PurchaseLineCursor
-CLOSE PurchaseLineCursor
-DEALLOCATE PurchaseLineCursor
-
--- return new itinerary id
-SELECT @NewItineraryID
+	[Margin]
+FROM [dbo].[AgentMargin]
+WHERE
+	[AgentID] = @AgentID
 GO
 PRINT N'Altering [dbo].[_ItinerarySet_Sel_ByID]...';
 
@@ -366,10 +233,6 @@ ALTER PROCEDURE [dbo].[_ItinerarySet_Sel_ByID]
 @ItineraryID INT
 AS
 SET NOCOUNT ON
-
-DECLARE @DefaultCurrencyCode char(3) -- Used in PurchaseItem query
-SET @DefaultCurrencyCode = (SELECT ISNULL(CurrencyCode,'NZD') FROM AppSettings)
-
 
 -- PaymentTerm --
 SELECT
@@ -431,7 +294,7 @@ SELECT
 	[AddedBy],
 	[RowVersion],
 	[IsDeleted],
-	[BaseCurrency]
+	[CurrencyCode]
 FROM [dbo].[Itinerary]
 WHERE
 	[ItineraryID] = @ItineraryID
@@ -490,8 +353,7 @@ SELECT
 	i.[EndTime],
 	i.[Net],
 	i.[Gross],
-	-- TODO, alter below to leave just i.[CurrencyRate], removing back-compat currency code from old rates table   
-	isnull(i.[CurrencyRate], dbo.GetConversionRate(s.CurrencyCode, i.StartDate)) as CurrencyRate,
+	i.[CurrencyRate],
 	i.[Quantity],
 	i.[NumberOfDays],
 	i.[PaymentTermID],
@@ -814,12 +676,219 @@ FROM [dbo].[ItineraryPaxOverride] o
 inner join PurchaseItem i on o.PurchaseItemID = i.PurchaseItemID
 inner join PurchaseLine l on i.PurchaseLineID = l.PurchaseLineID
 WHERE l.ItineraryID = @ItineraryID
+
+GO
+PRINT N'Altering [dbo].[_ItinerarySet_Copy_ByID]...';
+
+GO
+/****** Object:  StoredProcedure [dbo].[_ItinerarySet_Copy_ByID]    Script Date: 02/02/2011 16:04:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/** Copy Itinerary and related records **/
+
+ALTER PROCEDURE [dbo].[_ItinerarySet_Copy_ByID]
+    @OrigItineraryID int,
+    @NewItineraryName varchar(100),
+    @AddedOn datetime,
+    @AddedBy int
+AS
+SET NOCOUNT ON
+
+DECLARE @NewItineraryID int
+
+-- Itinerary ----------------------------------------------
+INSERT [dbo].[Itinerary]
+(
+    [ItineraryName],
+    [CustomCode],
+    [ArriveDate],
+    [ArriveCityID],
+    [ArriveFlight],
+    [ArriveNote],
+    [DepartDate],
+    [DepartCityID],
+    [DepartFlight],
+    [DepartNote],
+    [NetComOrMup],
+	[NetMargin],
+	[GrossMarkup],
+    [GrossOverride],
+    [PricingNote],
+    [AgentID],
+    [ItineraryStatusID],
+    [ItinerarySourceID],
+    [CountryID],
+    [AssignedTo],
+    [DepartmentID],
+    [BranchID],
+	[PaxOverride],
+    [Comments],
+    [IsRecordActive],
+    [ParentFolderID],
+    [AddedOn],
+    [AddedBy],
+    [CurrencyCode]
+)
+SELECT
+    @NewItineraryName,
+    CustomCode,
+    ArriveDate,
+    ArriveCityID,
+    ArriveFlight,
+    ArriveNote,
+    DepartDate,
+    DepartCityID,
+    DepartFlight,
+    DepartNote,
+    NetComOrMup,
+	NetMargin,
+	GrossMarkup,
+    GrossOverride,
+    PricingNote,
+    AgentID,
+    ItineraryStatusID,
+    ItinerarySourceID,
+    CountryID,
+    AssignedTo,
+    DepartmentID,
+    BranchID,
+	PaxOverride,
+    Comments,
+    IsRecordActive,
+    ParentFolderID,
+    @AddedOn,
+    @AddedBy,
+    CurrencyCode
+FROM Itinerary WHERE ItineraryID = @OrigItineraryID
+
+SELECT @NewItineraryID=SCOPE_IDENTITY()
+
+-- ItineraryMarginOverride ----------------------------------------------
+INSERT [dbo].[ItineraryMarginOverride]
+(
+    [ItineraryID],
+    [ServiceTypeID],
+    [Margin]
+)
+SELECT
+    @NewItineraryID,
+    ServiceTypeID,
+    Margin
+FROM ItineraryMarginOverride WHERE ItineraryID = @OrigItineraryID
+
+-- ItineraryPubFile ----------------------------------------------
+INSERT [dbo].[ItineraryPubFile]
+(
+	[ItineraryPubFileName],
+	[ItineraryID],
+	[DayTemplateFile],
+	[Layout],
+	[AddedOn],
+	[AddedBy]
+)
+SELECT
+	[ItineraryPubFileName],
+	@NewItineraryID,
+	[DayTemplateFile],
+	[Layout],
+	[AddedOn],
+	[AddedBy]
+FROM [dbo].[ItineraryPubFile] WHERE [ItineraryID] = @OrigItineraryID
+
+--=== Loop purchase lines ======================================
+DECLARE @NewPurchaseLineID int
+DECLARE @OrigPurchaseLineID int
+DECLARE PurchaseLineCursor CURSOR FOR 
+    SELECT PurchaseLineID FROM PurchaseLine WHERE ItineraryID = @OrigItineraryID
+
+OPEN PurchaseLineCursor
+FETCH NEXT FROM PurchaseLineCursor INTO @OrigPurchaseLineID
+
+WHILE @@FETCH_STATUS = 0
+BEGIN -- PurchaseLineCursor 
+    
+    INSERT [dbo].[PurchaseLine]
+    (
+        [ItineraryID],
+        [SupplierID],
+        [PurchaseLineName],
+        [Comments],
+        [NoteToSupplier],
+        [NoteToClient],
+        [Approved],
+        [SupplierReference],
+        [AddedOn],
+        [AddedBy]
+    )
+    SELECT
+        @NewItineraryID,
+        SupplierID,
+        PurchaseLineName,
+        Comments,
+        NoteToSupplier,
+        NoteToClient,
+        Approved,
+        SupplierReference,
+        @AddedOn,
+        @AddedBy
+    FROM PurchaseLine WHERE PurchaseLineID = @OrigPurchaseLineID
+    
+    SELECT @NewPurchaseLineID=SCOPE_IDENTITY()
+
+    -- PurchaseItem -----------------------------------------------------------------
+
+    INSERT [dbo].[PurchaseItem]
+    (
+        [PurchaseLineID],
+        [OptionID],
+        [BookingReference],
+        [PurchaseItemName],
+		[StartDate],
+		[StartTime],
+		[EndDate],
+		[EndTime],
+        [Net],
+        [Gross],
+        [Quantity],
+        [NumberOfDays],
+        [RequestStatusID],
+        [AddedOn],
+        [AddedBy]
+    )
+    SELECT
+        @NewPurchaseLineID,
+        OptionID,
+        BookingReference,
+        PurchaseItemName,
+		StartDate,
+		StartTime,
+		EndDate,
+		EndTime,
+        Net,
+        Gross,
+        Quantity,
+        NumberOfDays,
+        RequestStatusID,
+        @AddedOn,
+        @AddedBy
+    FROM PurchaseItem WHERE PurchaseLineID = @OrigPurchaseLineID
+
+    FETCH NEXT FROM PurchaseLineCursor INTO @OrigPurchaseLineID
+
+END -- PurchaseLineCursor
+CLOSE PurchaseLineCursor
+DEALLOCATE PurchaseLineCursor
+
+-- return new itinerary id
+SELECT @NewItineraryID
+
 GO
 PRINT N'Altering [dbo].[_Option_GetNewFromDate]...';
 
 
 GO
-
 
 ALTER PROCEDURE [dbo].[_Option_GetNewFromDate] 
 	@OptionID int,
@@ -859,6 +928,7 @@ WHERE op.RateID = rt.RateID
 		SELECT TOP(1) RateID FROM [Rate] 
 		--WHERE ValidFrom <= @NewDate AND ValidTo >= @NewDate
 		WHERE ValidFrom <= convert(char(8),@NewDate, 112) + ' 23:59' AND ValidTo >= convert(char(8),@NewDate, 112) + ' 00:00'
+		AND (IsDeleted is null OR IsDeleted = 0)
 		AND ServiceID = /* same service id as original option id */
 		(
 			SELECT ServiceID FROM [Rate] 
@@ -869,6 +939,317 @@ WHERE op.RateID = rt.RateID
 			)
 		)
 	)
+GO
+PRINT N'Altering [dbo].[_SupplierSet_Sel_ByID]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[_SupplierSet_Sel_ByID]
+@SupplierID INT
+AS
+SET NOCOUNT ON
+
+/* Select parent tables first */
+
+-- PaymentTerm --
+SELECT
+	[PaymentTermID],
+	[PaymentDueID],
+	[PaymentDuePeriod],
+	[DepositAmount],
+	[DepositType],
+	[DepositDueID],
+	[DepositDuePeriod]
+FROM [dbo].[PaymentTerm]
+WHERE
+	[PaymentTermID] = -- PurchasePaymentTerms from Supplier
+		(SELECT [PaymentTermID] FROM [Supplier] WHERE [SupplierID] = @SupplierID)
+OR
+	[PaymentTermID] IN -- PurchasePaymentTerms from Service
+		(SELECT DISTINCT [PaymentTermID] FROM [Service] WHERE
+			[ServiceID] IN ( 
+				SELECT [ServiceID] FROM [dbo].[Service] 
+					WHERE [SupplierID] = @SupplierID ))
+
+-- Supplier --
+SELECT
+	[SupplierID],
+	[SupplierName],
+	[HostName],
+	[StreetAddress],
+	[PostAddress],
+	[Postcode],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[Phone],
+	[MobilePhone],
+	[FreePhone],
+	[Fax],
+	[Email],
+	[Website],
+	[Latitude],
+	[Longitude],
+	[GradeID],
+	[GradeExternalID],
+	[Description],
+	[Comments],
+	[CancellationPolicy],
+	[BankDetails],
+	[AccountingName],
+	[TaxTypeID],
+	[PaymentTermID],
+	[DefaultMargin],
+	[DefaultCheckinTime],
+	[DefaultCheckoutTime],
+	[ImportID],
+	[ExportID],
+	[BookingWebsite],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Supplier]
+WHERE
+	[SupplierID] = @SupplierID
+			
+-- Service --
+SELECT
+	[ServiceID],
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[TaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Service]
+WHERE
+	[SupplierID] = @SupplierID
+	
+-- ServiceTime
+SELECT
+	[ServiceTimeID],
+	[ServiceID],
+	[StartTime],
+	[EndTime],
+	[Comment]
+FROM [dbo].[ServiceTime]
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+
+-- ServiceConfig --
+SELECT
+	[ServiceID],
+	[ServiceConfigTypeID],
+	[Note],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[ServiceConfig]
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+	
+-- Rate --	
+SELECT
+	[RateID],
+	[ServiceID],
+	[ValidFrom],
+	[ValidTo],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Rate]	
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+	
+-- Option --
+SELECT
+	[OptionID],
+	[OptionName],
+	[OptionTypeID],
+	[RateID],
+	[Net],
+	[Gross],
+	[PricingOption],
+	isnull([IsDefault], 0) as [IsDefault],
+	[IsRecordActive],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Option]	
+WHERE 
+	[RateID] IN (		
+		SELECT r.[RateID] 
+		FROM   [dbo].[Rate] r, [dbo].[Service] s 
+		WHERE  s.[SupplierID] = @SupplierID 
+		AND    r.[ServiceID] = s.[ServiceID] )
+			
+-- Contact --			
+SELECT
+	[ContactID],
+	[ContactName],
+	[Title],
+	[FirstName],
+	[LastName],
+	[StreetAddress],
+	[PostName],
+	[PostAddress],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[PostCode],
+	[WorkPhone],
+	[HomePhone],
+	[CellPhone],
+	[Fax],
+	[Email1],
+	[Email2],
+	[Website],
+	[BirthDate],
+	[Notes],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Contact]
+WHERE
+	[ContactID] IN (
+		SELECT [ContactID] FROM [dbo].[SupplierContact] 
+		WHERE [SupplierID] = @SupplierID )
+
+-- SupplierContacts --			
+SELECT
+	[SupplierID],
+	[ContactID],
+	[Description],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierContact]
+WHERE
+	[SupplierID] = @SupplierID
+	
+-- SupplierCreditCard --		
+SELECT
+	[SupplierID],
+	[CreditCardID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierCreditCard]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- SupplierConfig --		
+SELECT
+	[SupplierID],
+	[SupplierConfigTypeID],
+	[Note],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierConfig]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- Message --
+SELECT
+	[MessageID],
+	[MessageName],
+	[MessageType],
+	[MessageTo],
+	[MessageFrom],
+	[MessageFile],
+	[MessageDate],
+	[Description],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[Message]
+WHERE
+	[MessageID] IN (
+		SELECT [MessageID] FROM [dbo].[SupplierMessage]
+		WHERE [SupplierID] = @SupplierID)
+
+-- SupplierMessage --
+SELECT
+	[SupplierID],
+	[MessageID],
+	[AddedOn],
+	[AddedBy]
+FROM [dbo].[SupplierMessage]
+WHERE [SupplierID] = @SupplierID
+
+-- SupplierText --
+SELECT
+	[SupplierTextID],
+	[SupplierTextName],
+	[SupplierID],
+	[FileName],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierText]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- SupplierNote --
+SELECT
+	[SupplierNoteID],
+	[SupplierID],
+	[Note],
+	[RowVersion]
+FROM [dbo].[SupplierNote]
+WHERE
+	[SupplierID] = @SupplierID
+ORDER BY 
+	SupplierNoteID
+
+-- ServiceFoc --
+SELECT
+	[ServiceFocID],
+	[ServiceID],
+	[UnitsUsed],
+	[UnitsFree]
+FROM [dbo].[ServiceFoc]
+WHERE
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+
+-- Content
+SELECT * FROM [Content] 
+WHERE SupplierId = @SupplierID
 GO
 PRINT N'Altering [dbo].[Agent_Ins]...';
 
@@ -902,6 +1283,7 @@ ALTER PROCEDURE [dbo].[Agent_Ins]
 	@DefaultCurrencyMargin money,
 	@AddedOn datetime,
 	@AddedBy int,
+	@CurrencyCode char(3),
 	@AgentID int OUTPUT
 AS
 INSERT [dbo].[Agent]
@@ -931,7 +1313,8 @@ INSERT [dbo].[Agent]
 	[IsDefaultAgent],
 	[DefaultCurrencyMargin],
 	[AddedOn],
-	[AddedBy]
+	[AddedBy],
+	[CurrencyCode]
 )
 VALUES
 (
@@ -960,9 +1343,52 @@ VALUES
 	@IsDefaultAgent,
 	@DefaultCurrencyMargin,
 	@AddedOn,
-	@AddedBy
+	@AddedBy,
+	@CurrencyCode
 )
 SELECT @AgentID=SCOPE_IDENTITY()
+GO
+PRINT N'Altering [dbo].[Agent_Sel_All]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Agent_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[AgentID],
+	[AgentName],
+	[ParentAgentID],
+	[Address1],
+	[Address2],
+	[Address3],
+	[Phone],
+	[Fax],
+	[Email],
+	[TaxNumber],
+	[InvoiceNumberMask],
+	[PurchasePaymentTermID],
+	[SalePaymentTermID],
+	[LogoFile],
+	[VoucherLogoFile],
+	[NetComOrMup],
+	[Comments],
+	[AgentHeader],
+	[RequestFooter],
+	[ConfirmFooter],
+	[RemitFooter],
+	[ClientFooter],
+	[VoucherFooter],
+	[IsDefaultAgent],
+	[DefaultCurrencyMargin],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[CurrencyCode]
+FROM [dbo].[Agent]
+ORDER BY 
+	[AgentID] ASC
 GO
 PRINT N'Altering [dbo].[Agent_Sel_ByID]...';
 
@@ -1001,7 +1427,8 @@ SELECT
 	[DefaultCurrencyMargin],
 	[AddedOn],
 	[AddedBy],
-	[RowVersion]
+	[RowVersion],
+	[CurrencyCode]
 FROM [dbo].[Agent]
 WHERE
 	[AgentID] = @AgentID
@@ -1039,7 +1466,8 @@ ALTER PROCEDURE [dbo].[Agent_Upd]
 	@DefaultCurrencyMargin money,
 	@AddedOn datetime,
 	@AddedBy int,
-	@RowVersion timestamp
+	@RowVersion timestamp,
+	@CurrencyCode char(3)
 AS
 UPDATE [dbo].[Agent]
 SET 
@@ -1068,9 +1496,232 @@ SET
 	[IsDefaultAgent] = @IsDefaultAgent,
 	[DefaultCurrencyMargin] = @DefaultCurrencyMargin,
 	[AddedOn] = @AddedOn,
-	[AddedBy] = @AddedBy
+	[AddedBy] = @AddedBy,
+	[CurrencyCode] = @CurrencyCode
 WHERE
 	[AgentID] = @AgentID
+	AND [RowVersion] = @RowVersion
+GO
+PRINT N'Altering [dbo].[AppSettings_Ins]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[AppSettings_Ins]
+	@InstallID uniqueidentifier,
+	@InstallName varchar(255),
+	@VersionNumber varchar(100),
+	@CurrencyCode char(3),
+	@SupportEmail varchar(255),
+	@SupportPhone varchar(50),
+	@SmtpServerName varchar(255),
+	@SmtpServerPort int,
+	@SmtpServerUsername varchar(255),
+	@SmtpServerPassword varchar(255),
+	@SmtpServerEnableSsl bit,
+	@LastDbBackupDate datetime,
+	@LastDbBackupFile varchar(500),
+	@LastDbBackupName varchar(500),
+	@ExternalFilesPath varchar(500),
+	@CancelledRequestStatusID int,
+	@AccountingSystem varchar(50),
+	@CustomCodeFormat varchar(50),
+	@AppSettingsID int OUTPUT
+AS
+INSERT [dbo].[AppSettings]
+(
+	[InstallID],
+	[InstallName],
+	[VersionNumber],
+	[CurrencyCode],
+	[SupportEmail],
+	[SupportPhone],
+	[SmtpServerName],
+	[SmtpServerPort],
+	[SmtpServerUsername],
+	[SmtpServerPassword],
+	[SmtpServerEnableSsl],
+	[LastDbBackupDate],
+	[LastDbBackupFile],
+	[LastDbBackupName],
+	[ExternalFilesPath],
+	[CancelledRequestStatusID],
+	[AccountingSystem],
+	[CustomCodeFormat]
+)
+VALUES
+(
+	ISNULL(@InstallID, (newid())),
+	@InstallName,
+	@VersionNumber,
+	@CurrencyCode,
+	@SupportEmail,
+	@SupportPhone,
+	@SmtpServerName,
+	@SmtpServerPort,
+	@SmtpServerUsername,
+	@SmtpServerPassword,
+	@SmtpServerEnableSsl,
+	@LastDbBackupDate,
+	@LastDbBackupFile,
+	@LastDbBackupName,
+	@ExternalFilesPath,
+	@CancelledRequestStatusID,
+	@AccountingSystem,
+	@CustomCodeFormat
+)
+SELECT @AppSettingsID=SCOPE_IDENTITY()
+GO
+PRINT N'Altering [dbo].[AppSettings_Sel_All]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[AppSettings_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[AppSettingsID],
+	[InstallID],
+	[InstallName],
+	[VersionNumber],
+	[CurrencyCode],
+	[SupportEmail],
+	[SupportPhone],
+	[SmtpServerName],
+	[SmtpServerPort],
+	[SmtpServerUsername],
+	[SmtpServerPassword],
+	[SmtpServerEnableSsl],
+	[LastDbBackupDate],
+	[LastDbBackupFile],
+	[LastDbBackupName],
+	[ExternalFilesPath],
+	[CancelledRequestStatusID],
+	[RowVersion],
+	[AccountingSystem],
+	[CustomCodeFormat]
+FROM [dbo].[AppSettings]
+ORDER BY 
+	[AppSettingsID] ASC
+GO
+PRINT N'Altering [dbo].[AppSettings_Sel_ByID]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[AppSettings_Sel_ByID]
+	@AppSettingsID int
+AS
+SET NOCOUNT ON
+SELECT
+	[AppSettingsID],
+	[InstallID],
+	[InstallName],
+	[VersionNumber],
+	[CurrencyCode],
+	[SupportEmail],
+	[SupportPhone],
+	[SmtpServerName],
+	[SmtpServerPort],
+	[SmtpServerUsername],
+	[SmtpServerPassword],
+	[SmtpServerEnableSsl],
+	[LastDbBackupDate],
+	[LastDbBackupFile],
+	[LastDbBackupName],
+	[ExternalFilesPath],
+	[CancelledRequestStatusID],
+	[RowVersion],
+	[AccountingSystem],
+	[CustomCodeFormat]
+FROM [dbo].[AppSettings]
+WHERE
+	[AppSettingsID] = @AppSettingsID
+GO
+PRINT N'Altering [dbo].[AppSettings_Sel_ByInstallID]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[AppSettings_Sel_ByInstallID]
+	@InstallID uniqueidentifier
+AS
+SET NOCOUNT ON
+SELECT
+	[AppSettingsID],
+	[InstallID],
+	[InstallName],
+	[VersionNumber],
+	[CurrencyCode],
+	[SupportEmail],
+	[SupportPhone],
+	[SmtpServerName],
+	[SmtpServerPort],
+	[SmtpServerUsername],
+	[SmtpServerPassword],
+	[SmtpServerEnableSsl],
+	[LastDbBackupDate],
+	[LastDbBackupFile],
+	[LastDbBackupName],
+	[ExternalFilesPath],
+	[CancelledRequestStatusID],
+	[RowVersion],
+	[AccountingSystem],
+	[CustomCodeFormat]
+FROM [dbo].[AppSettings]
+WHERE
+	[InstallID] = @InstallID
+GO
+PRINT N'Altering [dbo].[AppSettings_Upd]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[AppSettings_Upd]
+	@AppSettingsID int,
+	@InstallID uniqueidentifier,
+	@InstallName varchar(255),
+	@VersionNumber varchar(100),
+	@CurrencyCode char(3),
+	@SupportEmail varchar(255),
+	@SupportPhone varchar(50),
+	@SmtpServerName varchar(255),
+	@SmtpServerPort int,
+	@SmtpServerUsername varchar(255),
+	@SmtpServerPassword varchar(255),
+	@SmtpServerEnableSsl bit,
+	@LastDbBackupDate datetime,
+	@LastDbBackupFile varchar(500),
+	@LastDbBackupName varchar(500),
+	@ExternalFilesPath varchar(500),
+	@CancelledRequestStatusID int,
+	@RowVersion timestamp,
+	@AccountingSystem varchar(50),
+	@CustomCodeFormat varchar(50)
+AS
+UPDATE [dbo].[AppSettings]
+SET 
+	[InstallID] = @InstallID,
+	[InstallName] = @InstallName,
+	[VersionNumber] = @VersionNumber,
+	[CurrencyCode] = @CurrencyCode,
+	[SupportEmail] = @SupportEmail,
+	[SupportPhone] = @SupportPhone,
+	[SmtpServerName] = @SmtpServerName,
+	[SmtpServerPort] = @SmtpServerPort,
+	[SmtpServerUsername] = @SmtpServerUsername,
+	[SmtpServerPassword] = @SmtpServerPassword,
+	[SmtpServerEnableSsl] = @SmtpServerEnableSsl,
+	[LastDbBackupDate] = @LastDbBackupDate,
+	[LastDbBackupFile] = @LastDbBackupFile,
+	[LastDbBackupName] = @LastDbBackupName,
+	[ExternalFilesPath] = @ExternalFilesPath,
+	[CancelledRequestStatusID] = @CancelledRequestStatusID,
+	[AccountingSystem] = @AccountingSystem,
+	[CustomCodeFormat] = @CustomCodeFormat
+WHERE
+	[AppSettingsID] = @AppSettingsID
 	AND [RowVersion] = @RowVersion
 GO
 PRINT N'Altering [dbo].[Itinerary_Ins]...';
@@ -1112,7 +1763,7 @@ ALTER PROCEDURE [dbo].[Itinerary_Ins]
 	@AddedOn datetime,
 	@AddedBy int,
 	@IsDeleted bit,
-	@BaseCurrency varchar(5),
+	@CurrencyCode char(3),
 	@ItineraryID int OUTPUT
 AS
 INSERT [dbo].[Itinerary]
@@ -1150,7 +1801,7 @@ INSERT [dbo].[Itinerary]
 	[AddedOn],
 	[AddedBy],
 	[IsDeleted],
-	[BaseCurrency]
+	[CurrencyCode]
 )
 VALUES
 (
@@ -1187,7 +1838,7 @@ VALUES
 	@AddedOn,
 	@AddedBy,
 	@IsDeleted,
-	@BaseCurrency
+	@CurrencyCode
 )
 SELECT @ItineraryID=SCOPE_IDENTITY()
 GO
@@ -1235,7 +1886,7 @@ SELECT
 	[AddedBy],
 	[RowVersion],
 	[IsDeleted],
-	[BaseCurrency]
+	[CurrencyCode]
 FROM [dbo].[Itinerary]
 ORDER BY 
 	[ItineraryID] ASC
@@ -1285,7 +1936,7 @@ SELECT
 	[AddedBy],
 	[RowVersion],
 	[IsDeleted],
-	[BaseCurrency]
+	[CurrencyCode]
 FROM [dbo].[Itinerary]
 WHERE
 	[ItineraryID] = @ItineraryID
@@ -1331,7 +1982,7 @@ ALTER PROCEDURE [dbo].[Itinerary_Upd]
 	@AddedBy int,
 	@RowVersion timestamp,
 	@IsDeleted bit,
-	@BaseCurrency varchar(5)
+	@CurrencyCode char(3)
 AS
 UPDATE [dbo].[Itinerary]
 SET 
@@ -1368,7 +2019,7 @@ SET
 	[AddedOn] = @AddedOn,
 	[AddedBy] = @AddedBy,
 	[IsDeleted] = @IsDeleted,
-	[BaseCurrency] = @BaseCurrency
+	[CurrencyCode] = @CurrencyCode
 WHERE
 	[ItineraryID] = @ItineraryID
 	AND [RowVersion] = @RowVersion
@@ -1390,7 +2041,6 @@ ALTER PROCEDURE [dbo].[Option_Ins]
 	@AddedOn datetime,
 	@AddedBy int,
 	@IsDeleted bit,
-	@GstUpdated bit,
 	@OptionID int OUTPUT
 AS
 INSERT [dbo].[Option]
@@ -1405,8 +2055,7 @@ INSERT [dbo].[Option]
 	[IsRecordActive],
 	[AddedOn],
 	[AddedBy],
-	[IsDeleted],
-	[GstUpdated]
+	[IsDeleted]
 )
 VALUES
 (
@@ -1420,8 +2069,7 @@ VALUES
 	@IsRecordActive,
 	@AddedOn,
 	@AddedBy,
-	@IsDeleted,
-	@GstUpdated
+	@IsDeleted
 )
 SELECT @OptionID=SCOPE_IDENTITY()
 GO
@@ -1446,8 +2094,7 @@ SELECT
 	[AddedOn],
 	[AddedBy],
 	[RowVersion],
-	[IsDeleted],
-	[GstUpdated]
+	[IsDeleted]
 FROM [dbo].[Option]
 ORDER BY 
 	[OptionID] ASC
@@ -1474,8 +2121,7 @@ SELECT
 	[AddedOn],
 	[AddedBy],
 	[RowVersion],
-	[IsDeleted],
-	[GstUpdated]
+	[IsDeleted]
 FROM [dbo].[Option]
 WHERE
 	[OptionID] = @OptionID
@@ -1502,8 +2148,7 @@ SELECT
 	[AddedOn],
 	[AddedBy],
 	[RowVersion],
-	[IsDeleted],
-	[GstUpdated]
+	[IsDeleted]
 FROM [dbo].[Option]
 WHERE
 	[RateID] = @RateID
@@ -1526,8 +2171,7 @@ ALTER PROCEDURE [dbo].[Option_Upd]
 	@AddedOn datetime,
 	@AddedBy int,
 	@RowVersion timestamp,
-	@IsDeleted bit,
-	@GstUpdated bit
+	@IsDeleted bit	
 AS
 UPDATE [dbo].[Option]
 SET 
@@ -1541,10 +2185,247 @@ SET
 	[IsRecordActive] = @IsRecordActive,
 	[AddedOn] = @AddedOn,
 	[AddedBy] = @AddedBy,
-	[IsDeleted] = @IsDeleted,
-	[GstUpdated] = @GstUpdated
+	[IsDeleted] = @IsDeleted
 WHERE
 	[OptionID] = @OptionID
+	AND [RowVersion] = @RowVersion
+GO
+PRINT N'Altering [dbo].[Service_Ins]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Service_Ins]
+	@ServiceName varchar(150),
+	@SupplierID int,
+	@ServiceTypeID int,
+	@Description varchar(2000),
+	@Comments varchar(2000),
+	@Warning varchar(2000),
+	@MaxPax int,
+	@CheckinTime datetime,
+	@CheckoutTime datetime,
+	@CheckinMinutesEarly int,
+	@IsRecordActive bit,
+	@CurrencyCode char(3),
+	@ChargeType varchar(10),
+	@PaymentTermID int,
+	@TaxTypeID int,
+	@Latitude float(53),
+	@Longitude float(53),
+	@AddedOn datetime,
+	@AddedBy int,
+	@IsDeleted bit,
+	@ServiceID int OUTPUT
+AS
+INSERT [dbo].[Service]
+(
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[TaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[IsDeleted]
+)
+VALUES
+(
+	ISNULL(@ServiceName, ('')),
+	@SupplierID,
+	@ServiceTypeID,
+	@Description,
+	@Comments,
+	@Warning,
+	@MaxPax,
+	@CheckinTime,
+	@CheckoutTime,
+	@CheckinMinutesEarly,
+	@IsRecordActive,
+	@CurrencyCode,
+	@ChargeType,
+	@PaymentTermID,
+	@TaxTypeID,
+	@Latitude,
+	@Longitude,
+	@AddedOn,
+	@AddedBy,
+	@IsDeleted
+)
+SELECT @ServiceID=SCOPE_IDENTITY()
+GO
+PRINT N'Altering [dbo].[Service_Sel_All]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Service_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[ServiceID],
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[TaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Service]
+ORDER BY 
+	[ServiceID] ASC
+GO
+PRINT N'Altering [dbo].[Service_Sel_ByID]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Service_Sel_ByID]
+	@ServiceID int
+AS
+SET NOCOUNT ON
+SELECT
+	[ServiceID],
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[TaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Service]
+WHERE
+	[ServiceID] = @ServiceID
+GO
+PRINT N'Altering [dbo].[Service_Sel_BySupplierID]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Service_Sel_BySupplierID]
+	@SupplierID int
+AS
+SET NOCOUNT ON
+SELECT
+	[ServiceID],
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[TaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted]
+FROM [dbo].[Service]
+WHERE
+	[SupplierID] = @SupplierID
+GO
+PRINT N'Altering [dbo].[Service_Upd]...';
+
+
+GO
+
+ALTER PROCEDURE [dbo].[Service_Upd]
+	@ServiceID int,
+	@ServiceName varchar(150),
+	@SupplierID int,
+	@ServiceTypeID int,
+	@Description varchar(2000),
+	@Comments varchar(2000),
+	@Warning varchar(2000),
+	@MaxPax int,
+	@CheckinTime datetime,
+	@CheckoutTime datetime,
+	@CheckinMinutesEarly int,
+	@IsRecordActive bit,
+	@CurrencyCode char(3),
+	@ChargeType varchar(10),
+	@PaymentTermID int,
+	@TaxTypeID int,
+	@Latitude float(53),
+	@Longitude float(53),
+	@AddedOn datetime,
+	@AddedBy int,
+	@RowVersion timestamp,
+	@IsDeleted bit
+AS
+UPDATE [dbo].[Service]
+SET 
+	[ServiceName] = @ServiceName,
+	[SupplierID] = @SupplierID,
+	[ServiceTypeID] = @ServiceTypeID,
+	[Description] = @Description,
+	[Comments] = @Comments,
+	[Warning] = @Warning,
+	[MaxPax] = @MaxPax,
+	[CheckinTime] = @CheckinTime,
+	[CheckoutTime] = @CheckoutTime,
+	[CheckinMinutesEarly] = @CheckinMinutesEarly,
+	[IsRecordActive] = @IsRecordActive,
+	[CurrencyCode] = @CurrencyCode,
+	[ChargeType] = @ChargeType,
+	[PaymentTermID] = @PaymentTermID,
+	[TaxTypeID] = @TaxTypeID,
+	[Latitude] = @Latitude,
+	[Longitude] = @Longitude,
+	[AddedOn] = @AddedOn,
+	[AddedBy] = @AddedBy,
+	[IsDeleted] = @IsDeleted
+WHERE
+	[ServiceID] = @ServiceID
 	AND [RowVersion] = @RowVersion
 GO
 PRINT N'Altering [dbo].[PurchaseItemTaxType]...';
@@ -1559,8 +2440,14 @@ RETURN
     (	
 	select 
 		PurchaseItemID,
-		ntax.TaxTypeCode as NetTaxCode,
-		ntax.Amount as NetTaxPercent,
+		case when ntaxSrv.TaxTypeID is not null then ntaxSrv.TaxTypeCode
+			 when ntaxSup.TaxTypeID is not null then ntaxSup.TaxTypeCode 
+			 when ntaxTyp.TaxTypeID is not null then ntaxTyp.TaxTypeCode
+		end as NetTaxCode,	
+		case when ntaxSrv.TaxTypeID is not null then ntaxSrv.Amount
+			 when ntaxSup.TaxTypeID is not null then ntaxSup.Amount 
+			 when ntaxTyp.TaxTypeID is not null then ntaxTyp.Amount
+		end as NetTaxPercent,
 		gtax.TaxTypeCode as GrossTaxCode,
 		gtax.Amount as GrossTaxPercent
 	from PurchaseItem item
@@ -1569,8 +2456,10 @@ RETURN
 	left join [Service] as serv on rate.ServiceID = serv.ServiceID
 	left join [Supplier] as sup on serv.SupplierID = sup.SupplierID
 	left join ServiceType as stype on serv.ServiceTypeID = stype.ServiceTypeID	
-	left join TaxType as ntax on isnull(serv.TaxTypeID, isnull(sup.TaxTypeID, stype.NetTaxTypeID)) = ntax.TaxTypeID
-	left join TaxType as gtax on stype.GrossTaxTypeID = gtax.TaxTypeID	
+	left join TaxType as ntaxSrv on ntaxSrv.TaxTypeID = serv.TaxTypeID
+	left join TaxType as ntaxSup on ntaxSup.TaxTypeID = sup.TaxTypeID
+	left join TaxType as ntaxTyp on ntaxTyp.TaxTypeID = stype.NetTaxTypeID
+	left join TaxType as gtax on stype.GrossTaxTypeID = gtax.TaxTypeID
 )
 GO
 PRINT N'Altering [dbo].[PurchaseItemPricing]...';
@@ -1733,10 +2622,6 @@ PRINT N'Altering [dbo].[ItineraryDetail]...';
 
 GO
 
-
-
-
-
 ALTER VIEW [dbo].[ItineraryDetail]
 AS
 select
@@ -1773,7 +2658,7 @@ select
 		depart.DepartmentName,
 		branch.BranchID,
 		branch.BranchName,
-		itin.BaseCurrency as ItineraryBaseCurrency,
+		itin.CurrencyCode as ItineraryCurrencyCode,
 		itin.NetComOrMup as NetOverrideComOrMup,
 		pric.Net as ItineraryNet,
 		pric.Gross as ItineraryGross,
@@ -1842,14 +2727,6 @@ select
 	where 
 		(itin.IsDeleted is null or itin.IsDeleted = 'false');
 GO
-PRINT N'Refreshing [dbo].[PurchaseItemDetail]...';
-
-
-GO
-EXECUTE sp_refreshview N'dbo.PurchaseItemDetail';
-
-
-GO
 PRINT N'Refreshing [dbo].[ItineraryServiceTypeDetail]...';
 
 
@@ -1863,6 +2740,14 @@ PRINT N'Refreshing [dbo].[ItinerarySaleDetail]...';
 
 GO
 EXECUTE sp_refreshview N'dbo.ItinerarySaleDetail';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItemDetail]...';
+
+
+GO
+EXECUTE sp_refreshview N'dbo.PurchaseItemDetail';
 
 
 GO
@@ -1898,11 +2783,19 @@ EXECUTE sp_refreshview N'dbo.PurchaseItemPaymentsDetail';
 
 
 GO
+PRINT N'Refreshing [dbo].[SupplierRatesDetail]...';
+
+
+GO
+EXECUTE sp_refreshview N'dbo.SupplierRatesDetail';
+
+
+GO
 
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2010.11.06'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.02.02'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
