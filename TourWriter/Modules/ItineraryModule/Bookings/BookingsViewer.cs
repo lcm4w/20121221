@@ -423,6 +423,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     itinerarySet.Itinerary[0].SetGrossOverrideNull();
                     txtPriceOverride.Value = null;
+                    RecalculateFinalPricing();
                 }
             }
         }
@@ -618,6 +619,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             foreach (var row in Enumerable.Where(itinerarySet.PurchaseItem, row => row.RowState != DataRowState.Deleted))
                 row.RecalculateTotals();
             itinerarySet.PurchaseItem.ColumnChanged += PurchaseItem_ColumnChanged;
+
+            RefreshGrid();
+            RecalculateFinalPricing();
             WarnIfPriceOverrideExists();
         }
 
