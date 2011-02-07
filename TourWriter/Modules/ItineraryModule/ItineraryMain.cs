@@ -204,6 +204,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void LoadData()
         {
+            ItinerarySet ds = new ItinerarySet();
             try
             {
                 toolSet.Merge(Cache.ToolSet, false);
@@ -212,7 +213,6 @@ namespace TourWriter.Modules.ItineraryModule
                 // make cities sort alphabetically
                 toolSet.DefaultViewManager.DataViewSettings[toolSet.City].Sort = "CityName ASC";
 
-                ItinerarySet ds = new ItinerarySet();
                 foreach (DataTable dt in ds.Tables)
                     dt.RowChanged += ItinerarySet_RowChanged;
 
@@ -227,7 +227,14 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     int id = navigationTreeItem.ItemID;
                     Itinerary i = new Itinerary();
-                    itinerarySet.Merge(i.GetItinerarySet(id, ds), false);
+
+                    ds.EnforceConstraints = false;
+                    i.GetItinerarySet(id, ds);
+                    //ds.ReadXml(@"...\ds1.xml", XmlReadMode.DiffGram);
+                    TestForPaymentTermsContraintError(ds);
+                    ds.EnforceConstraints = true;
+
+                    itinerarySet.Merge(ds, false);
                     
                     // refresh menu node (new itins might have name set from custom code in db when created)
                     MenuNode.Visible = true;
@@ -245,7 +252,9 @@ namespace TourWriter.Modules.ItineraryModule
                 itinerarySet.WriteXml(stream1, XmlWriteMode.DiffGram);
                 stream1.Position = 0;
                 var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
-                ErrorHelper.SendEmail(ex, true, attach1);
+
+                var errors = ds.Tables.Cast<DataTable>().SelectMany(table => table.GetErrors()).Aggregate("", (current, error) => current + "\r\n" + (error.RowError));
+                ErrorHelper.SendEmail(ex.Message + errors, ex.ToString(), true, attach1);
                 throw;
             }
             catch (Exception ex)
@@ -256,6 +265,33 @@ namespace TourWriter.Modules.ItineraryModule
                     serverConnectionError_UserNotified = true;
                 }
                 else throw;
+            }
+        }
+
+        /// <summary>
+        /// TODO: negative paymemts terms sometimes get saved to PurchaseItem table, why?
+        /// This sets them to null before enforcing constraints. Saving the Itinerary will update then in the database too.
+        /// </summary>
+        /// <param name="ds"></param>
+        private static void TestForPaymentTermsContraintError(DataSet ds)
+        {
+            try
+            {
+                ds.EnforceConstraints = true;
+            }
+            catch (ConstraintException ex)
+            {
+                var stream1 = new MemoryStream();
+                ds.WriteXml(stream1, XmlWriteMode.DiffGram);
+                stream1.Position = 0;
+                var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
+                var errors = ds.Tables.Cast<DataTable>().SelectMany(table => table.GetErrors()).Aggregate("", (current, error) => current + "\r\n" + (error.RowError));
+                ErrorHelper.SendEmail("(Note: silent PaymentTerms constraint error) " + ex.Message + errors, ex.ToString(), true, attach1);
+                // TODO: fix negative payment terms, but why is this happening?
+                foreach (var row in ((ItinerarySet)ds).PurchaseItem.
+                    Where(x => !x.IsPaymentTermIDNull() && x.PaymentTermID < 0)) // invalid payment term id
+                        row.SetPaymentTermIDNull(); // reset
+                ds.EnforceConstraints = true;
             }
         }
 
