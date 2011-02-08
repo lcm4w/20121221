@@ -27,8 +27,8 @@ namespace TourWriter.Modules.SupplierModule
         private void DataBind()
         {
             BuildContentTypesList();
-            srcContents.DataSource = SupplierSet.Content;
             srcContentTypes.DataSource = Cache.ToolSet;
+            srcContents.DataSource = SupplierSet.Content;
         }
 
         private void BuildContentTypesList()
