@@ -2006,7 +2006,7 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab2.Text = "Messages";
             ultraTab12.Key = "Content";
             ultraTab12.TabPage = this.ultraTabPageControl11;
-            ultraTab12.Text = "Publising Content";
+            ultraTab12.Text = "Publishing Content";
             ultraTab3.Key = "Publishing";
             ultraTab3.TabPage = this.ultraTabPageControl9;
             ultraTab3.Text = "Publishing Links";
