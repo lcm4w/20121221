@@ -1,12 +1,8 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using TourWriter.Global;
-using TourWriter.Services;
 
 namespace TourWriter.Services
 {
@@ -15,7 +11,7 @@ namespace TourWriter.Services
         public static Currency Single(string currencyCode)
         {
             var c = Cache.ToolSet.Currency.Where(x => x.CurrencyCode == currencyCode).FirstOrDefault();
-            return new Currency(c.CurrencyCode, c.CurrencyName, c.Symbol);
+            return c != null ? new Currency(c.CurrencyCode, c.CurrencyName, c.Symbol) : null;
         }
         
         public static List<Currency> All()
@@ -96,14 +92,15 @@ namespace TourWriter.Services
 
             Thread.CurrentThread.CurrentCulture = ciSystem;
         }
-
-
+        
         public class Currency
         {
-            public string CurrencyCode { get; set; }
-            public string CurrencyName { get; set; }
-            public string PortableCurrencyPattern { get; set; }
-            public Currency(string code, string name, string pattern) { CurrencyCode = code; CurrencyName = name; PortableCurrencyPattern = pattern; }
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public string Format { get; set; }
+            public string FriendlyName { get { return ToString(); } }
+            public override string ToString() { return Code + " " + Name; }
+            public Currency(string code, string name, string pattern) { Code = code; Name = name; Format = pattern; }
         }
 
         #region Import list

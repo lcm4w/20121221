@@ -566,8 +566,8 @@ namespace TourWriter.Modules.SupplierModule
         private void UpdateServiceCurrencyInfo(string currencyCode)
         {
             var currency = Currencies.Single(currencyCode);
-            var format = currency != null ? currency.PortableCurrencyPattern : "c";
-            var message = currency != null ? currency.CurrencyCode + ", " + currency.CurrencyName : "";
+            var format = currency != null ? currency.Format : "c";
+            var message = currency != null ? currency.Code + ", " + currency.Name : "";
 
             lblCurrencyInfo.Visible = message.Length > 0;
             lblCurrencyInfo.Text = message;
