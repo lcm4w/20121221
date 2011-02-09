@@ -91,10 +91,14 @@
           <DataField>ServiceTypeName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ItineraryCurrencyFormat">
+          <DataField>ItineraryCurrencyFormat</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,TotalGross,ServiceTypeName FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,TotalGross,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -171,7 +175,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGross.Value, "PurchaseItemDetail"), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"), Parameters!CultureCode.Value)</Value>
+                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGross.Value, "PurchaseItemDetail"), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"), First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail"))</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -789,8 +793,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -995,8 +998,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Value>=Fields!TotalGross.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1445,8 +1447,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2118,8 +2119,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Value>=Fields!PaymentAmount.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2248,8 +2248,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2383,8 +2382,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <Format>c</Format>
-                  <Language>=Parameters!CultureCode.Value</Language>
+                  <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -2437,24 +2435,12 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>
-    <ReportParameter Name="CultureCode">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value />
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportName</Prompt>
-      <Hidden>true</Hidden>
-    </ReportParameter>
   </ReportParameters>
-  <Code>Function WarnIfHasPriceOverride(total1 as Double, total2 as Double, cultureCode as String)	
-	If (total1 &lt;&gt; total2) Then		
-		MsgBox("This report will not show the adjusted final price of " + total1.ToString("c", System.Globalization.CultureInfo.GetCultureInfo(cultureCode)) + vbCrLf + vbCrLf + "Instead it shows all booking prices and total sum of " + total2.ToString("c", System.Globalization.CultureInfo.GetCultureInfo(cultureCode)),0,"Override Warning")     
+  <Code>Function WarnIfHasPriceOverride(total1 as Double, total2 as Double, ccyFormat as String)	
+	If (total1 &lt;&gt; total2) Then	
+		MsgBox("Your adjusted final price will NOT be shown in this report: " + total1.ToString(ccyFormat) + vbCrLf + vbCrLf  + "This report shows price details and therefore the SUM total: " + total2.ToString(ccyFormat) , 0, "Override Warning")     
 	End If
-End Function
-</Code>
+End Function</Code>
   <Width>19.00004cm</Width>
   <Page>
     <PageFooter>

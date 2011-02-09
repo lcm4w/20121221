@@ -112,10 +112,14 @@
           <DataField>ServiceTypeName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ItineraryCurrencyFormat">
+          <DataField>ItineraryCurrencyFormat</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryNet,ItineraryGross,PurchaseLineID,PurchaseLineName,PurchaseItemName,RequestStatusName,BookingReference,CityName,PurchaseItemStartDate,CurrencyCode,CurrencyRate,NumberOfDays,Quantity,Gross,TotalNet,TotalGross,TotalGrossOrig,ServiceTypeName FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>SELECT ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryNet,ItineraryGross,PurchaseLineID,PurchaseLineName,PurchaseItemName,RequestStatusName,BookingReference,CityName,PurchaseItemStartDate,CurrencyCode,CurrencyRate,NumberOfDays,Quantity,Gross,TotalNet,TotalGross,TotalGrossOrig,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -1431,8 +1435,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1466,8 +1469,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1804,8 +1806,7 @@
                               <Value>=Fields!Gross.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1839,8 +1840,7 @@
                               <Value>=Fields!TotalNet.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1873,8 +1873,7 @@
                               <Value>=Fields!TotalGrossOrig.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2329,8 +2328,7 @@
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -2431,8 +2429,8 @@
         </TablixRowHierarchy>
         <DataSetName>PurchaseItemDetail</DataSetName>
         <Top>2.5cm</Top>
-        <Height>1.9cm</Height>
-        <Width>27.51671cm</Width>
+        <Height>1.90002cm</Height>
+        <Width>27.51676cm</Width>
         <Style>
           <FontSize>8.5pt</FontSize>
         </Style>
@@ -3077,8 +3075,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3142,8 +3139,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3159,6 +3155,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -3295,8 +3292,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3327,8 +3323,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3452,8 +3447,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3516,8 +3510,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3657,8 +3650,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3732,8 +3724,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
-                                <Format>c</Format>
-                                <Language>=Parameters!CultureCode.Value</Language>
+                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -3824,7 +3815,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
         <Top>5cm</Top>
         <Left>12.5cm</Left>
         <Height>1.7cm</Height>
-        <Width>14.91136cm</Width>
+        <Width>14.91135cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <FontSize>8.5pt</FontSize>
@@ -3842,17 +3833,6 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
           <Value>Client locations</Value>
         </Values>
       </DefaultValue>
-      <Prompt>ReportName</Prompt>
-      <Hidden>true</Hidden>
-    </ReportParameter>
-    <ReportParameter Name="CultureCode">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value />
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>

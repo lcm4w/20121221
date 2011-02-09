@@ -80,10 +80,21 @@
           <DataField>ServiceTypeName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ItineraryCurrencyFormat">
+          <DataField>ItineraryCurrencyFormat</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,ServiceTypeName FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID AND (ServiceTypeID IN @ServiceTypeIDList) ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>
+SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,
+ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,ServiceTypeName, 
+isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat
+FROM dbo.PurchaseItemDetail p
+WHERE ItineraryID = @ItineraryID AND (ServiceTypeID IN @ServiceTypeIDList) 
+ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
+		</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -1011,8 +1022,8 @@
         <KeepTogether>true</KeepTogether>
         <DataSetName>PurchaseItemDetail</DataSetName>
         <Top>2.5cm</Top>
-        <Height>1.9cm</Height>
-        <Width>19cm</Width>
+        <Height>1.90002cm</Height>
+        <Width>19.00004cm</Width>
         <Style />
       </Tablix>
       <Textbox Name="textbox18">
@@ -1222,12 +1233,13 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <Format>c</Format>
-                  <Language>=Parameters!CultureCode.Value</Language>
+                  <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <Top>4.75cm</Top>
@@ -1253,12 +1265,13 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
-                  <Format>c</Format>
-                  <Language>=Parameters!CultureCode.Value</Language>
+                  <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <Top>5.5cm</Top>
@@ -1284,13 +1297,14 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
 	iif(not isnothing(First(Fields!ItineraryGross.Value)), First(Fields!ItineraryGross.Value), 0))</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
-                  <Language>=Parameters!CultureCode.Value</Language>
                   <FontWeight>Bold</FontWeight>
-                  <Format>c</Format>
+                  <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
         </Paragraphs>
         <Top>6.25cm</Top>
@@ -1370,19 +1384,8 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
       <Prompt>ReportName</Prompt>
       <Hidden>true</Hidden>
     </ReportParameter>
-    <ReportParameter Name="CultureCode">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value />
-        </Values>
-      </DefaultValue>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>ReportName</Prompt>
-      <Hidden>true</Hidden>
-    </ReportParameter>
   </ReportParameters>
-  <Width>19cm</Width>
+  <Width>19.00004cm</Width>
   <Page>
     <PageFooter>
       <Height>0.75cm</Height>
