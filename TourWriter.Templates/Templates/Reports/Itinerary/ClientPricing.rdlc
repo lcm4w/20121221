@@ -12,6 +12,10 @@
   <DataSets>
     <DataSet Name="PurchaseItemDetail">
       <Fields>
+        <Field Name="ItineraryID">
+          <DataField>ItineraryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="ItineraryName">
           <DataField>ItineraryName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -88,7 +92,7 @@
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
         <CommandText>
-SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,
+SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,
 ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,ServiceTypeName, 
 isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat
 FROM dbo.PurchaseItemDetail p
@@ -582,7 +586,7 @@ ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
                               <Value>=Fields!PurchaseItemStartDate.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>d</Format>
+                                <Format>d MMM yy</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -597,7 +601,7 @@ ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -1009,7 +1013,6 @@ ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
                   </TablixMembers>
                   <DataElementName>Detail_Collection</DataElementName>
                   <DataElementOutput>Output</DataElementOutput>
-                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -1061,12 +1064,12 @@ ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(not isnothing(First(Fields!CustomCode.Value)), "REF: " + First(Fields!CustomCode.Value) + "  ", "") +
-"IN: " + iif(not isnothing(First(Fields!ArriveDate.Value)), CDate(First(Fields!ArriveDate.Value)).ToString("g"), "...") + 
+                <Value>="Itinerary " + iif(not isnothing(First(Fields!CustomCode.Value)), "Ref: " + First(Fields!CustomCode.Value), "Id: " + CInt(First(Fields!ItineraryID.Value, "PurchaseItemDetail")).ToString()) +
+",  From: " + iif(not isnothing(First(Fields!ArriveDate.Value)), CDate(First(Fields!ArriveDate.Value)).ToString("d MMM yyyy"), "...") + 
 iif(not isnothing(First(Fields!ArriveCityName.Value)), " (" + First(Fields!ArriveCityName.Value) + ")", "") +
-",  OUT: " + iif(not isnothing(First(Fields!DepartDate.Value)), CDate(First(Fields!DepartDate.Value)).ToString("g"), "...") + 
+",  To: " + iif(not isnothing(First(Fields!DepartDate.Value)), CDate(First(Fields!DepartDate.Value)).ToString("d MMM yyyy"), "...") + 
 iif(not isnothing(First(Fields!DepartCityName.Value)), " (" + First(Fields!DepartCityName.Value) + ")", "") +
-iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields!ItineraryLength.Value)) + " days", "")</Value>
+iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Fields!ItineraryLength.Value)) + " days", "")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1399,7 +1402,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Parameters!ReportName.Value + ", processed " + Now().ToString("g") + ", page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                  <Value>=Parameters!ReportName.Value + ", processed " + Now().ToString("d MMM yyyy") + ", page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>

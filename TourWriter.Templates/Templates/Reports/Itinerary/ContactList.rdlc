@@ -12,6 +12,10 @@
   <DataSets>
     <DataSet Name="PurchaseItemDetail">
       <Fields>
+        <Field Name="ItineraryID">
+          <DataField>ItineraryID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="ItineraryName">
           <DataField>ItineraryName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -83,7 +87,7 @@
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,SupplierName,StreetAddress,CityName,RegionName,StateName,CountryName,Phone,PurchaseItemStartDate,PurchaseItemStartTime,PurchaseItemEndDate,ServiceTypeName FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID AND (ServiceTypeID IN @ServiceTypeIDList) ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,SupplierName,StreetAddress,CityName,RegionName,StateName,CountryName,Phone,PurchaseItemStartDate,PurchaseItemStartTime,PurchaseItemEndDate,ServiceTypeName FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID AND (ServiceTypeID IN @ServiceTypeIDList) ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -98,13 +102,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.7874in</Width>
+              <Width>0.7249in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.7874in</Width>
+              <Width>0.69365in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.87008in</Width>
+              <Width>2.02633in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>3.05118in</Width>
@@ -508,7 +512,7 @@
                               <Value>=Fields!PurchaseItemStartDate.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>d</Format>
+                                <Format>d MMM yy</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -523,7 +527,7 @@
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -542,7 +546,7 @@
                               <Value>=Fields!PurchaseItemEndDate.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
-                                <Format>d</Format>
+                                <Format>d MMM yy</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -557,7 +561,7 @@
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -906,7 +910,6 @@ Fields!CityName.Value</Value>
                   </TablixMembers>
                   <DataElementName>Detail_Collection</DataElementName>
                   <DataElementOutput>Output</DataElementOutput>
-                  <KeepTogether>true</KeepTogether>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -919,8 +922,8 @@ Fields!CityName.Value</Value>
         <KeepTogether>true</KeepTogether>
         <DataSetName>PurchaseItemDetail</DataSetName>
         <Top>2.5cm</Top>
-        <Height>1.9cm</Height>
-        <Width>19cm</Width>
+        <Height>1.90002cm</Height>
+        <Width>18.99999cm</Width>
         <Style />
       </Tablix>
       <Textbox Name="textbox10">
@@ -958,12 +961,12 @@ Fields!CityName.Value</Value>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(not isnothing(First(Fields!CustomCode.Value)), "REF: " + First(Fields!CustomCode.Value) + "  ", "") +
-"IN: " + iif(not isnothing(First(Fields!ArriveDate.Value)), CDate(First(Fields!ArriveDate.Value)).ToString("g"), "...") + 
+                <Value>="Itinerary " + iif(not isnothing(First(Fields!CustomCode.Value)), "Ref: " + First(Fields!CustomCode.Value), "Id: " + CInt(First(Fields!ItineraryID.Value, "PurchaseItemDetail")).ToString()) +
+",  From: " + iif(not isnothing(First(Fields!ArriveDate.Value)), CDate(First(Fields!ArriveDate.Value)).ToString("d MMM yyyy"), "...") + 
 iif(not isnothing(First(Fields!ArriveCityName.Value)), " (" + First(Fields!ArriveCityName.Value) + ")", "") +
-",  OUT: " + iif(not isnothing(First(Fields!DepartDate.Value)), CDate(First(Fields!DepartDate.Value)).ToString("g"), "...") + 
+",  To: " + iif(not isnothing(First(Fields!DepartDate.Value)), CDate(First(Fields!DepartDate.Value)).ToString("d MMM yyyy"), "...") + 
 iif(not isnothing(First(Fields!DepartCityName.Value)), " (" + First(Fields!DepartCityName.Value) + ")", "") +
-iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields!ItineraryLength.Value)) + " days", "")</Value>
+iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Fields!ItineraryLength.Value)) + " days", "")</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1017,7 +1020,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>4.4cm</Height>
+    <Height>4.40002cm</Height>
     <Style />
   </Body>
   <ReportParameters>
@@ -1046,7 +1049,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ", " + CStr(First(Fields
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>=Parameters!ReportName.Value + ", processed " + Now().ToString("g") + ", page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
+                  <Value>=Parameters!ReportName.Value + ", processed " + Now().ToString("d MMM yyyy") + ", page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                   </Style>
