@@ -162,7 +162,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // summaries
             var itinerary = itinerarySet.Itinerary[0];
             var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
-            var format = "{0:" + (currencyInfo != null ? currencyInfo.Format : "c") + "}";
+            var format = "{0:" + (currencyInfo != null ? currencyInfo.DisplayFormat : "c") + "}";
             gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
         }
 
@@ -220,7 +220,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             listPrice.Columns.Add("", col2Width, HorizontalAlignment.Left);
 
             var hasOverride = Currencies.GetPurchaseItemCurrencyCode(itemRow) != null;
-            var format = "{0:" + (hasOverride ? Currencies.Single(itemRow.CurrencyCode).Format : "c") + "}";
+            var format = "{0:" + (hasOverride ? Currencies.Single(itemRow.CurrencyCode).DisplayFormat : "c") + "}";
 
             var listItem = new ListViewItem {Text = "Net:"};
             listItem.SubItems.Add(string.Format(format, itemRow.Net));
@@ -698,13 +698,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // set base prices
             var hasOverride = Currencies.GetPurchaseItemCurrencyCode(item) != null;
-            var format = "{0:" + (hasOverride ? Currencies.Single(item.CurrencyCode).Format : "c") + "}";
+            var format = "{0:" + (hasOverride ? Currencies.Single(item.CurrencyCode).DisplayFormat : "c") + "}";
             if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.GrossTotal);
 
             // set final prices
             var itinerary = item.PurchaseLineRow.ItineraryRow;
             hasOverride = Currencies.GetItineraryCurrencyCode(itinerary) != null;
-            format = "{0:" + (hasOverride ? Currencies.Single(itinerary.CurrencyCode).Format : "c") + "}";
+            format = "{0:" + (hasOverride ? Currencies.Single(itinerary.CurrencyCode).DisplayFormat : "c") + "}";
             if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
         }
 

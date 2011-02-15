@@ -427,7 +427,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             var currencyCode = Currencies.GetPurchaseItemCurrencyCode(item);
             var format = currencyCode != null ?
-                "{0:" + string.Format("{0} ({1})", Currencies.Single(currencyCode).Format, currencyCode) + "}" :
+                "{0:" + string.Format("{0} ({1})", Currencies.Single(currencyCode).DisplayFormat, currencyCode) + "}" :
                 "{0:c}";
             
             var net = !item.IsNetNull() ? item.Net : 0;

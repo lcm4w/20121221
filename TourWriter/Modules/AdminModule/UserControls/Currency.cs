@@ -28,6 +28,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
         public Currency()
         {
             InitializeComponent();
+            btnCharMap.Text = "Enable Editing";
+
+            // TODO: remove unused controls ---------------
+            tabControl1.TabPages.Remove(tabPage2);
+            btnCurrencyAdd.Visible = false;
+            btnCurrencyDelete.Visible = false;
+            // -------------------------------------------------
         }
 
         private void Currency_Load(object sender, EventArgs e)
@@ -51,37 +58,48 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private void gridCurrency_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
-            {   
-                if (c.Key == "CurrencyCode")
+            {
+                if (c.Key == "Enabled")
                 {
-                    c.Header.Caption = "Currency code";
-                    c.MaskInput = ">AAA"; // 3 char required, converts to uppercase
+                    c.Header.Caption = "Enable";
                     c.CellClickAction = CellClickAction.Edit;
+                }
+                else if (c.Key == "CurrencyCode")
+                {
+                    c.Header.Caption = "Currency Code";
+                    c.MaskInput = ">AAA"; // 3 char required, converts to uppercase
+                    //c.CellClickAction = CellClickAction.Edit;
+                    c.SortIndicator = SortIndicator.Ascending;
                 }
                 else if (c.Key == "CurrencyName")
                 {
-                    c.Header.Caption = "Currency name";
-                    c.SortIndicator = SortIndicator.Ascending;
-                    c.CellClickAction = CellClickAction.Edit;
+                    c.Header.Caption = "Currency Name";
+                    //c.CellClickAction = CellClickAction.Edit;
                 } 
-                else if (c.Key == "Symbol")
+                else if (c.Key == "DisplayFormat")
                 {
-                    c.Header.Caption = "Symbol";
-                    c.CellClickAction = CellClickAction.Edit;
+                    c.Header.Caption = "Display Format";
+                    //c.CellClickAction = CellClickAction.Edit;
                 }
                 else
                     c.Hidden = true;
             }
-            e.Layout.Bands[0].Columns["CurrencyCode"].Width = 20;
-            e.Layout.Bands[0].Columns["CurrencyName"].Width = 80;
-            e.Layout.Bands[0].Columns["Symbol"].Width = 20;
+            e.Layout.Bands[0].Columns["Enabled"].Width = 100;
+            e.Layout.Bands[0].Columns["CurrencyCode"].Width = 100;
+            e.Layout.Bands[0].Columns["CurrencyName"].Width = 400;
+            e.Layout.Bands[0].Columns["DisplayFormat"].Width = 200;
 
             int index = 0;
+            e.Layout.Bands[0].Columns["Enabled"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyCode"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyName"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Symbol"].Header.VisiblePosition = index;
+            e.Layout.Bands[0].Columns["DisplayFormat"].Header.VisiblePosition = index;
 
             GridHelper.SetDefaultGridAppearance(e);
+            e.Layout.AutoFitStyle = AutoFitStyle.None;
+
+            e.Layout.Bands[0].SortedColumns.Add("CurrencyCode", false);
+            e.Layout.Bands[0].SortedColumns.Add("Enabled", true, true);
         }
             
         private void gridCurrency_Error(object sender, ErrorEventArgs e)
@@ -118,15 +136,20 @@ namespace TourWriter.Modules.AdminModule.UserControls
         
         private void btnCharMap_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Process.Start(@"C:\WINDOWS\system32\charmap.exe");
-            }
-            catch
-            {
-                App.ShowError(
-                    "Failed to open Windows Character Map. Try opening it from Start > All Programs > Accessories > System Tools > Character Map");
-            }
+            //try
+            //{
+            //    Process.Start(@"C:\WINDOWS\system32\charmap.exe");
+            //}
+            //catch
+            //{
+            //    App.ShowError(
+            //        "Failed to open Windows Character Map. Try opening it from Start > All Programs > Accessories > System Tools > Character Map");
+            //}
+
+            if (!App.AskYesNo("This will allow you to edit the currency data.\r\n\r\nPlease be careful editing the Display Format as this will affect all areas where currency amounts are shown, including client reports.\r\n\r\nDo you wish to continue?")) return;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyCode"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyName"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["DisplayFormat"].CellClickAction = CellClickAction.Edit;
         }
 
         #endregion

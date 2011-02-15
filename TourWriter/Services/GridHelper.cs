@@ -618,8 +618,8 @@ namespace TourWriter.Services
             #endregion
 
             dropDown.ValueMember = "CurrencyCode";
-            dropDown.DisplayMember = "CurrencyCode";
-            dropDown.DataSource = Cache.ToolSet.Currency;
+            dropDown.DisplayMember = "DisplayName";
+            dropDown.DataSource = Cache.ToolSet.Currency.Where(c => c.Enabled);
             return dropDown;
         }
         

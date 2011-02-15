@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.BusinessLogic;
-using TourWriter.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Modules.ContactModule;
@@ -89,7 +88,7 @@ namespace TourWriter.Modules.ItineraryModule
             txtNoteToClient.DataBindings.Add("Text", itinerarySet, "ItineraryGroup.NoteToClient");
             txtNoteToSupplier.DataBindings.Add("Text", itinerarySet, "ItineraryGroup.NoteToSupplier");
 
-            currencyBindingSource.DataSource = Cache.ToolSet.Currency;
+            currencyBindingSource.DataSource = Cache.ToolSet.Currency.Where(c => c.Enabled).ToList();
             itineraryGroupBindingSource.DataSource = itinerarySet.ItineraryGroup;
             if (itinerarySet.ItineraryGroup.Rows.Count > 0 && itinerarySet.ItineraryGroup[0].IsCurrencyCodeNull())
                 cmbCurrency.SelectedValue = DBNull.Value;

@@ -54,8 +54,8 @@ namespace TourWriter.Dialogs
         private void SetCurrencyInfo(string currencyCode)
         {
             var currency = Currencies.Single(currencyCode);
-            var format = currency != null ? currency.Format : "c";
-            var message = currency != null ? string.Format("Currency: {0}", currency.Code) : "";
+            var format = currency != null ? currency.DisplayFormat : "c";
+            var message = currency != null ? string.Format("Currency: {0}", currency.CurrencyCode) : "";
 
             lblCurrencyInfo.Visible = message.Length > 0;
             lblCurrencyInfo.Text = message;

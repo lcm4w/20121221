@@ -234,12 +234,6 @@ namespace TourWriter.Modules.ItineraryModule
                         MenuNode.Text = itinerarySet.Itinerary[0].ItineraryName; 
                 }
 
-                currencyBindingSource.DataSource = Currencies.All(); // also used by bookings grid
-                //cmbCurrency.DataSource = currencyBindingSource;
-                //cmbCurrency.DisplayMember = "FriendlyName";
-                //cmbCurrency.ValueMember = "CurrencyCode";
-                //cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "CurrencyCode", true));
-                //cmbCurrency.SelectedIndexChanged += OnIntineraryLanguageChanged;
                 cmbCurrency.Visible = false;
                 lblCurrency.Visible = false;
 

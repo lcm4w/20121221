@@ -146,9 +146,9 @@ namespace TourWriter.Modules.SupplierModule
             gridServices.DisplayLayout.ValueLists.Add("CurrencyList");
             gridServices.DisplayLayout.ValueLists["CurrencyList"].SortStyle = ValueListSortStyle.Ascending;
             gridServices.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(DBNull.Value, "");
-            foreach (ToolSet.CurrencyRow r in Cache.ToolSet.Currency)
+            foreach (ToolSet.CurrencyRow r in Cache.ToolSet.Currency.Where(c => c.Enabled))
                 gridServices.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(
-                    r.CurrencyCode, r.CurrencyCode);
+                    r.CurrencyCode, r.DisplayName);
 
             // create charge type data list
             gridServices.DisplayLayout.ValueLists.Add("ChargeTypeList");
@@ -566,8 +566,8 @@ namespace TourWriter.Modules.SupplierModule
         private void UpdateServiceCurrencyInfo(string currencyCode)
         {
             var currency = Currencies.Single(currencyCode);
-            var format = currency != null ? currency.Format : "c";
-            var message = currency != null ? currency.Code + ", " + currency.Name : "";
+            var format = currency != null ? currency.DisplayFormat : "c";
+            var message = currency != null ? currency.CurrencyCode + ", " + currency.CurrencyName : "";
 
             lblCurrencyInfo.Visible = message.Length > 0;
             lblCurrencyInfo.Text = message;
