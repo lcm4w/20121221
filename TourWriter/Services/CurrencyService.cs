@@ -94,7 +94,11 @@ namespace TourWriter.Services
         {
             try
             {
-                currency.Rate = GetRateHttp(currency.FromCurrency, currency.ToCurrency);
+                var rate = GetRateHttp(currency.FromCurrency, currency.ToCurrency);
+                if (rate > 100000) 
+                    currency.ErrorMessage = "Rate " + rate + " does not appear to be correct.";
+                else 
+                    currency.Rate = rate;
             }
             catch (Exception ex)
             {
