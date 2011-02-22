@@ -501,7 +501,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 txtGross1.Value = itinerarySet.GetGrossBasePrice();
 
             if (!itinerarySet.Itinerary[0].IsGrossMarkupNull())
-                txtGross2.Value = (decimal)txtGross1.Value * (1 + itinerarySet.Itinerary[0].GrossMarkup / 100);
+            {
+                var val = decimal.Parse(txtGross1.Value.ToString());
+                txtGross2.Value = val *(1 + itinerarySet.Itinerary[0].GrossMarkup/100);
+            }
             else
                 txtGross2.Value = txtGross1.Value;
 
