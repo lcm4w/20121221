@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Drawing;
 using System.Threading;
+using System.Windows.Forms;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.BusinessLogic;
 using TourWriter.Info;
@@ -714,12 +715,13 @@ namespace TourWriter.Forms
                             n.Reposition(collection);
                     }
                 }
-                else
-                    throw;
+                else throw;
             }
-
-		    tree.EndUpdate();
-			tree.ResumeLayout(false);
+            tree.Invoke((MethodInvoker) (() =>
+                                             {
+                                                 tree.EndUpdate();
+                                                 tree.ResumeLayout(false);
+                                             }));
         }
 
 		private void Folder_Delete(UltraTreeNode node)
