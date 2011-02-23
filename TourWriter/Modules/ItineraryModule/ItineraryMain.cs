@@ -116,6 +116,13 @@ namespace TourWriter.Modules.ItineraryModule
             agentBindingSource.Sort = "AgentName ASC";
         }
 
+        internal void SetItineraryReportsParameter(string key, object value)
+        {
+            if (reportControl.DefaultParameters.ContainsKey(key)) 
+                reportControl.DefaultParameters.Remove(key);
+            reportControl.DefaultParameters.Add(key, value);
+        }
+
         private void ItineraryLoad(object sender, EventArgs e)
         {
             DataBind();
@@ -135,9 +142,9 @@ namespace TourWriter.Modules.ItineraryModule
             setAddedByInfo();
 
             // reports
-            reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
-            reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            reportControl.DefaultParameters.Add("@CurrencyCode", Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
+            SetItineraryReportsParameter("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
+            SetItineraryReportsParameter("@PurchaseLineIDList", itinerarySet.PurchaseLine);
+            SetItineraryReportsParameter("@CurrencyCode", Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
@@ -746,20 +753,6 @@ namespace TourWriter.Modules.ItineraryModule
             txtDepartDate.DataBindings.Clear();
             txtDepartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
             txtDepartDate.DataBindings.Add(binding);
-        }
-        
-        internal void OnIntineraryLanguageChanged(object sender, EventArgs e)
-        {
-            var val = ((ComboBox)sender).SelectedValue.ToString();
-            if (itinerarySet.Itinerary[0].CurrencyCode != val) itinerarySet.Itinerary[0].CurrencyCode = val; // force binding (only if changed, otherwise dataset will show false HasChanges)
-
-            // update UI
-            bookingsViewer.SetItineraryLanguageInfo();
-            bookingsViewer.FormatFinalYieldText();
-
-            // set reports param
-            if (reportControl.DefaultParameters.ContainsKey("@CurrencyCode")) reportControl.DefaultParameters.Remove("@CurrencyCode");
-            reportControl.DefaultParameters.Add("@CurrencyCode", val);
         }
         
         private void tabControlAdditional_SelectedTabChanging(object sender, SelectedTabChangingEventArgs e)

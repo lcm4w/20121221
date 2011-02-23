@@ -118,35 +118,42 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 foreach (ToolSet.RequestStatusRow r in Cache.ToolSet.RequestStatus.Rows)
                 {
                     if (r.RowState == DataRowState.Deleted) continue;
-                    grid.DisplayLayout.ValueLists["StatusList"].ValueListItems.Add(r.RequestStatusID,
-                                                                                   r.RequestStatusName);
+                    grid.DisplayLayout.ValueLists["StatusList"].ValueListItems.Add(r.RequestStatusID, r.RequestStatusName);
                 }
             }
             var list = Cache.ToolSet.Currency.Where(c => c.Enabled).ToList();
             var nullRow = Cache.ToolSet.Currency.NewCurrencyRow();
             nullRow.CurrencyCode = nullRow.DisplayName = "";
             list.Insert(0, nullRow);
+
+            // itinerary currency code
+            if (cmbCurrency.DataBindings.Count == 0)
+                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
             cmbCurrency.DataSource = list;
             cmbCurrency.DisplayMember = "DisplayName";
             cmbCurrency.ValueMember = "CurrencyCode";
-            if (cmbCurrency.DataBindings.Count == 0) 
-                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itineraryBindingSource, "CurrencyCode", true));
-            cmbCurrency.SelectedIndexChanged += (ParentForm as ItineraryMain).OnIntineraryLanguageChanged;
-            
-            //cmbCurrency.SelectionChangeCommitted += delegate(object sender, EventArgs e)
-            cmbCurrency.DropDownClosed += delegate(object sender, EventArgs e) {
-                                                  (ParentForm as ItineraryMain).OnIntineraryLanguageChanged(sender, e);
-                                                  if (App.AskYesNo("Update currency rates also?"))
-                                                  {
-                                                      Application.DoEvents();
-                                                      RunCurrencyUpdater();
-                                                  }
-                                              };
+            cmbCurrency.SelectedIndexChanged += delegate { HandleCurrencyCodeChanged(); };
+            cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
+
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
             SetNetOverrideText();
             SetPriceOverrideWarning();
+        }
+
+        private void HandleCurrencyCodeChanged()
+        {
+            var newValue = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : null;
+            if (itinerarySet.Itinerary[0].CurrencyCode != newValue)
+                itinerarySet.Itinerary[0].CurrencyCode = newValue;
+
+            // update UI
+            SetItineraryLanguageInfo();
+            FormatFinalYieldText();
+
+            // set reports param
+            (ParentForm as ItineraryMain).SetItineraryReportsParameter("@CurrencyCode", newValue); 
         }
 
         private void LoadGridLayout()

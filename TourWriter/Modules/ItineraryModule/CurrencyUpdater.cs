@@ -36,6 +36,7 @@ namespace TourWriter.Modules.ItineraryModule
                             
                 }
             }
+            btnUpdate.Select();
         }
 
         private void UpdateCurrencies()
