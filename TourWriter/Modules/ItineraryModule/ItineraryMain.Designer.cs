@@ -1878,7 +1878,7 @@ namespace TourWriter.Modules.ItineraryModule
         private Panel pnlMain;
         private UltraTabPageControl ultraTabPageControl19;
         private Bookings.BookingsViewer bookingsViewer;
-        private ClientEditor clientEditor;
+        public ClientEditor clientEditor;
         private System.ComponentModel.BackgroundWorker itinerarySetLoaderThread;
         private UserControls.HeaderLabel headerLabel1;
         private UserControls.HeaderLabel headerLabel4;

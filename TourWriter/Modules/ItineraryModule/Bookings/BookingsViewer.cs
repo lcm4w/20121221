@@ -149,7 +149,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 itinerarySet.Itinerary[0].CurrencyCode = newValue;
 
             // update UI
-            SetItineraryLanguageInfo();
+            SetItineraryCurrencyInfo();
             FormatFinalYieldText();
 
             // set reports param
@@ -239,7 +239,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        internal void SetItineraryLanguageInfo()
+        internal void SetItineraryCurrencyInfo()
         {
             var itinerary = itinerarySet.Itinerary[0];
             var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
@@ -259,6 +259,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             
             // grid rows
             RefreshGrid();
+
+            (ParentForm as ItineraryMain).clientEditor.SetCurrencyFormat();
         }
 
         internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
@@ -449,7 +451,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             else overrideWarning.SetError(label8, ""); // reset
         }
 
-        internal void SetLanguageOverrideWarning()
+        internal void SetCurrencyOverrideWarning()
         {
             if (!string.IsNullOrEmpty(cmbCurrency.Text.Trim()))
             {
@@ -584,7 +586,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             File.Delete(GridLayoutFileName);
             grid.DataSource = null;
             SetDataBindings();
-            SetItineraryLanguageInfo();
+            SetItineraryCurrencyInfo();
         }
 
         private void SetFlags(UltraGridRow row)

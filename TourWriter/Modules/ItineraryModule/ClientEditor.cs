@@ -616,6 +616,17 @@ namespace TourWriter.Modules.ItineraryModule
             gridPayments_InitializeSummaries(e);
         }
 
+        internal void SetCurrencyFormat()
+        {
+            var itinerary = itinerarySet.Itinerary[0];
+            var currencyInfo = Currencies.Single(itinerary.CurrencyCode);
+            var format = currencyInfo != null ? currencyInfo.DisplayFormat : "c";
+
+            gridPayments.DisplayLayout.Bands[0].Columns["Amount"].Format = format;
+            gridPayments.DisplayLayout.Bands[0].Summaries["TotalAmount"].DisplayFormat = "{0:" + format + "}";
+
+        }
+
         private void gridPayments_InitializeRow(object sender, InitializeRowEventArgs e)
         {
             LockUnlockPaymentsRow(e.Row);
@@ -633,7 +644,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Amount"]);
             summary.Key = "TotalAmount";
-            summary.DisplayFormat = "Total payments: {0:#0.00}";
+            summary.DisplayFormat = "{0:#0.00}";
             summary.SummaryPosition = SummaryPosition.Right;
             summary.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
             summary.Lines = 2;
