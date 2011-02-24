@@ -177,7 +177,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // populate money values columns
                 if (addPaxItem)
                 {
-                    var totalGross = item.Gross*(decimal) item.NumberOfDays;
+                    var totalGross = item.GrossTotalConverted;//.Gross*(decimal) item.NumberOfDays;
                     row["Gross"] = totalGross + (row["Gross"] != DBNull.Value ? (decimal)row["Gross"] : 0);
                     RowPopulatePaxColumns(row, item, costType);
                 }
@@ -213,7 +213,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (paxCol == null) continue;
 
                 var paxMultiplier = RowGetPaxChargeMultiplier(item, pax, costType);
-                var newVal = (double)item.Gross * item.NumberOfDays * paxMultiplier;
+                var newVal = (double)item.GrossTotalConverted * paxMultiplier; //.Gross * item.NumberOfDays * paxMultiplier;
                 try
                 {
                     var oldVal = row[paxCol] != DBNull.Value && !string.IsNullOrEmpty(row[paxCol].ToString().Trim()) ? Convert.ToDouble(row[paxCol]) : 0;
@@ -231,7 +231,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var supCol = GetSuppliementsColumn(item.OptionTypeID);
             if (supCol == null) return;
 
-            var newVal = item.Gross / supCol.Divisor;
+            var newVal = item.GrossTotalConverted / supCol.Divisor; //.Gross / supCol.Divisor;
             if (row["Gross"] != DBNull.Value)
             {
                 var gross = (decimal) row["Gross"];
