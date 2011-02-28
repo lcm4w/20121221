@@ -112,6 +112,7 @@ namespace TourWriter.Forms
             this.menuSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReports = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNzgst = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuDashboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGeneralReports = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDataExtraction = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTourWriterData = new System.Windows.Forms.ToolStripMenuItem();
@@ -670,7 +671,8 @@ namespace TourWriter.Forms
             this.menuDataExtraction,
             this.menuTourWriterData,
             this.menuStartPage,
-            this.menuNzgst});
+            this.menuNzgst,
+            this.menuDashboard});
             this.menuAdditional.Name = "menuAdditional";
             resources.ApplyResources(this.menuAdditional, "menuAdditional");
             // 
@@ -694,6 +696,13 @@ namespace TourWriter.Forms
             this.menuNzgst.Name = "menuNzgst";
             resources.ApplyResources(this.menuNzgst, "menuNzgst");
             this.menuNzgst.Click += new System.EventHandler(this.menuNzgst_Click);
+            // 
+            // menuDashboard
+            // 
+            this.menuDashboard.Image = global::TourWriter.Properties.Resources.Calculator;
+            this.menuDashboard.Name = "menuDashboard";
+            resources.ApplyResources(this.menuDashboard, "menuDashboard");
+            this.menuDashboard.Click += new System.EventHandler(this.menuDashboard_Click);
             // 
             // menuGeneralReports
             // 
@@ -955,6 +964,7 @@ namespace TourWriter.Forms
         private System.Windows.Forms.ToolStripMenuItem menuFeedback;
         private System.Windows.Forms.ToolStripMenuItem menuReports;
         private System.Windows.Forms.ToolStripMenuItem menuNzgst;
+        private System.Windows.Forms.ToolStripMenuItem menuDashboard;
         private System.Windows.Forms.ToolStripMenuItem menuTourWriterData;
     }
 }

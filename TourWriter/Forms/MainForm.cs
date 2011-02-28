@@ -72,7 +72,8 @@ namespace TourWriter.Forms
             StatusBar_VersionText = "Version " + s.Substring(0, s.LastIndexOf('.'));
 
             // TODO: 1/11/10, hide NZ GST updater, should be finished with now.
-            menuNzgst.Visible = false;
+            menuNzgst.Visible = false; 
+            menuDashboard.Visible = false;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -654,6 +655,11 @@ namespace TourWriter.Forms
             LoadMdiForm(typeof(Modules.Plugins.NzGst.GstAdjust), new UltraTreeNode("NzGstAdjust"));
         }
 
+        internal void Load_Dashboard()
+        {
+            LoadMdiForm(typeof(Modules.Dashboard.Dashboard), new UltraTreeNode("Dashboard"));
+        }
+
         internal Form LoadMdiForm(string formType, UltraTreeNode formTag)
         {
             Assembly assembly = Assembly.LoadFrom(Assembly.GetExecutingAssembly().CodeBase);
@@ -793,6 +799,8 @@ namespace TourWriter.Forms
                 App.IsDebugMode = !App.IsDebugMode;
                 menuDebug.Visible = App.IsDebugMode;
                 menuReports.Visible = App.IsDebugMode;
+                menuNzgst.Visible = App.IsDebugMode;
+                menuDashboard.Visible = App.IsDebugMode;
                 navPane.Groups["Additional"].Items["Reports"].Visible = App.IsDebugMode;
                 return;
             }
@@ -1453,6 +1461,11 @@ namespace TourWriter.Forms
         private void menuNzgst_Click(object sender, EventArgs e)
         {
             Load_NzGstAdjust();
+        }
+
+        private void menuDashboard_Click(object sender, EventArgs e)
+        {
+            Load_Dashboard();
         }
 
         #endregion

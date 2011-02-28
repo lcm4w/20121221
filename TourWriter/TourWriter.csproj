@@ -607,6 +607,12 @@
     <Compile Include="Modules\ItineraryModule\SaleAllocationForm.Designer.cs">
       <DependentUpon>SaleAllocationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Dashboard\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Dashboard.designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Plugins\NzGst\GstAdjust.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1196,6 +1202,9 @@
     <EmbeddedResource Include="Modules\ItineraryModule\Publishing\LayoutForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LayoutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Dashboard\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Plugins\NzGst\GstAdjust.resx">
       <DependentUpon>GstAdjust.cs</DependentUpon>

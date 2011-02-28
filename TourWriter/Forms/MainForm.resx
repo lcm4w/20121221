@@ -621,6 +621,12 @@
   <data name="menuNzgst.Text" xml:space="preserve">
     <value>NZ GST adjust</value>
   </data>
+  <data name="menuDashboard.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 22</value>
+  </data>
+  <data name="menuDashboard.Text" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
   <data name="menuGeneralReports.Size" type="System.Drawing.Size, System.Drawing">
     <value>189, 22</value>
   </data>
