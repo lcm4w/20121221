@@ -146,7 +146,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             var newValue = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : null;
             if (itinerarySet.Itinerary[0].CurrencyCode != newValue)
+            {
+                if (newValue != null && newValue != "" && newValue.Length != 3)
+                    throw new ArgumentException("Invalid currency code: " + newValue);
                 itinerarySet.Itinerary[0].CurrencyCode = newValue;
+            }
 
             // update UI
             SetItineraryCurrencyInfo();
