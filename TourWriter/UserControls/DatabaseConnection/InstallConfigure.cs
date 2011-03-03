@@ -50,6 +50,8 @@ namespace TourWriter.UserControls.DatabaseConnection
 
             if (txtUser.Text.Trim() == "") msg += "User name is required\r\n";
 
+            if (txtUser.Text.Trim().ToLower() == "admin") msg += "User name is not valid, please choose a different User name\r\n";
+
             lblMsg.Text = msg;
             lblMsg.Visible = lblMsg.Text.Length > 0;
 
