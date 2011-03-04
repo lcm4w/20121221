@@ -230,7 +230,7 @@ namespace TourWriter.Services
             return true;
         }
 
-        internal static bool InsertDateText(Document doc, DateTime date)
+        internal static bool FindAndReplaceDate(Document doc, DateTime date)
         {
             // bit of a quick-and-dirty to enable custom formatting of date text
 

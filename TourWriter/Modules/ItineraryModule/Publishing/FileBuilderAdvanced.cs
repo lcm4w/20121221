@@ -14,7 +14,7 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
         // search and replace tags, these strings are searched for in the day template document
 		private const string MergeFieldDayNumber   = "[!DayNumber]";
 		private const string MergeFieldDayName     = "[!DayName]";
-		private const string MergeFieldDayDate     = "[!DayDate]";
+		//private const string MergeFieldDayDate   = "[!DayDate]"; // see WordHelper.FindAndReplaceDate()
 		private const string MergeFieldDayLocation = "[!DayLocation]";
 		private const string MergeFieldDayText     = "[!DayText]";
 	    private const string MergeFieldLineBreak   = "[!LineBreak]";
@@ -236,7 +236,7 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
 			    // fill template placeholders
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayNumber, ((dayDate - startDate).Days + 1).ToString());
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayName, dayDate.ToString("dddd"));
-                WordHelper.InsertDateText(dayDoc, dayDate);
+                WordHelper.FindAndReplaceDate(dayDoc, dayDate);
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayLocation, LayoutHelper.GetDaySectionLocation(dayNode));
                 WordHelper.FindAndReplace(dayDoc, MergeFieldDayText, textDoc, _setFontToTemplate);
 
