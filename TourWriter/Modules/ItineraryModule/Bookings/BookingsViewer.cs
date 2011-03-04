@@ -27,6 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
+        private const string GridLayoutVersion = "v2.2"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -54,13 +55,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         public BookingsViewer()
         {
             InitializeComponent();
-
+            
             GridLayoutFileName = App.Path_UserApplicationData + "BookingGridLayout.xml";
 
             // TODO: flags hidden for now
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
-        }
 
+            HandleDestroyed += BookingsViewer_HandleDestroyed;
+        }
+        
         private void BookingsViewer_Load(object sender, EventArgs e)
         {
             if (!DesignMode)
@@ -127,11 +130,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             list.Insert(0, nullRow);
 
             // itinerary currency code
-            if (cmbCurrency.DataBindings.Count == 0)
-                cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
             cmbCurrency.DataSource = list;
-            cmbCurrency.DisplayMember = "DisplayName";
             cmbCurrency.ValueMember = "CurrencyCode";
+            cmbCurrency.DisplayMember = "DisplayName";
+            cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
             cmbCurrency.SelectedIndexChanged += delegate { HandleCurrencyCodeChanged(); };
             cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
 
@@ -140,6 +142,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
             SetNetOverrideText();
             SetPriceOverrideWarning();
+
+            // if current grid version not found (in cols), reset the grid (to remove old version)
+            if (!grid.DisplayLayout.Bands[0].Columns.Exists(GridLayoutVersion))
+                ResetGridLayout();
         }
 
         private void HandleCurrencyCodeChanged()
@@ -168,6 +174,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 grid.DisplayLayout.LoadFromXml(
                     GridLayoutFileName,
                     PropertyCategories.Groups | PropertyCategories.SortedColumns);
+                
                 SetGridExpanded();
             }
             else
@@ -643,6 +650,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             RecalculateFinalPricing();
             WarnIfPriceOverrideExists();
         }
+        
+        void BookingsViewer_HandleDestroyed(object sender, EventArgs e)
+        {
+            SaveGridLayout();
+        }
 
         #region Events
 
@@ -653,6 +665,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 band.Hidden = (band.Key != "PurchaseItem");
 
             // Add custom rows
+            if (!e.Layout.Bands[0].Columns.Exists(GridLayoutVersion))
+                e.Layout.Bands[0].Columns.Add(GridLayoutVersion);
             if (!e.Layout.Bands[0].Columns.Exists("PurchaseLineName"))
                 e.Layout.Bands[0].Columns.Add("PurchaseLineName");
             if (!e.Layout.Bands[0].Columns.Exists("CityName"))
@@ -1525,12 +1539,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved != null) 
                 e.Cell.EditorResolved.ExitEditMode(true, true);
         }
-
-        private void BookingsViewer_Leave(object sender, EventArgs e)
-        {
-            SaveGridLayout();
-        }
-
+        
         private void txtMarkupOverride_Validated(object sender, EventArgs e)
         {
             RecalculateFinalPricing();

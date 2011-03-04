@@ -775,7 +775,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.Name = "BookingsViewer";
             this.Size = new System.Drawing.Size(828, 338);
             this.Load += new System.EventHandler(this.BookingsViewer_Load);
-            this.Leave += new System.EventHandler(this.BookingsViewer_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).EndInit();
