@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public partial class InstallSoftware : UiControlBase, IConnectionControl
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public partial class Start : UiControlBase
     {

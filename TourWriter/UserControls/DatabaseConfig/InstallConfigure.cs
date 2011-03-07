@@ -1,7 +1,7 @@
 ﻿using System;
 using TourWriter.Utilities.Encryption;
 
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public partial class InstallConfigure : UiControlBase, IConnectionControl
     {

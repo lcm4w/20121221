@@ -1,5 +1,5 @@
 ﻿
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public interface IConnectionControl
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public class UiControlBase : UserControl
     {

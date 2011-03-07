@@ -209,7 +209,7 @@ namespace TourWriter.Forms
 
         private void ManageServers()
         {
-            var dbForm = new UserControls.DatabaseConnection.Ui(new UserControls.DatabaseConnection.Start());
+            var dbForm = new UserControls.DatabaseConfig.Ui(new UserControls.DatabaseConfig.Start());
             var dr = dbForm.ShowDialog();
             if (dr == DialogResult.OK)
             {

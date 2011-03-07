@@ -1,4 +1,4 @@
-﻿namespace TourWriter.UserControls.DatabaseConnection
+﻿namespace TourWriter.UserControls.DatabaseConfig
 {
     partial class Start
     {

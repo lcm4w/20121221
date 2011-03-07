@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using TourWriter.Properties;
 
-namespace TourWriter.UserControls.DatabaseConnection
+namespace TourWriter.UserControls.DatabaseConfig
 {
     public partial class Ui : Form
     {
