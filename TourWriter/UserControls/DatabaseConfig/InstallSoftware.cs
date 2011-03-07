@@ -195,7 +195,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             if (!_restoreUserDatabase)
             {
                 Log("Setting initial data...");
-                Log(InstallHelper.RunSql(InstallHelper.InitialiseDbSql));
+                Log(InstallHelper.RunSql(InstallHelper.InitialiseNewDbSql));
                 Log("Database setup complete.\r\nClick Next to continue.");
             }
             else

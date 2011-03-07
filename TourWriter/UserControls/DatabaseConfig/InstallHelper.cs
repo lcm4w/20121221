@@ -64,10 +64,12 @@ EXEC sp_change_users_login 'Update_One', 'twuser', 'twuser';
 PRINT 'The database update succeeded';
 ";
 
-        internal const string InitialiseDbSql = @"
+        internal const string InitialiseNewDbSql = @"
 USE [TourWriter];
 PRINT N'Updating AppSettings';
 UPDATE AppSettings SET InstallID = NEWID(), InstallName = N'trial';
+PRINT N'Updating License';
+DELETE FROM [License];
 PRINT 'The database update succeeded';
 ";
 
