@@ -68,11 +68,35 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         {
             if (webBody.Document != null)
             {
+                var template = ReadTemplate(file);
+                ProcessTemplateSubject(ref template);
                 webBody.Document.OpenNew(false);
-                webBody.Document.Write(ReadTemplate(file));
+                webBody.Document.Write(template);
 
                 if (webBody.Document.Body != null)
                     webBody.Document.Body.SetAttribute("contenteditable", "true");
+            }
+        }
+
+        private void ProcessTemplateSubject(ref string template)
+        {
+            try
+            {
+                if (template.Contains(BookingEmailInfo.SubjectStartTag))
+                {
+                    var i = template.IndexOf(BookingEmailInfo.SubjectStartTag);
+                    var j = template.IndexOf(BookingEmailInfo.SubjectEndTag) + BookingEmailInfo.SubjectEndTag.Length;
+                    var subject = template.Substring(i, j - i);
+                    var body = template.Remove(i, j - i);
+
+                    txtSubject.Text = subject.Replace(BookingEmailInfo.SubjectStartTag, "").Replace(BookingEmailInfo.SubjectEndTag, "");
+                    template = body;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Error("Failed to parse Subject text, check that Subject is correct in the template (use tags " + 
+                    BookingEmailInfo.SubjectStartTag + " and " + BookingEmailInfo.SubjectEndTag, ex, false);
             }
         }
 

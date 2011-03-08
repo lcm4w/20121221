@@ -60,6 +60,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private const string ItemTotalTag = "[!ItemTotal]";
         private const string ItemPriceEndTag = "[!ItemPriceEnd]";
         private const string BookingDetailEndTag = "[!BookingDetailEnd]";
+        internal const string SubjectStartTag = "[!SubjectStart]";
+        internal const string SubjectEndTag = "[!SubjectEnd]";
 
         private bool showPrices;
         private int supplierId;
@@ -106,9 +108,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             emailMessage._To = GetToAddress(supplier.SupplierName, !supplier.IsEmailNull() ? supplier.Email : "");
             emailMessage._From = templateSettings.From;
             emailMessage._Bcc = templateSettings.Bcc;
-            emailMessage.Subject = templateSettings.Subject;
+            emailMessage.Subject = BuildEmailText(templateSettings.Subject);
             emailMessage.IsBodyHtml = true;
-            emailMessage.Body = BuildEmailBody(templateSettings.Body);
+            emailMessage.Body = BuildEmailText(templateSettings.Body);
             emailMessage._Tag = this;
             emailMessage._SaveWhenSent = templateSettings.SaveToFile;
 
@@ -158,7 +160,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         #region Email body creation
 
-        private string BuildEmailBody(string template)
+        private string BuildEmailText(string template)
         {
             ItinerarySet.SupplierLookupRow supplier =
                 GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
