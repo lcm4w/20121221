@@ -591,8 +591,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.btnMoveDates.Name = "btnMoveDates";
             this.btnMoveDates.Size = new System.Drawing.Size(224, 22);
-            this.btnMoveDates.Text = "Move booking dates/rates...";
-            this.btnMoveDates.ToolTipText = "Move booking dates and auto-update rates";
+            this.btnMoveDates.Text = "Refresh/Move booking rates...";
+            this.btnMoveDates.ToolTipText = "Refresh rates or Move bookings to new dates";
             this.btnMoveDates.Click += new System.EventHandler(this.btnMoveDates_Click);
             // 
             // btnUpdateCurrency

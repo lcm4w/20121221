@@ -132,8 +132,9 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                             }
                         }));
 
-                        if (optionLookup[0].OptionID != (int) row.Cells["OptionID"].Value)
-                        {
+                        // commented out below to update existing Rates too, with possible updates from the same underlying Option
+                        //if (optionLookup[0].OptionID != (int) row.Cells["OptionID"].Value)
+                        //{
                             // new rates are different so update the booking data
                             itinerarySet.OptionLookup.Merge(optionLookup, false);
                             itinerarySet.OptionLookup.AcceptChanges();
@@ -145,7 +146,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                                 row.Cells["Net"].Value = (!optionLookup[0].IsNetNull()) ? optionLookup[0].Net : 0;
                                 row.Cells["Gross"].Value = (!optionLookup[0].IsGrossNull()) ? optionLookup[0].Gross : 0;
                             }));
-                        }
+                        //}
                     }
                     else
                     {
