@@ -20,6 +20,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 {
     public partial class DateKickerForm : Form
     {
+        private string _origButtonText;
         private readonly ItinerarySet itinerarySet;
         private readonly ItinerarySet.PurchaseItemDataTable purchaseItemTable;
         private readonly bool autoStart;
@@ -40,6 +41,9 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
             this.autoStart = autoStart;
             purchaseItemTable = (ItinerarySet.PurchaseItemDataTable)itinerarySet.PurchaseItem.Copy();
             gridBookings.DataSource = purchaseItemTable;
+            btnStartStop.Select();
+            btnStartStop.Focus();
+            _origButtonText = btnStartStop.Text;
         }
 
         public void SetSelectedRow(int purchaseItemId, bool selectFollowingBookings)
@@ -224,7 +228,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
         /// </summary>
         private void UnlockControls()
         {
-            btnStartStop.Text = "Start";
+            btnStartStop.Text = _origButtonText;
             btnOk.Enabled = true;
             btnCancel.Enabled = true;
             txtDayOffset.ReadOnly = false;
@@ -279,7 +283,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 
         private void btnStartStop_Click(object sender, EventArgs e)
         {
-            if (btnStartStop.Text == "Start")
+            if (btnStartStop.Text == _origButtonText)
             {
                 // this is the start button
                 UpdateOptionsOnThread();

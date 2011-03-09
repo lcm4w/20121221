@@ -43,35 +43,49 @@
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.txtDayOffset = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
+            this.btnStartStop = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnStartStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.gridBookings = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.txtDayOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             this.SuspendLayout();
             // 
             // txtDayOffset
             // 
+            this.txtDayOffset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtDayOffset.FormatString = "###0";
-            this.txtDayOffset.Location = new System.Drawing.Point(168, 12);
+            this.txtDayOffset.Location = new System.Drawing.Point(171, 332);
             this.txtDayOffset.MaskInput = "-nnnn";
             this.txtDayOffset.Name = "txtDayOffset";
             this.txtDayOffset.PromptChar = ' ';
             this.txtDayOffset.Size = new System.Drawing.Size(40, 21);
             this.txtDayOffset.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.txtDayOffset, "Number of days (positive or negative number to move forward or back)");
+            this.toolTip1.SetToolTip(this.txtDayOffset, "Number of days to move to. Positive or negative or 0 (zero) to refresh current.");
+            // 
+            // btnStartStop
+            // 
+            this.btnStartStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStartStop.Location = new System.Drawing.Point(647, 333);
+            this.btnStartStop.Name = "btnStartStop";
+            this.btnStartStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStartStop.TabIndex = 1;
+            this.btnStartStop.Text = "Load Rates";
+            this.toolTip1.SetToolTip(this.btnStartStop, "Refresh booking Rates for current or new dates");
+            this.btnStartStop.UseVisualStyleBackColor = true;
+            this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(566, 379);
+            this.btnOk.Location = new System.Drawing.Point(566, 376);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 2;
-            this.btnOk.Text = "OK";
+            this.btnOk.Text = "Keep";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
@@ -79,27 +93,18 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(647, 379);
+            this.btnCancel.Location = new System.Drawing.Point(647, 376);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // btnStartStop
-            // 
-            this.btnStartStop.Location = new System.Drawing.Point(258, 10);
-            this.btnStartStop.Name = "btnStartStop";
-            this.btnStartStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStartStop.TabIndex = 1;
-            this.btnStartStop.Text = "Start";
-            this.btnStartStop.UseVisualStyleBackColor = true;
-            this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
-            // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 18);
+            this.label1.Location = new System.Drawing.Point(12, 338);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(159, 13);
             this.label1.TabIndex = 5;
@@ -107,8 +112,9 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(210, 18);
+            this.label2.Location = new System.Drawing.Point(213, 338);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 6;
@@ -173,15 +179,25 @@
             this.gridBookings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridBookings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.gridBookings.Location = new System.Drawing.Point(12, 42);
+            this.gridBookings.Location = new System.Drawing.Point(12, 12);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(710, 331);
+            this.gridBookings.Size = new System.Drawing.Size(710, 315);
             this.gridBookings.TabIndex = 7;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
-            this.gridBookings.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridBookings_MouseUp);
             this.gridBookings.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
             this.gridBookings.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.grid_InitializeRow);
+            this.gridBookings.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridBookings_MouseUp);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Location = new System.Drawing.Point(12, 367);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(706, 2);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
             // 
             // DateKickerForm
             // 
@@ -189,8 +205,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(734, 414);
+            this.ClientSize = new System.Drawing.Size(734, 411);
             this.ControlBox = false;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gridBookings);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -202,7 +219,7 @@
             this.MinimizeBox = false;
             this.Name = "DateKickerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "TourWriter - Move booking dates";
+            this.Text = "TourWriter Refresh Rates";
             this.Shown += new System.EventHandler(this.DateKickerForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.txtDayOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).EndInit();
@@ -221,5 +238,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private Infragistics.Win.UltraWinGrid.UltraGrid gridBookings;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

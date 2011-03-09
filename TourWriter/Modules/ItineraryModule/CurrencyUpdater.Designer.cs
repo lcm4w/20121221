@@ -115,7 +115,7 @@
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridBookings.Location = new System.Drawing.Point(12, 12);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(524, 417);
+            this.gridBookings.Size = new System.Drawing.Size(518, 417);
             this.gridBookings.TabIndex = 10;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -127,7 +127,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(461, 479);
+            this.btnCancel.Location = new System.Drawing.Point(455, 479);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 9;
@@ -138,7 +138,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(380, 479);
+            this.btnOk.Location = new System.Drawing.Point(374, 479);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 8;
@@ -149,11 +149,11 @@
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(461, 435);
+            this.btnUpdate.Location = new System.Drawing.Point(455, 435);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 11;
-            this.btnUpdate.Text = "Load";
+            this.btnUpdate.Text = "Load Rates";
             this.toolTip1.SetToolTip(this.btnUpdate, "Get latest exchange rates");
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -188,7 +188,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(15, 469);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(521, 2);
+            this.groupBox1.Size = new System.Drawing.Size(515, 2);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             // 
@@ -209,7 +209,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(548, 514);
+            this.ClientSize = new System.Drawing.Size(542, 514);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -222,7 +222,7 @@
             this.MinimizeBox = false;
             this.Name = "CurrencyUpdater";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "TourWriter Currency updater";
+            this.Text = "TourWriter Update Currencies";
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).EndInit();
             this.ResumeLayout(false);
