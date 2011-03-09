@@ -596,7 +596,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             File.Delete(GridLayoutFileName);
             grid.DataSource = null;
-            SetDataBindings();
+            grid.DataSource = itinerarySet.PurchaseItem;
             SetItineraryCurrencyInfo();
         }
 
