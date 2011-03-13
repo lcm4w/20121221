@@ -35,6 +35,7 @@ namespace TourWriter
         internal const string PricingOptionGrossCommissionText = "gc";
         internal const string RemoteConnectionName = "(custom server)";
         internal const string AdminUserName = "admin";
+        internal const bool DisableDatabaseUpdateScripts = false; // **** FOR TESTING ONLY: set to 'true' to disable database updates ****
 
         internal static void RefreshMenu(string menuName)
         {

@@ -33,6 +33,10 @@ namespace TourWriter.Services.Update
 
         private static void UpdateTimerFired(object state)
         {
+            // disables database updates ****************
+            if (App.DisableDatabaseUpdateScripts) return;
+            // ******************************************
+
             if (updateProcessRunning) return;
             try
             {
@@ -45,10 +49,11 @@ namespace TourWriter.Services.Update
                 }
                 else
                 {
-                    try { doDbForcedUpdate = DatabaseUpdateService.RunVersionCheck(); } catch { doDbForcedUpdate = false; }
+                    try { doDbForcedUpdate = DatabaseUpdateService.RunVersionCheck(); }
+                    catch { doDbForcedUpdate = false; }
                 }
 
-                if (timerCount%appTimerMultiple == 0)
+                if (timerCount % appTimerMultiple == 0)
                 {
                     var updater = new Forms.UpdateForm();
                     if (doDbForcedUpdate) // (timerCount == 0 || doDbForcedUpdate) // TW just opened, or db forced update
