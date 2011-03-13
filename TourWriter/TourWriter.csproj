@@ -186,6 +186,9 @@
       <Name>System.Windows.Forms</Name>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
       <Private>False</Private>
@@ -314,6 +317,24 @@
     </Compile>
     <Compile Include="Modules\AdminModule\UserControls\OptionConfigs.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\BookingPaymentsDue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\BookingPaymentsDue.Designer.cs">
+      <DependentUpon>BookingPaymentsDue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\Graph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\Graph.Designer.cs">
+      <DependentUpon>Graph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\ItineraryPaymentsDue.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\Dashboard\Controls\ItineraryPaymentsDue.Designer.cs">
+      <DependentUpon>ItineraryPaymentsDue.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\DataExtract\UserControls\ContactExport.cs">
       <SubType>UserControl</SubType>
@@ -1143,6 +1164,15 @@
     <EmbeddedResource Include="Modules\ContactModule\ContactMain.resx">
       <DependentUpon>ContactMain.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Dashboard\Controls\BookingPaymentsDue.resx">
+      <DependentUpon>BookingPaymentsDue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Dashboard\Controls\Graph.resx">
+      <DependentUpon>Graph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Dashboard\Controls\ItineraryPaymentsDue.resx">
+      <DependentUpon>ItineraryPaymentsDue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\DataExtract\DataExtractMain.resx">
       <SubType>Designer</SubType>
