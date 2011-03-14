@@ -36,6 +36,7 @@ namespace TourWriter.Modules.ContactModule.Email
 
             Size = Settings.Default.EmailEditorSize;
             Location = Settings.Default.EmailEditorLocation;
+            if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
             emailList = new List<ContactEmailInfo>();
 
             foreach (ContactSet.ContactRow row in contactTable.Rows)

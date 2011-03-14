@@ -40,6 +40,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             InitializeComponent();
             Size = Settings.Default.EmailEditorSize;
             Location = Settings.Default.EmailEditorLocation;
+            if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
 
             this.itinerarySet = itinerarySet;
             _templateFile = defaultTemplate;

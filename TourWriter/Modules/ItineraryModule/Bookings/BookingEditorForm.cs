@@ -41,8 +41,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             Size = Settings.Default.BookingEditorSize;
             Location = Settings.Default.BookingEditorLocation;
+            if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
             Text = Text.Trim() + ": " + itinerarySet.Itinerary[0].ItineraryName;
-
+            
             bookingEditor11.Select(); // ensure 'cancel' button not selected at load.
         }
 

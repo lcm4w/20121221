@@ -931,6 +931,7 @@ namespace TourWriter.Forms
         {
             Size = Settings.Default.MainFormSize;
             Location = Settings.Default.MainFormLocation;
+            if (!App.IsOnScreen(this)) Location = new Point(0, 0);
             WindowState = Settings.Default.MainFormWindowState;
             pnlMenu.Width = Settings.Default.MainFormMenuWidth;
         }

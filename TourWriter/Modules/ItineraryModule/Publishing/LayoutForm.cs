@@ -31,11 +31,11 @@ namespace TourWriter.Modules.ItineraryModule.Publishing
         {
             Size = Settings.Default.PublishingLayoutSize;
             Location = Settings.Default.PublishingLayoutLocation;
+            if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
 
             layoutControl1.LoadLayout(itinerarySetCopy, publisherFileId);
             var pubFile = itinerarySetCopy.ItineraryPubFile.FindByItineraryPubFileID(publisherFileId);
             Text += ": " + (pubFile != null && !pubFile.IsItineraryPubFileNameNull() ? pubFile.ItineraryPubFileName : "<unnamed>");
-        
         }
 
         private void LayoutForm_FormClosing(object sender, FormClosingEventArgs e)

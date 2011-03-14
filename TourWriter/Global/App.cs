@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -805,8 +806,7 @@ namespace TourWriter
             }
         }
 
-
-        internal static System.Drawing.Rectangle DragDrop_SetDragStartPosition(int X, int Y)
+        internal static Rectangle DragDrop_SetDragStartPosition(int X, int Y)
         {
             // Remember the point where the mouse down occurred. The DragSize indicates
             // the size that the mouse can move before a drag event should be started.
@@ -818,7 +818,16 @@ namespace TourWriter
                 new System.Drawing.Point(X - (dragSize.Width / 2), Y - (dragSize.Height / 2)),
                 dragSize);
         }
-
+        
+        internal static bool IsOnScreen(Form form)
+        {
+            const int buffer = 60;
+            var screens = Screen.AllScreens;
+            return (from screen in screens
+                    let formTopLeft = new Point(form.Left + buffer, form.Top + buffer)
+                    where screen.WorkingArea.Contains(formTopLeft)
+                    select screen).Any();
+        }
 
         /// <summary>
         /// Determines whether a key press is valid input for a number key.

@@ -33,6 +33,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             Size = Settings.Default.BookingSelectorSize;
             Location = Settings.Default.BookingSelectorLocation;
+            if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
             panel1.Height = Settings.Default.BookingSelectorGridHeight;
             chkCurrency.Checked = Settings.Default.BookingSelectorCurrencyUpdate;
 
