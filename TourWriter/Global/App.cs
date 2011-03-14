@@ -23,9 +23,6 @@ namespace TourWriter
     internal class App
     {
         internal const string HelpFilename = "TourWriterHelp.chm";
-        internal const string AppsettingFilename = "AppSettings.xml"; // used also in BLLBase	
-        internal const string UsersettingFilename = "UserSettings.xml";
-        internal const string UserlayoutFilename = "UserLayout.xml";
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
         internal const string DataErrorPkDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
         
@@ -120,9 +117,6 @@ namespace TourWriter
         }
 
         internal static string File_HelpPathAndFile = Path.Combine(Application.StartupPath, HelpFilename);
-        internal static string File_AppSettingPathAndFile = Path.Combine(Path_CommonApplicationData, AppsettingFilename);
-        internal static string File_UserSettingPathAndFile = Path.Combine(Path_UserApplicationData, UsersettingFilename);
-        internal static string File_UserLayoutPathAndFile = Path.Combine(Path_UserApplicationData, UserlayoutFilename);
         internal static string File_UpdateExe = Path.Combine(Path_TempFolder, "TourWriterUpdate.exe");
         internal static string File_TempatesUpdateArchive = Path.Combine(Application.StartupPath, "Templates.zip");
         internal static string File_DefaultDatabaseFile = Path.Combine(Application.StartupPath, "tw.dat");
