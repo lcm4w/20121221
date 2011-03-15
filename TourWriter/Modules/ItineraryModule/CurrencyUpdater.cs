@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
+using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Services;
 using Resources=TourWriter.Properties.Resources;
@@ -22,13 +23,29 @@ namespace TourWriter.Modules.ItineraryModule
 
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
-            // purchaseItemTable.DefaultView.RowFilter = String.Format("ToCurrency <> '{0}'", _localCurrencyCode);
-            
+
+            // currencies list with null row at index 0
+            var list = Cache.ToolSet.Currency.Where(c => c.Enabled).ToList();
+            var nullRow = Cache.ToolSet.Currency.NewCurrencyRow();
+            nullRow.CurrencyCode = "";
+            var ccy = Cache.ToolSet.Currency.Where(x => x.CurrencyCode == CurrencyService.GetSystemCurrencyCode()).FirstOrDefault();
+            nullRow.DisplayName = string.Format("-default- ({0} {1})", ccy.CurrencyCode, ccy.CurrencyName);
+            list.Insert(0, nullRow);
+
+            // bind currency
+            cmbCurrency.DataSource = list;
+            cmbCurrency.ValueMember = "CurrencyCode";
+            cmbCurrency.DisplayMember = "DisplayName";
+            cmbCurrency.SelectedValue = itinerarySet.Itinerary[0].CurrencyCode ?? "";
+            cmbCurrency.SelectedIndexChanged += cmbCurrency_SelectedIndexChanged;
+
+            // bind purchase items
             gridBookings.DataSource = purchaseItemTable.DefaultView;
 
+            // set default margin
             if (!itinerarySet.Itinerary[0].IsAgentIDNull())
             {
-                var agent = Global.Cache.ToolSet.Agent.FindByAgentID(itinerarySet.Itinerary[0].AgentID);
+                var agent = Cache.ToolSet.Agent.FindByAgentID(itinerarySet.Itinerary[0].AgentID);
                 if (agent != null && agent.Table.Columns.Contains("DefaultCurrencyMargin"))
                 {
                     var margin = agent["DefaultCurrencyMargin"];
@@ -39,7 +56,7 @@ namespace TourWriter.Modules.ItineraryModule
             btnUpdate.Select();
             btnUpdate.Focus();
         }
-
+        
         private void UpdateCurrencies()
         {
             try
@@ -112,19 +129,29 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void SaveChanges()
         {
-            foreach (UltraGridRow row in gridBookings.Rows)
+            // update ccy code
+            if (itinerarySet.Itinerary[0].IsCurrencyCodeNull())
+            {
+                if (cmbCurrency.SelectedValue.ToString() != "")
+                    itinerarySet.Itinerary[0].CurrencyCode = cmbCurrency.SelectedValue.ToString();
+            }
+            else if (itinerarySet.Itinerary[0].CurrencyCode != cmbCurrency.SelectedValue.ToString())
+            {
+                if (cmbCurrency.SelectedValue.ToString() == "") itinerarySet.Itinerary[0].SetCurrencyCodeNull();
+                else itinerarySet.Itinerary[0].CurrencyCode = cmbCurrency.SelectedValue.ToString();
+            }
+
+            // move temp cols to the real cols in prep for merge
+            foreach (var row in gridBookings.Rows)
             {
                 if (row.Cells["NewRate"].Value != DBNull.Value)
                     row.Cells["CurrencyRate"].Value = row.Cells["NewRate"].Value;
-                
                 row.Update();
             }
 
-            DataTable changes = purchaseItemTable.GetChanges();
-            if (changes != null)
-            {
-                itinerarySet.PurchaseItem.Merge(changes);
-            }
+            // merge
+            var changes = purchaseItemTable.GetChanges();
+            if (changes != null) itinerarySet.PurchaseItem.Merge(changes);
         }
 
         #region Events
@@ -251,8 +278,20 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["PurchaseLineName"].Value = item.PurchaseLineRow.PurchaseLineName;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
-            e.Row.Cells["ToCurrency"].Value = Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
             e.Row.Cells["FromCurrency"].Value = Currencies.GetPurchaseItemCurrencyCodeOrDefault(item);
+            e.Row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetSystemCurrencyCode();
+        }
+
+        void cmbCurrency_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach(var row in gridBookings.Rows)
+            {
+                row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetSystemCurrencyCode();
+                row.Cells["NewRate"].Value = DBNull.Value;
+                row.Cells["Result"].Value = DBNull.Value;
+                row.Cells["Result"].Appearance.Image = null;
+                row.Cells["Result"].ToolTipText = String.Empty;
+            }
         }
 
         private void gridBookings_MouseClick(object sender, MouseEventArgs e)

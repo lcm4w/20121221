@@ -136,6 +136,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
             cmbCurrency.SelectedIndexChanged += delegate { HandleCurrencyCodeChanged(); };
             cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
+            cmbCurrency.Enabled = false;
 
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;

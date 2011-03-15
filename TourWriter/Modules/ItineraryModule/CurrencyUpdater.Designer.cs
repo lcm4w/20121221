@@ -48,8 +48,10 @@
             this.txtRateAdjustment = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cmbCurrency = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
@@ -113,9 +115,9 @@
             this.gridBookings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridBookings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.gridBookings.Location = new System.Drawing.Point(12, 12);
+            this.gridBookings.Location = new System.Drawing.Point(12, 51);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(518, 417);
+            this.gridBookings.Size = new System.Drawing.Size(518, 378);
             this.gridBookings.TabIndex = 10;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -182,6 +184,19 @@
             this.label1.Text = "Adjustment";
             this.toolTip1.SetToolTip(this.label1, "Example: enter 5 to add a 5% buffer to the default exchange rate");
             // 
+            // cmbCurrency
+            // 
+            this.cmbCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCurrency.FormattingEnabled = true;
+            this.cmbCurrency.Location = new System.Drawing.Point(135, 18);
+            this.cmbCurrency.Name = "cmbCurrency";
+            this.cmbCurrency.Size = new System.Drawing.Size(395, 21);
+            this.cmbCurrency.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.cmbCurrency, "Output currency for this Itinerary");
+            this.cmbCurrency.SelectedIndexChanged += new System.EventHandler(this.cmbCurrency_SelectedIndexChanged);
+            // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
@@ -203,6 +218,16 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "(e.g. add margin to exchange rate)";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(15, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(120, 17);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Itinerary Currency";
+            // 
             // CurrencyUpdater
             // 
             this.AcceptButton = this.btnOk;
@@ -210,6 +235,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cmbCurrency);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -241,5 +268,7 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbCurrency;
+        private System.Windows.Forms.Label label3;
     }
 }
