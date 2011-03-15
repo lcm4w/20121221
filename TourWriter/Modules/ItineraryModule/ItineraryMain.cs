@@ -144,7 +144,7 @@ namespace TourWriter.Modules.ItineraryModule
             // reports
             SetItineraryReportsParameter("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
             SetItineraryReportsParameter("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            SetItineraryReportsParameter("@CurrencyCode", Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
+            SetItineraryReportsParameter("@CurrencyCode", CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
             if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 

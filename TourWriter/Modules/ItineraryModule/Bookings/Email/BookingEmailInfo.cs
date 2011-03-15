@@ -427,9 +427,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             var lookup = GetBookingItinerarySet().OptionLookup.FindByOptionID(item.OptionID);
             if (lookup == null) return;
 
-            var currencyCode = Currencies.GetPurchaseItemCurrencyCode(item);
+            var currencyCode = CurrencyService.GetPurchaseItemCurrencyCode(item);
             var format = currencyCode != null ?
-                "{0:" + string.Format("{0} ({1})", Currencies.Single(currencyCode).DisplayFormat, currencyCode) + "}" :
+                "{0:" + string.Format("{0} ({1})", CurrencyService.Single(currencyCode).DisplayFormat, currencyCode) + "}" :
                 "{0:c}";
             
             var net = !item.IsNetNull() ? item.Net : 0;

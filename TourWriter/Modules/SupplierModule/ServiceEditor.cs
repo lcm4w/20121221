@@ -565,7 +565,7 @@ namespace TourWriter.Modules.SupplierModule
 
         private void UpdateServiceCurrencyInfo(string currencyCode)
         {
-            var currency = Currencies.Single(currencyCode);
+            var currency = CurrencyService.Single(currencyCode);
             var format = currency != null ? currency.DisplayFormat : "c";
             var message = currency != null ? currency.CurrencyCode + ", " + currency.CurrencyName : "";
 

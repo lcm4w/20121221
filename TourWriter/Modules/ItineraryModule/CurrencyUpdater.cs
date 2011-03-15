@@ -63,7 +63,7 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 Cursor = Cursors.WaitCursor;
 
-                var to = Currencies.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
+                var to = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
 
                 var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().
                     Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
@@ -278,7 +278,7 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["PurchaseLineName"].Value = item.PurchaseLineRow.PurchaseLineName;
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
-            e.Row.Cells["FromCurrency"].Value = Currencies.GetPurchaseItemCurrencyCodeOrDefault(item);
+            e.Row.Cells["FromCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
             e.Row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetSystemCurrencyCode();
         }
 
