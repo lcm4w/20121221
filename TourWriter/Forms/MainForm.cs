@@ -98,7 +98,7 @@ namespace TourWriter.Forms
             {
                 case DialogResult.OK:
                     {
-                        CurrencyService.SetApplicationBaseCurrency();
+                        CurrencyService.SetUiCultureInfo();
                         LicenseService.CheckAsync();
                         ApplicationUpdateService.StartUpdateMonitor();
                         InitialiseMenu(ItineraryMenu);

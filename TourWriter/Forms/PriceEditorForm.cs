@@ -53,7 +53,7 @@ namespace TourWriter.Dialogs
 
         private void SetCurrencyInfo(string currencyCode)
         {
-            var currency = CurrencyService.Single(currencyCode);
+            var currency = CurrencyService.GetCurrency(currencyCode);
             var format = currency != null ? currency.DisplayFormat : "c";
             var message = currency != null ? string.Format("Currency: {0}", currency.CurrencyCode) : "";
 

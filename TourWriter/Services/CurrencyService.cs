@@ -12,18 +12,7 @@ namespace TourWriter.Services
 {
     class CurrencyService
     {
-        internal class Currency
-        {
-            public object Key { get; set; }
-            public string FromCurrency { get; set; }
-            public string ToCurrency { get; set; }
-            public double Rate { get; set; }
-            public string ErrorMessage { get; set; }
-        }
-
-
-
-        public static ToolSet.CurrencyRow Single(string currencyCode)
+        public static ToolSet.CurrencyRow GetCurrency(string currencyCode)
         {
             return Cache.ToolSet.Currency.Where(x => x.CurrencyCode == currencyCode).FirstOrDefault();
         }
@@ -36,53 +25,65 @@ namespace TourWriter.Services
                 FirstOrDefault();
         }
 
-        internal static string GetSiteCurrencyCode()
+        internal static string GetApplicationCurrencyCode()
         {
             var entity = Cache.ToolSet.AppSettings[0];
 
-            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? entity.CurrencyCode : null;
+            return entity != null && !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? 
+                entity.CurrencyCode : null;
+        }
+
+        internal static string GetApplicationCurrencyCodeOrDefault()
+        {
+            return GetApplicationCurrencyCode() ?? GetComputerCurrencyCode();
         }
 
         internal static string GetServiceCurrencyCode(SupplierSet.ServiceRow entity)
         {
-            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? entity.CurrencyCode : null;
+            return entity != null && !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? 
+                entity.CurrencyCode : null;
         }
 
         internal static string GetItineraryCurrencyCode(ItinerarySet.ItineraryRow entity)
         {
-            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? entity.CurrencyCode : null;
-        }
-
-        internal static string GetPurchaseItemCurrencyCode(ItinerarySet.PurchaseItemRow entity)
-        {
-            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? entity.CurrencyCode : null;
-        }
-
-        internal static string GetSiteCurrencyCodeOrDefault()
-        {
-            return GetSiteCurrencyCode() ?? GetComputerCurrencyCode();
-        }
-
-        internal static string GetServiceCurrencyCodeOrDefault(SupplierSet.ServiceRow entity)
-        {
-            return GetServiceCurrencyCode(entity) ?? GetSiteCurrencyCodeOrDefault();
+            return entity != null && !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? 
+                entity.CurrencyCode : null;
         }
 
         internal static string GetItineraryCurrencyCodeOrDefault(ItinerarySet.ItineraryRow entity)
         {
-            return GetItineraryCurrencyCode(entity) ?? GetSiteCurrencyCodeOrDefault();
+            return GetItineraryCurrencyCode(entity) ?? GetApplicationCurrencyCodeOrDefault();
+        }
+
+        internal static string GetPurchaseItemCurrencyCode(ItinerarySet.PurchaseItemRow entity)
+        {
+            return entity != null && !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? 
+                entity.CurrencyCode : null;
         }
 
         internal static string GetPurchaseItemCurrencyCodeOrDefault(ItinerarySet.PurchaseItemRow entity)
         {
-            return GetPurchaseItemCurrencyCode(entity) ?? GetSiteCurrencyCodeOrDefault();
+            return GetPurchaseItemCurrencyCode(entity) ?? GetApplicationCurrencyCodeOrDefault();
+        }
+        
+        internal static string GetPurchaseItemCurrencyCodeOrDefault(UltraGridCell currencyCodeCell)
+        {
+            var ccyCode = currencyCodeCell.Value != DBNull.Value && !string.IsNullOrEmpty(currencyCodeCell.Value.ToString().Trim()) ? 
+                currencyCodeCell.Value.ToString() : null;
+
+            return ccyCode ?? GetApplicationCurrencyCodeOrDefault();
+        }
+        
+        internal static string GetServiceCurrencyCodeOrDefault(SupplierSet.ServiceRow entity)
+        {
+            return GetServiceCurrencyCode(entity) ?? GetApplicationCurrencyCodeOrDefault();
         }
 
-        internal static void SetApplicationBaseCurrency()
+        internal static void SetUiCultureInfo()
         {
-            if (GetSiteCurrencyCode() == null) return; // nothing to do
+            if (GetApplicationCurrencyCode() == null) return; // nothing to do
 
-            var siteCurrencyCode = GetSiteCurrencyCode();
+            var siteCurrencyCode = GetApplicationCurrencyCode();
             var siteCurrencyOverride = CultureInfo.CreateSpecificCulture(siteCurrencyCode);
             if (Thread.CurrentThread.CurrentCulture.Name == siteCurrencyOverride.Name) return; // nothing to do
 
@@ -101,51 +102,18 @@ namespace TourWriter.Services
 
             Thread.CurrentThread.CurrentCulture = ciSystem;
         }
-
-
-
         
 
-        internal static string GetSystemCurrencyCode()
-        {
-            return !Cache.ToolSet.AppSettings[0].IsCurrencyCodeNull() ? 
-                Cache.ToolSet.AppSettings[0].CurrencyCode :                         // db setting
-                new RegionInfo(CultureInfo.CurrentCulture.LCID).ISOCurrencySymbol;  // user computer settings
-        }
+        #region Ccy update service
         
-        internal static string GetItineraryCurrencyCode(ItinerarySet itinerarySet)
+        internal class Currency
         {
-            if (itinerarySet != null && itinerarySet.Itinerary.Count > 0 && !itinerarySet.Itinerary[0].IsCurrencyCodeNull())
-                return itinerarySet.Itinerary[0].CurrencyCode;
-            return GetSystemCurrencyCode();
+            public object Key { get; set; }
+            public string FromCurrency { get; set; }
+            public string ToCurrency { get; set; }
+            public double Rate { get; set; }
+            public string ErrorMessage { get; set; }
         }
-
-        internal static string GetBookingCurrencyCode(ItinerarySet.PurchaseItemRow purchaseItem)
-        {
-            if (purchaseItem != null && !purchaseItem.IsCurrencyCodeNull())
-                return purchaseItem.CurrencyCode;
-            return GetSystemCurrencyCode();
-        }
-
-        internal static string GetBookingCurrencyCode(UltraGridCell currencyCell)
-        {
-            if (currencyCell.Value != DBNull.Value && !string.IsNullOrEmpty(currencyCell.Value.ToString().Trim()))
-                return currencyCell.Value.ToString();
-            return GetSystemCurrencyCode();
-        }
-
-        internal static CultureInfo GetCultureInfoFromCultureCode(string cultureCode)
-        {
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).Where(x => x.Name == cultureCode).FirstOrDefault();
-        }
-
-        internal static CultureInfo GetCultureInfoFromCurrencyCode(string currencyCode)
-        {
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures).
-                Where(cc => new RegionInfo(cc.LCID).ISOCurrencySymbol == currencyCode).FirstOrDefault();
-        }
-
-
 
         internal static List<Currency> GetRates(List<Currency> currencies)
         {
@@ -207,5 +175,7 @@ namespace TourWriter.Services
             App.Debug(string.Format("Called currency service: {0} -> {1} = {2}",fromCurrency,toCurrency,response));
             return double.TryParse(response, out result) ? result : 0;
         }
+
+        #endregion
     }
 }

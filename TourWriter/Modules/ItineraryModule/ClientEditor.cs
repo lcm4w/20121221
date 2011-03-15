@@ -619,7 +619,7 @@ namespace TourWriter.Modules.ItineraryModule
         internal void SetCurrencyFormat()
         {
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = CurrencyService.Single(itinerary.CurrencyCode);
+            var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
             var format = currencyInfo != null ? currencyInfo.DisplayFormat : "c";
 
             gridPayments.DisplayLayout.Bands[0].Columns["Amount"].Format = format;

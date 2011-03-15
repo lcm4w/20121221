@@ -254,7 +254,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         internal void SetItineraryCurrencyInfo()
         {
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = CurrencyService.Single(itinerary.CurrencyCode);
+            var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
             var pattern = currencyInfo != null ? currencyInfo.DisplayFormat : "c";
 
             // final prices
@@ -541,7 +541,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         internal void FormatFinalYieldText()
         {
             var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = CurrencyService.Single(itinerary.CurrencyCode);
+            var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
             var format = "{0:" + (currencyInfo != null ? currencyInfo.DisplayFormat : "c") + "}";
             
             var amount = string.Format(format, yieldAmount);
@@ -1046,7 +1046,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;//.ResizeAllColumns;
 
-            SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCode(itinerarySet));
+            SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
         }
 
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -1104,7 +1104,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 // set base prices
                 var hasOverride = CurrencyService.GetPurchaseItemCurrencyCode(item) != null;
-                var format = "{0:" + (hasOverride ? CurrencyService.Single(item.CurrencyCode).DisplayFormat : "c") + "}";
+                var format = "{0:" + (hasOverride ? CurrencyService.GetCurrency(item.CurrencyCode).DisplayFormat : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetUnit")) e.Row.Cells["NetUnit"].Value = string.Format(format, item.Net);
                 if (e.Row.Band.Columns.Exists("GrossUnit")) e.Row.Cells["GrossUnit"].Value = string.Format(format, item.Gross);
                 if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.NetTotal);
@@ -1113,7 +1113,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // set final prices
                 var itinerary = item.PurchaseLineRow.ItineraryRow;
                 hasOverride = CurrencyService.GetItineraryCurrencyCode(itinerary) != null;
-                format = "{0:" + (hasOverride ? CurrencyService.Single(itinerary.CurrencyCode).DisplayFormat : "c") + "}";
+                format = "{0:" + (hasOverride ? CurrencyService.GetCurrency(itinerary.CurrencyCode).DisplayFormat : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetFinal")) e.Row.Cells["NetFinal"].Value = string.Format(format, item.NetTotalConverted);
                 if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
                 
@@ -1139,8 +1139,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     SetRowLocked(e.Row, false);
                     EnableDisableButtons(e.Row);
                 }
-                e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCode(itinerarySet);
-                e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetBookingCurrencyCode(item);
+                e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
+                e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
             }
             catch (ArgumentException ex)
             {

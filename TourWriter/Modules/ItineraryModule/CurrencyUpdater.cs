@@ -28,7 +28,7 @@ namespace TourWriter.Modules.ItineraryModule
             var list = Cache.ToolSet.Currency.Where(c => c.Enabled).ToList();
             var nullRow = Cache.ToolSet.Currency.NewCurrencyRow();
             nullRow.CurrencyCode = "";
-            var ccy = Cache.ToolSet.Currency.Where(x => x.CurrencyCode == CurrencyService.GetSystemCurrencyCode()).FirstOrDefault();
+            var ccy = Cache.ToolSet.Currency.Where(x => x.CurrencyCode == CurrencyService.GetApplicationCurrencyCodeOrDefault()).FirstOrDefault();
             nullRow.DisplayName = string.Format("-default- ({0} {1})", ccy.CurrencyCode, ccy.CurrencyName);
             list.Insert(0, nullRow);
 
@@ -279,14 +279,14 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
             e.Row.Cells["FromCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
-            e.Row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetSystemCurrencyCode();
+            e.Row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetApplicationCurrencyCodeOrDefault();
         }
 
         void cmbCurrency_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach(var row in gridBookings.Rows)
             {
-                row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetSystemCurrencyCode();
+                row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetApplicationCurrencyCodeOrDefault();
                 row.Cells["NewRate"].Value = DBNull.Value;
                 row.Cells["Result"].Value = DBNull.Value;
                 row.Cells["Result"].Appearance.Image = null;
