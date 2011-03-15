@@ -135,8 +135,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             cmbCurrency.DisplayMember = "DisplayName";
             cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
             cmbCurrency.SelectedIndexChanged += delegate { HandleCurrencyCodeChanged(); };
-            cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
-            cmbCurrency.Enabled = false;
+            //cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
+            cmbCurrency.Enabled = true;
+            cmbCurrency.DropDown += new EventHandler(cmbCurrency_DropDown);
 
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
@@ -147,6 +148,21 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // if current grid version not found (in cols), reset the grid (to remove old version)
             if (!grid.DisplayLayout.Bands[0].Columns.Exists(GridLayoutVersion))
                 ResetGridLayout();
+        }
+
+        void cmbCurrency_DropDown(object sender, EventArgs e)
+        {
+            cmbCurrency.DropDownStyle = ComboBoxStyle.Simple;
+            cmbCurrency.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            RunCurrencyUpdater();
+
+            // prevent dropdown area from showing
+            cmbCurrency.BeginInvoke((MethodInvoker) delegate
+                                                        {
+                                                            cmbCurrency.DroppedDown = false;
+                                                            cmbCurrency.Focus();
+                                                        });
         }
 
         private void HandleCurrencyCodeChanged()
