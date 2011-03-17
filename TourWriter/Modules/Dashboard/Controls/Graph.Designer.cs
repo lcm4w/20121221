@@ -77,7 +77,7 @@
             this.chart1.Location = new System.Drawing.Point(14, 8);
             this.chart1.Name = "chart1";
             series1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
-            series1.BorderWidth = 3;
+            series1.BorderWidth = 2;
             series1.ChartArea = "Default";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(65)))), ((int)(((byte)(140)))), ((int)(((byte)(240)))));
@@ -86,7 +86,6 @@
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series1.Name = "Series1a";
             series1.ShadowColor = System.Drawing.Color.Black;
-            series1.ShadowOffset = 2;
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
@@ -99,11 +98,10 @@
             series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series2.Name = "Series1b";
             series2.ShadowColor = System.Drawing.Color.Black;
-            series2.ShadowOffset = 2;
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
-            series3.BorderWidth = 3;
+            series3.BorderWidth = 2;
             series3.ChartArea = "Default";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(224)))), ((int)(((byte)(64)))), ((int)(((byte)(10)))));
@@ -112,7 +110,6 @@
             series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
             series3.Name = "Series2a";
             series3.ShadowColor = System.Drawing.Color.Black;
-            series3.ShadowOffset = 2;
             series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(26)))), ((int)(((byte)(59)))), ((int)(((byte)(105)))));
@@ -125,7 +122,6 @@
             series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
             series4.Name = "Series2b";
             series4.ShadowColor = System.Drawing.Color.Black;
-            series4.ShadowOffset = 2;
             series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chart1.Series.Add(series1);
