@@ -63,12 +63,11 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 Cursor = Cursors.WaitCursor;
 
-                var to = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
-
-                var selectedRows = gridBookings.Rows.Cast<UltraGridRow>().ToList().
+                var toCurrency = GetToCurrencyCode();
+                var selectedRows = gridBookings.Rows.ToList().
                     Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
                 var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
-                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = to }).ToList();
+                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = toCurrency }).ToList();
 
                 foreach (var r in selectedRows) // reset status
                 {
@@ -154,6 +153,11 @@ namespace TourWriter.Modules.ItineraryModule
             if (changes != null) itinerarySet.PurchaseItem.Merge(changes);
         }
 
+        private string GetToCurrencyCode()
+        {
+            return cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue.ToString() : CurrencyService.GetApplicationCurrencyCodeOrDefault();
+        }
+        
         #region Events
 
         private void gridBookings_InitializeLayout(object sender, InitializeLayoutEventArgs e)
@@ -279,7 +283,7 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
             e.Row.Cells["FromCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
-            e.Row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetApplicationCurrencyCodeOrDefault();
+            e.Row.Cells["ToCurrency"].Value = GetToCurrencyCode();
         }
 
         void cmbCurrency_SelectedIndexChanged(object sender, EventArgs e)
