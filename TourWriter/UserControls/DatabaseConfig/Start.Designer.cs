@@ -66,7 +66,7 @@
             this.btnRemote.Name = "btnRemote";
             this.btnRemote.Size = new System.Drawing.Size(192, 44);
             this.btnRemote.TabIndex = 1;
-            this.btnRemote.Text = "Remote Database";
+            this.btnRemote.Text = "Online Database";
             this.btnRemote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRemote.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.toolTip1.SetToolTip(this.btnRemote, "Connect to an existing database that is hosted remotely for worldwide access");
