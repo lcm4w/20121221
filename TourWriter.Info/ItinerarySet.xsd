@@ -372,7 +372,8 @@
               <xs:element name="StateID" msprop:Generator_ColumnVarNameInTable="columnStateID" msprop:Generator_ColumnPropNameInRow="StateID" msprop:Generator_ColumnPropNameInTable="StateIDColumn" msprop:Generator_UserColumnName="StateID" type="xs:int" minOccurs="0" />
               <xs:element name="CountryID" msprop:Generator_ColumnVarNameInTable="columnCountryID" msprop:Generator_ColumnPropNameInRow="CountryID" msprop:Generator_ColumnPropNameInTable="CountryIDColumn" msprop:Generator_UserColumnName="CountryID" type="xs:int" minOccurs="0" />
               <xs:element name="AccountingName" msprop:Generator_ColumnVarNameInTable="columnAccountingName" msprop:Generator_ColumnPropNameInRow="AccountingName" msprop:Generator_ColumnPropNameInTable="AccountingNameColumn" msprop:Generator_UserColumnName="AccountingName" type="xs:string" minOccurs="0" />
-              <xs:element name="TaxTypeID" msprop:Generator_ColumnVarNameInTable="columnTaxTypeID" msprop:Generator_ColumnPropNameInRow="TaxTypeID" msprop:Generator_ColumnPropNameInTable="TaxTypeIDColumn" msprop:Generator_UserColumnName="TaxTypeID" type="xs:int" minOccurs="0" />
+              <xs:element name="NetTaxTypeID" msprop:Generator_ColumnVarNameInTable="columnNetTaxTypeID" msprop:Generator_ColumnPropNameInRow="NetTaxTypeID" msprop:Generator_ColumnPropNameInTable="NetTaxTypeIDColumn" msprop:Generator_UserColumnName="NetTaxTypeID" type="xs:int" minOccurs="0" />
+              <xs:element name="GrossTaxTypeID" msprop:Generator_ColumnVarNameInTable="columnGrossTaxTypeID" msprop:Generator_ColumnPropNameInRow="GrossTaxTypeID" msprop:Generator_ColumnPropNameInTable="GrossTaxTypeIDColumn" msprop:Generator_UserColumnName="GrossTaxTypeID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

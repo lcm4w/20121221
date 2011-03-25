@@ -7241,7 +7241,9 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnAccountingName;
             
-            private global::System.Data.DataColumn columnTaxTypeID;
+            private global::System.Data.DataColumn columnNetTaxTypeID;
+            
+            private global::System.Data.DataColumn columnGrossTaxTypeID;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -7414,9 +7416,17 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TaxTypeIDColumn {
+            public global::System.Data.DataColumn NetTaxTypeIDColumn {
                 get {
-                    return this.columnTaxTypeID;
+                    return this.columnNetTaxTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossTaxTypeIDColumn {
+                get {
+                    return this.columnGrossTaxTypeID;
                 }
             }
             
@@ -7475,7 +7485,8 @@ namespace TourWriter.Info {
                         int StateID, 
                         int CountryID, 
                         string AccountingName, 
-                        int TaxTypeID) {
+                        int NetTaxTypeID, 
+                        int GrossTaxTypeID) {
                 SupplierLookupRow rowSupplierLookupRow = ((SupplierLookupRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         SupplierID,
@@ -7495,7 +7506,8 @@ namespace TourWriter.Info {
                         StateID,
                         CountryID,
                         AccountingName,
-                        TaxTypeID};
+                        NetTaxTypeID,
+                        GrossTaxTypeID};
                 rowSupplierLookupRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSupplierLookupRow);
                 return rowSupplierLookupRow;
@@ -7542,7 +7554,8 @@ namespace TourWriter.Info {
                 this.columnStateID = base.Columns["StateID"];
                 this.columnCountryID = base.Columns["CountryID"];
                 this.columnAccountingName = base.Columns["AccountingName"];
-                this.columnTaxTypeID = base.Columns["TaxTypeID"];
+                this.columnNetTaxTypeID = base.Columns["NetTaxTypeID"];
+                this.columnGrossTaxTypeID = base.Columns["GrossTaxTypeID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7582,8 +7595,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnCountryID);
                 this.columnAccountingName = new global::System.Data.DataColumn("AccountingName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAccountingName);
-                this.columnTaxTypeID = new global::System.Data.DataColumn("TaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTaxTypeID);
+                this.columnNetTaxTypeID = new global::System.Data.DataColumn("NetTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNetTaxTypeID);
+                this.columnGrossTaxTypeID = new global::System.Data.DataColumn("GrossTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossTaxTypeID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey9", new global::System.Data.DataColumn[] {
                                 this.columnSupplierID}, true));
                 this.columnSupplierID.AllowDBNull = false;
@@ -15809,17 +15824,33 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int TaxTypeID {
+            public int NetTaxTypeID {
                 get {
                     try {
-                        return ((int)(this[this.tableSupplierLookup.TaxTypeIDColumn]));
+                        return ((int)(this[this.tableSupplierLookup.NetTaxTypeIDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TaxTypeID\' in table \'SupplierLookup\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NetTaxTypeID\' in table \'SupplierLookup\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSupplierLookup.TaxTypeIDColumn] = value;
+                    this[this.tableSupplierLookup.NetTaxTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int GrossTaxTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableSupplierLookup.GrossTaxTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossTaxTypeID\' in table \'SupplierLookup\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSupplierLookup.GrossTaxTypeIDColumn] = value;
                 }
             }
             
@@ -16017,14 +16048,26 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTaxTypeIDNull() {
-                return this.IsNull(this.tableSupplierLookup.TaxTypeIDColumn);
+            public bool IsNetTaxTypeIDNull() {
+                return this.IsNull(this.tableSupplierLookup.NetTaxTypeIDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTaxTypeIDNull() {
-                this[this.tableSupplierLookup.TaxTypeIDColumn] = global::System.Convert.DBNull;
+            public void SetNetTaxTypeIDNull() {
+                this[this.tableSupplierLookup.NetTaxTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossTaxTypeIDNull() {
+                return this.IsNull(this.tableSupplierLookup.GrossTaxTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossTaxTypeIDNull() {
+                this[this.tableSupplierLookup.GrossTaxTypeIDColumn] = global::System.Convert.DBNull;
             }
         }
         

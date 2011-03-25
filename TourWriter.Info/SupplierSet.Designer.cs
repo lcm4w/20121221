@@ -1462,7 +1462,9 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnAccountingName;
             
-            private global::System.Data.DataColumn columnTaxTypeID;
+            private global::System.Data.DataColumn columnNetTaxTypeID;
+            
+            private global::System.Data.DataColumn columnGrossTaxTypeID;
             
             private global::System.Data.DataColumn columnPaymentTermID;
             
@@ -1733,9 +1735,17 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TaxTypeIDColumn {
+            public global::System.Data.DataColumn NetTaxTypeIDColumn {
                 get {
-                    return this.columnTaxTypeID;
+                    return this.columnNetTaxTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossTaxTypeIDColumn {
+                get {
+                    return this.columnGrossTaxTypeID;
                 }
             }
             
@@ -1906,7 +1916,8 @@ namespace TourWriter.Info {
                         string CancellationPolicy, 
                         string BankDetails, 
                         string AccountingName, 
-                        int TaxTypeID, 
+                        int NetTaxTypeID, 
+                        int GrossTaxTypeID, 
                         PaymentTermRow parentPaymentTermRowByPaymentTermSupplier, 
                         decimal DefaultMargin, 
                         System.DateTime DefaultCheckinTime, 
@@ -1948,7 +1959,8 @@ namespace TourWriter.Info {
                         CancellationPolicy,
                         BankDetails,
                         AccountingName,
-                        TaxTypeID,
+                        NetTaxTypeID,
+                        GrossTaxTypeID,
                         null,
                         DefaultMargin,
                         DefaultCheckinTime,
@@ -1963,7 +1975,7 @@ namespace TourWriter.Info {
                         RowVersion,
                         IsDeleted};
                 if ((parentPaymentTermRowByPaymentTermSupplier != null)) {
-                    columnValuesArray[27] = parentPaymentTermRowByPaymentTermSupplier[0];
+                    columnValuesArray[28] = parentPaymentTermRowByPaymentTermSupplier[0];
                 }
                 rowSupplierRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSupplierRow);
@@ -2020,7 +2032,8 @@ namespace TourWriter.Info {
                 this.columnCancellationPolicy = base.Columns["CancellationPolicy"];
                 this.columnBankDetails = base.Columns["BankDetails"];
                 this.columnAccountingName = base.Columns["AccountingName"];
-                this.columnTaxTypeID = base.Columns["TaxTypeID"];
+                this.columnNetTaxTypeID = base.Columns["NetTaxTypeID"];
+                this.columnGrossTaxTypeID = base.Columns["GrossTaxTypeID"];
                 this.columnPaymentTermID = base.Columns["PaymentTermID"];
                 this.columnDefaultMargin = base.Columns["DefaultMargin"];
                 this.columnDefaultCheckinTime = base.Columns["DefaultCheckinTime"];
@@ -2091,8 +2104,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnBankDetails);
                 this.columnAccountingName = new global::System.Data.DataColumn("AccountingName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAccountingName);
-                this.columnTaxTypeID = new global::System.Data.DataColumn("TaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTaxTypeID);
+                this.columnNetTaxTypeID = new global::System.Data.DataColumn("NetTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNetTaxTypeID);
+                this.columnGrossTaxTypeID = new global::System.Data.DataColumn("GrossTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossTaxTypeID);
                 this.columnPaymentTermID = new global::System.Data.DataColumn("PaymentTermID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPaymentTermID);
                 this.columnDefaultMargin = new global::System.Data.DataColumn("DefaultMargin", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -2299,7 +2314,9 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnPaymentTermID;
             
-            private global::System.Data.DataColumn columnTaxTypeID;
+            private global::System.Data.DataColumn columnNetTaxTypeID;
+            
+            private global::System.Data.DataColumn columnGrossTaxTypeID;
             
             private global::System.Data.DataColumn columnLatitude;
             
@@ -2468,9 +2485,17 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TaxTypeIDColumn {
+            public global::System.Data.DataColumn NetTaxTypeIDColumn {
                 get {
-                    return this.columnTaxTypeID;
+                    return this.columnNetTaxTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossTaxTypeIDColumn {
+                get {
+                    return this.columnGrossTaxTypeID;
                 }
             }
             
@@ -2574,7 +2599,8 @@ namespace TourWriter.Info {
                         string CurrencyCode, 
                         string ChargeType, 
                         PaymentTermRow parentPaymentTermRowByPaymentTermService, 
-                        int TaxTypeID, 
+                        int NetTaxTypeID, 
+                        int GrossTaxTypeID, 
                         decimal Latitude, 
                         decimal Longitude, 
                         System.DateTime AddedOn, 
@@ -2598,7 +2624,8 @@ namespace TourWriter.Info {
                         CurrencyCode,
                         ChargeType,
                         null,
-                        TaxTypeID,
+                        NetTaxTypeID,
+                        GrossTaxTypeID,
                         Latitude,
                         Longitude,
                         AddedOn,
@@ -2655,7 +2682,8 @@ namespace TourWriter.Info {
                 this.columnCurrencyCode = base.Columns["CurrencyCode"];
                 this.columnChargeType = base.Columns["ChargeType"];
                 this.columnPaymentTermID = base.Columns["PaymentTermID"];
-                this.columnTaxTypeID = base.Columns["TaxTypeID"];
+                this.columnNetTaxTypeID = base.Columns["NetTaxTypeID"];
+                this.columnGrossTaxTypeID = base.Columns["GrossTaxTypeID"];
                 this.columnLatitude = base.Columns["Latitude"];
                 this.columnLongitude = base.Columns["Longitude"];
                 this.columnAddedOn = base.Columns["AddedOn"];
@@ -2697,8 +2725,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnChargeType);
                 this.columnPaymentTermID = new global::System.Data.DataColumn("PaymentTermID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPaymentTermID);
-                this.columnTaxTypeID = new global::System.Data.DataColumn("TaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnTaxTypeID);
+                this.columnNetTaxTypeID = new global::System.Data.DataColumn("NetTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNetTaxTypeID);
+                this.columnGrossTaxTypeID = new global::System.Data.DataColumn("GrossTaxTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossTaxTypeID);
                 this.columnLatitude = new global::System.Data.DataColumn("Latitude", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLatitude);
                 this.columnLongitude = new global::System.Data.DataColumn("Longitude", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -8682,17 +8712,33 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int TaxTypeID {
+            public int NetTaxTypeID {
                 get {
                     try {
-                        return ((int)(this[this.tableSupplier.TaxTypeIDColumn]));
+                        return ((int)(this[this.tableSupplier.NetTaxTypeIDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TaxTypeID\' in table \'Supplier\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NetTaxTypeID\' in table \'Supplier\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSupplier.TaxTypeIDColumn] = value;
+                    this[this.tableSupplier.NetTaxTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int GrossTaxTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableSupplier.GrossTaxTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossTaxTypeID\' in table \'Supplier\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSupplier.GrossTaxTypeIDColumn] = value;
                 }
             }
             
@@ -9193,14 +9239,26 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTaxTypeIDNull() {
-                return this.IsNull(this.tableSupplier.TaxTypeIDColumn);
+            public bool IsNetTaxTypeIDNull() {
+                return this.IsNull(this.tableSupplier.NetTaxTypeIDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTaxTypeIDNull() {
-                this[this.tableSupplier.TaxTypeIDColumn] = global::System.Convert.DBNull;
+            public void SetNetTaxTypeIDNull() {
+                this[this.tableSupplier.NetTaxTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossTaxTypeIDNull() {
+                return this.IsNull(this.tableSupplier.GrossTaxTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossTaxTypeIDNull() {
+                this[this.tableSupplier.GrossTaxTypeIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9683,17 +9741,33 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int TaxTypeID {
+            public int NetTaxTypeID {
                 get {
                     try {
-                        return ((int)(this[this.tableService.TaxTypeIDColumn]));
+                        return ((int)(this[this.tableService.NetTaxTypeIDColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'TaxTypeID\' in table \'Service\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'NetTaxTypeID\' in table \'Service\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableService.TaxTypeIDColumn] = value;
+                    this[this.tableService.NetTaxTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int GrossTaxTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableService.GrossTaxTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossTaxTypeID\' in table \'Service\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableService.GrossTaxTypeIDColumn] = value;
                 }
             }
             
@@ -9973,14 +10047,26 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTaxTypeIDNull() {
-                return this.IsNull(this.tableService.TaxTypeIDColumn);
+            public bool IsNetTaxTypeIDNull() {
+                return this.IsNull(this.tableService.NetTaxTypeIDColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTaxTypeIDNull() {
-                this[this.tableService.TaxTypeIDColumn] = global::System.Convert.DBNull;
+            public void SetNetTaxTypeIDNull() {
+                this[this.tableService.NetTaxTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossTaxTypeIDNull() {
+                return this.IsNull(this.tableService.GrossTaxTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossTaxTypeIDNull() {
+                this[this.tableService.GrossTaxTypeIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
