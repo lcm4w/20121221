@@ -102,7 +102,7 @@ namespace TourWriter.Modules.SupplierModule
 
         private void ContentControl_VisibleChanged(object sender, EventArgs e)
         {
-            if (Visible && !_isDataLoaded)
+            if (!App.IsInDesignMode && Visible && !_isDataLoaded)
             {
                 Cursor.Current = Cursors.WaitCursor;
                 
