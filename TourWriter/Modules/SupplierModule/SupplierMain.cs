@@ -395,9 +395,12 @@ namespace TourWriter.Modules.SupplierModule
             cmbGradeExternal.ValueMember = "GradeExternalID";
             cmbGradeExternal.DisplayMember = "GradeExternalName";
             // tax types
-            cmbTaxType.DataSource = toolSet.TaxType;
-            cmbTaxType.ValueMember = "TaxTypeID";
-            cmbTaxType.DisplayMember = "TaxTypeCode";
+            cmbNetTaxType.DataSource = Cache.ToolSet.TaxType;
+            cmbNetTaxType.ValueMember = "TaxTypeID";
+            cmbNetTaxType.DisplayMember = "TaxTypeCode";
+            cmbGrossTaxType.DataSource = Cache.ToolSet.TaxType;
+            cmbGrossTaxType.ValueMember = "TaxTypeID";
+            cmbGrossTaxType.DisplayMember = "TaxTypeCode";
             // credit cards
             treeCreditCards_Load();
 
@@ -423,7 +426,8 @@ namespace TourWriter.Modules.SupplierModule
             txtSupplierEmail.DataBindings.Add("Text", supplierSet, "Supplier.Email");
             txtSupplierWebsite.DataBindings.Add("Text", supplierSet, "Supplier.Website");
             txtSupplierPostAddress.DataBindings.Add("Text", supplierSet, "Supplier.PostAddress");
-            cmbTaxType.DataBindings.Add("SelectedValue", supplierSet, "Supplier.TaxTypeID");
+            cmbNetTaxType.DataBindings.Add("Value", supplierSet, "Supplier.NetTaxTypeID");
+            cmbGrossTaxType.DataBindings.Add("Value", supplierSet, "Supplier.GrossTaxTypeID");
             cmbGradeInternal.DataBindings.Add("Value", supplierSet, "Supplier.GradeID");
             cmbGradeExternal.DataBindings.Add("Value", supplierSet, "Supplier.GradeExternalID");
             txtSupplierDescription.DataBindings.Add("Text", supplierSet, "Supplier.Description");
@@ -940,6 +944,34 @@ namespace TourWriter.Modules.SupplierModule
             {
                 App.Error(ex);
             }
+        }
+        
+        private void cmbNetTaxType_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "TaxTypeCode")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbGrossTaxType_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "TaxTypeCode")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
         }
 
         #endregion

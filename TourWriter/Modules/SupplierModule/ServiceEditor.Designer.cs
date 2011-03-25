@@ -116,7 +116,9 @@ namespace TourWriter.Modules.SupplierModule
             this.btnRateAdd = new System.Windows.Forms.ToolStripButton();
             this.btnRateDelete = new System.Windows.Forms.ToolStripButton();
             this.ultraTabPageControl1 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.cmbTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.cmbGrossTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbNetTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.label11 = new System.Windows.Forms.Label();
             this.pnlSpatial = new System.Windows.Forms.Panel();
             this.txtLongitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
@@ -182,7 +184,8 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.gridRates)).BeginInit();
             this.tsRates.SuspendLayout();
             this.ultraTabPageControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbTaxType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbNetTaxType)).BeginInit();
             this.pnlSpatial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxPax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridFoc)).BeginInit();
@@ -197,6 +200,8 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceComments)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServices)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideExpiredSeasons)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideNonActiveItems)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.pnlServiceDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl)).BeginInit();
@@ -326,14 +331,14 @@ namespace TourWriter.Modules.SupplierModule
             this.gridOptions.Size = new System.Drawing.Size(464, 526);
             this.gridOptions.TabIndex = 4;
             this.gridOptions.Text = "Configurations for season";
-            this.gridOptions.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridOptions_ClickCellButton);
             this.gridOptions.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridOptions_InitializeLayout);
-            this.gridOptions.AfterRowActivate += new System.EventHandler(this.gridOptions_AfterRowActivate);
             this.gridOptions.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridOptions_InitializeRow);
-            this.gridOptions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridOptions_MouseClick);
+            this.gridOptions.AfterRowActivate += new System.EventHandler(this.gridOptions_AfterRowActivate);
             this.gridOptions.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridOptions_CellChange);
-            this.gridOptions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridOptions_KeyDown);
+            this.gridOptions.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridOptions_ClickCellButton);
             this.gridOptions.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.gridOptions_DoubleClickRow);
+            this.gridOptions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridOptions_KeyDown);
+            this.gridOptions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridOptions_MouseClick);
             // 
             // tsOptions
             // 
@@ -541,8 +546,9 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl1
             // 
             this.ultraTabPageControl1.AutoScroll = true;
-            this.ultraTabPageControl1.Controls.Add(this.cmbTaxType);
-            this.ultraTabPageControl1.Controls.Add(this.label11);
+            this.ultraTabPageControl1.Controls.Add(this.cmbGrossTaxType);
+            this.ultraTabPageControl1.Controls.Add(this.label12);
+            this.ultraTabPageControl1.Controls.Add(this.cmbNetTaxType);
             this.ultraTabPageControl1.Controls.Add(this.pnlSpatial);
             this.ultraTabPageControl1.Controls.Add(this.label8);
             this.ultraTabPageControl1.Controls.Add(this.txtMaxPax);
@@ -559,19 +565,41 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(471, 742);
             // 
-            // cmbTaxType
+            // cmbGrossTaxType
             // 
-            this.cmbTaxType.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.cmbTaxType.Location = new System.Drawing.Point(317, 144);
-            this.cmbTaxType.Name = "cmbTaxType";
-            this.cmbTaxType.Size = new System.Drawing.Size(120, 22);
-            this.cmbTaxType.TabIndex = 180;
-            this.cmbTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbTaxType_InitializeLayout);
+            this.cmbGrossTaxType.CheckedListSettings.CheckStateMember = "";
+            this.cmbGrossTaxType.Location = new System.Drawing.Point(324, 190);
+            this.cmbGrossTaxType.Name = "cmbGrossTaxType";
+            this.cmbGrossTaxType.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbGrossTaxType.Size = new System.Drawing.Size(120, 22);
+            this.cmbGrossTaxType.TabIndex = 182;
+            this.toolTip1.SetToolTip(this.cmbGrossTaxType, "Overrides the ServiceType or Supplier GrossTaxType");
+            this.cmbGrossTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbGrossTaxType_InitializeLayout);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(321, 174);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(123, 13);
+            this.label12.TabIndex = 181;
+            this.label12.Text = "Gross Tax Type override";
+            // 
+            // cmbNetTaxType
+            // 
+            this.cmbNetTaxType.CheckedListSettings.CheckStateMember = "";
+            this.cmbNetTaxType.Location = new System.Drawing.Point(324, 144);
+            this.cmbNetTaxType.Name = "cmbNetTaxType";
+            this.cmbNetTaxType.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbNetTaxType.Size = new System.Drawing.Size(120, 22);
+            this.cmbNetTaxType.TabIndex = 180;
+            this.toolTip1.SetToolTip(this.cmbNetTaxType, "Overrides the ServiceType or Supplier NetTaxType");
+            this.cmbNetTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbNetTaxType_InitializeLayout);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 195);
+            this.label11.Location = new System.Drawing.Point(8, 5);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(126, 13);
             this.label11.TabIndex = 179;
@@ -582,8 +610,9 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlSpatial.Controls.Add(this.txtLongitude);
             this.pnlSpatial.Controls.Add(this.label10);
             this.pnlSpatial.Controls.Add(this.txtLatitude);
+            this.pnlSpatial.Controls.Add(this.label11);
             this.pnlSpatial.Controls.Add(this.label43);
-            this.pnlSpatial.Location = new System.Drawing.Point(3, 190);
+            this.pnlSpatial.Location = new System.Drawing.Point(3, 221);
             this.pnlSpatial.Name = "pnlSpatial";
             this.pnlSpatial.Size = new System.Drawing.Size(199, 76);
             this.pnlSpatial.TabIndex = 178;
@@ -726,20 +755,20 @@ namespace TourWriter.Modules.SupplierModule
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.treeServiceConfigs.FullRowSelect = true;
-            this.treeServiceConfigs.Location = new System.Drawing.Point(3, 296);
+            this.treeServiceConfigs.Location = new System.Drawing.Point(3, 327);
             this.treeServiceConfigs.MinimumSize = new System.Drawing.Size(200, 200);
             this.treeServiceConfigs.Name = "treeServiceConfigs";
             _override1.NodeStyle = Infragistics.Win.UltraWinTree.NodeStyle.CheckBox;
             _override1.SelectionType = Infragistics.Win.UltraWinTree.SelectType.Extended;
             this.treeServiceConfigs.Override = _override1;
-            this.treeServiceConfigs.Size = new System.Drawing.Size(464, 434);
+            this.treeServiceConfigs.Size = new System.Drawing.Size(464, 403);
             this.treeServiceConfigs.TabIndex = 171;
             this.treeServiceConfigs.AfterCheck += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.treeServiceConfigs_AfterCheck);
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(3, 280);
+            this.label25.Location = new System.Drawing.Point(3, 311);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(227, 13);
             this.label25.TabIndex = 172;
@@ -748,11 +777,11 @@ namespace TourWriter.Modules.SupplierModule
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(314, 128);
+            this.label3.Location = new System.Drawing.Point(321, 128);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.Size = new System.Drawing.Size(113, 13);
             this.label3.TabIndex = 170;
-            this.label3.Text = "Tax Type";
+            this.label3.Text = "Net Tax Type override";
             // 
             // linkEdit
             // 
@@ -772,7 +801,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtPaymentTerms.Multiline = true;
             this.txtPaymentTerms.Name = "txtPaymentTerms";
             this.txtPaymentTerms.ReadOnly = true;
-            this.txtPaymentTerms.Size = new System.Drawing.Size(308, 40);
+            this.txtPaymentTerms.Size = new System.Drawing.Size(308, 68);
             this.txtPaymentTerms.TabIndex = 167;
             // 
             // label9
@@ -1128,11 +1157,11 @@ namespace TourWriter.Modules.SupplierModule
             this.gridServices.Size = new System.Drawing.Size(294, 768);
             this.gridServices.TabIndex = 0;
             this.gridServices.Text = "Services";
-            this.gridServices.BeforeCellUpdate += new Infragistics.Win.UltraWinGrid.BeforeCellUpdateEventHandler(this.gridServices_BeforeCellUpdate);
             this.gridServices.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridServices_InitializeLayout);
-            this.gridServices.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridServices_AfterCellListCloseUp);
-            this.gridServices.AfterRowActivate += new System.EventHandler(this.gridServices_AfterRowActivate);
             this.gridServices.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridServices_InitializeRow);
+            this.gridServices.AfterRowActivate += new System.EventHandler(this.gridServices_AfterRowActivate);
+            this.gridServices.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridServices_AfterCellListCloseUp);
+            this.gridServices.BeforeCellUpdate += new Infragistics.Win.UltraWinGrid.BeforeCellUpdateEventHandler(this.gridServices_BeforeCellUpdate);
             // 
             // chkHideExpiredSeasons
             // 
@@ -1387,7 +1416,8 @@ namespace TourWriter.Modules.SupplierModule
             this.tsRates.PerformLayout();
             this.ultraTabPageControl1.ResumeLayout(false);
             this.ultraTabPageControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbTaxType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbNetTaxType)).EndInit();
             this.pnlSpatial.ResumeLayout(false);
             this.pnlSpatial.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxPax)).EndInit();
@@ -1406,6 +1436,8 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceComments)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServices)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideExpiredSeasons)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideNonActiveItems)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.pnlServiceDetails.ResumeLayout(false);
             this.pnlServiceDetails.PerformLayout();
@@ -1500,6 +1532,8 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.Label label43;
         private Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit txtLatitude;
         private Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit txtLongitude;
-        private Infragistics.Win.UltraWinGrid.UltraCombo cmbTaxType;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbNetTaxType;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
+        private System.Windows.Forms.Label label12;
     }
 }

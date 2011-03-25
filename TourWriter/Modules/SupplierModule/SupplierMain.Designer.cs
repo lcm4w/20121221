@@ -111,6 +111,8 @@ namespace TourWriter.Modules.SupplierModule
             this.btnMessagesAdd = new System.Windows.Forms.ToolStripButton();
             this.btnMessageDel = new System.Windows.Forms.ToolStripButton();
             this.label35 = new System.Windows.Forms.Label();
+            this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl();
             this.ultraTabPageControl9 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.gridPublishing = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
@@ -185,6 +187,8 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl6 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.serviceEditor1 = new TourWriter.Modules.SupplierModule.ServiceEditor();
             this.ultraTabPageControl3 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.label46 = new System.Windows.Forms.Label();
+            this.cmbGrossTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.txtDefaultCheckout = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.txtAccountingName = new System.Windows.Forms.TextBox();
@@ -216,7 +220,7 @@ namespace TourWriter.Modules.SupplierModule
             this.label13 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cmbTaxType = new System.Windows.Forms.ComboBox();
+            this.cmbNetTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.cmbGradeExternal = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.btnPaymentTerms = new System.Windows.Forms.LinkLabel();
             this.txtPaymentTerms = new System.Windows.Forms.TextBox();
@@ -254,14 +258,13 @@ namespace TourWriter.Modules.SupplierModule
             this.toolRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolSaveClose = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
-            this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl();
             this.ultraTabPageControl5.SuspendLayout();
             this.ultraTabPageControl7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.optReports)).BeginInit();
             this.ultraTabPageControl8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMessages)).BeginInit();
             this.myToolStrip2.SuspendLayout();
+            this.ultraTabPageControl11.SuspendLayout();
             this.ultraTabPageControl9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPublishing)).BeginInit();
             this.myToolStrip1.SuspendLayout();
@@ -280,9 +283,11 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.cmbState)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCountry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSupplierDescription)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkIsSupplierActive)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSupplierComments)).BeginInit();
             this.ultraTabPageControl6.SuspendLayout();
             this.ultraTabPageControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDefaultCheckout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDefaultMargin)).BeginInit();
@@ -293,6 +298,7 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.gridNotes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtExternalLinkID)).BeginInit();
             this.myToolStrip3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbNetTaxType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGradeExternal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGradeInternal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBankDetails)).BeginInit();
@@ -306,13 +312,12 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.ultraTabPageControl11.SuspendLayout();
             this.SuspendLayout();
             // 
             // ultraTabPageControl5
             // 
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
-            this.ultraTabPageControl5.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
             this.ultraTabPageControl5.Size = new System.Drawing.Size(824, 491);
             // 
@@ -507,6 +512,21 @@ namespace TourWriter.Modules.SupplierModule
             this.label35.Size = new System.Drawing.Size(296, 13);
             this.label35.TabIndex = 119;
             this.label35.Text = "Record of messages to/from this Supplier (eg sent bookings)";
+            // 
+            // ultraTabPageControl11
+            // 
+            this.ultraTabPageControl11.Controls.Add(this.contentControl1);
+            this.ultraTabPageControl11.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl11.Name = "ultraTabPageControl11";
+            this.ultraTabPageControl11.Size = new System.Drawing.Size(824, 491);
+            // 
+            // contentControl1
+            // 
+            this.contentControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.contentControl1.Location = new System.Drawing.Point(0, 0);
+            this.contentControl1.Name = "contentControl1";
+            this.contentControl1.Size = new System.Drawing.Size(824, 491);
+            this.contentControl1.TabIndex = 0;
             // 
             // ultraTabPageControl9
             // 
@@ -905,7 +925,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
             this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSupplier.Name = "tabSupplier";
-            this.tabSupplier.Size = new System.Drawing.Size(828, 528);
+            this.tabSupplier.Size = new System.Drawing.Size(828, 543);
             // 
             // pnlSpatial
             // 
@@ -1160,9 +1180,10 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // cmbCity
             // 
-            this.cmbCity.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbCity.CheckedListSettings.CheckStateMember = "";
             this.cmbCity.Location = new System.Drawing.Point(64, 133);
             this.cmbCity.Name = "cmbCity";
+            this.cmbCity.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbCity.Size = new System.Drawing.Size(200, 23);
             this.cmbCity.TabIndex = 7;
             this.cmbCity.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCity_InitializeLayout);
@@ -1219,9 +1240,10 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // cmbRegion
             // 
-            this.cmbRegion.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbRegion.CheckedListSettings.CheckStateMember = "";
             this.cmbRegion.Location = new System.Drawing.Point(64, 160);
             this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbRegion.Size = new System.Drawing.Size(200, 23);
             this.cmbRegion.TabIndex = 8;
             this.cmbRegion.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbRegion_InitializeLayout);
@@ -1278,18 +1300,20 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // cmbState
             // 
-            this.cmbState.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbState.CheckedListSettings.CheckStateMember = "";
             this.cmbState.Location = new System.Drawing.Point(64, 187);
             this.cmbState.Name = "cmbState";
+            this.cmbState.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbState.Size = new System.Drawing.Size(200, 23);
             this.cmbState.TabIndex = 9;
             this.cmbState.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbState_InitializeLayout);
             // 
             // cmbCountry
             // 
-            this.cmbCountry.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbCountry.CheckedListSettings.CheckStateMember = "";
             this.cmbCountry.Location = new System.Drawing.Point(64, 214);
             this.cmbCountry.Name = "cmbCountry";
+            this.cmbCountry.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbCountry.Size = new System.Drawing.Size(200, 23);
             this.cmbCountry.TabIndex = 10;
             this.cmbCountry.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCountry_InitializeLayout);
@@ -1383,7 +1407,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl6.Controls.Add(this.serviceEditor1);
             this.ultraTabPageControl6.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl6.Name = "ultraTabPageControl6";
-            this.ultraTabPageControl6.Size = new System.Drawing.Size(828, 528);
+            this.ultraTabPageControl6.Size = new System.Drawing.Size(828, 543);
             // 
             // serviceEditor1
             // 
@@ -1401,6 +1425,8 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl3
             // 
             this.ultraTabPageControl3.AutoScroll = true;
+            this.ultraTabPageControl3.Controls.Add(this.label46);
+            this.ultraTabPageControl3.Controls.Add(this.cmbGrossTaxType);
             this.ultraTabPageControl3.Controls.Add(this.groupBox5);
             this.ultraTabPageControl3.Controls.Add(this.txtBookingWebsite);
             this.ultraTabPageControl3.Controls.Add(this.gridNotes);
@@ -1413,7 +1439,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl3.Controls.Add(this.label13);
             this.ultraTabPageControl3.Controls.Add(this.label29);
             this.ultraTabPageControl3.Controls.Add(this.label3);
-            this.ultraTabPageControl3.Controls.Add(this.cmbTaxType);
+            this.ultraTabPageControl3.Controls.Add(this.cmbNetTaxType);
             this.ultraTabPageControl3.Controls.Add(this.cmbGradeExternal);
             this.ultraTabPageControl3.Controls.Add(this.btnPaymentTerms);
             this.ultraTabPageControl3.Controls.Add(this.txtPaymentTerms);
@@ -1426,9 +1452,29 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl3.Controls.Add(this.label36);
             this.ultraTabPageControl3.Controls.Add(this.txtCancellationPolicy);
             this.ultraTabPageControl3.Controls.Add(this.label40);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(828, 528);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(828, 543);
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(380, 332);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(125, 13);
+            this.label46.TabIndex = 168;
+            this.label46.Text = "Gross Tax Type override";
+            // 
+            // cmbGrossTaxType
+            // 
+            this.cmbGrossTaxType.CheckedListSettings.CheckStateMember = "";
+            this.cmbGrossTaxType.Location = new System.Drawing.Point(383, 345);
+            this.cmbGrossTaxType.Name = "cmbGrossTaxType";
+            this.cmbGrossTaxType.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbGrossTaxType.Size = new System.Drawing.Size(120, 23);
+            this.cmbGrossTaxType.TabIndex = 182;
+            this.toolTip1.SetToolTip(this.cmbGrossTaxType, "Overrides the ServiceType GrossTaxType");
+            this.cmbGrossTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbGrossTaxType_InitializeLayout);
             // 
             // groupBox5
             // 
@@ -1733,7 +1779,7 @@ namespace TourWriter.Modules.SupplierModule
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 299);
+            this.label15.Location = new System.Drawing.Point(12, 284);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(81, 13);
             this.label15.TabIndex = 166;
@@ -1791,11 +1837,11 @@ namespace TourWriter.Modules.SupplierModule
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(380, 299);
+            this.label13.Location = new System.Drawing.Point(380, 284);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.Size = new System.Drawing.Size(115, 13);
             this.label13.TabIndex = 165;
-            this.label13.Text = "Tax Type";
+            this.label13.Text = "Net Tax Type override";
             // 
             // label29
             // 
@@ -1818,21 +1864,24 @@ namespace TourWriter.Modules.SupplierModule
             this.label3.Text = "Grade 1";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cmbTaxType
+            // cmbNetTaxType
             // 
-            this.cmbTaxType.FormattingEnabled = true;
-            this.cmbTaxType.Location = new System.Drawing.Point(383, 315);
-            this.cmbTaxType.Name = "cmbTaxType";
-            this.cmbTaxType.Size = new System.Drawing.Size(120, 21);
-            this.cmbTaxType.TabIndex = 164;
-            this.toolTip1.SetToolTip(this.cmbTaxType, "Suppliers tax type");
+            this.cmbNetTaxType.CheckedListSettings.CheckStateMember = "";
+            this.cmbNetTaxType.Location = new System.Drawing.Point(383, 300);
+            this.cmbNetTaxType.Name = "cmbNetTaxType";
+            this.cmbNetTaxType.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbNetTaxType.Size = new System.Drawing.Size(120, 23);
+            this.cmbNetTaxType.TabIndex = 180;
+            this.toolTip1.SetToolTip(this.cmbNetTaxType, "Overrides the ServiceType NetTaxType");
+            this.cmbNetTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbNetTaxType_InitializeLayout);
             // 
             // cmbGradeExternal
             // 
-            this.cmbGradeExternal.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbGradeExternal.CheckedListSettings.CheckStateMember = "";
             this.cmbGradeExternal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbGradeExternal.Location = new System.Drawing.Point(78, 164);
             this.cmbGradeExternal.Name = "cmbGradeExternal";
+            this.cmbGradeExternal.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbGradeExternal.Size = new System.Drawing.Size(139, 23);
             this.cmbGradeExternal.TabIndex = 17;
             this.toolTip1.SetToolTip(this.cmbGradeExternal, "Grade for 2nd custom grading system");
@@ -1841,7 +1890,7 @@ namespace TourWriter.Modules.SupplierModule
             // btnPaymentTerms
             // 
             this.btnPaymentTerms.AutoSize = true;
-            this.btnPaymentTerms.Location = new System.Drawing.Point(319, 299);
+            this.btnPaymentTerms.Location = new System.Drawing.Point(319, 284);
             this.btnPaymentTerms.Name = "btnPaymentTerms";
             this.btnPaymentTerms.Size = new System.Drawing.Size(33, 13);
             this.btnPaymentTerms.TabIndex = 163;
@@ -1853,11 +1902,11 @@ namespace TourWriter.Modules.SupplierModule
             // txtPaymentTerms
             // 
             this.txtPaymentTerms.BackColor = System.Drawing.SystemColors.Window;
-            this.txtPaymentTerms.Location = new System.Drawing.Point(15, 315);
+            this.txtPaymentTerms.Location = new System.Drawing.Point(15, 300);
             this.txtPaymentTerms.Multiline = true;
             this.txtPaymentTerms.Name = "txtPaymentTerms";
             this.txtPaymentTerms.ReadOnly = true;
-            this.txtPaymentTerms.Size = new System.Drawing.Size(337, 38);
+            this.txtPaymentTerms.Size = new System.Drawing.Size(337, 68);
             this.txtPaymentTerms.TabIndex = 162;
             this.toolTip1.SetToolTip(this.txtPaymentTerms, "Suppliers payment terms");
             // 
@@ -1874,10 +1923,11 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // cmbGradeInternal
             // 
-            this.cmbGradeInternal.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
+            this.cmbGradeInternal.CheckedListSettings.CheckStateMember = "";
             this.cmbGradeInternal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbGradeInternal.Location = new System.Drawing.Point(78, 135);
             this.cmbGradeInternal.Name = "cmbGradeInternal";
+            this.cmbGradeInternal.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbGradeInternal.Size = new System.Drawing.Size(139, 23);
             this.cmbGradeInternal.TabIndex = 16;
             this.toolTip1.SetToolTip(this.cmbGradeInternal, "Grade for custom grading system");
@@ -1901,7 +1951,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.txtBankDetails.AcceptsReturn = true;
             this.txtBankDetails.AcceptsTab = true;
-            this.txtBankDetails.Location = new System.Drawing.Point(15, 462);
+            this.txtBankDetails.Location = new System.Drawing.Point(15, 477);
             this.txtBankDetails.Multiline = true;
             this.txtBankDetails.Name = "txtBankDetails";
             this.txtBankDetails.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1912,7 +1962,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.label44.AutoSize = true;
             this.label44.BackColor = System.Drawing.Color.Transparent;
-            this.label44.Location = new System.Drawing.Point(12, 446);
+            this.label44.Location = new System.Drawing.Point(12, 461);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(340, 13);
             this.label44.TabIndex = 85;
@@ -1929,7 +1979,7 @@ namespace TourWriter.Modules.SupplierModule
             _override2.NodeStyle = Infragistics.Win.UltraWinTree.NodeStyle.CheckBox;
             _override2.SelectionType = Infragistics.Win.UltraWinTree.SelectType.Extended;
             this.treeSupplierConfigs.Override = _override2;
-            this.treeSupplierConfigs.Size = new System.Drawing.Size(239, 483);
+            this.treeSupplierConfigs.Size = new System.Drawing.Size(239, 498);
             this.treeSupplierConfigs.TabIndex = 1;
             this.treeSupplierConfigs.AfterCheck += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.treeSupplierConfigs_AfterCheck);
             // 
@@ -1947,7 +1997,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.txtCancellationPolicy.AcceptsReturn = true;
             this.txtCancellationPolicy.AcceptsTab = true;
-            this.txtCancellationPolicy.Location = new System.Drawing.Point(15, 379);
+            this.txtCancellationPolicy.Location = new System.Drawing.Point(15, 394);
             this.txtCancellationPolicy.Multiline = true;
             this.txtCancellationPolicy.Name = "txtCancellationPolicy";
             this.txtCancellationPolicy.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1958,7 +2008,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.label40.AutoSize = true;
             this.label40.BackColor = System.Drawing.Color.Transparent;
-            this.label40.Location = new System.Drawing.Point(12, 363);
+            this.label40.Location = new System.Drawing.Point(12, 378);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(95, 13);
             this.label40.TabIndex = 77;
@@ -1968,9 +2018,9 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(828, 528);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(828, 543);
             // 
             // tabsAdditional
             // 
@@ -2060,7 +2110,7 @@ namespace TourWriter.Modules.SupplierModule
             this.TabControl_Main.Name = "TabControl_Main";
             this.TabControl_Main.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this.TabControl_Main.ShowTabListButton = Infragistics.Win.DefaultableBoolean.False;
-            this.TabControl_Main.Size = new System.Drawing.Size(832, 551);
+            this.TabControl_Main.Size = new System.Drawing.Size(832, 566);
             this.TabControl_Main.TabIndex = 16;
             ultraTab6.Key = "Supplier";
             ultraTab6.TabPage = this.tabSupplier;
@@ -2086,7 +2136,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(828, 528);
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(828, 543);
             // 
             // pnlMain
             // 
@@ -2096,7 +2146,7 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlMain.Location = new System.Drawing.Point(0, 89);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlMain.Size = new System.Drawing.Size(842, 564);
+            this.pnlMain.Size = new System.Drawing.Size(842, 579);
             this.pnlMain.TabIndex = 17;
             // 
             // menuStrip1
@@ -2250,7 +2300,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.toolSaveClose.Image = ((System.Drawing.Image)(resources.GetObject("toolSaveClose.Image")));
             this.toolSaveClose.Name = "toolSaveClose";
-            this.toolSaveClose.Size = new System.Drawing.Size(51, 22);
+            this.toolSaveClose.Size = new System.Drawing.Size(96, 22);
             this.toolSaveClose.Text = "Save && &Close";
             this.toolSaveClose.ToolTipText = "Save and Close Supplier";
             this.toolSaveClose.Click += new System.EventHandler(this.menuSaveClose_Click);
@@ -2265,27 +2315,12 @@ namespace TourWriter.Modules.SupplierModule
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
             // 
-            // ultraTabPageControl11
-            // 
-            this.ultraTabPageControl11.Controls.Add(this.contentControl1);
-            this.ultraTabPageControl11.Location = new System.Drawing.Point(1, 23);
-            this.ultraTabPageControl11.Name = "ultraTabPageControl11";
-            this.ultraTabPageControl11.Size = new System.Drawing.Size(824, 491);
-            // 
-            // contentControl1
-            // 
-            this.contentControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.contentControl1.Location = new System.Drawing.Point(0, 0);
-            this.contentControl1.Name = "contentControl1";
-            this.contentControl1.Size = new System.Drawing.Size(824, 491);
-            this.contentControl1.TabIndex = 0;
-            // 
             // SupplierMain
             // 
             this.AllowDrop = true;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(842, 653);
+            this.ClientSize = new System.Drawing.Size(842, 668);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -2309,6 +2344,7 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.gridMessages)).EndInit();
             this.myToolStrip2.ResumeLayout(false);
             this.myToolStrip2.PerformLayout();
+            this.ultraTabPageControl11.ResumeLayout(false);
             this.ultraTabPageControl9.ResumeLayout(false);
             this.ultraTabPageControl9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPublishing)).EndInit();
@@ -2334,10 +2370,12 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.cmbState)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCountry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSupplierDescription)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkIsSupplierActive)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSupplierComments)).EndInit();
             this.ultraTabPageControl6.ResumeLayout(false);
             this.ultraTabPageControl3.ResumeLayout(false);
             this.ultraTabPageControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDefaultCheckout)).EndInit();
@@ -2350,6 +2388,7 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.txtExternalLinkID)).EndInit();
             this.myToolStrip3.ResumeLayout(false);
             this.myToolStrip3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbNetTaxType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGradeExternal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGradeInternal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBankDetails)).EndInit();
@@ -2365,7 +2404,6 @@ namespace TourWriter.Modules.SupplierModule
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.ultraTabPageControl11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2503,7 +2541,7 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.LinkLabel btnPaymentTerms;
         private System.Windows.Forms.TextBox txtPaymentTerms;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox cmbTaxType;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbNetTaxType;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox txtAccountingName;
         private System.Windows.Forms.Label label25;
@@ -2529,5 +2567,7 @@ namespace TourWriter.Modules.SupplierModule
         private Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit txtLongitude;
         private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl11;
         private ContentControl contentControl1;
+        private System.Windows.Forms.Label label46;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
     }
 }

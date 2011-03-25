@@ -125,9 +125,12 @@ namespace TourWriter.Modules.SupplierModule
 
 
             // tax types
-            cmbTaxType.DataSource = Cache.ToolSet.TaxType;
-            cmbTaxType.ValueMember = "TaxTypeID";
-            cmbTaxType.DisplayMember = "TaxTypeCode";
+            cmbNetTaxType.DataSource = Cache.ToolSet.TaxType;
+            cmbNetTaxType.ValueMember = "TaxTypeID";
+            cmbNetTaxType.DisplayMember = "TaxTypeCode";
+            cmbGrossTaxType.DataSource = Cache.ToolSet.TaxType;
+            cmbGrossTaxType.ValueMember = "TaxTypeID";
+            cmbGrossTaxType.DisplayMember = "TaxTypeCode";
 
             // Services
             gridServices.DisplayLayout.ValueLists.Add("ServiceTypeList");
@@ -169,7 +172,8 @@ namespace TourWriter.Modules.SupplierModule
             gridServices.SetDataBinding(supplierSet, "Supplier.SupplierService");
 
             // Service details
-            cmbTaxType.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.TaxTypeID");
+            cmbNetTaxType.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.NetTaxTypeID");
+            cmbGrossTaxType.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.GrossTaxTypeID");
             gridServiceTimes.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceServiceTime");
             txtCheckinMinutesEarly.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.CheckinMinutesEarly");
             txtServiceDescription.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Description");
@@ -1152,7 +1156,21 @@ namespace TourWriter.Modules.SupplierModule
             else if (existingConfig != null) existingConfig.Delete();
         }
 
-        private void cmbTaxType_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        private void cmbNetTaxType_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "TaxTypeCode")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbGrossTaxType_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
             // show/hide columns 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
