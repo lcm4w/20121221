@@ -11,83 +11,153 @@ using TourWriter.Services;
 
 namespace TourWriter.Modules.Search
 {
-    /// <summary>
-    /// Search for items in the MainForm menus.
-    /// </summary>
     public partial class SearchMain : ModuleBase
     {
-        #region Member vars
+        #region sql
+        const string ItinearySql =
+@"select ItineraryID, ItineraryName, CustomCode, ArriveDate, ItineraryStatusName [Status], CountryName [Origin], UserName [AssignedTo], DepartmentName [Department],
+ParentFolderID, i.IsRecordActive, i.AddedOn
+from Itinerary i
+left join ItineraryStatus s on i.ItineraryStatusID = s.ItineraryStatusID
+left join Country c on i.CountryID = c.CountryID
+left join [User] u on i.AssignedTo = u.UserID
+left join Department d on i.DepartmentId = d.DepartmentId
+where (IsDeleted = 0 or IsDeleted is null)
+and {0}";
 
-        private enum SearchType
-        {
-            StartsWith,
-            Contains,
-            ByID
-        }
+        const string PurchaseLineSql =
+@"select PurchaseLineID as BookingId, PurchaseLineName as BookingName, p.SupplierReference, 
+i.ItineraryID, ItineraryName, CustomCode, ArriveDate, ItineraryStatusName [Status], CountryName [Origin], UserName [AssignedTo], DepartmentName [Department],
+ParentFolderID, i.IsRecordActive, i.AddedOn
+from Itinerary i
+left join ItineraryStatus s on i.ItineraryStatusID = s.ItineraryStatusID
+left join Country c on i.CountryID = c.CountryID
+left join [User] u on i.AssignedTo = u.UserID
+left join Department d on i.DepartmentId = d.DepartmentId
+left join PurchaseLine p on p.ItineraryID = i.ItineraryID
+where (IsDeleted = 0 or IsDeleted is null)
+and {0}";
 
-        private DataSet ds;
+        const string SupplierSql =
+@"select SupplierID, SupplierName, CityName [City], CountryName [Country], ParentFolderID, IsRecordActive, AddedOn 
+from Supplier s
+left join City c on s.CityID = c.CityID
+left join Country t on s.CountryID = t.CountryID
+--where (IsDeleted = 0 or IsDeleted is null) -- don't hide *deleted*, so that user can undelete
+where {0}";
 
-        public NavigationTreeItemInfo.ItemTypes MenuType
-        {
-            get { return (NavigationTreeItemInfo.ItemTypes) cmbSearch.SelectedItem.DataValue; }
-            set
-            {
-                int index = -1;
-                for (int i = 0; i < cmbSearch.Items.Count; i++)
-                {
-                    if ((NavigationTreeItemInfo.ItemTypes) cmbSearch.Items[i].DataValue == value)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                cmbSearch.SelectedIndex = index;
-            }
-        }
-
+        const string ContactSql =
+@"select ContactId, ContactName, CityName [City], CountryName [Country], ParentFolderID, IsRecordActive, AddedOn 
+from Contact co
+left join City ci on co.CityID = ci.CityID
+left join Country cn on co.CountryID = cn.CountryID
+where (IsDeleted = 0 or IsDeleted is null)
+and {0}";
         #endregion
-
+        
         public SearchMain()
         {
-            Icon = Icon.FromHandle(TourWriter.Properties.Resources.Magnifier.GetHicon()); 
+            Icon = Icon.FromHandle(Properties.Resources.Magnifier.GetHicon()); 
             
             InitializeComponent();
             displayTypeName = "Search";
-            LoadComboItems();
 
             // Merged with parent.
             menuStrip1.Visible = false;
             toolStrip1.Visible = false;
-        }
 
-        private void SearchMain_Load(object sender, EventArgs e)
+
+            cmbTableName.Items.Add("Itinerary", "Itineraries");
+            cmbTableName.Items.Add("Supplier", "Suppliers");
+            cmbTableName.Items.Add("Contact", "Contacts");
+            cmbTableName.Items.Add("PurchaseLine", "Bookings");
+            cmbTableName.SelectedIndex = 0;
+            cmbColName.SelectedIndex = 0;
+        }
+        
+        public void SetDefaultSearch(string tableName)
         {
+            var index = -1;
+            for (var i = 0; i < cmbTableName.Items.Count; i++)
+            {
+                if (cmbTableName.Items[i].DataValue.ToString() != tableName) continue;
+                index = i;
+                break;
+            }
+            cmbTableName.SelectedIndex = index;
+            
         }
 
-        #region Override methods
-
-        protected override bool IsDataDirty()
-        {
-            return false;
-        }
-
-        protected override string GetDisplayName()
-        {
-            return string.Format("Search {0} '{1}'", cmbSearch.Text, txtSearch.Text); 
-        }
-
-        #endregion
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            var tableName = cmbTableName.SelectedItem.DataValue.ToString();
+            var colName = cmbColName.SelectedItem.DataValue.ToString();
+            var comparison = cmbComparison.SelectedItem.DataValue.ToString();
+            var text = txtSearch.Text.ToLower().Replace("\'", "\'\'").
+                Replace("update ", "").Replace("update/", "").
+                Replace("delete ", "").Replace("delete/", "").
+                Replace("drop ", "").Replace("drop/", "").
+                Replace("--", "");
+
+            var sql = "";
+
+            switch (tableName)
+            {
+                case "Itinerary":
+                    sql = ItinearySql;
+                    break;
+                case "Supplier":
+                    sql = SupplierSql;
+                    break;
+                case "Contact":
+                    sql = ContactSql;
+                    break;
+                case "PurchaseLine":
+                    sql = PurchaseLineSql;
+                    break;
+            }
+            if (sql == "")
+            {
+                App.ShowError("No sql statement found for that search");
+                return;
+            }
+
+            var filter = colName + " ";
+            switch (comparison)
+            {
+                case "contains":
+                    filter += " like '%" + text + "%'";
+                    break;
+                case "starts":
+                    filter += " like '" + text + "%'";
+                    break;
+                case "equals":
+                    if (colName.EndsWith("ID"))
+                    {
+                        int i;
+                        if (!int.TryParse(text, out i))
+                        {
+                            App.ShowInfo("ID must be a number");
+                            return;
+                        }
+                        filter += " = " + i;
+                    }
+                    else
+                        filter += " = '" + text + "'";
+                    break;
+            }
+            sql = string.Format(sql, filter);
+            
             Cursor = Cursors.WaitCursor;
             try
             {
-                PerformSearch();
+                App.Debug(sql);
+                Cursor = Cursors.WaitCursor;
+                Thread.Sleep(500);  // show cursor...
 
-                if (ds != null)
-                    DisplayResults();
-
+                var ds = Info.Services.DatabaseHelper.ExecuteDataset(sql);
+                if (ds != null) grid.DataSource = ds;
                 SetFormActiveText();
             }
             finally
@@ -95,131 +165,64 @@ namespace TourWriter.Modules.Search
                 Cursor = Cursors.Default;
             }
         }
-
-        private void cmbSearch_ValueChanged(object sender, EventArgs e)
-        {
-            grid.DataSource = null;
-            SetSearchTypes();
-        }
-
-        private void SetSearchTypes()
-        {
-            if (NavigationTreeItemInfo.ItemTypes.PurchaseLine ==
-                (NavigationTreeItemInfo.ItemTypes)cmbSearch.SelectedItem.DataValue)
-            {
-                cmbType.Items.Clear();
-                cmbType.Items.Add(SearchType.ByID, "ID equals");
-            }
-            else
-            {
-                cmbType.Items.Clear();
-                cmbType.Items.Add(SearchType.Contains, "Name contains");
-                cmbType.Items.Add(SearchType.StartsWith, "Name starts with");
-                cmbType.Items.Add(SearchType.ByID, "ID equals");
-            }
-
-            cmbType.SelectedIndex = 0;
-        }
-
+        
         private void grid_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
-            e.Layout.Bands[0].Columns[0].Hidden = true;
-
-            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            foreach (var c in e.Layout.Bands[0].Columns)
             {
                 if (c.Key == "ParentFolderID" || c.Key == "Type") 
                     c.Hidden = true;
-                
-                if (c.Key == "Name") 
-                    c.Band.SortedColumns.Add(c, false);
-
                 c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter; 
             }
-
             GridHelper.SetDefaultGridAppearance(e);
+            
+            // sort
+            e.Layout.Bands[0].SortedColumns.Clear();
+            var colName = cmbColName.SelectedItem.DataValue.ToString();
+            if (colName == "PurchaseLineName") colName = "BookingName";
+            if (colName == "PurchaseLineID") colName = "BookingId";
+            e.Layout.Bands[0].SortedColumns.Add(e.Layout.Bands[0].Columns[colName], false);
         }
 
         private void grid_DoubleClickRow(object sender, DoubleClickRowEventArgs e)
         {
-            if (e.Row.GetType() == typeof(UltraGridEmptyRow))
-                return;
+            if (e.Row.GetType() == typeof(UltraGridEmptyRow)) return;
+            
+            UltraTreeNode node;
+            NavigationTreeItemInfo info;
+            NavigationTreeItemInfo.ItemTypes clickItem;
+            var tableName = cmbTableName.SelectedItem.DataValue.ToString();
 
-            NavigationTreeItemInfo info = new NavigationTreeItemInfo(
-                (int)e.Row.Cells["ID"].Value,
-                (string)e.Row.Cells["Name"].Value,
-                MenuType,
-                (int)e.Row.Cells["ParentFolderID"].Value,
-                (bool)e.Row.Cells["IsActive"].Value);
-
-            UltraTreeNode node = App.MainForm.BuildMenuNode(info);
-
-            if (MenuType == NavigationTreeItemInfo.ItemTypes.Itinerary)
-                App.MainForm.Load_ItineraryForm(node);
-            else if (MenuType == NavigationTreeItemInfo.ItemTypes.Supplier)
-                App.MainForm.Load_SupplierForm(node);
-            else if (MenuType == NavigationTreeItemInfo.ItemTypes.Contact)
-                App.MainForm.Load_ContactForm(node);
-            else if (MenuType == NavigationTreeItemInfo.ItemTypes.PurchaseLine)
-                App.MainForm.Load_ItineraryForm(node);
-        }
-
-
-        private void LoadComboItems()
-        {
-            cmbSearch.Items.Add(NavigationTreeItemInfo.ItemTypes.Itinerary, "Itineraries");
-            cmbSearch.Items.Add(NavigationTreeItemInfo.ItemTypes.Supplier, "Suppliers");
-            cmbSearch.Items.Add(NavigationTreeItemInfo.ItemTypes.Contact, "Contacts");
-            cmbSearch.Items.Add(NavigationTreeItemInfo.ItemTypes.PurchaseLine, "Bookings");
-            cmbSearch.SelectedIndex = 0;
-
-            cmbType.SelectedIndex = 0;
-        }
-
-        private void PerformSearch()
-        {
-            NavigationTreeItemInfo m = new NavigationTreeItemInfo();
-
-            string phrase = txtSearch.Text;
-            NavigationTreeItemInfo.ItemTypes itemType = (NavigationTreeItemInfo.ItemTypes) cmbSearch.SelectedItem.DataValue;
-            SearchType searchType = (SearchType)cmbType.SelectedItem.DataValue;
-
-            try
+            switch (tableName)
             {
-                Cursor = Cursors.WaitCursor;
-                
-                Thread.Sleep(500);  // show cursor...
+                case "Itinerary":
+                case "PurchaseLine":
+                case "PurchaseItem":
+                    clickItem = NavigationTreeItemInfo.ItemTypes.Itinerary;
+                    info = new NavigationTreeItemInfo(
+                        (int)e.Row.Cells["ItineraryID"].Value, (string)e.Row.Cells["ItineraryName"].Value, clickItem, (int)e.Row.Cells["ParentFolderID"].Value, (bool)e.Row.Cells["IsRecordActive"].Value);
+                    node = App.MainForm.BuildMenuNode(info);
+                    App.MainForm.Load_ItineraryForm(node);
+                    break;
 
-                // validate
-                phrase = phrase.Replace("\'", "\'\'"); // escape sql quotes
-                phrase = phrase.ToLower().Replace(" delete ", "");
-                phrase = phrase.ToLower().Replace(" drop ", "");
-                
-                if (searchType == SearchType.ByID)
-                {
-                    int id;
-                    bool isInteger = int.TryParse(phrase, out id);
-                    ds = m.SearchByID((isInteger) ? id : -1, itemType);
-                }
-                else
-                {
-                    if (searchType == SearchType.Contains)
-                    {
-                        phrase = "%" + phrase;
-                    }
-                    ds = m.Search(phrase, itemType);
-                }
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
+                case "Supplier":
+                    clickItem = NavigationTreeItemInfo.ItemTypes.Supplier;
+                    info = new NavigationTreeItemInfo(
+                        (int)e.Row.Cells["SupplierID"].Value, (string)e.Row.Cells["SupplierName"].Value, clickItem, (int)e.Row.Cells["ParentFolderID"].Value, (bool)e.Row.Cells["IsRecordActive"].Value);
+                    node = App.MainForm.BuildMenuNode(info);
+                    App.MainForm.Load_SupplierForm(node);
+                    break;
+
+                case "Contact":
+                    clickItem = NavigationTreeItemInfo.ItemTypes.Contact;
+                    info = new NavigationTreeItemInfo(
+                        (int)e.Row.Cells["ContactID"].Value, (string)e.Row.Cells["ContactName"].Value, clickItem, (int)e.Row.Cells["ParentFolderID"].Value, (bool)e.Row.Cells["IsRecordActive"].Value);
+                    node = App.MainForm.BuildMenuNode(info);
+                    App.MainForm.Load_ContactForm(node);
+                    break;
             }
         }
-
-        private void DisplayResults()
-        {
-            grid.DataSource = ds;
-        }
-
+        
         private void menuHelp_Click(object sender, EventArgs e)
         {
             App.ShowHelp("SearchMain");
@@ -229,5 +232,80 @@ namespace TourWriter.Modules.Search
         {
             Close();
         }
+
+        private void cmbTableName_ValueChanged(object sender, EventArgs e)
+        {
+            cmbColName.Items.Clear();
+            var tableName = cmbTableName.SelectedItem.DataValue.ToString();
+            switch (tableName)
+            {
+                case "Itinerary":
+                    cmbColName.Items.Add("ItineraryName", "Name");
+                    cmbColName.Items.Add("ItineraryID", "ID");
+                    cmbColName.Items.Add("CustomCode", "Custom Code");
+                    break;
+                case "Supplier":
+                    cmbColName.Items.Add("SupplierName", "Name");
+                    cmbColName.Items.Add("SupplierID", "ID");
+                    break;
+                case "Contact":
+                    cmbColName.Items.Add("ContactName", "Name");
+                    cmbColName.Items.Add("ContactID", "ID");
+                    break;
+                case "PurchaseLine":
+                    cmbColName.Items.Add("PurchaseLineName", "Name");
+                    cmbColName.Items.Add("PurchaseLineID", "ID");
+                    cmbColName.Items.Add("SupplierReference", "Supplier Ref");
+                    break;
+                case "PurchaseItem":
+                    cmbColName.Items.Add("PurchaseItemName", "Name");
+                    cmbColName.Items.Add("PurchaseItemID", "ID");
+                    break;
+            }
+            cmbColName.SelectedIndex = 0;
+        }
+
+        private void cmbColName_ValueChanged(object sender, EventArgs e)
+        {
+            cmbComparison.Items.Clear();
+            var colName = cmbColName.SelectedItem.DataValue.ToString();
+
+            switch (colName)
+            {
+                case "ItineraryName":
+                case "SupplierName":
+                case "ContactName":
+                case "PurchaseLineName":
+                case "PurchaseItemName":
+                case "CustomCode":
+                case "SupplierReference":
+                    cmbComparison.Items.Add("contains", "contains");
+                    cmbComparison.Items.Add("starts", "starts with");
+                    cmbComparison.Items.Add("equals", "equals");
+                    break;
+                case "ItineraryID":
+                case "SupplierID":
+                case "ContactID":
+                case "PurchaseLineID":
+                case "PurchaseItemID":
+                    cmbComparison.Items.Add("equals", "equals");
+                    break;
+            }
+            cmbComparison.SelectedIndex = 0;
+        }
+        
+        #region Override methods
+
+        protected override bool IsDataDirty()
+        {
+            return false;
+        }
+
+        protected override string GetDisplayName()
+        {
+            return string.Format("Search {0} '{1}'", cmbTableName.Text, txtSearch.Text);
+        }
+
+        #endregion
     }
 }

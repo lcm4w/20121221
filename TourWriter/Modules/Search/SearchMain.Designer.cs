@@ -44,13 +44,14 @@ namespace TourWriter.Modules.Search
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmbComparison = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
             this.label4 = new System.Windows.Forms.Label();
             this.grid = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbType = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
-            this.cmbSearch = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
+            this.cmbColName = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
+            this.cmbTableName = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
             this.btnSearch = new Infragistics.Win.Misc.UltraButton();
             this.txtSearch = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -65,9 +66,10 @@ namespace TourWriter.Modules.Search
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbComparison)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbType)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbColName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbTableName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -79,7 +81,7 @@ namespace TourWriter.Modules.Search
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 89);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(683, 330);
+            this.panel1.Size = new System.Drawing.Size(731, 384);
             this.panel1.TabIndex = 0;
             // 
             // panel3
@@ -89,7 +91,7 @@ namespace TourWriter.Modules.Search
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(683, 330);
+            this.panel3.Size = new System.Drawing.Size(731, 384);
             this.panel3.TabIndex = 18;
             // 
             // panel2
@@ -99,24 +101,33 @@ namespace TourWriter.Modules.Search
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel2.Controls.Add(this.cmbComparison);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.grid);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.cmbType);
-            this.panel2.Controls.Add(this.cmbSearch);
+            this.panel2.Controls.Add(this.cmbColName);
+            this.panel2.Controls.Add(this.cmbTableName);
             this.panel2.Controls.Add(this.btnSearch);
             this.panel2.Controls.Add(this.txtSearch);
             this.panel2.Location = new System.Drawing.Point(8, 8);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(667, 315);
+            this.panel2.Size = new System.Drawing.Size(715, 369);
             this.panel2.TabIndex = 17;
+            // 
+            // cmbComparison
+            // 
+            this.cmbComparison.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
+            this.cmbComparison.Location = new System.Drawing.Point(297, 10);
+            this.cmbComparison.Name = "cmbComparison";
+            this.cmbComparison.Size = new System.Drawing.Size(102, 22);
+            this.cmbComparison.TabIndex = 17;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 65);
+            this.label4.Location = new System.Drawing.Point(4, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(168, 13);
             this.label4.TabIndex = 27;
@@ -181,9 +192,9 @@ namespace TourWriter.Modules.Search
             this.grid.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.grid.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.grid.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.grid.Location = new System.Drawing.Point(4, 81);
+            this.grid.Location = new System.Drawing.Point(4, 68);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(659, 229);
+            this.grid.Size = new System.Drawing.Size(707, 296);
             this.grid.TabIndex = 26;
             this.grid.Text = "ultraGrid1";
             this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
@@ -192,55 +203,56 @@ namespace TourWriter.Modules.Search
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(248, 15);
+            this.label3.Location = new System.Drawing.Point(151, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(21, 13);
+            this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 25;
-            this.label3.Text = "for";
+            this.label3.Text = "where";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 15);
+            this.label1.Location = new System.Drawing.Point(1, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 24;
-            this.label1.Text = "Search in";
+            this.label1.Text = "Search";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(398, 15);
+            this.label2.Location = new System.Drawing.Point(405, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 23;
             this.label2.Text = "the phrase";
             // 
-            // cmbType
+            // cmbColName
             // 
-            this.cmbType.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
-            this.cmbType.Location = new System.Drawing.Point(273, 12);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(118, 22);
-            this.cmbType.TabIndex = 17;
+            this.cmbColName.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
+            this.cmbColName.Location = new System.Drawing.Point(189, 11);
+            this.cmbColName.Name = "cmbColName";
+            this.cmbColName.Size = new System.Drawing.Size(102, 22);
+            this.cmbColName.TabIndex = 16;
+            this.cmbColName.ValueChanged += new System.EventHandler(this.cmbColName_ValueChanged);
             // 
-            // cmbSearch
+            // cmbTableName
             // 
-            this.cmbSearch.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
-            this.cmbSearch.Location = new System.Drawing.Point(62, 12);
-            this.cmbSearch.Name = "cmbSearch";
-            this.cmbSearch.Size = new System.Drawing.Size(180, 22);
-            this.cmbSearch.TabIndex = 15;
-            this.cmbSearch.ValueChanged += new System.EventHandler(this.cmbSearch_ValueChanged);
+            this.cmbTableName.DropDownStyle = Infragistics.Win.DropDownStyle.DropDownList;
+            this.cmbTableName.Location = new System.Drawing.Point(41, 10);
+            this.cmbTableName.Name = "cmbTableName";
+            this.cmbTableName.Size = new System.Drawing.Size(102, 22);
+            this.cmbTableName.TabIndex = 15;
+            this.cmbTableName.ValueChanged += new System.EventHandler(this.cmbTableName_ValueChanged);
             // 
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSearch.Location = new System.Drawing.Point(589, 40);
+            this.btnSearch.Location = new System.Drawing.Point(637, 40);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(74, 22);
-            this.btnSearch.TabIndex = 13;
+            this.btnSearch.TabIndex = 19;
             this.btnSearch.Text = "Search";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -248,10 +260,11 @@ namespace TourWriter.Modules.Search
             // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(463, 12);
+            this.txtSearch.Location = new System.Drawing.Point(468, 12);
+            this.txtSearch.MinimumSize = new System.Drawing.Size(40, 22);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 22);
-            this.txtSearch.TabIndex = 12;
+            this.txtSearch.Size = new System.Drawing.Size(243, 22);
+            this.txtSearch.TabIndex = 18;
             // 
             // menuStrip1
             // 
@@ -260,7 +273,7 @@ namespace TourWriter.Modules.Search
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 40);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(683, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(731, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -271,7 +284,7 @@ namespace TourWriter.Modules.Search
             this.menuClose});
             this.fileToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // toolStripSeparator1
@@ -279,14 +292,14 @@ namespace TourWriter.Modules.Search
             this.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator1.MergeIndex = 1;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(100, 6);
             // 
             // menuClose
             // 
             this.menuClose.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuClose.MergeIndex = 2;
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(152, 22);
+            this.menuClose.Size = new System.Drawing.Size(103, 22);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -296,7 +309,7 @@ namespace TourWriter.Modules.Search
             this.menuHelp});
             this.helpToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // menuHelp
@@ -306,7 +319,7 @@ namespace TourWriter.Modules.Search
             this.menuHelp.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.menuHelp.MergeIndex = 1;
             this.menuHelp.Name = "menuHelp";
-            this.menuHelp.Size = new System.Drawing.Size(178, 22);
+            this.menuHelp.Size = new System.Drawing.Size(176, 22);
             this.menuHelp.Text = "Help for this screen";
             this.menuHelp.Click += new System.EventHandler(this.menuHelp_Click);
             // 
@@ -317,7 +330,7 @@ namespace TourWriter.Modules.Search
             this.toolHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 64);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(683, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(731, 25);
             this.toolStrip1.TabIndex = 24;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -331,7 +344,7 @@ namespace TourWriter.Modules.Search
             this.toolHelp.Image = ((System.Drawing.Image)(resources.GetObject("toolHelp.Image")));
             this.toolHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolHelp.Name = "toolHelp";
-            this.toolHelp.Size = new System.Drawing.Size(48, 22);
+            this.toolHelp.Size = new System.Drawing.Size(52, 22);
             this.toolHelp.Text = "Help";
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
@@ -341,7 +354,7 @@ namespace TourWriter.Modules.Search
             this.AcceptButton = this.btnSearch;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(683, 419);
+            this.ClientSize = new System.Drawing.Size(731, 473);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -350,7 +363,6 @@ namespace TourWriter.Modules.Search
             this.MainToolStrip = this.toolStrip1;
             this.Name = "SearchMain";
             this.Text = "Search";
-            this.Load += new System.EventHandler(this.SearchMain_Load);
             this.Controls.SetChildIndex(this.menuStrip1, 0);
             this.Controls.SetChildIndex(this.toolStrip1, 0);
             this.Controls.SetChildIndex(this.panel1, 0);
@@ -358,9 +370,10 @@ namespace TourWriter.Modules.Search
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbComparison)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbType)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbColName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbTableName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -375,11 +388,11 @@ namespace TourWriter.Modules.Search
 
         private System.Windows.Forms.Panel panel1;
         private Infragistics.Win.Misc.UltraButton btnSearch;
-        private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbSearch;
+        private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbTableName;
         private Infragistics.Win.UltraWinEditors.UltraTextEditor txtSearch;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbType;
+        private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbColName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
@@ -394,5 +407,6 @@ namespace TourWriter.Modules.Search
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuClose;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private Infragistics.Win.UltraWinEditors.UltraComboEditor cmbComparison;
     }
 }

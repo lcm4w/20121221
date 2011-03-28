@@ -614,8 +614,7 @@ namespace TourWriter.Forms
         {
             UltraTreeNode tag = new UltraTreeNode("SearchMain");
             SearchMain s = LoadMdiForm(typeof(SearchMain), tag) as SearchMain;
-            if (s != null)
-                s.MenuType = menuType;
+            if (s != null) s.SetDefaultSearch(menuType.ToString());
         }
 
         internal void Load_DataExtractForm()
