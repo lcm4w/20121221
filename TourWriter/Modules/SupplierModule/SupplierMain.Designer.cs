@@ -71,6 +71,7 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.Appearance appearance36 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance37 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance53 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinTree.Override _override1 = new Infragistics.Win.UltraWinTree.Override();
             Infragistics.Win.Appearance appearance39 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance40 = new Infragistics.Win.Appearance();
@@ -136,6 +137,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl10 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.accounting1 = new TourWriter.Modules.SupplierModule.Accounting();
             this.tabSupplier = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.chkSupplierDeleted = new Infragistics.Win.UltraWinEditors.UltraCheckEditor();
             this.pnlSpatial = new System.Windows.Forms.Panel();
             this.txtLongitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
             this.txtLatitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
@@ -275,6 +277,7 @@ namespace TourWriter.Modules.SupplierModule
             this.groupBox1.SuspendLayout();
             this.ultraTabPageControl10.SuspendLayout();
             this.tabSupplier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkSupplierDeleted)).BeginInit();
             this.pnlSpatial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierEmail)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierWebsite)).BeginInit();
@@ -879,6 +882,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.AutoScroll = true;
             this.tabSupplier.AutoScrollMinSize = new System.Drawing.Size(720, 510);
             this.tabSupplier.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tabSupplier.Controls.Add(this.chkSupplierDeleted);
             this.tabSupplier.Controls.Add(this.pnlSpatial);
             this.tabSupplier.Controls.Add(this.txtPostcode);
             this.tabSupplier.Controls.Add(this.label34);
@@ -923,9 +927,24 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
+            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(828, 543);
+            // 
+            // chkSupplierDeleted
+            // 
+            appearance38.ForeColor = System.Drawing.Color.Red;
+            appearance38.TextHAlignAsString = "Right";
+            this.chkSupplierDeleted.Appearance = appearance38;
+            this.chkSupplierDeleted.BackColor = System.Drawing.Color.Transparent;
+            this.chkSupplierDeleted.BackColorInternal = System.Drawing.Color.Transparent;
+            this.chkSupplierDeleted.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkSupplierDeleted.Location = new System.Drawing.Point(380, 41);
+            this.chkSupplierDeleted.Name = "chkSupplierDeleted";
+            this.chkSupplierDeleted.Size = new System.Drawing.Size(139, 20);
+            this.chkSupplierDeleted.TabIndex = 147;
+            this.chkSupplierDeleted.Text = "DELETED";
+            this.chkSupplierDeleted.Visible = false;
             // 
             // pnlSpatial
             // 
@@ -1363,8 +1382,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // chkIsSupplierActive
             // 
-            appearance38.TextHAlignAsString = "Right";
-            this.chkIsSupplierActive.Appearance = appearance38;
+            appearance53.TextHAlignAsString = "Right";
+            this.chkIsSupplierActive.Appearance = appearance53;
             this.chkIsSupplierActive.BackColor = System.Drawing.Color.Transparent;
             this.chkIsSupplierActive.BackColorInternal = System.Drawing.Color.Transparent;
             this.chkIsSupplierActive.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1452,7 +1471,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl3.Controls.Add(this.label36);
             this.ultraTabPageControl3.Controls.Add(this.txtCancellationPolicy);
             this.ultraTabPageControl3.Controls.Add(this.label40);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(2, 21);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
             this.ultraTabPageControl3.Size = new System.Drawing.Size(828, 543);
             // 
@@ -2361,6 +2380,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl10.ResumeLayout(false);
             this.tabSupplier.ResumeLayout(false);
             this.tabSupplier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkSupplierDeleted)).EndInit();
             this.pnlSpatial.ResumeLayout(false);
             this.pnlSpatial.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierEmail)).EndInit();
@@ -2569,5 +2589,6 @@ namespace TourWriter.Modules.SupplierModule
         private ContentControl contentControl1;
         private System.Windows.Forms.Label label46;
         private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
+        private Infragistics.Win.UltraWinEditors.UltraCheckEditor chkSupplierDeleted;
     }
 }

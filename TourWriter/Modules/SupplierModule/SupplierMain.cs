@@ -75,6 +75,9 @@ namespace TourWriter.Modules.SupplierModule
                 }
                 reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
                 reportControl.DefaultParameters.Add("@SupplierID", supplierSet.Supplier[0].SupplierID);
+
+                chkSupplierDeleted.Visible = !supplierSet.Supplier[0].IsIsDeletedNull() && supplierSet.Supplier[0].IsDeleted;
+                chkSupplierDeleted.CheckedValueChanged += chkSupplierDeleted_CheckedChanged;
             }
 
             Cache.ToolSet.TemplateCategory.RowChanged += DataTable_RowChanged;
@@ -442,6 +445,7 @@ namespace TourWriter.Modules.SupplierModule
             txtExternalLinkID.DataBindings.Add("Text", supplierSet, "Supplier.ExportID");
             txtBookingWebsite.DataBindings.Add("Text", supplierSet, "Supplier.BookingWebsite");
             chkIsSupplierActive.DataBindings.Add("Checked", supplierSet, "Supplier.IsRecordActive");
+            chkSupplierDeleted.DataBindings.Add("Checked", supplierSet, "Supplier.IsDeleted");
             gridNotes.SetDataBinding(supplierSet, "Supplier.SupplierSupplierNote");
             gridNotes.ActiveRow = null;
 
@@ -1649,5 +1653,21 @@ namespace TourWriter.Modules.SupplierModule
         }
 
         #endregion
+
+        private void chkSupplierDeleted_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                if (chkSupplierDeleted.Checked) supplierSet.Supplier[0].SetIsDeletedNull();
+                SaveDataChanges();
+                App.RefreshMenu("Supplier");
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+        }
     }
 }
