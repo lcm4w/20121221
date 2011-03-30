@@ -21,6 +21,11 @@ namespace TourWriter.Modules.DataExtract.UserControls
             set { btnExcel.Text = (value) ? "Cancel" : "Excel"; }
         }
 
+        private void RatesExport_Load(object sender, EventArgs e)
+        {
+            gridReport.UltraGrid.InitializeLayout += gridReport_InitializeLayout;
+        }
+
         public RatesExport()
         {
             InitializeComponent();
@@ -74,7 +79,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
                 return;
 
             string saveFile = Path.GetTempFileName() + ".xls";
-            var dataTable = GridHelper.GetDataRowsTable(gridReport, true);
+            var dataTable = GridHelper.GetDataRowsTable(gridReport.UltraGrid, true);
 
             isExporting = true;
             excelExporter.StartExport(dataTable, templateFile, saveFile);
@@ -115,6 +120,8 @@ namespace TourWriter.Modules.DataExtract.UserControls
 
         private void gridReport_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
+            if (!(sender is UltraGrid)) return;
+
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
                 GridHelper.SetDefaultCellAppearance(c);
@@ -135,7 +142,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
 
             // group-by
             e.Layout.GroupByBox.Hidden = false;
-            gridReport.DisplayLayout.ViewStyleBand = ViewStyleBand.OutlookGroupBy;
+            gridReport.UltraGrid.DisplayLayout.ViewStyleBand = ViewStyleBand.OutlookGroupBy;
 
             e.Layout.Override.ActiveRowAppearance.ForeColor = System.Drawing.Color.Black;
             e.Layout.Override.ActiveRowAppearance.BackColor = System.Drawing.Color.White;

@@ -31,12 +31,11 @@ namespace TourWriter.Modules.DataExtract.UserControls
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnExcel = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.gridReport = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.gridReport = new TourWriter.UserControls.DataExtractGrid();
             this.txtStartDate = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.txtEndDate = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.gridReport)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStartDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndDate)).BeginInit();
             this.SuspendLayout();
@@ -73,12 +72,13 @@ namespace TourWriter.Modules.DataExtract.UserControls
             this.gridReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridReport.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gridReport.Location = new System.Drawing.Point(3, 33);
+            this.gridReport.DataSource = null;
+            this.gridReport.ExportFileName = "";
+            this.gridReport.GridEnabled = true;
+            this.gridReport.Location = new System.Drawing.Point(3, 30);
             this.gridReport.Name = "gridReport";
-            this.gridReport.Size = new System.Drawing.Size(766, 477);
-            this.gridReport.TabIndex = 80;
-            this.gridReport.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridReport_InitializeLayout);
+            this.gridReport.Size = new System.Drawing.Size(766, 480);
+            this.gridReport.TabIndex = 5;
             // 
             // txtStartDate
             // 
@@ -114,7 +114,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
             this.label2.TabIndex = 84;
             this.label2.Text = "End date";
             // 
-            // AgentBook
+            // RatesExport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -126,9 +126,9 @@ namespace TourWriter.Modules.DataExtract.UserControls
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnExcel);
             this.Controls.Add(this.btnLoad);
-            this.Name = "AgentBook";
+            this.Name = "RatesExport";
             this.Size = new System.Drawing.Size(772, 513);
-            ((System.ComponentModel.ISupportInitialize)(this.gridReport)).EndInit();
+            this.Load += new System.EventHandler(this.RatesExport_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtStartDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndDate)).EndInit();
             this.ResumeLayout(false);
@@ -141,7 +141,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnExcel;
         private System.Windows.Forms.ProgressBar progressBar;
-        private Infragistics.Win.UltraWinGrid.UltraGrid gridReport;
+        private TourWriter.UserControls.DataExtractGrid gridReport;
         private Infragistics.Win.UltraWinEditors.UltraDateTimeEditor txtStartDate;
         private Infragistics.Win.UltraWinEditors.UltraDateTimeEditor txtEndDate;
         private System.Windows.Forms.Label label1;
