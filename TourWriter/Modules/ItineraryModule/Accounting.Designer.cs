@@ -267,9 +267,9 @@ namespace TourWriter.Modules.ItineraryModule
             ultraTab3.TabPage = this.ultraTabPageControl22;
             ultraTab3.Text = "Purchases";
             this.tabControl.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
+            ultraTab3,
             ultraTab1,
-            ultraTab2,
-            ultraTab3});
+            ultraTab2});
             // 
             // btnTransfer
             // 

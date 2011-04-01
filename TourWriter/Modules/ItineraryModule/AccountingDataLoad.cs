@@ -7,9 +7,9 @@ namespace TourWriter.Modules.ItineraryModule
 {
     class AccountingDataLoad
     {
-        const string PurchasesSql = "select * from PurchaseItemPaymentsDetail where ItineraryID = {0} order by PaymentDueDate";
+        const string PurchasesSql = "select * from PurchaseItemPaymentsDetail where ItineraryID = {0}";
         const string AllocationsSql = "select * from ItinerarySaleAllocationDetail where ItineraryID = {0}";
-        const string ReceiptsSql = "select * from ItineraryPaymentDetail where ItineraryID = {0}";
+        //const string ReceiptsSql = "select * from ItineraryPaymentDetail where ItineraryID = {0}";
         const string ServiceTypesSql = "select ServiceTypeID, Gross from ItineraryServiceTypeDetail where ItineraryID = {0}";
 
         private List<Thread> threads;
