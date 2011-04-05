@@ -81,26 +81,27 @@ namespace TourWriter.Services
 
         internal static void SetUiCultureInfo()
         {
-            if (GetApplicationCurrencyCode() == null) return; // nothing to do
+            var hasOverride = !Cache.ToolSet.AppSettings[0].IsLanguageCodeNull() && !string.IsNullOrEmpty(Cache.ToolSet.AppSettings[0].LanguageCode.Trim());
+            var siteLanguageCode = hasOverride ? Cache.ToolSet.AppSettings[0].LanguageCode.Trim() : Thread.CurrentThread.CurrentCulture.Name;
+            var ciOverride = CultureInfo.CreateSpecificCulture(siteLanguageCode);
+            var nfOverride = ciOverride.NumberFormat;
+            
+            if (nfOverride == CultureInfo.CurrentCulture.NumberFormat) 
+                return; // nothing to do
 
-            var siteCurrencyCode = GetApplicationCurrencyCode();
-            var siteCurrencyOverride = CultureInfo.CreateSpecificCulture(siteCurrencyCode);
-            if (Thread.CurrentThread.CurrentCulture.Name == siteCurrencyOverride.Name) return; // nothing to do
-
-            var ciSystem = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-            var nfSystem = ciSystem.NumberFormat;
-            var nfOverride = siteCurrencyOverride.NumberFormat;
+            var ciClone = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+            var nfClone = ciClone.NumberFormat;
 
             // set the currency properties
-            nfSystem.CurrencyDecimalDigits = nfOverride.CurrencyDecimalDigits;
-            nfSystem.CurrencyDecimalSeparator = nfOverride.CurrencyDecimalSeparator;
-            nfSystem.CurrencyGroupSeparator = nfOverride.CurrencyGroupSeparator;
-            nfSystem.CurrencyGroupSizes = nfOverride.CurrencyGroupSizes;
-            nfSystem.CurrencyNegativePattern = nfOverride.CurrencyNegativePattern;
-            nfSystem.CurrencyPositivePattern = nfOverride.CurrencyPositivePattern;
-            nfSystem.CurrencySymbol = nfOverride.CurrencySymbol;
+            nfClone.CurrencyDecimalDigits = nfOverride.CurrencyDecimalDigits;
+            nfClone.CurrencyDecimalSeparator = nfOverride.CurrencyDecimalSeparator;
+            nfClone.CurrencyGroupSeparator = nfOverride.CurrencyGroupSeparator;
+            nfClone.CurrencyGroupSizes = nfOverride.CurrencyGroupSizes;
+            nfClone.CurrencyNegativePattern = nfOverride.CurrencyNegativePattern;
+            nfClone.CurrencyPositivePattern = nfOverride.CurrencyPositivePattern;
+            nfClone.CurrencySymbol = nfOverride.CurrencySymbol;
 
-            Thread.CurrentThread.CurrentCulture = ciSystem;
+            Thread.CurrentThread.CurrentCulture = ciClone;
         }
         
 

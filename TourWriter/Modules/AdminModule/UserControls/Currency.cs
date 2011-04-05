@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -28,24 +32,18 @@ namespace TourWriter.Modules.AdminModule.UserControls
         public Currency()
         {
             InitializeComponent();
-            btnCharMap.Text = "Enable Editing";
-
-            // TODO: remove unused controls ---------------
-            tabControl1.TabPages.Remove(tabPage2);
-            btnCurrencyAdd.Visible = false;
-            btnCurrencyDelete.Visible = false;
-            // -------------------------------------------------
+            tabControl1.TabPages.Remove(tabPage2); // TODO: hide Rates tab for now...
         }
 
         private void Currency_Load(object sender, EventArgs e)
         {
             DataBind();
+            RefreshCurrencyExample();
         }
 
         private void DataBind()
         {
             gridCurrency.SetDataBinding(toolSet, "Currency");
-
             cmbCurrencyFrom.DataSource = toolSet.Currency;
             cmbCurrencyFrom.DisplayMember = "CurrencyCode";
             cmbCurrencyTo.DataSource = toolSet.Currency;
@@ -111,47 +109,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
                 App.ShowInfo("Currency code must be 3 characters long.");
             }
         }
-
-        private void btnCurrencyAdd_Click(object sender, EventArgs e)
-        {
-            ToolSet.CurrencyRow r = toolSet.Currency.NewCurrencyRow();
-            r.CurrencyCode = "";
-            toolSet.Currency.AddCurrencyRow(r);
-            GridHelper.SetActiveRow(gridCurrency, "CurrencyCode", r.CurrencyCode, "CurrencyCode");
-
-            // Validation only works once editing has begun, otherwise empty cell value is accepted.
-            // This tricks cell into beginning validation on cell.
-            gridCurrency.ActiveCell.Value = "A";
-            gridCurrency.ActiveCell.Value = "";
-        }
-
-        private void btnCurrencyDelete_Click(object sender, EventArgs e)
-        {
-            if (gridCurrency.ActiveRow == null)
-                return;
-
-            if (App.AskDeleteRow())
-                GridHelper.DeleteActiveRow(gridCurrency, true);
-        }
         
-        private void btnCharMap_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    Process.Start(@"C:\WINDOWS\system32\charmap.exe");
-            //}
-            //catch
-            //{
-            //    App.ShowError(
-            //        "Failed to open Windows Character Map. Try opening it from Start > All Programs > Accessories > System Tools > Character Map");
-            //}
-
-            if (!App.AskYesNo("This will allow you to edit the currency data.\r\n\r\nPlease be careful editing the Display Format as this will affect all areas where currency amounts are shown, including client reports.\r\n\r\nDo you wish to continue?")) return;
-            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyCode"].CellClickAction = CellClickAction.Edit;
-            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyName"].CellClickAction = CellClickAction.Edit;
-            gridCurrency.DisplayLayout.Bands[0].Columns["DisplayFormat"].CellClickAction = CellClickAction.Edit;
-        }
-
         #endregion
 
         #region Currency rates
@@ -255,5 +213,47 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         #endregion
 
+        private void btnDefault_Click(object sender, EventArgs e)
+        {
+            var ccy = new CurrencyDefault();
+
+            if (ccy.ShowDialog() == DialogResult.OK)
+            {
+                var changed = false;
+                if (ccy.LanguageCode != toolSet.AppSettings[0].LanguageCode)
+                {
+                    changed = true;
+                    toolSet.AppSettings[0].LanguageCode = ccy.LanguageCode;
+                }
+                if (ccy.CurrencyCode != toolSet.AppSettings[0].CurrencyCode)
+                {
+                    changed = true;
+                    toolSet.AppSettings[0].CurrencyCode = ccy.CurrencyCode;
+                }
+                if (changed)
+                {
+                    RefreshCurrencyExample();
+                    CurrencyService.SetUiCultureInfo();
+                }
+            }
+        }
+
+        private void btnList_Click(object sender, EventArgs e)
+        {
+            if (!App.AskYesNo("This will allow you to edit the currency data.\r\n\r\nPlease be careful editing the Display Format as this will affect all areas where currency amounts are shown, including client reports.\r\n\r\nDo you wish to continue?")) return;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyCode"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyName"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["DisplayFormat"].CellClickAction = CellClickAction.Edit;
+        }
+
+        private void RefreshCurrencyExample()
+        {
+            var ccy = CurrencyService.GetApplicationCurrencyCodeOrDefault();
+            txtCurrency.Text = toolSet.Currency.Where(x => x.CurrencyCode == ccy).Select(x => x.DisplayName).FirstOrDefault();
+
+            var lang = !toolSet.AppSettings[0].IsLanguageCodeNull() ? toolSet.AppSettings[0].LanguageCode.Trim() : "";
+            if (lang == "") lang = CultureInfo.CurrentCulture.Name;
+            txtCurrency.Text += " (example:  " + 12345.6789f.ToString("c", CultureInfo.GetCultureInfo(lang)) + ").";
+        }
    }
 }

@@ -310,6 +310,12 @@
     <Compile Include="Forms\AddBookingTemplateForm.Designer.cs">
       <DependentUpon>AddBookingTemplateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CurrencyDefault.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CurrencyDefault.Designer.cs">
+      <DependentUpon>CurrencyDefault.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1055,6 +1061,9 @@
     <Compile Include="UserControls\Wizard\WizardPageEventArgs.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\CurrencyDefault.resx">
+      <DependentUpon>CurrencyDefault.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CurrencyRateEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CurrencyRateEditor.cs</DependentUpon>
@@ -1494,6 +1503,7 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.04.05.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.03.27.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.02.28.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.02.17.sql" />

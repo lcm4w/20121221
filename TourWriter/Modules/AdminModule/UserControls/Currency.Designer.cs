@@ -32,12 +32,12 @@ namespace TourWriter.Modules.AdminModule.UserControls
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Currency));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtCurrency = new System.Windows.Forms.Label();
+            this.btnList = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btnDefault = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.gridCurrency = new Infragistics.Win.UltraWinGrid.UltraGrid();
-            this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
-            this.btnCharMap = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCurrencyAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnCurrencyDelete = new System.Windows.Forms.ToolStripButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
@@ -65,7 +65,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCurrency)).BeginInit();
-            this.myToolStrip1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridRate)).BeginInit();
@@ -87,89 +86,91 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabControl1.Location = new System.Drawing.Point(3, 14);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(667, 540);
+            this.tabControl1.Size = new System.Drawing.Size(778, 573);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtCurrency);
+            this.tabPage1.Controls.Add(this.btnList);
+            this.tabPage1.Controls.Add(this.label11);
+            this.tabPage1.Controls.Add(this.btnDefault);
+            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.gridCurrency);
-            this.tabPage1.Controls.Add(this.myToolStrip1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(659, 514);
+            this.tabPage1.Size = new System.Drawing.Size(770, 547);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Currencies";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // txtCurrency
+            // 
+            this.txtCurrency.AutoSize = true;
+            this.txtCurrency.CausesValidation = false;
+            this.txtCurrency.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCurrency.ForeColor = System.Drawing.Color.Gray;
+            this.txtCurrency.Location = new System.Drawing.Point(103, 17);
+            this.txtCurrency.Name = "txtCurrency";
+            this.txtCurrency.Size = new System.Drawing.Size(134, 20);
+            this.txtCurrency.TabIndex = 131;
+            this.txtCurrency.Text = "Your sell currency";
+            // 
+            // btnList
+            // 
+            this.btnList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnList.Location = new System.Drawing.Point(635, 61);
+            this.btnList.Name = "btnList";
+            this.btnList.Size = new System.Drawing.Size(129, 23);
+            this.btnList.TabIndex = 130;
+            this.btnList.Text = "Enable List Editing";
+            this.btnList.UseVisualStyleBackColor = true;
+            this.btnList.Click += new System.EventHandler(this.btnList_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.CausesValidation = false;
+            this.label11.Location = new System.Drawing.Point(6, 22);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 13);
+            this.label11.TabIndex = 127;
+            this.label11.Text = "Your sell currency";
+            // 
+            // btnDefault
+            // 
+            this.btnDefault.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDefault.Location = new System.Drawing.Point(635, 17);
+            this.btnDefault.Name = "btnDefault";
+            this.btnDefault.Size = new System.Drawing.Size(129, 23);
+            this.btnDefault.TabIndex = 129;
+            this.btnDefault.Text = "Edit Default Currency";
+            this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.CausesValidation = false;
+            this.label5.Location = new System.Drawing.Point(6, 66);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(246, 13);
+            this.label5.TabIndex = 128;
+            this.label5.Text = "Select the buy/sell currencies that you want to use";
             // 
             // gridCurrency
             // 
             this.gridCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridCurrency.Location = new System.Drawing.Point(6, 27);
+            this.gridCurrency.Location = new System.Drawing.Point(6, 85);
             this.gridCurrency.Name = "gridCurrency";
-            this.gridCurrency.Size = new System.Drawing.Size(650, 484);
+            this.gridCurrency.Size = new System.Drawing.Size(761, 459);
             this.gridCurrency.TabIndex = 0;
             this.gridCurrency.Text = "ultraGrid1";
-            this.gridCurrency.Error += new Infragistics.Win.UltraWinGrid.ErrorEventHandler(this.gridCurrency_Error);
             this.gridCurrency.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridCurrency_InitializeLayout);
-            // 
-            // myToolStrip1
-            // 
-            this.myToolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.myToolStrip1.BackColor = System.Drawing.Color.Transparent;
-            this.myToolStrip1.DisableAllMenuItems = true;
-            this.myToolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.myToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnCharMap,
-            this.toolStripSeparator1,
-            this.btnCurrencyAdd,
-            this.btnCurrencyDelete});
-            this.myToolStrip1.Location = new System.Drawing.Point(549, 4);
-            this.myToolStrip1.Name = "myToolStrip1";
-            this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(112, 25);
-            this.myToolStrip1.TabIndex = 122;
-            this.myToolStrip1.Text = "myToolStrip1";
-            // 
-            // btnCharMap
-            // 
-            this.btnCharMap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnCharMap.Image = ((System.Drawing.Image)(resources.GetObject("btnCharMap.Image")));
-            this.btnCharMap.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCharMap.Name = "btnCharMap";
-            this.btnCharMap.Size = new System.Drawing.Size(57, 22);
-            this.btnCharMap.Text = "Char map";
-            this.btnCharMap.ToolTipText = "Open Windows Character map application";
-            this.btnCharMap.Click += new System.EventHandler(this.btnCharMap_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnCurrencyAdd
-            // 
-            this.btnCurrencyAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCurrencyAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnCurrencyAdd.Image")));
-            this.btnCurrencyAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCurrencyAdd.Name = "btnCurrencyAdd";
-            this.btnCurrencyAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnCurrencyAdd.ToolTipText = "Add new currency";
-            this.btnCurrencyAdd.Click += new System.EventHandler(this.btnCurrencyAdd_Click);
-            // 
-            // btnCurrencyDelete
-            // 
-            this.btnCurrencyDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCurrencyDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCurrencyDelete.Image")));
-            this.btnCurrencyDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCurrencyDelete.Name = "btnCurrencyDelete";
-            this.btnCurrencyDelete.Size = new System.Drawing.Size(23, 22);
-            this.btnCurrencyDelete.Text = "btnCurrencyDelete";
-            this.btnCurrencyDelete.ToolTipText = "Delete selected currency";
-            this.btnCurrencyDelete.Click += new System.EventHandler(this.btnCurrencyDelete_Click);
+            this.gridCurrency.Error += new Infragistics.Win.UltraWinGrid.ErrorEventHandler(this.gridCurrency_Error);
             // 
             // tabPage2
             // 
@@ -178,7 +179,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(659, 514);
+            this.tabPage2.Size = new System.Drawing.Size(770, 547);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Rates";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -193,7 +194,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 86);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(653, 425);
+            this.panel1.Size = new System.Drawing.Size(764, 458);
             this.panel1.TabIndex = 19;
             // 
             // label4
@@ -215,7 +216,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.gridRate.Location = new System.Drawing.Point(3, 50);
             this.gridRate.Name = "gridRate";
-            this.gridRate.Size = new System.Drawing.Size(647, 372);
+            this.gridRate.Size = new System.Drawing.Size(758, 405);
             this.gridRate.TabIndex = 1;
             this.gridRate.Text = "ultraGrid2";
             this.gridRate.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridRate_InitializeLayout);
@@ -236,7 +237,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.tsServiceTimes.DisableAllMenuItems = false;
             this.tsServiceTimes.Dock = System.Windows.Forms.DockStyle.None;
             this.tsServiceTimes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsServiceTimes.Location = new System.Drawing.Point(548, 3);
+            this.tsServiceTimes.Location = new System.Drawing.Point(659, 3);
             this.tsServiceTimes.Name = "tsServiceTimes";
             this.tsServiceTimes.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.tsServiceTimes.Size = new System.Drawing.Size(102, 25);
@@ -254,7 +255,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnRateAdd,
             this.btnRateDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(606, 27);
+            this.myToolStrip2.Location = new System.Drawing.Point(717, 27);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
@@ -288,10 +289,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             this.ultraExpandableGroupBox1.Controls.Add(this.ultraExpandableGroupBoxPanel1);
             this.ultraExpandableGroupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ultraExpandableGroupBox1.ExpandedSize = new System.Drawing.Size(653, 83);
+            this.ultraExpandableGroupBox1.ExpandedSize = new System.Drawing.Size(764, 83);
             this.ultraExpandableGroupBox1.Location = new System.Drawing.Point(3, 3);
             this.ultraExpandableGroupBox1.Name = "ultraExpandableGroupBox1";
-            this.ultraExpandableGroupBox1.Size = new System.Drawing.Size(653, 83);
+            this.ultraExpandableGroupBox1.Size = new System.Drawing.Size(764, 83);
             this.ultraExpandableGroupBox1.TabIndex = 18;
             this.ultraExpandableGroupBox1.Text = "Search rates data";
             // 
@@ -312,7 +313,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraExpandableGroupBoxPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ultraExpandableGroupBoxPanel1.Location = new System.Drawing.Point(3, 19);
             this.ultraExpandableGroupBoxPanel1.Name = "ultraExpandableGroupBoxPanel1";
-            this.ultraExpandableGroupBoxPanel1.Size = new System.Drawing.Size(647, 61);
+            this.ultraExpandableGroupBoxPanel1.Size = new System.Drawing.Size(758, 61);
             this.ultraExpandableGroupBoxPanel1.TabIndex = 0;
             // 
             // btnClear
@@ -366,22 +367,22 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // cmbCurrencyTo
             // 
-            this.cmbCurrencyTo.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.cmbCurrencyTo.DisplayStyle = Infragistics.Win.EmbeddableElementDisplayStyle.Default;
+            this.cmbCurrencyTo.CheckedListSettings.CheckStateMember = "";
             this.cmbCurrencyTo.DropDownStyle = Infragistics.Win.UltraWinGrid.UltraComboStyle.DropDownList;
             this.cmbCurrencyTo.Location = new System.Drawing.Point(227, 5);
             this.cmbCurrencyTo.Name = "cmbCurrencyTo";
+            this.cmbCurrencyTo.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbCurrencyTo.Size = new System.Drawing.Size(93, 22);
             this.cmbCurrencyTo.TabIndex = 5;
             this.cmbCurrencyTo.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCurrencyTo_InitializeLayout);
             // 
             // cmbCurrencyFrom
             // 
-            this.cmbCurrencyFrom.CharacterCasing = System.Windows.Forms.CharacterCasing.Normal;
-            this.cmbCurrencyFrom.DisplayStyle = Infragistics.Win.EmbeddableElementDisplayStyle.Default;
+            this.cmbCurrencyFrom.CheckedListSettings.CheckStateMember = "";
             this.cmbCurrencyFrom.DropDownStyle = Infragistics.Win.UltraWinGrid.UltraComboStyle.DropDownList;
             this.cmbCurrencyFrom.Location = new System.Drawing.Point(100, 5);
             this.cmbCurrencyFrom.Name = "cmbCurrencyFrom";
+            this.cmbCurrencyFrom.PreferredDropDownSize = new System.Drawing.Size(0, 0);
             this.cmbCurrencyFrom.Size = new System.Drawing.Size(93, 22);
             this.cmbCurrencyFrom.TabIndex = 2;
             this.cmbCurrencyFrom.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCurrencyFrom_InitializeLayout);
@@ -437,14 +438,12 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.tabControl1);
             this.Name = "Currency";
-            this.Size = new System.Drawing.Size(673, 557);
+            this.Size = new System.Drawing.Size(784, 590);
             this.Load += new System.EventHandler(this.Currency_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCurrency)).EndInit();
-            this.myToolStrip1.ResumeLayout(false);
-            this.myToolStrip1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -483,17 +482,17 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private System.Windows.Forms.Panel panel1;
         private Infragistics.Win.Misc.UltraExpandableGroupBox ultraExpandableGroupBox1;
         private Infragistics.Win.Misc.UltraExpandableGroupBoxPanel ultraExpandableGroupBoxPanel1;
-        private TourWriter.UserControls.MyToolStrip myToolStrip1;
-        private System.Windows.Forms.ToolStripButton btnCurrencyAdd;
-        private System.Windows.Forms.ToolStripButton btnCurrencyDelete;
         private TourWriter.UserControls.MyToolStrip tsServiceTimes;
         private TourWriter.UserControls.MyToolStrip myToolStrip2;
         private System.Windows.Forms.ToolStripButton btnRateAdd;
         private System.Windows.Forms.ToolStripButton btnRateDel;
-        private System.Windows.Forms.ToolStripButton btnCharMap;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnDefault;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnList;
+        private System.Windows.Forms.Label txtCurrency;
     }
 }
