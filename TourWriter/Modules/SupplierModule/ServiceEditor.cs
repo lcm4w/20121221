@@ -244,8 +244,11 @@ namespace TourWriter.Modules.SupplierModule
             }
         }
 
+        private DateTime? _defaultDate;
         public void SetSelectedRateRow(DateTime rateDate)
         {
+            _defaultDate = rateDate;
+
             // select rate based on specified date
             foreach (UltraGridRow row in gridRates.Rows)
             {
@@ -318,24 +321,31 @@ namespace TourWriter.Modules.SupplierModule
             gridRates.ActiveRow = null;
             gridOptions.ActiveRow = null;
 
-            UltraGridRow foundRow = null;
+            // try for exact match
+            UltraGridRow exactMatch = null;
+            UltraGridRow closeMatch = null;
             foreach (var row in gridRates.Rows)
             {
                 if (row.IsFilteredOut) continue;
 
-                if (foundRow == null)
-                {
-                    foundRow = row;
-                    if (_selectedStartDate == null || _selectedEndDate == null) break; 
-                }
-                if (((DateTime)row.Cells["ValidFrom"].Value).Date == ((DateTime)_selectedStartDate).Date &&
+                if (_selectedStartDate != null && _selectedEndDate != null &&
+                    ((DateTime)row.Cells["ValidFrom"].Value).Date == ((DateTime)_selectedStartDate).Date &&
                     ((DateTime)row.Cells["ValidTo"].Value).Date == ((DateTime)_selectedEndDate).Date)
                 {
-                    foundRow = row;
+                    exactMatch = row;
                     break;
                 }
+                if (closeMatch == null &&
+                    _defaultDate != null && 
+                    ((DateTime)row.Cells["ValidFrom"].Value).Date <= ((DateTime)_defaultDate).Date &&
+                    ((DateTime)row.Cells["ValidTo"].Value).Date >= ((DateTime)_defaultDate).Date)
+                {
+                    closeMatch = row; 
+                }
             }
-            if (foundRow != null) foundRow.Activate();
+
+            if (exactMatch != null) exactMatch.Activate();
+            else if (closeMatch != null) closeMatch.Activate();
 
         }
         
