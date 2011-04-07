@@ -11,7 +11,6 @@ namespace TourWriter.UserControls.DatabaseConfig
     public partial class InstallSoftware : UiControlBase, IConnectionControl
     {
         private WebClient _downloader;
-        private bool _restoreUserDatabase;
         internal string InstallFile { get; set; }
         internal string RestoreFile { get; set; }
 
@@ -168,20 +167,19 @@ namespace TourWriter.UserControls.DatabaseConfig
             }
             progressBar.Style = ProgressBarStyle.Marquee;
 
-            // restore
-            var isDefaultDb = false;
-            if (!string.IsNullOrEmpty(RestoreFile))
-                Log("Restoring database from user backup file: " + RestoreFile);
-            else
+            var isNewDb = !string.IsNullOrEmpty(RestoreFile);
+
+            // restore database
+            if (isNewDb)
             {
                 Log("Creating new default database...");
                 RestoreFile = GetDefaultRestoreFile();
-                isDefaultDb = true;
             }
+            else Log("Restoring database from user backup file: " + RestoreFile);
 
             Log(InstallHelper.RunSql(string.Format(InstallHelper.RestoreDbSql, RestoreFile)));
 
-            // login
+            // setup logins
             Log("Configuring database...");
             Log(InstallHelper.RunSql(InstallHelper.CreateLoginUserSql));
             
@@ -191,12 +189,13 @@ namespace TourWriter.UserControls.DatabaseConfig
                 return;
             }
 
-            // data 
-            if (!_restoreUserDatabase)
+            // initialise default data 
+            if (isNewDb)
             {
                 Log("Setting initial data...");
                 Log(InstallHelper.RunSql(InstallHelper.InitialiseNewDbSql));
                 Log("Database setup complete.\r\nClick Next to continue.");
+                InstallHelper.DeleteFile(RestoreFile);
             }
             else
             {
@@ -204,15 +203,12 @@ namespace TourWriter.UserControls.DatabaseConfig
                 NextControl = null;
                 NextButton.Text = "Finish";
             }
-
-            if (isDefaultDb) InstallHelper.DeleteFile(RestoreFile); // remove default db file from temp folder
-
+            
             NextButton.Enabled = true;
             CancelButton.Enabled = false;
             BackButton.Enabled = false;
             progressBar.Style = ProgressBarStyle.Continuous;
             progressBar.Value = progressBar.Maximum;
-
         }
         
         void HandleConnectionError(string level, string error)
