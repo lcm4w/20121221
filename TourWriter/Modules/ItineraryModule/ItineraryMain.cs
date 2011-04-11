@@ -187,7 +187,6 @@ namespace TourWriter.Modules.ItineraryModule
             bookingsQuote.Enabled = App.EnableGroups;
             clientEditor.EnableGroups = App.EnableGroups;
 
-            bookingsViewer.SetCurrencyOverrideWarning();
             bookingsViewer.RecalculateFinalPricing();
             bookingsViewer.SetItineraryCurrencyInfo();
         }

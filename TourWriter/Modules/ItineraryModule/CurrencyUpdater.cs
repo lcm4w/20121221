@@ -13,6 +13,7 @@ namespace TourWriter.Modules.ItineraryModule
 {
     public partial class CurrencyUpdater : Form
     {
+        private bool _userShouldUpdateRates;
         private readonly ItinerarySet itinerarySet;
         private readonly DataTable purchaseItemTable;
 
@@ -285,9 +286,10 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["FromCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
             e.Row.Cells["ToCurrency"].Value = GetToCurrencyCode();
         }
-
+        
         void cmbCurrency_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _userShouldUpdateRates = true;
             foreach(var row in gridBookings.Rows)
             {
                 row.Cells["ToCurrency"].Value = cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue : CurrencyService.GetApplicationCurrencyCodeOrDefault();
@@ -321,10 +323,19 @@ namespace TourWriter.Modules.ItineraryModule
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             UpdateCurrencies();
+            _userShouldUpdateRates = false;
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (_userShouldUpdateRates && App.AskYesNo("You have not updated the currency rates.\r\n\r\nUpdate rates now?"))
+            {
+                _userShouldUpdateRates = false;
+                UpdateCurrencies();
+                return;
+            }
+
+
             SaveChanges();
 
             DialogResult = DialogResult.OK;

@@ -195,7 +195,6 @@
             this.cmbCurrency.Size = new System.Drawing.Size(395, 21);
             this.cmbCurrency.TabIndex = 17;
             this.toolTip1.SetToolTip(this.cmbCurrency, "Output currency for this Itinerary");
-            this.cmbCurrency.SelectedIndexChanged += new System.EventHandler(this.cmbCurrency_SelectedIndexChanged);
             // 
             // groupBox1
             // 

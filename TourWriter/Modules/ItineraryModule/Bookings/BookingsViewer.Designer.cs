@@ -60,11 +60,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.label2 = new System.Windows.Forms.Label();
             this.txtCommission = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.txtSell = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
-            this.cmbCurrency = new TourWriter.UserControls.NullableComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lnkItineraryCurrency = new System.Windows.Forms.LinkLabel();
             this.chkLockGrossOverride = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnNetMarkup = new System.Windows.Forms.PictureBox();
@@ -74,6 +74,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paxOverrideMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeOptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editFlagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
@@ -98,8 +99,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnDelete = new System.Windows.Forms.ToolStripButton(); 
-            this.paxOverrideMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.txtItineraryCurrency = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).BeginInit();
@@ -179,22 +180,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.grid.Location = new System.Drawing.Point(3, 26);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(822, 248);
+            this.grid.Size = new System.Drawing.Size(993, 548);
             this.grid.TabIndex = 0;
             this.grid.Text = "ultraGrid1";
             this.grid.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
-            grid.BeforeExitEditMode += new Infragistics.Win.UltraWinGrid.BeforeExitEditModeEventHandler(this.grid_BeforeExitEditMode);
+            this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
+            this.grid.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.grid_InitializeRow);
+            this.grid.BeforeRowActivate += new Infragistics.Win.UltraWinGrid.RowEventHandler(this.grid_BeforeRowActivate);
+            this.grid.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_CellChange);
+            this.grid.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_AfterCellListCloseUp);
+            this.grid.BeforeSelectChange += new Infragistics.Win.UltraWinGrid.BeforeSelectChangeEventHandler(this.grid_BeforeSelectChange);
+            this.grid.BeforeExitEditMode += new Infragistics.Win.UltraWinGrid.BeforeExitEditModeEventHandler(this.grid_BeforeExitEditMode);
+            this.grid.BeforeRowsDeleted += new Infragistics.Win.UltraWinGrid.BeforeRowsDeletedEventHandler(this.grid_BeforeRowsDeleted);
+            this.grid.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.grid_DoubleClickRow);
+            this.grid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grid_KeyPress);
             this.grid.MouseDown += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDown);
             this.grid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.grid_MouseUp);
-            this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
-            this.grid.BeforeRowsDeleted += new Infragistics.Win.UltraWinGrid.BeforeRowsDeletedEventHandler(this.grid_BeforeRowsDeleted);
-            this.grid.BeforeSelectChange += new Infragistics.Win.UltraWinGrid.BeforeSelectChangeEventHandler(this.grid_BeforeSelectChange);
-            this.grid.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_AfterCellListCloseUp);
-            this.grid.BeforeRowActivate += new Infragistics.Win.UltraWinGrid.RowEventHandler(this.grid_BeforeRowActivate);
-            this.grid.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.grid_InitializeRow);
-            this.grid.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.grid_KeyPress);
-            this.grid.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.grid_CellChange);
-            this.grid.DoubleClickRow += new Infragistics.Win.UltraWinGrid.DoubleClickRowEventHandler(this.grid_DoubleClickRow);
             // 
             // label3
             // 
@@ -265,7 +266,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Location = new System.Drawing.Point(190, 276);
+            this.groupBox3.Location = new System.Drawing.Point(190, 576);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox3.Size = new System.Drawing.Size(278, 62);
@@ -350,9 +351,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtNetOverride.Size = new System.Drawing.Size(70, 21);
             this.txtNetOverride.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtNetOverride, "Net markup/commission override");
-            this.txtNetOverride.Validated += new System.EventHandler(this.txtMarkupOverride_Validated);
             this.txtNetOverride.BeforeEnterEditMode += new System.ComponentModel.CancelEventHandler(this.txtNetOverride_BeforeEnterEditMode);
             this.txtNetOverride.Click += new System.EventHandler(this.txtNetOverride_Click);
+            this.txtNetOverride.Validated += new System.EventHandler(this.txtMarkupOverride_Validated);
             // 
             // label2
             // 
@@ -387,24 +388,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtSell.TabStop = false;
             this.toolTip1.SetToolTip(this.txtSell, "Final sell price");
             // 
-            // cmbCurrency
-            // 
-            this.cmbCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.cmbCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCurrency.FormattingEnabled = true;
-            this.cmbCurrency.Location = new System.Drawing.Point(290, 35);
-            this.cmbCurrency.Name = "cmbCurrency";
-            this.cmbCurrency.Size = new System.Drawing.Size(200, 21);
-            this.cmbCurrency.TabIndex = 139;
-            this.toolTip1.SetToolTip(this.cmbCurrency, "The currency to convert all prices to");
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(290, 19);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(24, 60);
+            this.label9.Size = new System.Drawing.Size(84, 13);
             this.label9.TabIndex = 139;
             this.label9.Text = "Output Currency";
             // 
@@ -429,20 +418,32 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBox1.Controls.Add(this.txtItineraryCurrency);
+            this.groupBox1.Controls.Add(this.lnkItineraryCurrency);
             this.groupBox1.Controls.Add(this.chkLockGrossOverride);
             this.groupBox1.Controls.Add(this.txtCommission);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.cmbCurrency);
             this.groupBox1.Controls.Add(this.txtSell);
-            this.groupBox1.Location = new System.Drawing.Point(474, 276);
+            this.groupBox1.Location = new System.Drawing.Point(474, 576);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(500, 62);
             this.groupBox1.TabIndex = 102;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Final price";
+            // 
+            // lnkItineraryCurrency
+            // 
+            this.lnkItineraryCurrency.AutoSize = true;
+            this.lnkItineraryCurrency.Location = new System.Drawing.Point(388, 19);
+            this.lnkItineraryCurrency.Name = "lnkItineraryCurrency";
+            this.lnkItineraryCurrency.Size = new System.Drawing.Size(49, 13);
+            this.lnkItineraryCurrency.TabIndex = 140;
+            this.lnkItineraryCurrency.TabStop = true;
+            this.lnkItineraryCurrency.Text = "(change)";
+            this.lnkItineraryCurrency.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkItineraryCurrency_LinkClicked);
             // 
             // chkLockGrossOverride
             // 
@@ -477,7 +478,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox2.Controls.Add(this.txtGross1);
             this.groupBox2.Controls.Add(this.txtNetOverride);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(3, 276);
+            this.groupBox2.Location = new System.Drawing.Point(3, 576);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox2.Size = new System.Drawing.Size(181, 62);
@@ -524,6 +525,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // paxOverrideMenuItem
+            // 
+            this.paxOverrideMenuItem.Name = "paxOverrideMenuItem";
+            this.paxOverrideMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.paxOverrideMenuItem.Text = "Pax override";
+            this.paxOverrideMenuItem.Click += new System.EventHandler(this.paxOverrideMenuItem_Click);
+            // 
             // changeOptionToolStripMenuItem
             // 
             this.changeOptionToolStripMenuItem.Name = "changeOptionToolStripMenuItem";
@@ -559,10 +567,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnAdd,
             this.btnDelete});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(484, 3);
+            this.myToolStrip1.Location = new System.Drawing.Point(686, 3);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(341, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(310, 25);
             this.myToolStrip1.TabIndex = 104;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -590,7 +598,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnMoveDates
             // 
             this.btnMoveDates.Name = "btnMoveDates";
-            this.btnMoveDates.Size = new System.Drawing.Size(224, 22);
+            this.btnMoveDates.Size = new System.Drawing.Size(232, 22);
             this.btnMoveDates.Text = "Refresh/Move booking rates...";
             this.btnMoveDates.ToolTipText = "Refresh rates or Move bookings to new dates";
             this.btnMoveDates.Click += new System.EventHandler(this.btnMoveDates_Click);
@@ -598,14 +606,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnUpdateCurrency
             // 
             this.btnUpdateCurrency.Name = "btnUpdateCurrency";
-            this.btnUpdateCurrency.Size = new System.Drawing.Size(224, 22);
+            this.btnUpdateCurrency.Size = new System.Drawing.Size(232, 22);
             this.btnUpdateCurrency.Text = "Update currency rates...";
             this.btnUpdateCurrency.Click += new System.EventHandler(this.btnUpdateCurrency_Click);
             // 
             // btnLockEdit
             // 
             this.btnLockEdit.Name = "btnLockEdit";
-            this.btnLockEdit.Size = new System.Drawing.Size(224, 22);
+            this.btnLockEdit.Size = new System.Drawing.Size(232, 22);
             this.btnLockEdit.Text = "Show lock bookings column";
             this.btnLockEdit.ToolTipText = "Set bookings to read-only so they cannot be changed";
             this.btnLockEdit.Click += new System.EventHandler(this.btnLockEdit_Click);
@@ -613,19 +621,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnEditFlags
             // 
             this.btnEditFlags.Name = "btnEditFlags";
-            this.btnEditFlags.Size = new System.Drawing.Size(224, 22);
+            this.btnEditFlags.Size = new System.Drawing.Size(232, 22);
             this.btnEditFlags.Text = "Edit flags";
             this.btnEditFlags.Click += new System.EventHandler(this.btnEditFlags_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(229, 6);
             // 
             // btnPrint
             // 
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(224, 22);
+            this.btnPrint.Size = new System.Drawing.Size(232, 22);
             this.btnPrint.Text = "Print preview...";
             this.btnPrint.ToolTipText = "Open the print preview screen ready for printing";
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
@@ -633,7 +641,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnExportExcel
             // 
             this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(224, 22);
+            this.btnExportExcel.Size = new System.Drawing.Size(232, 22);
             this.btnExportExcel.Text = "Export grid to Excel...";
             this.btnExportExcel.ToolTipText = "Export the current data view to Excel file";
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
@@ -641,12 +649,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
             // 
             // btnFilter
             // 
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(224, 22);
+            this.btnFilter.Size = new System.Drawing.Size(232, 22);
             this.btnFilter.Text = "Show column filters";
             this.btnFilter.ToolTipText = "Filter the visible data";
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
@@ -654,7 +662,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnResetGrid
             // 
             this.btnResetGrid.Name = "btnResetGrid";
-            this.btnResetGrid.Size = new System.Drawing.Size(224, 22);
+            this.btnResetGrid.Size = new System.Drawing.Size(232, 22);
             this.btnResetGrid.Text = "Reset grid layout";
             this.btnResetGrid.ToolTipText = "Reset the layout to original settings";
             this.btnResetGrid.Click += new System.EventHandler(this.btnResetGrid_Click);
@@ -754,12 +762,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.ToolTipText = "Delete selected booking and related items";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // paxOverrideMenuItem
+            // txtItineraryCurrency
             // 
-            this.paxOverrideMenuItem.Name = "paxOverrideMenuItem";
-            this.paxOverrideMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.paxOverrideMenuItem.Text = "Pax override";
-            this.paxOverrideMenuItem.Click += new System.EventHandler(this.paxOverrideMenuItem_Click);
+            this.txtItineraryCurrency.Location = new System.Drawing.Point(293, 36);
+            this.txtItineraryCurrency.Name = "txtItineraryCurrency";
+            this.txtItineraryCurrency.ReadOnly = true;
+            this.txtItineraryCurrency.Size = new System.Drawing.Size(142, 20);
+            this.txtItineraryCurrency.TabIndex = 141;
+            this.txtItineraryCurrency.TabStop = false;
             // 
             // BookingsViewer
             // 
@@ -773,7 +783,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.Controls.Add(this.groupBox2);
             this.DoubleBuffered = true;
             this.Name = "BookingsViewer";
-            this.Size = new System.Drawing.Size(828, 338);
+            this.Size = new System.Drawing.Size(999, 638);
             this.Load += new System.EventHandler(this.BookingsViewer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).EndInit();
@@ -821,7 +831,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.BindingSource itineraryBindingSource;
         private System.Windows.Forms.GroupBox groupBox3;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtSell;
-        private System.Windows.Forms.ComboBox cmbCurrency;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -860,5 +869,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripMenuItem editFlagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnEditFlags;
         private System.Windows.Forms.ToolStripMenuItem paxOverrideMenuItem;
+        private System.Windows.Forms.LinkLabel lnkItineraryCurrency;
+        private System.Windows.Forms.TextBox txtItineraryCurrency;
     }
 }

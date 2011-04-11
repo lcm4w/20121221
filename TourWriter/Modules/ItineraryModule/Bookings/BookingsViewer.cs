@@ -128,17 +128,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var nullRow = Cache.ToolSet.Currency.NewCurrencyRow();
             nullRow.CurrencyCode = nullRow.DisplayName = "";
             list.Insert(0, nullRow);
-
-            // itinerary currency code
-            cmbCurrency.DataSource = list;
-            cmbCurrency.ValueMember = "CurrencyCode";
-            cmbCurrency.DisplayMember = "DisplayName";
-            cmbCurrency.DataBindings.Add(new Binding("SelectedValue", itinerarySet.Itinerary, "CurrencyCode", true));
-            cmbCurrency.SelectedIndexChanged += delegate { HandleCurrencyCodeChanged(); };
-            //cmbCurrency.DropDownClosed += delegate { HandleCurrencyCodeChanged(); RunCurrencyUpdater(); };
-            cmbCurrency.Enabled = true;
-            cmbCurrency.DropDown += new EventHandler(cmbCurrency_DropDown);
-
+            
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
@@ -150,38 +140,80 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 ResetGridLayout();
         }
 
-        void cmbCurrency_DropDown(object sender, EventArgs e)
-        {
-            cmbCurrency.DropDownStyle = ComboBoxStyle.Simple;
-            cmbCurrency.DropDownStyle = ComboBoxStyle.DropDownList;
+        #region CCY
 
+        //private void HandleCurrencyCodeChanged()
+        //{
+        //    var newValue = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : null;
+        //    if (itinerarySet.Itinerary[0].CurrencyCode != newValue)
+        //    {
+        //        if (newValue != null && newValue != "" && newValue.Length != 3)
+        //            throw new ArgumentException("Invalid currency code: " + newValue);
+        //        itinerarySet.Itinerary[0].CurrencyCode = newValue;
+        //    }
+
+        //    // update UI
+        //    SetItineraryCurrencyInfo();
+        //    FormatFinalYieldText();
+
+        //    // set reports param
+        //    (ParentForm as ItineraryMain).SetItineraryReportsParameter("@CurrencyCode", newValue); 
+        //}
+
+
+        internal void SetItineraryCurrencyInfo()
+        {
+            var itinerary = itinerarySet.Itinerary[0];
+            var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
+            var pattern = currencyInfo != null ? currencyInfo.DisplayFormat : "c";
+
+            // final prices
+            var format = pattern;
+            txtPriceOverride.FormatString = format;
+            txtGross2.FormatString = format;
+            txtGross1.FormatString = format;
+            txtSell.FormatString = format;
+            txtItineraryCurrency.Text = 
+                (currencyInfo == null || CurrencyService.GetApplicationCurrencyCode() == currencyInfo.CurrencyCode) ?
+                "default: " + CurrencyService.GetApplicationCurrencyCode() : currencyInfo.DisplayName;
+
+            // grid summaries
+            format = "{0:" + pattern + "}";
+            grid.DisplayLayout.Bands[0].Summaries["NetFinal"].DisplayFormat = format;
+            grid.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
+
+            // grid rows
+            RefreshGrid();
+
+            (ParentForm as ItineraryMain).clientEditor.SetCurrencyFormat();
+        }
+
+        private void lnkItineraryCurrency_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
             RunCurrencyUpdater();
-
-            // prevent dropdown area from showing
-            cmbCurrency.BeginInvoke((MethodInvoker) delegate
-                                                        {
-                                                            cmbCurrency.DroppedDown = false;
-                                                            cmbCurrency.Focus();
-                                                        });
         }
 
-        private void HandleCurrencyCodeChanged()
+
+        internal void RunCurrencyUpdater()
         {
-            var newValue = cmbCurrency.SelectedValue != null ? cmbCurrency.SelectedValue.ToString() : null;
-            if (itinerarySet.Itinerary[0].CurrencyCode != newValue)
-            {
-                if (newValue != null && newValue != "" && newValue.Length != 3)
-                    throw new ArgumentException("Invalid currency code: " + newValue);
-                itinerarySet.Itinerary[0].CurrencyCode = newValue;
-            }
+            var currencyUpdater = new CurrencyUpdater(itinerarySet);
+            if (currencyUpdater.ShowDialog() != DialogResult.OK) return;
 
-            // update UI
+            // update purchase item prices
+            itinerarySet.PurchaseItem.ColumnChanged -= PurchaseItem_ColumnChanged;
+            foreach (var row in Enumerable.Where(itinerarySet.PurchaseItem, row => row.RowState != DataRowState.Deleted))
+                row.RecalculateTotals();
+            itinerarySet.PurchaseItem.ColumnChanged += PurchaseItem_ColumnChanged;
+
+            RefreshGrid();
+            RecalculateFinalPricing();
+            WarnIfPriceOverrideExists();
             SetItineraryCurrencyInfo();
-            FormatFinalYieldText();
-
-            // set reports param
-            (ParentForm as ItineraryMain).SetItineraryReportsParameter("@CurrencyCode", newValue); 
         }
+
+        #endregion
+
+
 
         private void LoadGridLayout()
         {
@@ -266,31 +298,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
             }
         }
-
-        internal void SetItineraryCurrencyInfo()
-        {
-            var itinerary = itinerarySet.Itinerary[0];
-            var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
-            var pattern = currencyInfo != null ? currencyInfo.DisplayFormat : "c";
-
-            // final prices
-            var format = pattern;
-            txtPriceOverride.FormatString = format;
-            txtGross2.FormatString = format;
-            txtGross1.FormatString = format;
-            txtSell.FormatString = format;
-
-            // grid summaries
-            format = "{0:" + pattern + "}";
-            grid.DisplayLayout.Bands[0].Summaries["NetFinal"].DisplayFormat = format;
-            grid.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
-            
-            // grid rows
-            RefreshGrid();
-
-            (ParentForm as ItineraryMain).clientEditor.SetCurrencyFormat();
-        }
-
+        
         internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
         {
             e.Layout.Grid.CalcManager = new UltraCalcManager(e.Layout.Grid.Container);
@@ -478,18 +486,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             else overrideWarning.SetError(label8, ""); // reset
         }
-
-        internal void SetCurrencyOverrideWarning()
-        {
-            if (!string.IsNullOrEmpty(cmbCurrency.Text.Trim()))
-            {
-                overrideWarning.SetError(label9, "Using custom output currency");
-                overrideWarning.SetIconAlignment(label9, ErrorIconAlignment.BottomRight);
-                overrideWarning.SetIconPadding(label9, 3);
-            }
-            else overrideWarning.SetError(label9, ""); // reset
-        }
-
+        
         private void EditNetOverride()
         {
             NetOverrideForm overrideForm = new NetOverrideForm(itinerarySet);
@@ -649,23 +646,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             template.FilePath = file;
             template.ParentTemplateCategoryID = App.TemplateCategoryBookingEmail;
             Cache.ToolSet.Template.AddTemplateRow(template);
-        }
-
-        internal void RunCurrencyUpdater()
-        {
-            var currencyUpdater = new CurrencyUpdater(itinerarySet);
-
-            if (currencyUpdater.ShowDialog() != DialogResult.OK) return;
-
-            // update purchase item prices
-            itinerarySet.PurchaseItem.ColumnChanged -= PurchaseItem_ColumnChanged;
-            foreach (var row in Enumerable.Where(itinerarySet.PurchaseItem, row => row.RowState != DataRowState.Deleted))
-                row.RecalculateTotals();
-            itinerarySet.PurchaseItem.ColumnChanged += PurchaseItem_ColumnChanged;
-
-            RefreshGrid();
-            RecalculateFinalPricing();
-            WarnIfPriceOverrideExists();
         }
         
         void BookingsViewer_HandleDestroyed(object sender, EventArgs e)
