@@ -44,12 +44,12 @@
           <DataField>DepartCityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItineraryNet">
-          <DataField>ItineraryNet</DataField>
+        <Field Name="ItineraryNetFinalTotal">
+          <DataField>ItineraryNetFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ItineraryGross">
-          <DataField>ItineraryGross</DataField>
+        <Field Name="ItineraryGrossFinalTotal">
+          <DataField>ItineraryGrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="PurchaseLineID">
@@ -96,20 +96,16 @@
           <DataField>Quantity</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="Gross">
-          <DataField>Gross</DataField>
+        <Field Name="NetBaseUnit">
+          <DataField>NetBaseUnit</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TotalNet">
-          <DataField>TotalNet</DataField>
+        <Field Name="NetFinalTotal">
+          <DataField>NetFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TotalGross">
-          <DataField>TotalGross</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="TotalGrossOrig">
-          <DataField>TotalGrossOrig</DataField>
+        <Field Name="GrossFinalTotal">
+          <DataField>GrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ServiceTypeName">
@@ -120,10 +116,19 @@
           <DataField>ItineraryCurrencyFormat</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="PurchaseItemCurrencyFormat">
+          <DataField>PurchaseItemCurrencyFormat</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryID,ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryNet,ItineraryGross,PurchaseLineID,PurchaseLineName,PurchaseItemName,RequestStatusName,BookingReference,CityName,PurchaseItemStartDate,CurrencyCode,CurrencyRate,NumberOfDays,Quantity,Gross,TotalNet,TotalGross,TotalGrossOrig,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>
+SELECT ItineraryID,ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryNetFinalTotal,ItineraryGrossFinalTotal,
+PurchaseLineID,PurchaseLineName,PurchaseItemName,RequestStatusName,BookingReference,CityName,PurchaseItemStartDate,CurrencyCode,CurrencyRate,NumberOfDays,Quantity,
+NetBaseUnit,NetFinalTotal,GrossFinalTotal,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat,isnull(CurrencyFormat, 'c') as PurchaseItemCurrencyFormat 
+FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime
+		</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -138,13 +143,13 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.63115in</Width>
+              <Width>0.71783in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.98425in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>3.53396in</Width>
+              <Width>3.55846in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.4987in</Width>
@@ -156,19 +161,16 @@
               <Width>0.68898in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.29528in</Width>
+              <Width>0.68898in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.29528in</Width>
+              <Width>0.47938in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.29528in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.3937in</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>0.68898in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.88583in</Width>
@@ -387,14 +389,49 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox55">
+                    <Textbox Name="textbox73">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>NTS/DAYS</Value>
+                              <Value>UNIT NET</Value>
+                              <Style>
+                                <FontSize>7pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox66</rd:DefaultName>
+                      <Style>
+                        <BottomBorder>
+                          <Color>Black</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox57">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>LENGTH</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                               </Style>
@@ -416,10 +453,8 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell />
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="textbox39">
@@ -491,41 +526,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox66">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>RATE</Value>
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>textbox66</rd:DefaultName>
-                      <Style>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="textbox19">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -533,7 +533,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>NET</Value>
+                              <Value>TOTAL NET</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                               </Style>
@@ -568,7 +568,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>GROSS</Value>
+                              <Value>TOTAL GROSS</Value>
                               <Style>
                                 <FontSize>7pt</FontSize>
                               </Style>
@@ -950,41 +950,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox67">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>7pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>textbox67</rd:DefaultName>
-                      <Style>
-                        <TopBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="textbox27">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1329,40 +1294,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox81">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>textbox81</rd:DefaultName>
-                      <Style>
-                        <BottomBorder>
-                          <Color>Black</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="textbox48">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1370,7 +1301,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TotalNet.Value)</Value>
+                              <Value>=Sum(Fields!NetFinalTotal.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1404,7 +1335,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TotalGrossOrig.Value)</Value>
+                              <Value>=Sum(Fields!GrossFinalTotal.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1569,7 +1500,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Gross">
+                    <Textbox Name="NetBaseUnit">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -1585,7 +1516,7 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Gross</rd:DefaultName>
+                      <rd:DefaultName>NetBaseUnit</rd:DefaultName>
                       <Style>
                         <BottomBorder>
                           <Color>Gainsboro</Color>
@@ -1631,10 +1562,42 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell />
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="textbox80">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!NetBaseUnit.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>=Fields!PurchaseItemCurrencyFormat.Value</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>textbox68</rd:DefaultName>
+                      <Style>
+                        <BottomBorder>
+                          <Color>Gainsboro</Color>
+                          <Style>Solid</Style>
+                          <Width>1pt</Width>
+                        </BottomBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
                 <TablixCell>
                   <CellContents>
                     <Textbox Name="textbox23">
@@ -1735,40 +1698,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox68">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Gross.Value</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>textbox68</rd:DefaultName>
-                      <Style>
-                        <BottomBorder>
-                          <Color>Gainsboro</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </BottomBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="textbox28">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -1776,7 +1705,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TotalNet.Value</Value>
+                              <Value>=Fields!NetFinalTotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
@@ -1802,14 +1731,14 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox32">
+                    <Textbox Name="textbox29">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TotalGrossOrig.Value</Value>
+                              <Value>=Fields!GrossFinalTotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
@@ -1819,7 +1748,6 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>textbox32</rd:DefaultName>
                       <Style>
                         <BottomBorder>
                           <Color>Gainsboro</Color>
@@ -2186,41 +2114,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="textbox70">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Right</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>textbox70</rd:DefaultName>
-                      <Style>
-                        <TopBorder>
-                          <Color>Gainsboro</Color>
-                          <Style>Solid</Style>
-                          <Width>1pt</Width>
-                        </TopBorder>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="textbox37">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -2295,7 +2188,6 @@
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
-            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -2470,10 +2362,10 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.1811in</Width>
+              <Width>0.78107in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.63113in</Width>
+              <Width>1.24976in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.61168in</Width>
@@ -2574,7 +2466,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -2585,7 +2477,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -2608,7 +2500,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -2619,7 +2511,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -2642,7 +2534,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -2653,7 +2545,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -2676,7 +2568,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -2687,7 +2579,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                           <Width>1pt</Width>
                         </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingRight>8pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
@@ -2921,7 +2813,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Gross sum        </Value>
+                              <Value>Sub Total</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2977,7 +2869,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Sum(Fields!TotalGrossOrig.Value) - Sum(Fields!TotalNet.Value)) / (iif(Sum(Fields!TotalNet.Value) &lt;&gt; 0, Sum(Fields!TotalNet.Value), 1))</Value>
+                              <Value>=(Sum(Fields!GrossFinalTotal.Value) - Sum(Fields!NetFinalTotal.Value)) / (iif(Sum(Fields!NetFinalTotal.Value) &lt;&gt; 0, Sum(Fields!NetFinalTotal.Value), 1))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3009,7 +2901,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Sum(Fields!TotalNet.Value)), Sum(Fields!TotalNet.Value), 0)</Value>
+                              <Value>=iif(not isnothing(Sum(Fields!NetFinalTotal.Value)), Sum(Fields!NetFinalTotal.Value), 0)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3041,7 +2933,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(Sum(Fields!TotalGrossOrig.Value) - Sum(Fields!TotalNet.Value)) / (iif(Sum(Fields!TotalGrossOrig.Value) &lt;&gt; 0, Sum(Fields!TotalGrossOrig.Value), 1))</Value>
+                              <Value>=(Sum(Fields!GrossFinalTotal.Value) - Sum(Fields!NetFinalTotal.Value)) / (iif(Sum(Fields!GrossFinalTotal.Value) &lt;&gt; 0, Sum(Fields!GrossFinalTotal.Value), 1))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3073,7 +2965,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing (Sum(Fields!TotalGrossOrig.Value)), Sum(Fields!TotalGrossOrig.Value), 0)</Value>
+                              <Value>=iif(not isnothing (Sum(Fields!GrossFinalTotal.Value)), Sum(Fields!GrossFinalTotal.Value), 0)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3348,7 +3240,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(First(Fields!ItineraryGross.Value) - First(Fields!ItineraryNet.Value)) / (iif(First(Fields!ItineraryNet.Value) &lt;&gt; 0, First(Fields!ItineraryNet.Value), 1))</Value>
+                              <Value>=(First(Fields!ItineraryGrossFinalTotal.Value) - First(Fields!ItineraryNetFinalTotal.Value)) / (iif(First(Fields!ItineraryNetFinalTotal.Value) &lt;&gt; 0, First(Fields!ItineraryNetFinalTotal.Value), 1))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3380,7 +3272,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(First(Fields!ItineraryNet.Value)), First(Fields!ItineraryNet.Value), 0)</Value>
+                              <Value>=iif(not isnothing(First(Fields!ItineraryNetFinalTotal.Value)), First(Fields!ItineraryNetFinalTotal.Value), 0)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3412,7 +3304,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=(First(Fields!ItineraryGross.Value) - First(Fields!ItineraryNet.Value)) / (iif(First(Fields!ItineraryGross.Value) &lt;&gt; 0, First(Fields!ItineraryGross.Value), 1))</Value>
+                              <Value>=(First(Fields!ItineraryGrossFinalTotal.Value) - First(Fields!ItineraryNetFinalTotal.Value)) / (iif(First(Fields!ItineraryGrossFinalTotal.Value) &lt;&gt; 0, First(Fields!ItineraryGrossFinalTotal.Value), 1))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3443,7 +3335,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing (First(Fields!ItineraryGross.Value)), First(Fields!ItineraryGross.Value), 0)</Value>
+                              <Value>=iif(not isnothing (First(Fields!ItineraryGrossFinalTotal.Value)), First(Fields!ItineraryGrossFinalTotal.Value), 0)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -3750,9 +3642,9 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
         </TablixRowHierarchy>
         <DataSetName>PurchaseItemDetail</DataSetName>
         <Top>5cm</Top>
-        <Left>12.5cm</Left>
+        <Left>14.66954cm</Left>
         <Height>1.7cm</Height>
-        <Width>14.91135cm</Width>
+        <Width>12.92659cm</Width>
         <ZIndex>4</ZIndex>
         <Style>
           <FontSize>8.5pt</FontSize>
@@ -3777,7 +3669,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
   <Width>27.59613cm</Width>
   <Page>
     <PageFooter>
-      <Height>0.75cm</Height>
+      <Height>1.385cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -3799,7 +3691,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
               </Style>
             </Paragraph>
           </Paragraphs>
-          <Top>0.25cm</Top>
+          <Top>0.885cm</Top>
           <Height>0.5cm</Height>
           <Width>27.50812cm</Width>
           <Style>

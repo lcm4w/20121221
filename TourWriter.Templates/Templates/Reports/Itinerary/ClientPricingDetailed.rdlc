@@ -51,8 +51,8 @@
           <DataField>DepartCityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItineraryGross">
-          <DataField>ItineraryGross</DataField>
+        <Field Name="ItineraryGrossFinalTotal">
+          <DataField>ItineraryGrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ItineraryTotalPayments">
@@ -87,8 +87,8 @@
           <DataField>Quantity</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="TotalGross">
-          <DataField>TotalGross</DataField>
+        <Field Name="GrossFinalTotal">
+          <DataField>GrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ServiceTypeName">
@@ -102,7 +102,7 @@
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,TotalGross,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
+        <CommandText>SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGrossFinalTotal,ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,GrossFinalTotal,ServiceTypeName,isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat FROM dbo.PurchaseItemDetail WHERE ItineraryID = @ItineraryID ORDER BY PurchaseItemStartDate, PurchaseItemStartTime</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -179,7 +179,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGross.Value, "PurchaseItemDetail"), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"), First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail"))</Value>
+                <Value>=Code.WarnIfHasPriceOverride(First(Fields!ItineraryGrossFinalTotal.Value, "PurchaseItemDetail"), Sum(Fields!GrossFinalTotal.Value, "PurchaseItemDetail"), First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail"))</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -793,7 +793,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!TotalGross.Value)</Value>
+                              <Value>=Sum(Fields!GrossFinalTotal.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -999,7 +999,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!TotalGross.Value</Value>
+                              <Value>=Fields!GrossFinalTotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>=First(Fields!ItineraryCurrencyFormat.Value, "PurchaseItemDetail")</Format>
@@ -1447,7 +1447,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(sum(Fields!TotalGross.Value)), sum(Fields!TotalGross.Value), 0)</Value>
+                              <Value>=iif(not isnothing(sum(Fields!GrossFinalTotal.Value)), sum(Fields!GrossFinalTotal.Value), 0)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -2380,7 +2380,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(not isnothing(Sum(Fields!TotalGross.Value, "PurchaseItemDetail")), Sum(Fields!TotalGross.Value, "PurchaseItemDetail"), 0) - 
+                <Value>=iif(not isnothing(Sum(Fields!GrossFinalTotal.Value, "PurchaseItemDetail")), Sum(Fields!GrossFinalTotal.Value, "PurchaseItemDetail"), 0) - 
  iif(not isnothing(Sum(Fields!PaymentAmount.Value, "ItineraryPayments")), Sum(Fields!PaymentAmount.Value, "ItineraryPayments"), 0)</Value>
                 <Style>
                   <FontSize>8pt</FontSize>

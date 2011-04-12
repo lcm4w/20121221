@@ -44,8 +44,8 @@
           <DataField>DepartCityName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItineraryGross">
-          <DataField>ItineraryGross</DataField>
+        <Field Name="ItineraryGrossFinalTotal">
+          <DataField>ItineraryGrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ItineraryTotalPayments">
@@ -92,7 +92,7 @@
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
         <CommandText>
-SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGross,
+SELECT ItineraryID,isnull(DisplayName,ItineraryName) as ItineraryName,CustomCode,ItineraryLength,ArriveDate,ArriveCityName,DepartDate,DepartCityName,ItineraryGrossFinalTotal,
 ItineraryTotalPayments,ItineraryTotalOutstanding,PurchaseLineName,PurchaseItemName,PurchaseItemStartDate,CityName,NumberOfDays,Quantity,ServiceTypeName, 
 isnull(ItineraryCurrencyFormat, 'c') as ItineraryCurrencyFormat
 FROM dbo.PurchaseItemDetail p
@@ -1232,7 +1232,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=iif(not isnothing(First(Fields!ItineraryGross.Value)), First(Fields!ItineraryGross.Value), 0)</Value>
+                <Value>=iif(not isnothing(First(Fields!ItineraryGrossFinalTotal.Value)), First(Fields!ItineraryGrossFinalTotal.Value), 0)</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1297,7 +1297,7 @@ iif(not isnothing(First(Fields!ItineraryLength.Value)), ",  " + CStr(First(Field
             <TextRuns>
               <TextRun>
                 <Value>=iif(not isnothing(First(Fields!ItineraryTotalOutstanding.Value)), First(Fields!ItineraryTotalOutstanding.Value), 
-	iif(not isnothing(First(Fields!ItineraryGross.Value)), First(Fields!ItineraryGross.Value), 0))</Value>
+	iif(not isnothing(First(Fields!ItineraryGrossFinalTotal.Value)), First(Fields!ItineraryGrossFinalTotal.Value), 0))</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>Bold</FontWeight>
