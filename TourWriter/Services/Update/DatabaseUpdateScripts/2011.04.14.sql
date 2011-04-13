@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2011.04.05')
+if ((select VersionNumber from AppSettings) <> '2011.04.05' AND (select VersionNumber from AppSettings) <> '2011.04.12')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)	
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -93,14 +93,50 @@ BEGIN
 RETURN 
 END
 GO
+PRINT N'Altering [dbo].[ItineraryServiceTypeDetail]...';
+
+GO
+
+ALTER VIEW [dbo].[ItineraryServiceTypeDetail]
+AS
+select
+	itin.*,
+	stype.*, 
+	price.ItemCount as PurchaseItemCount, 
+	price.Net, 
+	price.Gross,
+	price.Markup,
+	price.Commission,
+	price.Yield,
+	sales.Amount as Sales,
+	isnull(price.Gross,0) - isnull(sales.Amount,0) as GrossMinusSales,
+	price.Gross - (price.Gross*100/(100+stype.GrossTaxPercent)) as GrossTaxAmount
+	
+	--/**** only for backwards compatibility ****/
+	--,0 as GrossOrig
+	--,0 as MarkupOrig
+	--,0 as CommissionOrig
+	--,0 as ItineraryGrossOrig
+	--/******************************************/
+	
+from ItineraryServiceTypePricing() price
+inner join ItineraryDetail itin on price.ItineraryID = itin.ItineraryID
+inner join ServiceTypeDetail stype on price.ServiceTypeID = stype.ServiceTypeID
+left outer join 
+(
+	select ItineraryID, ServiceTypeID, sum(Amount) as Amount
+	from ItinerarySale sale
+	inner join ItinerarySaleAllocation alloc on sale.ItinerarySaleID = alloc.ItinerarySaleID
+	group by ItineraryID, ServiceTypeID
+) sales on itin.ItineraryID = sales.ItineraryID and stype.ServiceTypeID = sales.ServiceTypeID;
+
+
+
+GO
 PRINT N'Altering [dbo].[ItineraryDetail]...';
 
 
 GO
-
-
-
-
 
 ALTER VIEW [dbo].[ItineraryDetail]
 AS
@@ -368,7 +404,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.04.12'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.04.14'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
