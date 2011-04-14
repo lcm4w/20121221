@@ -43,6 +43,11 @@ namespace TourWriter.Services
             return entity != null && !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ? 
                 entity.CurrencyCode : null;
         }
+        
+        internal static string GetServiceCurrencyCodeOrDefault(SupplierSet.ServiceRow entity)
+        {
+            return GetServiceCurrencyCode(entity) ?? GetApplicationCurrencyCodeOrDefault();
+        }
 
         internal static string GetItineraryCurrencyCode(ItinerarySet.ItineraryRow entity)
         {
@@ -74,9 +79,11 @@ namespace TourWriter.Services
             return ccyCode ?? GetApplicationCurrencyCodeOrDefault();
         }
         
-        internal static string GetServiceCurrencyCodeOrDefault(SupplierSet.ServiceRow entity)
+        internal static string GetItineraryPaymentCurrencyCodeOrDefault(ItinerarySet.ItineraryPaymentRow entity)
         {
-            return GetServiceCurrencyCode(entity) ?? GetApplicationCurrencyCodeOrDefault();
+            if (entity == null) return null;
+            return !entity.IsCurrencyCodeNull() && !string.IsNullOrEmpty(entity.CurrencyCode.Trim()) ?
+                entity.CurrencyCode : GetItineraryCurrencyCodeOrDefault(entity.ItineraryMemberRow.ItineraryGroupRow.ItineraryRow);
         }
 
         internal static void SetUiCultureInfo()

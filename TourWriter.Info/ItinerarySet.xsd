@@ -443,6 +443,13 @@
               <xs:element name="ItinerarySaleID" msprop:Generator_ColumnVarNameInTable="columnItinerarySaleID" msprop:Generator_ColumnPropNameInRow="ItinerarySaleID" msprop:Generator_ColumnPropNameInTable="ItinerarySaleIDColumn" msprop:Generator_UserColumnName="ItinerarySaleID" type="xs:int" minOccurs="0" />
               <xs:element name="IsLockedAccounting" msprop:Generator_ColumnVarNameInTable="columnIsLockedAccounting" msprop:Generator_ColumnPropNameInRow="IsLockedAccounting" msprop:Generator_ColumnPropNameInTable="IsLockedAccountingColumn" msprop:Generator_UserColumnName="IsLockedAccounting" type="xs:boolean" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="CurrencyCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCode" msprop:Generator_ColumnPropNameInTable="CurrencyCodeColumn" msprop:Generator_UserColumnName="CurrencyCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>           
             </xs:sequence>
           </xs:complexType>
         </xs:element>

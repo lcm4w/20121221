@@ -8921,6 +8921,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnRowVersion;
             
+            private global::System.Data.DataColumn columnCurrencyCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryPaymentDataTable() {
@@ -9028,6 +9030,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CurrencyCodeColumn {
+                get {
+                    return this.columnCurrencyCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -9063,7 +9073,7 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryPaymentRow AddItineraryPaymentRow(ItineraryMemberRow parentItineraryMemberRowByFK_ItineraryMember_ItineraryPayment, string Comments, decimal Amount, System.DateTime PaymentDate, int PaymentTypeID, int ItinerarySaleID, bool IsLockedAccounting, byte[] RowVersion) {
+            public ItineraryPaymentRow AddItineraryPaymentRow(ItineraryMemberRow parentItineraryMemberRowByFK_ItineraryMember_ItineraryPayment, string Comments, decimal Amount, System.DateTime PaymentDate, int PaymentTypeID, int ItinerarySaleID, bool IsLockedAccounting, byte[] RowVersion, string CurrencyCode) {
                 ItineraryPaymentRow rowItineraryPaymentRow = ((ItineraryPaymentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -9074,7 +9084,8 @@ namespace TourWriter.Info {
                         PaymentTypeID,
                         ItinerarySaleID,
                         IsLockedAccounting,
-                        RowVersion};
+                        RowVersion,
+                        CurrencyCode};
                 if ((parentItineraryMemberRowByFK_ItineraryMember_ItineraryPayment != null)) {
                     columnValuesArray[1] = parentItineraryMemberRowByFK_ItineraryMember_ItineraryPayment[0];
                 }
@@ -9116,6 +9127,7 @@ namespace TourWriter.Info {
                 this.columnItinerarySaleID = base.Columns["ItinerarySaleID"];
                 this.columnIsLockedAccounting = base.Columns["IsLockedAccounting"];
                 this.columnRowVersion = base.Columns["RowVersion"];
+                this.columnCurrencyCode = base.Columns["CurrencyCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9139,6 +9151,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnIsLockedAccounting);
                 this.columnRowVersion = new global::System.Data.DataColumn("RowVersion", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRowVersion);
+                this.columnCurrencyCode = new global::System.Data.DataColumn("CurrencyCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCurrencyCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryPaymentID}, true));
                 this.columnItineraryPaymentID.AutoIncrement = true;
@@ -9151,6 +9165,7 @@ namespace TourWriter.Info {
                 this.columnComments.MaxLength = 255;
                 this.columnPaymentDate.AllowDBNull = false;
                 this.columnRowVersion.ReadOnly = true;
+                this.columnCurrencyCode.MaxLength = 3;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17045,6 +17060,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string CurrencyCode {
+                get {
+                    if (this.IsCurrencyCodeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableItineraryPayment.CurrencyCodeColumn]));
+                    }
+                }
+                set {
+                    this[this.tableItineraryPayment.CurrencyCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryMemberRow ItineraryMemberRow {
                 get {
                     return ((ItineraryMemberRow)(this.GetParentRow(this.Table.ParentRelations["FK_ItineraryMember_ItineraryPayment"])));
@@ -17124,6 +17155,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRowVersionNull() {
                 this[this.tableItineraryPayment.RowVersionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCurrencyCodeNull() {
+                return this.IsNull(this.tableItineraryPayment.CurrencyCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCurrencyCodeNull() {
+                this[this.tableItineraryPayment.CurrencyCodeColumn] = global::System.Convert.DBNull;
             }
         }
         
