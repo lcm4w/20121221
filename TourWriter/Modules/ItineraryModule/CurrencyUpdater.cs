@@ -39,6 +39,7 @@ namespace TourWriter.Modules.ItineraryModule
             cmbCurrency.DisplayMember = "DisplayName";
             cmbCurrency.SelectedValue = itinerarySet.Itinerary[0].CurrencyCode ?? "";
             cmbCurrency.SelectedIndexChanged += cmbCurrency_SelectedIndexChanged;
+            cmbCurrency.Enabled = false;
 
             // bind purchase items
             gridBookings.DataSource = purchaseItemTable.DefaultView;
@@ -346,6 +347,21 @@ namespace TourWriter.Modules.ItineraryModule
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void lnkEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            const string msg =
+                "Client Payments exist, in your current Itinerary Currency\r\n\r\n" +
+                "Remove existing payments by making each 0 (zero) or blank, or by removing the payments completly.\r\n\r\n" +
+                "You can then re-enter them in the new Itinerary Currency amount after you change it.";
+
+            var hasPayments = itinerarySet.ItineraryPayment.Where(x => x.RowState != DataRowState.Deleted && !x.IsAmountNull() && x.Amount > 0).Count() > 0;
+
+            if (hasPayments) 
+                App.ShowWarning(msg);
+            else 
+                cmbCurrency.Enabled = true;
         }
 
         #endregion

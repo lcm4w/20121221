@@ -52,6 +52,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.lnkEdit = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
@@ -115,9 +116,9 @@
             this.gridBookings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridBookings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridBookings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.gridBookings.Location = new System.Drawing.Point(12, 51);
+            this.gridBookings.Location = new System.Drawing.Point(12, 63);
             this.gridBookings.Name = "gridBookings";
-            this.gridBookings.Size = new System.Drawing.Size(518, 378);
+            this.gridBookings.Size = new System.Drawing.Size(518, 366);
             this.gridBookings.TabIndex = 10;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -190,7 +191,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurrency.FormattingEnabled = true;
-            this.cmbCurrency.Location = new System.Drawing.Point(135, 18);
+            this.cmbCurrency.Location = new System.Drawing.Point(135, 25);
             this.cmbCurrency.Name = "cmbCurrency";
             this.cmbCurrency.Size = new System.Drawing.Size(395, 21);
             this.cmbCurrency.TabIndex = 17;
@@ -221,11 +222,23 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(15, 18);
+            this.label3.Location = new System.Drawing.Point(15, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 17);
             this.label3.TabIndex = 18;
             this.label3.Text = "Itinerary Currency";
+            // 
+            // lnkEdit
+            // 
+            this.lnkEdit.AutoSize = true;
+            this.lnkEdit.Location = new System.Drawing.Point(437, 9);
+            this.lnkEdit.Name = "lnkEdit";
+            this.lnkEdit.Size = new System.Drawing.Size(93, 13);
+            this.lnkEdit.TabIndex = 19;
+            this.lnkEdit.TabStop = true;
+            this.lnkEdit.Text = "(change currency)";
+            this.toolTip1.SetToolTip(this.lnkEdit, "Click to enable currency change");
+            this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
             // 
             // CurrencyUpdater
             // 
@@ -234,6 +247,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
+            this.Controls.Add(this.lnkEdit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmbCurrency);
             this.Controls.Add(this.label2);
@@ -269,5 +283,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbCurrency;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel lnkEdit;
     }
 }
