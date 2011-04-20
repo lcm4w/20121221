@@ -28,12 +28,12 @@
           <DataField>UserDisplayName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItineraryNet">
-          <DataField>ItineraryNet</DataField>
+        <Field Name="ItineraryNetFinalTotal">
+          <DataField>ItineraryNetFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
-        <Field Name="ItineraryGross">
-          <DataField>ItineraryGross</DataField>
+        <Field Name="ItineraryGrossFinalTotal">
+          <DataField>ItineraryGrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ItineraryMarkup">
@@ -59,7 +59,12 @@
       </Fields>
       <Query>
         <DataSourceName>ItineraryDetail</DataSourceName>
-        <CommandText>SELECT ItineraryName,ArriveDate,ItineraryStatusName,UserDisplayName,ItineraryNet,ItineraryGross,ItineraryMarkup,ItineraryCommission,ItineraryYield, ItineraryCurrencyCode, isnull(ItineraryCurrencyFormat,'c') as ItineraryCurrencyFormat FROM dbo.ItineraryDetail WHERE ArriveDate &gt;= @StartDate AND ArriveDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList) AND (UserID IN @UserIDList) AND (BranchID in @BranchIDList) AND (DepartmentID IN @DepartmentIDList)</CommandText>
+        <CommandText>
+SELECT ItineraryName,ArriveDate,ItineraryStatusName,UserDisplayName,ItineraryNetFinalTotal,ItineraryGrossFinalTotal,ItineraryMarkup,
+ItineraryCommission,ItineraryYield, ItineraryCurrencyCode, isnull(ItineraryCurrencyFormat,'c') as ItineraryCurrencyFormat 
+FROM dbo.ItineraryDetail 
+WHERE ArriveDate &gt;= @StartDate AND ArriveDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList) AND (UserID IN @UserIDList) AND (BranchID in @BranchIDList) AND (DepartmentID IN @DepartmentIDList)
+</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -590,7 +595,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!ItineraryGross.Value)</Value>
+                              <Value>=Sum(Fields!ItineraryGrossFinalTotal.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -625,7 +630,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Sum(Fields!ItineraryGross.Value)), Sum(Fields!ItineraryYield.Value) / Sum(Fields!ItineraryGross.Value), "")</Value>
+                              <Value>=iif(not isnothing(Sum(Fields!ItineraryGrossFinalTotal.Value)), Sum(Fields!ItineraryYield.Value) / Sum(Fields!ItineraryGrossFinalTotal.Value), "")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -800,7 +805,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!ItineraryGross.Value</Value>
+                              <Value>=Fields!ItineraryGrossFinalTotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>=Fields!ItineraryCurrencyFormat.Value</Format>
@@ -834,7 +839,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Fields!ItineraryGross.Value), Fields!ItineraryCommission.Value / 100, "")</Value>
+                              <Value>=iif(not isnothing(Fields!ItineraryGrossFinalTotal.Value), Fields!ItineraryCommission.Value / 100, "")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <Format>p</Format>
@@ -1538,7 +1543,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!ItineraryGross.Value)</Value>
+                              <Value>=Sum(Fields!ItineraryGrossFinalTotal.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -1576,7 +1581,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=iif(not isnothing(Sum(Fields!ItineraryGross.Value)), Sum(Fields!ItineraryYield.Value) / Sum(Fields!ItineraryGross.Value), "")</Value>
+                              <Value>=iif(not isnothing(Sum(Fields!ItineraryGrossFinalTotal.Value)), Sum(Fields!ItineraryYield.Value) / Sum(Fields!ItineraryGrossFinalTotal.Value), "")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
