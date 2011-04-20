@@ -96,6 +96,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             #region Validate
 
+            // remove contentEditable tag
+            emailInfo.EmailMessage.Body = emailInfo.EmailMessage.Body.Replace(" contentEditable=true", "");
+
             grid.ActiveRowScrollRegion.ScrollRowIntoView(grid.Rows[gridRow.Index]);
             if (!emailInfo.EmailMessage.Validate())
             {
