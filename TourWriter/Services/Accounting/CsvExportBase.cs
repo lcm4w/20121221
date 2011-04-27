@@ -26,6 +26,8 @@ namespace TourWriter.Services.Accounting
         }
 
         public string TemplateText { get; set; }
+        public string TemplateColumnHeader { get; set; }
+        public string TemplateColumnTags { get; set; }
 
         public DataTable DataSource { get; set; }
 
@@ -34,8 +36,23 @@ namespace TourWriter.Services.Accounting
         
         protected string ReadTemplateFile(string templateFile)
         {
-            using (TextReader reader = new StreamReader(templateFile))
-                return reader.ReadLine();
+            string text;
+            using (var reader = new StreamReader(templateFile))
+            {
+                //read the first line, assume it as header
+                 text = reader.ReadLine();
+                TemplateColumnHeader = text;
+
+                //read second line
+                text = reader.ReadLine();
+                if (text != null)
+                {
+                    return text;
+                }
+                text = TemplateColumnHeader;
+                TemplateColumnHeader = "";
+            }
+            return text;
         }
 
         protected static void WriteCsvFile(string text, string fileName)
