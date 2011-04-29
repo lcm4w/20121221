@@ -62,6 +62,9 @@ namespace TourWriter.Dialogs
 
             txtNet.FormatString = format;
             txtGross.FormatString = format;
+            
+            txtNet.MaskInput = "{LOC}-nnnnnnnnnn.nn";
+            txtGross.MaskInput = "{LOC}-nnnnnnnnnn.nn";
         }
 
         private void CostingDialog_Load(object sender, EventArgs e)
