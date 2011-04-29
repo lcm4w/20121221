@@ -699,7 +699,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // set base prices
             var hasOverride = CurrencyService.GetPurchaseItemCurrencyCode(item) != null;
             var format = "{0:" + (hasOverride ? CurrencyService.GetCurrency(item.CurrencyCode).DisplayFormat : "c") + "}";
-            if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.GrossTotal);
+            if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.NetTotal);
 
             // set final prices
             var itinerary = item.PurchaseLineRow.ItineraryRow;
