@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 
 namespace TourWriter.Services.Accounting
 {
@@ -8,7 +9,9 @@ namespace TourWriter.Services.Accounting
         private const string SortByColumnName = "PurchaseLineID";
         
         public override void ExportTo(string filename)
-        {
+        {   
+            FileInfo fileInfo = new FileInfo(filename);
+            string csvFile = filename.Replace(fileInfo.Extension, ".csv");   
             var hasSortCol = DataSource.Columns.Contains(SortByColumnName);
             if (hasSortCol) SortDataSource(SortByColumnName + " ASC");
 
@@ -23,6 +26,7 @@ namespace TourWriter.Services.Accounting
                 CsvContent.AppendLine(templateHelper.Replace(TemplateText, row));
             
             WriteCsvFile(CsvContent.ToString(), filename);
+            System.IO.File.Move(filename,csvFile);
         }
     }
 }
