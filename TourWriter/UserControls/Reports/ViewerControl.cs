@@ -98,6 +98,10 @@ namespace TourWriter.UserControls.Reports
                     throw new FormatException(localEx.Message);
                 throw;
             }
+            catch (Exception ex)
+            {
+                App.Error(string.Format("Report error for '{0}' ({1}). Message: {2}", reportViewer.LocalReport.DisplayName, reportViewer.LocalReport.ReportPath, ex.Message), ex, true);
+            }
             finally
             {
                 btnRefresh.Enabled = btnOptions.Enabled = btnEmail.Enabled = true;
