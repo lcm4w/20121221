@@ -67,7 +67,7 @@
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryName,ItineraryStatusName,PurchaseLineID,PurchaseLineName,PurchaseItemName,BookingReference,RequestStatusName,PurchaseItemStartDate,SupplierName,BaseTotalNet as TotalNet,BaseTotalGross as TotalGross, isnull(CurrencyFormat,'c') as CurrencyFormat, CurrencyCode FROM dbo.PurchaseItemDetail WHERE PurchaseItemStartDate &gt;= @StartDate AND PurchaseItemStartDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList) AND (RequestStatusID IN @RequestStatusIDList)</CommandText>
+        <CommandText>SELECT ItineraryName,ItineraryStatusName,PurchaseLineID,PurchaseLineName,PurchaseItemName,BookingReference,RequestStatusName,PurchaseItemStartDate,SupplierName,NetBaseTotal as TotalNet,GrossBaseTotal as TotalGross, isnull(CurrencyFormat,'c') as CurrencyFormat, CurrencyCode FROM dbo.PurchaseItemDetail WHERE PurchaseItemStartDate &gt;= @StartDate AND PurchaseItemStartDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList) AND (RequestStatusID IN @RequestStatusIDList)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>

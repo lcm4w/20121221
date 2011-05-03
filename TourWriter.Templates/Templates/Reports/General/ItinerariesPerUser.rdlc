@@ -85,8 +85,8 @@
           <DataField>UserDisplayName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ItineraryGross">
-          <DataField>ItineraryGross</DataField>
+        <Field Name="ItineraryGrossFinalTotal">
+          <DataField>ItineraryGrossFinalTotal</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="ItineraryYield">
@@ -96,7 +96,7 @@
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryID, UserDisplayName, ItineraryGross, ItineraryYield FROM dbo.ItineraryDetail WHERE ArriveDate &gt;= @StartDate AND ArriveDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList)</CommandText>
+        <CommandText>SELECT ItineraryID, UserDisplayName, ItineraryGrossFinalTotal, ItineraryYield FROM dbo.ItineraryDetail WHERE ArriveDate &gt;= @StartDate AND ArriveDate &lt; @EndDate AND (ItineraryStatusID IN @ItineraryStatusIDList)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
@@ -127,7 +127,7 @@
             </Grouping>
             <Sorting>
               <SortBy>
-                <SortExpression>=Sum(Fields!ItineraryGross.Value)</SortExpression>
+                <SortExpression>=Sum(Fields!ItineraryGrossFinalTotal.Value)</SortExpression>
                 <Direction>Descending</Direction>
               </SortBy>
             </Sorting>
@@ -209,7 +209,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                       <CanGrow>true</CanGrow>
-                      <Value>=Sum(Fields!ItineraryGross.Value)</Value>
+                      <Value>=Sum(Fields!ItineraryGrossFinalTotal.Value)</Value>
                     </Textbox>
                   </ReportItems>
                 </TableCell>
@@ -261,7 +261,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                       <CanGrow>true</CanGrow>
-                      <Value>=Sum(Fields!ItineraryYield.Value)  / iif(Sum(Fields!ItineraryGross.Value) &lt;&gt; 0, Sum(Fields!ItineraryGross.Value), 1)</Value>
+                      <Value>=Sum(Fields!ItineraryYield.Value)  / iif(Sum(Fields!ItineraryGrossFinalTotal.Value) &lt;&gt; 0, Sum(Fields!ItineraryGrossFinalTotal.Value), 1)</Value>
                     </Textbox>
                   </ReportItems>
                 </TableCell>
@@ -518,7 +518,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                       <CanGrow>true</CanGrow>
-                      <Value>=Sum(Fields!ItineraryGross.Value)</Value>
+                      <Value>=Sum(Fields!ItineraryGrossFinalTotal.Value)</Value>
                     </Textbox>
                   </ReportItems>
                 </TableCell>
@@ -577,7 +577,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                       <CanGrow>true</CanGrow>
-                      <Value>=Sum(Fields!ItineraryYield.Value)  / iif(Sum(Fields!ItineraryGross.Value) &lt;&gt; 0, Sum(Fields!ItineraryGross.Value), 1)</Value>
+                      <Value>=Sum(Fields!ItineraryYield.Value)  / iif(Sum(Fields!ItineraryGrossFinalTotal.Value) &lt;&gt; 0, Sum(Fields!ItineraryGrossFinalTotal.Value), 1)</Value>
                     </Textbox>
                   </ReportItems>
                 </TableCell>
@@ -692,7 +692,7 @@
               </Grouping>
               <Sorting>
                 <SortBy>
-                  <SortExpression>=Sum(Fields!ItineraryGross.Value)</SortExpression>
+                  <SortExpression>=Sum(Fields!ItineraryGrossFinalTotal.Value)</SortExpression>
                   <Direction>Descending</Direction>
                 </SortBy>
               </Sorting>
@@ -722,7 +722,7 @@
               <DataPoint>
                 <DataValues>
                   <DataValue>
-                    <Value>=iif(Sum(Fields!ItineraryYield.Value) &gt; -1, Sum(Fields!ItineraryGross.Value) - Sum(Fields!ItineraryYield.Value), Sum(Fields!ItineraryGross.Value))</Value>
+                    <Value>=iif(Sum(Fields!ItineraryYield.Value) &gt; -1, Sum(Fields!ItineraryGrossFinalTotal.Value) - Sum(Fields!ItineraryYield.Value), Sum(Fields!ItineraryGrossFinalTotal.Value))</Value>
                   </DataValue>
                 </DataValues>
                 <DataLabel />
@@ -819,7 +819,7 @@
               </Grouping>
               <Sorting>
                 <SortBy>
-                  <SortExpression>=Sum(Fields!ItineraryGross.Value)</SortExpression>
+                  <SortExpression>=Sum(Fields!ItineraryGrossFinalTotal.Value)</SortExpression>
                   <Direction>Descending</Direction>
                 </SortBy>
               </Sorting>
@@ -834,7 +834,7 @@
               <DataPoint>
                 <DataValues>
                   <DataValue>
-                    <Value>=Sum(Fields!ItineraryGross.Value)</Value>
+                    <Value>=Sum(Fields!ItineraryGrossFinalTotal.Value)</Value>
                   </DataValue>
                 </DataValues>
                 <DataLabel />
