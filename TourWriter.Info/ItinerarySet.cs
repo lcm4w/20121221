@@ -505,6 +505,7 @@ namespace TourWriter.Info
             {
                 System.Diagnostics.Debug.WriteLine("Called: PurchaseItemDataTable.PurchaseItemRow.RecalculateTotals(), custom columns recalc");
 
+                NetBaseTotal = calcNetBaseTotal();
                 NetTotalConverted = calcTotalNetConverted();
                 GrossTotalConverted = calcTotalGrossConverted();
             }
@@ -517,6 +518,12 @@ namespace TourWriter.Info
             public decimal GrossTotal
             {
                 get { return (!IsGrossNull() ? Gross : 0) * getUnitMultiplier(); }
+            }
+
+
+            private decimal calcNetBaseTotal()
+            {
+                return (!IsNetNull() ? Net : 0) * getUnitMultiplier();
             }
 
             private decimal calcTotalNetConverted()
