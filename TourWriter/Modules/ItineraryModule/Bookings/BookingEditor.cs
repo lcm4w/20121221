@@ -94,6 +94,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void PurchaseLine_CurrentChanged(object sender, EventArgs e)
         {
             supplierNotesList = null;
+            SetNetSummary();
         }
 
         private static void PurchaseItem_CurrentChanged(object sender, EventArgs e)
@@ -572,6 +573,46 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
             }
         }
+        
+        private void SetNetSummary()
+        {
+            UltraGridBand band = gridItems.DisplayLayout.Bands[0];
+
+            // add summary
+            if (!band.Summaries.Exists("NetTotal") && band.Columns.Exists("NetTotal"))
+            {
+                SummarySettings summary = band.Summaries.Add(SummaryType.Formula, band.Columns["NetTotal"]);
+                summary.Key = "NetTotal";
+                summary.Formula = "Sum([NetBaseTotal])";
+                summary.DisplayFormat = "{0:C}";
+                summary.Appearance.TextHAlign = HAlign.Right;
+                summary.ToolTipText = "Total net sum, in base currency";
+                summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
+                summary.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
+            }
+
+            // set currency format
+            var cm = BindingContext[BindingSource, "PurchaseLineID"] as CurrencyManager;
+            if (cm != null && cm.Current is int)
+            {
+                var ccyCodes = itinerarySet.PurchaseItem.Where(x => x.PurchaseLineID == (int)cm.Current).Select(x => x.CurrencyCode).Distinct();
+
+                if (ccyCodes.Count() == 1) // custom format
+                {
+                    var currencyInfo = CurrencyService.GetCurrency(ccyCodes.First());
+                    var format = "{0:" + (currencyInfo != null ? currencyInfo.DisplayFormat : "c") + "}";
+                    band.Summaries["NetTotal"].DisplayFormat = format;
+                }
+                else if (ccyCodes.Count() > 1) // not valid (don't sum multiple currencies)
+                {
+                    band.Summaries["NetTotal"].DisplayFormat = "n/a";
+                }
+                else // default format
+                {
+                    band.Summaries["NetTotal"].DisplayFormat = "{0:C}";
+                }
+            }
+        }
 
         #endregion
 
@@ -641,7 +682,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 else if (c.Key == "NetTotal")
                 {
                     c.Header.Caption = "Net (total)";
-                    c.Header.ToolTipText = "Base net total cost in Supplier base currency";
+                    c.Header.ToolTipText = "Total Net in Supplier currency";
                     c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
@@ -650,7 +691,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 else if (c.Key == "GrossFinal")
                 {
                     c.Header.Caption = "Gross (final)";
-                    c.Header.ToolTipText = "Final gross total cost in Itinerary base currency";
+                    c.Header.ToolTipText = "Final Total Gross in Itinerary currency";
                     c.DataType = typeof(string);
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.NoEdit;
@@ -683,7 +724,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             GridHelper.SetDefaultGridAppearance(e);
             GridHelper.SetDefaultGroupByAppearance(e);
 
+            // add summaries
             BookingsViewer.SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
+            SetNetSummary();
         }
 
         private void gridItems_InitializeRow(object sender, InitializeRowEventArgs e)
