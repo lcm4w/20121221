@@ -128,6 +128,7 @@ namespace TourWriter.Modules.ItineraryModule
             DataBind();
 
             LoadData();
+
             if (itinerarySet.Itinerary.Count == 0)
             {
                 if (!serverConnectionError_UserNotified)
@@ -189,6 +190,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             bookingsViewer.RecalculateFinalPricing();
             bookingsViewer.SetItineraryCurrencyInfo();
+ 
         }
         
         private void ItineraryMain_Shown(object sender, EventArgs e)
@@ -304,6 +306,26 @@ namespace TourWriter.Modules.ItineraryModule
         public void SaveChanges()
         {
             SaveDataChanges();
+        }
+
+        public bool IsBookingValid(int optionId, double numOfDaysNyt, DateTime startDate)
+        {
+            if (optionId > 0)
+            {
+                ItinerarySet.OptionLookupRow optionLookupRow = itinerarySet.OptionLookup.FindByOptionID(optionId);
+                if (optionLookupRow != null)
+                {
+                    var days = Convert.ToInt32(numOfDaysNyt);
+                    var endDate = startDate.AddDays(numOfDaysNyt);
+                   
+                    if (startDate < optionLookupRow.ValidFrom || startDate > optionLookupRow.ValidTo &&
+                        endDate < optionLookupRow.ValidFrom || endDate > optionLookupRow.ValidTo)
+                    {
+                        App.ShowInfo("Selected rate dates do not match the booking date");
+                    }
+                }
+            }
+            return true;
         }
 
         private void SetReadOnly(bool readOnly)
@@ -553,7 +575,8 @@ namespace TourWriter.Modules.ItineraryModule
                     {
                         // Add supplier booking
                         tabControl_Main.SelectedTab = tabControl_Main.Tabs["Bookings"];
-                        bookingsViewer.AddNewBooking(nodeInfo.ItemID);
+                        //original code: bookingsViewer.AddNewBooking(nodeInfo.ItemID);
+                        bookingsViewer.AddNewBooking(nodeInfo.ItemID, this);
                     }
                     else if (nodeInfo.ItemType == NavigationTreeItemInfo.ItemTypes.Contact)
                     {
@@ -891,7 +914,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void bookingsViewer_OnOpenBooking(BookingsViewerEditBookingEventArgs e)
         {
-            var editor = new BookingEditorForm(itinerarySet);
+            var editor = new BookingEditorForm(itinerarySet,this);
             editor.SetBindingContext(BindingContext);
             editor.SetActiveRows(e.purchaseLineId, e.purchaseItemId);
             editor.ShowDialog();

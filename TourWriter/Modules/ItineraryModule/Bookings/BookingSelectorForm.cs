@@ -25,9 +25,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private readonly ItinerarySet tempItinerarySet;
         private ItinerarySet.PurchaseLineRow purchaseLine;
 
+        private ItineraryMain itineraryMain;
+
         public enum PageType { Search, Select }
         
-        public BookingSelectorForm(ItinerarySet itinerarySet)
+        public BookingSelectorForm(ItinerarySet itinerarySet, ItineraryMain itineraryMain )
         {
             InitializeComponent();
 
@@ -38,11 +40,27 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             chkCurrency.Checked = Settings.Default.BookingSelectorCurrencyUpdate;
 
             this.itinerarySet = itinerarySet;
+            this.itineraryMain = itineraryMain;
+
             tempItinerarySet = (ItinerarySet)itinerarySet.Copy();
             gridBookings.DataSource = tempItinerarySet.PurchaseItem;
-            GridHelper.SetNumberOfDaysPicker(gridBookings);
 
+           
+
+            GridHelper.SetNumberOfDaysPicker(gridBookings);
             SetPage(PageType.Search);
+        }
+
+        private void PurchaseItemRowChanged(object sender, ItinerarySet.PurchaseItemRowChangeEvent e)
+        {
+          
+            if (e.Action == DataRowAction.Change )
+            {
+                if (!itineraryMain.IsBookingValid(e.Row.OptionID, e.Row.NumberOfDays,e .Row.StartDate))
+                {
+                    e.Row.RejectChanges();
+                }
+            }
         }
 
         private void BookingSelectorForm_Load(object sender, EventArgs e)
@@ -54,6 +72,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             CancelButton = btnCancel;
             btnOk.Enabled = gridBookings.Rows.Count > 0;
             chkIncrementDates.Checked = true;
+
+            tempItinerarySet.PurchaseItem.PurchaseItemRowChanged += PurchaseItemRowChanged;
         }
 
         private DateTime GetNextDefaultDate()
@@ -123,7 +143,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // Set selected option.
             if (optionId.HasValue)
-                serviceEditor1.SetSelectedOptionRow((int)optionId);
+            {
+                serviceEditor1.SetSelectedOptionRow((int) optionId);
+            }
         }
 
         public void SetPage(PageType defaultPage)
@@ -141,6 +163,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void ResetInvalidSeasonDatesWarning()
         {
             // Show/hide warning label.
+            
             errorProvider1.SetError(
                 serviceEditor1.lblRates, // lblDate, 
                 ((IsSelectedRateExpired)
@@ -153,10 +176,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             get
             {
+
                 int? rateId = serviceEditor1.GetSelectedRateId();
                 if (!rateId.HasValue)
                     return false;
-                
+              
                 SupplierSet.RateRow rate = supplierSet.Rate.FindByRateID((int)rateId);
                 DateTime itemDate = GetNextDefaultDate();
                 return !(itemDate.Date >= rate.ValidFrom.Date && itemDate.Date <= rate.ValidTo.Date);
@@ -517,6 +541,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // add purchase item
             var id = AddNewPurchaseItem(e.OptionID).PurchaseItemID;
+
             UltraGridRow newRow = null;
             foreach (var row in gridBookings.Rows)
                 if ((int)row.Cells["PurchaseItemID"].Value == id)
@@ -559,6 +584,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             cell.Value = list.ValueListItems[1].DataValue;
             cell.Row.Update();
+
+          
         }
         
         private void btnOptionDel_Click(object sender, EventArgs e)

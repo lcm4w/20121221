@@ -60,6 +60,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             get { return BindingSource.DataSource as ItinerarySet; }
         }
 
+        public ItineraryMain ItineraryMain { get; set; }
+
         #endregion
 
         #region Methods
@@ -671,6 +673,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellClickAction = CellClickAction.Edit;
                     c.CellActivation = Activation.AllowEdit;
+                    
                 }
                 else if (c.Key == "Quantity")
                 {
@@ -804,7 +807,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void PurchaseItem_PurchaseItemRowChanged(
             object sender, ItinerarySet.PurchaseItemRowChangeEvent e)
-        {
+        { 
             // Highlight a new row after it has been added.
             if (e.Action == DataRowAction.Add && gridItems.Rows != null)
             {
@@ -816,6 +819,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         break;
                     }
                 }
+            }
+
+            if (e.Action == DataRowAction.Change)
+            {
+               if (! ItineraryMain.IsBookingValid(e.Row.OptionID, e.Row.NumberOfDays, e.Row.StartDate))
+               {
+                   e.Row.RejectChanges();
+               }
             }
         }
 

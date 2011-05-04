@@ -15,11 +15,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
     public partial class BookingEditorForm : Form
     {
         private ItinerarySet itinerarySet;
-        
+        private ItineraryMain itineraryMain;
 
-        public BookingEditorForm(ItinerarySet itinerarySet)
+        public BookingEditorForm(ItinerarySet itinerarySet, ItineraryMain itineraryMain)
         {
             this.itinerarySet = itinerarySet;
+            this.itineraryMain = itineraryMain;
 
             InitializeComponent();
 
@@ -31,6 +32,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             
             bookingEditor11.BindingSource = bookingsBindingSource;
             bookingEditor11.OnOpenSupplier += bookingEditor11_OnOpenSupplier;
+            bookingEditor11.ItineraryMain = this.itineraryMain;
 
             cmbBookings.ComboBox.DataSource = bookingsBindingSource;
             cmbBookings.ComboBox.ValueMember = "PurchaseLineID";
@@ -68,7 +70,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void OpenSupplier(int supplierId, int? serviceId, int? optionId)
         {
-            BookingSelectorForm bookingSelectorForm = new BookingSelectorForm(itinerarySet);
+            BookingSelectorForm bookingSelectorForm = new BookingSelectorForm(itinerarySet, itineraryMain);
             bookingSelectorForm.LoadSupplier(supplierId, serviceId, optionId);
             bookingSelectorForm.SetPage(BookingSelectorForm.PageType.Select);
             bookingSelectorForm.Size = Size;
@@ -96,7 +98,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnAddLine_Click(object sender, EventArgs e)
         {
-            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet);
+            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet, itineraryMain);
             bookingSelector.Size = Size;
             bookingSelector.OnPurchaseItemAdded +=
                 new OnPurchaseItemAddedHandler(bookingSelector_OnPurchaseItemAdded);

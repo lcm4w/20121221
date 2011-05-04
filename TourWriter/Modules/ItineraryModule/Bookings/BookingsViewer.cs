@@ -34,6 +34,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private ItinerarySet itinerarySet;
 
+        private ItineraryMain itineraryMain;
+
         internal ItinerarySet ItinerarySet  
         {
             get { return itinerarySet; }
@@ -362,7 +364,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         
         public void SearchBookings()
         {
-            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet);
+            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet,itineraryMain);
             bookingSelector.SetPage(BookingSelectorForm.PageType.Search);
 
             bookingSelector.ShowDialog();
@@ -370,8 +372,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         }
 
         private bool isLoadingSupplier;
-        public void AddNewBooking(int supplierId)
+        public void AddNewBooking(int supplierId,ItineraryMain itineraryMain)
         {
+            this.itineraryMain = itineraryMain;
             // added to disable multiple drag-drop events queuing up
             if (isLoadingSupplier)
                 return;
@@ -380,7 +383,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
 
-            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet);
+            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet,itineraryMain);
             bookingSelector.LoadSupplier(supplierId, null, null);
             bookingSelector.SetPage(BookingSelectorForm.PageType.Select);
 
@@ -1225,7 +1228,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 int supplierId = itinerarySet.PurchaseLine.FindByPurchaseLineID(
                     (int)grid.ActiveRow.Cells["PurchaseLineID"].Value).SupplierID;
-                AddNewBooking(supplierId);
+                AddNewBooking(supplierId,this.itineraryMain);
             }
         }
         
