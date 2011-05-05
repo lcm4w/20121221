@@ -456,12 +456,13 @@ namespace TourWriter.Forms
                             <db>{3}</db>
                             <os>{4}</os>
                             <net>{5}</net>
-                            <lic>{6}</lic>
-                            <exp>{7}</exp>
-                            <pid>{8}</pid>
-                            <uid>{9}</uid>
-                            <uem>{10}</uem>
-                            <act>{11}</act>
+                            <res>{6}</res>
+                            <lic>{7}</lic>
+                            <exp>{8}</exp>
+                            <pid>{9}</pid>
+                            <uid>{10}</uid>
+                            <uem>{11}</uem>
+                            <act>{12}</act>
                         </req>".Replace(Environment.NewLine, "").Replace(" ", ""),
                     Info.VersionInfo.GetInstallId(),
                     AssemblyInfo.FileVersion,
@@ -469,6 +470,7 @@ namespace TourWriter.Forms
                     Cache.ToolSet.AppSettings[0].VersionNumber,
                     Environment.OSVersion.Version,
                     App.GetDotNetVersion(),
+                    SystemInformation.PrimaryMonitorSize.Width + "x" + SystemInformation.PrimaryMonitorSize.Height,
                     lic.MaxUsers,
                     lic.EndDate.ToString("yyyy-MM-dd"),
                     App.Test,
