@@ -3613,6 +3613,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnGrossTotalConverted;
             
+            private global::System.Data.DataColumn columnDiscountUnits;
+            
+            private global::System.Data.DataColumn columnDiscountType;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseItemDataTable() {
@@ -3920,6 +3924,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DiscountUnitsColumn {
+                get {
+                    return this.columnDiscountUnits;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DiscountTypeColumn {
+                get {
+                    return this.columnDiscountType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3988,7 +4008,9 @@ namespace TourWriter.Info {
                         string CurrencyCode, 
                         decimal NetBaseTotal, 
                         decimal NetTotalConverted, 
-                        decimal GrossTotalConverted) {
+                        decimal GrossTotalConverted, 
+                        double DiscountUnits, 
+                        string DiscountType) {
                 PurchaseItemRow rowPurchaseItemRow = ((PurchaseItemRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -4024,7 +4046,9 @@ namespace TourWriter.Info {
                         CurrencyCode,
                         NetBaseTotal,
                         NetTotalConverted,
-                        GrossTotalConverted};
+                        GrossTotalConverted,
+                        DiscountUnits,
+                        DiscountType};
                 if ((parentPurchaseLineRowByPurchaseLinePurchaseItem != null)) {
                     columnValuesArray[1] = parentPurchaseLineRowByPurchaseLinePurchaseItem[0];
                 }
@@ -4094,6 +4118,8 @@ namespace TourWriter.Info {
                 this.columnNetBaseTotal = base.Columns["NetBaseTotal"];
                 this.columnNetTotalConverted = base.Columns["NetTotalConverted"];
                 this.columnGrossTotalConverted = base.Columns["GrossTotalConverted"];
+                this.columnDiscountUnits = base.Columns["DiscountUnits"];
+                this.columnDiscountType = base.Columns["DiscountType"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4173,6 +4199,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnNetTotalConverted);
                 this.columnGrossTotalConverted = new global::System.Data.DataColumn("GrossTotalConverted", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGrossTotalConverted);
+                this.columnDiscountUnits = new global::System.Data.DataColumn("DiscountUnits", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscountUnits);
+                this.columnDiscountType = new global::System.Data.DataColumn("DiscountType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscountType);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey6", new global::System.Data.DataColumn[] {
                                 this.columnPurchaseItemID}, true));
                 this.columnPurchaseItemID.AutoIncrement = true;
@@ -10239,6 +10269,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnStaffRooms;
             
+            private global::System.Data.DataColumn columnGrossMarkupOverride;
+            
+            private global::System.Data.DataColumn columnGrossFinalOverride;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryPaxOverrideDataTable() {
@@ -10322,6 +10356,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossMarkupOverrideColumn {
+                get {
+                    return this.columnGrossMarkupOverride;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossFinalOverrideColumn {
+                get {
+                    return this.columnGrossFinalOverride;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -10357,7 +10407,7 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryPaxOverrideRow AddItineraryPaxOverrideRow(PurchaseItemRow parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride, ItineraryPaxRow parentItineraryPaxRowByFK_ItineraryPax_ItineraryPaxOverride, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms) {
+            public ItineraryPaxOverrideRow AddItineraryPaxOverrideRow(PurchaseItemRow parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride, ItineraryPaxRow parentItineraryPaxRowByFK_ItineraryPax_ItineraryPaxOverride, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms, decimal GrossMarkup, decimal GrossOverride) {
                 ItineraryPaxOverrideRow rowItineraryPaxOverrideRow = ((ItineraryPaxOverrideRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -10365,7 +10415,9 @@ namespace TourWriter.Info {
                         MemberCount,
                         MemberRooms,
                         StaffCount,
-                        StaffRooms};
+                        StaffRooms,
+                        GrossMarkup,
+                        GrossOverride};
                 if ((parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride != null)) {
                     columnValuesArray[0] = parentPurchaseItemRowByFK_PurchaseItem_ItineraryPaxOverride[0];
                 }
@@ -10408,6 +10460,8 @@ namespace TourWriter.Info {
                 this.columnMemberRooms = base.Columns["MemberRooms"];
                 this.columnStaffCount = base.Columns["StaffCount"];
                 this.columnStaffRooms = base.Columns["StaffRooms"];
+                this.columnGrossMarkupOverride = base.Columns["GrossMarkup"];
+                this.columnGrossFinalOverride = base.Columns["GrossOverride"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10425,6 +10479,16 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnStaffCount);
                 this.columnStaffRooms = new global::System.Data.DataColumn("StaffRooms", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStaffRooms);
+                this.columnGrossMarkupOverride = new global::System.Data.DataColumn("GrossMarkup", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "GrossMarkupOverrideColumn");
+                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnGrossMarkupOverride");
+                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_UserColumnName", "GrossMarkup");
+                base.Columns.Add(this.columnGrossMarkupOverride);
+                this.columnGrossFinalOverride = new global::System.Data.DataColumn("GrossOverride", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "GrossFinalOverrideColumn");
+                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnGrossFinalOverride");
+                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_UserColumnName", "GrossOverride");
+                base.Columns.Add(this.columnGrossFinalOverride);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnPurchaseItemID,
                                 this.columnItineraryPaxID}, true));
@@ -13065,6 +13129,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double DiscountUnits {
+                get {
+                    if (this.IsDiscountUnitsNull()) {
+                        return 1D;
+                    }
+                    else {
+                        return ((double)(this[this.tablePurchaseItem.DiscountUnitsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablePurchaseItem.DiscountUnitsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DiscountType {
+                get {
+                    if (this.IsDiscountTypeNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tablePurchaseItem.DiscountTypeColumn]));
+                    }
+                }
+                set {
+                    this[this.tablePurchaseItem.DiscountTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseLineRow PurchaseLineRow {
                 get {
                     return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
@@ -13431,6 +13527,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGrossTotalConvertedNull() {
                 this[this.tablePurchaseItem.GrossTotalConvertedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDiscountUnitsNull() {
+                return this.IsNull(this.tablePurchaseItem.DiscountUnitsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDiscountUnitsNull() {
+                this[this.tablePurchaseItem.DiscountUnitsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDiscountTypeNull() {
+                return this.IsNull(this.tablePurchaseItem.DiscountTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDiscountTypeNull() {
+                this[this.tablePurchaseItem.DiscountTypeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17582,6 +17702,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal GrossMarkup {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableItineraryPaxOverride.GrossMarkupOverrideColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossMarkup\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.GrossMarkupOverrideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal GrossOverride {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableItineraryPaxOverride.GrossFinalOverrideColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossOverride\' in table \'ItineraryPaxOverride\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPaxOverride.GrossFinalOverrideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseItemRow PurchaseItemRow {
                 get {
                     return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
@@ -17648,6 +17800,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStaffRoomsNull() {
                 this[this.tableItineraryPaxOverride.StaffRoomsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossMarkupNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.GrossMarkupOverrideColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossMarkupNull() {
+                this[this.tableItineraryPaxOverride.GrossMarkupOverrideColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossOverrideNull() {
+                return this.IsNull(this.tableItineraryPaxOverride.GrossFinalOverrideColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossOverrideNull() {
+                this[this.tableItineraryPaxOverride.GrossFinalOverrideColumn] = global::System.Convert.DBNull;
             }
         }
         
