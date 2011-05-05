@@ -421,7 +421,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void SendBookingRequest(IEnumerable<int> idList, string defaultTemplate)
         {
             var bookingEmailer = new BookingEmailForm(itinerarySet, idList, defaultTemplate);
-            bookingEmailer.ShowDialog();
+            bookingEmailer.Show();
         }
 
         internal void SetBindingContext(BindingContext bindingContext)
@@ -1228,6 +1228,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 int supplierId = itinerarySet.PurchaseLine.FindByPurchaseLineID(
                     (int)grid.ActiveRow.Cells["PurchaseLineID"].Value).SupplierID;
+                itineraryMain = ParentForm as ItineraryMain;
                 AddNewBooking(supplierId,this.itineraryMain);
             }
         }
