@@ -10,7 +10,7 @@ namespace TourWriter.Services.Accounting
         
         public override void ExportTo(string filename)
         {   
-            FileInfo fileInfo = new FileInfo(filename);
+            var fileInfo = new FileInfo(filename);
             string csvFile = filename.Replace(fileInfo.Extension, ".csv");   
             var hasSortCol = DataSource.Columns.Contains(SortByColumnName);
             if (hasSortCol) SortDataSource(SortByColumnName + " ASC");
@@ -23,7 +23,7 @@ namespace TourWriter.Services.Accounting
             }
             CsvContent.AppendLine(TemplateColumnHeader);
             foreach (DataRow row in DataSource.Rows)
-                CsvContent.AppendLine(templateHelper.Replace(TemplateText, row));
+                CsvContent.AppendLine(templateHelper.Replace(TemplateText, row, "csv"));
             
             WriteCsvFile(CsvContent.ToString(), filename);
             System.IO.File.Move(filename,csvFile);

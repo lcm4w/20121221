@@ -37,23 +37,46 @@ namespace TourWriter.Services
         /// <returns></returns>
         internal string Replace(string template, DataRow row)
         {
+            return Replace(template, row, "");
+        }
+
+        /// <summary>
+        /// Replace the tags in template with the matching column values, and use the specified format
+        /// </summary>
+        /// <param name="template"></param>
+        /// <param name="row"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        internal string Replace(string template, DataRow row, string format)
+        {
             var tags = GetTagNames(template);
             var keyValuePairs = GetKeyValuePairs(tags, row);
 
-            return Replace(template, keyValuePairs);
+            return Replace(template, keyValuePairs,format);
         }
-
         /// <summary>
         /// Replace the tags in a template with the matching tag values.
         /// </summary>
         /// <param name="template"></param>
         /// <param name="keyvals"></param>
+        /// <param name="format"></param>
         /// <returns></returns>
-        internal static string Replace(string template, IEnumerable<KeyValuePair<string, string>> keyvals)
+        internal static string Replace(string template, IEnumerable<KeyValuePair<string, string>> keyvals, string format)
         {
             foreach (var pair in keyvals)
-                template = Replace(template, pair.Key, pair.Value);
+            {
+                var key = pair.Key;
+                var value = pair.Value;
 
+                if (format == "csv")
+                {
+                    // escape embedded commas
+                    if (value.Contains(","))
+                        value = string.Format("\"{0}\"", value);
+                }
+
+                template = Replace(template, key, value) ;
+            }
             return template;
         }
 
