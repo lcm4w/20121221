@@ -540,7 +540,8 @@ namespace TourWriter.Info
             {
                 decimal quantity = !IsQuantityNull() ? (decimal)Quantity : 1;
                 decimal numberOfDays = !IsNumberOfDaysNull() ? (decimal)NumberOfDays : 1;
-                return quantity * numberOfDays;
+                decimal discount = !IsDiscountUnitsNull() ? (decimal)DiscountUnits : 0;
+                return (quantity * numberOfDays) - discount;
             }
         }
 

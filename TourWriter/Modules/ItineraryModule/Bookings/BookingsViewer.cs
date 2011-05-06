@@ -697,8 +697,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Layout.Bands[0].Columns.Add("BaseCurrency");
             if (!e.Layout.Bands[0].Columns.Exists("BookingCurrency"))
                 e.Layout.Bands[0].Columns.Add("BookingCurrency");
+            if (!e.Layout.Bands[0].Columns.Exists("Discount"))
+                e.Layout.Bands[0].Columns.Add("Discount");
 
-            // Show/hide columns 
+            // Show/hide columns )
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
                 if (c.Key == "PurchaseLineID")
@@ -966,6 +968,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.Hidden = true;
                     c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True;
                 }
+                else if (c.Key == "Discount")
+                {
+                    c.Header.Caption = "Free";
+                    c.Header.ToolTipText = "Free";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
                 else
                 {
                     c.Hidden = true;
@@ -1003,6 +1011,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["GrossTotal"].Width = 120;
             e.Layout.Bands[0].Columns["NetFinal"].Width = 120;
             e.Layout.Bands[0].Columns["GrossFinal"].Width = 120;
+            e.Layout.Bands[0].Columns["Discount"].Width = 50;
 
             int index = 0;
 
@@ -1028,12 +1037,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["GrossUnit"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Discount"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetFinal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index;
+          
 
             // Set defaults
             GridHelper.SetDefaultGridAppearance(e);
@@ -1108,7 +1119,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (e.Row.Band.Columns.Exists("GrossUnit")) e.Row.Cells["GrossUnit"].Value = string.Format(format, item.Gross);
                 if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.NetTotal);
                 if (e.Row.Band.Columns.Exists("GrossTotal")) e.Row.Cells["GrossTotal"].Value = string.Format(format, item.GrossTotal);
-                
+
+                if (e.Row.Band.Columns.Exists("Discount")) e.Row.Cells["Discount"].Value = !item.IsDiscountUnitsNull() ? item.DiscountUnits.ToString() : ""; ;
+
                 // set final prices
                 var itinerary = item.PurchaseLineRow.ItineraryRow;
                 hasOverride = CurrencyService.GetItineraryCurrencyCode(itinerary) != null;
@@ -1140,6 +1153,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
                 e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
+
+              
             }
             catch (ArgumentException ex)
             {
