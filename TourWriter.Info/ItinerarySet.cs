@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using TourWriter.Info.Services;
+using System.Linq;
 
 namespace TourWriter.Info
 {
@@ -402,6 +403,9 @@ namespace TourWriter.Info
                 if (itinerarySet != null)
                     itinerarySet.AddLookupRows(lookupSupplierSet, optionId);
 
+                SupplierSet.DiscountRow discountRow =
+                    lookupSupplierSet.Discount.Where(x => x.RowState != DataRowState.Deleted && x.ServiceID == serviceId).FirstOrDefault();
+                
                 // Add new row.
                 PurchaseItemRow item = NewPurchaseItemRow();
                 RemoveEvents();
@@ -431,6 +435,12 @@ namespace TourWriter.Info
                 item.ChargeType = chargeType;
                 item.IsDefaultOptionType = isDefault;
                 item.CurrencyCode = currencyCode;
+
+                if (discountRow != null)
+                {
+                    item.DiscountType = discountRow.DiscountType;
+                    item.DiscountUnits = discountRow.UnitsFree;
+                }
 
                 RegisterEvents();
                 AddPurchaseItemRow(item);
