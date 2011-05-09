@@ -476,13 +476,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ServiceFoc" msprop:Generator_UserTableName="ServiceFoc" msprop:Generator_RowEvArgName="ServiceFocRowChangeEvent" msprop:Generator_TableVarName="tableServiceFoc" msprop:Generator_TablePropName="ServiceFoc" msprop:Generator_RowDeletingName="ServiceFocRowDeleting" msprop:Generator_RowChangingName="ServiceFocRowChanging" msprop:Generator_RowDeletedName="ServiceFocRowDeleted" msprop:Generator_TableClassName="ServiceFocDataTable" msprop:Generator_RowChangedName="ServiceFocRowChanged" msprop:Generator_RowEvHandlerName="ServiceFocRowChangeEventHandler" msprop:Generator_RowClassName="ServiceFocRow">
+        <xs:element name="Discount" msprop:Generator_UserTableName="Discount" msprop:Generator_RowEvArgName="DiscountRowChangeEvent" msprop:Generator_TableVarName="tableDiscount" msprop:Generator_TablePropName="Discount" msprop:Generator_RowDeletingName="DiscountRowDeleting" msprop:Generator_RowChangingName="DiscountRowChanging" msprop:Generator_RowDeletedName="DiscountRowDeleted" msprop:Generator_TableClassName="DiscountDataTable" msprop:Generator_RowChangedName="DiscountRowChanged" msprop:Generator_RowEvHandlerName="DiscountRowChangeEventHandler" msprop:Generator_RowClassName="DiscountRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ServiceFocID" msprop:Generator_ColumnVarNameInTable="columnServiceFocID" msprop:Generator_ColumnPropNameInRow="ServiceFocID" msprop:Generator_ColumnPropNameInTable="ServiceFocIDColumn" msprop:Generator_UserColumnName="ServiceFocID" type="xs:int" />
+              <xs:element name="DiscountID" msprop:Generator_ColumnVarNameInTable="columnDiscountID" msprop:Generator_ColumnPropNameInRow="DiscountID" msprop:Generator_ColumnPropNameInTable="DiscountIDColumn" msprop:Generator_UserColumnName="DiscountID" type="xs:int" />
               <xs:element name="ServiceID" msprop:Generator_ColumnVarNameInTable="columnServiceID" msprop:Generator_ColumnPropNameInRow="ServiceID" msprop:Generator_ColumnPropNameInTable="ServiceIDColumn" msprop:Generator_UserColumnName="ServiceID" type="xs:int" />
               <xs:element name="UnitsUsed" msprop:Generator_ColumnVarNameInTable="columnUnitsUsed" msprop:Generator_ColumnPropNameInRow="UnitsUsed" msprop:Generator_ColumnPropNameInTable="UnitsUsedColumn" msprop:Generator_UserColumnName="UnitsUsed" type="xs:int" />
               <xs:element name="UnitsFree" msprop:Generator_ColumnVarNameInTable="columnUnitsFree" msprop:Generator_ColumnPropNameInRow="UnitsFree" msprop:Generator_ColumnPropNameInTable="UnitsFreeColumn" msprop:Generator_UserColumnName="UnitsFree" type="xs:int" />
+              <xs:element name="DiscountType" msprop:Generator_ColumnVarNameInTable="columnDiscountType" msprop:Generator_ColumnPropNameInRow="DiscountType" msprop:Generator_ColumnPropNameInTable="DiscountTypeColumn" msprop:Generator_UserColumnName="DiscountType" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -576,9 +577,9 @@
       <xs:field xpath="mstns:ItinerarySaleID" />
       <xs:field xpath="mstns:ServiceTypeID" />
     </xs:unique>
-    <xs:unique name="ServiceFoc_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:ServiceFoc" />
-      <xs:field xpath="mstns:ServiceFocID" />
+    <xs:unique name="Discount_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Discount" />
+      <xs:field xpath="mstns:DiscountID" />
     </xs:unique>
     <xs:unique name="ItineraryPaxOverride_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:ItineraryPaxOverride" />

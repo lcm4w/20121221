@@ -341,13 +341,14 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ServiceFoc" msprop:Generator_UserTableName="ServiceFoc" msprop:Generator_RowEvArgName="ServiceFocRowChangeEvent" msprop:Generator_TableVarName="tableServiceFoc" msprop:Generator_TablePropName="ServiceFoc" msprop:Generator_RowDeletingName="ServiceFocRowDeleting" msprop:Generator_RowChangingName="ServiceFocRowChanging" msprop:Generator_RowDeletedName="ServiceFocRowDeleted" msprop:Generator_RowEvHandlerName="ServiceFocRowChangeEventHandler" msprop:Generator_RowChangedName="ServiceFocRowChanged" msprop:Generator_TableClassName="ServiceFocDataTable" msprop:Generator_RowClassName="ServiceFocRow">
+        <xs:element name="Discount" msprop:Generator_UserTableName="Discount" msprop:Generator_RowEvArgName="DiscountRowChangeEvent" msprop:Generator_TableVarName="tableDiscount" msprop:Generator_TablePropName="Discount" msprop:Generator_RowDeletingName="DiscountRowDeleting" msprop:Generator_RowChangingName="DiscountRowChanging" msprop:Generator_RowDeletedName="DiscountRowDeleted" msprop:Generator_RowEvHandlerName="DiscountRowChangeEventHandler" msprop:Generator_RowChangedName="DiscountRowChanged" msprop:Generator_TableClassName="DiscountDataTable" msprop:Generator_RowClassName="DiscountRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ServiceFocID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnServiceFocID" msprop:Generator_ColumnPropNameInRow="ServiceFocID" msprop:Generator_ColumnPropNameInTable="ServiceFocIDColumn" msprop:Generator_UserColumnName="ServiceFocID" type="xs:int" />
+              <xs:element name="DiscountID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnDiscountID" msprop:Generator_ColumnPropNameInRow="DiscountID" msprop:Generator_ColumnPropNameInTable="DiscountIDColumn" msprop:Generator_UserColumnName="DiscountID" type="xs:int" />
               <xs:element name="ServiceID" msprop:Generator_ColumnVarNameInTable="columnServiceID" msprop:Generator_ColumnPropNameInRow="ServiceID" msprop:Generator_ColumnPropNameInTable="ServiceIDColumn" msprop:Generator_UserColumnName="ServiceID" type="xs:int" />
               <xs:element name="UnitsUsed" msprop:Generator_ColumnVarNameInTable="columnUnitsUsed" msprop:Generator_ColumnPropNameInRow="UnitsUsed" msprop:Generator_ColumnPropNameInTable="UnitsUsedColumn" msprop:Generator_UserColumnName="UnitsUsed" type="xs:int" />
               <xs:element name="UnitsFree" msprop:Generator_ColumnVarNameInTable="columnUnitsFree" msprop:Generator_ColumnPropNameInRow="UnitsFree" msprop:Generator_ColumnPropNameInTable="UnitsFreeColumn" msprop:Generator_UserColumnName="UnitsFree" type="xs:int" />
+              <xs:element name="DiscountType" msprop:Generator_ColumnVarNameInTable="columnDiscountType" msprop:Generator_ColumnPropNameInRow="DiscountType" msprop:Generator_ColumnPropNameInTable="DiscountTypeColumn" msprop:Generator_UserColumnName="DiscountType" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -455,16 +456,16 @@
       <xs:selector xpath=".//mstns:SupplierNote" />
       <xs:field xpath="mstns:SupplierNoteID" />
     </xs:unique>
-    <xs:unique name="ServiceFoc_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
-      <xs:selector xpath=".//mstns:ServiceFoc" />
-      <xs:field xpath="mstns:ServiceFocID" />
+    <xs:unique name="Discount_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Discount" />
+      <xs:field xpath="mstns:DiscountID" />
     </xs:unique>
     <xs:unique name="Content_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Content" />
       <xs:field xpath="mstns:ContentId" />
     </xs:unique>
-    <xs:keyref name="ServiceServiceFoc" refer="SupplierSetKey2" msprop:rel_Generator_UserChildTable="ServiceFoc" msprop:rel_Generator_ChildPropName="GetServiceFocRows" msprop:rel_Generator_ParentPropName="ServiceRow" msprop:rel_Generator_UserRelationName="ServiceServiceFoc" msprop:rel_Generator_RelationVarName="relationServiceServiceFoc" msprop:rel_Generator_UserParentTable="Service">
-      <xs:selector xpath=".//mstns:ServiceFoc" />
+    <xs:keyref name="ServiceDiscount" refer="SupplierSetKey2" msprop:rel_Generator_UserChildTable="Discount" msprop:rel_Generator_ChildPropName="GetDiscountRows" msprop:rel_Generator_ParentPropName="ServiceRow" msprop:rel_Generator_UserRelationName="ServiceDiscount" msprop:rel_Generator_RelationVarName="relationServiceDiscount" msprop:rel_Generator_UserParentTable="Service">
+      <xs:selector xpath=".//mstns:Discount" />
       <xs:field xpath="mstns:ServiceID" />
     </xs:keyref>
     <xs:keyref name="SupplierSupplierNote" refer="SupplierSetKey1" msprop:rel_Generator_UserChildTable="SupplierNote" msprop:rel_Generator_ChildPropName="GetSupplierNoteRows" msprop:rel_Generator_ParentPropName="SupplierRow" msprop:rel_Generator_UserRelationName="SupplierSupplierNote" msprop:rel_Generator_RelationVarName="relationSupplierSupplierNote" msprop:rel_Generator_UserParentTable="Supplier">

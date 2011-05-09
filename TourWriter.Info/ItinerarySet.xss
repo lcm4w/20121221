@@ -26,7 +26,7 @@
     <Shape ID="DesignTable:ItineraryPayment" ZOrder="24" X="293" Y="892" Height="164" Width="166" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="160" />
     <Shape ID="DesignTable:ItinerarySale" ZOrder="6" X="720" Y="518" Height="96" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="92" />
     <Shape ID="DesignTable:ItinerarySaleAllocation" ZOrder="5" X="940" Y="526" Height="62" Width="197" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="58" />
-    <Shape ID="DesignTable:ServiceFoc" ZOrder="18" X="720" Y="399" Height="95" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="91" />
+    <Shape ID="DesignTable:Discount" ZOrder="18" X="720" Y="399" Height="95" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="91" />
     <Shape ID="DesignTable:ItineraryPaxOverride" ZOrder="2" X="724" Y="1410" Height="143" Width="187" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="139" />
   </Shapes>
   <Connectors>

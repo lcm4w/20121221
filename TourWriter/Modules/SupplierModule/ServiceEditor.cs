@@ -195,7 +195,7 @@ namespace TourWriter.Modules.SupplierModule
             gridOptions.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceRate.RateOption");
 
             // FOCs
-            gridFoc.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceServiceFoc");
+            gridFoc.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceDiscount");
 
             // Select initial rows
             HideNonActiveItems(chkHideNonActiveItems.Checked);
@@ -805,11 +805,12 @@ namespace TourWriter.Modules.SupplierModule
                 return;
 
             // create new foc row
-            var foc = supplierSet.ServiceFoc.NewServiceFocRow();
+            var foc = supplierSet.Discount.NewDiscountRow();
             foc.ServiceID = (int)GetSelectedServiceId();
             foc.UnitsUsed = 0;
             foc.UnitsFree = 0;
-            supplierSet.ServiceFoc.AddServiceFocRow(foc);
+            foc.DiscountType = "foc";
+            supplierSet.Discount.AddDiscountRow(foc);
 
             // select the newly created row
             gridFoc.ActiveRow = gridFoc.Rows[gridFoc.Rows.Count - 1];

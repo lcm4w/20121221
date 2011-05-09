@@ -930,14 +930,14 @@ namespace TourWriter.Info
 
             // add service FOCs
             int serviceId = supplierSet.Option.FindByOptionID(optionId).RateRow.ServiceID;
-            var focs = from foc in supplierSet.ServiceFoc
+            var focs = from foc in supplierSet.Discount
                     where foc.ServiceID == serviceId
                     select foc;
             foreach(var row in focs)
             {
-                if (ServiceFoc.FindByServiceFocID(row.ServiceFocID) != null) continue;
-                ServiceFoc.Rows.Add(row.ServiceFocID, row.ServiceID, row.UnitsUsed, row.UnitsFree);
-                ServiceFoc.Rows[ServiceFoc.Rows.Count - 1].AcceptChanges();
+                if (Discount.FindByDiscountID(row.DiscountID) != null) continue;
+                Discount.Rows.Add(row.DiscountID, row.ServiceID, row.UnitsUsed, row.UnitsFree);
+                Discount.Rows[Discount.Rows.Count - 1].AcceptChanges();
             }
         }
 

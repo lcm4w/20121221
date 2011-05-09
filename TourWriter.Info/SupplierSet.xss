@@ -21,7 +21,7 @@
     <Shape ID="DesignTable:SupplierMessage" ZOrder="29" X="290" Y="1184" Height="95" Width="161" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="86" />
     <Shape ID="DesignTable:SupplierText" ZOrder="28" X="290" Y="1468" Height="146" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="142" />
     <Shape ID="DesignTable:SupplierNote" ZOrder="19" X="290" Y="1327" Height="95" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="91" />
-    <Shape ID="DesignTable:ServiceFoc" ZOrder="12" X="746" Y="80" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
+    <Shape ID="DesignTable:Discount" ZOrder="12" X="746" Y="80" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
     <Shape ID="DesignTable:Content" ZOrder="1" X="997" Y="34" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="206" />
   </Shapes>
   <Connectors>
@@ -237,7 +237,7 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:ServiceServiceFoc" ZOrder="10" LineWidth="11">
+    <Connector ID="DesignRelation:ServiceDiscount" ZOrder="10" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>440</X>

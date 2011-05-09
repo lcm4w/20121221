@@ -1349,6 +1349,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.09.sql" />
     <EmbeddedResource Include="UserControls\CheckBoxSet.resx">
       <DependentUpon>CheckBoxSet.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -300,7 +300,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                               : pax.MemberCount + pax.StaffCount;// total pax
 
             var q =
-                _itinerarySet.ServiceFoc.Where(foc =>
+                _itinerarySet.Discount.Where(foc =>
                     foc.RowState != DataRowState.Deleted && foc.ServiceID == item.ServiceID && qty >= foc.UnitsUsed).
                     Select(foc => foc.UnitsFree);
 

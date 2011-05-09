@@ -64,7 +64,7 @@ namespace TourWriter.Info {
         
         private ItinerarySaleAllocationDataTable tableItinerarySaleAllocation;
         
-        private ServiceFocDataTable tableServiceFoc;
+        private DiscountDataTable tableDiscount;
         
         private ItineraryPaxOverrideDataTable tableItineraryPaxOverride;
         
@@ -192,8 +192,8 @@ namespace TourWriter.Info {
                 if ((ds.Tables["ItinerarySaleAllocation"] != null)) {
                     base.Tables.Add(new ItinerarySaleAllocationDataTable(ds.Tables["ItinerarySaleAllocation"]));
                 }
-                if ((ds.Tables["ServiceFoc"] != null)) {
-                    base.Tables.Add(new ServiceFocDataTable(ds.Tables["ServiceFoc"]));
+                if ((ds.Tables["Discount"] != null)) {
+                    base.Tables.Add(new DiscountDataTable(ds.Tables["Discount"]));
                 }
                 if ((ds.Tables["ItineraryPaxOverride"] != null)) {
                     base.Tables.Add(new ItineraryPaxOverrideDataTable(ds.Tables["ItineraryPaxOverride"]));
@@ -420,9 +420,9 @@ namespace TourWriter.Info {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ServiceFocDataTable ServiceFoc {
+        public DiscountDataTable Discount {
             get {
-                return this.tableServiceFoc;
+                return this.tableDiscount;
             }
         }
         
@@ -563,8 +563,8 @@ namespace TourWriter.Info {
                 if ((ds.Tables["ItinerarySaleAllocation"] != null)) {
                     base.Tables.Add(new ItinerarySaleAllocationDataTable(ds.Tables["ItinerarySaleAllocation"]));
                 }
-                if ((ds.Tables["ServiceFoc"] != null)) {
-                    base.Tables.Add(new ServiceFocDataTable(ds.Tables["ServiceFoc"]));
+                if ((ds.Tables["Discount"] != null)) {
+                    base.Tables.Add(new DiscountDataTable(ds.Tables["Discount"]));
                 }
                 if ((ds.Tables["ItineraryPaxOverride"] != null)) {
                     base.Tables.Add(new ItineraryPaxOverrideDataTable(ds.Tables["ItineraryPaxOverride"]));
@@ -722,10 +722,10 @@ namespace TourWriter.Info {
                     this.tableItinerarySaleAllocation.InitVars();
                 }
             }
-            this.tableServiceFoc = ((ServiceFocDataTable)(base.Tables["ServiceFoc"]));
+            this.tableDiscount = ((DiscountDataTable)(base.Tables["Discount"]));
             if ((initTable == true)) {
-                if ((this.tableServiceFoc != null)) {
-                    this.tableServiceFoc.InitVars();
+                if ((this.tableDiscount != null)) {
+                    this.tableDiscount.InitVars();
                 }
             }
             this.tableItineraryPaxOverride = ((ItineraryPaxOverrideDataTable)(base.Tables["ItineraryPaxOverride"]));
@@ -803,8 +803,8 @@ namespace TourWriter.Info {
             base.Tables.Add(this.tableItinerarySale);
             this.tableItinerarySaleAllocation = new ItinerarySaleAllocationDataTable();
             base.Tables.Add(this.tableItinerarySaleAllocation);
-            this.tableServiceFoc = new ServiceFocDataTable();
-            base.Tables.Add(this.tableServiceFoc);
+            this.tableDiscount = new DiscountDataTable();
+            base.Tables.Add(this.tableDiscount);
             this.tableItineraryPaxOverride = new ItineraryPaxOverrideDataTable();
             base.Tables.Add(this.tableItineraryPaxOverride);
             global::System.Data.ForeignKeyConstraint fkc;
@@ -1130,7 +1130,7 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeServiceFoc() {
+        private bool ShouldSerializeDiscount() {
             return false;
         }
         
@@ -1256,7 +1256,7 @@ namespace TourWriter.Info {
         public delegate void ItinerarySaleAllocationRowChangeEventHandler(object sender, ItinerarySaleAllocationRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void ServiceFocRowChangeEventHandler(object sender, ServiceFocRowChangeEvent e);
+        public delegate void DiscountRowChangeEventHandler(object sender, DiscountRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void ItineraryPaxOverrideRowChangeEventHandler(object sender, ItineraryPaxOverrideRowChangeEvent e);
@@ -9952,9 +9952,9 @@ namespace TourWriter.Info {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ServiceFocDataTable : global::System.Data.TypedTableBase<ServiceFocRow> {
+        public partial class DiscountDataTable : global::System.Data.TypedTableBase<DiscountRow> {
             
-            private global::System.Data.DataColumn columnServiceFocID;
+            private global::System.Data.DataColumn columnDiscountID;
             
             private global::System.Data.DataColumn columnServiceID;
             
@@ -9962,10 +9962,12 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnUnitsFree;
             
+            private global::System.Data.DataColumn columnDiscountType;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocDataTable() {
-                this.TableName = "ServiceFoc";
+            public DiscountDataTable() {
+                this.TableName = "Discount";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -9973,7 +9975,7 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ServiceFocDataTable(global::System.Data.DataTable table) {
+            internal DiscountDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -9990,16 +9992,16 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected ServiceFocDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected DiscountDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ServiceFocIDColumn {
+            public global::System.Data.DataColumn DiscountIDColumn {
                 get {
-                    return this.columnServiceFocID;
+                    return this.columnDiscountID;
                 }
             }
             
@@ -10029,6 +10031,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DiscountTypeColumn {
+                get {
+                    return this.columnDiscountType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -10038,55 +10048,56 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRow this[int index] {
+            public DiscountRow this[int index] {
                 get {
-                    return ((ServiceFocRow)(this.Rows[index]));
+                    return ((DiscountRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ServiceFocRowChangeEventHandler ServiceFocRowChanging;
+            public event DiscountRowChangeEventHandler DiscountRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ServiceFocRowChangeEventHandler ServiceFocRowChanged;
+            public event DiscountRowChangeEventHandler DiscountRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ServiceFocRowChangeEventHandler ServiceFocRowDeleting;
+            public event DiscountRowChangeEventHandler DiscountRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ServiceFocRowChangeEventHandler ServiceFocRowDeleted;
+            public event DiscountRowChangeEventHandler DiscountRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddServiceFocRow(ServiceFocRow row) {
+            public void AddDiscountRow(DiscountRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRow AddServiceFocRow(int ServiceFocID, int ServiceID, int UnitsUsed, int UnitsFree) {
-                ServiceFocRow rowServiceFocRow = ((ServiceFocRow)(this.NewRow()));
+            public DiscountRow AddDiscountRow(int DiscountID, int ServiceID, int UnitsUsed, int UnitsFree, string DiscountType) {
+                DiscountRow rowDiscountRow = ((DiscountRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ServiceFocID,
+                        DiscountID,
                         ServiceID,
                         UnitsUsed,
-                        UnitsFree};
-                rowServiceFocRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowServiceFocRow);
-                return rowServiceFocRow;
+                        UnitsFree,
+                        DiscountType};
+                rowDiscountRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowDiscountRow);
+                return rowDiscountRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRow FindByServiceFocID(int ServiceFocID) {
-                return ((ServiceFocRow)(this.Rows.Find(new object[] {
-                            ServiceFocID})));
+            public DiscountRow FindByDiscountID(int DiscountID) {
+                return ((DiscountRow)(this.Rows.Find(new object[] {
+                            DiscountID})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                ServiceFocDataTable cln = ((ServiceFocDataTable)(base.Clone()));
+                DiscountDataTable cln = ((DiscountDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -10094,33 +10105,36 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new ServiceFocDataTable();
+                return new DiscountDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnServiceFocID = base.Columns["ServiceFocID"];
+                this.columnDiscountID = base.Columns["DiscountID"];
                 this.columnServiceID = base.Columns["ServiceID"];
                 this.columnUnitsUsed = base.Columns["UnitsUsed"];
                 this.columnUnitsFree = base.Columns["UnitsFree"];
+                this.columnDiscountType = base.Columns["DiscountType"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnServiceFocID = new global::System.Data.DataColumn("ServiceFocID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceFocID);
+                this.columnDiscountID = new global::System.Data.DataColumn("DiscountID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscountID);
                 this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceID);
                 this.columnUnitsUsed = new global::System.Data.DataColumn("UnitsUsed", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnitsUsed);
                 this.columnUnitsFree = new global::System.Data.DataColumn("UnitsFree", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnitsFree);
+                this.columnDiscountType = new global::System.Data.DataColumn("DiscountType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDiscountType);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnServiceFocID}, true));
-                this.columnServiceFocID.AllowDBNull = false;
-                this.columnServiceFocID.Unique = true;
+                                this.columnDiscountID}, true));
+                this.columnDiscountID.AllowDBNull = false;
+                this.columnDiscountID.Unique = true;
                 this.columnServiceID.AllowDBNull = false;
                 this.columnUnitsUsed.AllowDBNull = false;
                 this.columnUnitsFree.AllowDBNull = false;
@@ -10128,28 +10142,28 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRow NewServiceFocRow() {
-                return ((ServiceFocRow)(this.NewRow()));
+            public DiscountRow NewDiscountRow() {
+                return ((DiscountRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new ServiceFocRow(builder);
+                return new DiscountRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(ServiceFocRow);
+                return typeof(DiscountRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.ServiceFocRowChanged != null)) {
-                    this.ServiceFocRowChanged(this, new ServiceFocRowChangeEvent(((ServiceFocRow)(e.Row)), e.Action));
+                if ((this.DiscountRowChanged != null)) {
+                    this.DiscountRowChanged(this, new DiscountRowChangeEvent(((DiscountRow)(e.Row)), e.Action));
                 }
             }
             
@@ -10157,8 +10171,8 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.ServiceFocRowChanging != null)) {
-                    this.ServiceFocRowChanging(this, new ServiceFocRowChangeEvent(((ServiceFocRow)(e.Row)), e.Action));
+                if ((this.DiscountRowChanging != null)) {
+                    this.DiscountRowChanging(this, new DiscountRowChangeEvent(((DiscountRow)(e.Row)), e.Action));
                 }
             }
             
@@ -10166,8 +10180,8 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.ServiceFocRowDeleted != null)) {
-                    this.ServiceFocRowDeleted(this, new ServiceFocRowChangeEvent(((ServiceFocRow)(e.Row)), e.Action));
+                if ((this.DiscountRowDeleted != null)) {
+                    this.DiscountRowDeleted(this, new DiscountRowChangeEvent(((DiscountRow)(e.Row)), e.Action));
                 }
             }
             
@@ -10175,14 +10189,14 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.ServiceFocRowDeleting != null)) {
-                    this.ServiceFocRowDeleting(this, new ServiceFocRowChangeEvent(((ServiceFocRow)(e.Row)), e.Action));
+                if ((this.DiscountRowDeleting != null)) {
+                    this.DiscountRowDeleting(this, new DiscountRowChangeEvent(((DiscountRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveServiceFocRow(ServiceFocRow row) {
+            public void RemoveDiscountRow(DiscountRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -10209,7 +10223,7 @@ namespace TourWriter.Info {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "ServiceFocDataTable";
+                attribute2.FixedValue = "DiscountDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -17544,25 +17558,25 @@ namespace TourWriter.Info {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class ServiceFocRow : global::System.Data.DataRow {
+        public partial class DiscountRow : global::System.Data.DataRow {
             
-            private ServiceFocDataTable tableServiceFoc;
+            private DiscountDataTable tableDiscount;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ServiceFocRow(global::System.Data.DataRowBuilder rb) : 
+            internal DiscountRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableServiceFoc = ((ServiceFocDataTable)(this.Table));
+                this.tableDiscount = ((DiscountDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int ServiceFocID {
+            public int DiscountID {
                 get {
-                    return ((int)(this[this.tableServiceFoc.ServiceFocIDColumn]));
+                    return ((int)(this[this.tableDiscount.DiscountIDColumn]));
                 }
                 set {
-                    this[this.tableServiceFoc.ServiceFocIDColumn] = value;
+                    this[this.tableDiscount.DiscountIDColumn] = value;
                 }
             }
             
@@ -17570,10 +17584,10 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int ServiceID {
                 get {
-                    return ((int)(this[this.tableServiceFoc.ServiceIDColumn]));
+                    return ((int)(this[this.tableDiscount.ServiceIDColumn]));
                 }
                 set {
-                    this[this.tableServiceFoc.ServiceIDColumn] = value;
+                    this[this.tableDiscount.ServiceIDColumn] = value;
                 }
             }
             
@@ -17581,10 +17595,10 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int UnitsUsed {
                 get {
-                    return ((int)(this[this.tableServiceFoc.UnitsUsedColumn]));
+                    return ((int)(this[this.tableDiscount.UnitsUsedColumn]));
                 }
                 set {
-                    this[this.tableServiceFoc.UnitsUsedColumn] = value;
+                    this[this.tableDiscount.UnitsUsedColumn] = value;
                 }
             }
             
@@ -17592,11 +17606,39 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int UnitsFree {
                 get {
-                    return ((int)(this[this.tableServiceFoc.UnitsFreeColumn]));
+                    return ((int)(this[this.tableDiscount.UnitsFreeColumn]));
                 }
                 set {
-                    this[this.tableServiceFoc.UnitsFreeColumn] = value;
+                    this[this.tableDiscount.UnitsFreeColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string DiscountType {
+                get {
+                    try {
+                        return ((string)(this[this.tableDiscount.DiscountTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DiscountType\' in table \'Discount\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDiscount.DiscountTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDiscountTypeNull() {
+                return this.IsNull(this.tableDiscount.DiscountTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDiscountTypeNull() {
+                this[this.tableDiscount.DiscountTypeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -18511,22 +18553,22 @@ namespace TourWriter.Info {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class ServiceFocRowChangeEvent : global::System.EventArgs {
+        public class DiscountRowChangeEvent : global::System.EventArgs {
             
-            private ServiceFocRow eventRow;
+            private DiscountRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRowChangeEvent(ServiceFocRow row, global::System.Data.DataRowAction action) {
+            public DiscountRowChangeEvent(DiscountRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceFocRow Row {
+            public DiscountRow Row {
                 get {
                     return this.eventRow;
                 }
