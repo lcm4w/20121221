@@ -59,11 +59,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             InitializeComponent();
             
             GridLayoutFileName = App.Path_UserApplicationData + "BookingGridLayout.xml";
-
-            // TODO: flags hidden for now
-            btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
-
             HandleDestroyed += BookingsViewer_HandleDestroyed;
+            itineraryMain = ParentForm as ItineraryMain;
+            
+            // TODO: hide flags feature for now, see also line 1004 ---
+            btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
+            // ---------------------------------------------------------------
         }
         
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -214,8 +215,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         }
 
         #endregion
-
-
 
         private void LoadGridLayout()
         {
@@ -617,14 +616,47 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             SetItineraryCurrencyInfo();
         }
 
+        private bool ValidatePurchaseItem(ItinerarySet.PurchaseItemRow item)
+        {
+            var message = string.Empty;
+
+            // validate booking dates
+            if (!item.IsStartDateNull() && !item.IsNumberOfDaysNull())
+            {
+                var option = itinerarySet.OptionLookup.FindByOptionID(item.OptionID);
+                if (option != null)
+                {
+                    if (item.StartDate.Date < option.ValidFrom.Date || item.StartDate.Date > option.ValidTo.Date)
+                        message += "Start date does not match dates for this service" + "\r\n";
+                    else if (item.StartDate.AddDays(item.NumberOfDays).Date > option.ValidTo.Date)
+                        message += "End date does not match dates for this service" + "\r\n";
+                }
+            }
+
+            // validate discount
+            if (!item.IsDiscountTypeNull() && !item.IsDiscountUnitsNull())
+            {
+                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && x.DiscountType == item.DiscountType);
+
+                var unitsUsed = item.DiscountType == "foc" ? item.Quantity : item.NumberOfDays;
+                var discout = discounts.Where(x => x.UnitsUsed > unitsUsed).OrderBy(x => x.UnitsUsed).First();
+                if (item.DiscountUnits < discout.UnitsFree)
+                    message += "Booking discount does not match underlying " + item.DiscountType == "foc" ? "FOC" : "Stay-Pay";
+            }
+
+            item.RowError = message;
+            return message.Length == 0;
+        }
+
         private void SetFlags(UltraGridRow row)
         {
-            int purchaseItemId = (int)row.Cells["PurchaseItemID"].Value;
+            var purchaseItemId = (int)row.Cells["PurchaseItemID"].Value;
             var notes = itinerarySet.PurchaseItemNote.Where(note => note.RowState != DataRowState.Deleted &&
                                                                     note.PurchaseItemID == purchaseItemId);
 
             var flagImageList = new List<Bitmap>();
-            string message = String.Empty;
+            var message = String.Empty;    
+
             foreach (var note in notes)
             {
                 // add the flag
@@ -961,12 +993,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "Flags")
                 {
+                    c.Header.Caption = "";
+                    c.Header.ToolTipText = "Your custom warning messages";
                     c.DataType = typeof(Bitmap);
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
-                    // TODO: flags hidden for now (see line 57 too)
-                    c.Hidden = true;
                     c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True;
+
+                    // TODO: hide flags feature for now, see also line 66
+                    c.Hidden = true;
+                    // --------------------------------------------------
                 }
                 else if (c.Key == "Discount")
                 {
@@ -1054,7 +1090,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Override.RowSelectorHeaderStyle = RowSelectorHeaderStyle.ColumnChooserButton;
             e.Layout.Override.SelectTypeRow = SelectType.Extended;
             e.Layout.GroupByBox.Hidden = false;
-            e.Layout.AutoFitStyle = AutoFitStyle.None;//.ResizeAllColumns;
+            e.Layout.AutoFitStyle = AutoFitStyle.None;
+            e.Layout.Override.SupportDataErrorInfo = SupportDataErrorInfo.RowsAndCells;
 
             SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
         }
@@ -1062,7 +1099,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
         {
             if (e.Row.Band.Key != "PurchaseItem") return;
-
+            
             try
             {
                 // Set the purchaseline name.
@@ -1072,7 +1109,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
                 var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == itemId).FirstOrDefault();
                 if (item == null) return;
-
+                
                 // Set the city name.
                 int? cityId = itinerarySet.GetPurchaseItemCityId(itemId);
                 if (cityId.HasValue)
@@ -1136,9 +1173,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     if (!item.IsStartDateNull() && !item.IsNumberOfDaysNull())
                         e.Row.Cells["DefaultEndDate"].Value = item.StartDate.Date.AddDays(item.NumberOfDays).ToShortDateString();
                 }
-
-                SetFlags(e.Row);
-
+                
                 // disable the row if it has been exported to accounting
                 if (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
                     (bool) e.Row.Cells["IsLockedAccounting"].Value)
@@ -1153,8 +1188,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
                 e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
-
-              
+                
+                ValidatePurchaseItem(item);
+                SetFlags(e.Row);
             }
             catch (ArgumentException ex)
             {

@@ -833,15 +833,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         break;
                     }
                 }
-            }
-
-            if (e.Action == DataRowAction.Change)
-            {
-               if (! ItineraryMain.IsBookingValid(e.Row.OptionID, e.Row.NumberOfDays, e.Row.StartDate))
-               {
-                   e.Row.RejectChanges();
-               }
-            }
+            }           
         }
 
         private void gridItems_Validated(object sender, EventArgs e)
@@ -933,7 +925,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             ChangePurchaseItemOption();
         }
 
-        #endregion
+        #endregion        
     }
 
     public delegate void OnBookingEditorOpenSupplierHandler(BookingEditorOpenSupplierEventArgs e);

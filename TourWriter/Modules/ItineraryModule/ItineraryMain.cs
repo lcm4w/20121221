@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -307,27 +308,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             SaveDataChanges();
         }
-
-        public bool IsBookingValid(int optionId, double numOfDaysNyt, DateTime startDate)
-        {
-            if (optionId > 0)
-            {
-                ItinerarySet.OptionLookupRow optionLookupRow = itinerarySet.OptionLookup.FindByOptionID(optionId);
-                if (optionLookupRow != null)
-                {
-                    var days = Convert.ToInt32(numOfDaysNyt);
-                    var endDate = startDate.AddDays(numOfDaysNyt);
-                   
-                    if (startDate < optionLookupRow.ValidFrom || startDate > optionLookupRow.ValidTo &&
-                        endDate < optionLookupRow.ValidFrom || endDate > optionLookupRow.ValidTo)
-                    {
-                        App.ShowInfo("Selected rate dates do not match the booking date");
-                    }
-                }
-            }
-            return true;
-        }
-
+        
         private void SetReadOnly(bool readOnly)
         {
             if (readOnly)

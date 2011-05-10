@@ -49,19 +49,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             GridHelper.SetNumberOfDaysPicker(gridBookings);
             SetPage(PageType.Search);
-        }
-
-        private void PurchaseItemRowChanged(object sender, ItinerarySet.PurchaseItemRowChangeEvent e)
-        {
-          
-            if (e.Action == DataRowAction.Change )
-            {
-                if (!itineraryMain.IsBookingValid(e.Row.OptionID, e.Row.NumberOfDays,e .Row.StartDate))
-                {
-                    e.Row.RejectChanges();
-                }
-            }
-        }
+        }       
 
         private void BookingSelectorForm_Load(object sender, EventArgs e)
         {
@@ -71,9 +59,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             AcceptButton = btnNext;
             CancelButton = btnCancel;
             btnOk.Enabled = gridBookings.Rows.Count > 0;
-            chkIncrementDates.Checked = true;
-
-            tempItinerarySet.PurchaseItem.PurchaseItemRowChanged += PurchaseItemRowChanged;
+            chkIncrementDates.Checked = true;            
         }
 
         private DateTime GetNextDefaultDate()
@@ -117,7 +103,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     Cursor = Cursors.WaitCursor;
                     Application.DoEvents();
                     supplierSet = new BusinessLogic.Supplier().GetSupplierSet(supplierId);
-                    serviceEditor1.SupplierSet = supplierSet; 
+                    serviceEditor1.SupplierSet = supplierSet;
+                    tempItinerarySet.PurchaseItemNote.Clear();
                     tempItinerarySet.ItineraryPaxOverride.Clear();
                     tempItinerarySet.PurchaseItem.Clear();
                 }
