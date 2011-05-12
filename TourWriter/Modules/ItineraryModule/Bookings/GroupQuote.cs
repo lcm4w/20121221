@@ -78,6 +78,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // pax columns
             foreach (ItinerarySet.ItineraryPaxRow p in pax.Rows)
             {
+                if (p.RowState == DataRowState.Deleted) continue;
                 Columns.Add(new PaxColumn
                 {
                     ColumnName = p.ItineraryPaxName,
@@ -87,7 +88,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             // suppliments
-            foreach (ToolSet.OptionTypeRow o in options)
+            foreach (ToolSet.OptionTypeRow o in options.Where(x => x.RowState != DataRowState.Deleted))
             {
                 //if (o.OptionTypeID == 2) continue; // don't add default double here, its used for the default Pax columns
                 Columns.Add(new SuppliementsColumn

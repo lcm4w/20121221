@@ -186,8 +186,8 @@ namespace TourWriter.Modules.ItineraryModule
             Cache.ToolSet.Template.RowChanged += DataTable_RowChanged;
             Cache.ToolSet.Template.ColumnChanged += DataTable_ColumnChanged;
 
-            bookingsQuote.Enabled = App.EnableGroups;
-            clientEditor.EnableGroups = App.EnableGroups;
+            //bookingsQuote.Enabled = App.EnableGroups;
+            //clientEditor.EnableGroups = App.EnableGroups;
 
             bookingsViewer.RecalculateFinalPricing();
             bookingsViewer.SetItineraryCurrencyInfo();

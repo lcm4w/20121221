@@ -46,6 +46,7 @@
             this.btnFilter = new System.Windows.Forms.ToolStripButton();
             this.btnPrint = new System.Windows.Forms.ToolStripButton();
             this.btnExcel = new System.Windows.Forms.ToolStripButton();
+            this.btnEditOverrides = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.myToolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -111,7 +112,7 @@
             this.grid.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.grid.Location = new System.Drawing.Point(3, 28);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(890, 462);
+            this.grid.Size = new System.Drawing.Size(890, 433);
             this.grid.TabIndex = 1;
             this.grid.Text = "ultraGrid1";
             this.grid.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -130,10 +131,10 @@
             this.btnPrint,
             this.btnExcel});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(767, 5);
+            this.myToolStrip1.Location = new System.Drawing.Point(798, 5);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(126, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(95, 25);
             this.myToolStrip1.TabIndex = 75;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -181,11 +182,23 @@
             this.btnExcel.ToolTipText = "Export current view to Excel";
             this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
+            // btnEditOverrides
+            // 
+            this.btnEditOverrides.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEditOverrides.Location = new System.Drawing.Point(3, 467);
+            this.btnEditOverrides.Name = "btnEditOverrides";
+            this.btnEditOverrides.Size = new System.Drawing.Size(125, 23);
+            this.btnEditOverrides.TabIndex = 76;
+            this.btnEditOverrides.Text = "Edit Overrides";
+            this.btnEditOverrides.UseVisualStyleBackColor = true;
+            this.btnEditOverrides.Click += new System.EventHandler(this.btnEditOverrides_Click);
+            // 
             // BookingsQuote
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Controls.Add(this.btnEditOverrides);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.myToolStrip1);
             this.Name = "BookingsQuote";
@@ -207,5 +220,6 @@
         private System.Windows.Forms.ToolStripButton btnFilter;
         private System.Windows.Forms.ToolStripButton btnPrint;
         private System.Windows.Forms.ToolStripButton btnExcel;
+        private System.Windows.Forms.Button btnEditOverrides;
     }
 }
