@@ -72,7 +72,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl15 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelPax = new System.Windows.Forms.Panel();
-            this.label13 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.gridPax = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.myToolStrip2 = new TourWriter.UserControls.MyToolStrip();
@@ -179,7 +178,6 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             // panelPax
             // 
-            this.panelPax.Controls.Add(this.label13);
             this.panelPax.Controls.Add(this.label10);
             this.panelPax.Controls.Add(this.gridPax);
             this.panelPax.Controls.Add(this.myToolStrip2);
@@ -188,16 +186,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.panelPax.Name = "panelPax";
             this.panelPax.Size = new System.Drawing.Size(591, 116);
             this.panelPax.TabIndex = 99;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.Blue;
-            this.label13.Location = new System.Drawing.Point(71, 9);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(220, 13);
-            this.label13.TabIndex = 99;
-            this.label13.Text = "(groups beta - to test please ask TW support)";
             // 
             // label10
             // 
@@ -988,7 +976,6 @@ namespace TourWriter.Modules.ItineraryModule
         private System.Windows.Forms.ToolStripButton btnPaxDel;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.Label label13;
         
     }
 }

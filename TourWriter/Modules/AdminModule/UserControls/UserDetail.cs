@@ -29,8 +29,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private Button btnChangePassword;
         private TextBox txtEmail;
         private TextBox txtUsername;
-        private CheckBox checkBox1;
-        private Label label2;
         private Container components = null;
 
         public UserDetail()
@@ -70,8 +68,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.btnChangePassword = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtUsername = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnContact
@@ -183,35 +179,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.txtUsername.Size = new System.Drawing.Size(212, 20);
             this.txtUsername.TabIndex = 56;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox1.Checked = global::TourWriter.Properties.Settings.Default.EnableGroups;
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::TourWriter.Properties.Settings.Default, "EnableGroups", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox1.Location = new System.Drawing.Point(186, 251);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(202, 17);
-            this.checkBox1.TabIndex = 57;
-            this.checkBox1.Text = "Enable groups functionality for testing";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(189, 271);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(199, 13);
-            this.label2.TabIndex = 58;
-            this.label2.Text = "Groups is BETA, please use with caution";
-            // 
             // UserDetail
             // 
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.btnChangePassword);

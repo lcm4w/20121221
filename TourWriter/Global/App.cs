@@ -562,18 +562,6 @@ namespace TourWriter
         
         #endregion
 
-        #region User settings
-
-        public static bool EnableGroups
-        {
-            get
-            {
-                return Properties.Settings.Default.EnableGroups;
-            }
-        }
-
-        #endregion
-
         #region Resource files
 
         internal static string GetResourceString(string key)

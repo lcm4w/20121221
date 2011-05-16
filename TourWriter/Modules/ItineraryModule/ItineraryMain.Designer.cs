@@ -99,7 +99,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl12 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.bookingsViewer = new TourWriter.Modules.ItineraryModule.Bookings.BookingsViewer();
             this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.label12 = new System.Windows.Forms.Label();
             this.bookingsQuote = new TourWriter.Modules.ItineraryModule.Bookings.BookingsQuote();
             this.ultraTabPageControl8 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.reportControl = new TourWriter.UserControls.Reports.ReportManager();
@@ -284,21 +283,10 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             // ultraTabPageControl11
             // 
-            this.ultraTabPageControl11.Controls.Add(this.label12);
             this.ultraTabPageControl11.Controls.Add(this.bookingsQuote);
             this.ultraTabPageControl11.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl11.Name = "ultraTabPageControl11";
             this.ultraTabPageControl11.Size = new System.Drawing.Size(783, 394);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.Blue;
-            this.label12.Location = new System.Drawing.Point(3, 9);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(227, 13);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "(groups beta - to test please ask TW support)";
             // 
             // bookingsQuote
             // 
@@ -1972,7 +1960,6 @@ namespace TourWriter.Modules.ItineraryModule
         private UltraTabSharedControlsPage ultraTabSharedControlsPage4;
         private UltraTabPageControl ultraTabPageControl11;
         private UltraTabPageControl ultraTabPageControl12;
-        private Label label12;
         private ComboBox cmbCurrency;
         private Label lblCurrency;
         private BindingSource currencyBindingSource;

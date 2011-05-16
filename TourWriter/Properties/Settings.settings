@@ -71,9 +71,6 @@
     <Setting Name="RunReportsImmediately" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="EnableGroups" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="UpdateUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://support.tourwriter.com/UpdateService.aspx</Value>
     </Setting>
