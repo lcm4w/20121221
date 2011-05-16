@@ -1702,6 +1702,7 @@
     <None Include="Resources\cut.png" />
     <None Include="Resources\page_paste.png" />
     <None Include="Resources\database_add.png" />
+    <None Include="Resources\Phone.png" />
     <Content Include="Resources\SaveClose.png" />
     <None Include="Resources\server_go.png" />
     <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />

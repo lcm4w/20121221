@@ -691,6 +691,12 @@ namespace TourWriter.Modules.SupplierModule
             }
         }
 
+        private void btnCall(object sender, EventArgs e)
+        {
+            var number = ((TextBox) sender).Text;
+            Process.Start("callto:"+number);
+        }
+       
         private void btnSupplierEmail_Click(object sender, EventArgs e)
         {
             Process.Start("mailto:" + txtSupplierEmail.Text.Replace("mailto:", ""));
@@ -1668,6 +1674,6 @@ namespace TourWriter.Modules.SupplierModule
             {
                 Cursor = Cursors.Default;
             }
-        }
+        }                      
     }
 }

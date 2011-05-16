@@ -137,6 +137,9 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl10 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.accounting1 = new TourWriter.Modules.SupplierModule.Accounting();
             this.tabSupplier = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.btnSupplierFreePhone = new System.Windows.Forms.PictureBox();
+            this.btnSupplierMobile = new System.Windows.Forms.PictureBox();
+            this.btnSupplierPhone = new System.Windows.Forms.PictureBox();
             this.chkSupplierDeleted = new Infragistics.Win.UltraWinEditors.UltraCheckEditor();
             this.pnlSpatial = new System.Windows.Forms.Panel();
             this.txtLongitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
@@ -277,6 +280,9 @@ namespace TourWriter.Modules.SupplierModule
             this.groupBox1.SuspendLayout();
             this.ultraTabPageControl10.SuspendLayout();
             this.tabSupplier.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierFreePhone)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierMobile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierPhone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSupplierDeleted)).BeginInit();
             this.pnlSpatial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierEmail)).BeginInit();
@@ -882,6 +888,9 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.AutoScroll = true;
             this.tabSupplier.AutoScrollMinSize = new System.Drawing.Size(720, 510);
             this.tabSupplier.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.tabSupplier.Controls.Add(this.btnSupplierFreePhone);
+            this.tabSupplier.Controls.Add(this.btnSupplierMobile);
+            this.tabSupplier.Controls.Add(this.btnSupplierPhone);
             this.tabSupplier.Controls.Add(this.chkSupplierDeleted);
             this.tabSupplier.Controls.Add(this.pnlSpatial);
             this.tabSupplier.Controls.Add(this.txtPostcode);
@@ -930,6 +939,51 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Location = new System.Drawing.Point(2, 21);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(828, 543);
+            // 
+            // btnSupplierFreePhone
+            // 
+            this.btnSupplierFreePhone.BackColor = System.Drawing.Color.Transparent;
+            this.btnSupplierFreePhone.BackgroundImage = global::TourWriter.Properties.Resources.Phone;
+            this.btnSupplierFreePhone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSupplierFreePhone.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSupplierFreePhone.Location = new System.Drawing.Point(617, 162);
+            this.btnSupplierFreePhone.Name = "btnSupplierFreePhone";
+            this.btnSupplierFreePhone.Size = new System.Drawing.Size(22, 22);
+            this.btnSupplierFreePhone.TabIndex = 150;
+            this.btnSupplierFreePhone.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnSupplierFreePhone, "Click to call this number.\r\n");
+            this.btnSupplierFreePhone.Visible = false;
+            this.btnSupplierFreePhone.Click += new System.EventHandler(this.btnCall);
+            // 
+            // btnSupplierMobile
+            // 
+            this.btnSupplierMobile.BackColor = System.Drawing.Color.Transparent;
+            this.btnSupplierMobile.BackgroundImage = global::TourWriter.Properties.Resources.Phone;
+            this.btnSupplierMobile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSupplierMobile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSupplierMobile.Location = new System.Drawing.Point(617, 134);
+            this.btnSupplierMobile.Name = "btnSupplierMobile";
+            this.btnSupplierMobile.Size = new System.Drawing.Size(22, 22);
+            this.btnSupplierMobile.TabIndex = 149;
+            this.btnSupplierMobile.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnSupplierMobile, "Click to call this number.\r\n");
+            this.btnSupplierMobile.Visible = false;
+            this.btnSupplierMobile.Click += new System.EventHandler(this.btnCall);
+            // 
+            // btnSupplierPhone
+            // 
+            this.btnSupplierPhone.BackColor = System.Drawing.Color.Transparent;
+            this.btnSupplierPhone.BackgroundImage = global::TourWriter.Properties.Resources.Phone;
+            this.btnSupplierPhone.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSupplierPhone.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSupplierPhone.Location = new System.Drawing.Point(617, 107);
+            this.btnSupplierPhone.Name = "btnSupplierPhone";
+            this.btnSupplierPhone.Size = new System.Drawing.Size(22, 22);
+            this.btnSupplierPhone.TabIndex = 148;
+            this.btnSupplierPhone.TabStop = false;
+            this.toolTip1.SetToolTip(this.btnSupplierPhone, "Click to call this number.\r\n");
+            this.btnSupplierPhone.Visible = false;
+            this.btnSupplierPhone.Click += new System.EventHandler(this.btnCall);
             // 
             // chkSupplierDeleted
             // 
@@ -2380,6 +2434,9 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl10.ResumeLayout(false);
             this.tabSupplier.ResumeLayout(false);
             this.tabSupplier.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierFreePhone)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierMobile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSupplierPhone)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkSupplierDeleted)).EndInit();
             this.pnlSpatial.ResumeLayout(false);
             this.pnlSpatial.PerformLayout();
@@ -2504,7 +2561,6 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox btnSupplierWebsite;
-        private System.Windows.Forms.PictureBox btnSupplierEmail;
         private System.Windows.Forms.ToolTip toolTip1;
         private UserControls.HeaderLabel headerLabel4;
         private UserControls.HeaderLabel headerLabel3;
@@ -2590,5 +2646,9 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.Label label46;
         private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
         private Infragistics.Win.UltraWinEditors.UltraCheckEditor chkSupplierDeleted;
+        private System.Windows.Forms.PictureBox btnSupplierPhone;
+        private System.Windows.Forms.PictureBox btnSupplierEmail;
+        private System.Windows.Forms.PictureBox btnSupplierFreePhone;
+        private System.Windows.Forms.PictureBox btnSupplierMobile;
     }
 }
