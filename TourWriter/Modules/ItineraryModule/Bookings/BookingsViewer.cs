@@ -636,12 +636,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // validate discount
             if (!item.IsDiscountTypeNull() && !item.IsDiscountUnitsNull())
             {
-                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && x.DiscountType == item.DiscountType);
-
+                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && !x.IsDiscountTypeNull() && x.DiscountType == item.DiscountType );
+               
                 var unitsUsed = item.DiscountType == "foc" ? item.Quantity : item.NumberOfDays;
-                var discout = discounts.Where(x => x.UnitsUsed > unitsUsed).OrderBy(x => x.UnitsUsed).First();
-                if (item.DiscountUnits < discout.UnitsFree)
-                    message += "Booking discount does not match underlying " + item.DiscountType == "foc" ? "FOC" : "Stay-Pay";
+                if (discounts.Count() > 0)
+                {
+                    var discount = discounts.Where(x => x.UnitsUsed > unitsUsed).OrderBy(x => x.UnitsUsed).First();
+                    if (item.DiscountUnits < discount.UnitsFree)
+                        message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
+                }
             }
 
             item.RowError = message;
