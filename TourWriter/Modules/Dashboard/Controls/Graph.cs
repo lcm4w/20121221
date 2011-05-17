@@ -21,7 +21,8 @@ namespace TourWriter.Modules.Dashboard.Controls
         private void Graph_Load(object sender, EventArgs e)
         {
             var sql = @"
-select ItineraryID, ArriveDate, DepartDate, ItineraryGross, ItineraryYield, ItineraryStatusName from ItineraryDetail where ArriveDate >= '{0}' and ArriveDate <= '{1}'";
+select ItineraryID, ArriveDate, DepartDate, ItineraryGrossFinalTotal, ItineraryYield, ItineraryStatusName 
+from ItineraryDetail where ArriveDate >= '{0}' and ArriveDate <= '{1}'";
 
             var now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
             var from = now.AddMonths(-18);
@@ -44,8 +45,8 @@ select ItineraryID, ArriveDate, DepartDate, ItineraryGross, ItineraryYield, Itin
                 var monthName = new DateTime(3000, month, 1).ToString("MMM");
 
                 // SUM gross
-                chart1.Series["Series1a"].Points.AddY(current.Where(x => x.Field<DateTime>("ArriveDate").Month == month).Select(x => x.Field<decimal?>("ItineraryGross")).Sum());
-                chart1.Series["Series1b"].Points.AddY(previous.Where(x => x.Field<DateTime>("ArriveDate").Month == month).Select(x => x.Field<decimal?>("ItineraryGross")).Sum());
+                chart1.Series["Series1a"].Points.AddY(current.Where(x => x.Field<DateTime>("ArriveDate").Month == month).Select(x => x.Field<decimal?>("ItineraryGrossFinalTotal")).Sum());
+                chart1.Series["Series1b"].Points.AddY(previous.Where(x => x.Field<DateTime>("ArriveDate").Month == month).Select(x => x.Field<decimal?>("ItineraryGrossFinalTotal")).Sum());
 
                 // SUM yield
                 chart1.Series["Series2a"].Points.AddY(current.Where(x => x.Field<DateTime>("ArriveDate").Month == month).Select(x => x.Field<decimal?>("ItineraryYield")).Sum());

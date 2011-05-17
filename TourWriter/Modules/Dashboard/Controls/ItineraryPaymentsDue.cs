@@ -20,9 +20,10 @@ namespace TourWriter.Modules.Dashboard.Controls
         private void ItineraryPaymentsDue_Load(object sender, EventArgs e)
         {
             var sql = @"
-select top(10) itineraryname, arrivedate, itinerarystatusname, assignedto, itinerarygross, itinerarybalanceduedate, itinerarybalanceAmount
-from itinerarydetail
-order by itinerarybalanceduedate desc
+select top(10) 
+    ItineraryName, ArriveDate, ItineraryStatusName, AssignedTo, ItineraryGrossFinalTotal, ItineraryBalanceDueDate, ItineraryTotalOutstanding
+from ItineraryDetail
+order by ItineraryBalanceDueDate desc
 ";
             DataSet ds = new DataSet();
             DataSetHelper.FillDataset(ds, sql);
