@@ -28,7 +28,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         /// </summary>
         private void InitializeComponent()
         {
-            this.errorProv = new System.Windows.Forms.ErrorProvider();
+            this.components = new System.ComponentModel.Container();
+            this.errorProv = new System.Windows.Forms.ErrorProvider(this.components);
             this.txtFrom = new System.Windows.Forms.TextBox();
             this.txtSubject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,7 +46,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.webBody = new System.Windows.Forms.WebBrowser();
             this.chkReadReceipt = new System.Windows.Forms.CheckBox();
             this.chkSkip = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.checkGroupByEmail = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).BeginInit();
             this.SuspendLayout();
             // 
             // errorProv
@@ -58,7 +61,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFrom.Location = new System.Drawing.Point(52, 40);
             this.txtFrom.Name = "txtFrom";
-            this.txtFrom.Size = new System.Drawing.Size(338, 20);
+            this.txtFrom.Size = new System.Drawing.Size(344, 20);
             this.txtFrom.TabIndex = 1;
             // 
             // txtSubject
@@ -67,7 +70,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubject.Location = new System.Drawing.Point(52, 86);
             this.txtSubject.Name = "txtSubject";
-            this.txtSubject.Size = new System.Drawing.Size(338, 20);
+            this.txtSubject.Size = new System.Drawing.Size(344, 20);
             this.txtSubject.TabIndex = 3;
             // 
             // label1
@@ -136,7 +139,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBcc.Location = new System.Drawing.Point(52, 63);
             this.txtBcc.Name = "txtBcc";
-            this.txtBcc.Size = new System.Drawing.Size(338, 20);
+            this.txtBcc.Size = new System.Drawing.Size(344, 20);
             this.txtBcc.TabIndex = 2;
             // 
             // chkShowBookingPrice
@@ -156,7 +159,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTemplate.Location = new System.Drawing.Point(68, 427);
             this.txtTemplate.Name = "txtTemplate";
-            this.txtTemplate.Size = new System.Drawing.Size(492, 20);
+            this.txtTemplate.Size = new System.Drawing.Size(498, 20);
             this.txtTemplate.TabIndex = 38;
             // 
             // label5
@@ -174,7 +177,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.Image = global::TourWriter.Properties.Resources.FolderExplore;
-            this.btnBrowse.Location = new System.Drawing.Point(562, 426);
+            this.btnBrowse.Location = new System.Drawing.Point(568, 426);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(23, 22);
             this.btnBrowse.TabIndex = 40;
@@ -186,10 +189,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.webBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.webBody.Location = new System.Drawing.Point(3, 112);
+            this.webBody.Location = new System.Drawing.Point(3, 136);
             this.webBody.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBody.Name = "webBody";
-            this.webBody.Size = new System.Drawing.Size(585, 309);
+            this.webBody.Size = new System.Drawing.Size(591, 285);
             this.webBody.TabIndex = 8;
             // 
             // chkReadReceipt
@@ -215,10 +218,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.toolTip1.SetToolTip(this.chkSkip, "Go straight to the next page when window opens");
             this.chkSkip.UseVisualStyleBackColor = true;
             // 
+            // checkGroupByEmail
+            // 
+            this.checkGroupByEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkGroupByEmail.AutoSize = true;
+            this.checkGroupByEmail.Location = new System.Drawing.Point(419, 110);
+            this.checkGroupByEmail.Name = "checkGroupByEmail";
+            this.checkGroupByEmail.Size = new System.Drawing.Size(183, 17);
+            this.checkGroupByEmail.TabIndex = 42;
+            this.checkGroupByEmail.Text = "Group bookings by Supplier email";
+            this.checkGroupByEmail.UseVisualStyleBackColor = true;
+            // 
             // TemplateForm
             // 
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.checkGroupByEmail);
             this.Controls.Add(this.chkSkip);
             this.Controls.Add(this.chkReadReceipt);
             this.Controls.Add(this.webBody);
@@ -236,7 +251,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.Controls.Add(this.txtSubject);
             this.Controls.Add(this.txtFrom);
             this.Name = "TemplateForm";
-            this.Size = new System.Drawing.Size(591, 453);
+            this.Size = new System.Drawing.Size(597, 453);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,5 +277,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private System.Windows.Forms.CheckBox chkReadReceipt;
         private System.Windows.Forms.CheckBox chkSkip;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkGroupByEmail;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using TourWriter.Info;
@@ -26,6 +27,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly ItinerarySet itinerarySet;
         private readonly List<BookingEmailInfo> emailList;
 
+        private IEnumerable<int> purchaseLineIdList;
+
         private string _templateFile;
         private TemplateForm _templateForm;
         private EmailForm _emailForm;
@@ -45,11 +48,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.itinerarySet = itinerarySet;
             _templateFile = defaultTemplate;
             emailList = new List<BookingEmailInfo>();
-            foreach (var id in purchaseLineIdList)
-            {
-                var row = itinerarySet.PurchaseLine.FindByPurchaseLineID(id);
-                emailList.Add(new BookingEmailInfo(row));
-            }
+            this.purchaseLineIdList = purchaseLineIdList;           
         }
 
         private void BookingEmailForm_Load(object sender, EventArgs e)
@@ -180,11 +179,38 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         public void BuildEmailList()
         {
             Cursor.Current = Cursors.WaitCursor;
+            emailList.Clear();            
+            if (_templateForm.GroupBySupplierEmail)
+            {
+                var purchaseLineList = itinerarySet.PurchaseLine.Where(x => purchaseLineIdList.Contains(x.PurchaseLineID));
 
-            TemplateSettings templateSettings = templateForm.GetTemplateSettings();
-            foreach (BookingEmailInfo emailInfo in emailList)
+                var supplierList = itinerarySet.SupplierLookup.Where(x => !x.IsEmailNull()).ToList();
+
+                var purchaseLineGroupByEmail = from p in purchaseLineList
+                                               join sup in supplierList on p.SupplierID equals sup.SupplierID
+                                               group p by sup.Email
+                                                   into purchaseGroup
+                                                   select purchaseGroup;
+
+                foreach (var purchaseGroup in purchaseLineGroupByEmail)
+                {
+                    emailList.Add(new BookingEmailInfo(purchaseGroup));
+                }
+            }
+            else
+            {
+                foreach (var row in purchaseLineIdList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
+                {
+                    emailList.Add(new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow>() { row }));
+                }
+            }                              
+            
+            var templateSettings = templateForm.GetTemplateSettings();
+           
+            foreach (var emailInfo in emailList)
+            {                                               
                 emailInfo.CreateEmailMessage(templateSettings);
-
+            }
             Cursor.Current = Cursors.Default;
         }
 

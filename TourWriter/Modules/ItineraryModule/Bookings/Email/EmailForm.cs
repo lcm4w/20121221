@@ -41,12 +41,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private void SaveCurrentEmail()
         {
-            EmailMessage email = emailList[currentIndex].EmailMessage;
-            if (email != null)
+            if (emailList.Count > 0)
             {
-                email._To = txtTo.Text;
-                email.Subject = txtSubject.Text;
-                email.Body = TemplateSettings.ReplaceBodyHtml(webBody.DocumentText, webBody.Document.Body.OuterHtml);
+                EmailMessage email = emailList[currentIndex].EmailMessage;
+                if (email != null)
+                {
+                    email._To = txtTo.Text;
+                    email.Subject = txtSubject.Text;
+                    email.Body = TemplateSettings.ReplaceBodyHtml(webBody.DocumentText, webBody.Document.Body.OuterHtml);
+                }
             }
         }
 

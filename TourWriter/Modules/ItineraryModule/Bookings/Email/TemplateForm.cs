@@ -17,6 +17,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             get { return chkSkip.Checked; }
             set { chkSkip.Checked = value; }
         }
+
+        public bool GroupBySupplierEmail
+        {
+            get { return checkGroupByEmail.Checked; }
+            set { checkGroupByEmail.Checked = value; }
+        }
+
         private const string DefaultSubject = "Booking request for {0}";
         private const string ErrorText = "<html><body>Default template text not found...</body></html>";
         private readonly string _templateFile;

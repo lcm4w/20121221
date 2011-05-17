@@ -67,7 +67,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private int supplierId;
         private string supplierName;
         private EmailMessage emailMessage;
-        private readonly ItinerarySet.PurchaseLineRow purchaseLine;
+        private ItinerarySet.PurchaseLineRow purchaseLine;       
 
         #endregion
 
@@ -90,27 +90,40 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         {
             get { return purchaseLine; }
         }
+     
+        private IEnumerable<ItinerarySet.PurchaseLineRow> PurchaseLines { get; set; }
 
-
-        public BookingEmailInfo(ItinerarySet.PurchaseLineRow purchaseLine)
-        {
-            this.purchaseLine = purchaseLine;
+        public BookingEmailInfo(IEnumerable<ItinerarySet.PurchaseLineRow> purchaseLines)
+        {     
+            PurchaseLines = purchaseLines;
         }
 
         public void CreateEmailMessage(TemplateSettings templateSettings)
         {
+            // default to first PurchaseLine for header info
+            purchaseLine = PurchaseLines.FirstOrDefault();
+
             showPrices = templateSettings.ShowPrices;
-            ItinerarySet.SupplierLookupRow supplier =
-                GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
+            var supplier = GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
 
             // create email
             emailMessage = new EmailMessage();
-            emailMessage._To = GetToAddress(supplier.SupplierName, !supplier.IsEmailNull() ? supplier.Email : "");
+            emailMessage._To = GetToAddress(supplier);
             emailMessage._From = templateSettings.From;
             emailMessage._Bcc = templateSettings.Bcc;
-            emailMessage.Subject = BuildEmailText(templateSettings.Subject);
+            emailMessage.Subject = BuildEmailText(templateSettings.Subject, purchaseLine);
             emailMessage.IsBodyHtml = true;
-            emailMessage.Body = BuildEmailText(templateSettings.Body);
+
+            if (PurchaseLines.Count() > 0)
+            {
+                foreach (var purchaseLineRow in PurchaseLines)
+                    emailMessage.Body += BuildEmailText(templateSettings.Body, purchaseLineRow);
+            }
+            else
+            {
+                emailMessage.Body = BuildEmailText(templateSettings.Body, PurchaseLine);
+            }
+
             emailMessage._Tag = this;
             emailMessage._SaveWhenSent = templateSettings.SaveToFile;
 
@@ -160,13 +173,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         #region Email body creation
 
-        private string BuildEmailText(string template)
+        private string BuildEmailText(string template, ItinerarySet.PurchaseLineRow purchaseLine)
         {
             ItinerarySet.SupplierLookupRow supplier =
                 GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
 
             template = ReplaceTag(template, tagHostName,
                 (!supplier.IsHostNameNull() && supplier.HostName != "" ? supplier.HostName : "Reservations").Trim());
+
             template = ReplaceTag(template, tagSupplierName, supplier.SupplierName);
             template = ReplaceTag(template, tagItineraryName, purchaseLine.ItineraryRow.ItineraryName);
             template = ReplaceTag(template, tagDisplayName, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
@@ -174,7 +188,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
             template = ReplaceTag(template, tagCustomCode, !purchaseLine.ItineraryRow.IsCustomCodeNull() ? purchaseLine.ItineraryRow.CustomCode : "");
             template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
-            template = ReplaceBookingDetailsTag(template);
+            template = ReplaceBookingDetailsTag(template, purchaseLine);
             template = ReplaceTag(template, tagBookingNotes, BuildBookingNotes(PurchaseLine));
             template = ReplaceTag(template, tagClientNotes, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
             template = ReplaceTag(template, tagUserName, Cache.User.DisplayName);
@@ -183,7 +197,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return template;
         }
 
-        private string  ReplaceBookingDetailsTag(string template)
+        private string  ReplaceBookingDetailsTag(string template, ItinerarySet.PurchaseLineRow purchaseLine)
         {
             if (template.Contains(BookingDetailStartTag))
             {
@@ -191,7 +205,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 return InsertCustomBookingDetails(template, purchaseLine);
             }
             // handle old email templates (which don't allow custom booking details)
-            return ReplaceTag(template, tagBookingDetails, BuildBookingDetails(PurchaseLine));
+            return ReplaceTag(template, tagBookingDetails, BuildBookingDetails(purchaseLine));
         }
 
         private string BuildBookingDetails(ItinerarySet.PurchaseLineRow line)
@@ -374,8 +388,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return serviceTypeRow.BookingEndName;
         }
 
-        private static string GetToAddress(string name, string email)
+        private static string GetToAddress(ItinerarySet.SupplierLookupRow supplier) //string name, string email)
         {
+            if (supplier == null) return string.Empty;
+            var name = !supplier.IsSupplierNameNull() ? supplier.SupplierName : "";
+            var email = !supplier.IsEmailNull() ? supplier.Email : "";
+            
             // strip illegal characters from name
             name = name.
                 Replace(",", "").
