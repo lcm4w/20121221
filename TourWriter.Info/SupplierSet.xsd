@@ -389,6 +389,22 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="SupplierContent" msprop:Generator_TableClassName="SupplierContentDataTable" msprop:Generator_TableVarName="tableSupplierContent" msprop:Generator_TablePropName="SupplierContent" msprop:Generator_RowDeletingName="SupplierContentRowDeleting" msprop:Generator_UserTableName="SupplierContent" msprop:Generator_RowChangingName="SupplierContentRowChanging" msprop:Generator_RowEvHandlerName="SupplierContentRowChangeEventHandler" msprop:Generator_RowDeletedName="SupplierContentRowDeleted" msprop:Generator_RowEvArgName="SupplierContentRowChangeEvent" msprop:Generator_RowChangedName="SupplierContentRowChanged" msprop:Generator_RowClassName="SupplierContentRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SupplierID" msprop:Generator_ColumnVarNameInTable="columnSupplierID" msprop:Generator_ColumnPropNameInRow="SupplierID" msprop:Generator_ColumnPropNameInTable="SupplierIDColumn" msprop:Generator_UserColumnName="SupplierID" type="xs:int" />
+              <xs:element name="ContentID" msprop:Generator_ColumnVarNameInTable="columnContentID" msprop:Generator_ColumnPropNameInRow="ContentID" msprop:Generator_ColumnPropNameInTable="ContentIDColumn" msprop:Generator_UserColumnName="ContentID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ServiceContent" msprop:Generator_TableClassName="ServiceContentDataTable" msprop:Generator_TableVarName="tableServiceContent" msprop:Generator_TablePropName="ServiceContent" msprop:Generator_RowDeletingName="ServiceContentRowDeleting" msprop:Generator_UserTableName="ServiceContent" msprop:Generator_RowChangingName="ServiceContentRowChanging" msprop:Generator_RowEvHandlerName="ServiceContentRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceContentRowDeleted" msprop:Generator_RowEvArgName="ServiceContentRowChangeEvent" msprop:Generator_RowChangedName="ServiceContentRowChanged" msprop:Generator_RowClassName="ServiceContentRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ServiceID" msprop:Generator_ColumnVarNameInTable="columnServiceID" msprop:Generator_ColumnPropNameInRow="ServiceID" msprop:Generator_ColumnPropNameInTable="ServiceIDColumn" msprop:Generator_UserColumnName="ServiceID" type="xs:int" />
+              <xs:element name="ContentID" msprop:Generator_ColumnVarNameInTable="columnContentID" msprop:Generator_ColumnPropNameInRow="ContentID" msprop:Generator_ColumnPropNameInTable="ContentIDColumn" msprop:Generator_UserColumnName="ContentID" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1" msdata:PrimaryKey="true">
