@@ -17,7 +17,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsQuote : UserControl
     {
-        Dictionary<string, QuoteSummaryItem> _summaryItems = new Dictionary<string, QuoteSummaryItem>();
+        readonly Dictionary<string, QuoteSummaryItem> _summaryItems = new Dictionary<string, QuoteSummaryItem>();
 
         internal ItinerarySet ItinerarySet { get; set; }
 
@@ -77,12 +77,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             band.Override.BorderStyleSummaryValue = UIElementBorderStyle.None;
             band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
             band.Override.SummaryFooterCaptionVisible = DefaultableBoolean.False;
-            SummarySettings summary = null;
-            
+
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
                 string key = "Sum" + c.Header.Caption;
 
+                SummarySettings summary = null;
                 if (key == "SumCategory" && !band.Summaries.Exists("SumCategory"))
                 {
                     summary = band.Summaries.Add(
@@ -113,7 +113,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         summary = band.Summaries.Add(
                             string.Format("TW_SUM_{0}", c.Header.Caption),
                             SummaryType.Custom,
-                            new QuoteSummary(new QuoteSummaryItem()),
+                            new QuoteSummary(ItinerarySet),
                             band.Columns[c.Header.Caption],
                             SummaryPosition.UseSummaryPositionColumn,
                             null
@@ -223,46 +223,27 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnEditOverrides_Click(object sender, EventArgs e)
         {
-            QuoteTable dtQuote = (QuoteTable)grid.DataSource;
+            var dtQuote = (QuoteTable)grid.DataSource;
 
-            foreach (DataRow col in this.ItinerarySet.ItineraryPax.Rows)
+            // pass current column subtotals
+            foreach (DataRow col in ItinerarySet.ItineraryPax.Rows)
             {
                 var columnName = col["ItineraryPaxName"].ToString();
                 var key = string.Concat("Sum", columnName);
-                var subTotal = 0m;
+                var subTotal = (from DataRow row in dtQuote.Rows where !row.IsNull(columnName) 
+                                select Math.Round(Convert.ToDecimal(row[columnName]), 2)).Sum();
 
-                foreach (DataRow row in dtQuote.Rows)
-                {
-                    if (!row.IsNull(columnName))
-                    {
-                        subTotal += Math.Round(Convert.ToDecimal(row[columnName]), 2);
-                    }
-                }
-
-                if (!_summaryItems.ContainsKey(key))
-                {
-                    var summaryItem = new QuoteSummaryItem();
-                    summaryItem.Key = key;
-                    summaryItem.Subtotal = subTotal;
-                    _summaryItems.Add(key, summaryItem);
-                }
+                if (_summaryItems.ContainsKey(key)) continue;
+                var summaryItem = new QuoteSummaryItem {Key = key, Subtotal = subTotal};
+                _summaryItems.Add(key, summaryItem);
             }
 
-            using (var frm = new GroupQuoteOverride(this.ItinerarySet, _summaryItems))
+            // open override form
+            using (var frm = new GroupQuoteOverride(ItinerarySet, _summaryItems))
             {
-                if (frm.ShowDialog() == DialogResult.OK)
-                {
-                    _summaryItems = frm.SummaryItems;
-
-                    foreach (var key in frm.SummaryItems.Keys)
-                    {
-                        var si = frm.SummaryItems[key];
-
-                        grid.DisplayLayout.Bands[0].Summaries[key].CustomSummaryCalculator = new QuoteSummary(si);
-                    }
-
-                    grid.DisplayLayout.RefreshSummaries();
-                }
+                if (frm.ShowDialog() != DialogResult.OK) return;
+                foreach (SummarySettings s in grid.DisplayLayout.Bands[0].Summaries)
+                    s.Refresh(); // ICustomSummaryCalculator requires each col to be refreshed
             }
         }
 
@@ -297,12 +278,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         class QuoteSummary : ICustomSummaryCalculator
         {
-            QuoteSummaryItem _item;
             decimal _total;
+            private readonly ItinerarySet _itinerarySet;
 
-            public QuoteSummary(QuoteSummaryItem item)
+            public QuoteSummary(ItinerarySet itinerarySet)
             {
-                _item = item;
+                _itinerarySet = itinerarySet;
             }
 
             public void AggregateCustomSummary(SummarySettings summarySettings, UltraGridRow row)
@@ -322,19 +303,26 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             public object EndCustomSummary(SummarySettings summarySettings, RowsCollection rows)
             {
-                if (_item == null)
-                {
-                    return _total.ToString("#0.00");
-                }
+                var pax = _itinerarySet.ItineraryPax.
+                    Where(x => x.ItineraryPaxName == summarySettings.SourceColumn.Key).FirstOrDefault();
 
-                return string.Format("{0:#0.00}{1}{2:#0.00}{1}{3:#0.00}{1}{4:#0.00}{1}{5:#0.00}",
+                return string.Format("{0:#0.00}{1}{2:#0.00}{1}{3}{1}{4}{1}{5}",
                     _total,
                     Environment.NewLine,
-                    _item.Margin,
-                    _item.Markup,
-                    _item.Override,
-                    _item.Total
+                    null,
+                    pax != null && !pax.IsGrossMarkupNull() ? pax.GrossMarkup.ToString("#0.00") + "%" : "",
+                    pax != null && !pax.IsGrossOverrideNull() ? pax.GrossOverride.ToString("$#0.00") : "",
+                    FinalPrice(pax).ToString("$#0.00")
                     );
+            }
+
+            private decimal FinalPrice(ItinerarySet.ItineraryPaxRow pax)
+            {
+                if (pax == null) return _total;
+                if (!pax.IsGrossOverrideNull()) return pax.GrossOverride;
+                if (!pax.IsGrossMarkupNull())
+                    return _total * (1 + pax.GrossMarkup / 100);
+                return _total;
             }
         }
     }

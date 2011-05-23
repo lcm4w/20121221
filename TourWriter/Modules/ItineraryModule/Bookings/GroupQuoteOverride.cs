@@ -16,7 +16,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
     internal partial class GroupQuoteOverride : Form
     {
         private readonly ItinerarySet _itinerarySet;
-        private Dictionary<string, QuoteSummaryItem> _summaryItems;
+        private readonly Dictionary<string, QuoteSummaryItem> _summaryItems;
 
         public GroupQuoteOverride(ItinerarySet itinerarySet, Dictionary<string, QuoteSummaryItem> summaryItems)
         {
@@ -50,67 +50,57 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var key = string.Empty;
             var item = default(QuoteSummaryItem);
             var dt = new DataTable();
-            dt.Columns.Add("Description", typeof(string));
 
+            // add table columns
+            dt.Columns.Add("Description", typeof(string));
             foreach (DataRow row in _itinerarySet.ItineraryPax.Rows)
             {
-                dt.Columns.Add(row["ItineraryPaxName"].ToString(), typeof(string));
+                dt.Columns.Add(row["ItineraryPaxName"].ToString(), typeof(decimal));
             }
 
+            // add Subtotal row
             var newRow = dt.NewRow();
             newRow["Description"] = "Subtotal";
-
             foreach (DataRow row in _itinerarySet.ItineraryPax.Rows)
             {
                 columnName = row["ItineraryPaxName"].ToString();
                 key = string.Format("Sum{0}", columnName);
                 item = _summaryItems[key];
-
-                newRow[columnName] = item.Subtotal.ToString("#0.00");
+                newRow[columnName] = item.Subtotal;
             }
-
             dt.Rows.Add(newRow);
 
+            // add Margin row
             newRow = dt.NewRow();
             newRow["Description"] = "Margin";
 
             foreach (DataRow row in _itinerarySet.ItineraryPax.Rows)
             {
                 columnName = row["ItineraryPaxName"].ToString();
-                key = string.Format("Sum{0}", columnName);
-                item = _summaryItems[key];
-
-                newRow[columnName] = item.Margin.ToString("#0.00");
+                newRow[columnName] = DBNull.Value;
             }
-
             dt.Rows.Add(newRow);
 
+            // add Markup row
             newRow = dt.NewRow();
-            newRow["Description"] = "Markup";
-
-            foreach (DataRow row in _itinerarySet.ItineraryPax.Rows)
+            newRow["Description"] = "Markup %";
+            foreach (var row in _itinerarySet.ItineraryPax.AsEnumerable())
             {
                 columnName = row["ItineraryPaxName"].ToString();
-                key = string.Format("Sum{0}", columnName);
-                item = _summaryItems[key];
-
-                newRow[columnName] = item.Markup.ToString("#0.00");
+                if (!row.IsGrossMarkupNull())
+                    newRow[columnName] = row.GrossMarkup;
             }
-
             dt.Rows.Add(newRow);
 
+            // add Override row
             newRow = dt.NewRow();
-            newRow["Description"] = "Override";
-
-            foreach (DataRow row in _itinerarySet.ItineraryPax.Rows)
+            newRow["Description"] = "Override $";
+            foreach (var row in _itinerarySet.ItineraryPax.AsEnumerable())
             {
-                columnName = row["ItineraryPaxName"].ToString();
-                key = string.Format("Sum{0}", columnName);
-                item = _summaryItems[key];
-
-                newRow[columnName] = item.Override.ToString("#0.00");
+                columnName = row.ItineraryPaxName;
+                if (!row.IsGrossOverrideNull())
+                    newRow[columnName] = row.GrossOverride;
             }
-
             dt.Rows.Add(newRow);
 
             return dt;
@@ -126,6 +116,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var cell = row.Cells[i];
                 //cell.Style = Infragistics.Win.UltraWinGrid.ColumnStyle.Button;
                 cell.Style = Infragistics.Win.UltraWinGrid.ColumnStyle.Double;
+                cell.Activation = Activation.NoEdit;
             }
 
             // Markup
@@ -239,38 +230,60 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            // Start at pax value
-            for (int i = 0; i < grid.Rows.Count; i++)
+            var cols = grid.DisplayLayout.Bands[0].Columns;
+            for (var i = 1; i < cols.Count; i++)
             {
-                var row = grid.Rows[i];
+                var key = cols[i].Header.Caption;
+                var pax = _itinerarySet.ItineraryPax.Where(x => x.ItineraryPaxName == key).FirstOrDefault();
+                if (pax == null) continue;
+               
+                // set markup
+                var markup = grid.Rows[2].Cells[i].Value;
+                if (markup != DBNull.Value)
+                    pax.GrossMarkup = Convert.ToDecimal(markup);
+                else pax.SetGrossMarkupNull();
 
-                // Start at margin
-                for (int j = 1; j < row.Cells.Count; j++)
-                {
-                    var cell = row.Cells[j];
-                    var key = string.Concat("Sum", cell.Column.Key);
-                    var item = _summaryItems[key];
-
-                    if (item != null)
-                    {
-                        switch (i)
-                        {
-                            case 0: // Subtotal
-                                item.Subtotal = cell.Value == DBNull.Value ? 0 : Convert.ToDecimal(cell.Value);
-                                break;
-                            case 1: // Margin
-                                item.Margin = cell.Value == DBNull.Value ? 0 : Convert.ToDecimal(cell.Value);
-                                break;
-                            case 2: // Markup
-                                item.Markup = cell.Value == DBNull.Value ? 0 : Convert.ToDecimal(cell.Value);
-                                break;
-                            case 3: // Override
-                                item.Override = cell.Value == DBNull.Value ? 0 : Convert.ToDecimal(cell.Value);
-                                break;
-                        }
-                    }
-                }
+                // set override
+                var overide = grid.Rows[3].Cells[i].Value;
+                if (overide != DBNull.Value)
+                    pax.GrossOverride = Convert.ToDecimal(overide);
+                else pax.SetGrossOverrideNull();
+                
             }
+
+
+            //// Start at pax value
+            //for (int i = 0; i < grid.Rows.Count; i++)
+            //{
+            //    var row = grid.Rows[i];
+
+            //    // Start at margin
+            //    for (int j = 1; j < row.Cells.Count; j++)
+            //    {
+            //        var cell = row.Cells[j];
+            //        var key = string.Concat("Sum", cell.Column.Key);
+            //        var item = _summaryItems[key];
+
+            //        if (item != null)
+            //        {
+            //            switch (i)
+            //            {
+            //                case 0: // Subtotal
+            //                    item.Subtotal = cell.Value == DBNull.Value ? (decimal?)null : Convert.ToDecimal(cell.Value);
+            //                    break;
+            //                case 1: // Margin
+            //                    item.Margin = cell.Value == DBNull.Value ? (decimal?)null : Convert.ToDecimal(cell.Value);
+            //                    break;
+            //                case 2: // Markup
+            //                    item.Markup = cell.Value == DBNull.Value ? (decimal?)null : Convert.ToDecimal(cell.Value);
+            //                    break;
+            //                case 3: // Override
+            //                    item.Override = cell.Value == DBNull.Value ? (decimal?)null : Convert.ToDecimal(cell.Value);
+            //                    break;
+            //            }
+            //        }
+            //    }
+            //}
 
             DialogResult = DialogResult.OK;
         }
@@ -305,7 +318,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             public void AggregateCustomSummary(SummarySettings summarySettings, UltraGridRow row)
             {
-                var value = Convert.ToDecimal(row.GetCellValue(summarySettings.SourceColumn));
+                var obj = row.GetCellValue(summarySettings.SourceColumn);
+                var value = obj != DBNull.Value  && obj.ToString() != "" ? Convert.ToDecimal(obj) : 0;
 
                 // Override
                 if (_rowIndex == 3 && value > 0)

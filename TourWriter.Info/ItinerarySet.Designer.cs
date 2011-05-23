@@ -1641,9 +1641,9 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnNetMargin;
             
-            private global::System.Data.DataColumn columnGrossMarkupOverride;
+            private global::System.Data.DataColumn columnGrossMarkup;
             
-            private global::System.Data.DataColumn columnGrossFinalOverride;
+            private global::System.Data.DataColumn columnGrossOverride;
             
             private global::System.Data.DataColumn columnIsLockedGrossOverride;
             
@@ -1838,17 +1838,17 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GrossMarkupOverrideColumn {
+            public global::System.Data.DataColumn GrossMarkupColumn {
                 get {
-                    return this.columnGrossMarkupOverride;
+                    return this.columnGrossMarkup;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GrossFinalOverrideColumn {
+            public global::System.Data.DataColumn GrossOverrideColumn {
                 get {
-                    return this.columnGrossFinalOverride;
+                    return this.columnGrossOverride;
                 }
             }
             
@@ -2199,8 +2199,8 @@ namespace TourWriter.Info {
                 this.columnDepartNote = base.Columns["DepartNote"];
                 this.columnNetComOrMup = base.Columns["NetComOrMup"];
                 this.columnNetMargin = base.Columns["NetMargin"];
-                this.columnGrossMarkupOverride = base.Columns["GrossMarkup"];
-                this.columnGrossFinalOverride = base.Columns["GrossOverride"];
+                this.columnGrossMarkup = base.Columns["GrossMarkup"];
+                this.columnGrossOverride = base.Columns["GrossOverride"];
                 this.columnIsLockedGrossOverride = base.Columns["IsLockedGrossOverride"];
                 this.columnPricingNote = base.Columns["PricingNote"];
                 this.columnAgentID = base.Columns["AgentID"];
@@ -2257,16 +2257,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnNetComOrMup);
                 this.columnNetMargin = new global::System.Data.DataColumn("NetMargin", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNetMargin);
-                this.columnGrossMarkupOverride = new global::System.Data.DataColumn("GrossMarkup", typeof(decimal), null, global::System.Data.MappingType.Element);
-                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "GrossMarkupOverrideColumn");
-                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnGrossMarkupOverride");
-                this.columnGrossMarkupOverride.ExtendedProperties.Add("Generator_UserColumnName", "GrossMarkup");
-                base.Columns.Add(this.columnGrossMarkupOverride);
-                this.columnGrossFinalOverride = new global::System.Data.DataColumn("GrossOverride", typeof(decimal), null, global::System.Data.MappingType.Element);
-                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_ColumnPropNameInTable", "GrossFinalOverrideColumn");
-                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_ColumnVarNameInTable", "columnGrossFinalOverride");
-                this.columnGrossFinalOverride.ExtendedProperties.Add("Generator_UserColumnName", "GrossOverride");
-                base.Columns.Add(this.columnGrossFinalOverride);
+                this.columnGrossMarkup = new global::System.Data.DataColumn("GrossMarkup", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossMarkup);
+                this.columnGrossOverride = new global::System.Data.DataColumn("GrossOverride", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossOverride);
                 this.columnIsLockedGrossOverride = new global::System.Data.DataColumn("IsLockedGrossOverride", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsLockedGrossOverride);
                 this.columnPricingNote = new global::System.Data.DataColumn("PricingNote", typeof(string), null, global::System.Data.MappingType.Element);
@@ -2476,6 +2470,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnStaffRooms;
             
+            private global::System.Data.DataColumn columnGrossMarkup;
+            
+            private global::System.Data.DataColumn columnGrossOverride;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryPaxDataTable() {
@@ -2567,6 +2565,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossMarkupColumn {
+                get {
+                    return this.columnGrossMarkup;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GrossOverrideColumn {
+                get {
+                    return this.columnGrossOverride;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2602,7 +2616,7 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryPaxRow AddItineraryPaxRow(string ItineraryPaxName, ItineraryRow parentItineraryRowByItineraryItineraryPax, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms) {
+            public ItineraryPaxRow AddItineraryPaxRow(string ItineraryPaxName, ItineraryRow parentItineraryRowByItineraryItineraryPax, int MemberCount, double MemberRooms, int StaffCount, double StaffRooms, decimal GrossMarkup, decimal GrossOverride) {
                 ItineraryPaxRow rowItineraryPaxRow = ((ItineraryPaxRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2611,7 +2625,9 @@ namespace TourWriter.Info {
                         MemberCount,
                         MemberRooms,
                         StaffCount,
-                        StaffRooms};
+                        StaffRooms,
+                        GrossMarkup,
+                        GrossOverride};
                 if ((parentItineraryRowByItineraryItineraryPax != null)) {
                     columnValuesArray[2] = parentItineraryRowByItineraryItineraryPax[0];
                 }
@@ -2651,6 +2667,8 @@ namespace TourWriter.Info {
                 this.columnMemberRooms = base.Columns["MemberRooms"];
                 this.columnStaffCount = base.Columns["StaffCount"];
                 this.columnStaffRooms = base.Columns["StaffRooms"];
+                this.columnGrossMarkup = base.Columns["GrossMarkup"];
+                this.columnGrossOverride = base.Columns["GrossOverride"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2670,6 +2688,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnStaffCount);
                 this.columnStaffRooms = new global::System.Data.DataColumn("StaffRooms", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStaffRooms);
+                this.columnGrossMarkup = new global::System.Data.DataColumn("GrossMarkup", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossMarkup);
+                this.columnGrossOverride = new global::System.Data.DataColumn("GrossOverride", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGrossOverride);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryPaxID}, true));
                 this.columnItineraryPaxID.AutoIncrement = true;
@@ -11083,14 +11105,14 @@ namespace TourWriter.Info {
             public decimal GrossMarkup {
                 get {
                     try {
-                        return ((decimal)(this[this.tableItinerary.GrossMarkupOverrideColumn]));
+                        return ((decimal)(this[this.tableItinerary.GrossMarkupColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'GrossMarkup\' in table \'Itinerary\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableItinerary.GrossMarkupOverrideColumn] = value;
+                    this[this.tableItinerary.GrossMarkupColumn] = value;
                 }
             }
             
@@ -11099,14 +11121,14 @@ namespace TourWriter.Info {
             public decimal GrossOverride {
                 get {
                     try {
-                        return ((decimal)(this[this.tableItinerary.GrossFinalOverrideColumn]));
+                        return ((decimal)(this[this.tableItinerary.GrossOverrideColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'GrossOverride\' in table \'Itinerary\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableItinerary.GrossFinalOverrideColumn] = value;
+                    this[this.tableItinerary.GrossOverrideColumn] = value;
                 }
             }
             
@@ -11636,25 +11658,25 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsGrossMarkupNull() {
-                return this.IsNull(this.tableItinerary.GrossMarkupOverrideColumn);
+                return this.IsNull(this.tableItinerary.GrossMarkupColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGrossMarkupNull() {
-                this[this.tableItinerary.GrossMarkupOverrideColumn] = global::System.Convert.DBNull;
+                this[this.tableItinerary.GrossMarkupColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsGrossOverrideNull() {
-                return this.IsNull(this.tableItinerary.GrossFinalOverrideColumn);
+                return this.IsNull(this.tableItinerary.GrossOverrideColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGrossOverrideNull() {
-                this[this.tableItinerary.GrossFinalOverrideColumn] = global::System.Convert.DBNull;
+                this[this.tableItinerary.GrossOverrideColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12113,6 +12135,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal GrossMarkup {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableItineraryPax.GrossMarkupColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossMarkup\' in table \'ItineraryPax\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPax.GrossMarkupColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal GrossOverride {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableItineraryPax.GrossOverrideColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'GrossOverride\' in table \'ItineraryPax\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryPax.GrossOverrideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryRow ItineraryRow {
                 get {
                     return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryItineraryPax"])));
@@ -12168,6 +12222,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStaffRoomsNull() {
                 this[this.tableItineraryPax.StaffRoomsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossMarkupNull() {
+                return this.IsNull(this.tableItineraryPax.GrossMarkupColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossMarkupNull() {
+                this[this.tableItineraryPax.GrossMarkupColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGrossOverrideNull() {
+                return this.IsNull(this.tableItineraryPax.GrossOverrideColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGrossOverrideNull() {
+                this[this.tableItineraryPax.GrossOverrideColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

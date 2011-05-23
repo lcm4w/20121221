@@ -8,12 +8,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
     internal class QuoteSummaryItem
     {
         public string Key { get; set; }
-        public decimal Subtotal { get; set; }
-        public decimal Margin { get; set; }
-        public decimal Markup { get; set; }
-        public decimal Override { get; set; }
+        public decimal? Subtotal { get; set; }
+        public decimal? Margin { get; set; }
+        public decimal? Markup { get; set; }
+        public decimal? Override { get; set; }
 
-        public decimal Total
+        public decimal? Total
         {
             get
             {
