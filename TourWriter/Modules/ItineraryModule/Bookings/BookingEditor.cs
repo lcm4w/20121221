@@ -686,8 +686,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "Discount")
                 {
+                    c.Hidden = true; // TODO: feature hidden for now
+                    c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
                     c.Header.Caption = "Free";
-                    c.Header.ToolTipText = "Free";
+                    c.Header.ToolTipText = "Discount units (FOC or Stay-Pay)";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
                 else if (c.Key == "NetTotal")

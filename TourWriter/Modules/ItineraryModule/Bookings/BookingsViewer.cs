@@ -27,7 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
-        private const string GridLayoutVersion = "v2.2"; // bump this (any new name) to cause grid to reset to pick up changes
+        private const string GridLayoutVersion = "v2.3"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -1009,8 +1009,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "Discount")
                 {
+                    c.Hidden = true; // TODO: feature hidden for now
+                    c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
                     c.Header.Caption = "Free";
-                    c.Header.ToolTipText = "Free";
+                    c.Header.ToolTipText = "Discount units (FOC or Stay-Pay)";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
                 else
