@@ -952,7 +952,6 @@ namespace TourWriter.Modules.SupplierModule
             this.btnSupplierFreePhone.TabIndex = 150;
             this.btnSupplierFreePhone.TabStop = false;
             this.toolTip1.SetToolTip(this.btnSupplierFreePhone, "Click to call this number.\r\n");
-            this.btnSupplierFreePhone.Visible = false;
             this.btnSupplierFreePhone.Click += new System.EventHandler(this.btnCall);
             // 
             // btnSupplierMobile
@@ -967,7 +966,6 @@ namespace TourWriter.Modules.SupplierModule
             this.btnSupplierMobile.TabIndex = 149;
             this.btnSupplierMobile.TabStop = false;
             this.toolTip1.SetToolTip(this.btnSupplierMobile, "Click to call this number.\r\n");
-            this.btnSupplierMobile.Visible = false;
             this.btnSupplierMobile.Click += new System.EventHandler(this.btnCall);
             // 
             // btnSupplierPhone
@@ -982,7 +980,6 @@ namespace TourWriter.Modules.SupplierModule
             this.btnSupplierPhone.TabIndex = 148;
             this.btnSupplierPhone.TabStop = false;
             this.toolTip1.SetToolTip(this.btnSupplierPhone, "Click to call this number.\r\n");
-            this.btnSupplierPhone.Visible = false;
             this.btnSupplierPhone.Click += new System.EventHandler(this.btnCall);
             // 
             // chkSupplierDeleted

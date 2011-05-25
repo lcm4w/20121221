@@ -47,6 +47,9 @@ namespace TourWriter.Modules.SupplierModule
             ApplyLicenseStatus();
             tabsAdditional.Tabs["Reports"].Visible = App.ShowOldReports;
             tabsAdditional.Tabs["Export"].Visible = false;
+
+            // TODO hide feature for now - callto: protocol unreliable, and only works on Skype 4 or less
+            btnSupplierFreePhone.Visible = btnSupplierMobile.Visible = btnSupplierPhone.Visible = false;
         }
 
         public void ApplyLicenseStatus()
@@ -693,8 +696,16 @@ namespace TourWriter.Modules.SupplierModule
 
         private void btnCall(object sender, EventArgs e)
         {
-            var number = ((TextBox) sender).Text;
-            Process.Start("callto:"+number);
+            var ph = "";
+            if (sender == btnSupplierPhone)
+                ph = txtPhone.Text;
+            else if (sender == btnSupplierFreePhone)
+                ph = txtFreePhone.Text;
+            else if (sender == btnSupplierMobile)
+                ph = txtMobilePhone.Text;
+
+            if (ph.Trim() == "") return;
+            Process.Start("callto:"+ph.Trim());
         }
        
         private void btnSupplierEmail_Click(object sender, EventArgs e)
