@@ -277,7 +277,7 @@ namespace TourWriter.Modules.ItineraryModule
                 return;
 
             var id = (int)e.Row.Cells["PurchaseItemID"].Value;
-            var item = itinerarySet.PurchaseItem.Where(x => x.PurchaseItemID == id).FirstOrDefault();
+            var item = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == id).FirstOrDefault();
             
             e.Row.Cells["IsSelected"].Value = true;
             e.Row.Cells["Result"].ToolTipText = String.Empty;
