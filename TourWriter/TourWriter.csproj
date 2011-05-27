@@ -1361,7 +1361,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.09.sql" />
     <EmbeddedResource Include="UserControls\CheckBoxSet.resx">
       <DependentUpon>CheckBoxSet.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1518,7 +1517,8 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.19.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.28.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.09.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.05.06.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.04.14.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.04.05.sql" />
