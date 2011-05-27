@@ -50,13 +50,15 @@ namespace TourWriter.DataAccess
 			// get id
 			int id = changes.Supplier.Rows.Count > 0 ? changes.Supplier[0].SupplierID :
 				int.Parse(ds.ExtendedProperties["SupplierID"].ToString());
+            
+            // refresh data
+            SupplierSet fresh = GetSupplierSet(id);
 
-			// refresh data
-			SupplierSet fresh = GetSupplierSet(id);
-			changes.Merge(fresh, true);
-			DataSetHelper.ProcessRefreshedDataSet(changes);
+            //App.DataSet_MergeWithDebug(changes, fresh);
+            changes.Merge(fresh, true);
+            DataSetHelper.ProcessRefreshedDataSet(changes);
 
-			return changes;
+            return changes;
 		}
 	    
 	    /// <summary>

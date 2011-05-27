@@ -177,8 +177,16 @@ namespace TourWriter.Forms
 			foreach(DataTable dt in ds.Tables)
 			{
 				foreach(DataRow dr in dt.GetErrors())
-				{
-					if(dr.RowError.StartsWith(App.DataErrorCurrencyViolationText))
+                {
+                    if (dr.RowError.Contains(" DeleteCommand affected 0 of "))
+                    {
+                        // Full error desc: Concurrency violation: the DeleteCommand affected 0 of the expected 1 records.
+                        // Reason: this occurs when db cascades DELETE via FK relationship, then when dataset tries to 
+                        // also delete the child (FK) then there is no row to delete (db has already done it).
+                        dr.ClearErrors();
+                        dr.AcceptChanges();
+                    }
+                    else if(dr.RowError.StartsWith(App.DataErrorCurrencyViolationText))
 					{
 						#region CONCURRENCY_VIOLATION
 

@@ -910,6 +910,41 @@ namespace TourWriter
         #endregion
 
         #region DataSet helper methods
+
+        internal static void DataSet_MergeWithDebug(DataSet changes, DataSet fresh)
+        {
+            changes.WriteXml(@"C:\temp\dataset_changes.xml", XmlWriteMode.DiffGram);
+            fresh.WriteXml(@"C:\temp\dataset_fresh.xml", XmlWriteMode.DiffGram);
+
+            try
+            {
+                // set Constrainsts check to false, so that the merge is fast
+                changes.EnforceConstraints = false;
+
+                // any error on merge will be caught below
+                changes.Merge(fresh, true);
+
+                // set constrainsts check to true, so that we catch the exact error
+                changes.EnforceConstraints = true;
+            }
+            catch (DataException de)
+            {
+                foreach (DataTable table in changes.Tables)
+                {
+                    foreach (DataRow row in table.GetErrors())
+                    {
+                        foreach (DataColumn column in row.GetColumnsInError())
+                        {
+                            // loop through each column in the row that has caused the error during the bind and show it
+                            string errorMessage = string.Format("datasetOne bind failed due to Error : {0}", row.GetColumnError(column));
+                            var dataException = new DataException(errorMessage, de);
+                            throw dataException;
+                        }
+                    }
+                }
+            } 
+        }
+
         internal static bool DataSet_CheckForErrors(DataSet ds)
         {
             if (ds.HasErrors)
