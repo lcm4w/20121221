@@ -8204,6 +8204,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnContentID;
             
+            private global::System.Data.DataColumn columnContentTypeID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SupplierContentDataTable() {
@@ -8263,6 +8265,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ContentTypeIDColumn {
+                get {
+                    return this.columnContentTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8298,12 +8308,13 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SupplierContentRow AddSupplierContentRow(int SupplierID, ContentRow parentContentRowByFK_Content_SupplierContent) {
+            public SupplierContentRow AddSupplierContentRow(int SupplierID, ContentRow parentContentRowByFK_Content_SupplierContent, int ContentTypeID) {
                 SupplierContentRow rowSupplierContentRow = ((SupplierContentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         SupplierID,
-                        null};
+                        null,
+                        ContentTypeID};
                 if ((parentContentRowByFK_Content_SupplierContent != null)) {
                     columnValuesArray[2] = parentContentRowByFK_Content_SupplierContent[0];
                 }
@@ -8339,6 +8350,7 @@ namespace TourWriter.Info {
                 this.columnSupplierContentID = base.Columns["SupplierContentID"];
                 this.columnSupplierID = base.Columns["SupplierID"];
                 this.columnContentID = base.Columns["ContentID"];
+                this.columnContentTypeID = base.Columns["ContentTypeID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8350,6 +8362,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnSupplierID);
                 this.columnContentID = new global::System.Data.DataColumn("ContentID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContentID);
+                this.columnContentTypeID = new global::System.Data.DataColumn("ContentTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContentTypeID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnSupplierContentID}, true));
                 this.columnSupplierContentID.AutoIncrement = true;
@@ -8499,6 +8513,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnContentID;
             
+            private global::System.Data.DataColumn columnContentTypeID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ServiceContentDataTable() {
@@ -8558,6 +8574,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ContentTypeIDColumn {
+                get {
+                    return this.columnContentTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8593,12 +8617,13 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceContentRow AddServiceContentRow(int ServiceID, ContentRow parentContentRowByFK_Content_ServiceContent) {
+            public ServiceContentRow AddServiceContentRow(int ServiceID, ContentRow parentContentRowByFK_Content_ServiceContent, int ContentTypeID) {
                 ServiceContentRow rowServiceContentRow = ((ServiceContentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         ServiceID,
-                        null};
+                        null,
+                        ContentTypeID};
                 if ((parentContentRowByFK_Content_ServiceContent != null)) {
                     columnValuesArray[2] = parentContentRowByFK_Content_ServiceContent[0];
                 }
@@ -8634,6 +8659,7 @@ namespace TourWriter.Info {
                 this.columnServiceContentID = base.Columns["ServiceContentID"];
                 this.columnServiceID = base.Columns["ServiceID"];
                 this.columnContentID = base.Columns["ContentID"];
+                this.columnContentTypeID = base.Columns["ContentTypeID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8645,6 +8671,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnServiceID);
                 this.columnContentID = new global::System.Data.DataColumn("ContentID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContentID);
+                this.columnContentTypeID = new global::System.Data.DataColumn("ContentTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnContentTypeID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnServiceContentID}, true));
                 this.columnServiceContentID.AutoIncrement = true;
@@ -13890,11 +13918,11 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Heading {
                 get {
-                    try {
-                        return ((string)(this[this.tableContent.HeadingColumn]));
+                    if (this.IsHeadingNull()) {
+                        return string.Empty;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Heading\' in table \'Content\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableContent.HeadingColumn]));
                     }
                 }
                 set {
@@ -13906,11 +13934,11 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Body {
                 get {
-                    try {
-                        return ((string)(this[this.tableContent.BodyColumn]));
+                    if (this.IsBodyNull()) {
+                        return string.Empty;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Body\' in table \'Content\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableContent.BodyColumn]));
                     }
                 }
                 set {
@@ -13922,11 +13950,11 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string ImagePath {
                 get {
-                    try {
-                        return ((string)(this[this.tableContent.ImagePathColumn]));
+                    if (this.IsImagePathNull()) {
+                        return string.Empty;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ImagePath\' in table \'Content\' is DBNull.", e);
+                    else {
+                        return ((string)(this[this.tableContent.ImagePathColumn]));
                     }
                 }
                 set {
@@ -14054,6 +14082,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ContentTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableSupplierContent.ContentTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ContentTypeID\' in table \'SupplierContent\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSupplierContent.ContentTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContentRow ContentRow {
                 get {
                     return ((ContentRow)(this.GetParentRow(this.Table.ParentRelations["FK_Content_SupplierContent"])));
@@ -14061,6 +14105,18 @@ namespace TourWriter.Info {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Content_SupplierContent"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsContentTypeIDNull() {
+                return this.IsNull(this.tableSupplierContent.ContentTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetContentTypeIDNull() {
+                this[this.tableSupplierContent.ContentTypeIDColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -14113,6 +14169,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ContentTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableServiceContent.ContentTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ContentTypeID\' in table \'ServiceContent\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableServiceContent.ContentTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContentRow ContentRow {
                 get {
                     return ((ContentRow)(this.GetParentRow(this.Table.ParentRelations["FK_Content_ServiceContent"])));
@@ -14120,6 +14192,18 @@ namespace TourWriter.Info {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Content_ServiceContent"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsContentTypeIDNull() {
+                return this.IsNull(this.tableServiceContent.ContentTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetContentTypeIDNull() {
+                this[this.tableServiceContent.ContentTypeIDColumn] = global::System.Convert.DBNull;
             }
         }
         

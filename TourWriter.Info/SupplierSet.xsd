@@ -358,28 +358,28 @@
               <xs:element name="ContentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnContentID" msprop:Generator_ColumnPropNameInRow="ContentID" msprop:Generator_ColumnPropNameInTable="ContentIDColumn" msprop:Generator_UserColumnName="ContentID" type="xs:int" />
               <xs:element name="SupplierID" msprop:Generator_ColumnVarNameInTable="columnSupplierID" msprop:Generator_ColumnPropNameInRow="SupplierID" msprop:Generator_ColumnPropNameInTable="SupplierIDColumn" msprop:Generator_UserColumnName="SupplierID" type="xs:int" />
               <xs:element name="ContentTypeID" msprop:Generator_ColumnVarNameInTable="columnContentTypeID" msprop:Generator_ColumnPropNameInRow="ContentTypeID" msprop:Generator_ColumnPropNameInTable="ContentTypeIDColumn" msprop:Generator_UserColumnName="ContentTypeID" type="xs:int" minOccurs="0" />
-              <xs:element name="ContentName" msprop:Generator_ColumnVarNameInTable="columnContentName" msprop:Generator_ColumnPropNameInRow="ContentName" msprop:Generator_ColumnPropNameInTable="ContentNameColumn" msprop:Generator_UserColumnName="ContentName">
+              <xs:element name="ContentName" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ContentName" msprop:Generator_ColumnVarNameInTable="columnContentName" msprop:Generator_ColumnPropNameInTable="ContentNameColumn" msprop:Generator_UserColumnName="ContentName">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="50" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Heading" msprop:Generator_ColumnVarNameInTable="columnHeading" msprop:Generator_ColumnPropNameInRow="Heading" msprop:Generator_ColumnPropNameInTable="HeadingColumn" msprop:Generator_UserColumnName="Heading" minOccurs="0">
+              <xs:element name="Heading" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Heading" msprop:Generator_ColumnVarNameInTable="columnHeading" msprop:Generator_ColumnPropNameInTable="HeadingColumn" msprop:Generator_UserColumnName="Heading" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="250" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Body" msprop:Generator_ColumnVarNameInTable="columnBody" msprop:Generator_ColumnPropNameInRow="Body" msprop:Generator_ColumnPropNameInTable="BodyColumn" msprop:Generator_UserColumnName="Body" minOccurs="0">
+              <xs:element name="Body" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Body" msprop:Generator_ColumnVarNameInTable="columnBody" msprop:Generator_ColumnPropNameInTable="BodyColumn" msprop:Generator_UserColumnName="Body" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="4000" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="ImagePath" msprop:Generator_ColumnVarNameInTable="columnImagePath" msprop:Generator_ColumnPropNameInRow="ImagePath" msprop:Generator_ColumnPropNameInTable="ImagePathColumn" msprop:Generator_UserColumnName="ImagePath" minOccurs="0">
+              <xs:element name="ImagePath" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ImagePath" msprop:Generator_ColumnVarNameInTable="columnImagePath" msprop:Generator_ColumnPropNameInTable="ImagePathColumn" msprop:Generator_UserColumnName="ImagePath" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="250" />
@@ -395,6 +395,7 @@
               <xs:element name="SupplierContentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnSupplierContentID" msprop:Generator_ColumnPropNameInRow="SupplierContentID" msprop:Generator_ColumnPropNameInTable="SupplierContentIDColumn" msprop:Generator_UserColumnName="SupplierContentID" type="xs:int" />
               <xs:element name="SupplierID" msprop:Generator_ColumnVarNameInTable="columnSupplierID" msprop:Generator_ColumnPropNameInRow="SupplierID" msprop:Generator_ColumnPropNameInTable="SupplierIDColumn" msprop:Generator_UserColumnName="SupplierID" type="xs:int" />
               <xs:element name="ContentID" msprop:Generator_ColumnVarNameInTable="columnContentID" msprop:Generator_ColumnPropNameInRow="ContentID" msprop:Generator_ColumnPropNameInTable="ContentIDColumn" msprop:Generator_UserColumnName="ContentID" type="xs:int" />
+              <xs:element name="ContentTypeID" msprop:Generator_ColumnVarNameInTable="columnContentTypeID" msprop:Generator_ColumnPropNameInRow="ContentTypeID" msprop:Generator_ColumnPropNameInTable="ContentTypeIDColumn" msprop:Generator_UserColumnName="ContentTypeID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -404,6 +405,7 @@
               <xs:element name="ServiceContentID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnServiceContentID" msprop:Generator_ColumnPropNameInRow="ServiceContentID" msprop:Generator_ColumnPropNameInTable="ServiceContentIDColumn" msprop:Generator_UserColumnName="ServiceContentID" type="xs:int" />
               <xs:element name="ServiceID" msprop:Generator_ColumnVarNameInTable="columnServiceID" msprop:Generator_ColumnPropNameInRow="ServiceID" msprop:Generator_ColumnPropNameInTable="ServiceIDColumn" msprop:Generator_UserColumnName="ServiceID" type="xs:int" />
               <xs:element name="ContentID" msprop:Generator_ColumnVarNameInTable="columnContentID" msprop:Generator_ColumnPropNameInRow="ContentID" msprop:Generator_ColumnPropNameInTable="ContentIDColumn" msprop:Generator_UserColumnName="ContentID" type="xs:int" />
+              <xs:element name="ContentTypeID" msprop:Generator_ColumnVarNameInTable="columnContentTypeID" msprop:Generator_ColumnPropNameInRow="ContentTypeID" msprop:Generator_ColumnPropNameInTable="ContentTypeIDColumn" msprop:Generator_UserColumnName="ContentTypeID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

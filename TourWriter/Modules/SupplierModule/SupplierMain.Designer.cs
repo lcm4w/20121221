@@ -113,7 +113,7 @@ namespace TourWriter.Modules.SupplierModule
             this.btnMessageDel = new System.Windows.Forms.ToolStripButton();
             this.label35 = new System.Windows.Forms.Label();
             this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl();
+            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl(this);
             this.ultraTabPageControl9 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.gridPublishing = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();

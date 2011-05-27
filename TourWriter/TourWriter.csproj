@@ -670,11 +670,23 @@
       <DependentUpon>Accounting.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\SupplierModule\AccountingDataLoad.cs" />
-    <Compile Include="Modules\SupplierModule\ContentControl.cs">
+    <Compile Include="Modules\SupplierModule\Content\ContentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Modules\SupplierModule\ContentControl.Designer.cs">
+    <Compile Include="Modules\SupplierModule\Content\ContentControl.Designer.cs">
       <DependentUpon>ContentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Content\ContentEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Content\ContentEditor.Designer.cs">
+      <DependentUpon>ContentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Content\ContentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\SupplierModule\Content\ContentForm.Designer.cs">
+      <DependentUpon>ContentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\SupplierModule\ExportToExcel.cs" />
     <Compile Include="Modules\SupplierModule\SupplierMain.Designer.cs">
@@ -1262,8 +1274,14 @@
     <EmbeddedResource Include="Modules\Plugins\NzGst\GstAdjust.resx">
       <DependentUpon>GstAdjust.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\SupplierModule\ContentControl.resx">
+    <EmbeddedResource Include="Modules\SupplierModule\Content\ContentControl.resx">
       <DependentUpon>ContentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\Content\ContentEditor.resx">
+      <DependentUpon>ContentEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\SupplierModule\Content\ContentForm.resx">
+      <DependentUpon>ContentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\SupplierModule\SupplierSearch.resx">
       <DependentUpon>SupplierSearch.cs</DependentUpon>

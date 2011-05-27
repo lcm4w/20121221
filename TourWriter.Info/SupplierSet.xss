@@ -22,9 +22,9 @@
     <Shape ID="DesignTable:SupplierText" ZOrder="32" X="290" Y="1468" Height="146" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="142" />
     <Shape ID="DesignTable:SupplierNote" ZOrder="23" X="290" Y="1327" Height="95" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="91" />
     <Shape ID="DesignTable:Discount" ZOrder="16" X="746" Y="80" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
-    <Shape ID="DesignTable:Content" ZOrder="3" X="1303" Y="97" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
-    <Shape ID="DesignTable:SupplierContent" ZOrder="2" X="1086" Y="213" Height="86" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
-    <Shape ID="DesignTable:ServiceContent" ZOrder="1" X="1086" Y="81" Height="86" Width="153" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
+    <Shape ID="DesignTable:Content" ZOrder="3" X="1246" Y="127" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
+    <Shape ID="DesignTable:SupplierContent" ZOrder="2" X="1029" Y="216" Height="105" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
+    <Shape ID="DesignTable:ServiceContent" ZOrder="1" X="1029" Y="84" Height="105" Width="153" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
   </Shapes>
   <Connectors>
     <Connector ID="DesignRelation:PaymentTermSupplier" ZOrder="7" LineWidth="11">
@@ -254,24 +254,24 @@
     <Connector ID="DesignRelation:FK_Content_SupplierContent" ZOrder="4" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>1303</X>
-          <Y>246</Y>
+          <X>1246</X>
+          <Y>279</Y>
         </Point>
         <Point>
-          <X>1246</X>
-          <Y>246</Y>
+          <X>1189</X>
+          <Y>279</Y>
         </Point>
       </RoutePoints>
     </Connector>
     <Connector ID="DesignRelation:FK_Content_ServiceContent" ZOrder="5" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>1303</X>
-          <Y>147</Y>
+          <X>1246</X>
+          <Y>180</Y>
         </Point>
         <Point>
-          <X>1239</X>
-          <Y>147</Y>
+          <X>1182</X>
+          <Y>180</Y>
         </Point>
       </RoutePoints>
     </Connector>

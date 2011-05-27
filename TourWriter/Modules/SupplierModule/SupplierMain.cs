@@ -26,14 +26,13 @@ namespace TourWriter.Modules.SupplierModule
 {
     public partial class SupplierMain : ModuleBase
     {
-        private bool serverConnectionError_UserNotified = false;
-
+        private bool serverConnectionError_UserNotified;
         internal SupplierSet supplierSet;
-
         private static ToolSet toolSet
         {
             get { return Cache.ToolSet; }
         }
+        internal SupplierSet.ContentDataTable ContentTableCache { get; set; }
 
         public SupplierMain()
         {
