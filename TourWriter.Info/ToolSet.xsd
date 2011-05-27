@@ -407,7 +407,7 @@
         <xs:element name="ContentType" msprop:Generator_TableClassName="ContentTypeDataTable" msprop:Generator_TableVarName="tableContentType" msprop:Generator_TablePropName="ContentType" msprop:Generator_RowDeletingName="ContentTypeRowDeleting" msprop:Generator_UserTableName="ContentType" msprop:Generator_RowChangingName="ContentTypeRowChanging" msprop:Generator_RowEvHandlerName="ContentTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="ContentTypeRowDeleted" msprop:Generator_RowEvArgName="ContentTypeRowChangeEvent" msprop:Generator_RowChangedName="ContentTypeRowChanged" msprop:Generator_RowClassName="ContentTypeRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ContentTypeId" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnContentTypeId" msprop:Generator_ColumnPropNameInRow="ContentTypeId" msprop:Generator_ColumnPropNameInTable="ContentTypeIdColumn" msprop:Generator_UserColumnName="ContentTypeId" type="xs:int" />
+              <xs:element name="ContentTypeID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnContentTypeID" msprop:Generator_ColumnPropNameInRow="ContentTypeID" msprop:Generator_ColumnPropNameInTable="ContentTypeIDColumn" msprop:Generator_UserColumnName="ContentTypeID" type="xs:int" />
               <xs:element name="ContentTypeName" msprop:Generator_ColumnVarNameInTable="columnContentTypeName" msprop:Generator_ColumnPropNameInRow="ContentTypeName" msprop:Generator_ColumnPropNameInTable="ContentTypeNameColumn" msprop:Generator_UserColumnName="ContentTypeName" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
@@ -561,7 +561,7 @@
     </xs:unique>
     <xs:unique name="ContentType_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:ContentType" />
-      <xs:field xpath="mstns:ContentTypeId" />
+      <xs:field xpath="mstns:ContentTypeID" />
     </xs:unique>
     <xs:unique name="CurrencyRate_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:CurrencyRate" />
