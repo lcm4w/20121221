@@ -24,25 +24,12 @@ namespace TourWriter.Forms
 			_mainForm = mainForm;
 		}
 		
-
-		internal void HandleMenu_Load_OnThread()
+        
+		internal void HandleMenu_Load(string topNodeText)
 		{
-            var thread = new Thread(HandleMenu_Load) {Name = "LoadMenu_" + _menu.Name, IsBackground = true};
-		    thread.Start();	
-		}
-		
-		internal void HandleMenu_Load()
-		{
-			string nodeText = _menu.Nodes[0].Text;
-			
-			SetNodeText(_menu.Nodes[0], "Loading..."); 
-			_menu.Nodes[0].Enabled = false;
-
 			Folder_Open(0, _menu.Nodes[0].Nodes);
-
-			SetNodeText(_menu.Nodes[0], nodeText); 
+            SetNodeText(_menu.Nodes[0], topNodeText); 
 			_menu.Nodes[0].Enabled = true;
-
             RefreshSort(_menu);
 		}
 		
@@ -381,6 +368,15 @@ namespace TourWriter.Forms
 			
 			return node;
 		}
+
+
+        internal static UltraTreeNode Menu_FindNode(string key)
+        {
+            if (key.StartsWith("i~")) return App.MainForm.ItineraryMenu.GetNodeByKey(key);
+            if (key.StartsWith("s~")) return App.MainForm.SupplierMenu.GetNodeByKey(key);
+            if (key.StartsWith("c~")) return App.MainForm.ContactMenu.GetNodeByKey(key);
+            return null;
+        }
 
         delegate void SetRefreshSortDelegate(UltraTree menu);
         internal static void RefreshSort(UltraTree menu)

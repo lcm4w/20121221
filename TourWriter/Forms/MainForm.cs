@@ -7,12 +7,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Infragistics.Shared;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinScrollBar;
 using Infragistics.Win.UltraWinStatusBar;
+using Infragistics.Win.UltraWinTabbedMdi;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Info;
 using TourWriter.Services;
@@ -35,6 +37,8 @@ namespace TourWriter.Forms
     /// </summary>
     public partial class MainForm : Form
     {
+        private readonly TabHistory _tabHistory = new TabHistory();
+
         public MainForm()
         {
             // TODO: need to be smarter with this, set once on create?
@@ -63,6 +67,8 @@ namespace TourWriter.Forms
             ItineraryMenu.Select();
             if (ItineraryMenu.Nodes.Count > 0)
                 ItineraryMenu.Nodes[0].Selected = true;
+
+            mdiManager.TabMoved += (sender, e) => _tabHistory.Reposition(e.Tab.Form.Tag as UltraTreeNode, e.Tab.Index);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -78,7 +84,6 @@ namespace TourWriter.Forms
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            Load_StartPage();
             Application.DoEvents();
             Login();
 
@@ -98,21 +103,7 @@ namespace TourWriter.Forms
             {
                 case DialogResult.OK:
                     {
-                        CurrencyService.SetUiCultureInfo();
-                        LicenseService.CheckAsync();
-                        ApplicationUpdateService.StartUpdateMonitor();
-                        InitialiseMenu(ItineraryMenu);
-                        InitialiseMenu(SupplierMenu);
-                        InitialiseMenu(ContactMenu);
-
-                        // set connection display text
-                        StatusBar_ConnectionText = String.Format(
-                            "Connection: {0}\\{1}", App.Servername, Global.Cache.User.UserName);
-
-                        // needs to load after db connection established
-                        if (!App.ShowOldReports) menuGeneralReports.Visible = false;
-                        if (!App.ShowOldReports) navPane.GetItemsByKey("ReportsOLD")[0].Visible = false;
-                        App.EnsureInstallId();
+                        RunPostLoginActions();
                         break;
                     }
                 case DialogResult.Cancel:
@@ -123,14 +114,85 @@ namespace TourWriter.Forms
                     }
             }
         }
-        
+
+        private void RunPostLoginActions()
+        {
+            LicenseService.CheckAsync();
+            ApplicationUpdateService.StartUpdateMonitor();
+            CurrencyService.SetUiCultureInfo();
+
+            LoadMenusAndTabs();
+
+            // set connection display text
+            StatusBar_ConnectionText = String.Format("Connection: {0}\\{1}", App.Servername, Global.Cache.User.UserName);
+
+            // needs to load after db connection established
+            if (!App.ShowOldReports) menuGeneralReports.Visible = false;
+            if (!App.ShowOldReports) navPane.GetItemsByKey("ReportsOLD")[0].Visible = false;
+            App.EnsureInstallId();
+        }
+
+        private void LoadTabHistory()
+        {
+            Load_StartPage(); return; // TODO: feature complete, hold for now
+            
+            _tabHistory.LoadFromJson(Settings.Default.TabHistory);
+            foreach (var node in _tabHistory.FormNodes)
+            {
+                if (node.Key.StartsWith("i~")) HandleMenuItem_Open(ItineraryMenu, node);
+                else if (node.Key.StartsWith("s~")) HandleMenuItem_Open(SupplierMenu, node);
+                else if (node.Key.StartsWith("c~")) HandleMenuItem_Open(ContactMenu, node);
+                else if (node.Key == "SetupForm") Load_SetupForm();
+                else if (node.Key == "SearchForm") Load_SearchForm();
+                else if (node.Key == "ReportsForm") Load_ReportsForm();
+                else if (node.Key == "DataExtractForm") Load_DataExtractForm();
+                else if (node.Key == "WelcomeForm") Load_StartPage();
+                else if (node.Key == "DashboardForm") Load_Dashboard();
+            }
+            if (_tabHistory.ActiveIndex.HasValue && mdiManager.TabGroups.Count > 0 && mdiManager.TabGroups[0].Tabs.Count > 0)
+                if (_tabHistory.ActiveIndex < mdiManager.TabGroups[0].Tabs.Count)
+                    mdiManager.TabGroups[0].Tabs[(int) _tabHistory.ActiveIndex].Activate();
+        }
+
         #region Menu handling
 
-        internal void InitialiseMenu(UltraTree menu)
+        private int _loadCount;
+        private void LoadMenusAndTabs()
+        {
+            _loadCount = 3;
+
+            // itinerary menu
+            var text1 = MenuPrepareForLoad(ItineraryMenu);
+            var t1 = new BackgroundWorker();
+            t1.DoWork += (sender, e) => { e.Result = ItineraryMenu; new MenuHelper(this, ItineraryMenu).HandleMenu_Load(text1); };
+            t1.RunWorkerCompleted += MenuCompletedLoading;
+            t1.RunWorkerAsync();
+
+            // supplier menu
+            var text2 = MenuPrepareForLoad(SupplierMenu);
+            var t2 = new BackgroundWorker();
+            t2.DoWork += (sender, e) => { e.Result = SupplierMenu; new MenuHelper(this, SupplierMenu).HandleMenu_Load(text2); };
+            t2.RunWorkerCompleted += MenuCompletedLoading;
+            t2.RunWorkerAsync();
+
+            // contacts menu
+            var text3 = MenuPrepareForLoad(ContactMenu);
+            var t3 = new BackgroundWorker();
+            t3.DoWork += (sender, e) => { e.Result = ContactMenu; new MenuHelper(this, ContactMenu).HandleMenu_Load(text3); };
+            t3.RunWorkerCompleted += MenuCompletedLoading;
+            t3.RunWorkerAsync();
+        }
+
+        internal string MenuPrepareForLoad(UltraTree menu)
         {
             // create the top level node
-            NavigationTreeItemInfo info = new NavigationTreeItemInfo(0, menu.Nodes[0].Text, NavigationTreeItemInfo.ItemTypes.Folder, 0, true);
-            UltraTreeNode node = MenuHelper.Menu_BuildTopLevelNode(info);
+            var info = new NavigationTreeItemInfo(0, menu.Nodes[0].Text, NavigationTreeItemInfo.ItemTypes.Folder, 0, true);
+            var node = MenuHelper.Menu_BuildTopLevelNode(info);
+            var nodeText = node.Text; // proper text to show
+            
+            node.Text = "Loading..."; // temporary text to show
+            node.Enabled = false;
+
 
             // use custom sort
             menu.Override.Sort = SortType.Descending; // required to refresh sort, due to Infragistics problem
@@ -139,15 +201,24 @@ namespace TourWriter.Forms
             // add top level node
             menu.Nodes.Clear();
             menu.Nodes.Add(node);
-
-            // load child nodes from database
-            HandleMenu_LoadOnThread(menu);
+            return nodeText;
         }
 
-        private void HandleMenu_LoadOnThread(UltraTree menu)
+        private void MenuCompletedLoading(object sender, RunWorkerCompletedEventArgs e)
         {
-            MenuHelper m = new MenuHelper(this, menu);
-            m.HandleMenu_Load_OnThread();
+            var menu = e.Result as UltraTree;
+            App.Debug(string.Format("Menu loaded ({0}", menu != null ? menu.Name : ""));
+
+            _loadCount--;
+            if (_loadCount == 0) LoadTabHistory();
+        }
+        
+        internal void RefreshMenu(UltraTree menu)
+        {
+            var text = MenuPrepareForLoad(menu);
+            var t1 = new BackgroundWorker();
+            t1.DoWork += (sender, e) => { Thread.Sleep(200); new MenuHelper(this, menu).HandleMenu_Load(text); };
+            t1.RunWorkerAsync();
         }
 
         private void HandleMenu_LoadChildListAndParentTree(UltraTree menu, UltraTreeNode node)
@@ -342,15 +413,16 @@ namespace TourWriter.Forms
         {
             if (sender is UltraTree)
             {
-                UltraTree menu = sender as UltraTree;
-
-                if (menu.SelectedNodes.Count > 0 && !menu.SelectedNodes[0].IsEditing)
+                var menu = sender as UltraTree;
+                
+                if (e.KeyCode == Keys.F5)
+                {
+                    RefreshMenu(menu);
+                }
+                else if (menu.SelectedNodes.Count > 0 && !menu.SelectedNodes[0].IsEditing)
                 {
                     switch (e.KeyCode)
                     {
-                        case Keys.F5:
-                            HandleMenu_LoadOnThread(menu);
-                            break;
                         case Keys.Return:
                             HandleMenuItem_Open(menu, menu.SelectedNodes[0]); // only open one item from enter key
                             break;
@@ -550,7 +622,7 @@ namespace TourWriter.Forms
 
         internal void Load_StartPage()
         {
-            UltraTreeNode tag = new UltraTreeNode("Welcome to TourWriter");
+            UltraTreeNode tag = new UltraTreeNode("WelcomeForm");
             LoadMdiForm(typeof(Modules.StartPage.StartMain), tag);
         }
 
@@ -582,7 +654,7 @@ namespace TourWriter.Forms
 
         internal void Load_SetupForm(string defaultControl)
         {
-            UltraTreeNode tag = new UltraTreeNode("AdminMain");
+            UltraTreeNode tag = new UltraTreeNode("SetupForm");
             AdminMain adminMain = LoadMdiForm(typeof(AdminMain), tag) as AdminMain;
             if (adminMain != null)
                 adminMain.LoadNewControl(defaultControl);
@@ -596,7 +668,7 @@ namespace TourWriter.Forms
 
         internal void Load_ReportsForm()
         {
-            UltraTreeNode tag = new UltraTreeNode("ReportMain");
+            UltraTreeNode tag = new UltraTreeNode("ReportsForm");
             LoadMdiForm(typeof(GeneralReportsMain), tag);
         }
 
@@ -612,14 +684,14 @@ namespace TourWriter.Forms
 
         internal void Load_SearchForm(NavigationTreeItemInfo.ItemTypes menuType)
         {
-            UltraTreeNode tag = new UltraTreeNode("SearchMain");
+            UltraTreeNode tag = new UltraTreeNode("SearchForm");
             SearchMain s = LoadMdiForm(typeof(SearchMain), tag) as SearchMain;
             if (s != null) s.SetDefaultSearch(menuType.ToString());
         }
 
         internal void Load_DataExtractForm()
         {
-            LoadMdiForm(typeof(DataExtractMain), new UltraTreeNode("DataExtractMain"));
+            LoadMdiForm(typeof(DataExtractMain), new UltraTreeNode("DataExtractForm"));
         }
 
         internal static void Load_AboutForm()
@@ -656,7 +728,7 @@ namespace TourWriter.Forms
 
         internal void Load_Dashboard()
         {
-            LoadMdiForm(typeof(Modules.Dashboard.Dashboard), new UltraTreeNode("Dashboard"));
+            LoadMdiForm(typeof(Modules.Dashboard.Dashboard), new UltraTreeNode("DashboardForm"));
         }
 
         internal Form LoadMdiForm(string formType, UltraTreeNode formTag)
@@ -667,7 +739,7 @@ namespace TourWriter.Forms
 
         internal Form LoadMdiForm(Type formType, UltraTreeNode formTag)
         {
-            Cursor c = Cursor;
+            var c = Cursor;
             Cursor = Cursors.WaitCursor;
 
             Form form = null;
@@ -681,6 +753,10 @@ namespace TourWriter.Forms
                     form.MdiParent = this;
                     form.AutoScroll = true;
                     form.Show();
+
+                    _tabHistory.Add(formTag);
+                    form.FormClosed += delegate { _tabHistory.Remove(formTag); };
+                    form.Activated += delegate { _tabHistory.SetActiveNode(formTag); };
                 }
             }
             catch (Exception ex)
@@ -693,8 +769,7 @@ namespace TourWriter.Forms
             }
             return form;
         }
-
-
+        
         internal UltraTreeNode BuildMenuNode(NavigationTreeItemInfo info)
         {
             return MenuHelper.Menu_BuildNode(info);
@@ -950,9 +1025,8 @@ namespace TourWriter.Forms
                 Settings.Default.MainFormSize = RestoreBounds.Size;
                 Settings.Default.MainFormLocation = RestoreBounds.Location;
             }
-
             Settings.Default.MainFormMenuWidth = pnlMenu.Width;
-
+            Settings.Default.TabHistory = _tabHistory.ToJson();
             Settings.Default.Save();
         }
 
@@ -1224,7 +1298,7 @@ namespace TourWriter.Forms
             if (contextTree != null)
             {
                 SetActiveNavigationMenu(currentNavigationMenuType);
-                InitialiseMenu(contextTree);
+                RefreshMenu(contextTree);
             }
         }
 

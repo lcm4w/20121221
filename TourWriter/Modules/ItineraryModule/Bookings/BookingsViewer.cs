@@ -999,21 +999,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 else if (c.Key == "Flags")
                 {
+                    c.Hidden = true; c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now, see also line 66
                     c.Header.Caption = "";
                     c.Header.ToolTipText = "Your custom warning messages";
                     c.DataType = typeof(Bitmap);
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
-                    c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True;
-
-                    // TODO: hide flags feature for now, see also line 66
-                    c.Hidden = true;
-                    // --------------------------------------------------
                 }
                 else if (c.Key == "Discount")
                 {
-                    c.Hidden = true; // TODO: feature hidden for now
-                    c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
+                    c.Hidden = true; c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
                     c.Header.Caption = "Free";
                     c.Header.ToolTipText = "Discount units (FOC or Stay-Pay)";
                     c.CellAppearance.TextHAlign = HAlign.Right;

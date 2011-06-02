@@ -40,15 +40,13 @@ namespace TourWriter
             switch (menuName)
             {
                 case "Itinerary":
-                    MainForm.InitialiseMenu(MainForm.ItineraryMenu);
+                    MainForm.RefreshMenu(MainForm.ItineraryMenu);
                     break;
                 case "Supplier":
-                    MainForm.InitialiseMenu(MainForm.SupplierMenu);
+                    MainForm.RefreshMenu(MainForm.SupplierMenu);
                     break;
                 case "Contact":
-                    MainForm.InitialiseMenu(MainForm.ContactMenu);
-                    break;
-                default:
+                    MainForm.RefreshMenu(MainForm.ContactMenu);
                     break;
             }
         }

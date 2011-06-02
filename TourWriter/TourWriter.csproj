@@ -183,6 +183,7 @@
       <Name>System.Web</Name>
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
@@ -697,6 +698,7 @@
     <Compile Include="Services\LicenseService.cs" />
     <Compile Include="Services\NetworkConnectionHelper.cs" />
     <Compile Include="Services\ScreenshotService.cs" />
+    <Compile Include="Services\TabHistory.cs" />
     <Compile Include="Services\TemplateHelper.cs" />
     <Compile Include="Services\Update\ApplicationUpdateService.cs" />
     <Compile Include="Services\Update\DatabaseUpdateService.cs" />
