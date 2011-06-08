@@ -180,7 +180,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.grid.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.grid.Location = new System.Drawing.Point(3, 26);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(993, 548);
+            this.grid.Size = new System.Drawing.Size(891, 548);
             this.grid.TabIndex = 0;
             this.grid.Text = "ultraGrid1";
             this.grid.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
@@ -391,7 +391,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(290, 19);
+            this.label9.Location = new System.Drawing.Point(280, 19);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(84, 13);
             this.label9.TabIndex = 139;
@@ -429,7 +429,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox1.Location = new System.Drawing.Point(474, 576);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(500, 62);
+            this.groupBox1.Size = new System.Drawing.Size(416, 62);
             this.groupBox1.TabIndex = 102;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Final price";
@@ -437,7 +437,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // lnkItineraryCurrency
             // 
             this.lnkItineraryCurrency.AutoSize = true;
-            this.lnkItineraryCurrency.Location = new System.Drawing.Point(388, 19);
+            this.lnkItineraryCurrency.Location = new System.Drawing.Point(362, 19);
             this.lnkItineraryCurrency.Name = "lnkItineraryCurrency";
             this.lnkItineraryCurrency.Size = new System.Drawing.Size(49, 13);
             this.lnkItineraryCurrency.TabIndex = 140;
@@ -567,7 +567,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnAdd,
             this.btnDelete});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(686, 3);
+            this.myToolStrip1.Location = new System.Drawing.Point(584, 3);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip1.Size = new System.Drawing.Size(310, 25);
@@ -764,10 +764,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // txtItineraryCurrency
             // 
-            this.txtItineraryCurrency.Location = new System.Drawing.Point(293, 36);
+            this.txtItineraryCurrency.Location = new System.Drawing.Point(283, 36);
             this.txtItineraryCurrency.Name = "txtItineraryCurrency";
             this.txtItineraryCurrency.ReadOnly = true;
-            this.txtItineraryCurrency.Size = new System.Drawing.Size(142, 20);
+            this.txtItineraryCurrency.Size = new System.Drawing.Size(128, 20);
             this.txtItineraryCurrency.TabIndex = 141;
             this.txtItineraryCurrency.TabStop = false;
             // 
@@ -783,7 +783,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.Controls.Add(this.groupBox2);
             this.DoubleBuffered = true;
             this.Name = "BookingsViewer";
-            this.Size = new System.Drawing.Size(999, 638);
+            this.Size = new System.Drawing.Size(897, 638);
             this.Load += new System.EventHandler(this.BookingsViewer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).EndInit();
