@@ -85,7 +85,11 @@ namespace TourWriter.Forms
                         else
                         {
                             DownloadFile();
-                            SetUI(UiState.Install);
+                            var verified = CheckForValidLocalUpdate(updateReponse);
+                            if (!verified) 
+                                Close();
+                            else 
+                                SetUI(UiState.Install);
                         }
                     }
                     if (chkNoUpdates.Checked) Close();
@@ -260,7 +264,7 @@ namespace TourWriter.Forms
             var uri = new Uri(GetRequestString());
             var reponse = webClient.DownloadString(uri);
             if (!string.IsNullOrEmpty(reponse))
-                updateReponse = GetResponseObject(reponse);
+                updateReponse = ParseResponseObject(reponse);
         }
 
         private void UpdateCheckAsync()
@@ -277,7 +281,7 @@ namespace TourWriter.Forms
                 if (!e.Cancelled)
                 {
                     if (!string.IsNullOrEmpty(e.Result))
-                        updateReponse = GetResponseObject(e.Result);
+                        updateReponse = ParseResponseObject(e.Result);
                     if (IsUpdateAvailable)
                     {
                         if (IsFullSetupRequired)
@@ -396,13 +400,20 @@ namespace TourWriter.Forms
                 if (localFile.FileVersion != null)
                 {
                     var localVersion = new Version(localFile.FileVersion);
+                    var localHash = ComputeSHA1FileHash(App.File_UpdateExe);
                     var currentVersion = new Version(AssemblyInfo.FileVersion);
                     validLocalUpdate =
                         localVersion > currentVersion &&
                         localVersion == updateResponse.Version &&
-                        ComputeSHA1FileHash(App.File_UpdateExe) == updateResponse.Signature;
+                        localHash == updateResponse.Signature;
+
+                    if (localHash != updateResponse.Signature)
+                        Services.ErrorHelper.SendEmail(
+                            "Checksum failed for download file: " + localVersion, ", got: " + localHash + " expected: " + updateResponse.Signature, true);
                 }
-                if (!validLocalUpdate) ApplicationUpdateService.TryDelete(App.File_UpdateExe); // cleanup
+                if (!validLocalUpdate) 
+                    ApplicationUpdateService.TryDelete(App.File_UpdateExe); // cleanup
+
                 return validLocalUpdate;
             }
             return false;
@@ -415,7 +426,7 @@ namespace TourWriter.Forms
             {
                 var hash = new System.Security.Cryptography.SHA1CryptoServiceProvider().ComputeHash(stream);
                 var computed = BitConverter.ToString(hash).Replace("-", "");
-                return computed;
+                return computed.ToUpper();
             }
             finally
             {
@@ -481,14 +492,14 @@ namespace TourWriter.Forms
 
             // encode
             var bytes = System.Text.Encoding.UTF8.GetBytes(tag);
-            tag = Convert.ToBase64String(bytes);
-            tag = HttpUtility.UrlEncode(tag);
+            var enc = Convert.ToBase64String(bytes);
+            enc = HttpUtility.UrlEncode(enc);
 
-            // request
-            return string.Format("{0}?tag={1}", Settings.Default.UpdateUri, tag);
+            var url = string.Format("{0}?tag={1}", Settings.Default.UpdateUri, enc);
+            return url;
         }
 
-        private ApplicationUpdateService.AppUpdateResponse GetResponseObject(string responseXml)
+        private ApplicationUpdateService.AppUpdateResponse ParseResponseObject(string responseXml)
         {
             var doc = XDocument.Parse(responseXml);
             var q = doc.Descendants("Update").Select(
