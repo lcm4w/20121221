@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 using TourWriter.Global;
 
@@ -122,6 +123,14 @@ namespace TourWriter.UserControls.Reports
                     label.Text = "Contact Category";
                     editor = new CheckBoxSet();
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.ContactCategory, "ContactCategoryID", "ContactCategoryName", true);
+                    (editor as CheckBoxSet).CheckAll(true);
+                    break;
+                case "@IsLockedAccountingList":
+                    label.Text = "Accounting Export";
+                    editor = new CheckBoxSet();
+                    var t = new DataTable();t.Columns.Add("value");t.Columns.Add("text");
+                    t.Rows.Add(0, "Not Exported");t.Rows.Add(1, "Exported");
+                    (editor as CheckBoxSet).Initialise(t, "value", "text", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 default:
