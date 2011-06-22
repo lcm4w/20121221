@@ -114,6 +114,7 @@ namespace TourWriter.Modules.ItineraryModule
             toolSet.City.DefaultView.Sort = "CityName ASC";
             countryBindingSource.Sort = "CountryName ASC";
             userBindingSource.Sort = "UserName ASC";
+            userBindingSource.Filter = "IsRecordActive <> 1";
             agentBindingSource.Sort = "AgentName ASC";
         }
 
