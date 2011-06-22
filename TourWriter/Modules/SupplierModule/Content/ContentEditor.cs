@@ -39,6 +39,7 @@ namespace TourWriter.Modules.SupplierModule.Content
             const string fileFilter = "Word objects (*.jpg;*.jpeg;*.gif;*.png;*.bmp)|*.jpg;*.jpeg;*.gif;*.png;*.bmp|All files (*.*)|*.*";
             var file = App.SelectExternalFile(true, "Choose image", fileFilter, 1);
             txtImage.Text = file;
+            _content.ImagePath = file;
             _content.EndEdit();
         }
     }
