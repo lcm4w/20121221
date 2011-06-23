@@ -74,9 +74,11 @@ namespace TourWriter.Modules.SupplierModule
             // load Add items.
             btnAdd.DropDownItems.Add(new ToolStripMenuItem("Add for...") { Enabled = false });
             btnAdd.DropDownItems.Add(new ToolStripSeparator());
-            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Supplier: " + supplier.SupplierName, null, btnAddItem_Click) {Tag = _supplierSet.Supplier[0]});
+            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Supplier: " + supplier.SupplierName, null, btnAddItem_Click)
+                                         {Tag = "supplier:" + _supplierSet.Supplier[0].SupplierID});
             foreach (var service in _supplierSet.Service.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ServiceName))
-                btnAdd.DropDownItems.Add(new ToolStripMenuItem("Service: " + service.ServiceName, null, btnAddItem_Click) {Tag = service});
+                btnAdd.DropDownItems.Add(new ToolStripMenuItem("Service: " + service.ServiceName, null, btnAddItem_Click)
+                                             {Tag = "service:" + service.ServiceID});
 
             gridContents.DataSource = _table;
         }
@@ -186,6 +188,7 @@ namespace TourWriter.Modules.SupplierModule
             var item = sender as ToolStripDropDownItem;
             if (item == null) return;
    
+            // run content form
             var form = new ContentForm(_mainForm, null) { DisplayName = item.Text };
             if (form.ShowDialog() != DialogResult.OK) return;
 
@@ -198,20 +201,20 @@ namespace TourWriter.Modules.SupplierModule
                 _supplierSet.Content.ImportRow(content);
             
             // create new SupplierContent
-            if (item.Tag is SupplierSet.SupplierRow)
+            if (item.Tag.ToString().StartsWith("supplier"))
             {
                 var supplierContent = _supplierSet.SupplierContent.NewSupplierContentRow();
-                supplierContent.SupplierID = (item.Tag as SupplierSet.SupplierRow).SupplierID;
+                supplierContent.SupplierID = int.Parse(item.Tag.ToString().Split(':')[1]);
                 supplierContent.ContentID = content.ContentID;
                 _supplierSet.SupplierContent.AddSupplierContentRow(supplierContent);
                 AddSupplierContentBindingRow(supplierContent);
             }
 
             // or new ServiceContent
-            else if (item.Tag is SupplierSet.ServiceRow)
+            else if (item.Tag.ToString().StartsWith("service"))
             {
                 var serviceContent = _supplierSet.ServiceContent.NewServiceContentRow();
-                serviceContent.ServiceID = (item.Tag as SupplierSet.ServiceRow).ServiceID;
+                serviceContent.ServiceID = int.Parse(item.Tag.ToString().Split(':')[1]);
                 serviceContent.ContentID = content.ContentID;
                 _supplierSet.ServiceContent.AddServiceContentRow(serviceContent);
                 AddServiceContentBindingRow(serviceContent);
