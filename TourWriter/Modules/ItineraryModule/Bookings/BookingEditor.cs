@@ -595,7 +595,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // set currency format
             var cm = BindingContext[BindingSource, "PurchaseLineID"] as CurrencyManager;
-            if (cm != null && cm.Current is int)
+            if (cm != null && cm.Position > -1 && cm.Current is int)
             {
                 var ccyCodes = itinerarySet.PurchaseItem.Where(x => x.RowState != DataRowState.Deleted && x.PurchaseLineID == (int)cm.Current).Select(x => x.CurrencyCode).Distinct();
 
