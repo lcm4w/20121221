@@ -102,7 +102,7 @@ namespace TourWriter.UserControls.DatabaseConfig
                 Filter = "backup files (*.bak)|*.bak|All files (*.*)|*.*",
             };
 
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (dialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(dialog.FileName))
             {
                 lblRestoreFile.Text = dialog.FileName;
                 lblRestoreFile.Visible = true;
