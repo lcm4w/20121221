@@ -34,6 +34,11 @@ namespace TourWriter.Modules.SupplierModule.Content
             InitializeComponent();
         }
 
+        public void RefreshName()
+        {
+            txtName.Text = _content.ContentName;
+        }
+
         private void btnBrowse_Click(object sender, System.EventArgs e)
         {
             const string fileFilter = "Word objects (*.jpg;*.jpeg;*.gif;*.png;*.bmp)|*.jpg;*.jpeg;*.gif;*.png;*.bmp|All files (*.*)|*.*";

@@ -50,14 +50,14 @@ namespace TourWriter.Modules.SupplierModule
             _table.Columns.Add("ContentID", typeof(int));
             _table.Columns.Add("ContentName", typeof(string));
             _table.Columns.Add("TypeID", typeof(int));
-
+            
             var supplier = _supplierSet.Supplier[0];
 
-            // add suppliers content
+            // add supplier content rows
             foreach (var s in _supplierSet.SupplierContent.Where(x => x.RowState != DataRowState.Deleted))
                 AddSupplierContentBindingRow(s);
             
-            // add services content
+            // add service content rows
             foreach (var s in _supplierSet.ServiceContent.Where(x => x.RowState != DataRowState.Deleted))
                 AddServiceContentBindingRow(s);
 
@@ -175,12 +175,25 @@ namespace TourWriter.Modules.SupplierModule
                 }
             }
 
-            //if (e.Cell.Column.Key == "ContentTypeID")
-            //{
-            //    // TODO: for TravelEssence, set name to type
-            //    if (Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower())
-            //        e.Cell.Row.Cells["ContentName"].Value = e.Cell.Text;
-            //}
+            // TODO: setting contenttype of back-compat for TE
+            var contentId = (int)e.Cell.Row.Cells["ContentID"].Value;
+            var content = _supplierSet.Content.Where(x => x.RowState != DataRowState.Deleted && x.ContentID == contentId).FirstOrDefault();
+            if (content != null)
+            {
+                if (typeId.HasValue)
+                {
+                    content.ContentTypeID = (int) typeId;
+
+                    // TODO: for TravelEssence, set name to type
+                    if (Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575E7900-BF13-42D1-A661-2242510C3359".ToLower())
+                    {
+                        e.Cell.Row.Cells["ContentName"].Value = e.Cell.Text;
+                        content.ContentName = e.Cell.Text;
+                        contentEditor1.RefreshName();
+                    }
+                }
+                else content.SetContentTypeIDNull();
+            }
         }
         
         private void btnAddItem_Click(object sender, EventArgs e)
@@ -206,6 +219,7 @@ namespace TourWriter.Modules.SupplierModule
                 var supplierContent = _supplierSet.SupplierContent.NewSupplierContentRow();
                 supplierContent.SupplierID = int.Parse(item.Tag.ToString().Split(':')[1]);
                 supplierContent.ContentID = content.ContentID;
+                content.SupplierID = supplierContent.SupplierID; // TODO: hack, temp-back-compat for TE
                 _supplierSet.SupplierContent.AddSupplierContentRow(supplierContent);
                 AddSupplierContentBindingRow(supplierContent);
             }
