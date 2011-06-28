@@ -510,8 +510,8 @@ namespace TourWriter.Forms
                               Signature = xe.Element("Signature").Value,
                               Description = xe.Element("Description").Value
                           });
-            try { chkNoUpdates.Checked = !bool.Parse(doc.Descendants("Update").Select(e => e.Element("PromptUpdate").Value).First()); } catch { } // notify user of update (don't wait for next restart)
-            try { App.Test = Utilities.Encryption.EncryptionHelper.DecryptString(doc.Descendants("Update").Select(e => e.Element("Data").Value).First()); } catch { App.Test = "";}
+            try { chkNoUpdates.Checked = !bool.Parse(doc.Descendants("Update").Select(e => e.Element("Silent").Value).First()); } catch { } // notify user of update (don't wait for next restart)
+            try { App.Test = Utilities.Encryption.EncryptionHelper.DecryptString(doc.Descendants("Update").Select(e => e.Element("Test").Value).First()); } catch { App.Test = "";}
             return q.First();
         }
 
