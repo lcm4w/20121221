@@ -37,10 +37,6 @@ namespace TourWriter.Modules.SupplierModule
             gridContents.DoubleClickRow += gridContents_DoubleClickRow;
         }
         
-        private void ContentControl_Load(object sender, EventArgs e)
-        {
-        }
-
         private void DataBind()
         {
             _table = new DataTable();
@@ -74,10 +70,10 @@ namespace TourWriter.Modules.SupplierModule
             // load Add items.
             btnAdd.DropDownItems.Add(new ToolStripMenuItem("Add for...") { Enabled = false });
             btnAdd.DropDownItems.Add(new ToolStripSeparator());
-            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Supplier: " + supplier.SupplierName, null, btnAddItem_Click)
+            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Supplier: " + supplier.SupplierName.Trim(), null, btnAddItem_Click)
                                          {Tag = "supplier:" + _supplierSet.Supplier[0].SupplierID});
             foreach (var service in _supplierSet.Service.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ServiceName))
-                btnAdd.DropDownItems.Add(new ToolStripMenuItem("Service: " + service.ServiceName, null, btnAddItem_Click)
+                btnAdd.DropDownItems.Add(new ToolStripMenuItem("Service: " + service.ServiceName.Trim(), null, btnAddItem_Click)
                                              {Tag = "service:" + service.ServiceID});
 
             gridContents.DataSource = _table;

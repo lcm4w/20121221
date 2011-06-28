@@ -144,7 +144,6 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "ContentControl";
             this.Size = new System.Drawing.Size(582, 383);
-            this.Load += new System.EventHandler(this.ContentControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridContents)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.srcContents)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
