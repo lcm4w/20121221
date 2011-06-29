@@ -116,6 +116,11 @@ namespace TourWriter.UserControls.DatabaseConfig
         {
             btnStop.Enabled = false;
             progressBar.Style = ProgressBarStyle.Marquee;
+
+            // ensure install dir Archive bit is not set (HACK: guess install path)
+            try { EnsureNonArchivePath(@"C:\Program Files\Microsoft SQL Server"); } catch {}
+            try { EnsureNonArchivePath(@"C:\Program Files (x86)\Microsoft SQL Server"); } catch {}
+            
             Log("Install file is: " + InstallFile);
             Log("Installing Sql Server, this stage might take 10 minutes...");
 
@@ -125,6 +130,16 @@ namespace TourWriter.UserControls.DatabaseConfig
             var p = new Process { StartInfo = pi, EnableRaisingEvents = true };
             p.Exited += (sender, e) => Invoke((MethodInvoker)(() => InstallComplete(sender as Process)));
             p.Start();
+        }
+
+        private void EnsureNonArchivePath(string path)
+        {
+            try
+            {
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.Archive);
+            }
+            catch{ }
         }
 
         void InstallComplete(Process process)

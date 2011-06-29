@@ -32,7 +32,7 @@ namespace TourWriter.UserControls.DatabaseConfig
 /SAPWD=TwDbSaPsWd9191
 /ERRORREPORTING=0
 /SECURITYMODE=SQL
-/SQLSVCACCOUNT=""NT AUTHORITY\SYSTEM""
+/SQLSVCACCOUNT=""NT AUTHORITY\\SYSTEM""
 ";
 
         internal const string RestoreDbSql = @"
