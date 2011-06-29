@@ -307,20 +307,20 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             UltraGridBand band = e.Layout.Bands[0];
             band.Override.BorderStyleSummaryValue = UIElementBorderStyle.None;
             band.Override.SummaryDisplayArea = SummaryDisplayAreas.BottomFixed;
+            e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells; // show groupby summaries
 
             SummarySettings summary;
-            if (!band.Summaries.Exists("GroupGross") && band.Columns.Exists("GrossTotalConverted"))
-            {
-                // Group gross total. 
-                summary = band.Summaries.Add(SummaryType.Sum, band.Columns["GrossTotalConverted"]);
-                summary.Key = "GroupGross";
-                summary.DisplayFormat = "{0:C}";// #0.00}";
-                summary.Appearance.TextHAlign = HAlign.Right;
-                summary.ToolTipText = "Total gross sum, in Itinerary currency";
-                summary.SummaryDisplayArea = SummaryDisplayAreas.InGroupByRows; // group rows only
-                summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-                e.Layout.Override.GroupBySummaryDisplayStyle = GroupBySummaryDisplayStyle.SummaryCells;
-            }
+            //if (!band.Summaries.Exists("GroupGross") && band.Columns.Exists("GrossTotalConverted"))
+            //{
+            //    // Group gross total. 
+            //    summary = band.Summaries.Add(SummaryType.Sum, band.Columns["GrossTotalConverted"]);
+            //    summary.Key = "GroupGross";
+            //    summary.DisplayFormat = "{0:C}";// #0.00}";
+            //    summary.Appearance.TextHAlign = HAlign.Right;
+            //    summary.ToolTipText = "Total gross sum, in Itinerary currency";
+            //    summary.SummaryDisplayArea = SummaryDisplayAreas.InGroupByRows; // group rows only
+            //    summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
+            //}
             if (!band.Summaries.Exists("NetFinal") && band.Columns.Exists("NetFinal"))
             {
                 // Net total.
@@ -332,7 +332,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 summary.ToolTipText = "Total net sum, in Itinerary currency";
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
                 summary.SummaryDisplayArea = // fixed at bottom of grid
-                    SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
+                    SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly | SummaryDisplayAreas.InGroupByRows;
+
+                // groupby row summaries
+                summary.GroupBySummaryValueAppearance.TextHAlign = HAlign.Right;
+                summary.GroupBySummaryValueAppearance.FontData.Bold = DefaultableBoolean.True;
+                summary.GroupBySummaryValueAppearance.ForeColor = Color.DimGray;
             }
 
             if (!band.Summaries.Exists("GrossFinal") && band.Columns.Exists("GrossFinal"))
@@ -346,7 +351,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 summary.ToolTipText = "Total gross sum, in Itinerary currency";
                 summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
                 summary.SummaryDisplayArea = // fixed at bottom of grid
-                    SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
+                    SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly | SummaryDisplayAreas.InGroupByRows;
+
+                // groupby row summaries
+                summary.GroupBySummaryValueAppearance.TextHAlign = HAlign.Right;
+                summary.GroupBySummaryValueAppearance.FontData.Bold = DefaultableBoolean.True;
+                summary.GroupBySummaryValueAppearance.ForeColor = Color.DimGray;
             }
             if (!band.Summaries.Exists("BaseCurrency") && band.Columns.Exists("BaseCurrency"))
             {
@@ -1095,7 +1105,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;
             e.Layout.Override.SupportDataErrorInfo = SupportDataErrorInfo.RowsAndCells;
-
+            
             SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
         }
 
