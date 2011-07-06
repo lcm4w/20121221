@@ -18,17 +18,15 @@ namespace TourWriter.Modules.ItineraryModule
     {
         private readonly ItinerarySet itinerarySet;
         private readonly ItinerarySet itinerarySetOrig;
-        private readonly ItineraryMain itineraryMain; // needed for the save method
         private readonly DataTable serviceTypeTotalsTable; // needed for storing service type totals
 
-        public SaleAllocationForm(ItineraryMain itineraryMain, ItinerarySet itinerarySet, DataSet dsAdditionalData, int? selectedSaleId)
+        public SaleAllocationForm(ItinerarySet itinerarySet, DataSet dsAdditionalData, int? selectedSaleId)
         {
             InitializeComponent();
             
             Icon = Properties.Resources.TourWriter16;
             itinerarySetOrig = itinerarySet;
             this.itinerarySet = (ItinerarySet)itinerarySet.Copy();
-            this.itineraryMain = itineraryMain;
             serviceTypeTotalsTable = dsAdditionalData.Tables[0];
             DataBind();
             CalculateTotals();
@@ -45,8 +43,8 @@ namespace TourWriter.Modules.ItineraryModule
             }
         }
 
-        public SaleAllocationForm(ItineraryMain itineraryMain, ItinerarySet itinerarySet, DataSet dsAdditionalData)
-            : this(itineraryMain, itinerarySet, dsAdditionalData, null)
+        public SaleAllocationForm(ItinerarySet itinerarySet, DataSet dsAdditionalData)
+            : this(itinerarySet, dsAdditionalData, null)
         {
             
         }
@@ -90,7 +88,7 @@ namespace TourWriter.Modules.ItineraryModule
             ClearSaleAllocations(false);
         }
 
-        private void SaveChanges()
+        private void AcceptChanges()
         {
             // check for rows that have been deleted, but do not exist in the database
             for (int i = itinerarySetOrig.ItinerarySale.Count - 1; i >= 0; i--)
@@ -110,8 +108,6 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 itinerarySetOrig.Merge(changes);
             }
-
-            itineraryMain.SaveChanges();
         }
 
         private void CalculateTotals()
@@ -561,21 +557,13 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!App.AskYesNo("This will save any changes you have made to this itinerary.\r\n\r\nDo you want to continue?"))
-            {
-                DialogResult = DialogResult.None;
-                return;
-            }
-
-            SaveChanges();
+            AcceptChanges();
             DialogResult = DialogResult.OK;
-            Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-            Close();
         }
 
         #endregion

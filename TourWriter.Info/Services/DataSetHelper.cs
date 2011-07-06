@@ -206,6 +206,11 @@ namespace TourWriter.Info.Services
 			return dataSet;
 		}        
 		
+        public static void SaveDataSet(DataSet dataSet, params string[] tableName)
+        {
+            SaveDataSet(ConnectionString.GetConnectionString(), dataSet, tableName);
+        }
+
 		/// <summary>
 		/// Save data in a dataset, with optional list of tablenames 
 		/// </summary>
@@ -257,7 +262,7 @@ namespace TourWriter.Info.Services
 			}
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// Handles common DataSet update issues after merging fresh database data into 
 		/// the dataset of changes; eg changes.Merge(fresh, true);
 		/// </summary>

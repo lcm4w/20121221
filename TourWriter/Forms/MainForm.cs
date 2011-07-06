@@ -148,6 +148,7 @@ namespace TourWriter.Forms
                 else if (node.Key == "DataExtractForm") Load_DataExtractForm();
                 else if (node.Key == "WelcomeForm") Load_StartPage();
                 else if (node.Key == "DashboardForm") Load_Dashboard();
+                else if (node.Key == "Accounting") Load_Accounting();
             }
             if (_tabHistory.ActiveIndex.HasValue && mdiManager.TabGroups.Count > 0 && mdiManager.TabGroups[0].Tabs.Count > 0)
                 if (_tabHistory.ActiveIndex < mdiManager.TabGroups[0].Tabs.Count)
@@ -726,6 +727,11 @@ namespace TourWriter.Forms
             LoadMdiForm(typeof(Modules.Plugins.NzGst.GstAdjust), new UltraTreeNode("NzGstAdjust"));
         }
 
+        internal void Load_Accounting()
+        {
+            LoadMdiForm(typeof(Modules.Accounting.AccountingForm), new UltraTreeNode("Accounting"));
+        }
+
         internal void Load_Dashboard()
         {
             LoadMdiForm(typeof(Modules.Dashboard.Dashboard), new UltraTreeNode("DashboardForm"));
@@ -951,6 +957,9 @@ namespace TourWriter.Forms
                     break;
                 case "TourWriterData":
                     Load_TourWriterDataFolder();
+                    break;
+                case "Accounting":
+                    Load_Accounting();
                     break;
             }
         }
@@ -1535,6 +1544,11 @@ namespace TourWriter.Forms
         private void menuNzgst_Click(object sender, EventArgs e)
         {
             Load_NzGstAdjust();
+        }
+
+        private void menuAccounting_Click(object sender, EventArgs e)
+        {
+            Load_Accounting();
         }
 
         private void menuDashboard_Click(object sender, EventArgs e)

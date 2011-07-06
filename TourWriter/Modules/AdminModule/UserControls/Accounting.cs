@@ -40,7 +40,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
            
             // filter by template category ID
             var view = new DataView(Cache.ToolSet.Template);
-            view.RowFilter = "ParentTemplateCategoryID = " + category.TemplateCategoryID;
+            view.RowFilter = string.Format(
+                "ParentTemplateCategoryID = {0} " +
+                "AND (TemplateName = 'Accounting purchases' OR TemplateName = 'Accounting sales')", // to remove the old suppliers/clients/payments templates
+                category.TemplateCategoryID);
             templateBindingSource.DataSource = view;
 
             // sort so visible agent is the default one

@@ -57,26 +57,24 @@
             this.gridAllocations = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.itineraryPaymentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.myToolStrip3 = new TourWriter.UserControls.MyToolStrip();
             this.btnSaleAdd = new System.Windows.Forms.ToolStripButton();
             this.btnSaleDel = new System.Windows.Forms.ToolStripButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.itineraryPaymentBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridSales)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAllocations)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.myToolStrip3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryPaymentBindingSource)).BeginInit();
+            this.myToolStrip3.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridSales
             // 
-            this.gridSales.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridSales.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance1.BackColor = System.Drawing.SystemColors.Window;
             appearance1.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridSales.DisplayLayout.Appearance = appearance1;
@@ -131,23 +129,23 @@
             this.gridSales.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridSales.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridSales.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.gridSales.Location = new System.Drawing.Point(6, 36);
+            this.gridSales.Location = new System.Drawing.Point(3, 36);
             this.gridSales.Name = "gridSales";
-            this.gridSales.Size = new System.Drawing.Size(383, 139);
+            this.gridSales.Size = new System.Drawing.Size(512, 112);
             this.gridSales.TabIndex = 125;
             this.gridSales.Text = "ultraGrid1";
-            this.gridSales.AfterExitEditMode += new System.EventHandler(this.gridSales_AfterExitEditMode);
-            this.gridSales.Click += new System.EventHandler(this.gridSales_Click);
             this.gridSales.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridSales_InitializeLayout);
-            this.gridSales.AfterRowActivate += new System.EventHandler(this.gridSales_AfterRowActivate);
             this.gridSales.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridSales_InitializeRow);
+            this.gridSales.AfterExitEditMode += new System.EventHandler(this.gridSales_AfterExitEditMode);
+            this.gridSales.AfterRowActivate += new System.EventHandler(this.gridSales_AfterRowActivate);
             this.gridSales.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridSales_CellChange);
+            this.gridSales.Click += new System.EventHandler(this.gridSales_Click);
             // 
             // gridAllocations
             // 
-            this.gridAllocations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridAllocations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance13.BackColor = System.Drawing.SystemColors.Window;
             appearance13.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridAllocations.DisplayLayout.Appearance = appearance13;
@@ -203,19 +201,19 @@
             this.gridAllocations.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridAllocations.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridAllocations.Enabled = false;
-            this.gridAllocations.Location = new System.Drawing.Point(6, 21);
+            this.gridAllocations.Location = new System.Drawing.Point(3, 177);
             this.gridAllocations.Name = "gridAllocations";
-            this.gridAllocations.Size = new System.Drawing.Size(383, 202);
+            this.gridAllocations.Size = new System.Drawing.Size(512, 328);
             this.gridAllocations.TabIndex = 141;
             this.gridAllocations.Text = "ultraGrid1";
-            this.gridAllocations.AfterExitEditMode += new System.EventHandler(this.gridAllocations_AfterExitEditMode);
             this.gridAllocations.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridAllocations_InitializeLayout);
             this.gridAllocations.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridAllocations_InitializeRow);
+            this.gridAllocations.AfterExitEditMode += new System.EventHandler(this.gridAllocations_AfterExitEditMode);
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(251, 441);
+            this.btnOk.Location = new System.Drawing.Point(359, 511);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 142;
@@ -227,7 +225,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(332, 441);
+            this.btnCancel.Location = new System.Drawing.Point(440, 511);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 143;
@@ -235,18 +233,28 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // groupBox1
+            // itineraryPaymentBindingSource
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.gridSales);
-            this.groupBox1.Controls.Add(this.myToolStrip3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(395, 181);
-            this.groupBox1.TabIndex = 144;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Sales";
+            this.itineraryPaymentBindingSource.DataMember = "ItineraryPayment";
+            this.itineraryPaymentBindingSource.DataSource = typeof(TourWriter.Info.ItinerarySet);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(205, 13);
+            this.label1.TabIndex = 144;
+            this.label1.Text = "Sales: add and edit Itinerary Sales records";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 161);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(298, 13);
+            this.label2.TabIndex = 145;
+            this.label2.Text = "Allocations: split the selected Sale (above) accross categories";
             // 
             // myToolStrip3
             // 
@@ -258,7 +266,7 @@
             this.myToolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnSaleAdd,
             this.btnSaleDel});
-            this.myToolStrip3.Location = new System.Drawing.Point(340, 13);
+            this.myToolStrip3.Location = new System.Drawing.Point(466, 13);
             this.myToolStrip3.Name = "myToolStrip3";
             this.myToolStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip3.Size = new System.Drawing.Size(49, 25);
@@ -285,33 +293,18 @@
             this.btnSaleDel.ToolTipText = "Delete the selected sale";
             this.btnSaleDel.Click += new System.EventHandler(this.btnSaleDel_Click);
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.gridAllocations);
-            this.groupBox2.Location = new System.Drawing.Point(12, 199);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(395, 229);
-            this.groupBox2.TabIndex = 145;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Allocations";
-            // 
-            // itineraryPaymentBindingSource
-            // 
-            this.itineraryPaymentBindingSource.DataMember = "ItineraryPayment";
-            this.itineraryPaymentBindingSource.DataSource = typeof(TourWriter.Info.ItinerarySet);
-            // 
             // SaleAllocationForm
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(419, 476);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(518, 542);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.gridSales);
+            this.Controls.Add(this.myToolStrip3);
+            this.Controls.Add(this.gridAllocations);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.MaximizeBox = false;
@@ -321,13 +314,11 @@
             this.Text = "TourWriter Sale allocation";
             ((System.ComponentModel.ISupportInitialize)(this.gridSales)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAllocations)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.itineraryPaymentBindingSource)).EndInit();
             this.myToolStrip3.ResumeLayout(false);
             this.myToolStrip3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.itineraryPaymentBindingSource)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -340,9 +331,9 @@
         private Infragistics.Win.UltraWinGrid.UltraGrid gridAllocations;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.BindingSource itineraryPaymentBindingSource;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

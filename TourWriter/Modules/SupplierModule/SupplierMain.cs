@@ -87,6 +87,8 @@ namespace TourWriter.Modules.SupplierModule
 
             Cache.ToolSet.Template.RowChanged += DataTable_RowChanged;
             Cache.ToolSet.Template.ColumnChanged += DataTable_ColumnChanged;
+
+            contentControl1.MainForm = this;
         }
 
         protected override bool IsDataDirty()
@@ -153,8 +155,6 @@ namespace TourWriter.Modules.SupplierModule
 
                     UpdateMainForm(App.MainForm.SupplierMenu, supplierSet.Supplier[0].IsRecordActive);
                     SetDataCleanName();
-
-                    accounting1.RefreshRequired = true;
                 }
                 finally
                 {
@@ -320,7 +320,6 @@ namespace TourWriter.Modules.SupplierModule
             Supplier_DataBind();
 
             serviceEditor1.SupplierSet = supplierSet;
-            accounting1.SupplierSet = supplierSet;
             contentControl1.SupplierSet = supplierSet;
 
             UpdatePaymentTermCustomText();
@@ -504,17 +503,7 @@ namespace TourWriter.Modules.SupplierModule
             }
             contact.Dispose();
         }
-
-        private void RefreshAccounting()
-        {
-            CommitOpenEdits();
-
-            if (accounting1.RefreshRequired)
-            {
-                accounting1.RefreshDataAndControls();
-            }
-        }
-
+        
         #region Supplier
 
         private void cmbCity_InitializeLayout(object sender, InitializeLayoutEventArgs e)
@@ -1646,30 +1635,7 @@ namespace TourWriter.Modules.SupplierModule
         }
 
         #endregion
-
-        #region Accounting
-
-        private void tabControl_Main_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
-        {
-            if (e.Tab.Key == "Additional")
-            {
-                if (tabsAdditional.SelectedTab.Key == "Accounting")
-                {
-                    RefreshAccounting();
-                }
-            }
-        }
-
-        private void tabsAdditional_SelectedTabChanged(object sender, SelectedTabChangedEventArgs e)
-        {
-            if (e.Tab.Key == "Accounting")
-            {
-                RefreshAccounting();
-            }
-        }
-
-        #endregion
-
+        
         private void chkSupplierDeleted_CheckedChanged(object sender, EventArgs e)
         {
             try

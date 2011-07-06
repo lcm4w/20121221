@@ -116,7 +116,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl3 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.publisher1 = new TourWriter.Modules.ItineraryModule.Publishing.PublisherMain();
             this.tabAccounting = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.accounting1 = new TourWriter.Modules.ItineraryModule.Accounting();
+            this.accounting1 = new UserControls.Accounting.Accounting();
             this.ultraTabPageControl4 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.gridMessages = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.itinerarySet = new TourWriter.Info.ItinerarySet();
@@ -1941,7 +1941,7 @@ namespace TourWriter.Modules.ItineraryModule
         private ToolStripSeparator toolStripSeparator1;
         private BindingSource itinerarySourceBindingSource;
         private UltraTabPageControl tabAccounting;
-        private Accounting accounting1;
+        private UserControls.Accounting.Accounting accounting1;
         private TextBox txtDisplayName;
         private Label label9;
         private ToolTip toolTip1;

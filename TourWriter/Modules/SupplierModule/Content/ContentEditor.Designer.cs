@@ -64,7 +64,7 @@
             // btnBrowse
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Image = global::TourWriter.Properties.Resources.FolderExplore;
+            this.btnBrowse.Image = global::TourWriter.Properties.Resources.Folder;
             this.btnBrowse.Location = new System.Drawing.Point(420, 59);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(23, 22);

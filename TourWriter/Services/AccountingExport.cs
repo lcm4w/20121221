@@ -7,6 +7,7 @@ using Infragistics.Win.UltraWinGrid;
 using TourWriter.Global;
 using TourWriter.UserControls;
 using System.Linq;
+using TourWriter.UserControls.Accounting;
 
 namespace TourWriter.Services
 {
@@ -48,16 +49,16 @@ namespace TourWriter.Services
             }
         }
 
-        public static void ExportSalesToCsv(AccountingGrid gridSales, AccountingGrid gridAllocations, string exportFileName)
+        public static void ExportSalesToCsv(AccountingGrid gridSales, DataTable allocationsTable, string exportFileName)
         {
-            if (!ValidateSales(gridSales, gridAllocations))
+            if (!ValidateSales(gridSales, allocationsTable))
                 return;
 
             string templateFileName = GetTemplateFileName("Accounting sales");
             if (templateFileName != null)
             {
                 DataTable salesTable = gridSales.GetDataRowsTable();
-                DataTable allocationsTable = gridAllocations.GetDataRowsTable();
+                //DataTable allocationsTable = gridAllocations.GetDataRowsTable();
 
                 if (allocationsTable.Rows.Count == 0)
                     return;
@@ -131,7 +132,7 @@ namespace TourWriter.Services
         }
 
 
-        private static Accounting.IExport GetAccountingInterface()
+        internal static Accounting.IExport GetAccountingInterface()
         {
             var type = Cache.ToolSet.AppSettings[0].AccountingSystem.ToLower();
             if (type == "myob") return new Accounting.CsvExportMyob();
@@ -191,11 +192,10 @@ namespace TourWriter.Services
             return true;
         }
 
-        private static bool ValidateSales(AccountingGrid gridSales, AccountingGrid gridAllocations)
+        private static bool ValidateSales(AccountingGrid gridSales, DataTable allocationsTable)
         {
             const string missingCodeMsg = "- At least one service type is missing an accounting code.\r\n";
             string msgList = String.Empty;
-            DataTable allocationsTable = gridAllocations.GetDataRowsTable();
 
             foreach (UltraGridRow row in gridSales.UltraGrid.Rows)
             {

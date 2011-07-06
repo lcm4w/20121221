@@ -1,4 +1,4 @@
-﻿namespace TourWriter.UserControls
+﻿namespace TourWriter.UserControls.Accounting
 {
     partial class AccountingGrid
     {

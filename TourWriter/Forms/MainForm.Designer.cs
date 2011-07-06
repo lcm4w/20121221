@@ -57,6 +57,8 @@ namespace TourWriter.Forms
             Infragistics.Win.Appearance appearance7 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem7 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.Appearance appearance8 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem8 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
+            Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance9 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
@@ -112,6 +114,7 @@ namespace TourWriter.Forms
             this.menuSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.menuReports = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNzgst = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuAccounting = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDashboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGeneralReports = new System.Windows.Forms.ToolStripMenuItem();
             this.menuDataExtraction = new System.Windows.Forms.ToolStripMenuItem();
@@ -458,6 +461,13 @@ namespace TourWriter.Forms
             appearance4.ForceApplyResources = "FontData|";
             ultraExplorerBarItem2.Settings.AppearancesSmall.Appearance = appearance4;
             resources.ApplyResources(ultraExplorerBarItem2, "ultraExplorerBarItem2");
+            ultraExplorerBarItem8.Key = "Accounting";
+            appearance15.Image = global::TourWriter.Properties.Resources.Calculator;
+            resources.ApplyResources(appearance15.FontData, "appearance15.FontData");
+            resources.ApplyResources(appearance15, "appearance15");
+            appearance15.ForceApplyResources = "FontData|";
+            ultraExplorerBarItem8.Settings.AppearancesSmall.Appearance = appearance15;
+            resources.ApplyResources(ultraExplorerBarItem8, "ultraExplorerBarItem8");
             ultraExplorerBarItem3.Key = "ReportsOLD";
             appearance5.Image = global::TourWriter.Properties.Resources.Report;
             resources.ApplyResources(appearance5.FontData, "appearance5.FontData");
@@ -497,6 +507,7 @@ namespace TourWriter.Forms
             ultraExplorerBarItem1,
             ultraExplorerBarItem2,
             ultraExplorerBarItem3,
+            ultraExplorerBarItem8,
             ultraExplorerBarItem4,
             ultraExplorerBarItem5,
             ultraExplorerBarItem6,
@@ -668,6 +679,7 @@ namespace TourWriter.Forms
             this.menuSearch,
             this.menuReports,
             this.menuGeneralReports,
+            this.menuAccounting,
             this.menuDataExtraction,
             this.menuTourWriterData,
             this.menuStartPage,
@@ -696,6 +708,13 @@ namespace TourWriter.Forms
             this.menuNzgst.Name = "menuNzgst";
             resources.ApplyResources(this.menuNzgst, "menuNzgst");
             this.menuNzgst.Click += new System.EventHandler(this.menuNzgst_Click);
+            // 
+            // menuAccounting
+            // 
+            this.menuAccounting.Image = global::TourWriter.Properties.Resources.Calculator;
+            this.menuAccounting.Name = "menuNzgst";
+            resources.ApplyResources(this.menuAccounting, "menuAccounting");
+            this.menuAccounting.Click += new System.EventHandler(this.menuAccounting_Click);
             // 
             // menuDashboard
             // 
@@ -964,6 +983,7 @@ namespace TourWriter.Forms
         private System.Windows.Forms.ToolStripMenuItem menuFeedback;
         private System.Windows.Forms.ToolStripMenuItem menuReports;
         private System.Windows.Forms.ToolStripMenuItem menuNzgst;
+        private System.Windows.Forms.ToolStripMenuItem menuAccounting;
         private System.Windows.Forms.ToolStripMenuItem menuDashboard;
         private System.Windows.Forms.ToolStripMenuItem menuTourWriterData;
     }

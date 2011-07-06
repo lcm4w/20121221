@@ -25,13 +25,12 @@ namespace TourWriter.Modules.SupplierModule
                 DataBind();
             }
         }
-        private readonly SupplierMain _mainForm;
+        internal SupplierMain MainForm;
 
-        public ContentControl(SupplierMain mainForm)
+        public ContentControl()
         {
-            _mainForm = mainForm;
             InitializeComponent();
-
+        
             gridContents.AfterRowActivate += gridContents_AfterRowActivate;
             gridContents.AfterCellListCloseUp += gridContents_AfterCellListCloseUp;
             gridContents.DoubleClickRow += gridContents_DoubleClickRow;
@@ -198,11 +197,11 @@ namespace TourWriter.Modules.SupplierModule
             if (item == null) return;
    
             // run content form
-            var form = new ContentForm(_mainForm, null) { DisplayName = item.Text };
+            var form = new ContentForm(MainForm, null) { DisplayName = item.Text };
             if (form.ShowDialog() != DialogResult.OK) return;
 
             // get selected content row
-            var content = _mainForm.ContentTableCache.Where(x => x.ContentID == form.ContentId).FirstOrDefault();
+            var content = MainForm.ContentTableCache.Where(x => x.ContentID == form.ContentId).FirstOrDefault();
             if (content == null) return;
 
             // import it into supplier set

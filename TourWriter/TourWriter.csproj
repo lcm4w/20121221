@@ -301,12 +301,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApplicationStarter.cs" />
-    <Compile Include="Forms\AccountingExportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AccountingExportForm.Designer.cs">
-      <DependentUpon>AccountingExportForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\AddBookingTemplateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +318,12 @@
     </Compile>
     <Compile Include="Forms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Accounting\ExportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\Accounting\ExportForm.Designer.cs">
+      <DependentUpon>ExportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\AdminModule\UserControls\OptionConfigs.cs">
       <SubType>UserControl</SubType>
@@ -521,13 +521,12 @@
     <Compile Include="Modules\Emailer\TemplateForm.Designer.cs">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ItineraryModule\Accounting.cs">
+    <Compile Include="UserControls\Accounting\Accounting.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Modules\ItineraryModule\Accounting.Designer.cs">
+    <Compile Include="UserControls\Accounting\Accounting.Designer.cs">
       <DependentUpon>Accounting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ItineraryModule\AccountingDataLoad.cs" />
     <Compile Include="Modules\ItineraryModule\Bookings\BookingsQuote.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -651,6 +650,12 @@
     <Compile Include="Modules\Dashboard\Dashboard.designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Accounting\AccountingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\Accounting\AccountingForm.designer.cs">
+      <DependentUpon>AccountingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Plugins\NzGst\GstAdjust.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -663,13 +668,6 @@
     <Compile Include="Modules\StartPage\StartMain.Designer.cs">
       <DependentUpon>StartMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\SupplierModule\Accounting.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Modules\SupplierModule\Accounting.Designer.cs">
-      <DependentUpon>Accounting.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\SupplierModule\AccountingDataLoad.cs" />
     <Compile Include="Modules\SupplierModule\Content\ContentControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -717,10 +715,10 @@
     <Compile Include="Services\Update\DotNetUpdateService.cs" />
     <Compile Include="Services\Update\TemplatesUpdateService.cs" />
     <Compile Include="Services\WordHelper.cs" />
-    <Compile Include="UserControls\AccountingGrid.cs">
+    <Compile Include="UserControls\Accounting\AccountingGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\AccountingGrid.Designer.cs">
+    <Compile Include="UserControls\Accounting\AccountingGrid.Designer.cs">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\DatabaseConfig\InstallConfigure.cs">
@@ -1144,6 +1142,9 @@
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Accounting\ExportForm.resx">
+      <DependentUpon>ExportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Modules\AdminModule\AdminMain.resx">
       <DependentUpon>AdminMain.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1270,6 +1271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Dashboard\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\Accounting\AccountingForm.resx">
+      <DependentUpon>AccountingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\Plugins\NzGst\GstAdjust.resx">
       <DependentUpon>GstAdjust.cs</DependentUpon>
@@ -1563,9 +1567,6 @@
     <None Include="Resources\Refresh.bmp" />
     <None Include="Resources\Save.bmp" />
     <None Include="Resources\help16.bmp" />
-    <EmbeddedResource Include="Forms\AccountingExportForm.resx">
-      <DependentUpon>AccountingExportForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddBookingTemplateForm.resx">
       <DependentUpon>AddBookingTemplateForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -1669,7 +1670,7 @@
     <EmbeddedResource Include="Modules\GeneralReportsModule\old\UserControls\SupplierPurchases.resx">
       <DependentUpon>SupplierPurchases.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\ItineraryModule\Accounting.resx">
+    <EmbeddedResource Include="UserControls\Accounting\Accounting.resx">
       <DependentUpon>Accounting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1703,11 +1704,8 @@
       <DependentUpon>SaleAllocationForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modules\SupplierModule\Accounting.resx">
-      <DependentUpon>Accounting.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
-    <EmbeddedResource Include="UserControls\AccountingGrid.resx">
+    <EmbeddedResource Include="UserControls\Accounting\AccountingGrid.resx">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DataExtractGrid.resx">
@@ -1726,6 +1724,8 @@
     <None Include="Resources\page_paste.png" />
     <None Include="Resources\database_add.png" />
     <None Include="Resources\Phone.png" />
+    <None Include="Resources\Export.png" />
+    <None Include="Resources\Load.png" />
     <Content Include="Resources\SaveClose.png" />
     <None Include="Resources\server_go.png" />
     <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />

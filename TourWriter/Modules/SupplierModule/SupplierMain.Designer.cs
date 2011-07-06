@@ -94,7 +94,6 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab3 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab4 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab5 = new Infragistics.Win.UltraWinTabControl.UltraTab();
-            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab11 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.Appearance appearance52 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab6 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab7 = new Infragistics.Win.UltraWinTabControl.UltraTab();
@@ -113,7 +112,7 @@ namespace TourWriter.Modules.SupplierModule
             this.btnMessageDel = new System.Windows.Forms.ToolStripButton();
             this.label35 = new System.Windows.Forms.Label();
             this.ultraTabPageControl11 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl(this);
+            this.contentControl1 = new TourWriter.Modules.SupplierModule.ContentControl();
             this.ultraTabPageControl9 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.gridPublishing = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
@@ -134,8 +133,6 @@ namespace TourWriter.Modules.SupplierModule
             this.btnExportToExcel = new System.Windows.Forms.Button();
             this.txtTemplateFile = new System.Windows.Forms.TextBox();
             this.btnChooseTemplate = new System.Windows.Forms.Button();
-            this.ultraTabPageControl10 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.accounting1 = new TourWriter.Modules.SupplierModule.Accounting();
             this.tabSupplier = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.btnSupplierFreePhone = new System.Windows.Forms.PictureBox();
             this.btnSupplierMobile = new System.Windows.Forms.PictureBox();
@@ -278,7 +275,6 @@ namespace TourWriter.Modules.SupplierModule
             this.tsRates.SuspendLayout();
             this.ultraTabPageControl4.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.ultraTabPageControl10.SuspendLayout();
             this.tabSupplier.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierFreePhone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierMobile)).BeginInit();
@@ -326,7 +322,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl5
             // 
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
-            this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
             this.ultraTabPageControl5.Size = new System.Drawing.Size(824, 491);
             // 
@@ -350,21 +346,21 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // label30
             // 
-            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label30.ForeColor = System.Drawing.Color.Red;
             this.label30.Location = new System.Drawing.Point(3, 3);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(810, 13);
             this.label30.TabIndex = 155;
             this.label30.Text = "NOTE: This page will be removed in the future (once new reports are completed for" +
-                " you).";
+    " you).";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // optReports
             // 
-            this.optReports.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.optReports.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             appearance1.BorderColor = System.Drawing.SystemColors.Highlight;
             this.optReports.Appearance = appearance1;
             this.optReports.BackColor = System.Drawing.SystemColors.Menu;
@@ -385,9 +381,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // grpReports
             // 
-            this.grpReports.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpReports.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grpReports.BackColor = System.Drawing.Color.Transparent;
             this.grpReports.Location = new System.Drawing.Point(213, 19);
             this.grpReports.Name = "grpReports";
@@ -408,9 +404,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // gridMessages
             // 
-            this.gridMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance2.BackColor = System.Drawing.SystemColors.Window;
             appearance2.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridMessages.DisplayLayout.Appearance = appearance2;
@@ -548,9 +544,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // gridPublishing
             // 
-            this.gridPublishing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridPublishing.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance14.BackColor = System.Drawing.SystemColors.Window;
             appearance14.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridPublishing.DisplayLayout.Appearance = appearance14;
@@ -674,9 +670,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // gridContact
             // 
-            this.gridContact.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridContact.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance26.BackColor = System.Drawing.SystemColors.Window;
             appearance26.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridContact.DisplayLayout.Appearance = appearance26;
@@ -806,19 +802,19 @@ namespace TourWriter.Modules.SupplierModule
             this.label19.Size = new System.Drawing.Size(505, 13);
             this.label19.TabIndex = 25;
             this.label19.Text = "Contacts for supplier. Shown also in the Contacts menu, drag-drop from menu to li" +
-                "nk to existing contact";
+    "nk to existing contact";
             // 
             // ultraTabPageControl4
             // 
             this.ultraTabPageControl4.Controls.Add(this.groupBox1);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(824, 491);
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label26);
             this.groupBox1.Controls.Add(this.btnExportToExcel);
             this.groupBox1.Controls.Add(this.txtTemplateFile);
@@ -866,22 +862,6 @@ namespace TourWriter.Modules.SupplierModule
             this.toolTip1.SetToolTip(this.btnChooseTemplate, "Click to browse for a template file");
             this.btnChooseTemplate.UseVisualStyleBackColor = true;
             this.btnChooseTemplate.Click += new System.EventHandler(this.btnChooseTemplate_Click);
-            // 
-            // ultraTabPageControl10
-            // 
-            this.ultraTabPageControl10.Controls.Add(this.accounting1);
-            this.ultraTabPageControl10.Location = new System.Drawing.Point(-10000, -10000);
-            this.ultraTabPageControl10.Name = "ultraTabPageControl10";
-            this.ultraTabPageControl10.Size = new System.Drawing.Size(824, 491);
-            // 
-            // accounting1
-            // 
-            this.accounting1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.accounting1.Location = new System.Drawing.Point(0, 0);
-            this.accounting1.Name = "accounting1";
-            this.accounting1.Size = new System.Drawing.Size(824, 491);
-            this.accounting1.SupplierSet = null;
-            this.accounting1.TabIndex = 0;
             // 
             // tabSupplier
             // 
@@ -936,7 +916,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
+            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(828, 543);
             // 
@@ -1166,8 +1146,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // headerLabel4
             // 
-            this.headerLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.headerLabel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel4.Location = new System.Drawing.Point(369, 345);
             this.headerLabel4.Name = "headerLabel4";
             this.headerLabel4.Size = new System.Drawing.Size(453, 16);
@@ -1188,8 +1168,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // headerLabel2
             // 
-            this.headerLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.headerLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel2.Location = new System.Drawing.Point(372, 79);
             this.headerLabel2.Name = "headerLabel2";
             this.headerLabel2.Size = new System.Drawing.Size(450, 16);
@@ -1422,8 +1402,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.txtSupplierDescription.AcceptsReturn = true;
             this.txtSupplierDescription.AcceptsTab = true;
-            this.txtSupplierDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSupplierDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtSupplierDescription.Location = new System.Drawing.Point(369, 367);
             this.txtSupplierDescription.Multiline = true;
             this.txtSupplierDescription.Name = "txtSupplierDescription";
@@ -1461,8 +1441,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.txtSupplierComments.AcceptsReturn = true;
             this.txtSupplierComments.AcceptsTab = true;
-            this.txtSupplierComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSupplierComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.txtSupplierComments.Location = new System.Drawing.Point(8, 367);
             this.txtSupplierComments.Multiline = true;
             this.txtSupplierComments.Name = "txtSupplierComments";
@@ -1482,9 +1462,9 @@ namespace TourWriter.Modules.SupplierModule
             // serviceEditor1
             // 
             this.serviceEditor1.AllowEditing = true;
-            this.serviceEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.serviceEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.serviceEditor1.AutoScroll = true;
             this.serviceEditor1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.serviceEditor1.Location = new System.Drawing.Point(1, 4);
@@ -2041,8 +2021,8 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // treeSupplierConfigs
             // 
-            this.treeSupplierConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeSupplierConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.treeSupplierConfigs.FullRowSelect = true;
             this.treeSupplierConfigs.Location = new System.Drawing.Point(586, 35);
             this.treeSupplierConfigs.Name = "treeSupplierConfigs";
@@ -2088,15 +2068,15 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(828, 543);
             // 
             // tabsAdditional
             // 
-            this.tabsAdditional.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsAdditional.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabsAdditional.BackColorInternal = System.Drawing.Color.Transparent;
             this.tabsAdditional.Controls.Add(this.ultraTabSharedControlsPage3);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl7);
@@ -2105,7 +2085,6 @@ namespace TourWriter.Modules.SupplierModule
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl1);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl4);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl5);
-            this.tabsAdditional.Controls.Add(this.ultraTabPageControl10);
             this.tabsAdditional.Controls.Add(this.ultraTabPageControl11);
             this.tabsAdditional.Location = new System.Drawing.Point(0, 11);
             this.tabsAdditional.MinTabWidth = 70;
@@ -2136,9 +2115,6 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab5.Key = "Export";
             ultraTab5.TabPage = this.ultraTabPageControl4;
             ultraTab5.Text = "Export";
-            ultraTab11.Key = "Accounting";
-            ultraTab11.TabPage = this.ultraTabPageControl10;
-            ultraTab11.Text = "Accounting";
             this.tabsAdditional.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
             ultraTab10,
             ultraTab1,
@@ -2146,9 +2122,7 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab12,
             ultraTab3,
             ultraTab4,
-            ultraTab5,
-            ultraTab11});
-            this.tabsAdditional.SelectedTabChanged += new Infragistics.Win.UltraWinTabControl.SelectedTabChangedEventHandler(this.tabsAdditional_SelectedTabChanged);
+            ultraTab5});
             // 
             // ultraTabSharedControlsPage3
             // 
@@ -2164,9 +2138,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // TabControl_Main
             // 
-            this.TabControl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TabControl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance52.BackColor = System.Drawing.Color.WhiteSmoke;
             appearance52.BackGradientStyle = Infragistics.Win.GradientStyle.None;
             this.TabControl_Main.ClientAreaAppearance = appearance52;
@@ -2200,7 +2174,6 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab8,
             ultraTab9});
             this.TabControl_Main.ViewStyle = Infragistics.Win.UltraWinTabControl.ViewStyle.VisualStudio2005;
-            this.TabControl_Main.SelectedTabChanged += new Infragistics.Win.UltraWinTabControl.SelectedTabChangedEventHandler(this.tabControl_Main_SelectedTabChanged);
             // 
             // ultraTabSharedControlsPage1
             // 
@@ -2428,7 +2401,6 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.ultraTabPageControl10.ResumeLayout(false);
             this.tabSupplier.ResumeLayout(false);
             this.tabSupplier.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSupplierFreePhone)).EndInit();
@@ -2629,8 +2601,6 @@ namespace TourWriter.Modules.SupplierModule
         private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl5;
         private ReportManager reportControl;
         private System.Windows.Forms.Label label30;
-        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl10;
-        private Accounting accounting1;
         private System.Windows.Forms.Panel pnlSpatial;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label43;

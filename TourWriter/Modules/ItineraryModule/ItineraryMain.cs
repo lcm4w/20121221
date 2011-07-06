@@ -95,14 +95,12 @@ namespace TourWriter.Modules.ItineraryModule
         
         private void RefreshAccounting()
         {
-            CommitOpenEdits();
+            //CommitOpenEdits();
 
-            accounting1.DataBind();
-
-            if (accounting1.RefreshRequired || accounting1.SaveRequired)
-            {
-                accounting1.RefreshDataAndControls();
-            }
+            //if (accounting1.RefreshRequired || accounting1.SaveRequired)
+            //{
+            //    accounting1.RefreshDataAndControls();
+            //}
         }
 
         private void DataBind()
@@ -474,7 +472,7 @@ namespace TourWriter.Modules.ItineraryModule
                         UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
                         SetDataCleanName();
 
-                        accounting1.RefreshRequired = true;
+                        //accounting1.RefreshRequired = true;
                     }
                     catch (ConstraintException ex)
                     {

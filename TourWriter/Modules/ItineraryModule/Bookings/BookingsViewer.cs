@@ -538,6 +538,28 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private decimal yieldPercent;
         public void RecalculateFinalPricing()
         {
+            // -- testing --
+
+            var hasOverrides = !itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0;
+
+            // service-type overrides
+            decimal postServiceType;
+            if (hasOverrides)
+            {
+                var basePrice = itinerarySet.GetNetBasePrice();
+                var markup = itinerarySet.GetNetMarkup();
+                postServiceType = basePrice * (1 + markup / 100);
+                App.Debug(string.Format("Recalc Itinerary, base: {0}, markup: {1}, price: {2}", basePrice, markup, postServiceType));
+            }
+            else
+            {
+                postServiceType = itinerarySet.GetGrossBasePrice();
+                App.Debug(string.Format("Recalc Itinerary, price: {0}", postServiceType));
+            }
+            txtGross1.Value = postServiceType;
+
+            // -------------
+
 
             // net/gross adjustments
             if (!itinerarySet.Itinerary[0].IsNetMarginNull()
