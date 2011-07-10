@@ -9,12 +9,14 @@ using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Info.Services;
 using TourWriter.Services;
+using System.Collections;
 
 namespace TourWriter.Modules.ItineraryModule
 {
     public partial class NetOverrideForm : Form
     {
         private readonly ItinerarySet itinerarySet;
+        private string marginMinOrMax;        
 
         public NetOverrideForm(ItinerarySet itinerarySet)
         {
@@ -51,12 +53,15 @@ namespace TourWriter.Modules.ItineraryModule
             // check ComOrMup value
             if (itinerarySet.Itinerary[0].NetComOrMup == "com")
             {
-                rdCommission.Checked = true;
+                rdCommission.Checked = true;                
             }
             else
             {
-                rdMarkup.Checked = true;
+                rdMarkup.Checked = true;                
             }
+
+            LoadMarginSelection();
+            DisplayMarginSelection(itinerarySet.Itinerary[0].NetMinOrMax);
 
             // check override type (service type, or master)
             if (!itinerarySet.Itinerary[0].IsNetMarginNull())
@@ -69,11 +74,45 @@ namespace TourWriter.Modules.ItineraryModule
                 rdServiceTypeOverride.Checked = true;
                 txtMasterOverride.Value = null;
             }
+        }        
+
+        private void LoadMarginSelection()
+        {            
+            cbMarginForMarkup.SelectedIndexChanged -= cbMarginForMarkup_SelectedIndexChanged;
+            cbMarginForMarkup.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
+                                                          new { Text = "Set maximum", Value = "max" },
+                                                          new { Text = "Set exact", Value = "exact" }};            
+            cbMarginForMarkup.SelectedIndexChanged += cbMarginForMarkup_SelectedIndexChanged;
+
+            cbMarginForCommission.SelectedIndexChanged -= cbMarginForCommission_SelectedIndexChanged;
+            cbMarginForCommission.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
+                                                              new { Text = "Set maximum", Value = "max" },
+                                                              new { Text = "Set exact", Value = "exact" }};            
+            cbMarginForCommission.SelectedIndexChanged += cbMarginForCommission_SelectedIndexChanged;
+        }
+
+        private void DisplayMarginSelection(string marginOverride)
+        {            
+            cbMarginForMarkup.Enabled = rdMarkup.Checked;
+            cbMarginForCommission.Enabled = rdCommission.Checked;
+            cbMarginForMarkup.SelectedValue = marginOverride ?? "exact";
+            cbMarginForCommission.SelectedValue = marginOverride ?? "exact";            
+        }
+
+        private void UpdateMarginOverrideSelectionMessage()
+        {
+            if (rdMarkup.Checked && cbMarginForMarkup.SelectedIndex >= 0)
+                label3.Text = App.GetMarginOverrideSelectionMessage("mup", (string)cbMarginForMarkup.SelectedValue);
+            else if (rdCommission.Checked && cbMarginForCommission.SelectedIndex >= 0)
+                label3.Text = App.GetMarginOverrideSelectionMessage("com", (string)cbMarginForCommission.SelectedValue);
+            else
+                label3.Text = string.Empty;
         }
 
         private void SaveChanges()
         {
-            itinerarySet.Itinerary[0].NetComOrMup = (rdCommission.Checked) ? "com" : "mup";
+            itinerarySet.Itinerary[0].NetComOrMup = (rdMarkup.Checked) ? "mup" : "com";
+            itinerarySet.Itinerary[0].NetMinOrMax = marginMinOrMax;
 
             if (rdMasterOverride.Checked)
             {
@@ -90,7 +129,7 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 // remove the net margin override
                 itinerarySet.Itinerary[0].SetNetMarginNull();
-            }
+            }                                 
 
             // add/remove/update the service type overrides
             foreach (UltraGridRow row in grid.Rows)
@@ -414,6 +453,9 @@ namespace TourWriter.Modules.ItineraryModule
             RecalculatePricing();
             grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
                 (rdMarkup.Checked) ? "(([SellTotal()] - [NetBaseTotal()])/[NetBaseTotal()]) * 100" : String.Empty;
+
+            DisplayMarginSelection(null);
+            UpdateMarginOverrideSelectionMessage();
         }
 
         private void rdCommission_CheckedChanged(object sender, EventArgs e)
@@ -424,6 +466,21 @@ namespace TourWriter.Modules.ItineraryModule
             RecalculatePricing();
             grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
                 (rdCommission.Checked) ? "(([SellTotal()] - [NetBaseTotal()])/[SellTotal()]) * 100" : String.Empty;
+
+            DisplayMarginSelection(null);
+            UpdateMarginOverrideSelectionMessage();
+        }
+
+        private void cbMarginForMarkup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            marginMinOrMax = (string)cbMarginForMarkup.SelectedValue;
+            UpdateMarginOverrideSelectionMessage();
+        }
+
+        private void cbMarginForCommission_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            marginMinOrMax = (string)cbMarginForCommission.SelectedValue;
+            UpdateMarginOverrideSelectionMessage();
         }
     }
 }

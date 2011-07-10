@@ -30,7 +30,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
 
                 string sql =
                     @"
-SELECT ServiceTypeName, SUM(TotalNet) Net, SUM(TotalGross) Gross
+SELECT ServiceTypeName, SUM(NetFinalTotal) Net, SUM(GrossFinalTotal) Gross
 FROM PurchaseItemDetail
 WHERE PurchaseItemStartDate >= CONVERT(char(8), @startDate, 112)
 AND   PurchaseItemStartDate <= CONVERT(char(8), @endDate+1, 112)

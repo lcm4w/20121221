@@ -47,6 +47,9 @@
             this.rdMarkup = new System.Windows.Forms.RadioButton();
             this.rdCommission = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbMarginForCommission = new System.Windows.Forms.ComboBox();
+            this.cbMarginForMarkup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtMasterOverride = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
@@ -124,7 +127,7 @@
             this.grid.Enabled = false;
             this.grid.Location = new System.Drawing.Point(9, 91);
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(357, 243);
+            this.grid.Size = new System.Drawing.Size(357, 212);
             this.grid.TabIndex = 124;
             this.grid.Text = "ultraGrid1";
             this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
@@ -147,7 +150,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(266, 337);
+            this.label1.Location = new System.Drawing.Point(266, 306);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(99, 13);
             this.label1.TabIndex = 126;
@@ -169,7 +172,7 @@
             // rdMarkup
             // 
             this.rdMarkup.AutoSize = true;
-            this.rdMarkup.Location = new System.Drawing.Point(162, 18);
+            this.rdMarkup.Location = new System.Drawing.Point(20, 32);
             this.rdMarkup.Name = "rdMarkup";
             this.rdMarkup.Size = new System.Drawing.Size(61, 17);
             this.rdMarkup.TabIndex = 129;
@@ -181,7 +184,7 @@
             // rdCommission
             // 
             this.rdCommission.AutoSize = true;
-            this.rdCommission.Location = new System.Drawing.Point(162, 43);
+            this.rdCommission.Location = new System.Drawing.Point(125, 32);
             this.rdCommission.Name = "rdCommission";
             this.rdCommission.Size = new System.Drawing.Size(80, 17);
             this.rdCommission.TabIndex = 130;
@@ -194,20 +197,54 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.cbMarginForCommission);
+            this.groupBox1.Controls.Add(this.cbMarginForMarkup);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.rdMarkup);
             this.groupBox1.Controls.Add(this.rdCommission);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(372, 72);
+            this.groupBox1.Size = new System.Drawing.Size(372, 91);
             this.groupBox1.TabIndex = 131;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
             // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(242, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(122, 40);
+            this.label3.TabIndex = 134;
+            // 
+            // cbMarginForCommission
+            // 
+            this.cbMarginForCommission.DisplayMember = "Text";
+            this.cbMarginForCommission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMarginForCommission.FormattingEnabled = true;
+            this.cbMarginForCommission.Location = new System.Drawing.Point(125, 55);
+            this.cbMarginForCommission.Name = "cbMarginForCommission";
+            this.cbMarginForCommission.Size = new System.Drawing.Size(85, 21);
+            this.cbMarginForCommission.TabIndex = 133;
+            this.cbMarginForCommission.ValueMember = "Value";
+            this.cbMarginForCommission.SelectedIndexChanged += new System.EventHandler(this.cbMarginForCommission_SelectedIndexChanged);
+            // 
+            // cbMarginForMarkup
+            // 
+            this.cbMarginForMarkup.DisplayMember = "Text";
+            this.cbMarginForMarkup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbMarginForMarkup.FormattingEnabled = true;
+            this.cbMarginForMarkup.Location = new System.Drawing.Point(20, 55);
+            this.cbMarginForMarkup.Name = "cbMarginForMarkup";
+            this.cbMarginForMarkup.Size = new System.Drawing.Size(85, 21);
+            this.cbMarginForMarkup.TabIndex = 132;
+            this.cbMarginForMarkup.ValueMember = "Value";
+            this.cbMarginForMarkup.SelectedIndexChanged += new System.EventHandler(this.cbMarginForMarkup_SelectedIndexChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 20);
+            this.label2.Location = new System.Drawing.Point(17, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(137, 13);
             this.label2.TabIndex = 131;
@@ -224,9 +261,9 @@
             this.groupBox2.Controls.Add(this.grid);
             this.groupBox2.Controls.Add(this.toolStrip1);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(5, 90);
+            this.groupBox2.Location = new System.Drawing.Point(5, 109);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(372, 357);
+            this.groupBox2.Size = new System.Drawing.Size(372, 338);
             this.groupBox2.TabIndex = 132;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Value";
@@ -350,5 +387,8 @@
         private System.Windows.Forms.RadioButton rdServiceTypeOverride;
         private System.Windows.Forms.RadioButton rdMasterOverride;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtMasterOverride;
+        private System.Windows.Forms.ComboBox cbMarginForMarkup;
+        private System.Windows.Forms.ComboBox cbMarginForCommission;
+        private System.Windows.Forms.Label label3;
     }
 }

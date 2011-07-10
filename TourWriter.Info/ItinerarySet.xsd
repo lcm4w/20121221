@@ -100,6 +100,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="NetMinOrMax" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="NetMinOrMax" msprop:Generator_ColumnVarNameInTable="columnNetMinOrMax" msprop:Generator_ColumnPropNameInTable="NetMinOrMaxColumn" msprop:Generator_UserColumnName="NetMinOrMax" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -399,7 +400,7 @@
               <xs:element name="Gross" msprop:Generator_ColumnVarNameInTable="columnGross" msprop:Generator_ColumnPropNameInRow="Gross" msprop:Generator_ColumnPropNameInTable="GrossColumn" msprop:Generator_UserColumnName="Gross" type="xs:decimal" default="0" minOccurs="0" />
               <xs:element name="PricingOption" msprop:nullValue="gc" msprop:Generator_ColumnPropNameInRow="PricingOption" msprop:Generator_ColumnVarNameInTable="columnPricingOption" msprop:Generator_ColumnPropNameInTable="PricingOptionColumn" msprop:Generator_UserColumnName="PricingOption" type="xs:string" default="gc" minOccurs="0" />
               <xs:element name="ValidFrom" msprop:Generator_ColumnVarNameInTable="columnValidFrom" msprop:Generator_ColumnPropNameInRow="ValidFrom" msprop:Generator_ColumnPropNameInTable="ValidFromColumn" msprop:Generator_UserColumnName="ValidFrom" type="xs:date" minOccurs="0" />
-              <xs:element name="ValidTo" msprop:Generator_ColumnVarNameInTable="columnValidTo" msprop:Generator_ColumnPropNameInRow="ValidTo" msprop:Generator_ColumnPropNameInTable="ValidToColumn" msprop:Generator_UserColumnName="ValidTo" type="xs:date" minOccurs="0" />              
+              <xs:element name="ValidTo" msprop:Generator_ColumnVarNameInTable="columnValidTo" msprop:Generator_ColumnPropNameInRow="ValidTo" msprop:Generator_ColumnPropNameInTable="ValidToColumn" msprop:Generator_UserColumnName="ValidTo" type="xs:date" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -454,7 +455,7 @@
                     <xs:maxLength value="3" />
                   </xs:restriction>
                 </xs:simpleType>
-              </xs:element>           
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

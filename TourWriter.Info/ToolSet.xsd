@@ -229,6 +229,15 @@
               <xs:element name="AddedOn" msprop:Generator_ColumnVarNameInTable="columnAddedOn" msprop:Generator_ColumnPropNameInRow="AddedOn" msprop:Generator_ColumnPropNameInTable="AddedOnColumn" msprop:Generator_UserColumnName="AddedOn" type="xs:dateTime" minOccurs="0" />
               <xs:element name="AddedBy" msprop:Generator_ColumnVarNameInTable="columnAddedBy" msprop:Generator_ColumnPropNameInRow="AddedBy" msprop:Generator_ColumnPropNameInTable="AddedByColumn" msprop:Generator_UserColumnName="AddedBy" type="xs:int" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="IsDeleted" msprop:Generator_UserColumnName="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="NetMinOrMax" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="NetMinOrMax" msprop:Generator_ColumnVarNameInTable="columnNetMinOrMax" msprop:Generator_ColumnPropNameInTable="NetMinOrMaxColumn" msprop:Generator_UserColumnName="NetMinOrMax" type="xs:string" minOccurs="0" />
+              <xs:element name="CurrencyCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCode" msprop:Generator_ColumnPropNameInTable="CurrencyCodeColumn" msprop:Generator_UserColumnName="CurrencyCode" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="AgentNameParentName" msprop:Generator_ColumnVarNameInTable="columnAgentNameParentName" msprop:Generator_ColumnPropNameInRow="AgentNameParentName" msprop:Generator_ColumnPropNameInTable="AgentNameParentNameColumn" msprop:Generator_UserColumnName="AgentNameParentName" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>

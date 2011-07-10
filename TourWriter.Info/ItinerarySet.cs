@@ -122,10 +122,10 @@ namespace TourWriter.Info
                                                                                purchaseItem.ServiceTypeID);
                     if (row != null)
                     {
-                        if (Itinerary[0].NetComOrMup == "com")
-                            totalGross += Common.CalcGrossByNetCommission(purchaseItem.NetTotalConverted, row.Margin);
-                        else
-                            totalGross += Common.CalcGrossByNetMarkup(purchaseItem.NetTotalConverted, row.Margin);
+                        totalGross += Itinerary[0].CalculateGrossByNetMargin(purchaseItem.Net,
+                                                                             purchaseItem.Gross,
+                                                                             purchaseItem.NetTotalConverted,
+                                                                             row.Margin);                        
                     }
                     else
                     {
@@ -255,6 +255,34 @@ namespace TourWriter.Info
                              && IsGrossMarkupNull()
                              && IsGrossOverrideNull());
                 }
+            }
+
+            public decimal CalculateGrossByNetMargin(decimal net, decimal gross, decimal total, decimal margin)
+            {
+                decimal totalGross = 0M;
+
+                if (NetComOrMup == "com")
+                {                    
+                    var commission = ((ItinerarySet)this.tableItinerary.DataSet).GetCommission(net, gross);
+                    if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
+                        margin = Math.Max(commission, margin);
+                    else if (NetMinOrMax == "max") // ensure maximum, so give us the smallest value
+                        margin = Math.Min(commission, margin);
+
+                    totalGross = Common.CalcGrossByNetCommission(total, margin);
+                }
+                else
+                {
+                    var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(net, gross);
+                    if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
+                        margin = Math.Max(markup, margin);
+                    else if (NetMinOrMax == "max") // ensure maximum, so give us the smallest value
+                        margin = Math.Min(markup, margin);
+
+                    totalGross = Common.CalcGrossByNetMarkup(total, margin);
+                }
+
+                return totalGross;
             }
         }
 
@@ -951,6 +979,6 @@ namespace TourWriter.Info
             }
         }
 
-        #endregion
-    }
+        #endregion        
+    }    
 }

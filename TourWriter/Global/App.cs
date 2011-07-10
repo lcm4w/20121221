@@ -33,7 +33,16 @@ namespace TourWriter
         internal const string PricingOptionGrossCommissionText = "gc";
         internal const string RemoteConnectionName = "(custom server)";
         internal const string AdminUserName = "admin";
-        internal const bool DisableDatabaseUpdateScripts = false; // **** FOR TESTING ONLY: set to 'true' to disable database updates ****
+        internal const bool DisableDatabaseUpdateScripts = false; // **** FOR TESTING ONLY: set to 'true' to disable database updates ****        
+
+        // move to a different class if possible
+        internal static string GetMarginOverrideSelectionMessage(string marginOverride, string minOrMax)
+        {
+            return string.Format(App.GetResourceString("MarginOverrideSelection"), 
+                marginOverride == "mup"? "Markups" : "Commissions",
+                minOrMax == "min" ? "no less than" :
+                minOrMax == "max" ? "no more than" : "exactly");            
+        }
 
         internal static void RefreshMenu(string menuName)
         {
