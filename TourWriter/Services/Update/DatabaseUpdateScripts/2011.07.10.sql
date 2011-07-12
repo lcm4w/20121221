@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2011.06.28')
+if ((select VersionNumber from AppSettings) <> '2011.06.28' and (select VersionNumber from AppSettings) <> '2011.07.10')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)	
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -780,6 +780,9 @@ create FUNCTION [dbo].[GetAdjustedItemGross]
 RETURNS money
 AS
 BEGIN
+
+	if (@net is null or @gross is null or @net = 0 or @gross = 0)
+		return @gross
 	
 	declare @overrideMargin money
 	set @overrideMargin = isnull(@itinMargin, @stypeMargin)
@@ -907,7 +910,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.07.10'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.07.12'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
