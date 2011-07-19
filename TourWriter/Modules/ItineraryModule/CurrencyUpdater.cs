@@ -21,6 +21,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;
+            chkDebug.Visible = cmbCcyService.Visible = App.IsDebugMode; // debugging
 
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
@@ -78,7 +79,9 @@ namespace TourWriter.Modules.ItineraryModule
                     r.Cells["Result"].Appearance.Image = null;
                 }
 
-                CurrencyService.GetRates(toFromCurrencies);
+                if (!cmbCcyService.Visible || cmbCcyService.SelectedIndex < 0) CurrencyService.GetRates(toFromCurrencies);
+                else CurrencyService.GetRates(toFromCurrencies, 
+                    cmbCcyService.SelectedItem.ToString().ToLower().Contains("yahoo") ? CurrencyService.ServiceTypes.Yahoo : CurrencyService.ServiceTypes.Google);
                 
                 var adjust = Convert.ToDecimal(txtRateAdjustment.Value);
                 adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
@@ -90,8 +93,11 @@ namespace TourWriter.Modules.ItineraryModule
                     foreach (var row in updateRows)
                     {
                         var noAdjust = c.Rate == 1 && c.FromCurrency.Trim().ToLower() == c.ToCurrency.Trim().ToLower();
+                        var newRate = currency.Rate * (noAdjust ? 1 : adjust);
+
                         row.Cells["Result"].Appearance.Image = Resources.Tick;
-                        row.Cells["NewRate"].Value = Decimal.Round(Convert.ToDecimal(currency.Rate) * (noAdjust ? 1 : adjust), 4);
+                        row.Cells["NewRate"].Value = newRate;
+
                         if (!string.IsNullOrEmpty(c.ErrorMessage))
                         {
                             row.Cells["Result"].Value = c.ErrorMessage;
@@ -325,6 +331,8 @@ namespace TourWriter.Modules.ItineraryModule
         {
             UpdateCurrencies();
             _userShouldUpdateRates = false;
+            
+            if (chkDebug.Checked) System.Diagnostics.Process.Start(System.IO.Path.Combine(App.TempFolder, "ccy_test.txt"));
         }
 
         private void btnOk_Click(object sender, EventArgs e)

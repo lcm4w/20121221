@@ -170,6 +170,24 @@ namespace TourWriter
             }
         }
 
+        internal static bool UseGoogleCcyService
+        {
+            // TODO: should be a admin setup option
+            get
+            {
+                return
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "575e7900-bf13-42d1-a661-2242510c3359".ToLower() // trav essense
+                       ||
+                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
+                       "434b2bd7-03fe-4bc2-b800-fcf030ab63dc".ToLower(); // exp ireland
+            }
+        }
+
+
+
         #endregion
 
         #region Network

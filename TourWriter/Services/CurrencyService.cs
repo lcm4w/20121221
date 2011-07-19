@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.Global;
@@ -113,24 +115,31 @@ namespace TourWriter.Services
         
 
         #region Ccy update service
+
+        internal enum ServiceTypes { Yahoo, Google };
         
         internal class Currency
         {
             public object Key { get; set; }
             public string FromCurrency { get; set; }
             public string ToCurrency { get; set; }
-            public double Rate { get; set; }
+            public decimal Rate { get; set; }
             public string ErrorMessage { get; set; }
         }
 
         internal static List<Currency> GetRates(List<Currency> currencies)
+        {
+            return GetRates(currencies, App.UseGoogleCcyService ? ServiceTypes.Google : ServiceTypes.Yahoo);
+        }
+
+        internal static List<Currency> GetRates(List<Currency> currencies, ServiceTypes ccyService)
         {
             // Start threads
             var threads = new List<Thread>();
             for (var i = 0; i < currencies.Count; i++) // GetRateHttp(currencies[i]);
             {
                 var currency = currencies[i];
-                var thread = new Thread(() => GetRateHttp(currency)) { Name = string.Format("Currency_GetRateHttp{0}", i) };
+                var thread = new Thread(() => GetRateHttp(currency, ccyService)) { Name = string.Format("Currency_GetRateHttp{0}", i) };
                 thread.Start();
                 threads.Add(thread);
             }
@@ -142,19 +151,24 @@ namespace TourWriter.Services
             threads.Clear();
             return currencies;
         }
-
-        internal static double? GetRate(string fromCurrency, string toCurrency)
+        
+        internal static decimal? GetRate(string fromCurrency, string toCurrency)
+        {
+            return GetRate(fromCurrency, toCurrency, App.UseGoogleCcyService ? ServiceTypes.Google : ServiceTypes.Yahoo);
+        }
+        
+        internal static decimal? GetRate(string fromCurrency, string toCurrency, ServiceTypes ccyService)
         {
             if (fromCurrency == toCurrency || string.IsNullOrEmpty(fromCurrency.Trim()) || string.IsNullOrEmpty(toCurrency.Trim()))
                 return null;
-            return GetRateHttp(fromCurrency, toCurrency);
+            return GetRateHttp(fromCurrency, toCurrency, ccyService);
         }
 
-        private static Currency GetRateHttp(Currency currency)
+        private static Currency GetRateHttp(Currency currency, ServiceTypes ccyService)
         {
             try
             {
-                var rate = GetRateHttp(currency.FromCurrency, currency.ToCurrency);
+                var rate = GetRateHttp(currency.FromCurrency, currency.ToCurrency, ccyService);
                 if (rate > 100000) 
                     currency.ErrorMessage = "Rate " + rate + " does not appear to be correct.";
                 else 
@@ -163,27 +177,100 @@ namespace TourWriter.Services
             catch (Exception ex)
             {
                 // load error to the message field
-                currency.ErrorMessage = ex.Message;
+                currency.ErrorMessage = "No available: " + ex.Message;
                 ErrorHelper.SendEmail(ex, true);
             }
             return currency;
         }
 
-        private static double GetRateHttp(string fromCurrency, string toCurrency)
+        private static decimal GetRateHttp(string fromCurrency, string toCurrency, ServiceTypes ccyService)
         {
-            if (fromCurrency.ToLower().Trim() == toCurrency.ToLower().Trim()) return 1;
+            if (fromCurrency.ToLower().Trim() == toCurrency.ToLower().Trim()) 
+                return 1;
 
-            const string url = "http://finance.yahoo.com/d/quotes.csv?s={0}{1}=X&f=l1&e=.csv";
+            var d = ccyService == ServiceTypes.Google ? 
+                GetCcyGoogle(fromCurrency, toCurrency) : 
+                GetCcyYahoo(fromCurrency, toCurrency);
 
-            double result;
-            var client = new WebClient();
-            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; .NET CLR 2.0.50727;)");
-            var response = client.DownloadString(string.Format(url, fromCurrency, toCurrency));
-
-            App.Debug(string.Format("Called currency service: {0} -> {1} = {2}",fromCurrency,toCurrency,response));
-            return double.TryParse(response, out result) ? result : 0;
+            return (d.HasValue) ? (decimal)d : 0;
         }
 
+        private static decimal? GetCcyGoogle(string from, string to)
+        {
+            // alternative? but returns html page: http://www.google.com/finance/converter?a=379.00&from=USD&to=NZD
+            
+            const string url = "http://www.google.com/ig/calculator?hl=en&q=1{0}=?{1}";
+            var client = new WebClient();
+            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)");
+
+            var s = string.Format(url, from, to);
+            var response = client.DownloadString(s).Trim();
+
+            WriteDebug("CCY Reqeust: " + s);
+            WriteDebug("CCY Response: " + response);
+
+            /***************************************************************************************************************************************
+             * call: http://www.google.com/ig/calculator?hl=en&q=1VND=?GBP
+             * response: {lhs: \"1 Vietnamese dong\",rhs: \"3.03030303 \x26#215; 10\x3csup\x3e-5\x3c/sup\x3e British pounds\",error: \"\",icc: true}
+             * where: 3.03030303 \x26#215; 10\x3csup\x3e-5\x3c/sup\x3e
+             * equals: 3.03030303 x 10^-5
+             * eg: \x26#215;    = X
+             *     \x3csup\x3e  = ^
+             *     \x3c/sup\x3e = blank (maybe end of value minus word value at the end) 
+             ***************************************************************************************************************************************/
+
+            var regex = new Regex("^{lhs:.\"([^\"]*)\",rhs:.\"([^\"]*)\".*}$", RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+            var results = regex.Split(response);
+            var lhs = results[1];
+            var rhs = results[2];
+
+            regex = new Regex("^(\\d+\\.?\\d*)\\s(\\\\x26#215;\\s10\\\\x3csup\\\\x3e(.*)\\\\x3c/sup\\\\x3e)?.*$", RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+            // value on left side
+            //results = regex.Split(lhs);
+            //var d1 = Decimal.Parse(results[1]);
+
+            // value on right side
+            results = regex.Split(rhs);
+            decimal result;
+            if (results.Count() > 3)
+            {   // handle exponent
+                var d = Decimal.Parse(results[1]);
+                var exp = int.Parse(results[3]);
+                var pow = Math.Pow(10, exp);
+                result = d * Convert.ToDecimal(pow);
+            }
+            else result = Decimal.Parse(results[1]);
+
+            WriteDebug(string.Format("CCY Result: {0} > {1} = {2}", from, to, result));
+            return result;
+        }
+
+        private static decimal? GetCcyYahoo(string from, string to)
+        {
+            const string url = "http://finance.yahoo.com/d/quotes.csv?s={0}{1}=X&f=l1&e=.csv";
+            var client = new WebClient();
+            client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)");
+
+            var s = string.Format(url, from, to);
+            var response = client.DownloadString(s).Trim();
+
+            WriteDebug("CCY Reqeust: " + s);
+            WriteDebug("CCY Response: " + response);
+
+            decimal result;
+            decimal.TryParse(response, out result);
+            WriteDebug(string.Format("CCY Result: {0} > {1} = {2}", from, to, result));
+            return result;
+        }
+
+        public static void WriteDebug(string text)
+        {
+            if (!App.IsDebugMode) return;
+
+            var file = Path.Combine(App.TempFolder, "ccy_test.txt");
+            using (var sw = new StreamWriter(file, true)) sw.WriteLine(text);
+        }
         #endregion
     }
 }

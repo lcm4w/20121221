@@ -371,7 +371,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         {
                             item.CurrencyRate = rate;
                             item.RecalculateTotals();
-                            App.Debug(string.Format("Updated PurchaseItem currency rate {0}, {1}", code, args.Result));
                         }
                     }
                     catch { }

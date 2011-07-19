@@ -49,19 +49,21 @@
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cmbCurrency = new System.Windows.Forms.ComboBox();
+            this.lnkEdit = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lnkEdit = new System.Windows.Forms.LinkLabel();
+            this.chkDebug = new System.Windows.Forms.CheckBox();
+            this.cmbCcyService = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
             // 
             // gridBookings
             // 
-            this.gridBookings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridBookings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance1.BackColor = System.Drawing.SystemColors.Window;
             appearance1.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridBookings.DisplayLayout.Appearance = appearance1;
@@ -187,8 +189,8 @@
             // 
             // cmbCurrency
             // 
-            this.cmbCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurrency.FormattingEnabled = true;
             this.cmbCurrency.Location = new System.Drawing.Point(135, 25);
@@ -197,10 +199,22 @@
             this.cmbCurrency.TabIndex = 17;
             this.toolTip1.SetToolTip(this.cmbCurrency, "Output currency for this Itinerary");
             // 
+            // lnkEdit
+            // 
+            this.lnkEdit.AutoSize = true;
+            this.lnkEdit.Location = new System.Drawing.Point(437, 9);
+            this.lnkEdit.Name = "lnkEdit";
+            this.lnkEdit.Size = new System.Drawing.Size(93, 13);
+            this.lnkEdit.TabIndex = 19;
+            this.lnkEdit.TabStop = true;
+            this.lnkEdit.Text = "(change currency)";
+            this.toolTip1.SetToolTip(this.lnkEdit, "Click to enable currency change");
+            this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
+            // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(15, 469);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(515, 2);
@@ -228,17 +242,27 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "Itinerary Currency";
             // 
-            // lnkEdit
+            // chkDebug
             // 
-            this.lnkEdit.AutoSize = true;
-            this.lnkEdit.Location = new System.Drawing.Point(437, 9);
-            this.lnkEdit.Name = "lnkEdit";
-            this.lnkEdit.Size = new System.Drawing.Size(93, 13);
-            this.lnkEdit.TabIndex = 19;
-            this.lnkEdit.TabStop = true;
-            this.lnkEdit.Text = "(change currency)";
-            this.toolTip1.SetToolTip(this.lnkEdit, "Click to enable currency change");
-            this.lnkEdit.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEdit_LinkClicked);
+            this.chkDebug.AutoSize = true;
+            this.chkDebug.Location = new System.Drawing.Point(18, 483);
+            this.chkDebug.Name = "chkDebug";
+            this.chkDebug.Size = new System.Drawing.Size(93, 17);
+            this.chkDebug.TabIndex = 20;
+            this.chkDebug.Text = "write to debug";
+            this.chkDebug.UseVisualStyleBackColor = true;
+            // 
+            // cmbCcyService
+            // 
+            this.cmbCcyService.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCcyService.FormattingEnabled = true;
+            this.cmbCcyService.Items.AddRange(new object[] {
+            "use Yahoo Finance",
+            "use Google Finance"});
+            this.cmbCcyService.Location = new System.Drawing.Point(120, 481);
+            this.cmbCcyService.Name = "cmbCcyService";
+            this.cmbCcyService.Size = new System.Drawing.Size(121, 21);
+            this.cmbCcyService.TabIndex = 21;
             // 
             // CurrencyUpdater
             // 
@@ -247,6 +271,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
+            this.Controls.Add(this.cmbCcyService);
+            this.Controls.Add(this.chkDebug);
             this.Controls.Add(this.lnkEdit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmbCurrency);
@@ -284,5 +310,7 @@
         private System.Windows.Forms.ComboBox cmbCurrency;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel lnkEdit;
+        private System.Windows.Forms.CheckBox chkDebug;
+        private System.Windows.Forms.ComboBox cmbCcyService;
     }
 }
