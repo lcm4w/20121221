@@ -125,6 +125,8 @@ namespace TourWriter.UserControls.DatabaseConfig
             Log("Installing Sql Server, this stage might take 10 minutes...");
 
             var args = InstallHelper.InstallArgs.Replace("\r\n", " ").Trim();
+
+            //App.ShowInfo(args);
             var pi = new ProcessStartInfo { FileName = InstallFile, Arguments = args };
             //var pi = new ProcessStartInfo {FileName = @"C:\Program Files (x86)\Notepad++\Notepad++.exe"};
             var p = new Process { StartInfo = pi, EnableRaisingEvents = true };
@@ -150,7 +152,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             var error = "";
             var exitCode = process.ExitCode;
 
-            Log("Sql installer exited with code" + exitCode);
+            Log("Sql installer exited with code: " + exitCode);
             Log("Testing server connection...");
             if (InstallHelper.TestLocalServerConnect(out error))
             {
@@ -182,17 +184,21 @@ namespace TourWriter.UserControls.DatabaseConfig
             }
             progressBar.Style = ProgressBarStyle.Marquee;
 
-            var isNewDb = !string.IsNullOrEmpty(RestoreFile);
+            var isNewDb = string.IsNullOrEmpty(RestoreFile);
 
             // restore database
             if (isNewDb)
             {
                 Log("Creating new default database...");
                 RestoreFile = GetDefaultRestoreFile();
+                if (!File.Exists(RestoreFile)) 
+                    Log("Failed to find default backup file: " + RestoreFile);
             }
             else Log("Restoring database from user backup file: " + RestoreFile);
 
-            Log(InstallHelper.RunSql(string.Format(InstallHelper.RestoreDbSql, RestoreFile)));
+            string sql = string.Format(InstallHelper.RestoreDbSql, RestoreFile);
+            //App.ShowInfo(sql);
+            Log(InstallHelper.RunSql(sql));
 
             // setup logins
             Log("Configuring database...");
