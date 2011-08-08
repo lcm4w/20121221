@@ -10,10 +10,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
     {
         private readonly ItinerarySet _itinerarySet;
         private enum CostTypes { Client, Staff, Foc };
+        internal enum PriceTypes { Net, Gross };
+        private static PriceTypes _priceType;
 
-        public QuoteTable(ItinerarySet itinerarySet, IEnumerable<ToolSet.OptionTypeRow> optionTypes)
+        public QuoteTable(ItinerarySet itinerarySet, IEnumerable<ToolSet.OptionTypeRow> optionTypes, PriceTypes priceType)
         {
             _itinerarySet = itinerarySet;
+            _priceType = priceType;
 
             if (Columns.Count == 0)
                 BuildTableSchema(itinerarySet.ItineraryPax, optionTypes);
@@ -72,7 +75,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                      new DataColumn("BookingDate", typeof (DateTime)),
                                      new DataColumn("Category", typeof (String)),
                                      new DataColumn("ChargeType", typeof (String)),
-                                     new DataColumn("Gross", typeof (Decimal))
+                                     new DataColumn("Price", typeof (Decimal))
                                  });
 
             // pax columns
@@ -178,8 +181,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 // populate money values columns
                 if (addPaxItem)
                 {
-                    var totalGross = item.GrossTotalConverted;//.Gross*(decimal) item.NumberOfDays;
-                    row["Gross"] = totalGross + (row["Gross"] != DBNull.Value ? (decimal)row["Gross"] : 0);
+                    var price = GetItemPrice(item);//.Gross*(decimal) item.NumberOfDays;
+                    var currentTotal = row["Price"] != DBNull.Value ? (decimal) row["Price"] : 0;
+                    row["Price"] = currentTotal + price;
                     RowPopulatePaxColumns(row, item, costType);
                 }
                 if (addSupplimentItem)
@@ -214,11 +218,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (paxCol == null) continue;
 
                 var paxMultiplier = RowGetPaxChargeMultiplier(item, pax, costType);
-                var newVal = (double)item.GrossTotalConverted * paxMultiplier; //.Gross * item.NumberOfDays * paxMultiplier;
+                var price = (double)GetItemPrice(item) * paxMultiplier; //.Gross * item.NumberOfDays * paxMultiplier;
                 try
                 {
-                    var oldVal = row[paxCol] != DBNull.Value && !string.IsNullOrEmpty(row[paxCol].ToString().Trim()) ? Convert.ToDouble(row[paxCol]) : 0;
-                    row[paxCol] = oldVal + newVal;
+                    var currentTotal = row[paxCol] != DBNull.Value && !string.IsNullOrEmpty(row[paxCol].ToString().Trim()) ? Convert.ToDouble(row[paxCol]) : 0;
+                    row[paxCol] = currentTotal + price;
                 }
                 catch (InvalidCastException ex)
                 {
@@ -232,16 +236,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var supCol = GetSuppliementsColumn(item.OptionTypeID);
             if (supCol == null) return;
 
-            var newVal = item.GrossTotalConverted / supCol.Divisor; //.Gross / supCol.Divisor;
-            if (row["Gross"] != DBNull.Value)
+            var price = GetItemPrice(item) / supCol.Divisor; //.Gross / supCol.Divisor;
+            if (row["Price"] != DBNull.Value)
             {
-                var gross = (decimal) row["Gross"];
+                var basePrice = (decimal) row["Price"];
                 if (item.ChargeType == "ROOM")
-                    gross = gross / 2;
-                newVal = newVal - gross;
+                    basePrice = basePrice / 2;
+                price = price - basePrice;
             }
-            var oldVal = row[supCol] != DBNull.Value ? (decimal) row[supCol] : 0;
-            row[supCol] = oldVal + newVal;
+            var currentTotal = row[supCol] != DBNull.Value ? (decimal)row[supCol] : 0;
+            row[supCol] = currentTotal + price;
         }
 
         private static bool RowHasValues(DataRow row)
@@ -306,6 +310,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     Select(foc => foc.UnitsFree);
 
             return q.Count() > 0 ? q.Max() : 0;
+        }
+
+        private static decimal GetItemPrice(ItinerarySet.PurchaseItemRow item)
+        {
+            return _priceType == PriceTypes.Gross ? item.GrossTotalConverted : item.NetTotalConverted;
         }
 
         #endregion

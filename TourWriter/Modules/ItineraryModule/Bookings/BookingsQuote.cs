@@ -24,8 +24,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         public BookingsQuote()
         {
             InitializeComponent();
-        }
 
+            cmbPriceType.SelectedIndex = 0;
+            cmbPriceType.SelectedIndexChanged += delegate { DataBind(); };
+        }
+        
         private void BookingsQuote_VisibleChanged(object sender, EventArgs e)
         {
             if (!Visible || DesignMode) return;
@@ -35,9 +38,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void DataBind()
         {
-            var quote = new QuoteTable(ItinerarySet, Cache.ToolSet.OptionType);
-            quote.TablePopulate(ItinerarySet.PurchaseItem);
-            grid.DataSource = quote;
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                var priceType = cmbPriceType.SelectedItem.ToString().ToLower().Contains("gross") ? QuoteTable.PriceTypes.Gross : QuoteTable.PriceTypes.Net;
+                var quote = new QuoteTable(ItinerarySet, Cache.ToolSet.OptionType, priceType);
+                quote.TablePopulate(ItinerarySet.PurchaseItem);
+                grid.DataSource = quote;
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void grid_InitializeLayout(object sender, InitializeLayoutEventArgs e)
