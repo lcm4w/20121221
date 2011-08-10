@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using TourWriter.Utilities.Encryption;
 
 namespace TourWriter.UserControls.DatabaseConfig
@@ -37,6 +38,9 @@ namespace TourWriter.UserControls.DatabaseConfig
             InstallHelper.RunSql(string.Format(
                 "use TourWriter; insert into UserRole (UserID, RoleID, AddedBy) values ((select UserId from [User] where UserName = '{0}'), 1, 1)",
                 txtUser.Text.Trim()));
+
+            var name = Environment.MachineName + "TourWriter";
+            Connections.Add("local", name, name);
         }
 
         private bool IsValid()
@@ -58,33 +62,6 @@ namespace TourWriter.UserControls.DatabaseConfig
             return msg.Length == 0; 
         }
         
-        #region IConnectionControl members
-
-        public string GetServerName()
-        {
-            return Environment.MachineName + "\\TourWriter";
-        }
-
-        public string GetUserName()
-        {
-            return txtUser.Text.Trim();
-        }
-
-        public string GetPassword()
-        {
-            return txtPass.Text;
-        }
-
-        public string GetRemoteName()
-        {
-            return null;
-        }
-
-        public string GetRemoteConnection()
-        {
-            return null;
-        }
-        
         public bool ValidateAndFinalise()
         {
             if (!IsValid())
@@ -92,7 +69,5 @@ namespace TourWriter.UserControls.DatabaseConfig
             Save();
             return true;
         }
-
-        #endregion
     }
 }

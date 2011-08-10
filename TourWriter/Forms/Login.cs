@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Forms;
 using TourWriter.Info;
 using TourWriter.Properties;
+using TourWriter.UserControls.DatabaseConfig;
 using TourWriter.Utilities.Encryption;
 
 namespace TourWriter.Forms
@@ -81,19 +83,18 @@ namespace TourWriter.Forms
             getUserThread.RunWorkerAsync();
         }
 
-        private LoginResult Authenticate(string connection, string username, string password)
+        private LoginResult Authenticate(DbConnection connection, string username, string password)
         {
             LoginResult loginResult;
             authenticatedUser = null;
             var userSet = new UserSet();
 
-            // get user info.
             try
             {
-                if (connection == App.RemoteConnectionName)
-                    userSet.AuthenticateRemote(Settings.Default.RemoteConnection, username, EncryptionHelper.EncryptString(password));
+                if (connection.Type == "remote")
+                    userSet.AuthenticateRemote(connection.Data, username, EncryptionHelper.EncryptString(password));
                 else
-                    userSet.AuthenticateLocal(connection, username, EncryptionHelper.EncryptString(password));
+                    userSet.AuthenticateLocal(connection.Data, username, EncryptionHelper.EncryptString(password));
             }
             catch (Exception ex)
             {
@@ -209,22 +210,14 @@ namespace TourWriter.Forms
 
         private void ManageServers()
         {
-            var dbForm = new UserControls.DatabaseConfig.Ui(new UserControls.DatabaseConfig.Start());
+            var dbForm = new UserControls.DatabaseConfig.Ui(new UserControls.DatabaseConfig.Start(), Settings.Default.Connections);
             var dr = dbForm.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                var db = dbForm.DatabaseSetupResult;
-                if (db.IsLocalDatabase)
-                {
-                    AddServer(db.LocalServerName);
-                    txtUsername.Text = db.UserName;
-                }
-                else if (db.IsRemoteDatabase)
-                {
-                    AddServer(db.RemoteName);
-                    Settings.Default.RemoteConnection = db.RemoteConnection;
-                    Settings.Default.Save();
-                }
+                cmbServers.Items.Clear();
+                cmbServers.Items.AddRange(Settings.Default.Connections.Select(x => x.Name).OrderBy(x => x).ToArray());
+                foreach (var item in cmbServers.Items.Cast<object>().Where(item => item.ToString() == Settings.Default.Connections.Last().Name))
+                    cmbServers.SelectedItem = item.ToString();
             }
         }
 
@@ -254,39 +247,40 @@ namespace TourWriter.Forms
 
         private void LoadSettings()
         {
+            if (Settings.Default.Connections == null)
+                Settings.Default.Connections = new DbConnections();
+            MigrateSetting(); //  TODO: remove this migration, added 10 Aug 2011
+            
             txtUsername.Text = Settings.Default.Username;
-
-            // Set server name
-            if (Settings.Default.ServerNameHistory == null)
-                Settings.Default.ServerNameHistory = new System.Collections.Specialized.StringCollection();
-            if (Settings.Default.ServerNameHistory.Count > 0)
-            {
-                string[] servers = new string[Settings.Default.ServerNameHistory.Count];
-                Settings.Default.ServerNameHistory.CopyTo(servers, 0);
-                cmbServers.Items.AddRange(servers);
-            }
-            if (cmbServers.Items.Count > 0)
-                cmbServers.SelectedIndex = 0;
+            cmbServers.Items.AddRange(Settings.Default.Connections.Select(x => x.Name).OrderBy(x => x).ToArray());
+            foreach (var item in cmbServers.Items.Cast<object>().Where(item => item.ToString() == Settings.Default.DefaultConnection))
+                cmbServers.SelectedItem = item.ToString();
         }
 
         private void SaveSettings()
         {
-            if (txtUsername.Text.Trim().Length > 0)
-                Settings.Default.Username = txtUsername.Text;
+            App.Servername = cmbServers.SelectedItem.ToString();
 
-            if (!string.IsNullOrEmpty(cmbServers.Text.Trim()))
-            {
-                string serverName = cmbServers.Text;
-                Settings.Default.ServerNameHistory.Remove(serverName);
-                Settings.Default.ServerNameHistory.Insert(0, serverName);
-                if (Settings.Default.ServerNameHistory.Count == 5) // limit items to 5
-                    Settings.Default.ServerNameHistory.RemoveAt(4);
-            }
+            Settings.Default.Username = txtUsername.Text;
+            Settings.Default.DefaultConnection = cmbServers.SelectedItem.ToString();
             Settings.Default.Save();
-
-            App.Servername = cmbServers.Text;
         }
 
+        private static void MigrateSetting()
+        {
+            if (Settings.Default.Connections.Count > 0 || Settings.Default.ServerNameHistory.Count == 0) return;
+
+            // just get last connection (to clean up old list)
+            var connection = Settings.Default.ServerNameHistory[0];
+            Settings.Default.Connections.Add((connection == App.RemoteConnectionName) ? "remote" : "local",
+                                             connection,
+                                             (connection == App.RemoteConnectionName) ? Settings.Default.RemoteConnection : connection);
+
+            Settings.Default.DefaultConnection = connection;
+            Settings.Default.RemoteConnection = "";
+            Settings.Default.ServerNameHistory.Clear();
+            Settings.Default.Save();
+        }
         #endregion
         
         #region Events
@@ -306,12 +300,12 @@ namespace TourWriter.Forms
         void getUserThread_DoWork(object sender, DoWorkEventArgs e)
         {
             // Get server name on UI thread.
-            string connection = "";
-            string user = "";
-            string pass = "";
+            DbConnection connection = null;
+            var user = "";
+            var pass = "";
             Invoke(new MethodInvoker(delegate
                                          {
-                                             connection = cmbServers.Text;
+                                             connection = Settings.Default.Connections.Where(x => x.Name == cmbServers.SelectedItem.ToString()).FirstOrDefault();
                                              user = txtUsername.Text;
                                              pass = txtPassword.Text;
                                          }));

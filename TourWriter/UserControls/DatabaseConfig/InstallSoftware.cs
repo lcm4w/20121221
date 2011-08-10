@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -63,7 +64,6 @@ namespace TourWriter.UserControls.DatabaseConfig
             Thread.Sleep(delayAfter);
         }
         
-
         void ActionStart()
         {
             var error = "";
@@ -260,38 +260,9 @@ namespace TourWriter.UserControls.DatabaseConfig
             return Path.Combine(App.Path_TempFolder, "TourWriter.bak");
         }
 
-        #region IConnectionControl members
-        
-        public string GetServerName()
-        {
-            return Environment.MachineName + "\\TourWriter";
-        }
-
-        public string GetUserName()
-        {
-            return "";
-        }
-
-        public string GetPassword()
-        {
-            return "";
-        }
-
-        public string GetRemoteName()
-        {
-            return "";
-        }
-
-        public string GetRemoteConnection()
-        {
-            return "";
-        }
-
         public bool ValidateAndFinalise()
         {
             return true;
         }
-
-        #endregion
     }
 }

@@ -721,6 +721,7 @@
     <Compile Include="UserControls\Accounting\AccountingGrid.Designer.cs">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DatabaseConfig\DatabaseConnection.cs" />
     <Compile Include="UserControls\DatabaseConfig\InstallConfigure.cs">
       <SubType>UserControl</SubType>
     </Compile>

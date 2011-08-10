@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace TourWriter.UserControls.DatabaseConfig
                                   Location = new Point(txtName.Location.X, txtName.Location.Y + 20)
                               };
             Controls.Add(_lstServers);
-            _lstServers.SelectedIndexChanged += OnIndexChanged;
+            _lstServers.SelectedIndexChanged += OnServerSelected;
         }
         
         private void OnLoad(object sender, EventArgs e)
@@ -33,6 +34,29 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Enabled = false;
             NextControl = null;
             PrevControl = new Start();
+
+            NextButton.Click += delegate { SetServer(); }; // set server on Next/OK click
+
+            var conn = Connections.Where(x => x.Type == "local").FirstOrDefault();
+            if (conn != null) txtName.Text = conn.Name;
+        }
+
+        private void SetServer()
+        {
+            if (string.IsNullOrEmpty(txtName.Text.Trim())) return;
+
+            var name = txtName.Text.Trim();
+
+            // TODO: allow multi local db's?
+            var conn = Connections.Where(x => x.Type == "local").FirstOrDefault();
+            if (conn == null)
+            {
+                conn = new DbConnection();
+                Connections.Add(conn);
+            }
+            conn.Type = "local";
+            conn.Name = name;
+            conn.Data = name;
         }
 
         private void OnSearchClick(object sender, EventArgs e)
@@ -64,7 +88,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             }
         }
 
-        void OnIndexChanged(object sender, EventArgs e)
+        void OnServerSelected(object sender, EventArgs e)
         {
             if (_lstServers.SelectedItem == null) return;
             txtName.Text = _lstServers.SelectedItem.ToString();
@@ -75,32 +99,38 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Enabled = txtName.Text.Length > 0;
         }
         
+
         #region IConnectionControl members
 
-        public string GetServerName()
-        {
-            return txtName.Text;
-        }
+        //public string GetServerName()
+        //{
+        //    return txtName.Text;
+        //}
 
-        public string GetUserName()
-        {
-            return null;
-        }
+        //public string GetUserName()
+        //{
+        //    return null;
+        //}
 
-        public string GetPassword()
-        {
-            return null;
-        }
+        //public string GetPassword()
+        //{
+        //    return null;
+        //}
 
-        public string GetRemoteName()
-        {
-            return null;
-        }
+        //public string GetRemoteName()
+        //{
+        //    return null;
+        //}
 
-        public string GetRemoteConnection()
-        {
-            return null;
-        }
+        //public string GetRemoteConnection()
+        //{
+        //    return null;
+        //}
+        
+        //public StringDictionary GetRemoteServers()
+        //{
+        //    return null;
+        //}
         
         public bool ValidateAndFinalise()
         {

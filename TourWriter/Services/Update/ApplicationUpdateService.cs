@@ -33,10 +33,6 @@ namespace TourWriter.Services.Update
 
         private static void UpdateTimerFired(object state)
         {
-            // disables database updates ****************
-            if (App.DisableDatabaseUpdateScripts) return;
-            // ******************************************
-
             if (updateProcessRunning) return;
             try
             {

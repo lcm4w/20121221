@@ -47,7 +47,7 @@ namespace TourWriter.Services.Update
             try
             {
                 var requiredUpgrades = GetRequiredUpdateScripts(VersionInfo.GetDatabaseVersion());
-                if (requiredUpgrades.Count > 0)
+                if (requiredUpgrades.Count > 0 && App.AskIfUpdateDatabase())
                 {
                     PerformUpdates(requiredUpgrades);
                     PerformPostUpdateTasks();

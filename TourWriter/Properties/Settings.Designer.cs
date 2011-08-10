@@ -399,5 +399,28 @@ namespace TourWriter.Properties {
                 this["LastAccountingDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::TourWriter.UserControls.DatabaseConfig.DbConnections Connections {
+            get {
+                return ((global::TourWriter.UserControls.DatabaseConfig.DbConnections)(this["Connections"]));
+            }
+            set {
+                this["Connections"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultConnection {
+            get {
+                return ((string)(this["DefaultConnection"]));
+            }
+            set {
+                this["DefaultConnection"] = value;
+            }
+        }
     }
 }

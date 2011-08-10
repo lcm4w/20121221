@@ -33,7 +33,6 @@ namespace TourWriter
         internal const string PricingOptionGrossCommissionText = "gc";
         internal const string RemoteConnectionName = "(custom server)";
         internal const string AdminUserName = "admin";
-        internal const bool DisableDatabaseUpdateScripts = false; // **** FOR TESTING ONLY: set to 'true' to disable database updates ****        
 
         // move to a different class if possible
         internal static string GetMarginOverrideSelectionMessage(string marginOverride, string minOrMax)
@@ -1142,6 +1141,23 @@ namespace TourWriter
 
             return MessageBox.Show(msg, MessageCaption, MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
+        }
+
+        internal static bool AskIfUpdateDatabase()
+        {
+            if (Properties.Settings.Default.Connections.Count <= 1) return true; // single db, go ahead and auto update
+
+            const string msg = @"**  DATABASE UPDATE WARNING  **
+
+TourWriter is about to update the current database.
+
+Normally this is fine, and we are only asking because you appear to have multiple database connections in your login servers list. 
+So if this is your database...
+
+Are you sure you want to update this database?
+";
+            return MessageBox.Show(msg, "TourWriter Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes &&
+                   MessageBox.Show("Update database now?", "TourWriter Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes;
         }
 
 

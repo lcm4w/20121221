@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Windows.Forms;
 using TourWriter.Properties;
 
@@ -6,11 +7,14 @@ namespace TourWriter.UserControls.DatabaseConfig
 {
     public partial class Ui : Form
     {
-        public Ui(UserControl defaultControl)
+        protected DbConnections Connections;
+
+        public Ui(UserControl defaultControl, DbConnections connections)
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;
 
+            Connections = connections;
             LoadControl(defaultControl);
         }
 
@@ -27,7 +31,6 @@ namespace TourWriter.UserControls.DatabaseConfig
         /// </summary>
         internal Button EndButton { get { return btnCancel; } }
 
-        internal DatabaseSetupResult DatabaseSetupResult;
         internal UserControl NextControl { get; set; }
         internal UserControl PrevControl { get; set; }
         
@@ -36,6 +39,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             panel1.Controls.Clear();
             if (control != null)
             {
+                (control as UiControlBase).Connections = Connections;
                 control.Dock = DockStyle.Fill;
                 panel1.Controls.Add(control);
             }
@@ -63,7 +67,6 @@ namespace TourWriter.UserControls.DatabaseConfig
             var control = panel1.Controls[0] as IConnectionControl;
             if (control.ValidateAndFinalise())
             {
-                DatabaseSetupResult = new DatabaseSetupResult(control);
                 DialogResult = DialogResult.OK;
             }
         }
@@ -72,8 +75,7 @@ namespace TourWriter.UserControls.DatabaseConfig
         {
             LoadControl(control);
         }
-
-
+        
         private void OnPrevClick(object sender, EventArgs e)
         {
             GoBack();
@@ -87,34 +89,6 @@ namespace TourWriter.UserControls.DatabaseConfig
         private void OnCancelClick(object sender, EventArgs e)
         {
             GoCancel();
-        }
-    }
-
-    public class DatabaseSetupResult
-    {
-        internal string UserName { get; private set; }
-        internal string Password { get; set; }
-        internal string LocalServerName { get; set; } // Environment.MachineName;
-        internal string RemoteName { get; set; }
-        internal string RemoteConnection { get; set; }
-
-        public DatabaseSetupResult(IConnectionControl connectionControl)
-        {
-            UserName = connectionControl.GetUserName();
-            Password = connectionControl.GetPassword();
-            LocalServerName = connectionControl.GetServerName();
-            RemoteName = connectionControl.GetRemoteName();
-            RemoteConnection = connectionControl.GetRemoteConnection();
-        }
-
-        internal bool IsLocalDatabase
-        {
-            get { return !string.IsNullOrEmpty(LocalServerName); }
-        }
-
-        internal bool IsRemoteDatabase
-        {
-            get { return !string.IsNullOrEmpty(RemoteConnection); }
         }
     }
 }
