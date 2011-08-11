@@ -2,9 +2,9 @@
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class Start : UiControlBase
+    public partial class StartPage : UiControlBase
     {
-        public Start()
+        public StartPage()
         {
             InitializeComponent();
         }
@@ -18,19 +18,19 @@ namespace TourWriter.UserControls.DatabaseConfig
 
         private void OnLocalClick(object sender, EventArgs e)
         {
-            NextControl = new Local();
+            NextControl = new LocalSettings();
             GoNext();
         }
 
         private void OnRemoteClick(object sender, EventArgs e)
         {
-            NextControl = new Remote();
+            NextControl = new RemoteSettings();
             GoNext();
         }
 
         private void OnInstallClick(object sender, EventArgs e)
         {
-            NextControl = new InstallOptions();
+            NextControl = new InstallChooseOptions();
             GoNext();
         }
     }

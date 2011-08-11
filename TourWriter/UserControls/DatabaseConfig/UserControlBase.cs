@@ -5,7 +5,7 @@ namespace TourWriter.UserControls.DatabaseConfig
     public class UiControlBase : UserControl
     {
         internal DbConnections Connections { get; set; }
-        protected new Ui ParentForm { get { return Parent.Parent as Ui; } }
+        protected new DatabaseMain ParentForm { get { return Parent.Parent as DatabaseMain; } }
         protected Button BackButton { get { return ParentForm.BackButton; } }
         protected Button NextButton { get { return ParentForm.NextButton; } }
         protected Button CancelButton { get { return ParentForm.EndButton; } }

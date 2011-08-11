@@ -4,9 +4,9 @@ using TourWriter.Utilities.Encryption;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class InstallConfigure : UiControlBase, IConnectionControl
+    public partial class InstallFinalConfiguration : UiControlBase, IConnectionControl
     {
-        public InstallConfigure()
+        public InstallFinalConfiguration()
         {
             InitializeComponent();
             lblMsg.Visible = false;

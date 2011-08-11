@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class InstallSoftware : UiControlBase, IConnectionControl
+    public partial class InstallDatabaseSoftware : UiControlBase, IConnectionControl
     {
         private WebClient _downloader;
         internal string InstallFile { get; set; }
         internal string RestoreFile { get; set; }
 
-        public InstallSoftware()
+        public InstallDatabaseSoftware()
         {
             InitializeComponent();
         }
@@ -31,10 +31,10 @@ namespace TourWriter.UserControls.DatabaseConfig
             BackButton.Enabled = false;
             CancelButton.Enabled = false;
 
-            var configureControl = new InstallOptions();
+            var configureControl = new InstallChooseOptions();
             configureControl.RestoreUserOptions(InstallFile, RestoreFile);
             PrevControl = configureControl;
-            NextControl = new InstallConfigure();
+            NextControl = new InstallFinalConfiguration();
 
             ActionStart();
         }

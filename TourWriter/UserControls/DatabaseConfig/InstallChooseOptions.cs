@@ -4,15 +4,15 @@ using System.Windows.Forms;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class InstallOptions : UiControlBase
+    public partial class InstallChooseOptions : UiControlBase
     {
-        private readonly InstallSoftware _installerControl;
+        private readonly InstallDatabaseSoftware _installerControl;
 
-        public InstallOptions()
+        public InstallChooseOptions()
         {
             InitializeComponent();
 
-            _installerControl = new InstallSoftware(); // need ref to set install file later
+            _installerControl = new InstallDatabaseSoftware(); // need ref to set install file later
             groupBox1.Visible = false;
             var is64 = InstallHelper.Is64BitOperatingSystem();
             rd64.Checked = is64;
@@ -49,7 +49,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Text = "Install";
             NextButton.Enabled = true;
             NextControl = _installerControl;
-            PrevControl = new Start();
+            PrevControl = new StartPage();
 
             CheckPrereqs();
         }

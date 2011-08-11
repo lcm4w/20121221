@@ -1,6 +1,6 @@
 ﻿namespace TourWriter.UserControls.DatabaseConfig
 {
-    partial class Local
+    partial class LocalSettings
     {
         /// <summary> 
         /// Required designer variable.

@@ -7,11 +7,11 @@ using System.Windows.Forms;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class Local : UiControlBase, IConnectionControl
+    public partial class LocalSettings : UiControlBase, IConnectionControl
     {
         private readonly ListBox _lstServers;
 
-        public Local()
+        public LocalSettings()
         {
             InitializeComponent();
 
@@ -33,7 +33,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Text = "OK";
             NextButton.Enabled = false;
             NextControl = null;
-            PrevControl = new Start();
+            PrevControl = new StartPage();
 
             NextButton.Click += delegate { SetServer(); }; // set server on Next/OK click
 

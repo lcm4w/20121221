@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Specialized;
 using System.Windows.Forms;
 using TourWriter.Properties;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class Ui : Form
+    public partial class DatabaseMain : Form
     {
         protected DbConnections Connections;
 
-        public Ui(UserControl defaultControl, DbConnections connections)
+        public DatabaseMain(UserControl defaultControl, DbConnections connections)
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;

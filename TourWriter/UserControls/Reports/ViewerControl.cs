@@ -110,7 +110,6 @@ namespace TourWriter.UserControls.Reports
             }
         }
 
-
         private void ShowOptionsForm()
         {
             if (ReportOptions.ShowDialog() == DialogResult.OK)

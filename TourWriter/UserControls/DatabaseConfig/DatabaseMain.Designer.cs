@@ -1,6 +1,6 @@
 ﻿namespace TourWriter.UserControls.DatabaseConfig
 {
-    partial class Ui
+    partial class DatabaseMain
     {
         /// <summary>
         /// Required designer variable.

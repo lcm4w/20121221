@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace TourWriter.UserControls.DatabaseConfig
 {
-    public partial class Remote : UiControlBase, IConnectionControl
+    public partial class RemoteSettings : UiControlBase, IConnectionControl
     {
         private StringDictionary _servers;
  
-        public Remote()
+        public RemoteSettings()
         {
             InitializeComponent();
         }
@@ -23,7 +23,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Text = "OK";
             NextButton.Enabled = false;
             NextControl = null;
-            PrevControl = new Start();
+            PrevControl = new StartPage();
             
             lnkAdd.Visible = lnkClear.Visible = lnkNext.Visible = lnkPrev.Visible = App.IsDebugMode;
 

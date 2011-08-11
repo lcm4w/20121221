@@ -1,6 +1,6 @@
 ﻿namespace TourWriter.UserControls.DatabaseConfig
 {
-    partial class Remote
+    partial class RemoteSettings
     {
         /// <summary> 
         /// Required designer variable.

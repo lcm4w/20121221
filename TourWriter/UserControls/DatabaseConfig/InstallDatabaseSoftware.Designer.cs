@@ -1,6 +1,6 @@
 ﻿namespace TourWriter.UserControls.DatabaseConfig
 {
-    partial class InstallSoftware
+    partial class InstallDatabaseSoftware
     {
         /// <summary> 
         /// Required designer variable.
