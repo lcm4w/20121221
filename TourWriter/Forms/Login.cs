@@ -274,7 +274,7 @@ namespace TourWriter.Forms
             var connection = Settings.Default.ServerNameHistory[0];
             Settings.Default.Connections.Add((connection == App.RemoteConnectionName) ? "remote" : "local",
                                              connection,
-                                             (connection == App.RemoteConnectionName) ? Settings.Default.RemoteConnection : connection);
+                                             (connection == App.RemoteConnectionName) ? Settings.Default.RemoteConnection.Replace(" ", "\r\n") : connection);
 
             Settings.Default.DefaultConnection = connection;
             Settings.Default.RemoteConnection = "";

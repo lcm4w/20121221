@@ -34,7 +34,7 @@
             this.txtInfo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblName = new System.Windows.Forms.Label();
             this.lnkAdd = new System.Windows.Forms.LinkLabel();
             this.lnkClear = new System.Windows.Forms.LinkLabel();
             this.lnkNext = new System.Windows.Forms.LinkLabel();
@@ -101,20 +101,20 @@
             this.txtName.Size = new System.Drawing.Size(383, 20);
             this.txtName.TabIndex = 29;
             // 
-            // label1
+            // lblName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 111);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Name";
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(13, 111);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(35, 13);
+            this.lblName.TabIndex = 30;
+            this.lblName.Text = "Name";
             // 
             // lnkAdd
             // 
             this.lnkAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lnkAdd.AutoSize = true;
-            this.lnkAdd.Location = new System.Drawing.Point(12, 274);
+            this.lnkAdd.Location = new System.Drawing.Point(12, 270);
             this.lnkAdd.Name = "lnkAdd";
             this.lnkAdd.Size = new System.Drawing.Size(26, 13);
             this.lnkAdd.TabIndex = 31;
@@ -126,7 +126,7 @@
             // 
             this.lnkClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lnkClear.AutoSize = true;
-            this.lnkClear.Location = new System.Drawing.Point(42, 274);
+            this.lnkClear.Location = new System.Drawing.Point(42, 270);
             this.lnkClear.Name = "lnkClear";
             this.lnkClear.Size = new System.Drawing.Size(38, 13);
             this.lnkClear.TabIndex = 32;
@@ -136,9 +136,9 @@
             // 
             // lnkNext
             // 
-            this.lnkNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lnkNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkNext.AutoSize = true;
-            this.lnkNext.Location = new System.Drawing.Point(397, 274);
+            this.lnkNext.Location = new System.Drawing.Point(397, 270);
             this.lnkNext.Name = "lnkNext";
             this.lnkNext.Size = new System.Drawing.Size(36, 13);
             this.lnkNext.TabIndex = 34;
@@ -148,9 +148,9 @@
             // 
             // lnkPrev
             // 
-            this.lnkPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lnkPrev.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkPrev.AutoSize = true;
-            this.lnkPrev.Location = new System.Drawing.Point(359, 274);
+            this.lnkPrev.Location = new System.Drawing.Point(359, 270);
             this.lnkPrev.Name = "lnkPrev";
             this.lnkPrev.Size = new System.Drawing.Size(37, 13);
             this.lnkPrev.TabIndex = 33;
@@ -158,7 +158,7 @@
             this.lnkPrev.Text = "< prev";
             this.lnkPrev.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrev_LinkClicked);
             // 
-            // Remote
+            // RemoteSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -166,14 +166,14 @@
             this.Controls.Add(this.lnkPrev);
             this.Controls.Add(this.lnkClear);
             this.Controls.Add(this.lnkAdd);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.label2);
-            this.Name = "Remote";
+            this.Name = "RemoteSettings";
             this.Size = new System.Drawing.Size(444, 294);
             this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -190,7 +190,7 @@
         private System.Windows.Forms.TextBox txtInfo;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.LinkLabel lnkAdd;
         private System.Windows.Forms.LinkLabel lnkClear;
         private System.Windows.Forms.LinkLabel lnkNext;
