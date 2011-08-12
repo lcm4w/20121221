@@ -284,9 +284,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     {
                        // return memberCount != 0 ? staffRooms / memberCount : 0;
 
+                        double memCount = pax.MemberCount;
+
                         return
-                            (item.ChargeType == "ROOM") ? (memberCount != 0 ? staffRooms / memberCount : 0) :
-                            (item.ChargeType == "PAX") ? (memberCount != 0 ? staffCount / memberCount : 0) :
+                            (item.ChargeType == "ROOM") ? (memCount != 0 ? staffRooms / memCount : 0) :
+                            (item.ChargeType == "PAX") ? (memCount != 0 ? staffCount / memCount : 0) :
                             0;
                     }
                 case CostTypes.Foc:
