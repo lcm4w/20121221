@@ -43,16 +43,11 @@ namespace TourWriter.Forms
 
         private void Login_Load(object sender, EventArgs e)
         {
-            // Check commandline input params
-            string[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 2) // account for exe path and update flag
-            {
-                ProcessInputArgs(args);
-                btnLogin.PerformClick();
-                return;
-            }
+            var args = Environment.GetCommandLineArgs();
+            ProcessInputArgs(args);
+            
             if (cmbServers.Items.Count == 0)
-                ManageServers(); // open connections UI.
+                ManageServers();
         }
 
         private void ProcessInputArgs(string[] args)
@@ -63,12 +58,21 @@ namespace TourWriter.Forms
             {
                 var arg = args[i];
 
-                if (arg == "/s" || arg == "-s")
-                    AddServer(args[++i]);
-                else if (arg == "/u" || arg == "-u")
-                    txtUsername.Text = args[++i];
-                else if (arg == "/p" || arg == "-p")
-                    txtPassword.Text = args[++i];
+                switch (arg)
+                {
+                    case "-s":
+                    case "/s":
+                        AddServer(args[++i]);
+                        break;
+                    case "-u":
+                    case "/u":
+                        txtUsername.Text = args[++i];
+                        break;
+                    case "-p":
+                    case "/p":
+                        txtPassword.Text = args[++i];
+                        break;
+                }
             }
         }
         
