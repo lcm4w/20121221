@@ -55,6 +55,8 @@ namespace TourWriter.Modules.ContactModule
             this.label31 = new System.Windows.Forms.Label();
             this.txtMobilePhone = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtJob = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtTitle = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.label22 = new System.Windows.Forms.Label();
             this.txtLastName = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
@@ -94,6 +96,7 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtHomePhone)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMobilePhone)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJob)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTitle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLastName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFirstName)).BeginInit();
@@ -120,15 +123,15 @@ namespace TourWriter.Modules.ContactModule
             this.ultraTabPageControl1.Controls.Add(this.groupBox1);
             this.ultraTabPageControl1.Controls.Add(this.txtDisplayName);
             this.ultraTabPageControl1.Controls.Add(this.lblDisplayName);
-            this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(643, 320);
             // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.Controls.Add(this.ultraButton3);
             this.groupBox4.Controls.Add(this.ultraButton2);
             this.groupBox4.Controls.Add(this.ultraButton1);
@@ -222,8 +225,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.label30);
             this.groupBox2.Controls.Add(this.txtFax);
             this.groupBox2.Controls.Add(this.label33);
@@ -305,6 +308,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtJob);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.txtTitle);
             this.groupBox1.Controls.Add(this.label22);
             this.groupBox1.Controls.Add(this.txtLastName);
@@ -317,6 +322,22 @@ namespace TourWriter.Modules.ContactModule
             this.groupBox1.TabIndex = 89;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Name";
+            // 
+            // txtJob
+            // 
+            this.txtJob.Location = new System.Drawing.Point(44, 96);
+            this.txtJob.Name = "txtJob";
+            this.txtJob.Size = new System.Drawing.Size(288, 21);
+            this.txtJob.TabIndex = 63;
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(8, 96);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 23);
+            this.label7.TabIndex = 64;
+            this.label7.Text = "Job";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtTitle
             // 
@@ -368,8 +389,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             // txtDisplayName
             // 
-            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(84, 12);
             this.txtDisplayName.Name = "txtDisplayName";
             this.txtDisplayName.Nullable = false;
@@ -418,8 +439,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             // txtPostName
             // 
-            this.txtPostName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPostName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPostName.Location = new System.Drawing.Point(96, 145);
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(541, 21);
@@ -429,8 +450,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.txtPostAddress.AcceptsReturn = true;
             this.txtPostAddress.AcceptsTab = true;
-            this.txtPostAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPostAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPostAddress.Location = new System.Drawing.Point(96, 171);
             this.txtPostAddress.Multiline = true;
             this.txtPostAddress.Name = "txtPostAddress";
@@ -441,8 +462,8 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.txtStreetAddress.AcceptsReturn = true;
             this.txtStreetAddress.AcceptsTab = true;
-            this.txtStreetAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtStreetAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtStreetAddress.Location = new System.Drawing.Point(96, 15);
             this.txtStreetAddress.Multiline = true;
             this.txtStreetAddress.Name = "txtStreetAddress";
@@ -498,9 +519,9 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.txtNotes.AcceptsReturn = true;
             this.txtNotes.AcceptsTab = true;
-            this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtNotes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNotes.Location = new System.Drawing.Point(8, 56);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
@@ -511,7 +532,7 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.ultraTabPageControl4.Controls.Add(this.label5);
             this.ultraTabPageControl4.Controls.Add(this.treeCategories);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(643, 320);
             // 
@@ -538,9 +559,9 @@ namespace TourWriter.Modules.ContactModule
             // 
             // tabControl_Main
             // 
-            this.tabControl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl_Main.BackColorInternal = System.Drawing.Color.WhiteSmoke;
             this.tabControl_Main.Controls.Add(this.ultraTabSharedControlsPage1);
             this.tabControl_Main.Controls.Add(this.ultraTabPageControl1);
@@ -598,7 +619,7 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.toolSave.Image = ((System.Drawing.Image)(resources.GetObject("toolSave.Image")));
             this.toolSave.Name = "toolSave";
-            this.toolSave.Size = new System.Drawing.Size(101, 22);
+            this.toolSave.Size = new System.Drawing.Size(106, 22);
             this.toolSave.Text = "&Save and Close";
             this.toolSave.Click += new System.EventHandler(this.toolSave_Click);
             // 
@@ -631,6 +652,7 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtMobilePhone)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtJob)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtTitle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLastName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtFirstName)).EndInit();
@@ -707,6 +729,8 @@ namespace TourWriter.Modules.ContactModule
         private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl4;
         private System.Windows.Forms.Label label5;
         private Infragistics.Win.UltraWinTree.UltraTree treeCategories;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtJob;
+        private System.Windows.Forms.Label label7;
 
     }
 }

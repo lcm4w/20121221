@@ -71,6 +71,7 @@ namespace TourWriter.Modules.ContactModule
             txtTitle.DataBindings.Add("Text", contactSet.Contact, "Title");
             txtFirstName.DataBindings.Add("Text", contactSet.Contact, "FirstName");
             txtLastName.DataBindings.Add("Text", contactSet.Contact, "LastName");
+            txtJob.DataBindings.Add("Text", contactSet.Contact, "JobDescription");
             txtNotes.DataBindings.Add("Text", contactSet.Contact, "Notes");
             txtBirthDate.DataBindings.Add("Text", contactSet.Contact, "BirthDate");
 
