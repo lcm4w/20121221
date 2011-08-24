@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourWriter.Reports", "TourW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourWriter.Utilities", "TourWriter.Utilities\TourWriter.Utilities.csproj", "{48976480-DA72-4F4A-95B8-458ED13153FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourWriter.Tests", "TourWriter.Tests\TourWriter.Tests.csproj", "{1A0672A8-5485-4143-9070-44C568F6D2D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,12 @@ Global
 		{48976480-DA72-4F4A-95B8-458ED13153FB}.Default|Any CPU.Build.0 = Debug|Any CPU
 		{48976480-DA72-4F4A-95B8-458ED13153FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48976480-DA72-4F4A-95B8-458ED13153FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A0672A8-5485-4143-9070-44C568F6D2D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

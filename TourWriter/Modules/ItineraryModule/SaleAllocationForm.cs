@@ -389,8 +389,12 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void btnSaleAdd_Click(object sender, EventArgs e)
         {
-            ItinerarySet.ItinerarySaleRow saleRow = itinerarySet.ItinerarySale.AddItinerarySaleRow(itinerarySet.Itinerary[0].ItineraryID, String.Empty, DateTime.Now, false);
+            var saleRow = itinerarySet.ItinerarySale.NewItinerarySaleRow();
+            saleRow.ItineraryID = itinerarySet.Itinerary[0].ItineraryID;
+            saleRow.SaleDate = DateTime.Now;
+            saleRow.IsLockedAccounting = false;
             saleRow.Comments = App.CreateUniqueNameValue(gridSales.Rows, "Comments", "New sale");
+            itinerarySet.ItinerarySale.AddItinerarySaleRow(saleRow);
 
             if (itinerarySet.ItinerarySale.Rows.Count > 1)
             {
