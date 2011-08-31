@@ -272,6 +272,7 @@ namespace TourWriter.Forms
 
         private static void MigrateSetting()
         {
+            if (Settings.Default.ServerNameHistory == null) return;
             if (Settings.Default.Connections.Count > 0 || Settings.Default.ServerNameHistory.Count == 0) return;
 
             // just get last connection (to clean up old list)
