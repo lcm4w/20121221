@@ -690,8 +690,6 @@
     <Compile Include="Modules\SupplierModule\SupplierMain.Designer.cs">
       <DependentUpon>SupplierMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\AccountingExport.cs" />
-    <Compile Include="Services\AccountingService.cs" />
     <Compile Include="Services\Accounting\CsvExportXero.cs" />
     <Compile Include="Services\Accounting\CsvExportBase.cs" />
     <Compile Include="Services\Accounting\CsvExportMyob.cs" />
