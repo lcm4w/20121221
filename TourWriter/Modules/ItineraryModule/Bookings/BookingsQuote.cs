@@ -77,6 +77,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Override.SupportDataErrorInfo = SupportDataErrorInfo.RowsAndCells;
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.ColumnChooserEnabled = DefaultableBoolean.True;
+            e.Layout.AutoFitStyle = AutoFitStyle.None;
 
             GridHelper.SetDefaultSummaryAppearance(e);
 

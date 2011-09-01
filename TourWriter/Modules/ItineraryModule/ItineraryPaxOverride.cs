@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using TourWriter.Info;
 using Infragistics.Win;
@@ -14,9 +10,9 @@ namespace TourWriter.Modules.ItineraryModule
 {
     public partial class ItineraryPaxOverride : Form
     {
-        private int _purchaseItemId;
-        private ItinerarySet _baseItinerarySet;
-        private ItinerarySet.ItineraryPaxDataTable _paxTable;
+        private readonly int _purchaseItemId;
+        private readonly ItinerarySet _baseItinerarySet;
+        private readonly ItinerarySet.ItineraryPaxDataTable _paxTable;
 
         public ItineraryPaxOverride(ItinerarySet.PurchaseItemRow purchaseItem)
         {
@@ -158,27 +154,32 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 var baseRow = _baseItinerarySet.ItineraryPax.Where(p => p.ItineraryPaxID == row.ItineraryPaxID).FirstOrDefault();
                 var ovrRow = _baseItinerarySet.ItineraryPaxOverride.Where(p => p.RowState != DataRowState.Deleted &&
-                    p.PurchaseItemID == _purchaseItemId && p.ItineraryPaxID == row.ItineraryPaxID).FirstOrDefault();
+                                                                               p.PurchaseItemID == _purchaseItemId &&
+                                                                               p.ItineraryPaxID == row.ItineraryPaxID).FirstOrDefault();
 
-                if (baseRow.MemberCount != row.MemberCount ||
-                    baseRow.MemberRooms != baseRow.MemberRooms ||
-                    baseRow.StaffCount != row.StaffCount ||
-                    baseRow.StaffRooms != row.StaffRooms)
+                var hasChanges = baseRow.MemberCount != row.MemberCount || baseRow.MemberRooms != baseRow.MemberRooms || 
+                                 baseRow.StaffCount != row.StaffCount || baseRow.StaffRooms != row.StaffRooms;
+
+                if (hasChanges)
                 {
-                    if (ovrRow == null)
+                    if (ovrRow == null) // add new row
                     {
                         ovrRow = _baseItinerarySet.ItineraryPaxOverride.NewItineraryPaxOverrideRow();
                         ovrRow.ItineraryPaxID = row.ItineraryPaxID;
                         ovrRow.PurchaseItemID = _purchaseItemId;
                         _baseItinerarySet.ItineraryPaxOverride.AddItineraryPaxOverrideRow(ovrRow);
                     }
+
+                    // add new values
                     ovrRow.MemberCount = row.MemberCount;
                     ovrRow.MemberRooms = row.MemberRooms;
                     ovrRow.StaffCount = row.StaffCount;
                     ovrRow.StaffRooms = row.StaffRooms;
                 }
-                else if (ovrRow != null)
+                else if (ovrRow != null) // delete row
+                {
                     ovrRow.Delete();
+                }
             }
             DialogResult = DialogResult.OK;
         }

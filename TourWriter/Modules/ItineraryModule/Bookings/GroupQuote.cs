@@ -201,8 +201,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             row.ItemArray = new[]
                                 {
                                     item.PurchaseItemID,
-                                    item.PurchaseLineRow.SupplierName,
-                                    item.ServiceName,
+                                    item.PurchaseLineRow.PurchaseLineName,
+                                    item.PurchaseItemName,
                                     item.ServiceTypeName,
                                     !item.IsStartDateNull() ? (object) item.StartDate : DBNull.Value,
                                     costType.ToString(),
