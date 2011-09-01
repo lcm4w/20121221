@@ -363,7 +363,8 @@ namespace TourWriter.Info
                 if (e.Column == NetUnitColumn ||
                     e.Column == GrossUnitColumn ||
                     e.Column == QuantityColumn ||
-                    e.Column == NumberOfDaysColumn)
+                    e.Column == NumberOfDaysColumn ||
+                    e.Column == DiscountUnitsColumn)
                 {
                     PurchaseItemRow purchaseItem = e.Row as PurchaseItemRow;
                     if (purchaseItem != null)

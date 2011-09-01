@@ -651,7 +651,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private bool ValidatePurchaseItem(ItinerarySet.PurchaseItemRow item)
         {
             // TODO: Hiding all for now - WIP. Booking dates part is good to go, discounts needs testing. 
-            return true;
+            //return true;
 
             var message = string.Empty;
 
@@ -671,15 +671,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // validate discount
             if (!item.IsDiscountTypeNull() && !item.IsDiscountUnitsNull())
             {
-                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && !x.IsDiscountTypeNull() && x.DiscountType == item.DiscountType );
-               
                 var unitsUsed = item.DiscountType == "foc" ? item.Quantity : item.NumberOfDays;
-                if (discounts.Count() > 0)
-                {
-                    var discount = discounts.Where(x => x.UnitsUsed > unitsUsed).OrderBy(x => x.UnitsUsed).First();
-                    if (item.DiscountUnits < discount.UnitsFree)
-                        message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
-                }
+
+                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && !x.IsDiscountTypeNull() && x.DiscountType == item.DiscountType);
+                discounts = discounts.Where(x => x.UnitsUsed <= unitsUsed).OrderByDescending(x => x.UnitsUsed);
+                decimal unitsFree = discounts.Count() > 0 ? discounts.First().UnitsFree : 0;
+                
+                if ((decimal)item.DiscountUnits != unitsFree)
+                    message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
             }
 
             item.RowError = message;
@@ -767,8 +766,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Layout.Bands[0].Columns.Add("BaseCurrency");
             if (!e.Layout.Bands[0].Columns.Exists("BookingCurrency"))
                 e.Layout.Bands[0].Columns.Add("BookingCurrency");
-            if (!e.Layout.Bands[0].Columns.Exists("Discount"))
-                e.Layout.Bands[0].Columns.Add("Discount");
 
             // Show/hide columns )
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
@@ -916,6 +913,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.Header.ToolTipText = "Quantity required";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellClickAction = CellClickAction.Edit;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.TabStop = true;
+                }
+                else if (c.Key == "DiscountUnits")
+                {
+                    //c.Hidden = true; c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
+                    c.Header.Caption = "Free";
+                    c.Header.ToolTipText = "Discount units (FOC or Stay-Pay)";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.CellClickAction = CellClickAction.Edit;
                     c.TabStop = true;
                 }
                 else if (c.Key == "Grade")
@@ -1038,13 +1045,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
                 }
-                else if (c.Key == "Discount")
-                {
-                    c.Hidden = true; c.ExcludeFromColumnChooser = ExcludeFromColumnChooser.True; // TODO: feature hidden for now
-                    c.Header.Caption = "Free";
-                    c.Header.ToolTipText = "Discount units (FOC or Stay-Pay)";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                }
                 else
                 {
                     c.Hidden = true;
@@ -1071,6 +1071,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["DefaultEndDate"].Width = 80;
             e.Layout.Bands[0].Columns["NumberOfDays"].Width = 30;
             e.Layout.Bands[0].Columns["Quantity"].Width = 30;
+            e.Layout.Bands[0].Columns["DiscountUnits"].Width = 32;
             e.Layout.Bands[0].Columns["Grade"].Width = 50;
             e.Layout.Bands[0].Columns["GradeExternal"].Width = 50;
             e.Layout.Bands[0].Columns["BaseCurrency"].Width = 40;
@@ -1082,7 +1083,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["GrossTotal"].Width = 120;
             e.Layout.Bands[0].Columns["NetFinal"].Width = 120;
             e.Layout.Bands[0].Columns["GrossFinal"].Width = 120;
-            e.Layout.Bands[0].Columns["Discount"].Width = 50;
 
             int index = 0;
 
@@ -1108,7 +1108,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["GrossUnit"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NumberOfDays"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Discount"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["DiscountUnits"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossTotal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
@@ -1191,8 +1191,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (e.Row.Band.Columns.Exists("GrossUnit")) e.Row.Cells["GrossUnit"].Value = string.Format(format, item.Gross);
                 if (e.Row.Band.Columns.Exists("NetTotal")) e.Row.Cells["NetTotal"].Value = string.Format(format, item.NetTotal);
                 if (e.Row.Band.Columns.Exists("GrossTotal")) e.Row.Cells["GrossTotal"].Value = string.Format(format, item.GrossTotal);
-
-                if (e.Row.Band.Columns.Exists("Discount")) e.Row.Cells["Discount"].Value = !item.IsDiscountUnitsNull() ? item.DiscountUnits.ToString() : ""; ;
 
                 // set final prices
                 var itinerary = item.PurchaseLineRow.ItineraryRow;
