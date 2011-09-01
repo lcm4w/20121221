@@ -101,32 +101,8 @@ namespace TourWriter.UserControls.Reports
             }
 
             // add the files for this category
-            foreach (var file in Cache.ToolSet.Template.Where(f => f.RowState != DataRowState.Deleted && f.ParentTemplateCategoryID == categoryId))
-            {
-                //------------------------------------------------------------------
-                // TODO: delete these from db (see end 2010.05.o4.sql) and remove this code. once new default reports have proved themselves.
-                // This skips the old default reports if new ones exist
-                if (treeReports.Nodes[0].Nodes.Count > 0 &&
-                   (file.FilePath == @"\Templates\Reports\General\ClientLocations.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\Itineraries by Agent.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\Itineraries by Country.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\Itineraries by ServiceType.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\Itineraries by Source.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\Itineraries by User.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\ItineraryYield.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\SupplierPurchases.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\General\SupplierRates.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\ClientPricing.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\ClientPricingDetailed.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\ContactList.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\PricingDetailed.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\PricingSummary.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\SupplierRemittance.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Itinerary\Voucher.rdlc" ||
-                    file.FilePath == @"\Templates\Reports\Supplier\WhoUsed.rdlc")) continue;
-                //------------------------------------------------------------------
-                AddReportNode(parent, file);
-            }
+            var files = Cache.ToolSet.Template.Where(f => f.RowState != DataRowState.Deleted && f.ParentTemplateCategoryID == categoryId);
+            foreach (var file in files) AddReportNode(parent, file);
         }
 
         private TreeNode AddReportNode(TreeNode parent, ToolSet.TemplateRow report)
