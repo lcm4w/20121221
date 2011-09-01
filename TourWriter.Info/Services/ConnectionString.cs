@@ -48,13 +48,20 @@ namespace TourWriter.Info.Services
             try { conn.Password = EncryptionHelper.DecryptString(conn.Password); } catch {}
             _connectionString = conn.ToString();
         }
-
+        
         internal static string GetConnectionString()
+        {
+            return GetConnectionString(null);
+        }
+
+        internal static string GetConnectionString(int? timeout)
         {
             if (_connectionString == "")
                 throw new ArgumentNullException(_connectionString, "Database connection string is not initialized.");
-
-            return _connectionString;
+            
+            return timeout.HasValue ? 
+                new SqlConnectionStringBuilder(_connectionString) {ConnectTimeout = (int) timeout}.ToString() : 
+                _connectionString;
         }
 
         internal static string GetSaConnectionString()

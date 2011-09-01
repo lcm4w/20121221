@@ -160,7 +160,7 @@ namespace TourWriter.UserControls.Accounting
             
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from PurchaseItemPaymentsDetail where {1}", cols, GetSqlFilter("Purchases"));
-            _purchasesDs = DataSetHelper.FillDataSetFromSql(sql);
+            _purchasesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
 
             // apply data formatting
             App.PrepareDataTableForExport(_purchasesDs.Tables[0]);
@@ -173,7 +173,7 @@ namespace TourWriter.UserControls.Accounting
             
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from ItinerarySaleDetail where {1}", cols, GetSqlFilter("Sales"));
-            _salesDs = DataSetHelper.FillDataSetFromSql(sql);
+            _salesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
 
             // apply data formatting
             App.PrepareDataTableForExport(_salesDs.Tables[0]);
@@ -185,7 +185,7 @@ namespace TourWriter.UserControls.Accounting
                 "select ServiceTypeID, Gross from ItineraryServiceTypeDetail where ItineraryID = {0}", _itinerarySet.Itinerary[0].ItineraryID);
 
             _cachedServiceTypes = null;
-            _cachedServiceTypes = DataSetHelper.FillDataSetFromSql(sql);
+            _cachedServiceTypes = DataSetHelper.FillDataSetFromSql(sql, 120);
         }
         
         private void ExportPurchases()

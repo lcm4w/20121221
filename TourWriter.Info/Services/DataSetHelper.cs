@@ -56,12 +56,16 @@ namespace TourWriter.Info.Services
         /// <returns>Dataset containing the sql text result set.</returns>
         public static DataSet FillDataSetFromSql(string sql, params SqlParameter[] parameters)
         {
-            DataSet ds = new DataSet();
-            SqlHelper.FillDataset(ConnectionString.GetConnectionString(), CommandType.Text,
-                sql, ds, new []{"table1"}, parameters);
+            return FillDataSetFromSql(sql, null, parameters);
+        }
+        public static DataSet FillDataSetFromSql(string sql, int? timeout, params SqlParameter[] parameters)
+        {
+            var ds = new DataSet();
+            SqlHelper.FillDataset(ConnectionString.GetConnectionString(timeout), CommandType.Text,
+                sql, ds, new[] { "table1" }, parameters);
             return ds;
         }
-
+        
         /// <summary>
         /// Fills a dataset with the result set from a stored procedure.
         /// </summary>
