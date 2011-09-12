@@ -396,7 +396,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var service = option.RateRow.ServiceRow;
 
                 // set discounts here, after user might have edited qty or nigts
-                var discount = item.GetLatestDiscountRow();
+                var discount = item.GetBestDiscountRow();
                 if (discount != null)
                 {
                     item.DiscountUnits = discount.UnitsFree;

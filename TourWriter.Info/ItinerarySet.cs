@@ -578,19 +578,28 @@ namespace TourWriter.Info
             }
 
 
-            public DiscountRow GetLatestDiscountRow()
+            public DiscountRow GetBestDiscountRow()
             {
-                var unitsUsed = DiscountType == "foc" ? Quantity : NumberOfDays;
+                // WARNING: see 3 hacks below....
+
+                // TODO: hack - not handling FOC vs Pay-Stay
+                var unitsUsed = Quantity; // DiscountType == "foc" ? Quantity : NumberOfDays;
 
                 var serivceDiscounts = ((ItinerarySet)Table.DataSet).Discount.Where(x =>
                     x.RowState != DataRowState.Deleted &&
                     x.ServiceID == ServiceID);
 
                 var discounts = serivceDiscounts.Where(x =>
-                    !x.IsDiscountTypeNull() && x.DiscountType == DiscountType &&
+                    //!x.IsDiscountTypeNull() && x.DiscountType == DiscountType && // TODO: hack - not handling FOC vs Pay-Stay
                     x.UnitsUsed <= unitsUsed).OrderByDescending(x => x.UnitsUsed);
 
-                return discounts.FirstOrDefault();
+                var discount = discounts.FirstOrDefault();
+
+                // TODO: hack - not handling FOC vs Pay-Stay
+                if (discount != null && discount.IsDiscountTypeNull())
+                    discount.DiscountType = "foc";
+
+                return discount;
             }
         }
 

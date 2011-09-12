@@ -669,7 +669,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             // validate discount
-            var discount = item.GetLatestDiscountRow();
+            var discount = item.GetBestDiscountRow();
             var refresh = discount != null ? (decimal)discount.UnitsFree : 0;
             var current = !item.IsDiscountUnitsNull() ? (decimal)item.DiscountUnits : 0;
             if (current != refresh) message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
