@@ -669,22 +669,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             // validate discount
-            if (!item.IsDiscountTypeNull() && !item.IsDiscountUnitsNull())
-            {
-                var unitsUsed = item.DiscountType == "foc" ? item.Quantity : item.NumberOfDays;
-
-                var discounts = itinerarySet.Discount.Where(x => x.ServiceID == item.ServiceID && !x.IsDiscountTypeNull() && x.DiscountType == item.DiscountType);
-                discounts = discounts.Where(x => x.UnitsUsed <= unitsUsed).OrderByDescending(x => x.UnitsUsed);
-                decimal unitsFree = discounts.Count() > 0 ? discounts.First().UnitsFree : 0;
-                
-                if ((decimal)item.DiscountUnits != unitsFree)
-                    message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
-            }
-
+            var discount = item.GetLatestDiscountRow();
+            var refresh = discount != null ? (decimal)discount.UnitsFree : 0;
+            var current = !item.IsDiscountUnitsNull() ? (decimal)item.DiscountUnits : 0;
+            if (current != refresh) message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
+            
             item.RowError = message;
             return message.Length == 0;
         }
-
+        
         private void SetFlags(UltraGridRow row)
         {
             var purchaseItemId = (int)row.Cells["PurchaseItemID"].Value;

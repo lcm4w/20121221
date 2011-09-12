@@ -431,9 +431,6 @@ namespace TourWriter.Info
                 ItinerarySet itinerarySet = DataSet as ItinerarySet;
                 if (itinerarySet != null)
                     itinerarySet.AddLookupRows(lookupSupplierSet, optionId);
-
-                SupplierSet.DiscountRow discountRow =
-                    lookupSupplierSet.Discount.Where(x => x.RowState != DataRowState.Deleted && x.ServiceID == serviceId).FirstOrDefault();
                 
                 // Add new row.
                 PurchaseItemRow item = NewPurchaseItemRow();
@@ -465,11 +462,8 @@ namespace TourWriter.Info
                 item.IsDefaultOptionType = isDefault;
                 item.CurrencyCode = currencyCode;
 
-                if (discountRow != null)
-                {
-                    item.DiscountType = discountRow.DiscountType;
-                    item.DiscountUnits = discountRow.UnitsFree;
-                }
+                // discounts
+                // NO: not here, user has not yet entered qty and/or nights
 
                 RegisterEvents();
                 AddPurchaseItemRow(item);
@@ -581,6 +575,22 @@ namespace TourWriter.Info
                 decimal numberOfDays = !IsNumberOfDaysNull() ? (decimal)NumberOfDays : 1;
                 decimal discount = !IsDiscountUnitsNull() ? (decimal)DiscountUnits : 0;
                 return (quantity * numberOfDays) - discount;
+            }
+
+
+            public DiscountRow GetLatestDiscountRow()
+            {
+                var unitsUsed = DiscountType == "foc" ? Quantity : NumberOfDays;
+
+                var serivceDiscounts = ((ItinerarySet)Table.DataSet).Discount.Where(x =>
+                    x.RowState != DataRowState.Deleted &&
+                    x.ServiceID == ServiceID);
+
+                var discounts = serivceDiscounts.Where(x =>
+                    !x.IsDiscountTypeNull() && x.DiscountType == DiscountType &&
+                    x.UnitsUsed <= unitsUsed).OrderByDescending(x => x.UnitsUsed);
+
+                return discounts.FirstOrDefault();
             }
         }
 
@@ -968,13 +978,9 @@ namespace TourWriter.Info
             }
 
             // add service FOCs
-            int serviceId = supplierSet.Option.FindByOptionID(optionId).RateRow.ServiceID;
-            var focs = from foc in supplierSet.Discount
-                    where foc.ServiceID == serviceId
-                    select foc;
-            foreach(var row in focs)
+            var serviceId = supplierSet.Option.FindByOptionID(optionId).RateRow.ServiceID;
+            foreach (var row in Enumerable.Where(supplierSet.Discount.Where(x => x.ServiceID == serviceId), row => Discount.FindByDiscountID(row.DiscountID) == null))
             {
-                if (Discount.FindByDiscountID(row.DiscountID) != null) continue;
                 Discount.Rows.Add(row.DiscountID, row.ServiceID, row.UnitsUsed, row.UnitsFree);
                 Discount.Rows[Discount.Rows.Count - 1].AcceptChanges();
             }

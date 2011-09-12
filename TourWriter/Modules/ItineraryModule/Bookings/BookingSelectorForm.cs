@@ -389,14 +389,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 return;
             }
 
-            foreach (ItinerarySet.PurchaseItemRow item in tempItinerarySet.PurchaseItem)
+            foreach (var item in tempItinerarySet.PurchaseItem)
             {
                 if (item == null) continue;
                 var option = supplierSet.Option.FindByOptionID(item.OptionID);
                 var service = option.RateRow.ServiceRow;
 
+                // set discounts here, after user might have edited qty or nigts
+                var discount = item.GetLatestDiscountRow();
+                if (discount != null)
+                {
+                    item.DiscountUnits = discount.UnitsFree;
+                    item.DiscountType = discount.DiscountType;
+                }
+
                 // Add items payment terms and link to item
-                ItinerarySet.PaymentTermRow paymentTermRow = CopyRelevantPaymentTermRow(service);
+                var paymentTermRow = CopyRelevantPaymentTermRow(service);
                 if (paymentTermRow != null)
                     item.PaymentTermID = paymentTermRow.PaymentTermID;
 
