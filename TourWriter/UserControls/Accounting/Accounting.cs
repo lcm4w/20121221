@@ -53,6 +53,7 @@ namespace TourWriter.UserControls.Accounting
                                "ArriveDate",
                                "SupplierName",
                                "ServiceTypeName",
+                               "PurchaseLineID",
                                "PurchaseItemID",
                                "PurchaseItemName",
                                "RequestStatusName",
@@ -398,6 +399,10 @@ namespace TourWriter.UserControls.Accounting
                     c.Header.Appearance.ImageVAlign = VAlign.Middle;
                     c.Width = 30;
                     c.MaxWidth = 30;
+                }
+                else if (c.Key == "PurchaseLineID")
+                {
+                    c.Hidden = true;
                 }
 
                 if (c.Key != "IsSelected") c.CellAppearance.ForeColor = Color.Gray;
