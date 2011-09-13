@@ -656,14 +656,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var message = string.Empty;
 
             // validate booking dates
-            if (!item.IsStartDateNull() && !item.IsNumberOfDaysNull())
+            if (!item.IsStartDateNull())
             {
                 var option = itinerarySet.OptionLookup.FindByOptionID(item.OptionID);
                 if (option != null)
                 {
+                    var numDays = !item.IsNumberOfDaysNull() ? item.NumberOfDays : 0;
+
                     if (item.StartDate.Date < option.ValidFrom.Date || item.StartDate.Date > option.ValidTo.Date)
                         message += "Start date does not match dates for this service" + "\r\n";
-                    else if (item.StartDate.AddDays(item.NumberOfDays).Date > option.ValidTo.Date)
+                    else if (item.StartDate.AddDays(numDays).Date > option.ValidTo.Date)
                         message += "End date does not match dates for this service" + "\r\n";
                 }
             }
