@@ -319,6 +319,12 @@
     <Compile Include="Forms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.Designer.cs">
+      <DependentUpon>PaxBreaksForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Accounting\ExportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1141,6 +1147,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.resx">
+      <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Accounting\ExportForm.resx">
       <DependentUpon>ExportForm.cs</DependentUpon>

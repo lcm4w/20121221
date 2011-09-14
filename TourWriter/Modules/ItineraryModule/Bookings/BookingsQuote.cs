@@ -58,6 +58,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 c.CellActivation = Activation.NoEdit;
 
+                c.Header.ToolTipText = GetColumnTooltipText(c.Key);
+
                 if (c.DataType == typeof(Decimal))
                 {
                     c.Format = "#0.00";
@@ -82,6 +84,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             GridHelper.SetDefaultSummaryAppearance(e);
 
             SetGridSummaries(e, this.ItinerarySet.ItineraryPax);
+        }
+
+        private string GetColumnTooltipText(string key)
+        {
+            var pax = ItinerarySet.ItineraryPax.Where(x => x.RowState != DataRowState.Deleted && x.ItineraryPaxName == key).FirstOrDefault();
+            if (pax == null) return "";
+
+            return string.Format("Members/rooms: {0} / {1} \r\nStaff/rooms: {2} / {3}",
+                                 !pax.IsMemberCountNull() ? pax.MemberCount.ToString() : "",
+                                 !pax.IsMemberRoomsNull() ? pax.MemberRooms.ToString() : "",
+                                 !pax.IsStaffCountNull() ? pax.StaffCount.ToString() : "",
+                                 !pax.IsStaffRoomsNull()? pax.StaffRooms.ToString() : "");
+
         }
 
         internal void SetGridSummaries(InitializeLayoutEventArgs e, DataTable dtItineraryPax)
@@ -316,8 +331,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             public object EndCustomSummary(SummarySettings summarySettings, RowsCollection rows)
             {
-                var pax = _itinerarySet.ItineraryPax.
-                    Where(x => x.ItineraryPaxName == summarySettings.SourceColumn.Key).FirstOrDefault();
+                var pax = _itinerarySet.ItineraryPax.Where(x => x.RowState != DataRowState.Deleted && x.ItineraryPaxName == summarySettings.SourceColumn.Key).FirstOrDefault();
 
                 return string.Format("{0:#0.00}{1}{2:#0.00}{1}{3}{1}{4}{1}{5}",
                     _total,
@@ -337,6 +351,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     return _total * (1 + pax.GrossMarkup / 100);
                 return _total;
             }
+        }
+
+        private void btnPaxBreaks_Click(object sender, EventArgs e)
+        {
+            var state = ItinerarySet.ItineraryPax.GetChanges();
+            var form = new PaxBreaksForm(ItinerarySet);
+            
+            form.ShowDialog();
+            if (state != ItinerarySet.ItineraryPax.GetChanges())
+                DataBind();
         }
     }
 }
