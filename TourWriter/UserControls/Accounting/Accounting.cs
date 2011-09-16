@@ -162,9 +162,6 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from PurchaseItemPaymentsDetail where {1}", cols, GetSqlFilter("Purchases"));
             _purchasesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
-
-            // apply data formatting
-            App.PrepareDataTableForExport(_purchasesDs.Tables[0]);
         }
         
         private void LoadSalesData()
@@ -175,9 +172,6 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from ItinerarySaleDetail where {1}", cols, GetSqlFilter("Sales"));
             _salesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
-
-            // apply data formatting
-            App.PrepareDataTableForExport(_salesDs.Tables[0]);
         }
         
         private void LoadServiceType()
@@ -400,14 +394,24 @@ namespace TourWriter.UserControls.Accounting
                     c.Width = 30;
                     c.MaxWidth = 30;
                 }
-                else if (c.Key == "PurchaseLineID")
+
+                if (c.Key == "ItineraryID" || c.Key == "ItineraryName") 
+                    c.Hidden = _itinerarySet != null;
+
+                if (c.Key != "IsSelected") 
+                    c.CellAppearance.ForeColor = Color.Gray;
+
+                // format dates and currencies
+                if (c.DataType == typeof(decimal) || c.DataType == typeof(double))
                 {
-                    c.Hidden = true;
+                    c.Format = "#0.00";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
                 }
-
-                if (c.Key == "ItineraryID" || c.Key == "ItineraryName") c.Hidden = _itinerarySet != null;
-
-                if (c.Key != "IsSelected") c.CellAppearance.ForeColor = Color.Gray;
+                if (c.DataType == typeof(DateTime))
+                {
+                    c.Format = App.GetLocalShortDateFormat();
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
             }
             e.Layout.Bands[0].Override.RowSelectors = DefaultableBoolean.False;
         }
