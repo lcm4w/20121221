@@ -50,20 +50,20 @@ namespace TourWriter.UserControls.Accounting
                                "IsLockedAccounting",
                                "ItineraryID",
                                "ItineraryName",
-                               "ArriveDate",
-                               "SupplierName",
-                               "ServiceTypeName",
-                               "PurchaseLineID",
-                               "PurchaseItemID",
-                               "PurchaseItemName",
-                               "RequestStatusName",
                                "PurchaseItemStartDate",
-                               "PaymentDueDate",
+                               "SupplierName",
+                               "PurchaseItemName",
                                "NetBaseTotal",
-                               "NetAccountingCategoryCode",
-                               "NetTaxTypeCode",
-                               "CurrencyCode",
                                "GrossBaseTotal",
+                               "CurrencyCode",
+                               "NetTaxTypeCode",
+                               "PurchaseLineID",
+                               "NetAccountingCategoryCode",
+                               "ServiceTypeName",
+                               "PaymentDueDate",
+                               "RequestStatusName",
+                               "PurchaseItemID",
+                               "ArriveDate",
                            };
 
         private readonly List<string> _defaultSalesColumns = new List<string>()
@@ -71,14 +71,14 @@ namespace TourWriter.UserControls.Accounting
                                "SaleIsLockedAccounting",
                                "ItineraryID",
                                "ItineraryName",
-                               "ArriveDate",
-                               "ItinerarySaleID",
                                "SaleDate",
-                               "ItineraryBalanceDueDate",
                                "SaleAmount",
                                "SaleNet",
                                "ItineraryCurrencyCode",
                                "ItineraryGrossFinalTotal",
+                               "ItinerarySaleID",
+                               "ArriveDate",
+                               "ItineraryBalanceDueDate",
                            };
         #endregion
 
@@ -404,6 +404,8 @@ namespace TourWriter.UserControls.Accounting
                 {
                     c.Hidden = true;
                 }
+
+                if (c.Key == "ItineraryID" || c.Key == "ItineraryName") c.Hidden = _itinerarySet != null;
 
                 if (c.Key != "IsSelected") c.CellAppearance.ForeColor = Color.Gray;
             }
