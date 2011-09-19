@@ -13310,7 +13310,7 @@ namespace TourWriter.Info {
             public double DiscountUnits {
                 get {
                     if (this.IsDiscountUnitsNull()) {
-                        return 1D;
+                        return 0D;
                     }
                     else {
                         return ((double)(this[this.tablePurchaseItem.DiscountUnitsColumn]));

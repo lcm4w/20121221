@@ -396,11 +396,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var service = option.RateRow.ServiceRow;
 
                 // set discounts here, after user might have edited qty or nigts
-                var discount = item.GetBestDiscountRow();
-                if (discount != null)
+                var discount = Discounts.CalcDiscount((decimal)item.Quantity, item.GetDiscountRows());
+                if (discount > 0)
                 {
-                    item.DiscountUnits = discount.UnitsFree;
-                    item.DiscountType = discount.DiscountType;
+                    item.DiscountUnits = (double)discount;
+                    item.DiscountType = "foc"; // discount.DiscountType;
                 }
 
                 // Add items payment terms and link to item

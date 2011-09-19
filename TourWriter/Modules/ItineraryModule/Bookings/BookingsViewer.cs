@@ -669,13 +669,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         message += "End date does not match dates for this service" + "\r\n";
                 }
             }
-
-            // validate discount
-            var discount = item.GetBestDiscountRow();
-            var refresh = discount != null ? (decimal)discount.UnitsFree : 0;
-            var current = !item.IsDiscountUnitsNull() ? (decimal)item.DiscountUnits : 0;
-            if (current != refresh) message += "Booking discount does not match underlying " + (item.DiscountType == "foc" ? "FOC" : "Stay-Pay");
             
+            // validate discount
+            var calcDiscount = Discounts.CalcDiscount((decimal)item.Quantity, item.GetDiscountRows());
+            if ((decimal)item.DiscountUnits != calcDiscount)
+                message += string.Format("Discount mismatch, best discount is: {0}", calcDiscount);
+            
+            // apply
             item.RowError = message;
             return message.Length == 0;
         }

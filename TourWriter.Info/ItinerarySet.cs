@@ -1,7 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
 using TourWriter.Info.Services;
 using System.Linq;
 
@@ -577,29 +576,9 @@ namespace TourWriter.Info
                 return (quantity * numberOfDays) - discount;
             }
 
-
-            public DiscountRow GetBestDiscountRow()
+            public IEnumerable<DiscountRow> GetDiscountRows()
             {
-                // WARNING: see 3 hacks below....
-
-                // TODO: hack - not handling FOC vs Pay-Stay
-                var unitsUsed = Quantity; // DiscountType == "foc" ? Quantity : NumberOfDays;
-
-                var serivceDiscounts = ((ItinerarySet)Table.DataSet).Discount.Where(x =>
-                    x.RowState != DataRowState.Deleted &&
-                    x.ServiceID == ServiceID);
-
-                var discounts = serivceDiscounts.Where(x =>
-                    //!x.IsDiscountTypeNull() && x.DiscountType == DiscountType && // TODO: hack - not handling FOC vs Pay-Stay
-                    x.UnitsUsed <= unitsUsed).OrderByDescending(x => x.UnitsUsed);
-
-                var discount = discounts.FirstOrDefault();
-
-                // TODO: hack - not handling FOC vs Pay-Stay
-                if (discount != null && discount.IsDiscountTypeNull())
-                    discount.DiscountType = "foc";
-
-                return discount;
+                return ((ItinerarySet) Table.DataSet).Discount.Where(x => x.RowState != DataRowState.Deleted && x.ServiceID == ServiceID);
             }
         }
 
