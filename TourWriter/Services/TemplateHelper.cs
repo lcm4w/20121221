@@ -96,7 +96,14 @@ namespace TourWriter.Services
 
                 if (row.Table.Columns.IndexOf(tag) > -1)
                 {
-                    object val = row[tag];
+                    var val = row[tag];
+
+                    // format dates
+                    if (row.Table.Columns[tag].DataType == typeof(System.DateTime))
+                    {
+                        val = ((System.DateTime)val).ToShortDateString();
+                    }
+
                     keyvals.Add(new KeyValuePair<string, string>(tag, val.ToString()));
                 }
                 else
