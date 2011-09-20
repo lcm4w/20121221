@@ -28,6 +28,13 @@ namespace TourWriter
                 application.Run(args);
                 
             }
+            catch (System.Configuration.ConfigurationErrorsException ex)
+            {   // handle corrupted config file
+                var config = ((System.Configuration.ConfigurationErrorsException)ex.InnerException).Filename;
+                App.ShowInfo("Opps, config file needs to be reset...\r\n\r\n" + "Click OK, then start TourWriter again.");
+                System.IO.File.Delete(config);
+                Application.Exit();
+            }
             catch (Exception ex)
             {
                 ErrorHelper.HandleError(ex);
