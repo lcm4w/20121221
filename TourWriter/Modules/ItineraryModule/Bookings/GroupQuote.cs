@@ -294,24 +294,20 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 case CostTypes.Foc:
                     {
                         var foc = RowGetPaxFocs(item, pax);
-                        return memberCount != 0 ? -(foc/memberCount) : 0;
+                        return memberCount != 0 ? -((double)foc/memberCount) : 0;
                     }
                 default: return 1;
             }
         }
 
-        private double RowGetPaxFocs(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax)
+        private static decimal RowGetPaxFocs(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax)
         {
-            double qty = (item.ChargeType == "ROOM")
+            var qty = (item.ChargeType == "ROOM")
                               ? pax.MemberRooms + pax.StaffRooms // total rooms
                               : pax.MemberCount + pax.StaffCount;// total pax
 
-            var q =
-                _itinerarySet.Discount.Where(foc =>
-                    foc.RowState != DataRowState.Deleted && foc.ServiceID == item.ServiceID && qty >= foc.UnitsUsed).
-                    Select(foc => foc.UnitsFree);
-
-            return q.Count() > 0 ? q.Max() : 0;
+            var foc = Services.Discounts.CalcDiscount((decimal)qty, item.GetDiscountRows());
+            return foc;
         }
 
         private static decimal GetItemPrice(ItinerarySet.PurchaseItemRow item)
