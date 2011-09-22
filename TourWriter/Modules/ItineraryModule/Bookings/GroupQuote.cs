@@ -293,21 +293,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     }
                 case CostTypes.Foc:
                     {
-                        var foc = RowGetPaxFocs(item, pax);
+                        var qty = (item.ChargeType == "ROOM")
+                                      ? memberRooms + staffRooms
+                                      : memberCount + staffCount;
+
+                        var foc = Services.Discounts.CalcDiscount((decimal)qty, item.GetDiscountRows());
                         return memberCount != 0 ? -((double)foc/memberCount) : 0;
                     }
                 default: return 1;
             }
-        }
-
-        private static decimal RowGetPaxFocs(ItinerarySet.PurchaseItemRow item, ItinerarySet.ItineraryPaxRow pax)
-        {
-            var qty = (item.ChargeType == "ROOM")
-                              ? pax.MemberRooms + pax.StaffRooms // total rooms
-                              : pax.MemberCount + pax.StaffCount;// total pax
-
-            var foc = Services.Discounts.CalcDiscount((decimal)qty, item.GetDiscountRows());
-            return foc;
         }
 
         private static decimal GetItemPrice(ItinerarySet.PurchaseItemRow item)
