@@ -219,8 +219,8 @@
     </Content>
     <Content Include="SupplierSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>SupplierSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>SupplierSet.Designer.cs</LastGenOutput>
     </Content>
     <Content Include="ToolSet.xsd">
       <Generator>MSDataSetGenerator</Generator>

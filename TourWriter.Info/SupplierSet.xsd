@@ -86,7 +86,7 @@
               <xs:element name="DefaultMargin" msprop:Generator_ColumnVarNameInTable="columnDefaultMargin" msprop:Generator_ColumnPropNameInRow="DefaultMargin" msprop:Generator_ColumnPropNameInTable="DefaultMarginColumn" msprop:Generator_UserColumnName="DefaultMargin" type="xs:decimal" minOccurs="0" />
               <xs:element name="DefaultCheckinTime" msprop:Generator_ColumnVarNameInTable="columnDefaultCheckinTime" msprop:Generator_ColumnPropNameInRow="DefaultCheckinTime" msprop:Generator_ColumnPropNameInTable="DefaultCheckinTimeColumn" msprop:Generator_UserColumnName="DefaultCheckinTime" type="xs:dateTime" minOccurs="0" />
               <xs:element name="DefaultCheckoutTime" msprop:Generator_ColumnVarNameInTable="columnDefaultCheckoutTime" msprop:Generator_ColumnPropNameInRow="DefaultCheckoutTime" msprop:Generator_ColumnPropNameInTable="DefaultCheckoutTimeColumn" msprop:Generator_UserColumnName="DefaultCheckoutTime" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="ImportID" msprop:Generator_ColumnVarNameInTable="columnImportID" msprop:Generator_ColumnPropNameInRow="ImportID" msprop:Generator_ColumnPropNameInTable="ImportIDColumn" msprop:Generator_UserColumnName="ImportID" type="xs:string" minOccurs="0" />
+              <xs:element name="ImportID" msprop:Generator_ColumnVarNameInTable="columnImportID" msprop:Generator_ColumnPropNameInRow="ImportID" msprop:Generator_ColumnPropNameInTable="ImportIDColumn" msprop:Generator_UserColumnName="ImportID" type="xs:int" minOccurs="0" />
               <xs:element name="ExportID" msprop:Generator_ColumnVarNameInTable="columnExportID" msprop:Generator_ColumnPropNameInRow="ExportID" msprop:Generator_ColumnPropNameInTable="ExportIDColumn" msprop:Generator_UserColumnName="ExportID" type="xs:string" minOccurs="0" />
               <xs:element name="BookingWebsite" msprop:Generator_ColumnVarNameInTable="columnBookingWebsite" msprop:Generator_ColumnPropNameInRow="BookingWebsite" msprop:Generator_ColumnPropNameInTable="BookingWebsiteColumn" msprop:Generator_UserColumnName="BookingWebsite" type="xs:string" minOccurs="0" />
               <xs:element name="IsRecordActive" msprop:Generator_ColumnVarNameInTable="columnIsRecordActive" msprop:Generator_ColumnPropNameInRow="IsRecordActive" msprop:Generator_ColumnPropNameInTable="IsRecordActiveColumn" msprop:Generator_UserColumnName="IsRecordActive" type="xs:boolean" default="true" minOccurs="0" />
@@ -148,6 +148,7 @@
               <xs:element name="AddedBy" msprop:Generator_ColumnVarNameInTable="columnAddedBy" msprop:Generator_ColumnPropNameInRow="AddedBy" msprop:Generator_ColumnPropNameInTable="AddedByColumn" msprop:Generator_UserColumnName="AddedBy" type="xs:int" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ImportID" msprop:Generator_ColumnVarNameInTable="columnImportID" msprop:Generator_ColumnPropNameInRow="ImportID" msprop:Generator_ColumnPropNameInTable="ImportIDColumn" msprop:Generator_UserColumnName="ImportID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -191,6 +192,7 @@
               <xs:element name="AddedBy" msprop:Generator_ColumnVarNameInTable="columnAddedBy" msprop:Generator_ColumnPropNameInRow="AddedBy" msprop:Generator_ColumnPropNameInTable="AddedByColumn" msprop:Generator_UserColumnName="AddedBy" type="xs:int" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
+              <xs:element name="ImportID" msprop:Generator_ColumnVarNameInTable="columnImportID" msprop:Generator_ColumnPropNameInRow="ImportID" msprop:Generator_ColumnPropNameInTable="ImportIDColumn" msprop:Generator_UserColumnName="ImportID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -211,6 +213,7 @@
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
               <xs:element name="IsSelected" msprop:Generator_ColumnVarNameInTable="columnIsSelected" msprop:Generator_ColumnPropNameInRow="IsSelected" msprop:Generator_ColumnPropNameInTable="IsSelectedColumn" msprop:Generator_UserColumnName="IsSelected" type="xs:boolean" default="false" />
+              <xs:element name="ImportID" msprop:Generator_ColumnVarNameInTable="columnImportID" msprop:Generator_ColumnPropNameInRow="ImportID" msprop:Generator_ColumnPropNameInTable="ImportIDColumn" msprop:Generator_UserColumnName="ImportID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
