@@ -650,9 +650,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private bool ValidatePurchaseItem(ItinerarySet.PurchaseItemRow item)
         {
-            // TODO: Hiding all for now - WIP. Booking dates part is good to go, discounts needs testing. 
-            //return true;
-
             var message = string.Empty;
 
             // validate booking dates

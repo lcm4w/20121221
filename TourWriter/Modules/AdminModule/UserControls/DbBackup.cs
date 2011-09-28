@@ -96,7 +96,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(480, 28);
             this.lblHeading.TabIndex = 42;
-            this.lblHeading.Text = "Database Managment";
+            this.lblHeading.Text = "Database Management";
             // 
             // label6
             // 
