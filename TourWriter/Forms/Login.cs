@@ -119,7 +119,8 @@ namespace TourWriter.Forms
             else
             {
                 authenticatedUser = userSet;
-                loginResult = LoginResult.Success; 
+                loginResult = LoginResult.Success;
+                App.DatabaseConnectionType = connection.Type;
             }
             return loginResult;
         }

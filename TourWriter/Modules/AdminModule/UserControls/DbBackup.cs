@@ -17,6 +17,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
             " * Restore will remove all current and unsaved data for all users.\r\n" +
 	        " * All data will be completely reverted to date of the chosen backup file.\r\n" +
             " * All users must restart TourWriter to refresh screen data";
+
+	    private const string RemoteDatabaseMessage =
+	        "Your database appears to be an Online Hosted Database, in which case all database maintenance is handled by the provider.\r\n\r\n" +
+            "For further information, please contact the provider.";
+
 		#region Designer
 		private Label lblHeading;
 		private Label label6;
@@ -377,7 +382,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
 		}		
 		
 		private void btnBackup_Click(object sender, EventArgs e)
-		{				
+        {
+            if (App.DatabaseConnectionType == "remote") { App.ShowInfo(RemoteDatabaseMessage); return; }
+		
 			if(!App.IsValidFileName(txtBackupFile.Text))
 			{
 				App.ShowError("File name is not valid");
@@ -404,7 +411,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
 		}
 
 		private void btnRestore_Click(object sender, EventArgs e)
-		{
+        {
+            if (App.DatabaseConnectionType == "remote") { App.ShowInfo(RemoteDatabaseMessage); return; }
+
             string restorefile = App.SelectExternalFile(
                 false, "Select backup to restore from", ".bak files (*.bak)|*.bak|All files (*.*)|*.*", 2);
 

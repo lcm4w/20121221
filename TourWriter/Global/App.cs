@@ -133,6 +133,7 @@ namespace TourWriter
                 true, false, true, Keys.D, Utilities.KeyHook.KeyState.KeyDown);	// [Shift + Alt + D]
 
         #region Application variables
+        internal static string DatabaseConnectionType; // "local", "remote"
         internal static string Servername;
         internal static string UsernameOnDisk = "";
         internal static string PasswordOnDisk = "";
