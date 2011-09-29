@@ -83,6 +83,9 @@ namespace TourWriter.Modules.SupplierModule
                 if (OnSupplierSelected != null)
                     OnSupplierSelected(
                         new SupplierSelectedEventArgs(supplierSet.Supplier[0].SupplierID));
+
+                gridServices.AddExportHooks(SupplierSet);
+                gridOptions.AddExportHooks(SupplierSet);
             }
         }
 
@@ -1569,7 +1572,8 @@ namespace TourWriter.Modules.SupplierModule
 
         private void gridOptions_ClickCellButton(object sender, CellEventArgs e)
         {
-            gridOptions_HandleEditRequest(e.Cell.Row);
+            if (e.Cell.Column.Key == "Edit") 
+                gridOptions_HandleEditRequest(e.Cell.Row);
         }
 
         private void gridOptions_HandleEditRequest(UltraGridRow optionGridRow)

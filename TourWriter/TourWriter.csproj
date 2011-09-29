@@ -326,6 +326,7 @@
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Discounts.cs" />
+    <Compile Include="Services\DataSync.cs" />
     <Compile Include="UserControls\Accounting\ExportForm.cs">
       <SubType>Form</SubType>
     </Compile>
