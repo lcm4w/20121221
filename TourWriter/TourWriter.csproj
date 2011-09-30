@@ -326,7 +326,10 @@
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Discounts.cs" />
-    <Compile Include="Services\DataSync.cs" />
+    <Compile Include="Services\DataSyncUi.cs" />
+    <Compile Include="Services\Travelmesh\ApiWrapper.cs" />
+    <Compile Include="Services\Travelmesh\DataSync.cs" />
+    <Compile Include="Services\Travelmesh\TrialDatabase.cs" />
     <Compile Include="UserControls\Accounting\ExportForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -728,46 +731,64 @@
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Copy\CopyHelpers.cs" />
-    <Compile Include="UserControls\DatabaseConfig\DbConnectionInfo.cs" />
-    <Compile Include="UserControls\DatabaseConfig\InstallFinalConfiguration.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\InstallFinalConfiguration.Designer.cs">
-      <DependentUpon>InstallFinalConfiguration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\InstallHelper.cs" />
-    <Compile Include="UserControls\DatabaseConfig\InstallDatabaseSoftware.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\InstallDatabaseSoftware.Designer.cs">
-      <DependentUpon>InstallDatabaseSoftware.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\IConnectionControl.cs" />
-    <Compile Include="UserControls\DatabaseConfig\InstallChooseOptions.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\InstallChooseOptions.Designer.cs">
-      <DependentUpon>InstallChooseOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\LocalSettings.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\LocalSettings.Designer.cs">
-      <DependentUpon>LocalSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\RemoteSettings.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\RemoteSettings.Designer.cs">
-      <DependentUpon>RemoteSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\DatabaseMain.cs">
+    <Compile Include="UserControls\DatabaseConnection\TrialProgress.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UserControls\DatabaseConfig\DatabaseMain.Designer.cs">
-      <DependentUpon>DatabaseMain.cs</DependentUpon>
+    <Compile Include="UserControls\DatabaseConnection\TrialProgress.Designer.cs">
+      <DependentUpon>TrialProgress.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DatabaseConfig\UserControlBase.cs">
+    <Compile Include="UserControls\DatabaseConnection\TrialDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\TrialDatabase.Designer.cs">
+      <DependentUpon>TrialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\ChooseDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\ChooseDatabase.Designer.cs">
+      <DependentUpon>ChooseDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\DbConnectionInfo.cs" />
+    <Compile Include="UserControls\DatabaseConnection\InstallConfigure.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallConfigure.Designer.cs">
+      <DependentUpon>InstallConfigure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallHelper.cs" />
+    <Compile Include="UserControls\DatabaseConnection\InstallDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallDatabase.Designer.cs">
+      <DependentUpon>InstallDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\IConnectionControl.cs" />
+    <Compile Include="UserControls\DatabaseConnection\InstallOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\InstallOptions.Designer.cs">
+      <DependentUpon>InstallOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\LocalDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\LocalDatabase.Designer.cs">
+      <DependentUpon>LocalDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\OnlineDatabase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\OnlineDatabase.Designer.cs">
+      <DependentUpon>OnlineDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DatabaseConnection\BaseUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\DataExtractGrid.cs">
@@ -775,12 +796,6 @@
     </Compile>
     <Compile Include="UserControls\DataExtractGrid.designer.cs">
       <DependentUpon>DataExtractGrid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\StartPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\DatabaseConfig\StartPage.Designer.cs">
-      <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MyToolStrip.cs">
       <SubType>Component</SubType>
@@ -1398,26 +1413,32 @@
       <DependentUpon>CheckBoxSet.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\InstallFinalConfiguration.resx">
-      <DependentUpon>InstallFinalConfiguration.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\TrialProgress.resx">
+      <DependentUpon>TrialProgress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\InstallDatabaseSoftware.resx">
-      <DependentUpon>InstallDatabaseSoftware.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\TrialDatabase.resx">
+      <DependentUpon>TrialDatabase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\InstallChooseOptions.resx">
-      <DependentUpon>InstallChooseOptions.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\ChooseDatabase.resx">
+      <DependentUpon>ChooseDatabase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\LocalSettings.resx">
-      <DependentUpon>LocalSettings.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallConfigure.resx">
+      <DependentUpon>InstallConfigure.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\RemoteSettings.resx">
-      <DependentUpon>RemoteSettings.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallDatabase.resx">
+      <DependentUpon>InstallDatabase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\StartPage.resx">
-      <DependentUpon>StartPage.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\InstallOptions.resx">
+      <DependentUpon>InstallOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\DatabaseConfig\DatabaseMain.resx">
-      <DependentUpon>DatabaseMain.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\LocalDatabase.resx">
+      <DependentUpon>LocalDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\OnlineDatabase.resx">
+      <DependentUpon>OnlineDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DatabaseConnection\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\GridCaption.resx">
       <SubType>Designer</SubType>
@@ -1550,6 +1571,9 @@
     <None Include="Resources\activityindicator.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\new red.png" />
+    <None Include="Resources\group_add.png" />
+    <Content Include="Resources\world_add.png" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.09.26.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.08.16.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.07.10.sql" />
@@ -1739,6 +1763,8 @@
     <None Include="Resources\Phone.png" />
     <None Include="Resources\Export.png" />
     <None Include="Resources\Load.png" />
+    <None Include="Resources\house_go.png" />
+    <None Include="Resources\database_go.png" />
     <Content Include="Resources\SaveClose.png" />
     <None Include="Resources\server_go.png" />
     <Content Include="Resources\TourWriter.Email.BookingRequest.txt" />

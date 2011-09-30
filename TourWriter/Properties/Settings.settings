@@ -98,7 +98,7 @@
     <Setting Name="LastAccountingDir" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Connections" Type="TourWriter.UserControls.DatabaseConfig.DbConnections" Scope="User">
+    <Setting Name="Connections" Type="TourWriter.UserControls.DatabaseConnection.DbConnections" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultConnection" Type="System.String" Scope="User">

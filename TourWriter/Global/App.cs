@@ -31,7 +31,7 @@ namespace TourWriter
         internal const string PricingOptionNetMarkupText = "nm";
         internal const string PricingOptionNetGrossText = "ng";
         internal const string PricingOptionGrossCommissionText = "gc";
-        internal const string RemoteConnectionName = "(custom server)";
+        internal const string OnlineConnectionName = "(online server)";
         internal const string AdminUserName = "admin";
 
         // move to a different class if possible

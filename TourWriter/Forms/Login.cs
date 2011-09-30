@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using TourWriter.Info;
 using TourWriter.Properties;
-using TourWriter.UserControls.DatabaseConfig;
+using TourWriter.UserControls.DatabaseConnection;
 using TourWriter.Utilities.Encryption;
 
 namespace TourWriter.Forms
@@ -211,18 +211,31 @@ namespace TourWriter.Forms
 
         #endregion
         
-        #region Edit servers
+        #region Manage connections
 
         private void ManageServers()
         {
-            var dbForm = new DatabaseMain(new StartPage(), Settings.Default.Connections);
-            var dr = dbForm.ShowDialog();
-            if (dr == DialogResult.OK)
+            var connInfo = new ConnectionInfo(txtUsername.Text, txtPassword.Text, cmbServers.Text, Settings.Default.Connections);
+            var form = new UserControls.DatabaseConnection.MainForm(new ChooseDatabase(), connInfo);
+
+            if (form.ShowDialog() == DialogResult.OK)
             {
                 cmbServers.Items.Clear();
+                var info = form.ConnectionInfo;
+
+                txtUsername.Text = info.UserName;
+                txtPassword.Text = info.Password;
+                Settings.Default.Connections = info.DbConnections;
                 cmbServers.Items.AddRange(Settings.Default.Connections.Select(x => x.Name).OrderBy(x => x).ToArray());
-                foreach (var item in cmbServers.Items.Cast<object>().Where(item => item.ToString() == Settings.Default.Connections.Last().Name))
+
+                foreach (var item in cmbServers.Items.Cast<object>().Where(item => item.ToString() == info.SelectedConnection))
                     cmbServers.SelectedItem = item.ToString();
+
+                Settings.Default.Save();
+
+                btnLogin.Select();
+                if (txtUsername.Text.Trim().Length == 0) txtUsername.Select(); else txtPassword.Select();
+                if (info.AutoLogin) btnLogin.PerformClick();
             }
         }
 
@@ -257,6 +270,7 @@ namespace TourWriter.Forms
             MigrateSetting(); //  TODO: remove this migration, added 10 Aug 2011
             
             txtUsername.Text = Settings.Default.Username;
+
             cmbServers.Items.AddRange(Settings.Default.Connections.Select(x => x.Name).OrderBy(x => x).ToArray());
             foreach (var item in cmbServers.Items.Cast<object>().Where(item => item.ToString() == Settings.Default.DefaultConnection))
                 cmbServers.SelectedItem = item.ToString();
@@ -278,9 +292,11 @@ namespace TourWriter.Forms
 
             // just get last connection (to clean up old list)
             var connection = Settings.Default.ServerNameHistory[0];
-            Settings.Default.Connections.Add((connection == App.RemoteConnectionName) ? "remote" : "local",
+
+            var oldName = "(custom server)";
+            Settings.Default.Connections.Add((connection == oldName) ? "remote" : "local",
                                              connection,
-                                             (connection == App.RemoteConnectionName) ? Settings.Default.RemoteConnection.Replace(" ", "\r\n") : connection);
+                                             (connection == oldName) ? Settings.Default.RemoteConnection.Replace(" ", "\r\n") : connection);
 
             Settings.Default.DefaultConnection = connection;
             Settings.Default.RemoteConnection = "";

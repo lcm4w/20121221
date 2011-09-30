@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public partial class RemoteSettings : UiControlBase, IConnectionControl
+    public partial class OnlineDatabase : BaseUserControl, IConnectionControl
     {
         private List<DbConnection> RemoteConnections
         {
-            get { return Connections.Where(x => x.Type == "remote").ToList(); }
+            get { return ConnectionInfo.DbConnections.Where(x => x.Type == "remote").ToList(); }
         }
      
         
-        public RemoteSettings()
+        public OnlineDatabase()
         {
             InitializeComponent();
         }
@@ -27,12 +26,12 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Text = "OK";
             NextButton.Enabled = true;
             NextControl = null;
-            PrevControl = new StartPage();
+            PrevControl = new ChooseDatabase();
             
             lnkAdd.Visible = lnkClear.Visible = lnkNext.Visible = lnkPrev.Visible = lblName.Visible = txtName.Visible = App.IsDebugMode;
 
             if (RemoteConnections.Count == 0)
-                Connections.Add("remote", "", "");
+                ConnectionInfo.DbConnections.Add("remote", "", "");
             SetCurrentServer(0);
 
             NextButton.Click += delegate { SaveCurrentServer(); };
@@ -46,6 +45,7 @@ namespace TourWriter.UserControls.DatabaseConfig
         
         public bool ValidateAndFinalise()
         {
+            ConnectionInfo.SelectedConnection = txtName.Text.Trim();
             return true;
         }
         
@@ -83,18 +83,14 @@ namespace TourWriter.UserControls.DatabaseConfig
                 return;
             }
             if (!App.IsDebugMode && name.Trim() == "") 
-                name = "(online server)";
+                name = App.OnlineConnectionName;
 
             var conns = RemoteConnections;
-            var conn = _currentIndex > -1 && _currentIndex < conns.Count ? conns[_currentIndex] : null;
-            if (conn == null)
-            {
-                conn = new DbConnection();
-                Connections.Add(conn);
-            }
-            conn.Type = "remote";
+            var conn = (_currentIndex > -1 && _currentIndex < conns.Count ? conns[_currentIndex] : null) ??
+                       ConnectionInfo.DbConnections.Add("remote", name, data);
             conn.Name = name;
             conn.Data = data;
+            ConnectionInfo.SelectedConnection = conn.Name;
         }
 
         private void RemoveCurrentServer()
@@ -105,7 +101,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             var conn = RemoteConnections[_currentIndex];
             if (conn != null)
             {
-                Connections.Remove(conn);
+                ConnectionInfo.DbConnections.Remove(conn);
                 txtName.Text = "";
                 txtInfo.Text = "";
 
@@ -121,7 +117,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             if (txtName.Text == name && txtInfo.Text.Trim() == "") return;
 
             SaveCurrentServer();
-            Connections.Add("remote", name, "");
+            ConnectionInfo.DbConnections.Add("remote", name, "");
             SetCurrentServer(RemoteConnections.Count());
         }
 

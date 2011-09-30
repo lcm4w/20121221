@@ -1,6 +1,6 @@
-﻿namespace TourWriter.UserControls.DatabaseConfig
+﻿namespace TourWriter.UserControls.DatabaseConnection
 {
-    partial class InstallFinalConfiguration
+    partial class InstallConfigure
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblMsg = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -47,31 +46,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(169, 13);
-            this.label2.TabIndex = 25;
-            this.label2.Text = "Create first database user account";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(51, 48);
+            this.label3.Location = new System.Drawing.Point(56, 21);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 20);
+            this.label3.Size = new System.Drawing.Size(123, 20);
             this.label3.TabIndex = 33;
-            this.label3.Text = "Account details";
+            this.label3.Text = "Database setup";
             // 
             // lblMsg
             // 
             this.lblMsg.AutoSize = true;
             this.lblMsg.ForeColor = System.Drawing.Color.Red;
-            this.lblMsg.Location = new System.Drawing.Point(101, 279);
+            this.lblMsg.Location = new System.Drawing.Point(101, 268);
             this.lblMsg.Name = "lblMsg";
             this.lblMsg.Size = new System.Drawing.Size(38, 13);
             this.lblMsg.TabIndex = 44;
@@ -81,7 +71,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label7.Location = new System.Drawing.Point(101, 249);
+            this.label7.Location = new System.Drawing.Point(101, 242);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(69, 13);
             this.label7.TabIndex = 43;
@@ -89,7 +79,7 @@
             // 
             // txtPass
             // 
-            this.txtPass.Location = new System.Drawing.Point(104, 229);
+            this.txtPass.Location = new System.Drawing.Point(104, 222);
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(340, 20);
             this.txtPass.TabIndex = 3;
@@ -98,7 +88,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 232);
+            this.label5.Location = new System.Drawing.Point(20, 225);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 41;
@@ -106,7 +96,7 @@
             // 
             // txtCompany
             // 
-            this.txtCompany.Location = new System.Drawing.Point(104, 83);
+            this.txtCompany.Location = new System.Drawing.Point(104, 61);
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(340, 20);
             this.txtCompany.TabIndex = 0;
@@ -114,7 +104,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 86);
+            this.label1.Location = new System.Drawing.Point(20, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(83, 13);
             this.label1.TabIndex = 39;
@@ -122,7 +112,7 @@
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(104, 176);
+            this.txtEmail.Location = new System.Drawing.Point(104, 169);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(340, 20);
             this.txtEmail.TabIndex = 1;
@@ -130,7 +120,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 179);
+            this.label4.Location = new System.Drawing.Point(20, 172);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(75, 13);
             this.label4.TabIndex = 37;
@@ -138,7 +128,7 @@
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(104, 203);
+            this.txtUser.Location = new System.Drawing.Point(104, 196);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(340, 20);
             this.txtUser.TabIndex = 2;
@@ -146,7 +136,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 206);
+            this.label6.Location = new System.Drawing.Point(20, 199);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 35;
@@ -157,16 +147,16 @@
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label11.Location = new System.Drawing.Point(51, 139);
+            this.label11.Location = new System.Drawing.Point(56, 132);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(98, 20);
+            this.label11.Size = new System.Drawing.Size(87, 20);
             this.label11.TabIndex = 48;
-            this.label11.Text = "Login details";
+            this.label11.Text = "User setup";
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::TourWriter.Properties.Resources.user_add;
-            this.pictureBox2.Location = new System.Drawing.Point(15, 130);
+            this.pictureBox2.Location = new System.Drawing.Point(18, 123);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(33, 32);
             this.pictureBox2.TabIndex = 49;
@@ -175,7 +165,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TourWriter.Properties.Resources.database_add;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 41);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 15);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(33, 32);
             this.pictureBox1.TabIndex = 34;
@@ -199,7 +189,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Name = "InstallConfigure";
             this.Size = new System.Drawing.Size(477, 342);
             this.Load += new System.EventHandler(this.OnLoad);
@@ -212,7 +201,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label lblMsg;

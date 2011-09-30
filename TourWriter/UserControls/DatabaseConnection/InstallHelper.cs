@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
     static class InstallHelper
     {

@@ -55,7 +55,7 @@ namespace TourWriter.Services
             return Send(
                 settings.SmtpServerName,
                 !settings.IsSmtpServerPortNull() ? settings.SmtpServerPort : 25,
-                !settings.IsSmtpServerEnableSslNull() ? settings.SmtpServerEnableSsl : false,
+                !settings.IsSmtpServerEnableSslNull() && settings.SmtpServerEnableSsl,
                 settings.SmtpServerUsername,
                 settings.SmtpServerPassword);
         }
@@ -294,6 +294,21 @@ namespace TourWriter.Services
             imgTag = imgTag.Remove(indexOfClosingQuote);
 
             return imgTag;
+        }
+
+        public static void SendAysync(string host, int port, bool enableSsl, string username, string password, string to, string subject, string body)
+        {
+            new System.Threading.Thread(() =>
+            {
+                var message = new MailMessage { Subject = subject, Body = body };
+                message.To.Add(to);
+
+                var client = new SmtpClient {Host = host, Port = port, EnableSsl = enableSsl, 
+                    Credentials = new System.Net.NetworkCredential(username, password), DeliveryMethod = SmtpDeliveryMethod.Network};
+                client.Send(message);
+                message.Dispose();
+
+            }).Start();
         }
 	}
 }

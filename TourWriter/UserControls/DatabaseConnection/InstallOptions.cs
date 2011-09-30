@@ -2,17 +2,17 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public partial class InstallChooseOptions : UiControlBase
+    public partial class InstallOptions : BaseUserControl
     {
-        private readonly InstallDatabaseSoftware _installerControl;
+        private readonly InstallDatabase _installerControl;
 
-        public InstallChooseOptions()
+        public InstallOptions()
         {
             InitializeComponent();
 
-            _installerControl = new InstallDatabaseSoftware(); // need ref to set install file later
+            _installerControl = new InstallDatabase(); // need ref to set install file later
             groupBox1.Visible = false;
             var is64 = InstallHelper.Is64BitOperatingSystem();
             rd64.Checked = is64;
@@ -49,7 +49,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             NextButton.Text = "Install";
             NextButton.Enabled = true;
             NextControl = _installerControl;
-            PrevControl = new StartPage();
+            PrevControl = new LocalDatabase();
 
             CheckPrereqs();
         }
@@ -109,7 +109,6 @@ namespace TourWriter.UserControls.DatabaseConfig
                 _installerControl.RestoreFile = dialog.FileName;
                 lblRestoreFile.Location = new System.Drawing.Point(lblRestoreFile.Location.X, btnRestoreFile.Location.Y); // weirdness
             }
-
         }
     }
 }

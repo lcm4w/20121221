@@ -1,6 +1,6 @@
 ﻿using System.Collections.Specialized;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
     public interface IConnectionControl
     {

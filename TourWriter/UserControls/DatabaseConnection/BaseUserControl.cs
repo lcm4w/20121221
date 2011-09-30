@@ -1,11 +1,11 @@
 ﻿using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public class UiControlBase : UserControl
+    public class BaseUserControl : UserControl
     {
-        internal DbConnections Connections { get; set; }
-        protected new DatabaseMain ParentForm { get { return Parent.Parent as DatabaseMain; } }
+        public ConnectionInfo ConnectionInfo { get; set; }
+        protected new MainForm ParentForm { get { return Parent.Parent as MainForm; } }
         protected Button BackButton { get { return ParentForm.BackButton; } }
         protected Button NextButton { get { return ParentForm.NextButton; } }
         protected Button CancelButton { get { return ParentForm.EndButton; } }

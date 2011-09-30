@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Specialized;
 using TourWriter.Utilities.Encryption;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public partial class InstallFinalConfiguration : UiControlBase, IConnectionControl
+    public partial class InstallConfigure : BaseUserControl, IConnectionControl
     {
-        public InstallFinalConfiguration()
+        public InstallConfigure()
         {
             InitializeComponent();
             lblMsg.Visible = false;
@@ -18,7 +17,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             BackButton.Visible = true;
             CancelButton.Visible = true;
 
-            NextButton.Text = "Finish";
+            NextButton.Text = "Login";
             NextButton.Enabled = true;
             BackButton.Enabled = false;
             CancelButton.Enabled = false;
@@ -39,8 +38,12 @@ namespace TourWriter.UserControls.DatabaseConfig
                 "use TourWriter; insert into UserRole (UserID, RoleID, AddedBy) values ((select UserId from [User] where UserName = '{0}'), 1, 1)",
                 txtUser.Text.Trim()));
 
-            var name = Environment.MachineName + "TourWriter";
-            Connections.Add("local", name, name);
+            var name = Environment.MachineName + "\\TourWriter";
+            var conn = ConnectionInfo.DbConnections.Add("local", name, name);
+            ConnectionInfo.UserName = txtUser.Text;
+            ConnectionInfo.Password = ""; // use blank
+            ConnectionInfo.SelectedConnection = conn.Name;
+            ConnectionInfo.AutoLogin = true;
         }
 
         private bool IsValid()

@@ -140,7 +140,7 @@ namespace TourWriter.Forms
             this.btnSetup.Name = "btnSetup";
             this.btnSetup.Size = new System.Drawing.Size(43, 22);
             this.btnSetup.TabIndex = 11;
-            this.btnSetup.Text = "Setup";
+            this.btnSetup.Text = "&Setup";
             this.btnSetup.UseVisualStyleBackColor = true;
             this.btnSetup.Click += new System.EventHandler(this.btnSetup_Click);
             // 

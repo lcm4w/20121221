@@ -7,15 +7,15 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public partial class InstallDatabaseSoftware : UiControlBase, IConnectionControl
+    public partial class InstallDatabase : BaseUserControl, IConnectionControl
     {
         private WebClient _downloader;
         internal string InstallFile { get; set; }
         internal string RestoreFile { get; set; }
 
-        public InstallDatabaseSoftware()
+        public InstallDatabase()
         {
             InitializeComponent();
         }
@@ -31,10 +31,10 @@ namespace TourWriter.UserControls.DatabaseConfig
             BackButton.Enabled = false;
             CancelButton.Enabled = false;
 
-            var configureControl = new InstallChooseOptions();
+            var configureControl = new InstallOptions();
             configureControl.RestoreUserOptions(InstallFile, RestoreFile);
             PrevControl = configureControl;
-            NextControl = new InstallFinalConfiguration();
+            NextControl = new InstallConfigure();
 
             ActionStart();
         }
@@ -222,7 +222,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             {
                 Log("Database restore complete.");
                 NextControl = null;
-                NextButton.Text = "Finish";
+                NextButton.Text = "OK";
             }
             
             NextButton.Enabled = true;

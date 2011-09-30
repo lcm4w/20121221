@@ -1,6 +1,6 @@
-﻿namespace TourWriter.UserControls.DatabaseConfig
+﻿namespace TourWriter.UserControls.DatabaseConnection
 {
-    partial class InstallDatabaseSoftware
+    partial class InstallDatabase
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,25 +33,28 @@
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtLog
             // 
+            this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLog.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.txtLog.Location = new System.Drawing.Point(15, 117);
+            this.txtLog.Location = new System.Drawing.Point(15, 89);
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
-            this.txtLog.Size = new System.Drawing.Size(452, 222);
+            this.txtLog.Size = new System.Drawing.Size(452, 250);
             this.txtLog.TabIndex = 36;
             this.txtLog.Text = "";
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(413, 87);
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Location = new System.Drawing.Point(411, 60);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(54, 23);
+            this.btnStop.Size = new System.Drawing.Size(58, 23);
             this.btnStop.TabIndex = 35;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -59,15 +62,17 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(15, 87);
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Location = new System.Drawing.Point(15, 60);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(398, 23);
+            this.progressBar.Size = new System.Drawing.Size(394, 23);
             this.progressBar.TabIndex = 33;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TourWriter.Properties.Resources.database_add;
-            this.pictureBox1.Location = new System.Drawing.Point(15, 41);
+            this.pictureBox1.Location = new System.Drawing.Point(18, 15);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(33, 32);
             this.pictureBox1.TabIndex = 32;
@@ -78,22 +83,13 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(51, 48);
+            this.label3.Location = new System.Drawing.Point(56, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(154, 20);
             this.label3.TabIndex = 31;
             this.label3.Text = "Software Installation";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(200, 13);
-            this.label2.TabIndex = 25;
-            this.label2.Text = "Download and install the Server software";
-            // 
-            // InstallSoftware
+            // InstallDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -102,8 +98,7 @@
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Name = "InstallSoftware";
+            this.Name = "InstallDatabase";
             this.Size = new System.Drawing.Size(477, 342);
             this.Load += new System.EventHandler(this.OnLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -114,7 +109,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnStop;

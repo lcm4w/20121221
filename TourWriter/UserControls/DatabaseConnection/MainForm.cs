@@ -2,18 +2,17 @@
 using System.Windows.Forms;
 using TourWriter.Properties;
 
-namespace TourWriter.UserControls.DatabaseConfig
+namespace TourWriter.UserControls.DatabaseConnection
 {
-    public partial class DatabaseMain : Form
+    public partial class MainForm : Form
     {
-        protected DbConnections Connections;
-
-        public DatabaseMain(UserControl defaultControl, DbConnections connections)
+        public ConnectionInfo ConnectionInfo { get; private set; }
+        
+        public MainForm(UserControl defaultControl, ConnectionInfo connectionInfo)
         {
+            ConnectionInfo = connectionInfo;
             InitializeComponent();
             Icon = Resources.TourWriter16;
-
-            Connections = connections;
             LoadControl(defaultControl);
         }
 
@@ -38,7 +37,7 @@ namespace TourWriter.UserControls.DatabaseConfig
             panel1.Controls.Clear();
             if (control != null)
             {
-                (control as UiControlBase).Connections = Connections;
+                (control as BaseUserControl).ConnectionInfo = ConnectionInfo;
                 control.Dock = DockStyle.Fill;
                 panel1.Controls.Add(control);
             }
@@ -64,10 +63,8 @@ namespace TourWriter.UserControls.DatabaseConfig
         internal void GoComplete()
         {
             var control = panel1.Controls[0] as IConnectionControl;
-            if (control.ValidateAndFinalise())
-            {
+            if (control.ValidateAndFinalise()) 
                 DialogResult = DialogResult.OK;
-            }
         }
 
         internal void GoTo(UserControl control)
