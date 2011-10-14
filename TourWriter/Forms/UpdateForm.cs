@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Cache;
@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using TourWriter.Global;
 using TourWriter.Properties;
 using System.Linq;
+using System.Collections.Specialized;
 using TourWriter.Services.Update;
 
 namespace TourWriter.Forms
@@ -261,6 +262,9 @@ namespace TourWriter.Forms
 
         private void UpdateCheck()
         {
+            // TODO: WIP, done but testing
+            new System.Threading.Thread(() => { try { App.Debug("UPDATE_TEST_A\r\n"+QueryUpdateServer()); } catch(Exception ex){App.Debug("UPDATE_TEST_A\r\n" + ex);} }).Start();
+
             var uri = new Uri(GetRequestString());
             var reponse = webClient.DownloadString(uri);
             if (!string.IsNullOrEmpty(reponse))
@@ -269,6 +273,9 @@ namespace TourWriter.Forms
 
         private void UpdateCheckAsync()
         {
+            // TODO: WIP, done but testing
+            new System.Threading.Thread(() => { try { App.Debug("UPDATE_TEST_B\r\n" + QueryUpdateServer()); } catch (Exception ex) { App.Debug("UPDATE_TEST_B\r\n" + ex); } }).Start();
+
             SetUI(UiState.Check); Application.DoEvents();
             webClient.DownloadStringCompleted += UpdateCheckAsyncCompleted;
             webClient.DownloadStringAsync(new Uri(GetRequestString()));
@@ -488,7 +495,7 @@ namespace TourWriter.Forms
                     Cache.User.UserID,
                     Cache.User.IsEmailNull() || string.IsNullOrEmpty(Cache.User.Email)
                         ? "" : new System.Net.Mail.MailAddress(Cache.User.Email).Address,
-                    App.IsActive ? 1 : 0);
+                    App.IsActive ? 1 : 0); // TODO: ?? what was this for ??
 
             // encode
             var bytes = System.Text.Encoding.UTF8.GetBytes(tag);
@@ -518,6 +525,48 @@ namespace TourWriter.Forms
         private static void DownloadToBrowser(Uri uri)
         {
             Process.Start(uri.ToString());
+        }
+        
+        private static string QueryUpdateServer()
+        {
+            return "WIP"; // TODO: WIP, working but need to deploy server side
+
+            // data
+            var lic = new Info.License(); lic.LoadFromDatabase();
+            var data = new NameValueCollection
+                       {
+                           {"sid", Info.VersionInfo.GetInstallId()},
+                           {"app", AssemblyInfo.FileVersion},
+                           {"rev", AssemblyInfo.RevisionNumber},
+                           {"db", Cache.ToolSet.AppSettings[0].VersionNumber},
+                           {"os", Environment.OSVersion.Version.ToString()},
+                           {"net", App.GetDotNetVersion()},
+                           {"res", SystemInformation.PrimaryMonitorSize.Width + "x" + SystemInformation.PrimaryMonitorSize.Height},
+                           {"lic", lic.MaxUsers.ToString()},
+                           {"exp", lic.EndDate.ToString("yyyy-MM-dd")},
+                           {"pid", App.Test},
+                           {"uid", Cache.User.UserID.ToString()},
+                           {"uem", Cache.User.IsEmailNull() || string.IsNullOrEmpty(Cache.User.Email) ? "" : new System.Net.Mail.MailAddress(Cache.User.Email).Address},
+                       };
+            var postData = string.Join("&", (from string name in data select String.Concat(name, "=", HttpUtility.UrlEncode(data[name]))).ToArray());
+            
+            // request
+            var request = WebRequest.Create("http://localhost:10135/update") as HttpWebRequest;
+            request.Timeout = 20000;
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            using (var s = request.GetRequestStream())
+            using (var sw = new StreamWriter(s))
+                sw.Write(postData);
+
+            // response
+            string xml;
+            var response = request.GetResponse() as HttpWebResponse;
+            using (var s = response.GetResponseStream())
+            using (var sr = new StreamReader(s))
+                xml = sr.ReadToEnd();
+
+            return xml;
         }
     }
 }
