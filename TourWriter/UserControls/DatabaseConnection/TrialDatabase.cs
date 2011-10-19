@@ -9,7 +9,7 @@ namespace TourWriter.UserControls.DatabaseConnection
         private const string MsgSuccess = @"
 Your database is ready.
 
-The database is hosted by Travelmesh Web Services, and you will receive a confirmation email from them shortly.
+IMPORTANT: Please check your email for a message containing your database access key, you'll need this to connect other users. The email is from Travelmesh Web Services, who provide the online services. If you do not receive the email, please contact us: support@tourwriter.com
 
 Click OK to login in now :)
 ";
