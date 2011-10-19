@@ -56,7 +56,7 @@
             this.groupBox1.Controls.Add(this.txtBody);
             this.groupBox1.Location = new System.Drawing.Point(6, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(447, 313);
+            this.groupBox1.Size = new System.Drawing.Size(492, 367);
             this.groupBox1.TabIndex = 150;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Publishing content";
@@ -65,7 +65,7 @@
             // 
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.Image = global::TourWriter.Properties.Resources.Folder;
-            this.btnBrowse.Location = new System.Drawing.Point(420, 59);
+            this.btnBrowse.Location = new System.Drawing.Point(465, 59);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(23, 22);
             this.btnBrowse.TabIndex = 146;
@@ -87,7 +87,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHeading.Location = new System.Drawing.Point(80, 30);
             this.txtHeading.Name = "txtHeading";
-            this.txtHeading.Size = new System.Drawing.Size(361, 20);
+            this.txtHeading.Size = new System.Drawing.Size(406, 20);
             this.txtHeading.TabIndex = 0;
             // 
             // txtImage
@@ -96,7 +96,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtImage.Location = new System.Drawing.Point(80, 60);
             this.txtImage.Name = "txtImage";
-            this.txtImage.Size = new System.Drawing.Size(338, 20);
+            this.txtImage.Size = new System.Drawing.Size(383, 20);
             this.txtImage.TabIndex = 145;
             // 
             // label4
@@ -126,7 +126,8 @@
             this.txtBody.MinimumSize = new System.Drawing.Size(400, 150);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
-            this.txtBody.Size = new System.Drawing.Size(426, 195);
+            this.txtBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtBody.Size = new System.Drawing.Size(471, 249);
             this.txtBody.TabIndex = 2;
             // 
             // txtName
@@ -135,7 +136,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(53, 3);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(396, 20);
+            this.txtName.Size = new System.Drawing.Size(441, 20);
             this.txtName.TabIndex = 149;
             // 
             // label1
@@ -155,7 +156,7 @@
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
             this.Name = "ContentEditor";
-            this.Size = new System.Drawing.Size(456, 345);
+            this.Size = new System.Drawing.Size(501, 399);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
