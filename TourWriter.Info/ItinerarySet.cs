@@ -572,7 +572,7 @@ namespace TourWriter.Info
             {
                 decimal quantity = !IsQuantityNull() ? (decimal)Quantity : 1;
                 decimal numberOfDays = !IsNumberOfDaysNull() ? (decimal)NumberOfDays : 1;
-                decimal discount = !IsDiscountUnitsNull() ? (decimal)DiscountUnits : 0;
+                decimal discount = numberOfDays * (!IsDiscountUnitsNull() ? (decimal)DiscountUnits : 0);
                 return (quantity * numberOfDays) - discount;
             }
 
