@@ -326,7 +326,7 @@
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Discounts.cs" />
-    <Compile Include="Services\DataSyncUi.cs" />
+    <Compile Include="Services\Travelmesh\DataSyncUi.cs" />
     <Compile Include="Services\Travelmesh\ApiWrapper.cs" />
     <Compile Include="Services\Travelmesh\DataSync.cs" />
     <Compile Include="Services\Travelmesh\TrialDatabase.cs" />

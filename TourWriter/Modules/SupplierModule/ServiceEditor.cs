@@ -84,8 +84,12 @@ namespace TourWriter.Modules.SupplierModule
                     OnSupplierSelected(
                         new SupplierSelectedEventArgs(supplierSet.Supplier[0].SupplierID));
 
-                gridServices.AddExportHooks(SupplierSet);
-                gridOptions.AddExportHooks(SupplierSet);
+
+                if (App.IsDebugMode && ModifierKeys == Keys.Control)
+                {
+                    gridServices.AddExportHooks(SupplierSet);
+                    gridOptions.AddExportHooks(SupplierSet);
+                }
             }
         }
 

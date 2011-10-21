@@ -21,8 +21,6 @@ namespace TourWriter.Services
         
         public static void AddExportHooks(this UltraGrid grid, SupplierSet supplierSet)
         {
-            if (!ENABLED) return; // TODO: WIP, hide for now
-
             InitializeLayout(grid, supplierSet);
             grid.InitializeRow += (sender, e) => OnInitializeRow(e.Row, supplierSet);
             grid.AfterCellListCloseUp += (sender, e) => OnCellListCloseUp(e, supplierSet);
@@ -58,19 +56,24 @@ namespace TourWriter.Services
             col.Header.Caption = "Sync";
             col.ProportionalResize = false;
             col.Style = ColumnStyle.DropDownList;
+            
             col.CellActivation = Activation.AllowEdit;
             col.Header.ToolTipText = "Sync with online data";
             col.ValueList = grid.DisplayLayout.ValueLists["syncOptionsList"];
             col.CellButtonAppearance.ImageHAlign = Infragistics.Win.HAlign.Center;
-            col.Header.VisiblePosition = 0;// grid.DisplayLayout.Bands[0].Columns.Count;
+            col.Header.VisiblePosition = 0;
+            //col.ButtonDisplayStyle = ButtonDisplayStyle.OnCellActivate;
         }
 
         static void OnCellListCloseUp(CellEventArgs e, SupplierSet supplierSet)
         {
-            App.Debug("Sync click: " + e.Cell.Text);
-            if (e.Cell.Text == "Sync")
+            var result = e.Cell.Text;
+            ((UltraGrid) e.Cell.Row.Band.Layout.Grid).PerformAction(UltraGridAction.DeactivateCell);
+
+            App.Debug("Sync click: " + result);
+            if (result == "Sync")
                 OnSyncClick(e, supplierSet);
-            if (e.Cell.Text == "Remove")
+            if (result == "Remove")
                 OnRemoveClick(e, supplierSet);
             e.Cell.Value = null;
         }
@@ -78,8 +81,9 @@ namespace TourWriter.Services
         private static void OnInitializeRow(UltraGridRow row, SupplierSet supplierSet)
         {
             var cell = row.Cells["Export"];
+            cell.ActiveAppearance.BackColor = Color.White;
+            cell.ToolTipText = "Sync with Travelmesh";
             var exported = row.Cells["ImportID"].Value != DBNull.Value;
-            cell.ToolTipText = exported ? "Sync with online data" : "Export to online data";
             cell.Appearance.Image = exported ? Base64ToImage(ImgGreen) : Base64ToImage(ImgGrey);
         }
 
@@ -129,10 +133,13 @@ namespace TourWriter.Services
         
         private static void OnRemoveClick(CellEventArgs e, SupplierSet supplierSet)
         {
-            App.ShowInfo("Not yet implimented..."); return; // TODO
+            if (e.Cell.Column.Key != "Export") return;
             
-            if (!App.AskYesNo("Remove link mapping? This will only remove the link, not the items"))
-                return;
+            var exported = e.Cell.Row.Cells["ImportID"].Value != DBNull.Value;
+            if (!exported) return;
+
+            e.Cell.Row.Cells["ImportID"].Value = DBNull.Value;
+            //App.ShowInfo("Mapping removed.\r\n\r\nOnline data was not removed.");
         }
 
         private static Image Base64ToImage(string base64String)
