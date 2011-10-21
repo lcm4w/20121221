@@ -376,12 +376,7 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Body" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Body" msprop:Generator_ColumnVarNameInTable="columnBody" msprop:Generator_ColumnPropNameInTable="BodyColumn" msprop:Generator_UserColumnName="Body" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="4000" />
-                  </xs:restriction>
-                </xs:simpleType>
+              <xs:element name="Body" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Body" msprop:Generator_ColumnVarNameInTable="columnBody" msprop:Generator_ColumnPropNameInTable="BodyColumn" msprop:Generator_UserColumnName="Body" minOccurs="0">                
               </xs:element>
               <xs:element name="ImagePath" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="ImagePath" msprop:Generator_ColumnVarNameInTable="columnImagePath" msprop:Generator_ColumnPropNameInTable="ImagePathColumn" msprop:Generator_UserColumnName="ImagePath" minOccurs="0">
                 <xs:simpleType>
