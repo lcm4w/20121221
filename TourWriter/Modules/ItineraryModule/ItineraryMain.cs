@@ -59,6 +59,12 @@ namespace TourWriter.Modules.ItineraryModule
             get { return bookingsViewer; }
         }
 
+        internal QuoteTable BookingsQuoteTable
+        {
+            get { return bookingsQuote.QuoteTable; }
+        }
+
+
         public BindingSource CurrencyBindingSource { get { return currencyBindingSource; } }
 
         #endregion

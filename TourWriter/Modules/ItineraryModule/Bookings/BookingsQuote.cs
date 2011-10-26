@@ -21,6 +21,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         internal ItinerarySet ItinerarySet { get; set; }
 
+        internal QuoteTable QuoteTable
+        {
+            get
+            {
+                if (grid.DataSource != null) DataBind();
+                return (QuoteTable)grid.DataSource;
+            }
+        }
+
+
         public BookingsQuote()
         {
             InitializeComponent();

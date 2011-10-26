@@ -13,6 +13,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         internal enum PriceTypes { Net, Gross };
         private static PriceTypes _priceType;
 
+        public QuoteTable() { } // parameterless constructor required for base.Copy() etc
+ 
         public QuoteTable(ItinerarySet itinerarySet, IEnumerable<ToolSet.OptionTypeRow> optionTypes, PriceTypes priceType)
         {
             _itinerarySet = itinerarySet;

@@ -89,8 +89,6 @@ namespace TourWriter.UserControls.Reports
             reportParams = _defaultParams;
             dataSources = _rdlcHelper.GetDataSourcesNameAndSql(ref exists);
 
-            if (!exists) throw new ArgumentException("Report section not found: SQL statement");
-
             foreach(var editControl in pnlLayout.Controls)
             {
                 var editor = editControl as OptionEdit;

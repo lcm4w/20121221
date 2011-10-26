@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using TourWriter.Info.Services;
@@ -50,7 +51,7 @@ namespace TourWriter.UserControls.Reports
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.WaitCursor;
                 else Cursor = Cursors.WaitCursor;
                 Application.DoEvents();
-
+                
                 // initialise
                 reportViewer.Reset();
                 reportViewer.LocalReport.ReportPath = _reportFile;
@@ -83,9 +84,19 @@ namespace TourWriter.UserControls.Reports
                 // set data
                 foreach (var dataSource in _dataSources)
                 {
-                    var sql = dataSource.Value;
-                    var data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
-                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));  
+                    // client datasource
+                    if (dataSource.Key.ToLower().EndsWith("_client"))
+                    {
+                        var dt = GetDataSourceFromClient(dataSource.Key);
+                        reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, dt));
+                    }
+                    // sql datasource
+                    else
+                    {
+                        var sql = dataSource.Value;
+                        var data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
+                        reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));
+                    }
                 }
                 reportViewer.RefreshReport();
             }
@@ -93,10 +104,11 @@ namespace TourWriter.UserControls.Reports
             {
                 var localEx = ex.InnerException;
                 while (localEx.InnerException != null) localEx = localEx.InnerException;
+                throw localEx;
 
-                if (localEx.Message.ToLower().StartsWith("the report definition is not valid"))
-                    throw new FormatException(localEx.Message);
-                throw;
+                //if (localEx.Message.ToLower().StartsWith("the report definition is not valid"))
+                //    throw new FormatException(localEx.Message);
+                //throw;
             }
             catch (Exception ex)
             {
@@ -108,6 +120,57 @@ namespace TourWriter.UserControls.Reports
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.Default;
                 else Cursor = Cursors.Default;
             }
+        }
+
+        private object GetDataSourceFromClient(string key)
+        {
+            DataTable dt = null;
+
+            // groups dynamic-cols data
+            if (key == "GroupQuoteAll_client" || key == "GroupQuotePrices_client")
+            {
+                dt = new DataTable(key);
+                dt.Columns.AddRange(new[] { new DataColumn("row", typeof(int)), new DataColumn("col", typeof(string)), new DataColumn("val", typeof(string)) });
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+         
+                var cnt = 0;
+                foreach (DataRow row in quoteTable.Rows)
+                {
+                    cnt++;
+                    foreach (DataColumn col in quoteTable.Columns)
+                    {
+                        // val formated
+                        var val = row[col.ColumnName];
+                        if (col.DataType == typeof(DateTime) && !string.IsNullOrEmpty(val.ToString())) 
+                            val = DateTime.Parse(val.ToString()).ToShortDateString();
+                        if (col.DataType == typeof(Decimal) && !string.IsNullOrEmpty(val.ToString()))
+                            val = Math.Round((decimal)val, 2).ToString("0.00");
+
+                        var isPriceColumn = col.DataType == typeof(decimal); // or (col index > 7)
+                        if (col.ColumnName == "PurchaseItemID" || key == "GroupQuoteAll_client" || isPriceColumn)
+                            dt.Rows.Add(cnt, col.ColumnName, val);
+                    }
+                }
+            }
+            // groups static detail cols data
+            else if (key == "GroupQuoteDetail_client")
+            {
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                dt = quoteTable.Copy();
+                dt.TableName = key;
+
+                for (int i = dt.Columns.Count - 1; i > -1; i--)
+                    if (dt.Columns[i].DataType == typeof(Decimal))
+                        dt.Columns.RemoveAt(i);
+            }
+            // groups static all cols data
+            else if (key == "GroupQuoteStatic_client")
+            {
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                dt = quoteTable.Copy();
+                dt.TableName = key;
+            }
+            return dt;
         }
 
         private void ShowOptionsForm()
