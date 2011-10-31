@@ -38,6 +38,8 @@ namespace TourWriter.Forms
         internal Label label11;
         private LinkLabel lnkEmailSupport;
         private LinkLabel lnkCopyInfo;
+        internal Label label8;
+        internal Label lblDbName;
         private System.ComponentModel.IContainer components;
 	
 		public About()
@@ -78,6 +80,8 @@ namespace TourWriter.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblDbName = new System.Windows.Forms.Label();
             this.lblDotNetVersion = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.lblOsVersion = new System.Windows.Forms.Label();
@@ -152,6 +156,9 @@ namespace TourWriter.Forms
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.lblDbName);
             this.groupBox1.Controls.Add(this.lblDotNetVersion);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.lblOsVersion);
@@ -170,9 +177,18 @@ namespace TourWriter.Forms
             this.groupBox1.Controls.Add(this.lblDescription);
             this.groupBox1.Controls.Add(this.lblAppVersion);
             this.groupBox1.Controls.Add(this.label4);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // lblDbName
+            // 
+            resources.ApplyResources(this.lblDbName, "lblDbName");
+            this.lblDbName.Name = "lblDbName";
             // 
             // lblDotNetVersion
             // 
@@ -216,8 +232,8 @@ namespace TourWriter.Forms
             // 
             // btnOK
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.btnOK, "btnOK");
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnOK.Name = "btnOK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -270,6 +286,7 @@ namespace TourWriter.Forms
 				lblTitle.Text = ai.Title;
                 lblAppVersion.Text = AssemblyInfo.InformationalVersion;
 			    lblDbVersion.Text = Cache.ToolSet.AppSettings[0].VersionNumber;
+			    lblDbName.Text = GetDbName();
                 lblOsVersion.Text = Environment.OSVersion.VersionString;
 			    lblDotNetVersion.Text = App.GetDotNetVersion();
                 lblDbVersion.Text = Cache.ToolSet.AppSettings[0].VersionNumber;
@@ -289,6 +306,7 @@ namespace TourWriter.Forms
             var info = new StringBuilder();
             info.AppendLine("Title: " + lblTitle.Text);
             info.AppendLine("Application Version: " + lblAppVersion.Text);
+            info.AppendLine("Database Name: " + lblDbName.Text);
             info.AppendLine("Database Version: " + lblDbVersion.Text);
             info.AppendLine("OS Version: " + lblOsVersion.Text);
             info.AppendLine(".NET Version: " + lblDotNetVersion.Text);
@@ -298,6 +316,17 @@ namespace TourWriter.Forms
             info.AppendLine("Codebase: " + lblCodebase.Text);
 
             return info.ToString();
+        }
+
+	    private static string _dbname;
+        private string GetDbName()
+        {
+            if (_dbname == null)
+            {
+                var rdr = Info.Services.DatabaseHelper.ExecuteReader("select db_name()");
+                _dbname = rdr.Read() ? rdr[0].ToString() : "";
+            }
+            return _dbname;
         }
 
         private void CopyInfoToClipboard()
@@ -331,5 +360,6 @@ namespace TourWriter.Forms
         {
             CopyInfoToClipboard();
         }
+
 	}
 }
