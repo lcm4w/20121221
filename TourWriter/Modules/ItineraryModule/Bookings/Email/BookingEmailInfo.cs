@@ -31,6 +31,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly string tagAgentName = "[!AgentName]";
         private readonly string tagItineraryID = "[!ItineraryID]";
         private readonly string tagCustomCode = "[!CustomID]";
+        private readonly string tagCountryOrOrigin = "[!CountryOfOrigin]";
+        private readonly string tagPaxCount = "[!PaxCount]";
         private readonly string tagBookingID = "[!BookingID]";
         private readonly string tagBookingDetails = "[!BookingDetails]";
         private readonly string tagBookingNotes = "[!BookingNotes]";
@@ -175,8 +177,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private string BuildEmailText(string template, ItinerarySet.PurchaseLineRow purchaseLine)
         {
-            ItinerarySet.SupplierLookupRow supplier =
-                GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
+            var supplier = GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
+            var origin = !purchaseLine.ItineraryRow.IsCountryIDNull() ? Cache.ToolSet.Country.FindByCountryID(purchaseLine.ItineraryRow.CountryID) : null;
+            var pax = !purchaseLine.ItineraryRow.IsPaxOverrideNull() ? purchaseLine.ItineraryRow.PaxOverride : 
+                purchaseLine.ItineraryRow.GetItineraryGroupRows().Sum(g => g.GetItineraryMemberRows().Count());
 
             template = ReplaceTag(template, tagHostName,
                 (!supplier.IsHostNameNull() && supplier.HostName != "" ? supplier.HostName : "Reservations").Trim());
@@ -187,6 +191,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, tagAgentName, !purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
             template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
             template = ReplaceTag(template, tagCustomCode, !purchaseLine.ItineraryRow.IsCustomCodeNull() ? purchaseLine.ItineraryRow.CustomCode : "");
+            template = ReplaceTag(template, tagCountryOrOrigin, origin != null ? origin.CountryName : "");
+            template = ReplaceTag(template, tagPaxCount, pax.ToString());
             template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
             template = ReplaceBookingDetailsTag(template, purchaseLine);
             template = ReplaceTag(template, tagBookingNotes, BuildBookingNotes(PurchaseLine));
