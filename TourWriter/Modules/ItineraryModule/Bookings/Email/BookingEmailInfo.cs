@@ -24,21 +24,21 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private readonly string htmlRowTemplateBookings = "<tr valign=top><td width=20></td><td>{0}:&nbsp;&nbsp;</td><td>{1}</td></tr>";
         
         // email body search-and-replace tags
-        private readonly string tagHostName = "[!HostName]";
-        private readonly string tagSupplierName = "[!SupplierName]";
-        private readonly string tagItineraryName = "[!ItineraryName]";
-        private readonly string tagDisplayName = "[!DisplayName]";
-        private readonly string tagAgentName = "[!AgentName]";
-        private readonly string tagItineraryID = "[!ItineraryID]";
-        private readonly string tagCustomCode = "[!CustomID]";
-        private readonly string tagCountryOrOrigin = "[!CountryOfOrigin]";
-        private readonly string tagPaxCount = "[!PaxCount]";
-        private readonly string tagBookingID = "[!BookingID]";
-        private readonly string tagBookingDetails = "[!BookingDetails]";
-        private readonly string tagBookingNotes = "[!BookingNotes]";
-        private readonly string tagClientNotes = "[!ClientNotes]";
-        private readonly string tagUserName = "[!UserName]";
-        private readonly string tagUserEmail = "[!UserEmail]";
+        private const string HostNameTag = "[!HostName]";
+        private const string SupplierNameTag = "[!SupplierName]";
+        private const string ItineraryNameTag = "[!ItineraryName]";
+        private const string DisplayNameTag = "[!DisplayName]";
+        private const string AgentNameTag = "[!AgentName]";
+        private const string ItineraryIdTag = "[!ItineraryID]";
+        private const string CustomCodeTag = "[!CustomID]";
+        private const string CountryOrOriginTag = "[!CountryOfOrigin]";
+        private const string PaxCountTag = "[!PaxCount]";
+        private const string BookingIdTag = "[!BookingID]";
+        private const string BookingDetailsTag = "[!BookingDetails]";
+        private const string BookingNotesTag = "[!BookingNotes]";
+        private const string ClientNotesTag = "[!ClientNotes]";
+        private const string UserNameTag = "[!UserName]";
+        private const string UserEmailTag = "[!UserEmail]";
         
         private const string BookingDetailStartTag = "[!BookingDetailStart]";
         private const string ItemCountTag = "[!ItemCount]";
@@ -182,23 +182,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             var pax = !purchaseLine.ItineraryRow.IsPaxOverrideNull() ? purchaseLine.ItineraryRow.PaxOverride : 
                 purchaseLine.ItineraryRow.GetItineraryGroupRows().Sum(g => g.GetItineraryMemberRows().Count());
 
-            template = ReplaceTag(template, tagHostName,
+            template = ReplaceTag(template, HostNameTag,
                 (!supplier.IsHostNameNull() && supplier.HostName != "" ? supplier.HostName : "Reservations").Trim());
 
-            template = ReplaceTag(template, tagSupplierName, supplier.SupplierName);
-            template = ReplaceTag(template, tagItineraryName, purchaseLine.ItineraryRow.ItineraryName);
-            template = ReplaceTag(template, tagDisplayName, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
-            template = ReplaceTag(template, tagAgentName, !purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
-            template = ReplaceTag(template, tagItineraryID, purchaseLine.ItineraryID.ToString());
-            template = ReplaceTag(template, tagCustomCode, !purchaseLine.ItineraryRow.IsCustomCodeNull() ? purchaseLine.ItineraryRow.CustomCode : "");
-            template = ReplaceTag(template, tagCountryOrOrigin, origin != null ? origin.CountryName : "");
-            template = ReplaceTag(template, tagPaxCount, pax.ToString());
-            template = ReplaceTag(template, tagBookingID, purchaseLine.PurchaseLineID.ToString());
+            template = ReplaceTag(template, SupplierNameTag, supplier.SupplierName);
+            template = ReplaceTag(template, ItineraryNameTag, purchaseLine.ItineraryRow.ItineraryName);
+            template = ReplaceTag(template, DisplayNameTag, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
+            template = ReplaceTag(template, AgentNameTag, !purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
+            template = ReplaceTag(template, ItineraryIdTag, purchaseLine.ItineraryID.ToString());
+            template = ReplaceTag(template, CustomCodeTag, !purchaseLine.ItineraryRow.IsCustomCodeNull() ? purchaseLine.ItineraryRow.CustomCode : "");
+            template = ReplaceTag(template, CountryOrOriginTag, origin != null ? origin.CountryName : "");
+            template = ReplaceTag(template, PaxCountTag, pax.ToString());
+            template = ReplaceTag(template, BookingIdTag, purchaseLine.PurchaseLineID.ToString());
             template = ReplaceBookingDetailsTag(template, purchaseLine);
-            template = ReplaceTag(template, tagBookingNotes, BuildBookingNotes(PurchaseLine));
-            template = ReplaceTag(template, tagClientNotes, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
-            template = ReplaceTag(template, tagUserName, Cache.User.DisplayName);
-            template = ReplaceTag(template, tagUserEmail, Cache.User.Email);
+            template = ReplaceTag(template, BookingNotesTag, BuildBookingNotes(PurchaseLine));
+            template = ReplaceTag(template, ClientNotesTag, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
+            template = ReplaceTag(template, UserNameTag, Cache.User.DisplayName);
+            template = ReplaceTag(template, UserEmailTag, Cache.User.Email);
 
             return template;
         }
@@ -211,7 +211,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 return InsertCustomBookingDetails(template, purchaseLine);
             }
             // handle old email templates (which don't allow custom booking details)
-            return ReplaceTag(template, tagBookingDetails, BuildBookingDetails(purchaseLine));
+            return ReplaceTag(template, BookingDetailsTag, BuildBookingDetails(purchaseLine));
         }
 
         private string BuildBookingDetails(ItinerarySet.PurchaseLineRow line)
