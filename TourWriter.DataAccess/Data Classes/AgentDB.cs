@@ -38,7 +38,7 @@ namespace TourWriter.DataAccess
 
 			return ds;
 		}
-
+        
 		/// <summary>
 		/// Saves changes to a AgentSet, updates any row errors, and refreshes the data
 		/// based on the ExtendedProperties 'ID' key.
@@ -55,7 +55,7 @@ namespace TourWriter.DataAccess
 		    AgentSet fresh;
             if(ds.ExtendedProperties["AgentID"] != null)
             {
-                fresh = GetAgentSet((int) ds.ExtendedProperties["AgentID"]);   
+                fresh = GetAgentSet(int.Parse(ds.ExtendedProperties["AgentID"].ToString()));   
             }
             else
             {

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinTree;
@@ -898,16 +899,67 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void CopyAgent()
         {
-            if (gridAgents.ActiveRow == null)
-                return;
-
-            AgentSet.AgentRow copyRow = Cache.AgentSet.Agent.FindByAgentID(
-                (int)gridAgents.ActiveRow.Cells["AgentID"].Value);
-
-            if (App.AskYesNo("Copy agent: " + copyRow.AgentName + "?"))
+            if (gridAgents.ActiveRow == null) return;
+            AgentSet.AgentRow copyAgent = Cache.AgentSet.Agent.FindByAgentID((int)gridAgents.ActiveRow.Cells["AgentID"].Value);
+            if (App.AskYesNo("Copy agent: " + copyAgent.AgentName + "?"))
             {
-                AgentSet.AgentRow newRow = copyRow.Copy("Copy of " + copyRow.AgentName, Cache.User.UserID);
-                GridHelper.SetActiveRow(gridAgents, "AgentID", newRow.AgentID, "AgentName");
+                // agent
+                var agent = Cache.AgentSet.Agent.NewAgentRow();
+                var id = agent.AgentID;
+                agent.ItemArray = copyAgent.ItemArray;
+                agent.AgentID = id;
+                agent.IsDefaultAgent = false;
+                agent.AgentName = agent.AgentName + " (copy)";
+                Cache.AgentSet.Agent.AddAgentRow(agent);
+
+                // contacts
+                foreach (var row in copyAgent.GetAgentContactRows())
+                {
+                    var contact = Cache.AgentSet.AgentContact.NewAgentContactRow();
+                    contact.ItemArray = row.ItemArray;
+                    contact.AgentID = id;
+                    Cache.AgentSet.AgentContact.AddAgentContactRow(contact);
+                }
+
+                // margins
+                foreach (var row in copyAgent.GetAgentMarginRows())
+                {
+                    var margin = Cache.AgentSet.AgentMargin.NewAgentMarginRow();
+                    margin.ItemArray = row.ItemArray;
+                    margin.AgentID = id;
+                    Cache.AgentSet.AgentMargin.AddAgentMarginRow(margin);
+                }
+
+                // purchs term
+                if (!copyAgent.IsPurchasePaymentTermIDNull())
+                {
+                    var copyPurch = Cache.AgentSet.PaymentTerm.Where(x => x.RowState != DataRowState.Deleted && x.PaymentTermID == copyAgent.PurchasePaymentTermID).FirstOrDefault();
+                    if (copyPurch != null)
+                    {
+                        var purch = Cache.AgentSet.PaymentTerm.NewPaymentTermRow();
+                        id = purch.PaymentTermID;
+                        purch.ItemArray = copyPurch.ItemArray;
+                        purch.PaymentTermID = id;
+                        Cache.AgentSet.PaymentTerm.AddPaymentTermRow(purch);
+                        agent.PurchasePaymentTermID = purch.PaymentTermID;
+                    }
+                }
+
+                // sales term
+                if (!copyAgent.IsSalePaymentTermIDNull())
+                {
+                    var copySale = Cache.AgentSet.PaymentTerm.Where(x => x.RowState != DataRowState.Deleted && x.PaymentTermID == copyAgent.SalePaymentTermID).FirstOrDefault();
+                    if (copySale != null)
+                    {
+                        var sale = Cache.AgentSet.PaymentTerm.NewPaymentTermRow();
+                        id = sale.PaymentTermID;
+                        sale.ItemArray = copySale.ItemArray;
+                        sale.PaymentTermID = id;
+                        Cache.AgentSet.PaymentTerm.AddPaymentTermRow(sale);
+                        agent.SalePaymentTermID = sale.PaymentTermID;
+                    }
+                }
+                GridHelper.SetActiveRow(gridAgents, "AgentID", agent.AgentID, "AgentName");
             }
 
             RebuildAgentList();

@@ -7,22 +7,6 @@ namespace TourWriter.Info
 	{
         partial class AgentRow
         {
-            public AgentRow Copy(string newName, int userId)
-            {
-                AgentRow newRow = tableAgent.NewAgentRow();
-                int newId = newRow.AgentID;
-                newRow.ItemArray = ItemArray;
-
-                // Set new values.
-                newRow.AgentName = newName;
-                newRow.AgentID = newId;
-                newRow.AddedBy = userId;
-                newRow.AddedOn = DateTime.Now;
-
-                tableAgent.AddAgentRow(newRow);
-                
-                return newRow;
-            }
         }
 
         partial class PaymentTermRow
