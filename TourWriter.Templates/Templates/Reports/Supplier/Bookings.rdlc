@@ -39,7 +39,13 @@
       </Fields>
       <Query>
         <DataSourceName>PurchaseItemDetail</DataSourceName>
-        <CommandText>SELECT ItineraryName,AgentName,PurchaseItemName,PurchaseItemStartDate,SupplierName,ServiceName FROM dbo.PurchaseItemDetail WHERE SupplierID = @SupplierID AND PurchaseItemStartDate &gt;= @StartDate AND PurchaseItemStartDate &lt; @EndDate and (AgentID in @AgentIDList)</CommandText>
+        <CommandText>
+SELECT ItineraryName,AgentName,PurchaseItemName,PurchaseItemStartDate,SupplierName,ServiceName 
+FROM dbo.PurchaseItemDetail 
+WHERE SupplierID = @SupplierID AND PurchaseItemStartDate &gt;= @StartDate 
+AND PurchaseItemStartDate &lt; @EndDate 
+AND (AgentID in @AgentIDList)
+AND (ItineraryStatusID in @ItineraryStatusIDList)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <rd:DataSetInfo>
