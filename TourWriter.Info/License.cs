@@ -86,9 +86,9 @@ namespace TourWriter.Info
             LocalLicenseID = null;
             LicenseID = null;
             LicenseType = "Trial";
-            MaxUsers = 3;
+            MaxUsers = 10;
             StartDate = DateTime.Now; // trial period start
-            EndDate = DateTime.Now.AddDays(30); // trial period end
+            EndDate = DateTime.Now.AddDays(16); // trial period end
             PurchaseURL = @"http://www.tourwriter.com";
             InfoURL = @"http://www.tourwriter.com";
         }

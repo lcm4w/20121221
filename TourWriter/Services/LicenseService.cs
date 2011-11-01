@@ -114,12 +114,12 @@ namespace TourWriter.Services
             }
             else if (daysExpired <= 30)
             {
-                delay = 12;
+                delay = 10;
                 notify = _lastNotifiedDate.AddHours(3) < DateTime.Now;
             }
             else
             {
-                delay = 60;
+                delay = 30;
                 notify = true;
                 if (daysExpired > 60) ForceReadOnlyMode = true;
             }
