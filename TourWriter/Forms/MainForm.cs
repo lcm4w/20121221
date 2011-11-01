@@ -703,6 +703,10 @@ namespace TourWriter.Forms
 
         internal void Load_TourWriterDataFolder()
         {
+            // also show AppData folder?
+            if (App.IsDebugMode) Process.Start(App.Path_DefaultTemplatesFolder);
+
+            // open TourWriterData
             var f = Services.ExternalFilesHelper.GetTourWriterDataFolder();
             try
             {
