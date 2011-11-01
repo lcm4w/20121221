@@ -190,10 +190,7 @@ namespace TourWriter.Modules.SupplierModule
             txtLatitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Latitude");
             txtLongitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Longitude");
 
-            // TODO : hiding spatial except for ENZ, WalshGroup
-            pnlSpatial.Visible =
-                Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4" ||
-                Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991";
+            pnlSpatial.Visible = App.ShowSupplierLatLong;
 
             // Rates
             gridRates.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceRate");

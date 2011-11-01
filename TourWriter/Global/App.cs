@@ -195,6 +195,27 @@ namespace TourWriter
             }
         }
 
+        internal static bool UseOldItineraryExportCols
+        {
+            get
+            {
+                return Cache.ToolSet.AppSettings.Count > 0 && (
+                       //Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "bbe982ab-c8e2-4db4-8eac-06801a810540".ToLower() ||    // sx au
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "49ad26fd-6582-493a-b998-b9ba244d082f".ToLower() ||    // sx nz
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "8a7e0397-40dc-4389-8a38-9e74a2c32e20".ToLower());     // sz
+            }
+        }
+
+        internal static bool ShowSupplierLatLong
+        {
+            get
+            {   // enz and walsh's
+                return Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4" ||
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991";
+            }
+        }
+
+        
 
 
         #endregion
