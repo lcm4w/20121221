@@ -21,13 +21,13 @@ namespace TourWriter.Services
         
         public static void AddExportHooks(this UltraGrid grid, SupplierSet supplierSet)
         {
-            InitializeLayout(grid, supplierSet);
-            grid.InitializeRow += (sender, e) => OnInitializeRow(e.Row, supplierSet);
-            grid.AfterCellListCloseUp += (sender, e) => OnCellListCloseUp(e, supplierSet);
+            OnGridInitializeLayout(grid, supplierSet);
+            grid.InitializeRow += (sender, e) => OnGridInitializeRow(e.Row, supplierSet);
+            grid.AfterCellListCloseUp += (sender, e) => OnGridCellListCloseUp(e, supplierSet);
             grid.Rows.Refresh(RefreshRow.FireInitializeRow);
         }
         
-        private static void InitializeLayout(UltraGrid grid, SupplierSet supplierSet)
+        private static void OnGridInitializeLayout(UltraGrid grid, SupplierSet supplierSet)
         {
             var col = grid.DisplayLayout.Bands[0].Columns.Exists("Export") ? grid.DisplayLayout.Bands[0].Columns["Export"] : grid.DisplayLayout.Bands[0].Columns.Add("Export");
             //col.Width = 6;
@@ -65,20 +65,7 @@ namespace TourWriter.Services
             //col.ButtonDisplayStyle = ButtonDisplayStyle.OnCellActivate;
         }
 
-        static void OnCellListCloseUp(CellEventArgs e, SupplierSet supplierSet)
-        {
-            var result = e.Cell.Text;
-            ((UltraGrid) e.Cell.Row.Band.Layout.Grid).PerformAction(UltraGridAction.DeactivateCell);
-
-            App.Debug("Sync click: " + result);
-            if (result == "Sync")
-                OnSyncClick(e, supplierSet);
-            if (result == "Remove")
-                OnRemoveClick(e, supplierSet);
-            e.Cell.Value = null;
-        }
-
-        private static void OnInitializeRow(UltraGridRow row, SupplierSet supplierSet)
+        private static void OnGridInitializeRow(UltraGridRow row, SupplierSet supplierSet)
         {
             var cell = row.Cells["Export"];
             cell.ActiveAppearance.BackColor = Color.White;
@@ -87,7 +74,7 @@ namespace TourWriter.Services
             cell.Appearance.Image = exported ? Base64ToImage(ImgGreen) : Base64ToImage(ImgGrey);
         }
 
-        private static void OnSyncClick(CellEventArgs e, SupplierSet supplierSet)
+        private static void OnEntitySyncClick(CellEventArgs e, SupplierSet supplierSet)
         {
             if (e.Cell.Column.Key != "Export") return;
             if (supplierSet.HasChanges())
@@ -101,13 +88,15 @@ namespace TourWriter.Services
             row.Band.Layout.Grid.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             try
             {
+                // Service clicked
                 if (row.Cells.Exists("ServiceName"))
                 {
                     var service = Enumerable.Where(supplierSet.Service, x => x.RowState != DataRowState.Deleted && x.ServiceID == (int)row.Cells["ServiceID"].Value).FirstOrDefault();
                     DataSync.SyncSupplier(service.SupplierRow);
                     DataSync.SyncService(service);
-                    DataSync.CreateServiceRates(service);
+                    DataSync.SyncRatesForService(service);
                 }
+                // Option clicked
                 else if (row.Cells.Exists("OptionName"))
                 {
                     var option = Enumerable.Where(supplierSet.Option, x => x.RowState != DataRowState.Deleted && x.OptionID == (int)row.Cells["OptionID"].Value).FirstOrDefault();
@@ -121,7 +110,7 @@ namespace TourWriter.Services
 
                     if (supplier.IsImportIDNull()) DataSync.SyncSupplier(supplier);
                     if (service.IsImportIDNull()) DataSync.SyncService(service);
-                    DataSync.CreateServiceRates(service, option.OptionID);
+                    DataSync.SyncRatesForOption(option.OptionID, service);
                 }
             }
             finally
@@ -131,7 +120,7 @@ namespace TourWriter.Services
             }
         }
         
-        private static void OnRemoveClick(CellEventArgs e, SupplierSet supplierSet)
+        private static void OnEntityUnsyncClick(CellEventArgs e, SupplierSet supplierSet)
         {
             if (e.Cell.Column.Key != "Export") return;
             
@@ -140,6 +129,19 @@ namespace TourWriter.Services
 
             e.Cell.Row.Cells["ImportID"].Value = DBNull.Value;
             //App.ShowInfo("Mapping removed.\r\n\r\nOnline data was not removed.");
+        }
+
+        static void OnGridCellListCloseUp(CellEventArgs e, SupplierSet supplierSet)
+        {
+            var result = e.Cell.Text;
+            ((UltraGrid)e.Cell.Row.Band.Layout.Grid).PerformAction(UltraGridAction.DeactivateCell);
+
+            App.Debug("Sync click: " + result);
+            if (result == "Sync")
+                OnEntitySyncClick(e, supplierSet);
+            if (result == "Remove")
+                OnEntityUnsyncClick(e, supplierSet);
+            e.Cell.Value = null;
         }
 
         private static Image Base64ToImage(string base64String)
