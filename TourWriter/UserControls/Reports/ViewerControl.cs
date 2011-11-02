@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
@@ -84,19 +85,22 @@ namespace TourWriter.UserControls.Reports
                 // set data
                 foreach (var dataSource in _dataSources)
                 {
+                    DataTable data;
+
                     // client datasource
                     if (dataSource.Key.ToLower().EndsWith("_client"))
                     {
-                        var dt = GetDataSourceFromClient(dataSource.Key);
-                        reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, dt));
+                        data = GetDataSourceFromClient(dataSource.Key);
                     }
                     // sql datasource
                     else
                     {
                         var sql = dataSource.Value;
-                        var data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
-                        reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));
+                        data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
                     }
+                    var isDefaultReport = _reportFile.ToLower().Contains(App.Path_DefaultTemplatesFolder.ToLower());
+                    if (isDefaultReport) EnsureDefaultReportImagesAreFound(data);
+                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));
                 }
                 reportViewer.RefreshReport();
             }
@@ -122,7 +126,30 @@ namespace TourWriter.UserControls.Reports
             }
         }
 
-        private object GetDataSourceFromClient(string key)
+        private void EnsureDefaultReportImagesAreFound(DataTable table)
+        {
+            var cols = table.Columns.Cast<DataColumn>().Where(x => x.ColumnName.IndexOf("Image") > -1).ToList();
+            
+            foreach (var row in table.Rows.Cast<DataRow>())
+                foreach (var col in cols.Where(col => row[col.ColumnName] != DBNull.Value))
+                    row[col.ColumnName] = EnsureDefaultReportImageIsFound(row[col.ColumnName].ToString());
+        }
+
+        private string EnsureDefaultReportImageIsFound(string imageFile)
+        {
+            var isUriFormat = imageFile.StartsWith("file://");
+            if (isUriFormat) imageFile = imageFile.Replace("file://", "");
+
+            if (!File.Exists(imageFile))
+            {
+                var imageName = new FileInfo(imageFile).Name;
+                var newSrc = Path.Combine(Path.Combine(App.Path_DefaultTemplatesFolder, "Images"), imageName);
+                if (File.Exists(newSrc)) imageFile = newSrc;
+            }
+            return isUriFormat ? "file://" + imageFile : imageFile;
+        }
+
+        private DataTable GetDataSourceFromClient(string key)
         {
             DataTable dt = null;
 
