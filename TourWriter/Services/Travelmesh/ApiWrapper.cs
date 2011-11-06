@@ -5,8 +5,13 @@ namespace Travelmesh
 {
     class ApiWrapper
     {
-        const string TravelmeshUrl = "http://localhost:17795";
-        //const string TravelmeshUrl = "http://api.travelmesh.com";
+
+        // -----------------------------------------------------------------
+        /* LIVE */ const string TravelmeshUrl = "http://api.travelmesh.com";
+        /* TEST */ //const string TravelmeshUrl = "http://localhost:17795";
+        // -----------------------------------------------------------------
+
+
         const string ApiKey = "115ea538cedd5feae0ed4504ea3092223c4b5e9a";
         static readonly CookieContainer CookieJar = new CookieContainer();
         
