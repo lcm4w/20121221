@@ -23,6 +23,7 @@ namespace TourWriter
     /// </summary>
     internal class App
     {
+        internal const RuntimeModes RuntimeMode = RuntimeModes.Develop;
         internal const string HelpFilename = "TourWriterHelp.chm";
         internal const string DataErrorCurrencyViolationText = "Concurrency violation";
         internal const string DataErrorPkDeleteConflictText = "The DELETE statement conflicted with the REFERENCE constraint";
@@ -141,6 +142,7 @@ namespace TourWriter
         internal static string LANLocation = "";
         internal static string WSLocation = "";
         internal static string UpdatedStartParam = "-updated";
+        internal enum RuntimeModes { Develop, Release };
 
         internal static bool ShowOldReports
         {
