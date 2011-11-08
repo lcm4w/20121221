@@ -92,7 +92,9 @@ namespace TourWriter.Services
                 if (row.Cells.Exists("ServiceName"))
                 {
                     var service = Enumerable.Where(supplierSet.Service, x => x.RowState != DataRowState.Deleted && x.ServiceID == (int)row.Cells["ServiceID"].Value).FirstOrDefault();
-                    DataSync.SyncSupplier(service.SupplierRow);
+                    var isPushNewService = service.IsImportIDNull();
+                    if (isPushNewService && service.SupplierRow.IsImportIDNull()) 
+                        DataSync.SyncSupplier(service.SupplierRow);
                     DataSync.SyncService(service);
                     DataSync.SyncRatesForService(service);
                 }
@@ -108,8 +110,11 @@ namespace TourWriter.Services
                     var service = option.RateRow.ServiceRow;
                     var supplier = service.SupplierRow;
 
-                    if (supplier.IsImportIDNull()) DataSync.SyncSupplier(supplier);
-                    if (service.IsImportIDNull()) DataSync.SyncService(service);
+                    var isPushNewOption = option.IsImportIDNull();
+                    if (isPushNewOption && supplier.IsImportIDNull()) 
+                        DataSync.SyncSupplier(supplier);
+                    if (isPushNewOption && service.IsImportIDNull()) 
+                        DataSync.SyncService(service);
                     DataSync.SyncRatesForOption(option.OptionID, service);
                 }
             }
