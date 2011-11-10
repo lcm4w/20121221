@@ -153,10 +153,6 @@ namespace TourWriter
                        ||
                        Cache.ToolSet.AppSettings.Rows.Count > 0 &&
                        Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
-                       "20D0DC7C-BE6B-4846-83C6-3CC580808959".ToLower() // wldr
-                       ||
-                       Cache.ToolSet.AppSettings.Rows.Count > 0 &&
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() ==
                        "49AD26FD-6582-493A-B998-B9BA244D082F".ToLower() // sc nz
                        ||
                        Cache.ToolSet.AppSettings.Rows.Count > 0 &&
