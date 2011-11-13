@@ -138,6 +138,7 @@ namespace TourWriter.Services
         {
             value = value.Trim().Replace("\r\n", " ").Replace("\n", " "); // clean value
             //value = "\"" + value.Replace("\"", "\"\"") + "\""; // escape value
+            value = value.Replace(',', '\0');
             tag = "[!" + tag + "]";
             return text.Replace(tag, value);
         }
