@@ -244,7 +244,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 !service.IsChargeTypeNull() ? service.ChargeType : "", 
                 option.IsDefault,
                 service.CurrencyCode);
-
+            
             if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
             btnOk.Enabled = true;
             return newItem;
@@ -352,8 +352,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             _newRows.Add(row);
         }
 
-        private void CurrencyUpdatesForNewRows()
+        private void SetCurrencyUpdatesForNewRows()
         {
+            /*** do we want to use forward rates first, if they exist, if not latest rates? ***
+            // forward ra1tes
+            var currencyRate = Cache.ToolSet.CurrencyRate.GetCurrencyRate(item.StartDate.Date, itinerarySet.Itinerary[0].CurrencyCode, item.CurrencyCode, true);
+            if (currencyRate != null)
+            {
+                item.CurrencyRate = currencyRate.ForecastRate;
+            }
+            ***/
+  
+            // latest rates
             var baseCurrency = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
             var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != baseCurrency.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
             foreach (var c in codes)
@@ -395,14 +405,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var option = supplierSet.Option.FindByOptionID(item.OptionID);
                 var service = option.RateRow.ServiceRow;
 
-                // set discounts here, after user might have edited qty or nigts
+                // set discounts here, after user finished editing qty, nights
                 var discount = Discounts.CalcDiscount((decimal)item.Quantity, item.GetDiscountRows());
                 if (discount > 0)
                 {
                     item.DiscountUnits = (double)discount;
                     item.DiscountType = "foc"; // discount.DiscountType;
                 }
-
+                
                 // Add items payment terms and link to item
                 var paymentTermRow = CopyRelevantPaymentTermRow(service);
                 if (paymentTermRow != null)
@@ -423,7 +433,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 itinerarySet.Merge(tempItinerarySet);
                 itinerarySet.PurchaseItem.RowChanged -= AddNewMergeRow;
 
-                if (chkCurrency.Checked) CurrencyUpdatesForNewRows();
+                if (chkCurrency.Checked) 
+                    SetCurrencyUpdatesForNewRows();
             }
             catch (ConstraintException ex)
             {

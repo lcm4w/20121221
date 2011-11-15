@@ -298,6 +298,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.bookingEditor11.BindingSource = null;
             this.bookingEditor11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.bookingEditor11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bookingEditor11.ItineraryMain = null;
             this.bookingEditor11.Location = new System.Drawing.Point(4, 4);
             this.bookingEditor11.MinimumSize = new System.Drawing.Size(452, 450);
             this.bookingEditor11.Name = "bookingEditor11";
@@ -318,8 +319,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.Name = "BookingEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "TourWriter bookings";
-            this.Load += new System.EventHandler(this.BookingEditorForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BookingsManager_FormClosing);
+            this.Load += new System.EventHandler(this.BookingEditorForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bookingsNavigator)).EndInit();
             this.bookingsNavigator.ResumeLayout(false);
             this.bookingsNavigator.PerformLayout();

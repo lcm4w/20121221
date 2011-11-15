@@ -83,6 +83,28 @@ namespace TourWriter.Info
                 if (changes != null)
                     Merge(changes);
             }
+
+            /// <summary>
+            /// Get a currency rate row
+            /// </summary>
+            /// <param name="date">The date for the exchange rate</param>
+            /// <param name="from">The from currency code</param>
+            /// <param name="to">The to currency code</param>
+            /// <param name="loadIfNotCached">Loads from the database, if not already in the local dataset</param>
+            /// <returns></returns>
+            public CurrencyRateRow GetCurrencyRate(DateTime date, string from, string to, bool loadIfNotCached)
+            {
+                // set exch rates here after user has finished editing dates
+                var currencyRate = this.Where(x => x.ForecastDate == date && x.CurrencyCodeFrom == from && x.CurrencyCodeTo == to).FirstOrDefault();
+
+                if (currencyRate == null && loadIfNotCached)
+                {
+                    // load from database and try again
+                    Load(from, to, date.Date, date.Date);
+                    currencyRate = this.Where(x => x.ForecastDate == date && x.CurrencyCodeFrom == from && x.CurrencyCodeTo == to).FirstOrDefault();
+                }
+                return currencyRate;
+            }
         }
 
         partial class AgentDataTable

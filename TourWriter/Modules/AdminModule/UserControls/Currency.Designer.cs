@@ -78,9 +78,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(3, 14);
@@ -161,9 +161,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // gridCurrency
             // 
-            this.gridCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridCurrency.Location = new System.Drawing.Point(6, 85);
             this.gridCurrency.Name = "gridCurrency";
             this.gridCurrency.Size = new System.Drawing.Size(761, 459);
@@ -207,13 +207,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label4.Size = new System.Drawing.Size(583, 17);
             this.label4.TabIndex = 124;
             this.label4.Text = "Add/remove is disabled, please use new update functionality in Itinerary > Bookin" +
-                "gs > Tools";
+    "gs > Tools";
             // 
             // gridRate
             // 
-            this.gridRate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridRate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridRate.Location = new System.Drawing.Point(3, 50);
             this.gridRate.Name = "gridRate";
             this.gridRate.Size = new System.Drawing.Size(758, 405);
@@ -255,17 +255,16 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnRateAdd,
             this.btnRateDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(717, 27);
+            this.myToolStrip2.Location = new System.Drawing.Point(686, 27);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
+            this.myToolStrip2.Size = new System.Drawing.Size(80, 25);
             this.myToolStrip2.TabIndex = 123;
             this.myToolStrip2.Text = "myToolStrip2";
             // 
             // btnRateAdd
             // 
             this.btnRateAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRateAdd.Enabled = false;
             this.btnRateAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRateAdd.Image")));
             this.btnRateAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRateAdd.Name = "btnRateAdd";
@@ -276,7 +275,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // btnRateDel
             // 
             this.btnRateDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRateDel.Enabled = false;
             this.btnRateDel.Image = ((System.Drawing.Image)(resources.GetObject("btnRateDel.Image")));
             this.btnRateDel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnRateDel.Name = "btnRateDel";

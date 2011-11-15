@@ -424,7 +424,8 @@ namespace TourWriter.Info
                 SupplierSet lookupSupplierSet, int purchaseLineId, string purchaseItemName, double? qty, double? days, 
                 decimal net, decimal gross, DateTime startDate, DateTime? startTime, DateTime? endTime, int userId, 
                 int serviceTypeId, int optionId, int rateId, int serviceId, string serviceTypeName, int? optionTypeId,
-                string serviceName, string optionName, string optionTypeName, string chargeType, bool isDefault, string currencyCode)
+                string serviceName, string optionName, string optionTypeName, string chargeType, bool isDefault, 
+                string currencyCode)
             {
                 // Add lookups first.
                 ItinerarySet itinerarySet = DataSet as ItinerarySet;
@@ -460,7 +461,6 @@ namespace TourWriter.Info
                 item.ChargeType = chargeType;
                 item.IsDefaultOptionType = isDefault;
                 item.CurrencyCode = currencyCode;
-
                 // discounts
                 // NO: not here, user has not yet entered qty and/or nights
 

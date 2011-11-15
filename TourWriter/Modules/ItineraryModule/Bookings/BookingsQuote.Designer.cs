@@ -44,14 +44,14 @@
             this.grid = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.btnEditOverrides = new System.Windows.Forms.Button();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
-            this.cmbPriceType = new System.Windows.Forms.ToolStripComboBox();
             this.btnPaxBreaks = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmbPriceType = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnExpand = new System.Windows.Forms.ToolStripButton();
             this.btnFilter = new System.Windows.Forms.ToolStripButton();
             this.btnPrint = new System.Windows.Forms.ToolStripButton();
             this.btnExcel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.myToolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -151,22 +151,12 @@
             this.btnPrint,
             this.btnExcel});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(566, 5);
+            this.myToolStrip1.Location = new System.Drawing.Point(597, 5);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(327, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(296, 25);
             this.myToolStrip1.TabIndex = 75;
             this.myToolStrip1.Text = "myToolStrip1";
-            // 
-            // cmbPriceType
-            // 
-            this.cmbPriceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPriceType.Items.AddRange(new object[] {
-            "Net prices",
-            "Gross prices"});
-            this.cmbPriceType.Name = "cmbPriceType";
-            this.cmbPriceType.Size = new System.Drawing.Size(121, 25);
-            this.cmbPriceType.ToolTipText = "Use net or gross Supplier prices";
             // 
             // btnPaxBreaks
             // 
@@ -178,6 +168,21 @@
             this.btnPaxBreaks.Text = "Pax Breaks";
             this.btnPaxBreaks.ToolTipText = "Manage pax breaks";
             this.btnPaxBreaks.Click += new System.EventHandler(this.btnPaxBreaks_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // cmbPriceType
+            // 
+            this.cmbPriceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPriceType.Items.AddRange(new object[] {
+            "Net prices",
+            "Gross prices"});
+            this.cmbPriceType.Name = "cmbPriceType";
+            this.cmbPriceType.Size = new System.Drawing.Size(121, 25);
+            this.cmbPriceType.ToolTipText = "Use net or gross Supplier prices";
             // 
             // toolStripSeparator1
             // 
@@ -227,11 +232,6 @@
             this.btnExcel.Text = "toolStripButton1";
             this.btnExcel.ToolTipText = "Export current view to Excel";
             this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // BookingsQuote
             // 
