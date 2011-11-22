@@ -7,7 +7,9 @@ using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
 using TourWriter.Info.Services;
 using TourWriter.Modules.Emailer;
+using TourWriter.Modules.ItineraryModule.Bookings;
 using TourWriter.Properties;
+using TourWriter.Services;
 
 namespace TourWriter.UserControls.Reports
 {
@@ -48,6 +50,13 @@ namespace TourWriter.UserControls.Reports
         {
             try
             {
+                // reset default params
+                // currency format
+                var itinerary = (ParentForm as Modules.ItineraryModule.ItineraryMain).ItinerarySet.Itinerary[0];
+                var hasOverride = CurrencyService.GetItineraryCurrencyCode(itinerary) != null;
+                var format = hasOverride ? CurrencyService.GetCurrency(itinerary.CurrencyCode).DisplayFormat : "c";
+                (ParentForm as Modules.ItineraryModule.ItineraryMain).SetItineraryReportsParameter("@ItineraryCurrencyFormat", format);
+                
                 btnRefresh.Enabled = btnOptions.Enabled = btnEmail.Enabled = false;
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.WaitCursor;
                 else Cursor = Cursors.WaitCursor;
@@ -153,9 +162,15 @@ namespace TourWriter.UserControls.Reports
         {
             DataTable dt = null;
 
-            // groups dynamic-cols data
-            if (key == "GroupQuoteAll_client" || key == "GroupQuotePrices_client")
+            #region Quotes table, as seen in booking quote UI
+
+            // group bookings detail and/or price, in a 'matrix' schema (row, col, val) to suit 'dynamic' cols in RDL
+            // this allows RDL to dynamically create grid cols (runtime), when it does not know the number/name of cols at designtime
+            // more info: http://sonalimendis.blogspot.com/2011/07/dynamic-column-rdls.html
+            if (key == "GroupQuoteDynamicAll_client" || key == "GroupQuoteDynamicPrices_client")
             {
+                // create a 'matrix' table with cols: (row number, column name, data value)
+                // note: using rownumber because no unique id in quote table
                 dt = new DataTable(key);
                 dt.Columns.AddRange(new[] { new DataColumn("row", typeof(int)), new DataColumn("col", typeof(string)), new DataColumn("val", typeof(string)) });
                 var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
@@ -166,37 +181,88 @@ namespace TourWriter.UserControls.Reports
                     cnt++;
                     foreach (DataColumn col in quoteTable.Columns)
                     {
-                        // val formated
+                        if (key == "GroupQuotePrices_client" && // only want prices
+                            !(col is QuoteTable.PaxColumn || col is QuoteTable.SuppliementsColumn)) // not a price col
+                            continue; // skip detail cols
+
+                        // format
                         var val = row[col.ColumnName];
-                        if (col.DataType == typeof(DateTime) && !string.IsNullOrEmpty(val.ToString())) 
+                        if (col.DataType == typeof(DateTime) && !string.IsNullOrEmpty(val.ToString()))
                             val = DateTime.Parse(val.ToString()).ToShortDateString();
                         if (col.DataType == typeof(Decimal) && !string.IsNullOrEmpty(val.ToString()))
                             val = Math.Round((decimal)val, 2).ToString("0.00");
 
-                        var isPriceColumn = col.DataType == typeof(decimal); // or (col index > 7)
-                        if (col.ColumnName == "PurchaseItemID" || key == "GroupQuoteAll_client" || isPriceColumn)
-                            dt.Rows.Add(cnt, col.ColumnName, val);
+                        dt.Rows.Add(cnt, col.ColumnName, val);
                     }
                 }
             }
-            // groups static detail cols data
-            else if (key == "GroupQuoteDetail_client")
+
+            // dump entire bookings grid
+            else if (key == "GroupQuoteDumpAll_client")
+            {
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                dt = quoteTable.Copy();
+                dt.TableName = key;
+            }
+
+            // dump the detail columns (name, desc etc - not prices) from the booking grid
+            // note: these cols are static, so can be safely use in report at design time 
+            else if (key == "GroupQuoteDumpDetail_client")
             {
                 var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
                 dt = quoteTable.Copy();
                 dt.TableName = key;
 
-                for (int i = dt.Columns.Count - 1; i > -1; i--)
-                    if (dt.Columns[i].DataType == typeof(Decimal))
+                // remove price cols
+                for (var i = dt.Columns.Count - 1; i > -1; i--)
+                    if (dt.Columns[i] is QuoteTable.PaxColumn || dt.Columns[i] is QuoteTable.SuppliementsColumn)
                         dt.Columns.RemoveAt(i);
             }
-            // groups static all cols data
-            else if (key == "GroupQuoteStatic_client")
+            #endregion
+
+            #region Pax and suppliment tables with subtotals and totals
+
+            // pax and suppliments price summary in basic pax+suppliments table
+            else if (key == "GroupQuotePriceSummary_client")
+            {
+                throw new NotImplementedException();
+            }
+
+            // pax price summary in basic pax table
+            else if (key == "GroupQuotePriceSummaryPax_client")
             {
                 var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
-                dt = quoteTable.Copy();
-                dt.TableName = key;
+
+                dt = new DataTable("ItineraryPax");
+                dt.Columns.AddRange(new []
+                                           {
+                                               new DataColumn("PaxName", typeof(string)),
+                                               new DataColumn("Subtotal", typeof(decimal)),
+                                               new DataColumn("Total", typeof(decimal))
+                                           });
+                foreach (var row in (ParentForm as Modules.ItineraryModule.ItineraryMain).ItinerarySet.ItineraryPax)
+                {
+                    var name = row.ItineraryPaxName;
+                    var subtotal = quoteTable.AsEnumerable().Sum(x => x.Field<decimal?>(name));
+                    
+                    decimal? total;   
+                    if (!row.IsGrossOverrideNull())
+                        total = row.GrossOverride;
+                    else if (!row.IsGrossMarkupNull())
+                        total = subtotal * (1 + row.GrossMarkup / 100);
+                    else total = subtotal;
+
+                    dt.Rows.Add(row.ItineraryPaxName, subtotal, total);
+                }
             }
+
+            // suppliments price summary in basic suppliments table
+            else if (key == "GroupQuotePriceSummarySuppliments_client")
+            {
+                throw new NotImplementedException();
+            }
+            #endregion
+
             return dt;
         }
 

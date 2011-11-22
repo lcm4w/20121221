@@ -26,6 +26,11 @@ namespace TourWriter.Modules.ItineraryModule
     {
         #region Properties
 
+        internal ItinerarySet ItinerarySet
+        {
+            get { return itinerarySet; }
+        }
+
         private bool serverConnectionError_UserNotified = false;
 
         private bool isReadOnlyChecked

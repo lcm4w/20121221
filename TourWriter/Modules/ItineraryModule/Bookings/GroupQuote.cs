@@ -315,12 +315,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         #region Columns
 
-        class PaxColumn : DataColumn
+        internal class PaxColumn : DataColumn
         {
             public ItinerarySet.ItineraryPaxRow Key { get; set; }
         }
 
-        class SuppliementsColumn : DataColumn
+        internal class SuppliementsColumn : DataColumn
         {
             public int Key { get; set; }
             public int Divisor { get; set; }
