@@ -114,6 +114,8 @@ namespace TourWriter.Modules.SupplierModule
 
         protected override void SaveDataChanges()
         {
+            // WIP - TOOLBARS: merge done here
+
             if (!App.ShowCheckPermission(AppPermissions.Permissions.SupplierEdit))
                 return;
 
@@ -305,6 +307,9 @@ namespace TourWriter.Modules.SupplierModule
 
         private void DisplaySupplier()
         {
+            // WIP - TOOLBARS: uncomment to see behaviour
+            // return; 
+
             Supplier_LoadSupplierSet();
             
             if(supplierSet == null)
@@ -343,6 +348,8 @@ namespace TourWriter.Modules.SupplierModule
 
         private void Supplier_LoadSupplierSet()
         {
+            // WIP - TOOLBARS: load done here
+
             try
             {
                 NavigationTreeItemInfo item = MenuNode.Tag as NavigationTreeItemInfo;

@@ -131,6 +131,9 @@ namespace TourWriter.Modules.ItineraryModule
         {
             DataBind();
 
+            // WIP - TOOLBARS: uncomment to see behaviour
+            // return; 
+
             LoadData();
 
             if (itinerarySet.Itinerary.Count == 0)
@@ -202,6 +205,9 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void LoadData()
         {
+            // WIP - TOOLBARS: load done here
+            // WIP - TOOLBARS: merge done here
+
             ItinerarySet ds = new ItinerarySet();
             try
             {
