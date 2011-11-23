@@ -146,10 +146,10 @@ namespace TourWriter.Modules.ItineraryModule
             setAddedByInfo();
 
             // set report sql params
-            if (reportControl.DefaultParameters.ContainsKey("@ItineraryID")) reportControl.DefaultParameters.Remove("@ItineraryID");
-            reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
-            if (reportControl.DefaultParameters.ContainsKey("@PurchaseLineIDList")) reportControl.DefaultParameters.Remove("@PurchaseLineIDList");
-            reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
+            if (reportControl.SqlParameters.ContainsKey("@ItineraryID")) reportControl.SqlParameters.Remove("@ItineraryID");
+            reportControl.SqlParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
+            if (reportControl.SqlParameters.ContainsKey("@PurchaseLineIDList")) reportControl.SqlParameters.Remove("@PurchaseLineIDList");
+            reportControl.SqlParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
             // bind user controls

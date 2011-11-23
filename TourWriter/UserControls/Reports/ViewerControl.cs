@@ -32,7 +32,7 @@ namespace TourWriter.UserControls.Reports
 
         public ViewerControl(string reportName, string reportFile) : this(reportName, reportFile, null) { }
 
-        public ViewerControl(string reportName, string reportFile, ICollection<KeyValuePair<string, object>> defaultParameters)
+        public ViewerControl(string reportName, string reportFile, ICollection<KeyValuePair<string, object>> sqlParameters)
         {
             InitializeComponent();
 
@@ -41,8 +41,8 @@ namespace TourWriter.UserControls.Reports
             _dataSources = new Dictionary<string, string>();
 
             // clone params
-            _defaultParams = new Dictionary<string, object>(defaultParameters.Count);
-            foreach (var param in defaultParameters) _defaultParams.Add(param.Key, param.Value);
+            _defaultParams = new Dictionary<string, object>(sqlParameters.Count);
+            foreach (var param in sqlParameters) _defaultParams.Add(param.Key, param.Value);
         }
 
         public void RunReport()
@@ -355,18 +355,6 @@ namespace TourWriter.UserControls.Reports
 
         private static void LocalReportSubreportProcessing(object sender, SubreportProcessingEventArgs e)
         {
-            //string dataSourceName = e.DataSourceNames[0];
-            //if (!_dataSourcesCache.ContainsKey(dataSourceName))
-            //{
-            //    string reportFolder = Path.GetDirectoryName(_reportFile);
-            //    string filename = String.Format(@"{0}\{1}.rdlc", reportFolder, e.ReportPath);
-
-            //    var options = new OptionsForm(filename, _defaultParameters);
-            //    var dataSource = GetData(options.ProcessOptions());
-            //    _dataSourcesCache.Add(dataSourceName, dataSource);
-            //}
-            //e.DataSources.Clear();
-            //e.DataSources.Add(new ReportDataSource(dataSourceName, _dataSourcesCache[dataSourceName]));
         }
 
         #endregion

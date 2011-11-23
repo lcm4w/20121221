@@ -9,12 +9,12 @@ namespace TourWriter.UserControls.Reports
     public partial class OptionEdit : UserControl
     {
         public RdlcFileHelper.SqlExpression SqlExpression { get; private set; }
-        private readonly Dictionary<string, object> _defaultParameters;
+        private readonly Dictionary<string, object> _sqlParameters;
 
-        public OptionEdit(RdlcFileHelper.SqlExpression sqlExpression, Dictionary<string, object> defaultParameters)
+        public OptionEdit(RdlcFileHelper.SqlExpression sqlExpression, Dictionary<string, object> sqlParameters)
         {
             SqlExpression = sqlExpression;
-            _defaultParameters = defaultParameters;
+            _sqlParameters = sqlParameters;
             InitializeComponent();
             LoadControls();
         }
@@ -38,24 +38,24 @@ namespace TourWriter.UserControls.Reports
                 case "@ItineraryID":
                     label.Text = "Itinerary ID";
                     editor = new NumericUpDown { Width = 80, Enabled = false, Maximum = int.MaxValue };
-                    (editor as NumericUpDown).Value = Convert.ToInt32(_defaultParameters[SqlExpression.ParameterName]);
+                    (editor as NumericUpDown).Value = Convert.ToInt32(_sqlParameters[SqlExpression.ParameterName]);
                     break;
                 case "@SupplierID":
                     label.Text = "Supplier ID";
                     editor = new NumericUpDown { Width = 80, Enabled = false, Maximum = int.MaxValue };
-                    (editor as NumericUpDown).Value = Convert.ToInt32(_defaultParameters[SqlExpression.ParameterName]);
+                    (editor as NumericUpDown).Value = Convert.ToInt32(_sqlParameters[SqlExpression.ParameterName]);
                     break;
                 case "@StartDate":
                     label.Text = "Start date";
                     editor = new DateTimePicker { Format = DateTimePickerFormat.Short, Width = 80 };
-                    if (_defaultParameters.ContainsKey(SqlExpression.ParameterName))
-                        editor.Text = _defaultParameters[SqlExpression.ParameterName].ToString();
+                    if (_sqlParameters.ContainsKey(SqlExpression.ParameterName))
+                        editor.Text = _sqlParameters[SqlExpression.ParameterName].ToString();
                     break;
                 case "@EndDate":
                     label.Text = "End date";
                     editor = new DateTimePicker { Format = DateTimePickerFormat.Short, Width = 80 };
-                    if (_defaultParameters.ContainsKey(SqlExpression.ParameterName))
-                        editor.Text = _defaultParameters[SqlExpression.ParameterName].ToString();
+                    if (_sqlParameters.ContainsKey(SqlExpression.ParameterName))
+                        editor.Text = _sqlParameters[SqlExpression.ParameterName].ToString();
                     break;
                 case "@ContentTypeID":
                     label.Text = "Content Type";
@@ -72,7 +72,7 @@ namespace TourWriter.UserControls.Reports
                     label.Text = "Booking lines";
                     editor = new CheckBoxSet();
                     (editor as CheckBoxSet).Initialise(
-                        _defaultParameters[SqlExpression.ParameterName], "PurchaseLineID", "PurchaseLineName", false);
+                        _sqlParameters[SqlExpression.ParameterName], "PurchaseLineID", "PurchaseLineName", false);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@AssignedToIDList":

@@ -328,7 +328,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // reportControl
             // 
-            this.reportControl.DefaultParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.DefaultParameters")));
+            this.reportControl.SqlParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.SqlParameters")));
             this.reportControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reportControl.Location = new System.Drawing.Point(0, 0);
             this.reportControl.Name = "reportControl";

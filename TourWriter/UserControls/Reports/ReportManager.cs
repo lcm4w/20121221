@@ -7,12 +7,12 @@ namespace TourWriter.UserControls.Reports
 {
     public partial class ReportManager : UserControl
     {
-        public Dictionary<string, object> DefaultParameters { get; set; }
+        public Dictionary<string, object> SqlParameters { get; set; }
 
         public ReportManager()
         {
             InitializeComponent();
-            DefaultParameters = new Dictionary<string, object>();
+            SqlParameters = new Dictionary<string, object>();
         }
 
         public void PoplulateReportExplorer(ExplorerControl.ReportCategory reportCategory)
@@ -27,7 +27,7 @@ namespace TourWriter.UserControls.Reports
 
         private void OpenReport(string reportName, string reportFile)
         {
-            var reportViewer = new ViewerControl(reportName, reportFile, DefaultParameters)
+            var reportViewer = new ViewerControl(reportName, reportFile, SqlParameters)
                                    {Dock = DockStyle.Fill};
             reportViewer.ViewerControlClosed += ViewerControlReportHostClosed;
 
