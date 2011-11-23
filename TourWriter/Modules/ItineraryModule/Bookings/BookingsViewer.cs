@@ -1607,6 +1607,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         RecalculateFinalPricing();
                         RefreshGrid();
                     }
+                    else // revert 
+                        activeCell.EditorResolved.Value = origDate;
                 }
             }
         }
