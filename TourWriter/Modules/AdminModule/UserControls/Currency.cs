@@ -32,7 +32,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
         public Currency()
         {
             InitializeComponent();
-            //tabControl1.TabPages.Remove(tabPage2); // TODO: hide Rates tab for now...
+            tabControl1.TabPages.Remove(tabPage2); // TODO: hide Rates tab for now...
         }
 
         private void Currency_Load(object sender, EventArgs e)
