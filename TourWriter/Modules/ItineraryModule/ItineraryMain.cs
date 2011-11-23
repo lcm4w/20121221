@@ -64,9 +64,9 @@ namespace TourWriter.Modules.ItineraryModule
             get { return bookingsViewer; }
         }
 
-        internal QuoteTable BookingsQuoteTable
+        internal QuoteTable GetRefreshQuoteTable
         {
-            get { return bookingsQuote.QuoteTable; }
+            get { return bookingsQuote.GetRefreshedQuoteTable(); }
         }
 
 

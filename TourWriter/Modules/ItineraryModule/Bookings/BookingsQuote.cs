@@ -20,16 +20,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         readonly Dictionary<string, QuoteSummaryItem> _summaryItems = new Dictionary<string, QuoteSummaryItem>();
 
         internal ItinerarySet ItinerarySet { get; set; }
-
-        internal QuoteTable QuoteTable
-        {
-            get
-            {
-                if (grid.DataSource != null) DataBind();
-                return (QuoteTable)grid.DataSource;
-            }
-        }
-
+        
 
         public BookingsQuote()
         {
@@ -54,6 +45,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 var priceType = cmbPriceType.SelectedItem.ToString().ToLower().Contains("gross") ? QuoteTable.PriceTypes.Gross : QuoteTable.PriceTypes.Net;
                 var quote = new QuoteTable(ItinerarySet, Cache.ToolSet.OptionType, priceType);
                 quote.TablePopulate(ItinerarySet.PurchaseItem);
+                _tempQuoteTable = quote;
                 grid.DataSource = quote;
             }
             finally
@@ -173,6 +165,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
                 }
             }
+        }
+
+        private QuoteTable _tempQuoteTable;
+        internal QuoteTable GetRefreshedQuoteTable()
+        {
+            DataBind();
+            return _tempQuoteTable;
         }
 
         private void btnExpand_Click(object sender, EventArgs e)

@@ -83,7 +83,7 @@ namespace TourWriter.UserControls.Reports
         ///  Process report options.
         /// </summary>
         /// <returns></returns>
-        public void ProcessOptions(ref Dictionary<string, object> reportParams, ref Dictionary<string, string> dataSources)
+        public void ProcessReportFilterOptions(ref Dictionary<string, object> reportParams, ref Dictionary<string, string> dataSources)
         {
             var exists = false;
             reportParams = _defaultParams;

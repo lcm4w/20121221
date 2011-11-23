@@ -63,31 +63,8 @@ namespace TourWriter.UserControls.Reports
                 reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
                 reportViewer.LocalReport.SubreportProcessing += LocalReportSubreportProcessing;
 
-                // load dynamic options
-                ReportOptions.ProcessOptions(ref _defaultParams, ref _dataSources);
-                
-                // set data
-                foreach (var dataSource in _dataSources)
-                {
-                    DataTable data;
-
-                    // client datasource
-                    if (dataSource.Key.ToLower().EndsWith("_client"))
-                    {
-                        data = GetDataSourceFromClient(dataSource.Key);
-                    }
-                    // sql datasource
-                    else
-                    {
-                        var sql = dataSource.Value;
-                        data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
-                    }
-                    var isDefaultReport = _reportFile.ToLower().Contains(App.Path_DefaultTemplatesFolder.ToLower());
-                    if (isDefaultReport) EnsureDefaultReportImagesAreFound(data);
-                    reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));
-                }
-
-                // set the reports default parameter values
+                ReportOptions.ProcessReportFilterOptions(ref _defaultParams, ref _dataSources); // ensure sql param values
+                SetReportDataSources();
                 SetReportDefaultParams();
 
                 // run report
@@ -96,12 +73,9 @@ namespace TourWriter.UserControls.Reports
             catch (LocalProcessingException ex)
             {
                 var localEx = ex.InnerException;
-                while (localEx.InnerException != null) localEx = localEx.InnerException;
+                while (localEx.InnerException != null) 
+                    localEx = localEx.InnerException;
                 throw localEx;
-
-                //if (localEx.Message.ToLower().StartsWith("the report definition is not valid"))
-                //    throw new FormatException(localEx.Message);
-                //throw;
             }
             catch (Exception ex)
             {
@@ -112,6 +86,28 @@ namespace TourWriter.UserControls.Reports
                 btnRefresh.Enabled = btnOptions.Enabled = btnEmail.Enabled = true;
                 if (TopLevelControl != null) TopLevelControl.Cursor = Cursors.Default;
                 else Cursor = Cursors.Default;
+            }
+        }
+
+        private void SetReportDataSources()
+        {
+            foreach (var dataSource in _dataSources)
+            {
+                DataTable data;
+                var isClientDataSource = dataSource.Key.ToLower().EndsWith("_client");
+
+                if (isClientDataSource) // load from client app
+                {
+                    data = GetClientAppDataSource(dataSource.Key);
+                }
+                else // isSqlDataSource, load with sql query
+                {
+                    var sql = dataSource.Value;
+                    data = DataSetHelper.FillDataSetFromSql(sql).Tables[0];
+                }
+                var isDefaultReport = _reportFile.ToLower().Contains(App.Path_DefaultTemplatesFolder.ToLower());
+                if (isDefaultReport) EnsureDefaultReportImagesAreFound(data);
+                reportViewer.LocalReport.DataSources.Add(new ReportDataSource(dataSource.Key, data));
             }
         }
 
@@ -168,7 +164,7 @@ namespace TourWriter.UserControls.Reports
                 }
             }
         }
-
+        
         private void EnsureDefaultReportImagesAreFound(DataTable table)
         {
             var cols = table.Columns.Cast<DataColumn>().Where(x => x.ColumnName.IndexOf("Image") > -1).ToList();
@@ -192,7 +188,7 @@ namespace TourWriter.UserControls.Reports
             return isUriFormat ? "file://" + imageFile : imageFile;
         }
 
-        private DataTable GetDataSourceFromClient(string key)
+        private DataTable GetClientAppDataSource(string key)
         {
             DataTable dt = null;
 
@@ -207,7 +203,7 @@ namespace TourWriter.UserControls.Reports
                 // note: using rownumber because no unique id in quote table
                 dt = new DataTable(key);
                 dt.Columns.AddRange(new[] { new DataColumn("row", typeof(int)), new DataColumn("col", typeof(string)), new DataColumn("val", typeof(string)) });
-                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).GetRefreshQuoteTable;
          
                 var cnt = 0;
                 foreach (DataRow row in quoteTable.Rows)
@@ -234,7 +230,7 @@ namespace TourWriter.UserControls.Reports
             // dump entire bookings grid
             else if (key == "GroupQuoteDumpAll_client")
             {
-                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).GetRefreshQuoteTable;
                 dt = quoteTable.Copy();
                 dt.TableName = key;
             }
@@ -243,7 +239,7 @@ namespace TourWriter.UserControls.Reports
             // note: these cols are static, so can be safely use in report at design time 
             else if (key == "GroupQuoteDumpDetail_client")
             {
-                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).GetRefreshQuoteTable;
                 dt = quoteTable.Copy();
                 dt.TableName = key;
 
@@ -265,7 +261,7 @@ namespace TourWriter.UserControls.Reports
             // pax price summary in basic pax table
             else if (key == "GroupQuotePriceSummaryPax_client")
             {
-                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).BookingsQuoteTable;
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).GetRefreshQuoteTable;
 
                 dt = new DataTable("ItineraryPax");
                 dt.Columns.AddRange(new []
