@@ -122,6 +122,8 @@ namespace TourWriter.UserControls.Reports
             }
         }
 
+        #region Report layout (margins etc)
+
         private void LoadLayoutOptions()
         {
             var exists = false;
@@ -170,5 +172,7 @@ namespace TourWriter.UserControls.Reports
                 LayoutRefreshRequired = true;
             }
         }
+
+        #endregion
     }
 }

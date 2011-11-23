@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Linq;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -8,7 +7,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
-using Infragistics.Win.UltraWinTabControl;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.BusinessLogic;
 using TourWriter.Forms;
@@ -75,8 +73,10 @@ namespace TourWriter.Modules.SupplierModule
                     dt.ColumnChanged += SupplierSet_ColumnChanged;
                     dt.RowDeleted += SupplierSet_RowDeleted;
                 }
-                reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
+                // set report sql params
+                if (reportControl.DefaultParameters.ContainsKey("@SupplierID")) reportControl.DefaultParameters.Remove("@SupplierID");
                 reportControl.DefaultParameters.Add("@SupplierID", supplierSet.Supplier[0].SupplierID);
+                reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
 
                 chkSupplierDeleted.Visible = !supplierSet.Supplier[0].IsIsDeletedNull() && supplierSet.Supplier[0].IsDeleted;
                 chkSupplierDeleted.CheckedValueChanged += chkSupplierDeleted_CheckedChanged;

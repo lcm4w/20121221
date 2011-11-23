@@ -127,13 +127,6 @@ namespace TourWriter.Modules.ItineraryModule
             agentBindingSource.Sort = "AgentName ASC";
         }
 
-        internal void SetItineraryReportsParameter(string key, object value)
-        {
-            if (reportControl.DefaultParameters.ContainsKey(key)) 
-                reportControl.DefaultParameters.Remove(key);
-            reportControl.DefaultParameters.Add(key, value);
-        }
-
         private void ItineraryLoad(object sender, EventArgs e)
         {
             DataBind();
@@ -149,15 +142,14 @@ namespace TourWriter.Modules.ItineraryModule
                     c.Enabled = false; // disable top level controls
                 return;
             }
-
             optReport.CheckedIndex = 0;
             setAddedByInfo();
 
-            // reports
-            SetItineraryReportsParameter("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
-            SetItineraryReportsParameter("@PurchaseLineIDList", itinerarySet.PurchaseLine);
-            SetItineraryReportsParameter("@CurrencyCode", CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
-            if (!itinerarySet.Itinerary[0].IsAgentIDNull()) SetReportAgentParams();
+            // set report sql params
+            if (reportControl.DefaultParameters.ContainsKey("@ItineraryID")) reportControl.DefaultParameters.Remove("@ItineraryID");
+            reportControl.DefaultParameters.Add("@ItineraryID", itinerarySet.Itinerary[0].ItineraryID);
+            if (reportControl.DefaultParameters.ContainsKey("@PurchaseLineIDList")) reportControl.DefaultParameters.Remove("@PurchaseLineIDList");
+            reportControl.DefaultParameters.Add("@PurchaseLineIDList", itinerarySet.PurchaseLine);
             reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Itinerary);
 
             // bind user controls
@@ -846,33 +838,6 @@ namespace TourWriter.Modules.ItineraryModule
             itinerarySet.Itinerary[0].NetComOrMup = (!agentRow.IsNetComOrMupNull()) ? agentRow.NetComOrMup : "mup";
         }
 
-        private void SetReportAgentParams()
-        {
-            var id = itinerarySet.Itinerary[0].AgentID;
-            var agent = Cache.ToolSet.Agent.Where(a => a.AgentID == id).FirstOrDefault();
-            if (agent == null || agent.IsVoucherLogoFileNull()) return;
-
-            if (!reportControl.DefaultParameters.ContainsKey("@LogoFile"))
-                reportControl.DefaultParameters.Add("@LogoFile", "");
-            reportControl.DefaultParameters["@LogoFile"] = (!agent.IsVoucherLogoFileNull() ? 
-                "file:\\\\\\" + ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile) : "");
-
-            if (!reportControl.DefaultParameters.ContainsKey("@AgentVoucherNote"))
-                reportControl.DefaultParameters.Add("@AgentVoucherNote", "");
-            reportControl.DefaultParameters["@AgentVoucherNote"] = 
-                !agent.IsVoucherFooterNull() ? agent.VoucherFooter : "";
-
-            if (!reportControl.DefaultParameters.ContainsKey("@AgentClientFooter"))
-                reportControl.DefaultParameters.Add("@AgentClientFooter", "");
-            reportControl.DefaultParameters["@AgentClientFooter"] = 
-                !agent.IsClientFooterNull() ? agent.ClientFooter : "";
-
-            if (!reportControl.DefaultParameters.ContainsKey("@AgentHeader"))
-                reportControl.DefaultParameters.Add("@AgentHeader", "");
-            reportControl.DefaultParameters["@AgentHeader"] =
-                !agent.IsAgentHeaderNull() ? agent.AgentHeader : "";
-        }
-
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cmbAgent.SelectedValue == null || (int)cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
@@ -889,7 +854,6 @@ namespace TourWriter.Modules.ItineraryModule
             }
             AutoPopulateNetOverrides();
             bookingsViewer.RecalculateFinalPricing();
-            SetReportAgentParams();
         }
 
         #endregion
