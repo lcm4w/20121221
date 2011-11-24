@@ -245,7 +245,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 option.IsDefault,
                 service.CurrencyCode);
             
-            if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
+            //if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
             btnOk.Enabled = true;
             return newItem;
         }
