@@ -27,7 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
-        private const string GridLayoutVersion = "v2.4"; // bump this (any new name) to cause grid to reset to pick up changes
+        private const string GridLayoutVersion = "v2.5"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -1021,7 +1021,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     c.Header.Caption = String.Empty;
                     c.Header.Appearance.Image = Properties.Resources.LockEdit;
-                    c.Header.Appearance.ImageHAlign = HAlign.Center;
+                    c.Header.Appearance.ImageHAlign = HAlign.Right;
                     c.Header.Appearance.ImageVAlign = VAlign.Middle;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
@@ -1047,7 +1047,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             e.Layout.Bands[0].Columns["Flags"].Width = 23;
-            e.Layout.Bands[0].Columns["IsLockedAccounting"].Width = 40;
+            e.Layout.Bands[0].Columns["IsLockedAccounting"].Width = 22;
             e.Layout.Bands[0].Columns["PurchaseLineID"].Width = 40;
             e.Layout.Bands[0].Columns["PurchaseLineName"].Width = 150;
             e.Layout.Bands[0].Columns["ServiceName"].Width = 100;
@@ -1601,8 +1601,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     App.AskYesNo("Auto-update rate also?"))
                 {
                     var delta = (newDate.Date - origDate.Date).Days;
-                    var dateKicker = new DateKickerForm(itinerarySet, delta, true);
-                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value, true);
+                    var dateKicker = new DateKickerForm(itinerarySet, 0, true);
+                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value, delta);
                     if (dateKicker.ShowDialog() == DialogResult.OK)
                     {
                         RecalculateFinalPricing();

@@ -13,6 +13,7 @@ using System.Data.SqlClient;
 using TourWriter.Info.Services;
 using System;
 using TourWriter.Services;
+using ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle;
 using ColumnStyle=Infragistics.Win.UltraWinGrid.ColumnStyle;
 using Resources=TourWriter.Properties.Resources;
 
@@ -25,6 +26,8 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
         private readonly ItinerarySet.PurchaseItemDataTable purchaseItemTable;
         private readonly bool autoStart;
         bool stopUpdateProcess;
+
+        private int _dayOffset = 0;
 
         /// <summary>
         /// Moves booking dates and attempts to update the rates.
@@ -44,22 +47,61 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
             btnStartStop.Select();
             btnStartStop.Focus();
             _origButtonText = btnStartStop.Text;
+            this._dayOffset = dayOffset;
+
+            chkUpdateStartDate.Checked = true;
+            gridBookings.AfterCellListCloseUp += gridBookings_AfterCellListCloseUp;
+            
+            if (!itinerarySet.Itinerary[0].IsArriveDateNull())
+            {
+                dtpOldStartDate.Value = itinerarySet.Itinerary[0].ArriveDate;
+                dtpNewStartDate.Value = itinerarySet.Itinerary[0].ArriveDate.AddDays(dayOffset);
+            }
+            else dtpNewStartDate.Value = dtpOldStartDate.Value = null;
+
+            if (!itinerarySet.Itinerary[0].IsDepartDateNull())
+            {
+                dtpOldEndDate.Value = itinerarySet.Itinerary[0].DepartDate;
+                dtpNewEndDate.Value = itinerarySet.Itinerary[0].DepartDate.AddDays(dayOffset);
+            }
+            else dtpNewEndDate.Value = dtpOldEndDate.Value = null;
+
+            dtpNewStartDate.ValueChanged += dtpNewStartDate_ValueChanged;
+            
+            SetNewBookingDates(dayOffset);
         }
 
-        public void SetSelectedRow(int purchaseItemId, bool selectFollowingBookings)
+        void  gridBookings_AfterCellListCloseUp(object sender, CellEventArgs e)
         {
-            if (!selectFollowingBookings)
-                SetSelectedRows(new List<int> {purchaseItemId});
-            else
+            if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved != null)
             {
-                var item = purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == purchaseItemId).FirstOrDefault();
-                if (item != null)
+                e.Cell.Row.Cells["Result"].Appearance.Image = null;
+                e.Cell.Row.Cells["Result"].ToolTipText = "";
+                e.Cell.Row.Cells["Result"].Value = "";
+                
+                if (App.AskYesNo("Also move following booking dates?"))
                 {
-                    var items = purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted &&
-                        (x == item || x.StartDate > item.StartDate || (x.StartDate == item.StartDate && x.PurchaseItemID > purchaseItemId))).
-                        Select(x => x.PurchaseItemID);
-                    SetSelectedRows(items.ToList());
+                    var id = (int)e.Cell.Row.Cells["PurchaseItemID"].Value;
+                    var oldDate = (DateTime)e.Cell.Row.Cells["StartDate"].Value;
+                    var newDate = (DateTime)e.Cell.Row.Cells["StartDate"].EditorResolved.Value;
+                    var offset = (newDate.Date - oldDate.Date).Days;
+                    SetSelectedRow(id, offset);
                 }
+            }
+        }
+
+        public void SetSelectedRow(int purchaseItemId, int dayOffset)
+        {
+            // select row and all following rows (date order, eg move following bookings too)
+            var item = purchaseItemTable.FirstOrDefault(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == purchaseItemId);
+            if (item != null)
+            {
+                var items = purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted &&
+                    (x == item || x.StartDate > item.StartDate || (x.StartDate == item.StartDate && x.PurchaseItemID > purchaseItemId))).
+                    Select(x => x.PurchaseItemID);
+                SetSelectedRows(items.ToList());
+                
+                SetNewBookingDates(dayOffset);
             }
         }
 
@@ -72,6 +114,27 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                                    (bool)row.Cells["IsLockedAccounting"].Value;
 
                 row.Cells["IsSelected"].Value = isInSelectList && !isRowLocked;
+            }
+        }
+
+        private void SetNewBookingDates(int daysOffset)
+        {
+            foreach (UltraGridRow row in gridBookings.Rows)
+            {
+                // set date
+                if ((bool)row.Cells["IsSelected"].Value)
+                    row.Cells["StartDate"].Value = ((DateTime)row.Cells["OldDate"].Value).AddDays(daysOffset);
+                else // reset date
+                    row.Cells["StartDate"].Value = ((DateTime)row.Cells["OldDate"].Value);
+
+                // reset price
+                if (row.Cells["OldNet"].Value != null && row.Cells["OldNet"].Value != DBNull.Value)
+                    row.Cells["Net"].Value = row.Cells["OldNet"].Value;
+
+                // reset status
+                row.Cells["Result"].Appearance.Image = null;
+                row.Cells["Result"].ToolTipText = "";
+                row.Cells["Result"].Value = "";
             }
         }
 
@@ -93,7 +156,8 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 
                 if ((bool)row.Cells["IsSelected"].Value && row.Cells["StartDate"].Value != DBNull.Value)
                 {
-                    DateTime startDate = ((DateTime)row.Cells["StartDate"].Value).AddDays((int)txtDayOffset.Value);
+                    //DateTime startDate = ((DateTime) row.Cells["OldDate"].Value).AddDays((int) txtDayOffset.Value);
+                    var startDate = (DateTime) row.Cells["StartDate"].Value;
 
                     DateTime? endDate = null;
                     if (row.Cells["EndDate"].Value != DBNull.Value)
@@ -274,13 +338,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 row.Cells["Result"].Appearance.Image = Resources.Tick;
             }
         }
-
-        private void DateKickerForm_Shown(object sender, EventArgs e)
-        {
-            if (autoStart)
-                UpdateOptionsOnThread();
-        }
-
+        
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             if (btnStartStop.Text == _origButtonText)
@@ -297,8 +355,30 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (dtpNewStartDate.Value != null)
+                itinerarySet.Itinerary[0].ArriveDate = (DateTime) dtpNewStartDate.Value;
+         
+            if (dtpNewEndDate.Value != null)
+                itinerarySet.Itinerary[0].DepartDate = (DateTime) dtpNewEndDate.Value;
+         
+            //itinerarySet.Itinerary[0].AcceptChanges();
+
+            // booking dates
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
             DialogResult = DialogResult.OK;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            // reset arrive date
+            if (!itinerarySet.Itinerary[0].IsArriveDateNull() && dtpOldStartDate.Value != null && 
+                itinerarySet.Itinerary[0].ArriveDate != (DateTime)dtpOldStartDate.Value)
+                itinerarySet.Itinerary[0].ArriveDate = (DateTime)dtpOldStartDate.Value;
+
+            // reset depart date
+            if (!itinerarySet.Itinerary[0].IsDepartDateNull() && dtpOldEndDate.Value != null &&
+                itinerarySet.Itinerary[0].DepartDate != (DateTime)dtpOldEndDate.Value)
+                itinerarySet.Itinerary[0].DepartDate = (DateTime)dtpOldEndDate.Value;
         }
 
         private void grid_InitializeLayout(object sender, InitializeLayoutEventArgs e)
@@ -365,7 +445,13 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     c.Header.Caption = "New date";
                     c.Style = ColumnStyle.Date;
                     c.Format = App.GetLocalShortDateFormat();
-                    c.EditorControl = new UltraTextEditor();
+                    //c.EditorControl = new UltraTextEditor();
+                    
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
                 }
                 else if (c.Key == "NumberOfDays")
                 {
@@ -462,6 +548,17 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 {
                     SelectAll();
                 }
+            }
+        }
+
+        private void dtpNewStartDate_ValueChanged(object sender, EventArgs e)
+        {
+            if (chkUpdateStartDate.Checked)
+            {
+                var offset = ((DateTime)dtpNewStartDate.Value).Subtract((DateTime)dtpOldStartDate.Value).Days;
+                txtDayOffset.Value = offset;
+                SetNewBookingDates(offset);
+                //UpdateOptionsOnThread();
             }
         }
     }

@@ -599,7 +599,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.btnMoveDates.Name = "btnMoveDates";
             this.btnMoveDates.Size = new System.Drawing.Size(232, 22);
-            this.btnMoveDates.Text = "Refresh/Move booking rates...";
+            this.btnMoveDates.Text = "Rates and dates update...";
             this.btnMoveDates.ToolTipText = "Refresh rates or Move bookings to new dates";
             this.btnMoveDates.Click += new System.EventHandler(this.btnMoveDates_Click);
             // 
@@ -607,7 +607,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.btnUpdateCurrency.Name = "btnUpdateCurrency";
             this.btnUpdateCurrency.Size = new System.Drawing.Size(232, 22);
-            this.btnUpdateCurrency.Text = "Update currency rates...";
+            this.btnUpdateCurrency.Text = "Currency exchange update...";
             this.btnUpdateCurrency.Click += new System.EventHandler(this.btnUpdateCurrency_Click);
             // 
             // btnLockEdit
@@ -617,6 +617,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnLockEdit.Text = "Show lock bookings column";
             this.btnLockEdit.ToolTipText = "Set bookings to read-only so they cannot be changed";
             this.btnLockEdit.Click += new System.EventHandler(this.btnLockEdit_Click);
+            this.btnLockEdit.Visible = false;
             // 
             // btnEditFlags
             // 

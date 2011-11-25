@@ -668,13 +668,13 @@ namespace TourWriter.Modules.ItineraryModule
                 itinerarySet.Itinerary[0].IsDepartDateNull() && itinerarySet.PurchaseItem.Count == 0) // nothing to change
                 return;
 
-            string msg =
-                (itinerarySet.PurchaseItem.Count > 0)
-                    ? "Move bookings and departure date also (opens rates management screen)?"
-                    : "Move departure date also?";
+            //string msg =
+            //    (itinerarySet.PurchaseItem.Count > 0)
+            //        ? "Move bookings and departure date also (opens rates management screen)?"
+            //        : "Move departure date also?";
             
             int dayOffset = (newDate.Date - oldDate.Date).Days;
-            if (App.AskYesNo(msg))
+            if (true)//App.AskYesNo(msg))
             {
                 // shift depart date
                 if (txtDepartDate.Value != null) txtDepartDate.Value = ((DateTime)txtDepartDate.Value).AddDays(dayOffset);
