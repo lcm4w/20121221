@@ -74,8 +74,8 @@ namespace TourWriter.Modules.SupplierModule
                     dt.RowDeleted += SupplierSet_RowDeleted;
                 }
                 // set report sql params
-                if (reportControl.SqlParameters.ContainsKey("@SupplierID")) reportControl.SqlParameters.Remove("@SupplierID");
-                reportControl.SqlParameters.Add("@SupplierID", supplierSet.Supplier[0].SupplierID);
+                if (reportControl.GeneralParameters.ContainsKey("@SupplierID")) reportControl.GeneralParameters.Remove("@SupplierID");
+                reportControl.GeneralParameters.Add("@SupplierID", supplierSet.Supplier[0].SupplierID);
                 reportControl.PoplulateReportExplorer(UserControls.Reports.ExplorerControl.ReportCategory.Supplier);
 
                 chkSupplierDeleted.Visible = !supplierSet.Supplier[0].IsIsDeletedNull() && supplierSet.Supplier[0].IsDeleted;

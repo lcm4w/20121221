@@ -23,16 +23,16 @@ namespace TourWriter.UserControls.Reports
         {
             get
             {
-                if (_reportOptions == null) _reportOptions = new OptionsForm(_reportFile, _defaultParams);
+                if (_reportOptions == null) _reportOptions = new OptionsForm(_reportFile, _reportParams);
                 return _reportOptions;
             }
         }
         private Dictionary<string, string> _dataSources;
-        private Dictionary<string, object> _defaultParams;
+        private Dictionary<string, object> _reportParams;
 
         public ViewerControl(string reportName, string reportFile) : this(reportName, reportFile, null) { }
 
-        public ViewerControl(string reportName, string reportFile, ICollection<KeyValuePair<string, object>> sqlParameters)
+        public ViewerControl(string reportName, string reportFile, ICollection<KeyValuePair<string, object>> generalParameters)
         {
             InitializeComponent();
 
@@ -40,9 +40,11 @@ namespace TourWriter.UserControls.Reports
             _reportFile = reportFile;
             _dataSources = new Dictionary<string, string>();
 
-            // clone params
-            _defaultParams = new Dictionary<string, object>(sqlParameters.Count);
-            foreach (var param in sqlParameters) _defaultParams.Add(param.Key, param.Value);
+            // clone params for this report
+            _reportParams = new Dictionary<string, object>(generalParameters.Count);
+            foreach (var param in generalParameters) _reportParams.Add(param.Key, param.Value);
+
+            // Load event call RunReport();
         }
 
         public void RunReport()
@@ -63,10 +65,26 @@ namespace TourWriter.UserControls.Reports
                 reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
                 reportViewer.LocalReport.SubreportProcessing += LocalReportSubreportProcessing;
 
-                ReportOptions.ProcessReportFilterOptions(ref _defaultParams, ref _dataSources); // ensure sql param values
-                SetReportDataSources();
-                SetReportDefaultParams();
+                // get params from report file, merge into our params list to ensure we have them all covered
+                foreach (var param in reportViewer.LocalReport.GetParameters())
+                {
+                    var key = !param.Name.StartsWith("@") ? "@" + param.Name : param.Name;
+                    if (!_reportParams.ContainsKey(key) && param.Values.Count > 0 && param.Values[0] != null)
+                        _reportParams.Add(key, param.Values[0]);
+                }
 
+                // refresh report params (user filter options)
+                ReportOptions.ProcessReportFilterOptions(ref _reportParams, ref _dataSources); // refresh params from user filters
+
+                // refresh general params (possible changes in itinerary etc)
+                RefreshGeneralParams();
+                
+                // set report embedded params
+                SetReportParamValues();
+
+                // set report sql and/or embedded datasources
+                SetReportDataSources();
+                
                 // run report
                 reportViewer.RefreshReport();
             }
@@ -111,60 +129,75 @@ namespace TourWriter.UserControls.Reports
             }
         }
 
-        private void SetReportDefaultParams()
+        private void RefreshGeneralParams()
         {
-            var paramNames = reportViewer.LocalReport.GetParameters().Select(x => x.Name).ToList();
-
-            if (paramNames.Contains("ReportName"))
-            {
-                reportViewer.LocalReport.SetParameters(new ReportParameter("ReportName", lblReportName.Text, false));
-            }
-
-            // itinerary default report parameters
+            // refresh some general params
+            if (!_reportParams.ContainsKey("@ReportName")) _reportParams.Add("@ReportName", "");
+            _reportParams["@ReportName"] = lblReportName.Text;
+            
+            // refresh itinerary general params (in case user has changed itineray)
             if (ParentForm is Modules.ItineraryModule.ItineraryMain)
             {
                 var itineraryForm = ParentForm as Modules.ItineraryModule.ItineraryMain;
                 var itinerary = itineraryForm.ItinerarySet.Itinerary[0];
                 var agent = Global.Cache.ToolSet.Agent.Where(a => a.AgentID == itinerary.AgentID).FirstOrDefault();
                 
-                if (paramNames.Contains("ItineraryID"))
+                if (_reportParams.ContainsKey("@ItineraryID"))
                 {
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ItineraryID", "123", false));
+                    _reportParams["@ItineraryID"] = lblReportName.Text;
                 }
-                if (paramNames.Contains("ItineraryCurrencyFormat"))
+
+                if (_reportParams.ContainsKey("@ItineraryID"))
                 {
-                    var format = CurrencyService.GetItineraryCurrencyCode(itinerary) != null ? 
+                    _reportParams["@ItineraryID"] = itinerary.ItineraryID;
+                }
+                if (_reportParams.ContainsKey("@ItineraryCurrencyFormat"))
+                {
+                    var format = CurrencyService.GetItineraryCurrencyCode(itinerary) != null ?
                         CurrencyService.GetCurrency(itinerary.CurrencyCode).DisplayFormat : "c";
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("ItineraryCurrencyFormat", format, false));
+                    _reportParams["@ItineraryCurrencyFormat"] = format;
                 }
-                if (paramNames.Contains("CurrencyCode"))
+                if (_reportParams.ContainsKey("@CurrencyCode"))
                 {
                     var code = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerary);
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("CurrencyCode", code, false));
+                    _reportParams["@CurrencyCode"] = code;
                 }
-                if (paramNames.Contains("LogoFile") && agent != null)
+                if (_reportParams.ContainsKey("@LogoFile") && agent != null)
                 {
                     var logo = !agent.IsVoucherLogoFileNull() ? ExternalFilesHelper.ConvertToAbsolutePath(agent.VoucherLogoFile) : "";
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("LogoFile", "file:\\\\\\" + logo, false));
+                    _reportParams["@LogoFile"] = "file:\\\\\\" + logo;
                 }
-                if (paramNames.Contains("AgentVoucherNote") && agent != null)
+                if (_reportParams.ContainsKey("@AgentVoucherNote") && agent != null)
                 {
                     var note = !agent.IsVoucherFooterNull() ? agent.VoucherFooter : "";
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("AgentVoucherNote", note, false));
+                    _reportParams["@AgentVoucherNote"] = note;
                 }
-                if (paramNames.Contains("AgentClientFooter") && agent != null)
+                if (_reportParams.ContainsKey("@AgentClientFooter") && agent != null)
                 {
                     var note = !agent.IsClientFooterNull() ? agent.ClientFooter : "";
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("AgentClientFooter", note, false));
+                    _reportParams["@AgentClientFooter"] = note;
                 }
-                if (paramNames.Contains("AgentHeader") && agent != null)
+                if (_reportParams.ContainsKey("@AgentHeader") && agent != null)
                 {
                     var note = !agent.IsAgentHeaderNull() ? agent.AgentHeader : "";
-                    reportViewer.LocalReport.SetParameters(new ReportParameter("AgentHeader", note, false));
+                    _reportParams["@AgentHeader"] = note;
                 }
             }
         }
         
+        private void SetReportParamValues()
+        {
+            // set report param values
+            var reportParams = new List<ReportParameter>();
+            foreach (var param in reportViewer.LocalReport.GetParameters())
+            {
+                var key = !param.Name.StartsWith("@") ? "@" + param.Name : param.Name;
+                if (_reportParams.ContainsKey(key))
+                    reportParams.Add(new ReportParameter(key.TrimStart('@'), _reportParams[key].ToString()));
+            }
+            reportViewer.LocalReport.SetParameters(reportParams.ToArray());
+        }
+
         private void EnsureDefaultReportImagesAreFound(DataTable table)
         {
             var cols = table.Columns.Cast<DataColumn>().Where(x => x.ColumnName.IndexOf("Image") > -1).ToList();
