@@ -135,6 +135,8 @@ namespace TourWriter.Forms
         private void LoadTabHistory()
         {
             Load_StartPage();
+
+            return;
             
             _tabHistory.LoadFromJson(Settings.Default.TabHistory);
             foreach (var node in _tabHistory.FormNodes)
