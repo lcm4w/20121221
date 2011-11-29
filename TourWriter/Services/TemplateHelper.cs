@@ -136,9 +136,12 @@ namespace TourWriter.Services
         /// <returns></returns>
         private static string Replace(string text, string tag, string value)
         {
-            value = value.Trim().Replace("\r\n", " ").Replace("\n", " "); // clean value
-            //value = "\"" + value.Replace("\"", "\"\"") + "\""; // escape value
-            value = value.Replace(',', '\0');
+            value = value // clean
+                .Trim()
+                .Replace("\r\n", " ")   // new lines
+                .Replace("\n", " ")     // new lines
+                .Replace(",", ".");     // comma's
+
             tag = "[!" + tag + "]";
             return text.Replace(tag, value);
         }
