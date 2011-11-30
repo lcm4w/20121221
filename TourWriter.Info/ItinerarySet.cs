@@ -442,8 +442,8 @@ namespace TourWriter.Info
                 item.StartDate = startDate;
                 if (startTime.HasValue) item.StartTime = (DateTime)startTime;
                 if (endTime.HasValue) item.EndTime = (DateTime)endTime;
-                item.Net = net;
-                item.Gross = gross;
+                item.Net = decimal.Round(net, 2, MidpointRounding.AwayFromZero);
+                item.Gross = decimal.Round(gross, 2, MidpointRounding.AwayFromZero);
                 if (qty.HasValue) item.Quantity = (double)qty;
                 if (days.HasValue) item.NumberOfDays = (double)days;
                 item.AddedOn = DateTime.Now;

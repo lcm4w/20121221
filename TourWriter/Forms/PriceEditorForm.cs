@@ -18,22 +18,22 @@ namespace TourWriter.Dialogs
         }
         public decimal Net
         {
-            get { return decimal.Parse(txtNet.Value.ToString()); }
+            get { return decimal.Round(decimal.Parse(txtNet.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
             set { txtNet.Value = value; }
         }
         public decimal Markup
         {
-            get { return decimal.Parse(txtMarkup.Value.ToString()); }
+            get { return decimal.Round(decimal.Parse(txtMarkup.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
             set { txtMarkup.Value = value; }
         }
         public decimal Gross
         {
-            get { return decimal.Parse(txtGross.Value.ToString()); }
+            get { return decimal.Round(decimal.Parse(txtGross.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
             set { txtGross.Value = value; }
         }
         public decimal Commission
         {
-            get { return decimal.Parse(txtCommission.Value.ToString()); }
+            get { return decimal.Round(decimal.Parse(txtCommission.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
             set { txtCommission.Value = value; }
         }
 
