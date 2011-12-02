@@ -55,6 +55,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.chkDebug = new System.Windows.Forms.CheckBox();
             this.cmbCcyService = new System.Windows.Forms.ComboBox();
+            this.btnForex = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.SuspendLayout();
@@ -264,6 +265,18 @@
             this.cmbCcyService.Size = new System.Drawing.Size(121, 21);
             this.cmbCcyService.TabIndex = 21;
             // 
+            // btnForex
+            // 
+            this.btnForex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnForex.Location = new System.Drawing.Point(374, 435);
+            this.btnForex.Name = "btnForex";
+            this.btnForex.Size = new System.Drawing.Size(75, 23);
+            this.btnForex.TabIndex = 22;
+            this.btnForex.Text = "FOREX";
+            this.toolTip1.SetToolTip(this.btnForex, "Get latest exchange rates");
+            this.btnForex.UseVisualStyleBackColor = true;
+            this.btnForex.Click += new System.EventHandler(this.btnForex_Click);
+            // 
             // CurrencyUpdater
             // 
             this.AcceptButton = this.btnOk;
@@ -271,6 +284,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
+            this.Controls.Add(this.btnForex);
             this.Controls.Add(this.cmbCcyService);
             this.Controls.Add(this.chkDebug);
             this.Controls.Add(this.lnkEdit);
@@ -312,5 +326,6 @@
         private System.Windows.Forms.LinkLabel lnkEdit;
         private System.Windows.Forms.CheckBox chkDebug;
         private System.Windows.Forms.ComboBox cmbCcyService;
+        private System.Windows.Forms.Button btnForex;
     }
 }

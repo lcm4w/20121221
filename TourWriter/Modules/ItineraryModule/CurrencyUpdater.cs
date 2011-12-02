@@ -58,6 +58,7 @@ namespace TourWriter.Modules.ItineraryModule
             }
             btnUpdate.Select();
             btnUpdate.Focus();
+            btnForex.Visible = App.IsDebugMode;
         }
         
         private void UpdateCurrencies()
@@ -372,6 +373,74 @@ namespace TourWriter.Modules.ItineraryModule
                 cmbCurrency.Enabled = true;
         }
 
+
+        private void btnForex_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                var selectedRows = gridBookings.Rows.ToList().Where(x =>
+                    (bool)x.Cells["IsSelected"].Value &&
+                    x.Cells["ToCurrency"].Value != null &&
+                    x.Cells["FromCurrency"].Value != null &&
+                    x.Cells["StartDate"].Value != DBNull.Value).ToList();
+
+                if (selectedRows.Count() == 0) return;
+
+                // reset status
+                foreach (var r in selectedRows)
+                {
+                    r.Cells["NewRate"].Value = null;
+                    r.Cells["Result"].Value = null;
+                    r.Cells["Result"].Appearance.Image = null;
+                }
+
+                // build sql filter statement
+                var filter = "";
+                foreach (var row in selectedRows)
+                {
+                    if (row.Cells["FromCurrency"].Value == row.Cells["ToCurrency"].Value) continue;
+
+                    filter += (filter.Length == 0) ? "where " : "or    ";
+                    filter += string.Format("(CurrencyCodeFrom = '{0}' and CurrencyCodeTo = '{1}' and CurrencyRateDate = '{2}') \r\n",
+                                         row.Cells["FromCurrency"].Value,
+                                         row.Cells["ToCurrency"].Value,
+                                         ((DateTime)row.Cells["StartDate"].Value).ToString("yyyy.MM.dd"));
+                }
+
+                // load currency rates
+                var dt = Info.Services.DataSetHelper.FillDataSetFromSql(
+                    "select CurrencyCodeFrom, CurrencyCodeTo, CurrencyRateDate, ForecastRate from CurrencyRate \r\n" + filter).Tables[0];
+
+                // update rates in grid
+                foreach (var booking in selectedRows)
+                {
+                    // no conversion
+                    if (booking.Cells["FromCurrency"].Value.ToString() == booking.Cells["ToCurrency"].Value.ToString())
+                    {
+                        booking.Cells["NewRate"].Value = 1;
+                        booking.Cells["Result"].Appearance.Image = Resources.Tick;
+                        continue;
+                    }
+
+                    // get matching database rate
+                    var dr = dt.AsEnumerable().Where(x => x.Field<string>("CurrencyCodeFrom") == booking.Cells["FromCurrency"].Value.ToString() &&
+                                                          x.Field<string>("CurrencyCodeTo") == booking.Cells["ToCurrency"].Value.ToString() &&
+                                                          x.Field<DateTime>("CurrencyRateDate") == (DateTime)booking.Cells["StartDate"].Value).FirstOrDefault();
+                    // set new rate
+                    decimal rate;
+                    if (dr != null && decimal.TryParse(dr["ForecastRate"].ToString(), out rate))
+                    {
+                        booking.Cells["NewRate"].Value = rate;
+                        booking.Cells["Result"].Appearance.Image = Resources.Tick;
+                    }
+                    // no match found
+                    else booking.Cells["Result"].Appearance.Image = Resources.Cross;
+                }
+            }
+            finally { Cursor = Cursors.Default; }
+        }
         #endregion
     }
 }
