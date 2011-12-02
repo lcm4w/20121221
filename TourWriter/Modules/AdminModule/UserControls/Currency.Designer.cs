@@ -40,7 +40,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridCurrency = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.gridRate = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.label2 = new System.Windows.Forms.Label();
             this.tsServiceTimes = new TourWriter.UserControls.MyToolStrip();
@@ -186,7 +185,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.gridRate);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.tsServiceTimes);
@@ -197,26 +195,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.panel1.Size = new System.Drawing.Size(764, 458);
             this.panel1.TabIndex = 19;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(9, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(583, 17);
-            this.label4.TabIndex = 124;
-            this.label4.Text = "Add/remove is disabled, please use new update functionality in Itinerary > Bookin" +
-    "gs > Tools";
-            // 
             // gridRate
             // 
             this.gridRate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridRate.Location = new System.Drawing.Point(3, 50);
+            this.gridRate.Location = new System.Drawing.Point(3, 26);
             this.gridRate.Name = "gridRate";
-            this.gridRate.Size = new System.Drawing.Size(758, 405);
+            this.gridRate.Size = new System.Drawing.Size(758, 429);
             this.gridRate.TabIndex = 1;
             this.gridRate.Text = "ultraGrid2";
             this.gridRate.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridRate_InitializeLayout);
@@ -255,10 +241,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnRateAdd,
             this.btnRateDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(686, 27);
+            this.myToolStrip2.Location = new System.Drawing.Point(717, 3);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(80, 25);
+            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
             this.myToolStrip2.TabIndex = 123;
             this.myToolStrip2.Text = "myToolStrip2";
             // 
@@ -486,7 +472,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private System.Windows.Forms.ToolStripButton btnRateDel;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnDefault;
         private System.Windows.Forms.Label label5;
