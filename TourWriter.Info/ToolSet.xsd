@@ -196,6 +196,8 @@
               <xs:element name="AccountingSystem" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="AccountingSystem" msprop:Generator_ColumnVarNameInTable="columnAccountingSystem" msprop:Generator_ColumnPropNameInTable="AccountingSystemColumn" msprop:Generator_UserColumnName="AccountingSystem" type="xs:string" minOccurs="0" />
               <xs:element name="CustomCodeFormat" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CustomCodeFormat" msprop:Generator_ColumnVarNameInTable="columnCustomCodeFormat" msprop:Generator_ColumnPropNameInTable="CustomCodeFormatColumn" msprop:Generator_UserColumnName="CustomCodeFormat" type="xs:string" minOccurs="0" />
               <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
+              <xs:element name="CcyRateSource" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CcyRateSource" msprop:Generator_ColumnVarNameInTable="columnCcyRateSource" msprop:Generator_ColumnPropNameInTable="CcyRateSourceColumn" msprop:Generator_UserColumnName="CcyRateSource" type="xs:string" minOccurs="0" />
+              <xs:element name="CcyDatePoint" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CcyDatePoint" msprop:Generator_ColumnVarNameInTable="columnCcyDatePoint" msprop:Generator_ColumnPropNameInTable="CcyDatePointColumn" msprop:Generator_UserColumnName="CcyDatePoint" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -229,7 +231,7 @@
               <xs:element name="AddedOn" msprop:Generator_ColumnVarNameInTable="columnAddedOn" msprop:Generator_ColumnPropNameInRow="AddedOn" msprop:Generator_ColumnPropNameInTable="AddedOnColumn" msprop:Generator_UserColumnName="AddedOn" type="xs:dateTime" minOccurs="0" />
               <xs:element name="AddedBy" msprop:Generator_ColumnVarNameInTable="columnAddedBy" msprop:Generator_ColumnPropNameInRow="AddedBy" msprop:Generator_ColumnPropNameInTable="AddedByColumn" msprop:Generator_UserColumnName="AddedBy" type="xs:int" minOccurs="0" />
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" msprop:Generator_UserColumnName="RowVersion" type="xs:base64Binary" minOccurs="0" />
-              <xs:element name="IsDeleted" msprop:Generator_UserColumnName="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" msprop:Generator_UserColumnName="IsDeleted" type="xs:boolean" minOccurs="0" />
               <xs:element name="NetMinOrMax" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="NetMinOrMax" msprop:Generator_ColumnVarNameInTable="columnNetMinOrMax" msprop:Generator_ColumnPropNameInTable="NetMinOrMaxColumn" msprop:Generator_UserColumnName="NetMinOrMax" type="xs:string" minOccurs="0" />
               <xs:element name="CurrencyCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCode" msprop:Generator_ColumnPropNameInTable="CurrencyCodeColumn" msprop:Generator_UserColumnName="CurrencyCode" minOccurs="0">
                 <xs:simpleType>
@@ -239,6 +241,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="AgentNameParentName" msprop:Generator_ColumnVarNameInTable="columnAgentNameParentName" msprop:Generator_ColumnPropNameInRow="AgentNameParentName" msprop:Generator_ColumnPropNameInTable="AgentNameParentNameColumn" msprop:Generator_UserColumnName="AgentNameParentName" type="xs:string" minOccurs="0" />
+              <xs:element name="DefaultCurrencyMargin" msprop:Generator_ColumnVarNameInTable="columnDefaultCurrencyMargin" msprop:Generator_ColumnPropNameInRow="DefaultCurrencyMargin" msprop:Generator_ColumnPropNameInTable="DefaultCurrencyMarginColumn" msprop:Generator_UserColumnName="DefaultCurrencyMargin" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -425,24 +428,13 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="CurrencyRateID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnCurrencyRateID" msprop:Generator_ColumnPropNameInRow="CurrencyRateID" msprop:Generator_ColumnPropNameInTable="CurrencyRateIDColumn" msprop:Generator_UserColumnName="CurrencyRateID" type="xs:int" />
-              <xs:element name="CurrencyCodeFrom" msdata:Caption="FromCurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCodeFrom" msprop:Generator_ColumnPropNameInRow="CurrencyCodeFrom" msprop:Generator_ColumnPropNameInTable="CurrencyCodeFromColumn" msprop:Generator_UserColumnName="CurrencyCodeFrom">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="3" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="CurrencyCodeTo" msdata:Caption="ToCurrencyCode" msprop:Generator_ColumnVarNameInTable="columnCurrencyCodeTo" msprop:Generator_ColumnPropNameInRow="CurrencyCodeTo" msprop:Generator_ColumnPropNameInTable="CurrencyCodeToColumn" msprop:Generator_UserColumnName="CurrencyCodeTo">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="3" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="CurrencyRateDate" msprop:Generator_ColumnVarNameInTable="columnCurrencyRateDate" msprop:Generator_ColumnPropNameInRow="CurrencyRateDate" msprop:Generator_ColumnPropNameInTable="CurrencyRateDateColumn" msprop:Generator_UserColumnName="CurrencyRateDate" type="xs:dateTime" />
-              <xs:element name="ActualRate" msprop:Generator_ColumnVarNameInTable="columnActualRate" msprop:Generator_ColumnPropNameInRow="ActualRate" msprop:Generator_ColumnPropNameInTable="ActualRateColumn" msprop:Generator_UserColumnName="ActualRate" type="xs:decimal" minOccurs="0" />
-              <xs:element name="ForecastRate" msprop:Generator_ColumnVarNameInTable="columnForecastRate" msprop:Generator_ColumnPropNameInRow="ForecastRate" msprop:Generator_ColumnPropNameInTable="ForecastRateColumn" msprop:Generator_UserColumnName="ForecastRate" type="xs:decimal" minOccurs="0" />
-              <xs:element name="ForecastDate" msprop:Generator_ColumnVarNameInTable="columnForecastDate" msprop:Generator_ColumnPropNameInRow="ForecastDate" msprop:Generator_ColumnPropNameInTable="ForecastDateColumn" msprop:Generator_UserColumnName="ForecastDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="CodeFrom" msprop:Generator_ColumnVarNameInTable="columnCodeFrom" msprop:Generator_ColumnPropNameInRow="CodeFrom" msprop:Generator_ColumnPropNameInTable="CodeFromColumn" msprop:Generator_UserColumnName="CodeFrom" type="xs:string" minOccurs="0" />
+              <xs:element name="CodeTo" msprop:Generator_ColumnVarNameInTable="columnCodeTo" msprop:Generator_ColumnPropNameInRow="CodeTo" msprop:Generator_ColumnPropNameInTable="CodeToColumn" msprop:Generator_UserColumnName="CodeTo" type="xs:string" minOccurs="0" />
+              <xs:element name="Rate" msprop:Generator_ColumnVarNameInTable="columnRate" msprop:Generator_ColumnPropNameInRow="Rate" msprop:Generator_ColumnPropNameInTable="RateColumn" msprop:Generator_UserColumnName="Rate" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ValidFrom" msprop:Generator_ColumnVarNameInTable="columnValidFrom" msprop:Generator_ColumnPropNameInRow="ValidFrom" msprop:Generator_ColumnPropNameInTable="ValidFromColumn" msprop:Generator_UserColumnName="ValidFrom" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ValidTo" msprop:Generator_ColumnVarNameInTable="columnValidTo" msprop:Generator_ColumnPropNameInRow="ValidTo" msprop:Generator_ColumnPropNameInTable="ValidToColumn" msprop:Generator_UserColumnName="ValidTo" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EnabledFrom" msprop:Generator_ColumnVarNameInTable="columnEnabledFrom" msprop:Generator_ColumnPropNameInRow="EnabledFrom" msprop:Generator_ColumnPropNameInTable="EnabledFromColumn" msprop:Generator_UserColumnName="EnabledFrom" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="EnabledTo" msprop:Generator_ColumnVarNameInTable="columnEnabledTo" msprop:Generator_ColumnPropNameInRow="EnabledTo" msprop:Generator_ColumnPropNameInTable="EnabledToColumn" msprop:Generator_UserColumnName="EnabledTo" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -576,14 +568,6 @@
       <xs:selector xpath=".//mstns:CurrencyRate" />
       <xs:field xpath="mstns:CurrencyRateID" />
     </xs:unique>
-    <xs:keyref name="CurrencyCurrencyRateFrom" refer="Currency_Constraint1" msprop:rel_Generator_UserChildTable="CurrencyRate" msprop:rel_Generator_ChildPropName="GetCurrencyRateRowsByCurrencyCurrencyRateFrom" msprop:rel_Generator_ParentPropName="CurrencyRowByCurrencyCurrencyRateFrom" msprop:rel_Generator_UserRelationName="CurrencyCurrencyRateFrom" msprop:rel_Generator_RelationVarName="relationCurrencyCurrencyRateFrom" msprop:rel_Generator_UserParentTable="Currency">
-      <xs:selector xpath=".//mstns:CurrencyRate" />
-      <xs:field xpath="mstns:CurrencyCodeFrom" />
-    </xs:keyref>
-    <xs:keyref name="CurrencyCurrencyRateTo" refer="Currency_Constraint1" msprop:rel_Generator_UserChildTable="CurrencyRate" msprop:rel_Generator_ChildPropName="GetCurrencyRateRowsByCurrencyCurrencyRateTo" msprop:rel_Generator_ParentPropName="CurrencyRowByCurrencyCurrencyRateTo" msprop:rel_Generator_UserRelationName="CurrencyCurrencyRateTo" msprop:rel_Generator_RelationVarName="relationCurrencyCurrencyRateTo" msprop:rel_Generator_UserParentTable="Currency">
-      <xs:selector xpath=".//mstns:CurrencyRate" />
-      <xs:field xpath="mstns:CurrencyCodeTo" />
-    </xs:keyref>
     <xs:keyref name="TemplateCategory_Template" refer="TemplateCategory_Constraint1" msprop:rel_Generator_UserChildTable="Template" msprop:rel_Generator_ChildPropName="GetTemplateRows" msprop:rel_Generator_ParentPropName="TemplateCategoryRow" msprop:rel_Generator_UserRelationName="TemplateCategory_Template" msprop:rel_Generator_RelationVarName="relationTemplateCategory_Template" msprop:rel_Generator_UserParentTable="TemplateCategory">
       <xs:selector xpath=".//mstns:Template" />
       <xs:field xpath="mstns:ParentTemplateCategoryID" />

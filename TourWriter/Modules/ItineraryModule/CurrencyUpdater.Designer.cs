@@ -53,11 +53,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.chkDebug = new System.Windows.Forms.CheckBox();
             this.cmbCcyService = new System.Windows.Forms.ComboBox();
-            this.btnForex = new System.Windows.Forms.Button();
+            this.pnlMargin = new System.Windows.Forms.Panel();
+            this.cmbCcyDatepoint = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
+            this.pnlMargin.SuspendLayout();
             this.SuspendLayout();
             // 
             // gridBookings
@@ -155,20 +156,19 @@
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(455, 435);
+            this.btnUpdate.Location = new System.Drawing.Point(374, 435);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdate.Size = new System.Drawing.Size(156, 23);
             this.btnUpdate.TabIndex = 11;
-            this.btnUpdate.Text = "Load Rates";
+            this.btnUpdate.Text = "Load Internet Rates";
             this.toolTip1.SetToolTip(this.btnUpdate, "Get latest exchange rates");
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // txtRateAdjustment
             // 
-            this.txtRateAdjustment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtRateAdjustment.FormatString = "##0\\.00%";
-            this.txtRateAdjustment.Location = new System.Drawing.Point(72, 436);
+            this.txtRateAdjustment.Location = new System.Drawing.Point(63, 5);
             this.txtRateAdjustment.MaskInput = "-nnn.nn %";
             this.txtRateAdjustment.Name = "txtRateAdjustment";
             this.txtRateAdjustment.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
@@ -179,9 +179,8 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 440);
+            this.label1.Location = new System.Drawing.Point(3, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 13);
             this.label1.TabIndex = 13;
@@ -202,6 +201,7 @@
             // 
             // lnkEdit
             // 
+            this.lnkEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkEdit.AutoSize = true;
             this.lnkEdit.Location = new System.Drawing.Point(437, 9);
             this.lnkEdit.Name = "lnkEdit";
@@ -224,10 +224,9 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(132, 440);
+            this.label2.Location = new System.Drawing.Point(123, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(169, 13);
             this.label2.TabIndex = 16;
@@ -243,39 +242,38 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "Itinerary Currency";
             // 
-            // chkDebug
-            // 
-            this.chkDebug.AutoSize = true;
-            this.chkDebug.Location = new System.Drawing.Point(18, 483);
-            this.chkDebug.Name = "chkDebug";
-            this.chkDebug.Size = new System.Drawing.Size(93, 17);
-            this.chkDebug.TabIndex = 20;
-            this.chkDebug.Text = "write to debug";
-            this.chkDebug.UseVisualStyleBackColor = true;
-            // 
             // cmbCcyService
             // 
+            this.cmbCcyService.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cmbCcyService.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCcyService.FormattingEnabled = true;
-            this.cmbCcyService.Items.AddRange(new object[] {
-            "use Yahoo Finance",
-            "use Google Finance"});
-            this.cmbCcyService.Location = new System.Drawing.Point(120, 481);
+            this.cmbCcyService.Location = new System.Drawing.Point(16, 481);
             this.cmbCcyService.Name = "cmbCcyService";
-            this.cmbCcyService.Size = new System.Drawing.Size(121, 21);
+            this.cmbCcyService.Size = new System.Drawing.Size(150, 21);
             this.cmbCcyService.TabIndex = 21;
+            this.cmbCcyService.Visible = false;
+            this.cmbCcyService.SelectedIndexChanged += new System.EventHandler(this.cmbCcyService_SelectedIndexChanged);
             // 
-            // btnForex
+            // pnlMargin
             // 
-            this.btnForex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnForex.Location = new System.Drawing.Point(374, 435);
-            this.btnForex.Name = "btnForex";
-            this.btnForex.Size = new System.Drawing.Size(75, 23);
-            this.btnForex.TabIndex = 22;
-            this.btnForex.Text = "FOREX";
-            this.toolTip1.SetToolTip(this.btnForex, "Get latest exchange rates");
-            this.btnForex.UseVisualStyleBackColor = true;
-            this.btnForex.Click += new System.EventHandler(this.btnForex_Click);
+            this.pnlMargin.Controls.Add(this.label1);
+            this.pnlMargin.Controls.Add(this.txtRateAdjustment);
+            this.pnlMargin.Controls.Add(this.label2);
+            this.pnlMargin.Location = new System.Drawing.Point(12, 431);
+            this.pnlMargin.Name = "pnlMargin";
+            this.pnlMargin.Size = new System.Drawing.Size(323, 32);
+            this.pnlMargin.TabIndex = 22;
+            // 
+            // cmbCcyDatepoint
+            // 
+            this.cmbCcyDatepoint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cmbCcyDatepoint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCcyDatepoint.FormattingEnabled = true;
+            this.cmbCcyDatepoint.Location = new System.Drawing.Point(172, 481);
+            this.cmbCcyDatepoint.Name = "cmbCcyDatepoint";
+            this.cmbCcyDatepoint.Size = new System.Drawing.Size(150, 21);
+            this.cmbCcyDatepoint.TabIndex = 23;
+            this.cmbCcyDatepoint.Visible = false;
             // 
             // CurrencyUpdater
             // 
@@ -284,16 +282,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
-            this.Controls.Add(this.btnForex);
+            this.Controls.Add(this.cmbCcyDatepoint);
+            this.Controls.Add(this.pnlMargin);
             this.Controls.Add(this.cmbCcyService);
-            this.Controls.Add(this.chkDebug);
             this.Controls.Add(this.lnkEdit);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cmbCurrency);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtRateAdjustment);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.gridBookings);
             this.Controls.Add(this.btnCancel);
@@ -305,6 +300,8 @@
             this.Text = "TourWriter Update Currencies";
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).EndInit();
+            this.pnlMargin.ResumeLayout(false);
+            this.pnlMargin.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,8 +321,8 @@
         private System.Windows.Forms.ComboBox cmbCurrency;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel lnkEdit;
-        private System.Windows.Forms.CheckBox chkDebug;
         private System.Windows.Forms.ComboBox cmbCcyService;
-        private System.Windows.Forms.Button btnForex;
+        private System.Windows.Forms.Panel pnlMargin;
+        private System.Windows.Forms.ComboBox cmbCcyDatepoint;
     }
 }

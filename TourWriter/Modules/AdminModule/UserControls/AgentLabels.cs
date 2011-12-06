@@ -24,48 +24,55 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
 		private System.Windows.Forms.Label lblHeading;
 		private System.Windows.Forms.Label label6;
-		private Infragistics.Win.UltraWinGrid.UltraGrid gridAgents;
-        private Infragistics.Win.UltraWinGrid.UltraGrid gridContact;
-		internal System.Windows.Forms.ImageList imageList1;
-		private Infragistics.Win.UltraWinTabControl.UltraTabControl ultraTabControl1;
-		private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage1;
-        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl2;
-		private Infragistics.Win.UltraWinEditors.UltraTextEditor txtComments;
-		private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-		private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl1;
-		private System.Windows.Forms.Label label9;
-		private Infragistics.Win.UltraWinEditors.UltraTextEditor txtTermsConditions;
-		private Infragistics.Win.UltraWinTabControl.UltraTabControl ultraTabControl3;
-		private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage3;
-		private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl8;
-		private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl9;
-		private Infragistics.Win.UltraWinTabControl.UltraTabControl ultraTabControl4;
-		private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage4;
-		private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl10;
-		private System.Windows.Forms.Label label11;
-		private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl11;
-		private System.Windows.Forms.Label label12;
-		private Infragistics.Win.UltraWinEditors.UltraTextEditor txtVoucherLogo;
-		private Infragistics.Win.UltraWinEditors.UltraTextEditor txtVoucherFooter;
-		private Infragistics.Win.Misc.UltraButton btnVoucherLogo;
-        private Infragistics.Win.UltraWinEditors.UltraPictureBox picVoucherLogo;
+        private Infragistics.Win.UltraWinGrid.UltraGrid gridAgents;
+        internal System.Windows.Forms.ImageList imageList1;
         private TourWriter.UserControls.MyToolStrip myToolStrip1;
         private ToolStripButton btnAgentAdd;
         private ToolStripButton btnAgentDel;
         private ToolStripButton btnAgentCopy;
         private Label label10;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl3;
+        private ComboBox cmbMargin;
+        private RadioButton rdCommission;
+        private RadioButton rdMarkup;
+        private UltraGrid gridMarginOverride;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl9;
+        private Infragistics.Win.UltraWinTabControl.UltraTabControl ultraTabControl4;
+        private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage4;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl10;
+        private Infragistics.Win.UltraWinEditors.UltraPictureBox picVoucherLogo;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtVoucherLogo;
+        private Label label11;
+        private Infragistics.Win.Misc.UltraButton btnVoucherLogo;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl11;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtVoucherFooter;
+        private Label label12;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl1;
+        private Infragistics.Win.UltraWinTabControl.UltraTabControl ultraTabControl3;
+        private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage3;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl8;
+        private Label label9;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtTermsConditions;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl2;
+        private UltraGrid gridContact;
         private TourWriter.UserControls.MyToolStrip myToolStrip2;
         private ToolStripButton btnContactAdd;
         private ToolStripButton btnContactDel;
-        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl3;
-        private UltraGrid gridMarginOverride;
-        private RadioButton btnCommission;
-        private RadioButton btnMarkup;
-        private GroupBox groupBox1;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private ComboBox cbMargin;
-        private Label label1;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtComments;
+        private Label label3;
+        private Label label4;
+        private TourWriter.UserControls.MyToolStrip miniToolStrip;
+        private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage1;
+        private Infragistics.Win.UltraWinTabControl.UltraTabControl Currenc;
+        private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtCurrencyMargin;
+        private Label label16;
+        private Label label15;
+        private Label label2;
+        private Label label5;
+        private Label label7;
+        private Label label8;
+        private TextBox label1;
 		private System.ComponentModel.IContainer components;
 
 		public AgentLabels()
@@ -131,6 +138,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label12 = new System.Windows.Forms.Label();
             this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.gridContact = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.myToolStrip2 = new TourWriter.UserControls.MyToolStrip();
+            this.btnContactAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnContactDel = new System.Windows.Forms.ToolStripButton();
             this.txtComments = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -141,26 +151,30 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabControl4 = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
             this.ultraTabSharedControlsPage4 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
             this.ultraTabPageControl3 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cbMargin = new System.Windows.Forms.ComboBox();
-            this.btnCommission = new System.Windows.Forms.RadioButton();
-            this.btnMarkup = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.TextBox();
+            this.txtCurrencyMargin = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cmbMargin = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.rdCommission = new System.Windows.Forms.RadioButton();
+            this.label15 = new System.Windows.Forms.Label();
+            this.rdMarkup = new System.Windows.Forms.RadioButton();
             this.gridMarginOverride = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.gridAgents = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.lblHeading = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.ultraTabControl1 = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
-            this.ultraTabSharedControlsPage1 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
             this.label10 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
             this.btnAgentCopy = new System.Windows.Forms.ToolStripButton();
             this.btnAgentAdd = new System.Windows.Forms.ToolStripButton();
             this.btnAgentDel = new System.Windows.Forms.ToolStripButton();
-            this.myToolStrip2 = new TourWriter.UserControls.MyToolStrip();
-            this.btnContactAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnContactDel = new System.Windows.Forms.ToolStripButton();
+            this.miniToolStrip = new TourWriter.UserControls.MyToolStrip();
+            this.ultraTabSharedControlsPage1 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
+            this.Currenc = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
             this.ultraTabPageControl8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtTermsConditions)).BeginInit();
             this.ultraTabPageControl10.SuspendLayout();
@@ -169,6 +183,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.txtVoucherFooter)).BeginInit();
             this.ultraTabPageControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridContact)).BeginInit();
+            this.myToolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtComments)).BeginInit();
             this.ultraTabPageControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl3)).BeginInit();
@@ -177,13 +192,12 @@ namespace TourWriter.Modules.AdminModule.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl4)).BeginInit();
             this.ultraTabControl4.SuspendLayout();
             this.ultraTabPageControl3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCurrencyMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMarginOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAgents)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl1)).BeginInit();
-            this.ultraTabControl1.SuspendLayout();
             this.myToolStrip1.SuspendLayout();
-            this.myToolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Currenc)).BeginInit();
+            this.Currenc.SuspendLayout();
             this.SuspendLayout();
             // 
             // ultraTabPageControl8
@@ -192,10 +206,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl8.Controls.Add(this.txtTermsConditions);
             this.ultraTabPageControl8.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl8.Name = "ultraTabPageControl8";
-            this.ultraTabPageControl8.Size = new System.Drawing.Size(488, 162);
+            this.ultraTabPageControl8.Size = new System.Drawing.Size(784, 385);
             // 
             // label9
             // 
+            this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Location = new System.Drawing.Point(8, 4);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(476, 23);
@@ -207,11 +222,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             this.txtTermsConditions.AcceptsReturn = true;
             this.txtTermsConditions.AcceptsTab = true;
+            this.txtTermsConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTermsConditions.Location = new System.Drawing.Point(8, 28);
             this.txtTermsConditions.Multiline = true;
             this.txtTermsConditions.Name = "txtTermsConditions";
             this.txtTermsConditions.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtTermsConditions.Size = new System.Drawing.Size(476, 132);
+            this.txtTermsConditions.Size = new System.Drawing.Size(773, 354);
             this.txtTermsConditions.TabIndex = 42;
             // 
             // ultraTabPageControl10
@@ -222,7 +240,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl10.Controls.Add(this.btnVoucherLogo);
             this.ultraTabPageControl10.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl10.Name = "ultraTabPageControl10";
-            this.ultraTabPageControl10.Size = new System.Drawing.Size(492, 162);
+            this.ultraTabPageControl10.Size = new System.Drawing.Size(786, 386);
             // 
             // picVoucherLogo
             // 
@@ -315,7 +333,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl11.Controls.Add(this.label12);
             this.ultraTabPageControl11.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl11.Name = "ultraTabPageControl11";
-            this.ultraTabPageControl11.Size = new System.Drawing.Size(492, 162);
+            this.ultraTabPageControl11.Size = new System.Drawing.Size(786, 386);
             // 
             // txtVoucherFooter
             // 
@@ -344,18 +362,17 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl2.Controls.Add(this.txtComments);
             this.ultraTabPageControl2.Controls.Add(this.label3);
             this.ultraTabPageControl2.Controls.Add(this.label4);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(522, 232);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(795, 418);
             // 
             // gridContact
             // 
-            this.gridContact.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridContact.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gridContact.Location = new System.Drawing.Point(8, 113);
             this.gridContact.Name = "gridContact";
-            this.gridContact.Size = new System.Drawing.Size(510, 117);
+            this.gridContact.Size = new System.Drawing.Size(510, 302);
             this.gridContact.TabIndex = 9;
             this.gridContact.Text = "Contact list  (drag-drop)";
             this.gridContact.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridContact_InitializeLayout);
@@ -363,17 +380,49 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridContact.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridContact_CellChange);
             this.gridContact.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridContact_ClickCellButton);
             // 
+            // myToolStrip2
+            // 
+            this.myToolStrip2.BackColor = System.Drawing.Color.Transparent;
+            this.myToolStrip2.DisableAllMenuItems = true;
+            this.myToolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.myToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnContactAdd,
+            this.btnContactDel});
+            this.myToolStrip2.Location = new System.Drawing.Point(476, 90);
+            this.myToolStrip2.Name = "myToolStrip2";
+            this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
+            this.myToolStrip2.TabIndex = 127;
+            this.myToolStrip2.Text = "myToolStrip2";
+            // 
+            // btnContactAdd
+            // 
+            this.btnContactAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnContactAdd.Image = global::TourWriter.Properties.Resources.Plus;
+            this.btnContactAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnContactAdd.Name = "btnContactAdd";
+            this.btnContactAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnContactAdd.Click += new System.EventHandler(this.btnContactAdd_Click);
+            // 
+            // btnContactDel
+            // 
+            this.btnContactDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnContactDel.Image = global::TourWriter.Properties.Resources.Remove;
+            this.btnContactDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnContactDel.Name = "btnContactDel";
+            this.btnContactDel.Size = new System.Drawing.Size(23, 22);
+            this.btnContactDel.Click += new System.EventHandler(this.btnContactDel_Click);
+            // 
             // txtComments
             // 
             this.txtComments.AcceptsReturn = true;
             this.txtComments.AcceptsTab = true;
-            this.txtComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtComments.Location = new System.Drawing.Point(60, 8);
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
             this.txtComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtComments.Size = new System.Drawing.Size(458, 64);
+            this.txtComments.Size = new System.Drawing.Size(461, 64);
             this.txtComments.TabIndex = 40;
             // 
             // label3
@@ -399,16 +448,19 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl1.Controls.Add(this.ultraTabControl3);
             this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
-            this.ultraTabPageControl1.Size = new System.Drawing.Size(522, 232);
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(795, 418);
             // 
             // ultraTabControl3
             // 
+            this.ultraTabControl3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ultraTabControl3.Controls.Add(this.ultraTabSharedControlsPage3);
             this.ultraTabControl3.Controls.Add(this.ultraTabPageControl8);
             this.ultraTabControl3.Location = new System.Drawing.Point(4, 4);
             this.ultraTabControl3.Name = "ultraTabControl3";
             this.ultraTabControl3.SharedControlsPage = this.ultraTabSharedControlsPage3;
-            this.ultraTabControl3.Size = new System.Drawing.Size(492, 188);
+            this.ultraTabControl3.Size = new System.Drawing.Size(788, 411);
             this.ultraTabControl3.TabIndex = 44;
             ultraTab1.TabPage = this.ultraTabPageControl8;
             ultraTab1.Text = "Itinerary footer";
@@ -419,24 +471,27 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             this.ultraTabSharedControlsPage3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage3.Name = "ultraTabSharedControlsPage3";
-            this.ultraTabSharedControlsPage3.Size = new System.Drawing.Size(488, 162);
+            this.ultraTabSharedControlsPage3.Size = new System.Drawing.Size(784, 385);
             // 
             // ultraTabPageControl9
             // 
             this.ultraTabPageControl9.Controls.Add(this.ultraTabControl4);
             this.ultraTabPageControl9.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl9.Name = "ultraTabPageControl9";
-            this.ultraTabPageControl9.Size = new System.Drawing.Size(522, 232);
+            this.ultraTabPageControl9.Size = new System.Drawing.Size(795, 418);
             // 
             // ultraTabControl4
             // 
+            this.ultraTabControl4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ultraTabControl4.Controls.Add(this.ultraTabSharedControlsPage4);
             this.ultraTabControl4.Controls.Add(this.ultraTabPageControl10);
             this.ultraTabControl4.Controls.Add(this.ultraTabPageControl11);
             this.ultraTabControl4.Location = new System.Drawing.Point(2, 3);
             this.ultraTabControl4.Name = "ultraTabControl4";
             this.ultraTabControl4.SharedControlsPage = this.ultraTabSharedControlsPage4;
-            this.ultraTabControl4.Size = new System.Drawing.Size(496, 188);
+            this.ultraTabControl4.Size = new System.Drawing.Size(790, 412);
             this.ultraTabControl4.TabIndex = 43;
             ultraTab2.TabPage = this.ultraTabPageControl10;
             ultraTab2.Text = "Header";
@@ -450,72 +505,155 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             this.ultraTabSharedControlsPage4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage4.Name = "ultraTabSharedControlsPage4";
-            this.ultraTabSharedControlsPage4.Size = new System.Drawing.Size(492, 162);
+            this.ultraTabSharedControlsPage4.Size = new System.Drawing.Size(786, 386);
             // 
             // ultraTabPageControl3
             // 
-            this.ultraTabPageControl3.Controls.Add(this.groupBox1);
+            this.ultraTabPageControl3.Controls.Add(this.label1);
+            this.ultraTabPageControl3.Controls.Add(this.txtCurrencyMargin);
+            this.ultraTabPageControl3.Controls.Add(this.label8);
+            this.ultraTabPageControl3.Controls.Add(this.label7);
+            this.ultraTabPageControl3.Controls.Add(this.label5);
+            this.ultraTabPageControl3.Controls.Add(this.label2);
+            this.ultraTabPageControl3.Controls.Add(this.cmbMargin);
+            this.ultraTabPageControl3.Controls.Add(this.label16);
+            this.ultraTabPageControl3.Controls.Add(this.rdCommission);
+            this.ultraTabPageControl3.Controls.Add(this.label15);
+            this.ultraTabPageControl3.Controls.Add(this.rdMarkup);
             this.ultraTabPageControl3.Controls.Add(this.gridMarginOverride);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(522, 232);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(795, 393);
             // 
-            // groupBox1
+            // label1
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.cbMargin);
-            this.groupBox1.Controls.Add(this.btnCommission);
-            this.groupBox1.Controls.Add(this.btnMarkup);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(123, 226);
-            this.groupBox1.TabIndex = 128;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Override type";
+            this.label1.Location = new System.Drawing.Point(10, 162);
+            this.label1.Name = "label1";
+            this.label1.ReadOnly = true;
+            this.label1.Size = new System.Drawing.Size(263, 20);
+            this.label1.TabIndex = 157;
             // 
-            // cbMargin
+            // txtCurrencyMargin
             // 
-            this.cbMargin.DisplayMember = "Text";
-            this.cbMargin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMargin.FormattingEnabled = true;
-            this.cbMargin.Location = new System.Drawing.Point(7, 65);
-            this.cbMargin.Name = "cbMargin";
-            this.cbMargin.Size = new System.Drawing.Size(110, 21);
-            this.cbMargin.TabIndex = 133;
-            this.cbMargin.ValueMember = "Value";
-            this.cbMargin.SelectedIndexChanged += new System.EventHandler(this.cbMargin_SelectedIndexChanged);
+            this.txtCurrencyMargin.FormatString = "##0.00";
+            this.txtCurrencyMargin.Location = new System.Drawing.Point(163, 18);
+            this.txtCurrencyMargin.MaskInput = "-nnn.nn";
+            this.txtCurrencyMargin.Name = "txtCurrencyMargin";
+            this.txtCurrencyMargin.Nullable = true;
+            this.txtCurrencyMargin.NumericType = Infragistics.Win.UltraWinEditors.NumericType.Double;
+            this.txtCurrencyMargin.Size = new System.Drawing.Size(110, 21);
+            this.txtCurrencyMargin.TabIndex = 150;
             // 
-            // btnCommission
+            // label8
             // 
-            this.btnCommission.AutoSize = true;
-            this.btnCommission.Location = new System.Drawing.Point(6, 42);
-            this.btnCommission.Name = "btnCommission";
-            this.btnCommission.Size = new System.Drawing.Size(80, 17);
-            this.btnCommission.TabIndex = 127;
-            this.btnCommission.TabStop = true;
-            this.btnCommission.Text = "Commission";
-            this.toolTip1.SetToolTip(this.btnCommission, "Set the override type to commission");
-            this.btnCommission.UseVisualStyleBackColor = true;
-            this.btnCommission.CheckedChanged += new System.EventHandler(this.btnCommission_CheckedChanged);
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.CausesValidation = false;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(272, 22);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(15, 13);
+            this.label8.TabIndex = 156;
+            this.label8.Text = "%";
             // 
-            // btnMarkup
+            // label7
             // 
-            this.btnMarkup.AutoSize = true;
-            this.btnMarkup.Location = new System.Drawing.Point(6, 19);
-            this.btnMarkup.Name = "btnMarkup";
-            this.btnMarkup.Size = new System.Drawing.Size(61, 17);
-            this.btnMarkup.TabIndex = 126;
-            this.btnMarkup.TabStop = true;
-            this.btnMarkup.Text = "Markup";
-            this.toolTip1.SetToolTip(this.btnMarkup, "Set the override type to markup");
-            this.btnMarkup.UseVisualStyleBackColor = true;
-            this.btnMarkup.CheckedChanged += new System.EventHandler(this.btnMarkup_CheckedChanged);
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Location = new System.Drawing.Point(8, 118);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(145, 13);
+            this.label7.TabIndex = 155;
+            this.label7.Text = "Default Booking Margin Type";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.CausesValidation = false;
+            this.label5.Location = new System.Drawing.Point(323, 14);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(170, 13);
+            this.label5.TabIndex = 153;
+            this.label5.Text = "Default Margins for Booking Types";
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.CausesValidation = false;
+            this.label2.Location = new System.Drawing.Point(8, 188);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(302, 43);
+            this.label2.TabIndex = 152;
+            this.label2.Text = "Only when you have default margins set (see grid on right),\r\nthis sets the method" +
+    " (markup or commission) used to \r\ncalculate the margin.";
+            // 
+            // cmbMargin
+            // 
+            this.cmbMargin.DisplayMember = "Text";
+            this.cmbMargin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMargin.FormattingEnabled = true;
+            this.cmbMargin.Location = new System.Drawing.Point(163, 135);
+            this.cmbMargin.Name = "cmbMargin";
+            this.cmbMargin.Size = new System.Drawing.Size(110, 21);
+            this.cmbMargin.TabIndex = 133;
+            this.cmbMargin.ValueMember = "Value";
+            // 
+            // label16
+            // 
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.CausesValidation = false;
+            this.label16.Location = new System.Drawing.Point(8, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(302, 46);
+            this.label16.TabIndex = 149;
+            this.label16.Text = "Only for Webservice rates, this sets a default margin to add\r\nto the \'now\' rate r" +
+    "eturned from the webservice, whenver you\r\nupdate exchange rates (user can overri" +
+    "de).";
+            // 
+            // rdCommission
+            // 
+            this.rdCommission.AutoSize = true;
+            this.rdCommission.BackColor = System.Drawing.Color.Transparent;
+            this.rdCommission.Location = new System.Drawing.Point(77, 139);
+            this.rdCommission.Name = "rdCommission";
+            this.rdCommission.Size = new System.Drawing.Size(80, 17);
+            this.rdCommission.TabIndex = 127;
+            this.rdCommission.TabStop = true;
+            this.rdCommission.Text = "Commission";
+            this.toolTip1.SetToolTip(this.rdCommission, "Set the override type to commission");
+            this.rdCommission.UseVisualStyleBackColor = false;
+            this.rdCommission.CheckedChanged += new System.EventHandler(this.btnCommission_CheckedChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.CausesValidation = false;
+            this.label15.Location = new System.Drawing.Point(8, 24);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(121, 13);
+            this.label15.TabIndex = 148;
+            this.label15.Text = "Default Currency Margin";
+            // 
+            // rdMarkup
+            // 
+            this.rdMarkup.AutoSize = true;
+            this.rdMarkup.BackColor = System.Drawing.Color.Transparent;
+            this.rdMarkup.Location = new System.Drawing.Point(10, 139);
+            this.rdMarkup.Name = "rdMarkup";
+            this.rdMarkup.Size = new System.Drawing.Size(61, 17);
+            this.rdMarkup.TabIndex = 126;
+            this.rdMarkup.TabStop = true;
+            this.rdMarkup.Text = "Markup";
+            this.toolTip1.SetToolTip(this.rdMarkup, "Set the override type to markup");
+            this.rdMarkup.UseVisualStyleBackColor = false;
+            this.rdMarkup.CheckedChanged += new System.EventHandler(this.btnMarkup_CheckedChanged);
             // 
             // gridMarginOverride
             // 
-            this.gridMarginOverride.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.gridMarginOverride.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             appearance3.BackColor = System.Drawing.SystemColors.Window;
             appearance3.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridMarginOverride.DisplayLayout.Appearance = appearance3;
@@ -571,9 +709,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.gridMarginOverride.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridMarginOverride.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridMarginOverride.Enabled = false;
-            this.gridMarginOverride.Location = new System.Drawing.Point(132, 3);
+            this.gridMarginOverride.Location = new System.Drawing.Point(324, 30);
             this.gridMarginOverride.Name = "gridMarginOverride";
-            this.gridMarginOverride.Size = new System.Drawing.Size(387, 226);
+            this.gridMarginOverride.Size = new System.Drawing.Size(374, 360);
             this.gridMarginOverride.TabIndex = 125;
             this.gridMarginOverride.Text = "ultraGrid1";
             this.gridMarginOverride.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridMarginOverride_InitializeLayout);
@@ -581,11 +719,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // gridAgents
             // 
-            this.gridAgents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridAgents.Location = new System.Drawing.Point(4, 104);
+            this.gridAgents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridAgents.Location = new System.Drawing.Point(4, 89);
             this.gridAgents.Name = "gridAgents";
-            this.gridAgents.Size = new System.Drawing.Size(526, 153);
+            this.gridAgents.Size = new System.Drawing.Size(799, 207);
             this.gridAgents.TabIndex = 1;
             this.gridAgents.Text = "Agent Labels";
             this.gridAgents.AfterCellUpdate += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridAgents_AfterCellUpdate);
@@ -612,61 +750,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label6.TabIndex = 28;
             this.label6.Text = resources.GetString("label6.Text");
             // 
-            // ultraTabControl1
-            // 
-            this.ultraTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.ultraTabControl1.Controls.Add(this.ultraTabSharedControlsPage1);
-            this.ultraTabControl1.Controls.Add(this.ultraTabPageControl2);
-            this.ultraTabControl1.Controls.Add(this.ultraTabPageControl1);
-            this.ultraTabControl1.Controls.Add(this.ultraTabPageControl9);
-            this.ultraTabControl1.Controls.Add(this.ultraTabPageControl3);
-            this.ultraTabControl1.Location = new System.Drawing.Point(4, 263);
-            this.ultraTabControl1.Name = "ultraTabControl1";
-            this.ultraTabControl1.SharedControlsPage = this.ultraTabSharedControlsPage1;
-            this.ultraTabControl1.Size = new System.Drawing.Size(526, 258);
-            this.ultraTabControl1.TabIndex = 47;
-            ultraTab4.Key = "Agent";
-            ultraTab4.TabPage = this.ultraTabPageControl2;
-            ultraTab4.Text = "Agent";
-            ultraTab5.Key = "Clients";
-            ultraTab5.TabPage = this.ultraTabPageControl1;
-            ultraTab5.Text = "Client texts";
-            ultraTab6.Key = "Vouchers";
-            ultraTab6.TabPage = this.ultraTabPageControl9;
-            ultraTab6.Text = "Voucher Texts";
-            ultraTab7.Key = "MarginOverrides";
-            ultraTab7.TabPage = this.ultraTabPageControl3;
-            ultraTab7.Text = "Margin overrides";
-            this.ultraTabControl1.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
-            ultraTab4,
-            ultraTab5,
-            ultraTab6,
-            ultraTab7});
-            // 
-            // ultraTabSharedControlsPage1
-            // 
-            this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
-            this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(522, 232);
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 88);
+            this.label10.Location = new System.Drawing.Point(3, 73);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(69, 13);
             this.label10.TabIndex = 126;
             this.label10.Text = "Agent Labels";
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(5, 99);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 39);
-            this.label1.TabIndex = 129;
             // 
             // myToolStrip1
             // 
@@ -679,7 +770,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.btnAgentCopy,
             this.btnAgentAdd,
             this.btnAgentDel});
-            this.myToolStrip1.Location = new System.Drawing.Point(458, 81);
+            this.myToolStrip1.Location = new System.Drawing.Point(731, 66);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip1.Size = new System.Drawing.Size(72, 25);
@@ -713,40 +804,59 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.btnAgentDel.Size = new System.Drawing.Size(23, 22);
             this.btnAgentDel.Click += new System.EventHandler(this.btnAgentDel_Click);
             // 
-            // myToolStrip2
+            // miniToolStrip
             // 
-            this.myToolStrip2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.myToolStrip2.BackColor = System.Drawing.Color.Transparent;
-            this.myToolStrip2.DisableAllMenuItems = true;
-            this.myToolStrip2.Dock = System.Windows.Forms.DockStyle.None;
-            this.myToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnContactAdd,
-            this.btnContactDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(469, 90);
-            this.myToolStrip2.Name = "myToolStrip2";
-            this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
-            this.myToolStrip2.TabIndex = 127;
-            this.myToolStrip2.Text = "myToolStrip2";
+            this.miniToolStrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.miniToolStrip.AutoSize = false;
+            this.miniToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this.miniToolStrip.CanOverflow = false;
+            this.miniToolStrip.DisableAllMenuItems = false;
+            this.miniToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.miniToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.miniToolStrip.Location = new System.Drawing.Point(0, 0);
+            this.miniToolStrip.Name = "miniToolStrip";
+            this.miniToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.miniToolStrip.Size = new System.Drawing.Size(49, 25);
+            this.miniToolStrip.TabIndex = 127;
             // 
-            // btnContactAdd
+            // ultraTabSharedControlsPage1
             // 
-            this.btnContactAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnContactAdd.Image = global::TourWriter.Properties.Resources.Plus;
-            this.btnContactAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnContactAdd.Name = "btnContactAdd";
-            this.btnContactAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnContactAdd.Click += new System.EventHandler(this.btnContactAdd_Click);
+            this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(795, 393);
             // 
-            // btnContactDel
+            // Currenc
             // 
-            this.btnContactDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnContactDel.Image = global::TourWriter.Properties.Resources.Remove;
-            this.btnContactDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnContactDel.Name = "btnContactDel";
-            this.btnContactDel.Size = new System.Drawing.Size(23, 22);
-            this.btnContactDel.Click += new System.EventHandler(this.btnContactDel_Click);
+            this.Currenc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Currenc.Controls.Add(this.ultraTabSharedControlsPage1);
+            this.Currenc.Controls.Add(this.ultraTabPageControl2);
+            this.Currenc.Controls.Add(this.ultraTabPageControl1);
+            this.Currenc.Controls.Add(this.ultraTabPageControl9);
+            this.Currenc.Controls.Add(this.ultraTabPageControl3);
+            this.Currenc.Location = new System.Drawing.Point(4, 302);
+            this.Currenc.Name = "Currenc";
+            this.Currenc.SharedControlsPage = this.ultraTabSharedControlsPage1;
+            this.Currenc.Size = new System.Drawing.Size(799, 419);
+            this.Currenc.TabIndex = 47;
+            ultraTab4.Key = "Agent";
+            ultraTab4.TabPage = this.ultraTabPageControl2;
+            ultraTab4.Text = "Agent";
+            ultraTab5.Key = "Clients";
+            ultraTab5.TabPage = this.ultraTabPageControl1;
+            ultraTab5.Text = "Client texts";
+            ultraTab6.Key = "Vouchers";
+            ultraTab6.TabPage = this.ultraTabPageControl9;
+            ultraTab6.Text = "Voucher Texts";
+            ultraTab7.Key = "MarginOverrides";
+            ultraTab7.TabPage = this.ultraTabPageControl3;
+            ultraTab7.Text = "Margin overrides";
+            this.Currenc.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
+            ultraTab4,
+            ultraTab5,
+            ultraTab6,
+            ultraTab7});
             // 
             // AgentLabels
             // 
@@ -756,11 +866,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.Controls.Add(this.gridAgents);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.myToolStrip1);
-            this.Controls.Add(this.ultraTabControl1);
+            this.Controls.Add(this.Currenc);
             this.Controls.Add(this.lblHeading);
             this.Controls.Add(this.label6);
             this.Name = "AgentLabels";
-            this.Size = new System.Drawing.Size(542, 538);
+            this.Size = new System.Drawing.Size(815, 724);
             this.Load += new System.EventHandler(this.AgentLabels_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.AgentLabel_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.AgentLabel_DragEnter);
@@ -776,6 +886,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl2.ResumeLayout(false);
             this.ultraTabPageControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridContact)).EndInit();
+            this.myToolStrip2.ResumeLayout(false);
+            this.myToolStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtComments)).EndInit();
             this.ultraTabPageControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl3)).EndInit();
@@ -784,16 +896,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl4)).EndInit();
             this.ultraTabControl4.ResumeLayout(false);
             this.ultraTabPageControl3.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.ultraTabPageControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtCurrencyMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMarginOverride)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAgents)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ultraTabControl1)).EndInit();
-            this.ultraTabControl1.ResumeLayout(false);
             this.myToolStrip1.ResumeLayout(false);
             this.myToolStrip1.PerformLayout();
-            this.myToolStrip2.ResumeLayout(false);
-            this.myToolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Currenc)).EndInit();
+            this.Currenc.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -804,9 +914,14 @@ namespace TourWriter.Modules.AdminModule.UserControls
 		private void AgentLabels_Load(object sender, EventArgs e)
 		{
 			DataBind();
+            
+            cmbMargin.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
+                                                 new { Text = "Set maximum", Value = "max" },
+                                                 new { Text = "Set exact", Value = "exact" }};
+            cmbMargin.SelectedIndexChanged += cbMargin_SelectedIndexChanged;
 
 			if(gridAgents.Rows.Count < 1)
-				ultraTabControl1.Enabled = false;
+				Currenc.Enabled = false;
 		}
 
 		private void DataBind()
@@ -823,17 +938,12 @@ namespace TourWriter.Modules.AdminModule.UserControls
             gridMarginOverride.DataSource = table;
 
 			gridAgents.SetDataBinding(Cache.AgentSet, "Agent");
-            txtComments.DataBindings.Add("Text", Cache.AgentSet, "Agent.Comments");
             txtTermsConditions.DataBindings.Add("Text", Cache.AgentSet, "Agent.ClientFooter");
             txtVoucherLogo.DataBindings.Add("Text", Cache.AgentSet, "Agent.VoucherLogoFile");
             txtVoucherFooter.DataBindings.Add("Text", Cache.AgentSet, "Agent.VoucherFooter");
             gridContact.SetDataBinding(Cache.AgentSet, "Agent.AgentAgentContact");
-
-            cbMargin.SelectedIndexChanged -= cbMargin_SelectedIndexChanged;
-            cbMargin.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
-                                                 new { Text = "Set maximum", Value = "max" },
-                                                 new { Text = "Set exact", Value = "exact" }};
-            cbMargin.SelectedIndexChanged += cbMargin_SelectedIndexChanged;
+            txtComments.DataBindings.Add("Text", Cache.AgentSet, "Agent.Comments");
+            txtCurrencyMargin.DataBindings.Add("Value", Cache.AgentSet, "Agent.DefaultCurrencyMargin");
 		}
 		
 		private void EndAllEdits()
@@ -866,7 +976,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             gridAgents.ActiveRow = gridAgents.Rows[gridAgents.Rows.Count - 1];
 
             // enable agent details to be entered
-            ultraTabControl1.Enabled = true;
+            Currenc.Enabled = true;
 
             EnableDisableAgents();
             RebuildAgentList();
@@ -1057,7 +1167,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             picVoucherLogo.Image = null;
 
             gridMarginOverride.Enabled = true;
-            InitializeMarginOverrideGrid();
+            InitializeOverrides();
         }
 
         private void gridAgents_Click(object sender, EventArgs e)
@@ -1151,7 +1261,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
 		private void EnableDisableAgents()
 		{
-			ultraTabControl1.Enabled = gridAgents.Rows.Count > 0;
+			Currenc.Enabled = gridAgents.Rows.Count > 0;
 		}
 		#endregion
 
@@ -1369,7 +1479,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         #region Margin override
 
-        private void InitializeMarginOverrideGrid()
+        private void InitializeOverrides()
         {
             DataTable table = (DataTable)gridMarginOverride.DataSource;
             foreach (DataRow row in table.Rows)
@@ -1392,24 +1502,24 @@ namespace TourWriter.Modules.AdminModule.UserControls
             if (!agentRow.IsNetComOrMupNull())
             {
                 if (agentRow.NetComOrMup == "mup")
-                    btnMarkup.Checked = true;
+                    rdMarkup.Checked = true;
 
                 else
-                    btnCommission.Checked = true;
+                    rdCommission.Checked = true;
             }
             else
             {
-                btnMarkup.Checked = false;
-                btnCommission.Checked = false;
+                rdMarkup.Checked = false;
+                rdCommission.Checked = false;
             }
 
             if (!agentRow.IsNetMinOrMaxNull())
             {
-                cbMargin.SelectedValue = agentRow.NetMinOrMax;
+                cmbMargin.SelectedValue = agentRow.NetMinOrMax;
             }
             else
             {
-                cbMargin.SelectedIndex = -1;
+                cmbMargin.SelectedIndex = -1;
             }
 
             UpdateMarginOverrideSelectionMessage();
@@ -1487,7 +1597,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void btnMarkup_CheckedChanged(object sender, EventArgs e)
         {
-            if (btnMarkup.Checked)
+            if (rdMarkup.Checked)
                 GetSelectedAgentRow().NetComOrMup = "mup";
 
             UpdateMarginOverrideSelectionMessage();
@@ -1495,7 +1605,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void btnCommission_CheckedChanged(object sender, EventArgs e)
         {
-            if (btnCommission.Checked)
+            if (rdCommission.Checked)
                 GetSelectedAgentRow().NetComOrMup = "com";
 
             UpdateMarginOverrideSelectionMessage();
@@ -1503,8 +1613,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void cbMargin_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cbMargin.SelectedIndex >= 0)
-                GetSelectedAgentRow().NetMinOrMax = (string)cbMargin.SelectedValue;
+            if (cmbMargin.SelectedIndex >= 0)
+                GetSelectedAgentRow().NetMinOrMax = (string)cmbMargin.SelectedValue;
 
             UpdateMarginOverrideSelectionMessage();
         }

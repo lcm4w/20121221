@@ -156,7 +156,7 @@ namespace TourWriter.Modules.SupplierModule
             gridServices.DisplayLayout.ValueLists.Add("CurrencyList");
             gridServices.DisplayLayout.ValueLists["CurrencyList"].SortStyle = ValueListSortStyle.Ascending;
             gridServices.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(DBNull.Value, "");
-            foreach (ToolSet.CurrencyRow r in Cache.ToolSet.Currency.Where(c => c.Enabled))
+            foreach (ToolSet.CurrencyRow r in Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Deleted && c.Enabled))
                 gridServices.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(
                     r.CurrencyCode, r.DisplayName);
 

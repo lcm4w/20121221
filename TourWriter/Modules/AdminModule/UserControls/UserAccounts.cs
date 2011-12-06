@@ -90,20 +90,21 @@ namespace TourWriter.Modules.AdminModule.UserControls
             ((System.ComponentModel.ISupportInitialize)(this.treeRoles)).BeginInit();
             this.myToolStrip2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkDisable)).BeginInit();
             this.SuspendLayout();
             // 
             // gridUsers
             // 
-            this.gridUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.gridUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gridUsers.Location = new System.Drawing.Point(16, 105);
             this.gridUsers.Name = "gridUsers";
             this.gridUsers.Size = new System.Drawing.Size(200, 410);
             this.gridUsers.TabIndex = 14;
             this.gridUsers.Text = "Users";
             this.gridUsers.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridUsers_InitializeLayout);
-            this.gridUsers.AfterRowActivate += new System.EventHandler(this.gridUsers_AfterRowActivate);
             this.gridUsers.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridUsers_InitializeRow);
+            this.gridUsers.AfterRowActivate += new System.EventHandler(this.gridUsers_AfterRowActivate);
             this.gridUsers.BeforeRowDeactivate += new System.ComponentModel.CancelEventHandler(this.gridUsers_BeforeRowDeactivate);
             // 
             // label1
@@ -143,7 +144,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label6.Size = new System.Drawing.Size(480, 28);
             this.label6.TabIndex = 28;
             this.label6.Text = "Manage application users and the secuity role(s) they belong to, which controls h" +
-                "ow and where they can access the application.";
+    "ow and where they can access the application.";
             // 
             // treeRoles
             // 
@@ -241,7 +242,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.myToolStrip2.Location = new System.Drawing.Point(172, 82);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
+            this.myToolStrip2.Size = new System.Drawing.Size(80, 25);
             this.myToolStrip2.TabIndex = 134;
             this.myToolStrip2.Text = "myToolStrip2";
             // 
@@ -265,9 +266,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.chkDisable);
             this.groupBox1.Controls.Add(this.treeRoles);
             this.groupBox1.Controls.Add(this.label1);
@@ -317,6 +318,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.myToolStrip2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkDisable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

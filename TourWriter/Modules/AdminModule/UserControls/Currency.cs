@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
 using TourWriter.Forms;
+using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Services;
-using ButtonDisplayStyle=Infragistics.Win.ButtonDisplayStyle;
+using ColumnStyle = Infragistics.Win.UltraWinGrid.ColumnStyle;
 
 namespace TourWriter.Modules.AdminModule.UserControls
 {
@@ -32,7 +30,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
         public Currency()
         {
             InitializeComponent();
-            //tabControl1.TabPages.Remove(tabPage2); // TODO: hide Rates tab for now...
         }
 
         private void Currency_Load(object sender, EventArgs e)
@@ -43,10 +40,35 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void DataBind()
         {
+            cmbRateSource.Items.AddRange(new object[] { "Spot rates: yahoo", "Spot rates: google", "Forward rates: user-defined" });
+            cmbDatePoint.Items.AddRange(new object[] { "Booking start date", "Itinerary start date" });
+
+            cmbRateSource.SelectedIndex = 
+                Cache.ToolSet.AppSettings[0].IsCcyRateSourceNull() ? 0 :
+                Cache.ToolSet.AppSettings[0].CcyRateSource == "yahoo" ? 0 :
+                Cache.ToolSet.AppSettings[0].CcyRateSource == "google" ? 1 :
+                Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined" ? 2 : 0;
+            
+            cmbDatePoint.SelectedIndex =
+                            Cache.ToolSet.AppSettings[0].IsCcyDatePointNull() ? 0 :
+                            Cache.ToolSet.AppSettings[0].CcyRateSource == "booking" ? 0 :
+                            Cache.ToolSet.AppSettings[0].CcyRateSource == "internet" ? 1 : 0;
+            
+            
+            cmbRateSource.SelectedIndexChanged += cmbRateSource_SelectedIndexChanged;
+            cmbDatePoint.SelectedIndexChanged += cmbDatePoint_SelectedIndexChanged;
+
+
+            gridRate.DisplayLayout.ValueLists.Add("CurrencyList");
+            gridRate.DisplayLayout.ValueLists["CurrencyList"].SortStyle = ValueListSortStyle.Ascending;
+            gridRate.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(DBNull.Value, "");
+            foreach (ToolSet.CurrencyRow r in Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Deleted && c.Enabled))
+                gridRate.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(r.CurrencyCode, r.DisplayName);
+
             gridCurrency.SetDataBinding(toolSet, "Currency");
-            cmbCurrencyFrom.DataSource = toolSet.Currency;
+            cmbCurrencyFrom.DataSource = Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Added && c.Enabled).ToList();
             cmbCurrencyFrom.DisplayMember = "CurrencyCode";
-            cmbCurrencyTo.DataSource = toolSet.Currency;
+            cmbCurrencyTo.DataSource = Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Added && c.Enabled).ToList();
             cmbCurrencyTo.DisplayMember = "CurrencyCode";
             gridRate.DataSource = toolSet.CurrencyRate;
         }
@@ -82,10 +104,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
                 else
                     c.Hidden = true;
             }
-            e.Layout.Bands[0].Columns["Enabled"].Width = 100;
-            e.Layout.Bands[0].Columns["CurrencyCode"].Width = 100;
-            e.Layout.Bands[0].Columns["CurrencyName"].Width = 400;
-            e.Layout.Bands[0].Columns["DisplayFormat"].Width = 200;
+            e.Layout.Bands[0].Columns["Enabled"].Width = 70;
+            e.Layout.Bands[0].Columns["CurrencyCode"].Width = 70;
+            e.Layout.Bands[0].Columns["CurrencyName"].Width = 200;
+            e.Layout.Bands[0].Columns["DisplayFormat"].Width = 100;
 
             int index = 0;
             e.Layout.Bands[0].Columns["Enabled"].Header.VisiblePosition = index++;
@@ -116,51 +138,111 @@ namespace TourWriter.Modules.AdminModule.UserControls
 
         private void gridRate_InitializeLayout(object sender, InitializeLayoutEventArgs e)
         {
+            if (!e.Layout.Bands[0].Columns.Exists("EnabledToday"))
+                e.Layout.Bands[0].Columns.Add("EnabledToday");
+
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
-                if (c.Key == "CurrencyCodeFrom")
+                if (c.Key == "CodeFrom")
                 {
                     c.Header.Caption = "Currency from";
                     c.SortIndicator = SortIndicator.Ascending;
+                    
+                    c.Style = ColumnStyle.DropDown;
+                    c.ValueList = gridRate.DisplayLayout.ValueLists["CurrencyList"];
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
                 }
-                else if (c.Key == "CurrencyCodeTo")
+                else if (c.Key == "CodeTo")
                 {
                     c.Header.Caption = "Currency to";
+
+                    c.Style = ColumnStyle.DropDown;
+                    c.ValueList = gridRate.DisplayLayout.ValueLists["CurrencyList"];
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
                 }
-                else if (c.Key == "CurrencyRateDate")
+                else if (c.Key == "Rate")
                 {
-                    c.Header.Caption = "Date";
-                    c.SortIndicator = SortIndicator.Ascending;
-                    DateTimeEditor editor = c.Editor as DateTimeEditor;
-                    if (editor != null)
-                        editor.DropDownButtonDisplayStyle = ButtonDisplayStyle.Never;
-                }
-                else if (c.Key == "ForecastRate")
-                {
-                    c.Header.Caption = "Forecast rate";
-                    c.Header.ToolTipText = "To enable forward bookings to be made.";
+                    c.Header.Caption = "Rate";
                     c.CellClickAction = CellClickAction.Edit;
                     c.MaskInput = "nnnn.nnnn";
                     c.Format = "###0.0000";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
-                else if (c.Key == "ActualRate")
+                else if (c.Key == "ValidFrom")
                 {
-                    c.Header.Caption = "Actual rate";
-                    c.Header.ToolTipText = "Actual currency rate, as known after the date";
+                    c.Header.Caption = "Valid from";
+
+                    c.Style = ColumnStyle.Date;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
-                    c.MaskInput = "nnnn.nnnn";
-                    c.Format = "###0.0000";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.TabStop = true;
                 }
-                else
-                    c.Hidden = true;
+                else if (c.Key == "ValidTo")
+                {
+                    c.Header.Caption = "Valid to";
+                    
+                    c.Style = ColumnStyle.Date;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
+                }
+                else if (c.Key == "EnabledFrom")
+                {
+                    c.Header.Caption = "Enabled from";
+
+                    c.Style = ColumnStyle.Date;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
+                }
+                else if (c.Key == "EnabledTo")
+                {
+                    c.Header.Caption = "Enabled to";
+
+                    c.Style = ColumnStyle.Date;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
+                }
+                else if (c.Key == "EnabledToday")
+                {
+                    c.Header.Caption = "Enabled Today";
+                    c.Header.ToolTipText = "Can I use this rate today";
+                    c.CellActivation = Activation.NoEdit;
+                    c.TabStop = true;
+                }
+                else c.Hidden = true;
             }
 
             GridHelper.SetDefaultGridAppearance(e);
 
             // Allow multiple row selects to help in deleting rows.
             e.Layout.Bands[0].Override.SelectTypeRow = SelectType.Extended;
+        }
+
+        private void gridRate_InitializeRow(object sender, InitializeRowEventArgs e)
+        {
+            if (e.Row.Cells["EnabledFrom"].Value != DBNull.Value && e.Row.Cells["EnabledTo"].Value != DBNull.Value)
+            {
+                var now = DateTime.Now;
+                var from = (DateTime)e.Row.Cells["EnabledFrom"].Value;
+                var to = (DateTime)e.Row.Cells["EnabledTo"].Value;
+                e.Row.Cells["EnabledToday"].Value = from.Date <= now.Date && now.Date <= to.Date ? "YES" : "NO";
+            }
         }
 
         private void btnRateAdd_Click(object sender, EventArgs e)
@@ -212,8 +294,45 @@ namespace TourWriter.Modules.AdminModule.UserControls
         }
 
         #endregion
+        
+        private void RefreshCurrencyExample()
+        {
+            var ccy = CurrencyService.GetApplicationCurrencyCodeOrDefault();
+            txtCurrency.Text = toolSet.Currency.Where(x => x.CurrencyCode == ccy).Select(x => x.DisplayName).FirstOrDefault();
 
-        private void btnDefault_Click(object sender, EventArgs e)
+            var lang = !toolSet.AppSettings[0].IsLanguageCodeNull() ? toolSet.AppSettings[0].LanguageCode.Trim() : "";
+            if (lang == "") lang = CultureInfo.CurrentCulture.Name;
+            txtCurrency.Text += " (example:  " + 12345.6789f.ToString("c", CultureInfo.GetCultureInfo(lang)) + ").";
+        }
+
+        private void cmbRateSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Cache.ToolSet.AppSettings[0].CcyRateSource =
+                cmbRateSource.SelectedIndex == 0 ? "yahoo" :
+                cmbRateSource.SelectedIndex == 1 ? "google" :
+                cmbRateSource.SelectedIndex == 2 ? "predefined" : 
+                "yahoo"; // default
+        }
+
+        private void cmbDatePoint_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Cache.ToolSet.AppSettings[0].CcyDatePoint =
+                cmbDatePoint.SelectedIndex == 0 ? "booking" :
+                cmbDatePoint.SelectedIndex == 1 ? "itinerary" :
+                "booking"; // default
+
+            Cache.ToolSet.AppSettings[0].CcyDatePoint = cmbDatePoint.SelectedIndex == 0 ? "booking" : "itinerary";
+        }
+
+        private void btnCurrencyEdit_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!App.AskYesNo("This will allow you to edit the currency data.\r\n\r\nPlease be careful editing the Display Format as this will affect all areas where currency amounts are shown, including client reports.\r\n\r\nDo you wish to continue?")) return;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyCode"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyName"].CellClickAction = CellClickAction.Edit;
+            gridCurrency.DisplayLayout.Bands[0].Columns["DisplayFormat"].CellClickAction = CellClickAction.Edit;
+        }
+
+        private void lnkDefaultCurrency_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var ccy = new CurrencyDefault();
 
@@ -236,24 +355,6 @@ namespace TourWriter.Modules.AdminModule.UserControls
                     CurrencyService.SetUiCultureInfo();
                 }
             }
-        }
-
-        private void btnList_Click(object sender, EventArgs e)
-        {
-            if (!App.AskYesNo("This will allow you to edit the currency data.\r\n\r\nPlease be careful editing the Display Format as this will affect all areas where currency amounts are shown, including client reports.\r\n\r\nDo you wish to continue?")) return;
-            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyCode"].CellClickAction = CellClickAction.Edit;
-            gridCurrency.DisplayLayout.Bands[0].Columns["CurrencyName"].CellClickAction = CellClickAction.Edit;
-            gridCurrency.DisplayLayout.Bands[0].Columns["DisplayFormat"].CellClickAction = CellClickAction.Edit;
-        }
-
-        private void RefreshCurrencyExample()
-        {
-            var ccy = CurrencyService.GetApplicationCurrencyCodeOrDefault();
-            txtCurrency.Text = toolSet.Currency.Where(x => x.CurrencyCode == ccy).Select(x => x.DisplayName).FirstOrDefault();
-
-            var lang = !toolSet.AppSettings[0].IsLanguageCodeNull() ? toolSet.AppSettings[0].LanguageCode.Trim() : "";
-            if (lang == "") lang = CultureInfo.CurrentCulture.Name;
-            txtCurrency.Text += " (example:  " + 12345.6789f.ToString("c", CultureInfo.GetCultureInfo(lang)) + ").";
         }
    }
 }

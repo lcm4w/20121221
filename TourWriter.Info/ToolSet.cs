@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -69,19 +70,20 @@ namespace TourWriter.Info
             public void Load(string fromCurrency, string toCurrency, DateTime fromDate, DateTime toDate)
             {
                 // Retain changes to merge into new data.
-                DataTable changes = GetChanges();
+                var existingChanges = GetChanges();
+                
+                var sql = string.Format(@"
+select * from CurrencyRate 
+where CodeFrom = '{0}' 
+and CodeTo = '{1}' 
+and ValidFrom <= '{3}' 
+and ValidTo >= '{2}'
+and (EnabledFrom is null or EnabledFrom <= '{4}')
+and (EnabledTo is null or EnabledTo >= '{4}')",
+                    fromCurrency, toCurrency, fromDate.ToString("yyyy.MM.dd"), toDate.ToString("yyyy.MM.dd"), DateTime.Now.Date.ToString("yyyy.MM.dd"));
 
-                SqlParameter param1 = new SqlParameter("@CurrencyCodeFrom", fromCurrency);
-                SqlParameter param2 = new SqlParameter("@CurrencyCodeTo", toCurrency);
-                SqlParameter param3 = new SqlParameter("@DateFrom", fromDate.Date);
-                SqlParameter param4 = new SqlParameter("@DateTo", toDate.Date);
-
-                DataSetHelper.FillDataSet(
-                    ConnectionString.GetConnectionString(), DataSet, "_ToolSet_Load_CurrencyRate",
-                    new string[1] { TableName }, param1, param2, param3, param4);
-
-                if (changes != null)
-                    Merge(changes);
+                DataSetHelper.FillDataset(DataSet, sql);
+                if (existingChanges != null) Merge(existingChanges);
             }
 
             /// <summary>
@@ -92,21 +94,34 @@ namespace TourWriter.Info
             /// <param name="to">The to currency code</param>
             /// <param name="loadIfNotCached">Loads from the database, if not already in the local dataset</param>
             /// <returns></returns>
-            public CurrencyRateRow GetCurrencyRate(DateTime date, string from, string to, bool loadIfNotCached)
+            public List<CurrencyRateRow> GetCurrencyRate(DateTime date, string from, string to, bool loadIfNotCached)
             {
-                // set exch rates here after user has finished editing dates
-                var currencyRate = this.Where(x => x.ForecastDate == date && x.CurrencyCodeFrom == from && x.CurrencyCodeTo == to).FirstOrDefault();
+                var rates = GetCurrencyRate(date, from, to);
 
-                if (currencyRate == null && loadIfNotCached)
+                if (rates.Count() == 0 && loadIfNotCached)
                 {
-                    // load from database and try again
+                    // load from db, then try again
                     Load(from, to, date.Date, date.Date);
-                    currencyRate = this.Where(x => x.ForecastDate == date && x.CurrencyCodeFrom == from && x.CurrencyCodeTo == to).FirstOrDefault();
+                    rates = GetCurrencyRate(date, from, to);
                 }
-                return currencyRate;
+                return rates.ToList();
             }
-        }
 
+            private List<CurrencyRateRow> GetCurrencyRate(DateTime date, string from, string to)
+            {
+                var valid = this.Where(x => x.CodeFrom == from &&
+                                            x.CodeTo == to &&
+                                            x.ValidFrom.Date <= date.Date &&
+                                            x.ValidTo.Date >= date.Date).ToList();
+
+                var enabled = valid.Where(x => (x.IsEnabledFromNull() || x.EnabledFrom.Date <= DateTime.Now.Date) &&
+                                               (x.IsEnabledToNull() || x.EnabledTo.Date >= DateTime.Now.Date)).ToList();
+
+                return enabled;
+            }
+
+        }
+        
         partial class AgentDataTable
         {
             public void PopulateAgentNameParentName()

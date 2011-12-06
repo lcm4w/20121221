@@ -1574,6 +1574,7 @@
     <None Include="Resources\new red.png" />
     <None Include="Resources\group_add.png" />
     <Content Include="Resources\world_add.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.12.06.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.09.26.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.08.16.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2011.07.10.sql" />

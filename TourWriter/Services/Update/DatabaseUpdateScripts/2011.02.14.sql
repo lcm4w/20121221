@@ -414,8 +414,8 @@ begin
 		 update Currency set CurrencyName = N'Burundi Franc', DisplayFormat = N'''FBu''#,##0', Enabled = 'true' where CurrencyCode = 'BIF'
 	else insert into Currency values ('BIF', N'Burundi Franc', N'''FBu''#,##0', 'false')
 	if exists (select currencycode from Currency where CurrencyCode = 'BMD') 
-		 update Currency set CurrencyName = N'Bermudian Dollar)', DisplayFormat = N'''BD$''#,##0.00', Enabled = 'true' where CurrencyCode = 'BMD'
-	else insert into Currency values ('BMD', N'Bermudian Dollar)', N'''BD$''#,##0.00', 'false')
+		 update Currency set CurrencyName = N'Bermudian Dollar', DisplayFormat = N'''BD$''#,##0.00', Enabled = 'true' where CurrencyCode = 'BMD'
+	else insert into Currency values ('BMD', N'Bermudian Dollar', N'''BD$''#,##0.00', 'false')
 	if exists (select currencycode from Currency where CurrencyCode = 'BND') 
 		 update Currency set CurrencyName = N'Brunei Dollar', DisplayFormat = N'''B$''#,##0.00', Enabled = 'true' where CurrencyCode = 'BND'
 	else insert into Currency values ('BND', N'Brunei Dollar', N'''B$''#,##0.00', 'false')

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Infragistics.Win;
@@ -21,7 +22,6 @@ namespace TourWriter.Modules.ItineraryModule
         {
             InitializeComponent();
             Icon = Resources.TourWriter16;
-            chkDebug.Visible = cmbCcyService.Visible = App.IsDebugMode; // debugging
 
             this.itinerarySet = itinerarySet;
             purchaseItemTable = itinerarySet.PurchaseItem.Copy();
@@ -56,59 +56,145 @@ namespace TourWriter.Modules.ItineraryModule
                             
                 }
             }
+
+            pnlMargin.Visible = Cache.ToolSet.AppSettings[0].CcyRateSource == "webservice";
+            cmbCcyService.Items.AddRange(new[] { "", "Predefined forward rates", "Yahoo spot rates", "Google spot rates" });
+            cmbCcyDatepoint.Items.AddRange(new[] { "Use booking date", "Use itinerary date" });
+            cmbCcyDatepoint.SelectedIndex = 0;
+            btnUpdate.Text = Cache.ToolSet.AppSettings[0].CcyRateSource == "webservice" ? "Load Internet Rates" : "Load Predefined Rates";
+            cmbCcyService.Visible = App.IsDebugMode;
+            // cmbCcyDatepoint.Visible = App.IsDebugMode; // not visible - visibility controlled by cmCccService.SelectedItem
+            
             btnUpdate.Select();
             btnUpdate.Focus();
-            btnForex.Visible = App.IsDebugMode;
         }
+        
         
         private void UpdateCurrencies()
         {
             try
             {
+                var ccyService = Cache.ToolSet.AppSettings[0].CcyRateSource;
+                
+                // debugging
+                if (cmbCcyService.Visible)
+                {
+                    if (cmbCcyService.Text == "")
+                    {
+                        App.ShowInfo("DEBUG MODE: select service (bottom left).");
+                        return;
+                    }
+                    ccyService =
+                        cmbCcyService.SelectedIndex == 1 ? "predefined" :
+                        cmbCcyService.SelectedIndex == 2 ? "yahoo" :
+                        cmbCcyService.SelectedIndex == 3 ? "google" : "yahoo";
+                }
+                
                 Cursor = Cursors.WaitCursor;
-
-                var toCurrency = GetToCurrencyCode();
-                var selectedRows = gridBookings.Rows.ToList().
-                    Where(x => (bool)x.Cells["IsSelected"].Value && x.Cells["ToCurrency"].Value != null && x.Cells["FromCurrency"].Value != null);
-                var toFromCurrencies = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct().
-                    Select(from => new CurrencyService.Currency { FromCurrency = from, ToCurrency = toCurrency }).ToList();
-
-                foreach (var r in selectedRows) // reset status
+                
+                var selectedRows = gridBookings.Rows.ToList().Where(x =>
+                    (bool)x.Cells["IsSelected"].Value &&
+                    x.Cells["ToCurrency"].Value != null &&
+                    x.Cells["FromCurrency"].Value != null &&
+                    x.Cells["StartDate"].Value != DBNull.Value).ToList();
+                if (selectedRows.Count() == 0) return;
+                
+                // reset status col
+                foreach (var r in selectedRows)
                 {
                     r.Cells["NewRate"].Value = null;
                     r.Cells["Result"].Value = null;
                     r.Cells["Result"].Appearance.Image = null;
                 }
 
-                if (!cmbCcyService.Visible || cmbCcyService.SelectedIndex < 0) CurrencyService.GetRates(toFromCurrencies);
-                else CurrencyService.GetRates(toFromCurrencies, 
-                    cmbCcyService.SelectedItem.ToString().ToLower().Contains("yahoo") ? CurrencyService.ServiceTypes.Yahoo : CurrencyService.ServiceTypes.Google);
-                
-                var adjust = Convert.ToDecimal(txtRateAdjustment.Value);
-                adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
-
-                foreach (var c in toFromCurrencies)
+                if (ccyService == "predefined")
                 {
-                    var currency = c;
-                    var updateRows = selectedRows.Where(x => x.Cells["FromCurrency"].Value.ToString() == currency.FromCurrency);
-                    foreach (var row in updateRows)
-                    {
-                        var noAdjust = c.Rate == 1 && c.FromCurrency.Trim().ToLower() == c.ToCurrency.Trim().ToLower();
-                        var newRate = currency.Rate * (noAdjust ? 1 : adjust);
-
-                        row.Cells["Result"].Appearance.Image = Resources.Tick;
-                        row.Cells["NewRate"].Value = newRate;
-
-                        if (!string.IsNullOrEmpty(c.ErrorMessage))
-                        {
-                            row.Cells["Result"].Value = c.ErrorMessage;
-                            row.Cells["Result"].Appearance.Image = Resources.Warning;
-                        }
-                    }
+                    UpdateCcyPredefined(selectedRows, GetCcyTo());
+                }
+                else
+                {
+                    UpdateCcyWebservice(selectedRows, GetCcyTo(), ccyService);
                 }
             }
             finally { Cursor = Cursors.Default; }
         }
+
+        private void UpdateCcyWebservice(List<UltraGridRow> selectedRows, string ccyTo, string ccyService)
+        {
+            var distinct = selectedRows.Select(from => from.Cells["FromCurrency"].Value.ToString()).Distinct();
+            var ccyPairs = distinct.Select(from => 
+                new CurrencyService.Currency {FromCurrency = from, ToCurrency = ccyTo}).ToList();
+            
+            // get rates
+            CurrencyService.GetRates(ccyPairs, ccyService);
+            
+            // get margin
+            var adjust = Convert.ToDecimal(txtRateAdjustment.Value);
+            adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
+
+            // set rates
+            foreach (var c in ccyPairs)
+            {
+                var ccyPair = c;
+                var updateRows = selectedRows.Where(x => x.Cells["FromCurrency"].Value.ToString() == ccyPair.FromCurrency);
+                foreach (var row in updateRows)
+                {
+                    var noAdjust = c.Rate == 1 && c.FromCurrency.Trim().ToLower() == c.ToCurrency.Trim().ToLower();
+                    var newRate = ccyPair.Rate * (noAdjust ? 1 : adjust);
+
+                    row.Cells["Result"].Appearance.Image = Resources.Tick;
+                    row.Cells["NewRate"].Value = newRate;
+
+                    if (!string.IsNullOrEmpty(c.ErrorMessage))
+                    {
+                        row.Cells["Result"].Value = c.ErrorMessage;
+                        row.Cells["Result"].Appearance.Image = Resources.Warning;
+                    }
+                }
+            }
+        }
+
+        private void UpdateCcyPredefined(IEnumerable<UltraGridRow> selectedRows, string ccyTo)
+        {
+            var ccyDatePoint = !Cache.ToolSet.AppSettings[0].IsCcyDatePointNull()
+                                   ? Cache.ToolSet.AppSettings[0].CcyDatePoint
+                                   : "booking";
+            if (cmbCcyDatepoint.Visible)
+                ccyDatePoint = cmbCcyDatepoint.SelectedIndex == 0 ? "booking" : "itinerary";
+
+            // update rates in grid
+            foreach (var row in selectedRows)
+            {
+                decimal? rate = null;
+                var ccyFrom = row.Cells["FromCurrency"].Value.ToString();
+
+                if (ccyFrom == ccyTo)
+                {
+                    rate = 1;
+                }
+                else
+                {
+                    var date = ccyDatePoint == "booking" ? (DateTime)row.Cells["StartDate"].Value : itinerarySet.Itinerary[0].ArriveDate;
+                    var rateRow = Cache.ToolSet.CurrencyRate.GetCurrencyRate(date.Date, ccyFrom, ccyTo, true).FirstOrDefault();
+                    if (rateRow != null) rate = rateRow.Rate;
+                }
+                
+                if (rate.HasValue)
+                {
+                    row.Cells["NewRate"].Value = (decimal)rate;
+                    row.Cells["Result"].Appearance.Image = Resources.Tick;
+                }
+                else row.Cells["Result"].Appearance.Image = Resources.Cross;
+            }
+        }
+
+        private string GetCcyTo()
+        {
+            return cmbCurrency.SelectedValue.ToString() != ""
+                       ? cmbCurrency.SelectedValue.ToString()
+                       : CurrencyService.GetApplicationCurrencyCodeOrDefault();
+        }
+        
 
         private void SelectAll()
         {
@@ -152,7 +238,7 @@ namespace TourWriter.Modules.ItineraryModule
             // move temp cols to the real cols in prep for merge
             foreach (var row in gridBookings.Rows)
             {
-                if (row.Cells["NewRate"].Value != DBNull.Value)
+                if (row.Cells["NewRate"].Value  != null && row.Cells["NewRate"].Value != DBNull.Value)
                     row.Cells["CurrencyRate"].Value = row.Cells["NewRate"].Value;
                 row.Update();
             }
@@ -160,11 +246,6 @@ namespace TourWriter.Modules.ItineraryModule
             // merge
             var changes = purchaseItemTable.GetChanges();
             if (changes != null) itinerarySet.PurchaseItem.Merge(changes);
-        }
-
-        private string GetToCurrencyCode()
-        {
-            return cmbCurrency.SelectedValue.ToString() != "" ? cmbCurrency.SelectedValue.ToString() : CurrencyService.GetApplicationCurrencyCodeOrDefault();
         }
         
         #region Events
@@ -185,6 +266,8 @@ namespace TourWriter.Modules.ItineraryModule
                 e.Layout.Bands[0].Columns.Add("OldRate");
             if (!e.Layout.Bands[0].Columns.Exists("NewRate"))
                 e.Layout.Bands[0].Columns.Add("NewRate");
+            if (!e.Layout.Bands[0].Columns.Exists("DatePoint"))
+                e.Layout.Bands[0].Columns.Add("DatePoint");
 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
@@ -251,6 +334,12 @@ namespace TourWriter.Modules.ItineraryModule
                     c.CellClickAction = CellClickAction.Edit;
                     c.Header.ToolTipText = "Exchange rate after update"; 
                 }
+                else if (c.Key == "DatePoint" && Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined")
+                {
+                    c.Width = 100;
+                    c.Header.Caption = "Exc date";
+                    c.Header.ToolTipText = "Date of exch rate";
+                }
                 else
                 {
                     c.Hidden = true;
@@ -264,6 +353,7 @@ namespace TourWriter.Modules.ItineraryModule
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["FromCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["ToCurrency"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["DatePoint"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["OldRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NewRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Result"].Header.VisiblePosition = index;
@@ -292,7 +382,14 @@ namespace TourWriter.Modules.ItineraryModule
             e.Row.Cells["OldRate"].Value = e.Row.Cells["CurrencyRate"].Value;
             e.Row.Cells["NewRate"].Value = DBNull.Value;
             e.Row.Cells["FromCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
-            e.Row.Cells["ToCurrency"].Value = GetToCurrencyCode();
+            e.Row.Cells["ToCurrency"].Value = GetCcyTo();
+
+            if (Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined")
+            {
+                var date = Cache.ToolSet.AppSettings[0].CcyDatePoint == "itinerary" ? itinerarySet.Itinerary[0].ArriveDate : item.StartDate;
+                e.Row.Cells["DatePoint"].Value = date.ToShortDateString();
+            }
+
         }
         
         void cmbCurrency_SelectedIndexChanged(object sender, EventArgs e)
@@ -332,8 +429,6 @@ namespace TourWriter.Modules.ItineraryModule
         {
             UpdateCurrencies();
             _userShouldUpdateRates = false;
-            
-            if (chkDebug.Checked) System.Diagnostics.Process.Start(System.IO.Path.Combine(App.TempFolder, "ccy_test.txt"));
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -344,8 +439,6 @@ namespace TourWriter.Modules.ItineraryModule
                 UpdateCurrencies();
                 return;
             }
-
-
             SaveChanges();
 
             DialogResult = DialogResult.OK;
@@ -372,75 +465,22 @@ namespace TourWriter.Modules.ItineraryModule
             else 
                 cmbCurrency.Enabled = true;
         }
-
-
-        private void btnForex_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-
-                var selectedRows = gridBookings.Rows.ToList().Where(x =>
-                    (bool)x.Cells["IsSelected"].Value &&
-                    x.Cells["ToCurrency"].Value != null &&
-                    x.Cells["FromCurrency"].Value != null &&
-                    x.Cells["StartDate"].Value != DBNull.Value).ToList();
-
-                if (selectedRows.Count() == 0) return;
-
-                // reset status
-                foreach (var r in selectedRows)
-                {
-                    r.Cells["NewRate"].Value = null;
-                    r.Cells["Result"].Value = null;
-                    r.Cells["Result"].Appearance.Image = null;
-                }
-
-                // build sql filter statement
-                var filter = "";
-                foreach (var row in selectedRows)
-                {
-                    if (row.Cells["FromCurrency"].Value == row.Cells["ToCurrency"].Value) continue;
-
-                    filter += (filter.Length == 0) ? "where " : "or    ";
-                    filter += string.Format("(CurrencyCodeFrom = '{0}' and CurrencyCodeTo = '{1}' and CurrencyRateDate = '{2}') \r\n",
-                                         row.Cells["FromCurrency"].Value,
-                                         row.Cells["ToCurrency"].Value,
-                                         ((DateTime)row.Cells["StartDate"].Value).ToString("yyyy.MM.dd"));
-                }
-
-                // load currency rates
-                var dt = Info.Services.DataSetHelper.FillDataSetFromSql(
-                    "select CurrencyCodeFrom, CurrencyCodeTo, CurrencyRateDate, ForecastRate from CurrencyRate \r\n" + filter).Tables[0];
-
-                // update rates in grid
-                foreach (var booking in selectedRows)
-                {
-                    // no conversion
-                    if (booking.Cells["FromCurrency"].Value.ToString() == booking.Cells["ToCurrency"].Value.ToString())
-                    {
-                        booking.Cells["NewRate"].Value = 1;
-                        booking.Cells["Result"].Appearance.Image = Resources.Tick;
-                        continue;
-                    }
-
-                    // get matching database rate
-                    var dr = dt.AsEnumerable().Where(x => x.Field<string>("CurrencyCodeFrom") == booking.Cells["FromCurrency"].Value.ToString() &&
-                                                          x.Field<string>("CurrencyCodeTo") == booking.Cells["ToCurrency"].Value.ToString() &&
-                                                          x.Field<DateTime>("CurrencyRateDate") == (DateTime)booking.Cells["StartDate"].Value).FirstOrDefault();
-                    // set new rate
-                    decimal rate;
-                    if (dr != null && decimal.TryParse(dr["ForecastRate"].ToString(), out rate))
-                    {
-                        booking.Cells["NewRate"].Value = rate;
-                        booking.Cells["Result"].Appearance.Image = Resources.Tick;
-                    }
-                    // no match found
-                    else booking.Cells["Result"].Appearance.Image = Resources.Cross;
-                }
-            }
-            finally { Cursor = Cursors.Default; }
-        }
         #endregion
+
+        private void cmbCcyService_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!cmbCcyService.Visible) return;
+
+            if (cmbCcyService.SelectedIndex == 0) 
+                btnUpdate.Text = "";
+            else if (cmbCcyService.SelectedIndex == 1) 
+                btnUpdate.Text = "Load Predefined Rates";
+            else 
+                btnUpdate.Text = "Load Internet Rates";
+
+            var isInternetRates = cmbCcyService.SelectedIndex > 1;
+            pnlMargin.Visible = isInternetRates;
+            cmbCcyDatepoint.Visible = !isInternetRates;
+        }
     }
 }

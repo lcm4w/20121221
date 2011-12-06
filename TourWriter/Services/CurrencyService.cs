@@ -116,8 +116,6 @@ namespace TourWriter.Services
 
         #region Ccy update service
 
-        internal enum ServiceTypes { Yahoo, Google };
-        
         internal class Currency
         {
             public object Key { get; set; }
@@ -127,12 +125,7 @@ namespace TourWriter.Services
             public string ErrorMessage { get; set; }
         }
 
-        internal static List<Currency> GetRates(List<Currency> currencies)
-        {
-            return GetRates(currencies, App.UseGoogleCcyService ? ServiceTypes.Google : ServiceTypes.Yahoo);
-        }
-
-        internal static List<Currency> GetRates(List<Currency> currencies, ServiceTypes ccyService)
+        internal static List<Currency> GetRates(List<Currency> currencies, string ccyService)
         {
             // Start threads
             var threads = new List<Thread>();
@@ -152,19 +145,19 @@ namespace TourWriter.Services
             return currencies;
         }
         
-        internal static decimal? GetRate(string fromCurrency, string toCurrency)
-        {
-            return GetRate(fromCurrency, toCurrency, App.UseGoogleCcyService ? ServiceTypes.Google : ServiceTypes.Yahoo);
-        }
-        
-        internal static decimal? GetRate(string fromCurrency, string toCurrency, ServiceTypes ccyService)
+        //internal static decimal? GetRate(string fromCurrency, string toCurrency)
+        //{
+        //    return GetRate(fromCurrency, toCurrency, App.UseGoogleCcyService ? ServiceTypes.Google : ServiceTypes.Yahoo);
+        //}
+
+        internal static decimal? GetRate(string fromCurrency, string toCurrency, string ccyService)
         {
             if (fromCurrency == toCurrency || string.IsNullOrEmpty(fromCurrency.Trim()) || string.IsNullOrEmpty(toCurrency.Trim()))
                 return null;
             return GetRateHttp(fromCurrency, toCurrency, ccyService);
         }
 
-        private static Currency GetRateHttp(Currency currency, ServiceTypes ccyService)
+        private static Currency GetRateHttp(Currency currency, string ccyService)
         {
             try
             {
@@ -183,12 +176,12 @@ namespace TourWriter.Services
             return currency;
         }
 
-        private static decimal GetRateHttp(string fromCurrency, string toCurrency, ServiceTypes ccyService)
+        private static decimal GetRateHttp(string fromCurrency, string toCurrency, string ccyService)
         {
             if (fromCurrency.ToLower().Trim() == toCurrency.ToLower().Trim()) 
                 return 1;
 
-            var d = ccyService == ServiceTypes.Google ? 
+            var d = ccyService == "google" ? 
                 GetCcyGoogle(fromCurrency, toCurrency) : 
                 GetCcyYahoo(fromCurrency, toCurrency);
 
@@ -266,10 +259,9 @@ namespace TourWriter.Services
 
         public static void WriteDebug(string text)
         {
-            if (!App.IsDebugMode) return;
-
-            var file = Path.Combine(App.TempFolder, "ccy_test.txt");
-            using (var sw = new StreamWriter(file, true)) sw.WriteLine(text);
+            //if (!App.IsDebugMode) return;
+            //var file = Path.Combine(App.TempFolder, "ccy_test.txt");
+            //using (var sw = new StreamWriter(file, true)) sw.WriteLine(text);
         }
         #endregion
     }

@@ -70,6 +70,10 @@ namespace TourWriter.Global
             _toolSet = new Tools().GetToolSet();
             _toolSet.DefaultViewManager.DataViewSettings[_toolSet.ServiceType.TableName].RowFilter
                 = "IsDeleted = 'FALSE' OR IsDeleted IS NULL";
+
+
+            _toolSet.AppSettings[0].CcyRateSource = "predefined";
+            _toolSet.AppSettings[0].CcyDatePoint= "booking";
         }
 
         #endregion

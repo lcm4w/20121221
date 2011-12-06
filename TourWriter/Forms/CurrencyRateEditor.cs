@@ -1,5 +1,8 @@
 using System;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
+using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Properties;
 using TourWriter.Services;
@@ -48,11 +51,10 @@ namespace TourWriter.Forms
 
             cmbCurrencyFrom.Select();
 
-            cmbCurrencyFrom.DataSource = toolSet.Currency;
+            cmbCurrencyFrom.DataSource = Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Added && c.Enabled).ToList();
             cmbCurrencyFrom.DisplayMember = "CurrencyCode";
-            cmbCurrencyTo.DataSource = toolSet.Currency;
+            cmbCurrencyTo.DataSource = Cache.ToolSet.Currency.Where(c => c.RowState != DataRowState.Added && c.Enabled).ToList();
             cmbCurrencyTo.DisplayMember = "CurrencyCode";
-
             Icon = Resources.TourWriter16;
         }
 
@@ -64,6 +66,24 @@ namespace TourWriter.Forms
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (txtDateFrom.Value.Date > txtDateTo.Value.Date)
+            {
+                App.ShowWarning("From date must be less than To date");
+                return;
+            }
+
+            var row = toolSet.CurrencyRate.NewCurrencyRateRow();
+            row.CodeFrom = CurrencyFrom;
+            row.CodeTo = CurrencyTo;
+            row.ValidFrom = txtDateFrom.Value.Date;
+            row.ValidTo = txtDateTo.Value.Date;
+            row.Rate = (decimal)Rate;
+            toolSet.CurrencyRate.AddCurrencyRateRow(row);
+
+            DialogResult = DialogResult.OK;
+
+            // -----------------------------------------------------
+            /*
             for (int i = 0; i < (txtDateTo.Value.Date - txtDateFrom.Value.Date).Days + 1; i++)
             {
                 DateTime date = txtDateFrom.Value.Date.AddDays(i);
@@ -92,6 +112,7 @@ namespace TourWriter.Forms
                 }
             }
             DialogResult = DialogResult.OK;
+            */
         }
 
         private void cmbCurrencyFrom_InitializeLayout(object sender, Infragistics.Win.UltraWinGrid.InitializeLayoutEventArgs e)

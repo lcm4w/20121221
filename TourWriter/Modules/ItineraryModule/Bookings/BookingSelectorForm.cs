@@ -351,34 +351,64 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (row == null || row.IsCurrencyCodeNull()) return;
             _newRows.Add(row);
         }
+        
+        #region Currency exchange rates for new bookings
 
         private void SetCurrencyUpdatesForNewRows()
         {
-            /*** do we want to use forward rates first, if they exist, if not latest rates? ***
-            // forward ra1tes
-            var currencyRate = Cache.ToolSet.CurrencyRate.GetCurrencyRate(item.StartDate.Date, itinerarySet.Itinerary[0].CurrencyCode, item.CurrencyCode, true);
-            if (currencyRate != null)
+            // exch rate is set only if ccySource is "yahoo", "google", "predefined"
+            var ccySource = Cache.ToolSet.AppSettings[0].CcyRateSource;
+
+            var ccyTo = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
+            var agentId = !itinerarySet.Itinerary[0].IsAgentIDNull() ? itinerarySet.Itinerary[0].AgentID : (int?)null;
+
+            // get predefined rates (when user has set forward rates in the CurrencyRate table)
+            if (ccySource == "predefined")
             {
-                item.CurrencyRate = currencyRate.ForecastRate;
+                var itinDate = itinerarySet.Itinerary[0].ArriveDate;
+                UpdateCcyPredefined(ccyTo, agentId, itinDate, _newRows);
             }
-            ***/
-  
-            // latest rates
-            var baseCurrency = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
-            var codes = _newRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != baseCurrency.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
-            foreach (var c in codes)
+            
+            // get webservice rates (get latest rates from webservice)
+            if (ccySource == "yahoo" || ccySource == "google")
             {
-                var code = c;
+                UpdateCcyWebservice(ccyTo, agentId, _newRows);
+            }
+        }
+
+        private static void UpdateCcyWebservice(string ccyTo, int? agentId, List<ItinerarySet.PurchaseItemRow> updateRows)
+        {
+            var ccyFroms = updateRows.Where(x => !x.IsCurrencyCodeNull() && x.CurrencyCode.Trim().ToLower() != ccyTo.Trim().ToLower()).Select(x => x.CurrencyCode).Distinct();
+            foreach (var c in ccyFroms)
+            {
+                var ccyFrom = c;
                 var thread = new BackgroundWorker();
-                thread.DoWork += delegate(object o, DoWorkEventArgs args) { try { args.Result = CurrencyService.GetRate(code, baseCurrency); } catch { } };
+
+                // get rate
+                thread.DoWork += delegate(object o, DoWorkEventArgs args)
+                {
+                    try
+                    {
+                        App.Debug(string.Format("GET ccy rate from WEBSERVICE: {0} > {1}", ccyFrom, ccyTo));
+                        var ccyService = Cache.ToolSet.AppSettings[0].CcyRateSource;
+                        var rate = CurrencyService.GetRate(ccyFrom, ccyTo, ccyService);
+                        args.Result = rate;
+                    }
+                    catch { }
+                };
+
+                // set rate
                 thread.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
                 {
                     try
                     {
                         decimal rate;
                         if (!decimal.TryParse(args.Result.ToString(), out rate)) return;
-                        foreach (var item in _newRows.Where(x => x.CurrencyCode == code))
+
+                        rate = rate * GetAgentCcyMarginMultiplier(agentId, ccyFrom, ccyTo);
+                        foreach (var item in updateRows.Where(x => x.CurrencyCode == ccyFrom))
                         {
+                            App.Debug(string.Format("SET ccy rate from WEBSERVICE: {0}, {1} > {2}, {3}", item.StartDate, item.CurrencyCode, ccyTo, rate));
                             item.CurrencyRate = rate;
                             item.RecalculateTotals();
                         }
@@ -387,14 +417,76 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 };
                 thread.RunWorkerAsync();
             }
+            
         }
+        
+        private static void UpdateCcyPredefined(string ccyTo, int? agentId, DateTime itinDate, IEnumerable<ItinerarySet.PurchaseItemRow> updateRows)
+        {
+            foreach (var i in updateRows)
+            {
+                var item = i;
+                var thread = new BackgroundWorker();
 
+                // get rate
+                thread.DoWork += delegate(object o, DoWorkEventArgs args)
+                {
+                    try
+                    {
+                        var ccyRatePoint = !Cache.ToolSet.AppSettings[0].IsCcyDatePointNull() ? Cache.ToolSet.AppSettings[0].CcyDatePoint : "booking";
+                        var date = ccyRatePoint == "booking" ? item.StartDate : itinDate;
+
+                        App.Debug(string.Format("GET ccy rate from PREDEFINED: {0}, {1} > {2}", date.Date, item.CurrencyCode, ccyTo));
+                        var row = Cache.ToolSet.CurrencyRate.GetCurrencyRate(date.Date, item.CurrencyCode, ccyTo, true).FirstOrDefault();
+                        args.Result = row != null ? row.Rate : (decimal?)null;
+                    }
+                    catch { }
+                };
+
+                // set rate
+                thread.RunWorkerCompleted += delegate(object o, RunWorkerCompletedEventArgs args)
+                {
+                    try
+                    {
+                        decimal rate;
+                        if (!decimal.TryParse(args.Result.ToString(), out rate)) return;
+
+                        App.Debug(string.Format("SET ccy rate from PREDEFINED: {0}, {1} > {2}, {3}", item.StartDate, item.CurrencyCode, ccyTo, rate));
+                        item.CurrencyRate = rate;
+                        item.RecalculateTotals();
+                    }
+                    catch { }
+                };
+                thread.RunWorkerAsync();
+            }
+        }
+        
+        private static decimal GetAgentCcyMarginMultiplier(int? agentId, string ccyFrom, string ccyTo)
+        {
+            if (!agentId.HasValue) 
+                return 1;
+
+            if (ccyFrom != ccyTo)
+                return 1;
+            
+            var agent = Cache.ToolSet.Agent.FindByAgentID((int)agentId);
+
+            if (agent == null || agent.IsDefaultCurrencyMarginNull()) 
+                return 1;
+
+            var adjust = agent.DefaultCurrencyMargin;
+            adjust = 1 + ((adjust != 0) ? adjust / 100 : 0);
+            return adjust;
+        }
+        
+#endregion 
+
+        #region Events
 
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (tempItinerarySet.PurchaseItem.Count == 0)
             {
-                App.ShowError("Please select at least one service option.");
+                App.ShowError("No new bookings selected.");
                 DialogResult = DialogResult.None;
                 return;
             }
@@ -433,8 +525,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 itinerarySet.Merge(tempItinerarySet);
                 itinerarySet.PurchaseItem.RowChanged -= AddNewMergeRow;
 
-                if (chkCurrency.Checked) 
-                    SetCurrencyUpdatesForNewRows();
+                // set currency exch rates for new bookings
+                SetCurrencyUpdatesForNewRows();
             }
             catch (ConstraintException ex)
             {
@@ -748,6 +840,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.RaiseErrorEvent = true;
             e.RestoreOriginalValue = true;
         }
+
+        #endregion
     }
 
     public delegate void OnPurchaseItemAddedHandler(PurchaseItemAddedEventArgs e);
