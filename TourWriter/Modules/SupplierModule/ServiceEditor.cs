@@ -87,7 +87,7 @@ namespace TourWriter.Modules.SupplierModule
 
                 if (App.IsDebugMode && ModifierKeys == Keys.Control)
                 {
-                    gridServices.AddExportHooks(SupplierSet);
+                    gridServices.AddExportHooks(SupplierSet, gridOptions);
                     gridOptions.AddExportHooks(SupplierSet);
                 }
             }
