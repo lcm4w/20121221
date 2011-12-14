@@ -433,6 +433,9 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (!App.ShowCheckPermission(AppPermissions.Permissions.ItineraryRefreshCcyRates))
+                return;
+
             if (_userShouldUpdateRates && App.AskYesNo("You have not updated the currency rates.\r\n\r\nUpdate rates now?"))
             {
                 _userShouldUpdateRates = false;

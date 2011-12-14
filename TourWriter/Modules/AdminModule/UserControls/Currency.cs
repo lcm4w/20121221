@@ -30,8 +30,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
         public Currency()
         {
             InitializeComponent();
-        }
 
+            var permission = AppPermissions.UserHasPermission(AppPermissions.Permissions.CurrencyRatesEdit);
+            btnRateAdd.Enabled = btnRateDel.Enabled = permission;
+        }
+        
         private void Currency_Load(object sender, EventArgs e)
         {
             DataBind();
@@ -141,6 +144,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             if (!e.Layout.Bands[0].Columns.Exists("EnabledToday"))
                 e.Layout.Bands[0].Columns.Add("EnabledToday");
 
+            var permission = AppPermissions.UserHasPermission(AppPermissions.Permissions.CurrencyRatesEdit);
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
                 if (c.Key == "CodeFrom")
@@ -226,6 +230,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
                     c.TabStop = true;
                 }
                 else c.Hidden = true;
+
+                // disable if no permission ----------------------------
+                if (!permission) c.CellActivation = Activation.Disabled;
+                // -----------------------------------------------------
             }
 
             GridHelper.SetDefaultGridAppearance(e);

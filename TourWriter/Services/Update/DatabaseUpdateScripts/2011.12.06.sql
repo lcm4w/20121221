@@ -512,7 +512,48 @@ ORDER BY
 GO
 
 
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[_Permission_AddToRoles]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[_Permission_AddToRoles]
+GO
 
+create PROCEDURE [dbo].[_Permission_AddToRoles] 
+	@permissionName varchar(100)
+AS
+
+-- adds a permission to all roles, used when adding new permissions, to default enable for all users
+
+DECLARE @roleId int
+DECLARE @permissionId int
+SET @permissionId = (select PermissionID from Permission where PermissionName = @permissionName)
+
+DECLARE RoleIds CURSOR FOR SELECT RoleID FROM Role
+OPEN RoleIds
+FETCH NEXT FROM RoleIds INTO @roleId
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    if not exists (select RoleID from RolePermission where RoleID = @roleId and PermissionID = @permissionId)
+		insert RolePermission (RoleID, PermissionID) values (@roleId, @permissionId)
+    FETCH NEXT FROM RoleIds INTO @roleId
+END
+
+CLOSE RoleIds
+DEALLOCATE RoleIds
+
+GO
+
+
+-- update Permissions
+if not exists (select PermissionName from Permission where PermissionName = 'Reports - run Custom Reports')
+	insert Permission values ('Reports - run Custom Reports');
+exec [dbo].[_Permission_AddToRoles] 'Reports - run Custom Reports';
+GO
+if not exists (select PermissionName from Permission where PermissionName = 'Currency rates - edit')
+	insert Permission values ('Currency rates - edit');
+exec [dbo].[_Permission_AddToRoles] 'Currency rates - edit'
+GO
+if not exists (select PermissionName from Permission where PermissionName = 'Itinerary - refresh currency rates')
+	insert Permission values ('Itinerary - refresh currency rates');
+exec [dbo].[_Permission_AddToRoles] 'Itinerary - refresh currency rates';
+GO
 
 
 GO

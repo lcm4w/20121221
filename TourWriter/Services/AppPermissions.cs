@@ -33,7 +33,10 @@ namespace TourWriter.Services
             DataImport                  = 20,
             AccountingView              = 21,
             AccountingEdit              = 22,
-            ItineraryReadOnly           = 23
+            ItineraryReadOnly           = 23,
+            CustomReportsRun            = 24,
+            CurrencyRatesEdit           = 25,
+            ItineraryRefreshCcyRates    = 26,
 		}
 
 		
