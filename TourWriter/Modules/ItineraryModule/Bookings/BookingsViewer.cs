@@ -27,7 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
-        private const string GridLayoutVersion = "v2.3"; // bump this (any new name) to cause grid to reset to pick up changes
+        private const string GridLayoutVersion = "v2.4"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -71,8 +71,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             if (!DesignMode)
             {
-                btnLockEdit.Enabled = AppPermissions.UserHasPermission(
-                    AppPermissions.Permissions.AccountingEdit);
+                //btnLockEdit.Enabled = AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingEdit);
                 RefreshEmailTemplateMenu();
             }
         }
@@ -230,8 +229,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             else
                 grid.DisplayLayout.Bands[0].SortedColumns.Add("StartDate", false);
 
-            // always hide by default
-            grid.DisplayLayout.Bands[0].Columns["IsLockedAccounting"].Hidden = true;
+            // check accting permission
+            grid.DisplayLayout.Bands[0].Columns["IsLockedAccounting"].CellActivation =
+                AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingEdit) ? Activation.AllowEdit : Activation.Disabled;
             
             // custom sort comparer for date column
             grid.DisplayLayout.Bands[0].Columns["StartDate"].SortComparer = new DateSortComparer();
@@ -1027,6 +1027,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellClickAction = CellClickAction.Edit;
                     c.TabStop = false;
                     c.Hidden = true;
+                    c.ColumnChooserCaption = "Accounting";
                 }
                 else if (c.Key == "Flags")
                 {
