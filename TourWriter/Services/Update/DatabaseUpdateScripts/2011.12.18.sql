@@ -24,8 +24,8 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2011.09.26')
-	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)	
+if ((select VersionNumber from AppSettings) <> '2011.09.26' and (select VersionNumber from AppSettings) <> '2011.12.06')
+	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
 GO
@@ -562,7 +562,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.12.06'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2011.12.18'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
