@@ -67,15 +67,7 @@ namespace TourWriter.Services
             {
                 var key = pair.Key;
                 var value = pair.Value;
-
-                if (format == "csv")
-                {
-                    // escape embedded commas
-                    if (value.Contains(","))
-                        value = string.Format("\"{0}\"", value);
-                }
-
-                template = Replace(template, key, value) ;
+                template = Replace(template, key, value, format);
             }
             return template;
         }
@@ -134,13 +126,14 @@ namespace TourWriter.Services
         /// <param name="tag"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static string Replace(string text, string tag, string value)
+        private static string Replace(string text, string tag, string value, string format)
         {
-            value = value // clean
-                .Trim()
-                .Replace("\r\n", " ")   // new lines
-                .Replace("\n", " ")     // new lines
-                .Replace(",", ".");     // comma's
+            value = value.Trim(). // clean
+                Replace("\r\n", " ").Replace("\n", " ");  // and remove new-lines
+
+            if (format == "csv")
+                if (value.Contains(","))
+                    value = string.Format("\"{0}\"", value); // escape embedded commas
 
             tag = "[!" + tag + "]";
             return text.Replace(tag, value);
