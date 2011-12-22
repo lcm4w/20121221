@@ -131,7 +131,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             // add alternate text view
             var textPart = AlternateView.CreateAlternateViewFromString(
-                HtmlToPlainText(emailMessage.Body), Encoding.GetEncoding("iso-8859-1"), "text/plain");
+                HtmlToPlainText(emailMessage.Body), Encoding.GetEncoding("UTF-8"), "text/plain");
             textPart.TransferEncoding = TransferEncoding.SevenBit;
             emailMessage.AlternateViews.Add(textPart);
             

@@ -73,12 +73,12 @@ namespace TourWriter.Services
             var body = Body;
             Body = null;
             var linkedResources = GetLinkedResources(ref body);
-            var htmlPart = AlternateView.CreateAlternateViewFromString(body, Encoding.GetEncoding("iso-8859-1"), "text/html");
+            var htmlPart = AlternateView.CreateAlternateViewFromString(body, Encoding.GetEncoding("UTF-8"), "text/html");
             htmlPart.TransferEncoding = TransferEncoding.SevenBit;
             AlternateViews.Add(htmlPart);
             foreach (var res in linkedResources)
                 htmlPart.LinkedResources.Add(res);
-            BodyEncoding = Encoding.GetEncoding("iso-8859-1");
+            BodyEncoding = Encoding.GetEncoding("UTF-8");
 
             var smtpClient = new SmtpClient
                                  {
