@@ -157,6 +157,9 @@ namespace TourWriter.Modules.SupplierModule
 
                     UpdateMainForm(App.MainForm.SupplierMenu, supplierSet.Supplier[0].IsRecordActive);
                     SetDataCleanName();
+
+                    // rebind supplier set
+                    contentControl1.SupplierSet = supplierSet;
                 }
                 finally
                 {

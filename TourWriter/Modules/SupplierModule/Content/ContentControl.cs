@@ -57,9 +57,10 @@ namespace TourWriter.Modules.SupplierModule
                 AddServiceContentBindingRow(s);
 
             // init content types combo
-            if (!gridContents.DisplayLayout.ValueLists.Contains("ContentTypeList"))
+            if (!gridContents.DisplayLayout.ValueLists.Exists("ContentTypeList"))
                 gridContents.DisplayLayout.ValueLists.Add("ContentTypeList");
-            else gridContents.DisplayLayout.ValueLists["ContentTypeList"].ValueListItems.Clear();
+            else 
+                gridContents.DisplayLayout.ValueLists["ContentTypeList"].ValueListItems.Clear();
 
             // add content types
             gridContents.DisplayLayout.ValueLists["ContentTypeList"].ValueListItems.Add(DBNull.Value, "");
@@ -67,13 +68,16 @@ namespace TourWriter.Modules.SupplierModule
                 gridContents.DisplayLayout.ValueLists["ContentTypeList"].ValueListItems.Add(r.ContentTypeID, r.ContentTypeName);
 
             // load Add items.
-            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Add for...") { Enabled = false });
+            btnAdd.DropDownItems.Clear();
+            btnAdd.DropDownItems.Add(new ToolStripMenuItem("Add for...") 
+                                    { Enabled = false });
             btnAdd.DropDownItems.Add(new ToolStripSeparator());
             btnAdd.DropDownItems.Add(new ToolStripMenuItem("Supplier: " + supplier.SupplierName.Trim(), null, btnAddItem_Click)
-                                         {Tag = "supplier:" + _supplierSet.Supplier[0].SupplierID});
+                                    {Tag = "supplier:" + _supplierSet.Supplier[0].SupplierID});
+
             foreach (var service in _supplierSet.Service.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ServiceName))
                 btnAdd.DropDownItems.Add(new ToolStripMenuItem("Service: " + service.ServiceName.Trim(), null, btnAddItem_Click)
-                                             {Tag = "service:" + service.ServiceID});
+                                         {Tag = "service:" + service.ServiceID});
 
             gridContents.DataSource = _table;
         }
