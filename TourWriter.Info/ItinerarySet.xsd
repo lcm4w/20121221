@@ -101,6 +101,7 @@
                 </xs:simpleType>
               </xs:element>
               <xs:element name="NetMinOrMax" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="NetMinOrMax" msprop:Generator_ColumnVarNameInTable="columnNetMinOrMax" msprop:Generator_ColumnPropNameInTable="NetMinOrMaxColumn" msprop:Generator_UserColumnName="NetMinOrMax" type="xs:string" minOccurs="0" />
+              <xs:element name="AgentContactID" msprop:Generator_ColumnVarNameInTable="columnAgentContactID" msprop:Generator_ColumnPropNameInRow="AgentContactID" msprop:Generator_ColumnPropNameInTable="AgentContactIDColumn" msprop:Generator_UserColumnName="AgentContactID" type="xs:int" default="0" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

@@ -126,7 +126,7 @@ namespace TourWriter.Modules.ItineraryModule
             userBindingSource.Filter = "IsRecordActive <> 1";
             agentBindingSource.Sort = "AgentName ASC";
         }
-
+        
         private void ItineraryLoad(object sender, EventArgs e)
         {
             DataBind();
@@ -179,6 +179,8 @@ namespace TourWriter.Modules.ItineraryModule
             toolRefresh.Enabled = toolRefresh.Enabled && !isReadOnlyChecked;
             menuRefresh.Enabled = menuRefresh.Enabled && !isReadOnlyChecked;
 
+            RefreshAgentContactBindings();
+
             SetEventHandlers(true);
 
             // set permissions for read-only
@@ -191,7 +193,6 @@ namespace TourWriter.Modules.ItineraryModule
             Cache.ToolSet.Template.ColumnChanged += DataTable_ColumnChanged;
             bookingsViewer.RecalculateFinalPricing();
             bookingsViewer.SetItineraryCurrencyInfo();
- 
         }
         
         private void ItineraryMain_Shown(object sender, EventArgs e)
@@ -358,11 +359,13 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 chkReadOnly.CheckStateChanged += chkReadOnly_CheckStateChanged;
                 cmbAgent.SelectedValueChanged += cmbAgent_SelectedValueChanged;
+                cmbAgentContact.SelectedIndexChanged += cmbAgentContact_SelectedIndexChanged;
             }
             else
             {
                 chkReadOnly.CheckStateChanged -= chkReadOnly_CheckStateChanged;
                 cmbAgent.SelectedValueChanged -= cmbAgent_SelectedValueChanged;
+                cmbAgentContact.SelectedIndexChanged -= cmbAgentContact_SelectedIndexChanged;
             }
         }
 
@@ -843,15 +846,38 @@ namespace TourWriter.Modules.ItineraryModule
 
             itinerarySet.Itinerary[0].NetComOrMup = (!agentRow.IsNetComOrMupNull()) ? agentRow.NetComOrMup : "mup";
         }
+        
+        private void RefreshAgentContactBindings()
+        {
+            if (itinerarySet.Itinerary[0].IsAgentIDNull())
+                return;
+
+            var agentId = itinerarySet.Itinerary[0].AgentID;
+
+            var contacts = new Dictionary<string, string> { { "", "" } };
+            foreach (var c in Cache.AgentSet.AgentContact.Where(x => x.RowState != DataRowState.Deleted && x.AgentID == agentId).OrderBy(x => x.Description))
+                contacts.Add(c.ContactID.ToString(), c.Description);
+
+            cmbAgentContact.ValueMember = "Key";
+            cmbAgentContact.DisplayMember = "Value";
+            cmbAgentContact.DataSource = new BindingSource(contacts, null);
+            cmbAgentContact.SelectedValue = !itinerarySet.Itinerary[0].IsAgentContactIDNull() ? itinerarySet.Itinerary[0].AgentContactID.ToString() : "";
+        }
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
         {
             if (cmbAgent.SelectedValue == null || (int)cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
                 return;
+            int id = (int) cmbAgent.SelectedValue;
 
             // force dataset value to update
-            itinerarySet.Itinerary[0].AgentID = (int)cmbAgent.SelectedValue;
+            itinerarySet.Itinerary[0].AgentID = id;
 
+            // reset agent contact
+            itinerarySet.Itinerary[0].SetAgentContactIDNull();
+            RefreshAgentContactBindings();
+
+            // reset agent margins
             if (HasOverrides())
             {
                 const string msg =
@@ -860,6 +886,14 @@ namespace TourWriter.Modules.ItineraryModule
             }
             AutoPopulateNetOverrides();
             bookingsViewer.RecalculateFinalPricing();
+        }
+
+        private void cmbAgentContact_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbAgentContact.SelectedValue != "")
+                itinerarySet.Itinerary[0].AgentContactID = int.Parse(cmbAgentContact.SelectedValue.ToString());
+            else
+                itinerarySet.Itinerary[0].SetAgentContactIDNull();
         }
 
         #endregion

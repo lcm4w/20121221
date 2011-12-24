@@ -220,6 +220,8 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolSaveClose = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cmbAgentContact = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.ultraTabPageControl12.SuspendLayout();
             this.ultraTabPageControl11.SuspendLayout();
             this.ultraTabPageControl8.SuspendLayout();
@@ -306,8 +308,8 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             // reportControl
             // 
-            this.reportControl.GeneralParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.SqlParameters")));
             this.reportControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportControl.GeneralParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.GeneralParameters")));
             this.reportControl.Location = new System.Drawing.Point(0, 0);
             this.reportControl.Name = "reportControl";
             this.reportControl.Size = new System.Drawing.Size(787, 503);
@@ -702,6 +704,8 @@ namespace TourWriter.Modules.ItineraryModule
             // ultraTabPageControl1
             // 
             this.ultraTabPageControl1.AutoScroll = true;
+            this.ultraTabPageControl1.Controls.Add(this.label12);
+            this.ultraTabPageControl1.Controls.Add(this.cmbAgentContact);
             this.ultraTabPageControl1.Controls.Add(this.cmbCurrency);
             this.ultraTabPageControl1.Controls.Add(this.lblCurrency);
             this.ultraTabPageControl1.Controls.Add(this.chkReadOnly);
@@ -753,7 +757,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl1.Controls.Add(this.label38);
             this.ultraTabPageControl1.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
-            this.ultraTabPageControl1.Size = new System.Drawing.Size(789, 533);
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(789, 563);
             // 
             // cmbCurrency
             // 
@@ -761,9 +765,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cmbCurrency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCurrency.FormattingEnabled = true;
-            this.cmbCurrency.Location = new System.Drawing.Point(449, 389);
+            this.cmbCurrency.Location = new System.Drawing.Point(459, 416);
             this.cmbCurrency.Name = "cmbCurrency";
-            this.cmbCurrency.Size = new System.Drawing.Size(260, 21);
+            this.cmbCurrency.Size = new System.Drawing.Size(250, 21);
             this.cmbCurrency.TabIndex = 144;
             this.toolTip1.SetToolTip(this.cmbCurrency, "The currency to convert all prices to");
             // 
@@ -772,7 +776,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.lblCurrency.AutoSize = true;
             this.lblCurrency.BackColor = System.Drawing.Color.Transparent;
             this.lblCurrency.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrency.Location = new System.Drawing.Point(377, 392);
+            this.lblCurrency.Location = new System.Drawing.Point(377, 419);
             this.lblCurrency.Name = "lblCurrency";
             this.lblCurrency.Size = new System.Drawing.Size(51, 13);
             this.lblCurrency.TabIndex = 145;
@@ -875,10 +879,10 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             // txtAddedBy
             // 
-            this.txtAddedBy.Location = new System.Drawing.Point(449, 426);
+            this.txtAddedBy.Location = new System.Drawing.Point(459, 453);
             this.txtAddedBy.Name = "txtAddedBy";
             this.txtAddedBy.ReadOnly = true;
-            this.txtAddedBy.Size = new System.Drawing.Size(260, 21);
+            this.txtAddedBy.Size = new System.Drawing.Size(250, 21);
             this.txtAddedBy.TabIndex = 15;
             // 
             // cmbBranch
@@ -890,9 +894,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbBranch.DisplayMember = "BranchName";
             this.cmbBranch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBranch.FormattingEnabled = true;
-            this.cmbBranch.Location = new System.Drawing.Point(449, 504);
+            this.cmbBranch.Location = new System.Drawing.Point(459, 531);
             this.cmbBranch.Name = "cmbBranch";
-            this.cmbBranch.Size = new System.Drawing.Size(260, 21);
+            this.cmbBranch.Size = new System.Drawing.Size(250, 21);
             this.cmbBranch.TabIndex = 17;
             this.cmbBranch.ValueMember = "BranchID";
             // 
@@ -910,9 +914,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbDepartment.DisplayMember = "DepartmentName";
             this.cmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDepartment.FormattingEnabled = true;
-            this.cmbDepartment.Location = new System.Drawing.Point(449, 478);
+            this.cmbDepartment.Location = new System.Drawing.Point(459, 505);
             this.cmbDepartment.Name = "cmbDepartment";
-            this.cmbDepartment.Size = new System.Drawing.Size(260, 21);
+            this.cmbDepartment.Size = new System.Drawing.Size(250, 21);
             this.cmbDepartment.TabIndex = 16;
             this.cmbDepartment.ValueMember = "DepartmentID";
             // 
@@ -930,9 +934,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbAssignedTo.DisplayMember = "UserName";
             this.cmbAssignedTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAssignedTo.FormattingEnabled = true;
-            this.cmbAssignedTo.Location = new System.Drawing.Point(449, 452);
+            this.cmbAssignedTo.Location = new System.Drawing.Point(459, 479);
             this.cmbAssignedTo.Name = "cmbAssignedTo";
-            this.cmbAssignedTo.Size = new System.Drawing.Size(260, 21);
+            this.cmbAssignedTo.Size = new System.Drawing.Size(250, 21);
             this.cmbAssignedTo.TabIndex = 15;
             this.cmbAssignedTo.ValueMember = "UserID";
             // 
@@ -950,9 +954,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbSource.DisplayMember = "ItinerarySourceName";
             this.cmbSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSource.FormattingEnabled = true;
-            this.cmbSource.Location = new System.Drawing.Point(449, 362);
+            this.cmbSource.Location = new System.Drawing.Point(459, 389);
             this.cmbSource.Name = "cmbSource";
-            this.cmbSource.Size = new System.Drawing.Size(260, 21);
+            this.cmbSource.Size = new System.Drawing.Size(250, 21);
             this.cmbSource.TabIndex = 14;
             this.cmbSource.ValueMember = "ItinerarySourceID";
             // 
@@ -970,9 +974,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbStatus.DisplayMember = "ItineraryStatusName";
             this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatus.FormattingEnabled = true;
-            this.cmbStatus.Location = new System.Drawing.Point(449, 336);
+            this.cmbStatus.Location = new System.Drawing.Point(459, 363);
             this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(260, 21);
+            this.cmbStatus.Size = new System.Drawing.Size(250, 21);
             this.cmbStatus.TabIndex = 13;
             this.cmbStatus.ValueMember = "ItineraryStatusID";
             // 
@@ -990,9 +994,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.cmbAgent.DisplayMember = "AgentNameParentName";
             this.cmbAgent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAgent.FormattingEnabled = true;
-            this.cmbAgent.Location = new System.Drawing.Point(449, 311);
+            this.cmbAgent.Location = new System.Drawing.Point(459, 311);
             this.cmbAgent.Name = "cmbAgent";
-            this.cmbAgent.Size = new System.Drawing.Size(260, 21);
+            this.cmbAgent.Size = new System.Drawing.Size(250, 21);
             this.cmbAgent.TabIndex = 12;
             this.cmbAgent.ValueMember = "AgentID";
             // 
@@ -1009,7 +1013,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.txtComments.Location = new System.Drawing.Point(7, 302);
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
-            this.txtComments.Size = new System.Drawing.Size(340, 225);
+            this.txtComments.Size = new System.Drawing.Size(340, 255);
             this.txtComments.TabIndex = 11;
             // 
             // txtDepartNote
@@ -1318,7 +1322,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label69.AutoSize = true;
             this.label69.BackColor = System.Drawing.Color.Transparent;
             this.label69.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label69.Location = new System.Drawing.Point(377, 429);
+            this.label69.Location = new System.Drawing.Point(377, 456);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(60, 13);
             this.label69.TabIndex = 47;
@@ -1330,7 +1334,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label67.AutoSize = true;
             this.label67.BackColor = System.Drawing.Color.Transparent;
             this.label67.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.Location = new System.Drawing.Point(377, 507);
+            this.label67.Location = new System.Drawing.Point(377, 534);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(40, 13);
             this.label67.TabIndex = 37;
@@ -1342,7 +1346,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label66.AutoSize = true;
             this.label66.BackColor = System.Drawing.Color.Transparent;
             this.label66.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label66.Location = new System.Drawing.Point(377, 481);
+            this.label66.Location = new System.Drawing.Point(377, 508);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(64, 13);
             this.label66.TabIndex = 35;
@@ -1354,7 +1358,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label64.AutoSize = true;
             this.label64.BackColor = System.Drawing.Color.Transparent;
             this.label64.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label64.Location = new System.Drawing.Point(377, 455);
+            this.label64.Location = new System.Drawing.Point(377, 482);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(63, 13);
             this.label64.TabIndex = 31;
@@ -1366,7 +1370,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label62.AutoSize = true;
             this.label62.BackColor = System.Drawing.Color.Transparent;
             this.label62.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label62.Location = new System.Drawing.Point(377, 365);
+            this.label62.Location = new System.Drawing.Point(377, 392);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(40, 13);
             this.label62.TabIndex = 27;
@@ -1378,7 +1382,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label38.AutoSize = true;
             this.label38.BackColor = System.Drawing.Color.Transparent;
             this.label38.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.Location = new System.Drawing.Point(377, 339);
+            this.label38.Location = new System.Drawing.Point(377, 366);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(38, 13);
             this.label38.TabIndex = 6;
@@ -1535,7 +1539,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.tabControl_Main.ScrollButtons = Infragistics.Win.UltraWinTabs.TabScrollButtons.None;
             this.tabControl_Main.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this.tabControl_Main.ShowTabListButton = Infragistics.Win.DefaultableBoolean.False;
-            this.tabControl_Main.Size = new System.Drawing.Size(793, 556);
+            this.tabControl_Main.Size = new System.Drawing.Size(793, 586);
             this.tabControl_Main.TabIndex = 0;
             this.tabControl_Main.TabLayoutStyle = Infragistics.Win.UltraWinTabs.TabLayoutStyle.SingleRowFixed;
             ultraTab5.Key = "Itinerary";
@@ -1562,7 +1566,7 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(789, 533);
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(789, 563);
             // 
             // panel3
             // 
@@ -1571,7 +1575,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 89);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(799, 566);
+            this.panel3.Size = new System.Drawing.Size(799, 596);
             this.panel3.TabIndex = 6;
             // 
             // pnlMain
@@ -1583,7 +1587,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlMain.Size = new System.Drawing.Size(799, 566);
+            this.pnlMain.Size = new System.Drawing.Size(799, 596);
             this.pnlMain.TabIndex = 1;
             // 
             // itinerarySetLoaderThread
@@ -1761,11 +1765,34 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
             // 
+            // cmbAgentContact
+            // 
+            this.cmbAgentContact.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.cmbAgentContact.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbAgentContact.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAgentContact.FormattingEnabled = true;
+            this.cmbAgentContact.Location = new System.Drawing.Point(459, 337);
+            this.cmbAgentContact.Name = "cmbAgentContact";
+            this.cmbAgentContact.Size = new System.Drawing.Size(250, 21);
+            this.cmbAgentContact.TabIndex = 146;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(376, 341);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 13);
+            this.label12.TabIndex = 147;
+            this.label12.Text = "Agent Contact";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // ItineraryMain
             // 
             this.AllowDrop = true;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(799, 655);
+            this.ClientSize = new System.Drawing.Size(799, 685);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1958,6 +1985,8 @@ namespace TourWriter.Modules.ItineraryModule
         private UltraTabPageControl ultraTabPageControl12;
         private Label lblCurrency;
         private BindingSource currencyBindingSource;
+        private Label label12;
+        private ComboBox cmbAgentContact;
         private UserControls.NullableComboBox cmbCurrency;
     }
 }
