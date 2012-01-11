@@ -9,6 +9,8 @@ namespace TourWriter.Services
     {
         public static decimal CalcDiscount(decimal bookingQty, IEnumerable<ItinerarySet.DiscountRow> discounts)
         {
+            if (discounts == null || discounts.Count() == 0) return 0;
+
             var applicableDiscounts = discounts.Where(x => x.UnitsUsed < bookingQty).OrderByDescending(x => x.UnitsUsed);
             var bestDiscount = applicableDiscounts.FirstOrDefault();
 
