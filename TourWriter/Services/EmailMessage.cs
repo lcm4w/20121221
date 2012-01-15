@@ -123,7 +123,7 @@ namespace TourWriter.Services
                                      DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory,
                                      PickupDirectoryLocation = saveToPath
                                  };
-	        saveClient.SendAsync(this, "token?");
+            saveClient.Send(this); //.SendAsync(this, "token?");
 
             saveToPath = GetLatestFileEntryName(saveToPath);
             
