@@ -27,6 +27,15 @@ namespace TourWriter.Info.Services
         }
 
         /// <summary>
+        /// Calculate gross based on gross commission.
+        /// </summary>
+        public static decimal CalcGrossByGrossCommission(decimal gross, decimal commission)
+        {
+		    // WARNING: assume 'user friendly' postive number, so subtract because taking comm OFF gross
+            return gross * (1 - (commission / 100));
+        }
+
+        /// <summary>
         /// Calculate the markup value.
         /// </summary>
         /// <param name="net"></param>

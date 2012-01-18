@@ -44,12 +44,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.rdMarkup = new System.Windows.Forms.RadioButton();
-            this.rdCommission = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbMarginForCommission = new System.Windows.Forms.ComboBox();
-            this.cbMarginForMarkup = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtMasterOverride = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
@@ -58,6 +53,11 @@
             this.toolStrip1 = new TourWriter.UserControls.MyToolStrip();
             this.btnPopulate = new System.Windows.Forms.ToolStripButton();
             this.btnClear = new System.Windows.Forms.ToolStripButton();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cmbMargin = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cmbOverride = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -67,9 +67,9 @@
             // 
             // grid
             // 
-            this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance13.BackColor = System.Drawing.SystemColors.Window;
             appearance13.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.grid.DisplayLayout.Appearance = appearance13;
@@ -169,77 +169,22 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // rdMarkup
-            // 
-            this.rdMarkup.AutoSize = true;
-            this.rdMarkup.Location = new System.Drawing.Point(20, 32);
-            this.rdMarkup.Name = "rdMarkup";
-            this.rdMarkup.Size = new System.Drawing.Size(61, 17);
-            this.rdMarkup.TabIndex = 129;
-            this.rdMarkup.TabStop = true;
-            this.rdMarkup.Text = "Markup";
-            this.rdMarkup.UseVisualStyleBackColor = true;
-            this.rdMarkup.CheckedChanged += new System.EventHandler(this.rdMarkup_CheckedChanged);
-            // 
-            // rdCommission
-            // 
-            this.rdCommission.AutoSize = true;
-            this.rdCommission.Location = new System.Drawing.Point(125, 32);
-            this.rdCommission.Name = "rdCommission";
-            this.rdCommission.Size = new System.Drawing.Size(80, 17);
-            this.rdCommission.TabIndex = 130;
-            this.rdCommission.TabStop = true;
-            this.rdCommission.Text = "Commission";
-            this.rdCommission.UseVisualStyleBackColor = true;
-            this.rdCommission.CheckedChanged += new System.EventHandler(this.rdCommission_CheckedChanged);
-            // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cbMarginForCommission);
-            this.groupBox1.Controls.Add(this.cbMarginForMarkup);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.cmbMargin);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.cmbOverride);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.rdMarkup);
-            this.groupBox1.Controls.Add(this.rdCommission);
             this.groupBox1.Location = new System.Drawing.Point(5, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(372, 91);
             this.groupBox1.TabIndex = 131;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Type";
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(242, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 40);
-            this.label3.TabIndex = 134;
-            // 
-            // cbMarginForCommission
-            // 
-            this.cbMarginForCommission.DisplayMember = "Text";
-            this.cbMarginForCommission.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMarginForCommission.FormattingEnabled = true;
-            this.cbMarginForCommission.Location = new System.Drawing.Point(125, 55);
-            this.cbMarginForCommission.Name = "cbMarginForCommission";
-            this.cbMarginForCommission.Size = new System.Drawing.Size(85, 21);
-            this.cbMarginForCommission.TabIndex = 133;
-            this.cbMarginForCommission.ValueMember = "Value";
-            this.cbMarginForCommission.SelectedIndexChanged += new System.EventHandler(this.cbMarginForCommission_SelectedIndexChanged);
-            // 
-            // cbMarginForMarkup
-            // 
-            this.cbMarginForMarkup.DisplayMember = "Text";
-            this.cbMarginForMarkup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbMarginForMarkup.FormattingEnabled = true;
-            this.cbMarginForMarkup.Location = new System.Drawing.Point(20, 55);
-            this.cbMarginForMarkup.Name = "cbMarginForMarkup";
-            this.cbMarginForMarkup.Size = new System.Drawing.Size(85, 21);
-            this.cbMarginForMarkup.TabIndex = 132;
-            this.cbMarginForMarkup.ValueMember = "Value";
-            this.cbMarginForMarkup.SelectedIndexChanged += new System.EventHandler(this.cbMarginForMarkup_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -252,9 +197,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.txtMasterOverride);
             this.groupBox2.Controls.Add(this.rdServiceTypeOverride);
             this.groupBox2.Controls.Add(this.rdMasterOverride);
@@ -341,6 +286,58 @@
             this.btnClear.ToolTipText = "Clear all overrides";
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.Transparent;
+            this.label17.Location = new System.Drawing.Point(223, 57);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(119, 13);
+            this.label17.TabIndex = 166;
+            this.label17.Text = "the specified % override";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Location = new System.Drawing.Point(189, 36);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(31, 13);
+            this.label14.TabIndex = 165;
+            this.label14.Text = "to be";
+            // 
+            // cmbMarkup
+            // 
+            this.cmbMargin.DisplayMember = "Text";
+            this.cmbMargin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMargin.FormattingEnabled = true;
+            this.cmbMargin.Location = new System.Drawing.Point(73, 32);
+            this.cmbMargin.Name = "cmbMarkup";
+            this.cmbMargin.Size = new System.Drawing.Size(110, 21);
+            this.cmbMargin.TabIndex = 164;
+            this.cmbMargin.ValueMember = "Value";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Location = new System.Drawing.Point(17, 36);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 13);
+            this.label13.TabIndex = 163;
+            this.label13.Text = "Adjust my";
+            // 
+            // cmbMargin
+            // 
+            this.cmbOverride.DisplayMember = "Text";
+            this.cmbOverride.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOverride.FormattingEnabled = true;
+            this.cmbOverride.Location = new System.Drawing.Point(224, 33);
+            this.cmbOverride.Name = "cmbMargin";
+            this.cmbOverride.Size = new System.Drawing.Size(110, 21);
+            this.cmbOverride.TabIndex = 162;
+            this.cmbOverride.ValueMember = "Value";
+            // 
             // NetOverrideForm
             // 
             this.AcceptButton = this.btnOk;
@@ -379,16 +376,16 @@
         private TourWriter.UserControls.MyToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnPopulate;
         private System.Windows.Forms.ToolStripButton btnClear;
-        private System.Windows.Forms.RadioButton rdMarkup;
-        private System.Windows.Forms.RadioButton rdCommission;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton rdServiceTypeOverride;
         private System.Windows.Forms.RadioButton rdMasterOverride;
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtMasterOverride;
-        private System.Windows.Forms.ComboBox cbMarginForMarkup;
-        private System.Windows.Forms.ComboBox cbMarginForCommission;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cmbMargin;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cmbOverride;
     }
 }

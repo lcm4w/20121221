@@ -22,7 +22,8 @@ namespace TourWriter.Modules.ItineraryModule
         {
             InitializeComponent();
             Icon = Properties.Resources.TourWriter16;
-            this.itinerarySet = itinerarySet;
+            this.itinerarySet = itinerarySet;            
+
             DataBind();
         }
 
@@ -37,7 +38,7 @@ namespace TourWriter.Modules.ItineraryModule
             dataSet.DefaultViewManager.DataViewSettings[dataSet.Tables[0].TableName].RowFilter =
                 Cache.ToolSet.DefaultViewManager.DataViewSettings[Cache.ToolSet.ServiceType.TableName].RowFilter;
 
-            serviceTypeCopy.Columns.Add("Override", typeof(decimal));
+            serviceTypeCopy.Columns.Add("Override", typeof(decimal));            
             grid.DataSource = serviceTypeCopy;
             foreach (DataRow row in serviceTypeCopy.Rows)
             {
@@ -50,19 +51,11 @@ namespace TourWriter.Modules.ItineraryModule
                     row["Override"] = overrideRow.Margin;
             }
 
-            // check ComOrMup value
-            if (itinerarySet.Itinerary[0].NetComOrMup == "com")
-            {
-                rdCommission.Checked = true;                
-            }
-            else
-            {
-                rdMarkup.Checked = true;                
-            }
-
             LoadMarginSelection();
-            DisplayMarginSelection(itinerarySet.Itinerary[0].NetMinOrMax);
 
+            // check ComOrMup and MinOrMax value
+            DisplayMarginSelection(itinerarySet.Itinerary[0].NetComOrMup, itinerarySet.Itinerary[0].NetMinOrMax);
+             
             // check override type (service type, or master)
             if (!itinerarySet.Itinerary[0].IsNetMarginNull())
             {
@@ -77,42 +70,59 @@ namespace TourWriter.Modules.ItineraryModule
         }        
 
         private void LoadMarginSelection()
-        {            
-            cbMarginForMarkup.SelectedIndexChanged -= cbMarginForMarkup_SelectedIndexChanged;
-            cbMarginForMarkup.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
-                                                          new { Text = "Set maximum", Value = "max" },
-                                                          new { Text = "Set exact", Value = "exact" }};            
-            cbMarginForMarkup.SelectedIndexChanged += cbMarginForMarkup_SelectedIndexChanged;
-
-            cbMarginForCommission.SelectedIndexChanged -= cbMarginForCommission_SelectedIndexChanged;
-            cbMarginForCommission.DataSource = new ArrayList {new { Text = "Set minimum", Value = "min" }, 
-                                                              new { Text = "Set maximum", Value = "max" },
-                                                              new { Text = "Set exact", Value = "exact" }};            
-            cbMarginForCommission.SelectedIndexChanged += cbMarginForCommission_SelectedIndexChanged;
-        }
-
-        private void DisplayMarginSelection(string marginOverride)
-        {            
-            cbMarginForMarkup.Enabled = rdMarkup.Checked;
-            cbMarginForCommission.Enabled = rdCommission.Checked;
-            cbMarginForMarkup.SelectedValue = marginOverride ?? "exact";
-            cbMarginForCommission.SelectedValue = marginOverride ?? "exact";            
-        }
-
-        private void UpdateMarginOverrideSelectionMessage()
         {
-            if (rdMarkup.Checked && cbMarginForMarkup.SelectedIndex >= 0)
-                label3.Text = App.GetMarginOverrideSelectionMessage("mup", (string)cbMarginForMarkup.SelectedValue);
-            else if (rdCommission.Checked && cbMarginForCommission.SelectedIndex >= 0)
-                label3.Text = App.GetMarginOverrideSelectionMessage("com", (string)cbMarginForCommission.SelectedValue);
-            else
-                label3.Text = string.Empty;
+            cmbOverride.DataSource = new ArrayList {new { Text = "Minimum of", Value = "min" }, 
+                                                 new { Text = "Maximum of", Value = "max" },
+                                                 new { Text = "Exactly", Value = "exact" }};
+            cmbOverride.SelectedIndex = -1;
+            cmbOverride.SelectedIndexChanged += cmbOverride_SelectedIndexChanged;            
+
+            cmbMargin.DataSource = new ArrayList {new { Text = "Markup", Value = "mup" }, 
+                                                 new { Text = "Commission", Value = "com" },
+                                                 new { Text = "Agent Commission", Value = "grs" }};
+            cmbMargin.SelectedIndex = -1;
+            cmbMargin.SelectedIndexChanged += cmbMargin_SelectedIndexChanged;            
         }
+
+        private void DisplayMarginSelection(string margin, string @override)
+        {
+            switch (margin)
+            {
+                case "mup":
+                    cmbMargin.SelectedIndex = 0;
+                    break;
+                case "com":
+                    cmbMargin.SelectedIndex = 1;
+                    break;
+                case "grs":
+                    cmbMargin.SelectedIndex = 2;
+                    break;
+                default:             
+                    cmbMargin.SelectedIndex = -1;
+                    break;
+            }
+
+            switch (@override)
+            {
+                case "min":
+                    cmbOverride.SelectedIndex = 0;
+                    break;
+                case "max":
+                    cmbOverride.SelectedIndex = 1;
+                    break;
+                case "exact":
+                    cmbOverride.SelectedIndex = 2;
+                    break;
+                default:
+                    cmbOverride.SelectedIndex = -1;
+                    break;
+            }            
+        }  
 
         private void SaveChanges()
         {
-            itinerarySet.Itinerary[0].NetComOrMup = (rdMarkup.Checked) ? "mup" : "com";
-            itinerarySet.Itinerary[0].NetMinOrMax = marginMinOrMax;
+            itinerarySet.Itinerary[0].NetComOrMup = cmbMargin.SelectedIndex >= 0 ? cmbMargin.SelectedValue.ToString() : null;
+            itinerarySet.Itinerary[0].NetMinOrMax = cmbOverride.SelectedIndex >= 0 ? cmbOverride.SelectedValue.ToString() : null;
 
             if (rdMasterOverride.Checked)
             {
@@ -136,7 +146,8 @@ namespace TourWriter.Modules.ItineraryModule
             {
                 int serviceTypeID = (int)row.Cells["ServiceTypeID"].Value;
                 decimal? margin = row.Cells["Override"].Value != DBNull.Value ?
-                    (decimal?)row.Cells["Override"].Value : null;
+                    (decimal?)row.Cells["Override"].Value :
+                    null;
 
                 itinerarySet.ItineraryMarginOverride.AddInsertOrDelete(serviceTypeID, margin);
             }
@@ -230,10 +241,12 @@ namespace TourWriter.Modules.ItineraryModule
                 // calculate sell from override
                 if (ovrride != null)
                 {
-                    if (rdCommission.Checked)
+                    if (cmbMargin.SelectedValue == "com")
                         sell = Common.CalcGrossByNetCommission(net, (decimal)ovrride);
-                    else
+                    else if (cmbMargin.SelectedValue == "mup")
                         sell = Common.CalcGrossByNetMarkup(net, (decimal)ovrride);
+                    else
+                        sell = Common.CalcGrossByGrossCommission(gross, (decimal)ovrride);
                 }
                 else
                 {
@@ -443,44 +456,56 @@ namespace TourWriter.Modules.ItineraryModule
         {
             grid.Enabled = rdServiceTypeOverride.Checked;
             toolStrip1.Enabled = rdServiceTypeOverride.Checked;
+        }        
+
+        private void cmbOverride_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbOverride.SelectedIndex >= 0)
+            {
+                RecalculatePricing();
+            }
         }
 
-        private void rdMarkup_CheckedChanged(object sender, EventArgs e)
+        private void cmbMargin_SelectedIndexChanged(object sender, EventArgs e)
         {
-            grid.DisplayLayout.Bands[0].Columns["Markup"].Hidden = !rdMarkup.Checked;
+            if (cmbMargin.SelectedIndex >= 0)
+            {
+                grid.DisplayLayout.Bands[0].Columns["Markup"].Hidden = !(cmbMargin.SelectedValue == "mup");
+                grid.DisplayLayout.Bands[0].Columns["Commission"].Hidden = !(cmbMargin.SelectedValue == "com");
+                grid.DisplayLayout.Bands[0].Columns["Gross"].Hidden = !(cmbMargin.SelectedValue == "grs");
 
-            // change formula to calculate average markup
-            RecalculatePricing();
-            grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
-                (rdMarkup.Checked) ? "(([SellTotal()] - [NetBaseTotal()])/[NetBaseTotal()]) * 100" : String.Empty;
+                label14.Visible = true;
+                label17.Visible = true;
+                cmbOverride.Visible = true;
 
-            DisplayMarginSelection(null);
-            UpdateMarginOverrideSelectionMessage();
-        }
-
-        private void rdCommission_CheckedChanged(object sender, EventArgs e)
-        {
-            grid.DisplayLayout.Bands[0].Columns["Commission"].Hidden = !rdCommission.Checked;
-
-            // change formula to calculate average commission
-            RecalculatePricing();
-            grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
-                (rdCommission.Checked) ? "(([SellTotal()] - [NetBaseTotal()])/[SellTotal()]) * 100" : String.Empty;
-
-            DisplayMarginSelection(null);
-            UpdateMarginOverrideSelectionMessage();
-        }
-
-        private void cbMarginForMarkup_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            marginMinOrMax = (string)cbMarginForMarkup.SelectedValue;
-            UpdateMarginOverrideSelectionMessage();
-        }
-
-        private void cbMarginForCommission_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            marginMinOrMax = (string)cbMarginForCommission.SelectedValue;
-            UpdateMarginOverrideSelectionMessage();
+                switch (cmbMargin.SelectedValue.ToString())
+                {
+                    case "mup":
+                        grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
+                            "(([SellTotal()] - [NetBaseTotal()])/[NetBaseTotal()]) * 100";
+                        cmbOverride.SelectedValue = "exact";
+                        break;
+                    case "com":
+                        grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula =
+                            "(([SellTotal()] - [NetBaseTotal()])/[SellTotal()]) * 100";
+                        cmbOverride.SelectedValue = "exact";
+                        break;
+                    case "grs":
+                        grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula = 
+                            "[SellTotal()]";
+                        label14.Visible = false;
+                        label17.Visible = false;
+                        cmbOverride.Visible = false;
+                        cmbOverride.SelectedIndex = -1;
+                        break;
+                    default:
+                        grid.DisplayLayout.Bands[0].Summaries["OverrideAvg"].Formula = 
+                            string.Empty;
+                        break;
+                }
+               
+                RecalculatePricing();
+            }
         }
     }
 }

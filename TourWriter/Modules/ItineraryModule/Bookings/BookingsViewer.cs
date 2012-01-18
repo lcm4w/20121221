@@ -540,48 +540,56 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             // -- testing --
 
-            var hasOverrides = !itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0;
+            //var hasOverrides = !itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0;
 
-            // service-type overrides
-            decimal postServiceType;
-            if (hasOverrides)
-            {
-                var basePrice = itinerarySet.GetNetBasePrice();
-                var markup = itinerarySet.GetNetMarkup();
-                postServiceType = basePrice * (1 + markup / 100);
-                App.Debug(string.Format("Recalc Itinerary, base: {0}, markup: {1}, price: {2}", basePrice, markup, postServiceType));
-            }
-            else
-            {
-                postServiceType = itinerarySet.GetGrossBasePrice();
-                App.Debug(string.Format("Recalc Itinerary, price: {0}", postServiceType));
-            }
-            txtGross1.Value = postServiceType;
+            //// service-type overrides
+            //decimal postServiceType;
+            //if (hasOverrides)
+            //{
+            //    var basePrice = itinerarySet.GetNetBasePrice();
+            //    var markup = itinerarySet.GetNetMarkup();
+            //    postServiceType = basePrice * (1 + markup / 100);
+            //    App.Debug(string.Format("Recalc Itinerary, base: {0}, markup: {1}, price: {2}", basePrice, markup, postServiceType));
+            //}
+            //else
+            //{
+            //    postServiceType = itinerarySet.GetGrossBasePrice();
+            //    App.Debug(string.Format("Recalc Itinerary, price: {0}", postServiceType));
+            //}
+            //txtGross1.Value = postServiceType;
 
             // -------------
 
+            
+            decimal net, markup, gross, final;
+            net = itinerarySet.GetNetBasePrice();
+            final = itinerarySet.GetGrossFinalPrice();
 
-            // net/gross adjustments
-            if (!itinerarySet.Itinerary[0].IsNetMarginNull()
-                || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
-                txtGross1.Value = itinerarySet.GetNetBasePrice() * (1 + itinerarySet.GetNetMarkup() / 100);
+            if (!itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
+            {
+                markup = itinerarySet.GetNetMarkup();
+                txtGross1.Value = net*(1 + markup/100);
+            }
             else
-                txtGross1.Value = itinerarySet.GetGrossBasePrice();
+            {
+                gross = itinerarySet.GetGrossBasePrice();
+                txtGross1.Value = gross;
+            }
 
             if (!itinerarySet.Itinerary[0].IsGrossMarkupNull())
             {
                 var val = decimal.Parse(txtGross1.Value.ToString());
-                txtGross2.Value = val *(1 + itinerarySet.Itinerary[0].GrossMarkup/100);
+                txtGross2.Value = val * (1 + itinerarySet.Itinerary[0].GrossMarkup / 100);
             }
             else
+            {
                 txtGross2.Value = txtGross1.Value;
+            }
 
             // final sell
-            decimal total = itinerarySet.GetGrossFinalPrice();
-            decimal net = itinerarySet.GetNetBasePrice();
-            yieldAmount = total - net;
-            yieldPercent = Common.CalcCommissionByNetGross(net, total);
-            txtSell.Value = total;
+            yieldAmount = final - net;
+            yieldPercent = Common.CalcCommissionByNetGross(net, final);
+            txtSell.Value = final;
             FormatFinalYieldText();
         }
 

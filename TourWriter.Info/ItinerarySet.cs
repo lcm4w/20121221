@@ -121,8 +121,8 @@ namespace TourWriter.Info
                                                                                purchaseItem.ServiceTypeID);
                     if (row != null)
                     {
-                        totalGross += Itinerary[0].CalculateGrossByNetMargin(purchaseItem.Net,
-                                                                             purchaseItem.Gross,
+                        totalGross += Itinerary[0].CalculateGrossByNetMargin(purchaseItem.NetTotal,
+                                                                             purchaseItem.GrossTotal,
                                                                              purchaseItem.NetTotalConverted,
                                                                              row.Margin);                        
                     }
@@ -270,7 +270,7 @@ namespace TourWriter.Info
 
                     totalGross = Common.CalcGrossByNetCommission(total, margin);
                 }
-                else
+                else if (NetComOrMup == "mup")
                 {
                     var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(net, gross);
                     if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
@@ -279,6 +279,10 @@ namespace TourWriter.Info
                         margin = Math.Min(markup, margin);
 
                     totalGross = Common.CalcGrossByNetMarkup(total, margin);
+                }
+                else // if (NetComOrMup == "grs")
+                {
+                    totalGross = Common.CalcGrossByGrossCommission(gross, margin);
                 }
 
                 return totalGross;
