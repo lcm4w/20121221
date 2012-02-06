@@ -62,6 +62,7 @@ namespace TourWriter.UserControls.Reports
                 reportViewer.LocalReport.DisplayName = lblReportName.Text;
                 reportViewer.ProcessingMode = ProcessingMode.Local;
                 reportViewer.LocalReport.EnableExternalImages = true;
+                reportViewer.LocalReport.EnableHyperlinks = true;
                 reportViewer.LocalReport.ExecuteReportInCurrentAppDomain(System.Reflection.Assembly.GetExecutingAssembly().Evidence);
                 reportViewer.LocalReport.SubreportProcessing += LocalReportSubreportProcessing;
 
