@@ -524,11 +524,11 @@ namespace TourWriter.Forms
                 {
                     var ds = s.GetSupplierSet(id);
                     ds.Supplier[0].IsDeleted = true;
-                    if (App.DataSet_AskSaveDeleteConstraints(ds))
-                    {
+                    //if (App.DataSet_AskSaveDeleteConstraints(ds))
+                    //{
                         s.SaveSupplierSet(ds);
                         node.Remove();
-                    }
+                    //}
                 }
             }
 		}
