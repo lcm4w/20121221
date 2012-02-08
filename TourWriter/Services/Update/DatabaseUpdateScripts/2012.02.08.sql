@@ -1501,13 +1501,6 @@ select * from ServiceWarning
 where ServiceID in (select ServiceID from [Service] where SupplierID = @SupplierID)
 GO
 
-
-USE [TourWriterDev]
-GO
-/****** Object:  StoredProcedure [dbo].[_ItinerarySet_Sel_ByID]    Script Date: 02/08/2012 14:01:54 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[_ItinerarySet_Sel_ByID]
 @ItineraryID INT
@@ -1971,7 +1964,7 @@ SELECT [ServiceWarningID]
 		,[Description]
 		,[ValidFrom]
 		,[ValidTo]
-	FROM [TourWriterDev].[dbo].[ServiceWarning]
+	FROM [ServiceWarning]
 WHERE
 	[ServiceID] in 
 	(	
@@ -1984,6 +1977,20 @@ WHERE
 		left outer join [Service] s on s.ServiceID = r.ServiceID 
 	)
 AND ValidTo > getdate()
+GO
+
+
+ALTER VIEW [dbo].[ViewsColumnList]
+AS
+
+select
+	table_name as TableName, 
+	column_name as ColumnName,
+	data_type as DataType, 
+	character_maximum_length as MaxLength
+from INFORMATION_SCHEMA.columns
+--where column_name like '____'
+--order by table_name, column_name
 GO
 
 
