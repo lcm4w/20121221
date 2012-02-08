@@ -79,17 +79,17 @@ namespace TourWriter.Modules.SupplierModule
                     supplierSet.Merge(value);
                 }
 
-                // Notify listners.
+                // Notify listeners.
                 if (OnSupplierSelected != null)
                     OnSupplierSelected(
                         new SupplierSelectedEventArgs(supplierSet.Supplier[0].SupplierID));
 
 
-                if (App.IsDebugMode && ModifierKeys == Keys.Control)
-                {
+                //if (App.IsDebugMode && ModifierKeys == Keys.Control)
+                //{
                     gridServices.AddExportHooks(SupplierSet, gridOptions);
                     gridOptions.AddExportHooks(SupplierSet);
-                }
+                //}
             }
         }
 
