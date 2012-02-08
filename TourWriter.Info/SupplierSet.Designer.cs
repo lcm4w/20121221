@@ -62,11 +62,13 @@ namespace TourWriter.Info {
         
         private ServiceContentDataTable tableServiceContent;
         
+        private ServiceWarningDataTable tableServiceWarning;
+        
         private global::System.Data.DataRelation relationPaymentTermSupplier;
         
-        private global::System.Data.DataRelation relationSupplierService;
-        
         private global::System.Data.DataRelation relationPaymentTermService;
+        
+        private global::System.Data.DataRelation relationSupplierService;
         
         private global::System.Data.DataRelation relationServiceServiceTime;
         
@@ -76,17 +78,17 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationRateOption;
         
-        private global::System.Data.DataRelation relationContactSupplierContact;
-        
         private global::System.Data.DataRelation relationSupplierSupplierContact;
+        
+        private global::System.Data.DataRelation relationContactSupplierContact;
         
         private global::System.Data.DataRelation relationSupplierSupplierCreditCard;
         
         private global::System.Data.DataRelation relationSupplierSupplierConfig;
         
-        private global::System.Data.DataRelation relationMessageSupplierMessage;
-        
         private global::System.Data.DataRelation relationSupplierSupplierMessage;
+        
+        private global::System.Data.DataRelation relationMessageSupplierMessage;
         
         private global::System.Data.DataRelation relationSupplierSupplierText;
         
@@ -94,13 +96,15 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationServiceDiscount;
         
+        private global::System.Data.DataRelation relationFK_Content_SupplierContent;
+        
         private global::System.Data.DataRelation relationFK_Supplier_SupplierContent;
         
-        private global::System.Data.DataRelation relationFK_Content_SupplierContent;
+        private global::System.Data.DataRelation relationFK_Content_ServiceContent;
         
         private global::System.Data.DataRelation relationFK_Service_ServiceContent;
         
-        private global::System.Data.DataRelation relationFK_Content_ServiceContent;
+        private global::System.Data.DataRelation relationFK_Service_ServiceWarning;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -186,6 +190,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ServiceContent"] != null)) {
                     base.Tables.Add(new ServiceContentDataTable(ds.Tables["ServiceContent"]));
+                }
+                if ((ds.Tables["ServiceWarning"] != null)) {
+                    base.Tables.Add(new ServiceWarningDataTable(ds.Tables["ServiceWarning"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -397,6 +404,16 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public ServiceWarningDataTable ServiceWarning {
+            get {
+                return this.tableServiceWarning;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -518,6 +535,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ServiceContent"] != null)) {
                     base.Tables.Add(new ServiceContentDataTable(ds.Tables["ServiceContent"]));
+                }
+                if ((ds.Tables["ServiceWarning"] != null)) {
+                    base.Tables.Add(new ServiceWarningDataTable(ds.Tables["ServiceWarning"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -666,26 +686,33 @@ namespace TourWriter.Info {
                     this.tableServiceContent.InitVars();
                 }
             }
+            this.tableServiceWarning = ((ServiceWarningDataTable)(base.Tables["ServiceWarning"]));
+            if ((initTable == true)) {
+                if ((this.tableServiceWarning != null)) {
+                    this.tableServiceWarning.InitVars();
+                }
+            }
             this.relationPaymentTermSupplier = this.Relations["PaymentTermSupplier"];
-            this.relationSupplierService = this.Relations["SupplierService"];
             this.relationPaymentTermService = this.Relations["PaymentTermService"];
+            this.relationSupplierService = this.Relations["SupplierService"];
             this.relationServiceServiceTime = this.Relations["ServiceServiceTime"];
             this.relationServiceServiceConfig = this.Relations["ServiceServiceConfig"];
             this.relationServiceRate = this.Relations["ServiceRate"];
             this.relationRateOption = this.Relations["RateOption"];
-            this.relationContactSupplierContact = this.Relations["ContactSupplierContact"];
             this.relationSupplierSupplierContact = this.Relations["SupplierSupplierContact"];
+            this.relationContactSupplierContact = this.Relations["ContactSupplierContact"];
             this.relationSupplierSupplierCreditCard = this.Relations["SupplierSupplierCreditCard"];
             this.relationSupplierSupplierConfig = this.Relations["SupplierSupplierConfig"];
-            this.relationMessageSupplierMessage = this.Relations["MessageSupplierMessage"];
             this.relationSupplierSupplierMessage = this.Relations["SupplierSupplierMessage"];
+            this.relationMessageSupplierMessage = this.Relations["MessageSupplierMessage"];
             this.relationSupplierSupplierText = this.Relations["SupplierSupplierText"];
             this.relationSupplierSupplierNote = this.Relations["SupplierSupplierNote"];
             this.relationServiceDiscount = this.Relations["ServiceDiscount"];
-            this.relationFK_Supplier_SupplierContent = this.Relations["FK_Supplier_SupplierContent"];
             this.relationFK_Content_SupplierContent = this.Relations["FK_Content_SupplierContent"];
-            this.relationFK_Service_ServiceContent = this.Relations["FK_Service_ServiceContent"];
+            this.relationFK_Supplier_SupplierContent = this.Relations["FK_Supplier_SupplierContent"];
             this.relationFK_Content_ServiceContent = this.Relations["FK_Content_ServiceContent"];
+            this.relationFK_Service_ServiceContent = this.Relations["FK_Service_ServiceContent"];
+            this.relationFK_Service_ServiceWarning = this.Relations["FK_Service_ServiceWarning"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -735,11 +762,20 @@ namespace TourWriter.Info {
             base.Tables.Add(this.tableSupplierContent);
             this.tableServiceContent = new ServiceContentDataTable();
             base.Tables.Add(this.tableServiceContent);
+            this.tableServiceWarning = new ServiceWarningDataTable();
+            base.Tables.Add(this.tableServiceWarning);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermSupplier", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplier.PaymentTermIDColumn});
             this.tableSupplier.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.SetNull;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermService", new global::System.Data.DataColumn[] {
+                        this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableService.PaymentTermIDColumn});
+            this.tableService.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.SetNull;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
@@ -749,13 +785,6 @@ namespace TourWriter.Info {
             this.tableService.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermService", new global::System.Data.DataColumn[] {
-                        this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableService.PaymentTermIDColumn});
-            this.tableService.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.SetNull;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("ServiceServiceTime", new global::System.Data.DataColumn[] {
                         this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
@@ -785,16 +814,16 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("ContactSupplierContact", new global::System.Data.DataColumn[] {
-                        this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierContact.ContactIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("SupplierSupplierContact", new global::System.Data.DataColumn[] {
+                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierContact.SupplierIDColumn});
             this.tableSupplierContact.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("SupplierSupplierContact", new global::System.Data.DataColumn[] {
-                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierContact.SupplierIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("ContactSupplierContact", new global::System.Data.DataColumn[] {
+                        this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierContact.ContactIDColumn});
             this.tableSupplierContact.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -813,16 +842,16 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("MessageSupplierMessage", new global::System.Data.DataColumn[] {
-                        this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierMessage.MessageIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("SupplierSupplierMessage", new global::System.Data.DataColumn[] {
+                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierMessage.SupplierIDColumn});
             this.tableSupplierMessage.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("SupplierSupplierMessage", new global::System.Data.DataColumn[] {
-                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierMessage.SupplierIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("MessageSupplierMessage", new global::System.Data.DataColumn[] {
+                        this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierMessage.MessageIDColumn});
             this.tableSupplierMessage.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -848,13 +877,6 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Supplier_SupplierContent", new global::System.Data.DataColumn[] {
-                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierContent.SupplierIDColumn});
-            this.tableSupplierContent.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Content_SupplierContent", new global::System.Data.DataColumn[] {
                         this.tableContent.ContentIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierContent.ContentIDColumn});
@@ -862,10 +884,10 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Service_ServiceContent", new global::System.Data.DataColumn[] {
-                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableServiceContent.ServiceIDColumn});
-            this.tableServiceContent.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Supplier_SupplierContent", new global::System.Data.DataColumn[] {
+                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierContent.SupplierIDColumn});
+            this.tableSupplierContent.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
@@ -876,18 +898,32 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Service_ServiceContent", new global::System.Data.DataColumn[] {
+                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableServiceContent.ServiceIDColumn});
+            this.tableServiceContent.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Service_ServiceWarning", new global::System.Data.DataColumn[] {
+                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableServiceWarning.ServiceIDColumn});
+            this.tableServiceWarning.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             this.relationPaymentTermSupplier = new global::System.Data.DataRelation("PaymentTermSupplier", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplier.PaymentTermIDColumn}, false);
             this.Relations.Add(this.relationPaymentTermSupplier);
-            this.relationSupplierService = new global::System.Data.DataRelation("SupplierService", new global::System.Data.DataColumn[] {
-                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableService.SupplierIDColumn}, false);
-            this.Relations.Add(this.relationSupplierService);
             this.relationPaymentTermService = new global::System.Data.DataRelation("PaymentTermService", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableService.PaymentTermIDColumn}, false);
             this.Relations.Add(this.relationPaymentTermService);
+            this.relationSupplierService = new global::System.Data.DataRelation("SupplierService", new global::System.Data.DataColumn[] {
+                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableService.SupplierIDColumn}, false);
+            this.Relations.Add(this.relationSupplierService);
             this.relationServiceServiceTime = new global::System.Data.DataRelation("ServiceServiceTime", new global::System.Data.DataColumn[] {
                         this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableServiceTime.ServiceIDColumn}, false);
@@ -904,14 +940,14 @@ namespace TourWriter.Info {
                         this.tableRate.RateIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableOption.RateIDColumn}, false);
             this.Relations.Add(this.relationRateOption);
-            this.relationContactSupplierContact = new global::System.Data.DataRelation("ContactSupplierContact", new global::System.Data.DataColumn[] {
-                        this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierContact.ContactIDColumn}, false);
-            this.Relations.Add(this.relationContactSupplierContact);
             this.relationSupplierSupplierContact = new global::System.Data.DataRelation("SupplierSupplierContact", new global::System.Data.DataColumn[] {
                         this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierContact.SupplierIDColumn}, false);
             this.Relations.Add(this.relationSupplierSupplierContact);
+            this.relationContactSupplierContact = new global::System.Data.DataRelation("ContactSupplierContact", new global::System.Data.DataColumn[] {
+                        this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierContact.ContactIDColumn}, false);
+            this.Relations.Add(this.relationContactSupplierContact);
             this.relationSupplierSupplierCreditCard = new global::System.Data.DataRelation("SupplierSupplierCreditCard", new global::System.Data.DataColumn[] {
                         this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierCreditCard.SupplierIDColumn}, false);
@@ -920,14 +956,14 @@ namespace TourWriter.Info {
                         this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierConfig.SupplierIDColumn}, false);
             this.Relations.Add(this.relationSupplierSupplierConfig);
-            this.relationMessageSupplierMessage = new global::System.Data.DataRelation("MessageSupplierMessage", new global::System.Data.DataColumn[] {
-                        this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierMessage.MessageIDColumn}, false);
-            this.Relations.Add(this.relationMessageSupplierMessage);
             this.relationSupplierSupplierMessage = new global::System.Data.DataRelation("SupplierSupplierMessage", new global::System.Data.DataColumn[] {
                         this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierMessage.SupplierIDColumn}, false);
             this.Relations.Add(this.relationSupplierSupplierMessage);
+            this.relationMessageSupplierMessage = new global::System.Data.DataRelation("MessageSupplierMessage", new global::System.Data.DataColumn[] {
+                        this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierMessage.MessageIDColumn}, false);
+            this.Relations.Add(this.relationMessageSupplierMessage);
             this.relationSupplierSupplierText = new global::System.Data.DataRelation("SupplierSupplierText", new global::System.Data.DataColumn[] {
                         this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierText.SupplierIDColumn}, false);
@@ -940,22 +976,26 @@ namespace TourWriter.Info {
                         this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableDiscount.ServiceIDColumn}, false);
             this.Relations.Add(this.relationServiceDiscount);
-            this.relationFK_Supplier_SupplierContent = new global::System.Data.DataRelation("FK_Supplier_SupplierContent", new global::System.Data.DataColumn[] {
-                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSupplierContent.SupplierIDColumn}, false);
-            this.Relations.Add(this.relationFK_Supplier_SupplierContent);
             this.relationFK_Content_SupplierContent = new global::System.Data.DataRelation("FK_Content_SupplierContent", new global::System.Data.DataColumn[] {
                         this.tableContent.ContentIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierContent.ContentIDColumn}, false);
             this.Relations.Add(this.relationFK_Content_SupplierContent);
-            this.relationFK_Service_ServiceContent = new global::System.Data.DataRelation("FK_Service_ServiceContent", new global::System.Data.DataColumn[] {
-                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableServiceContent.ServiceIDColumn}, false);
-            this.Relations.Add(this.relationFK_Service_ServiceContent);
+            this.relationFK_Supplier_SupplierContent = new global::System.Data.DataRelation("FK_Supplier_SupplierContent", new global::System.Data.DataColumn[] {
+                        this.tableSupplier.SupplierIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSupplierContent.SupplierIDColumn}, false);
+            this.Relations.Add(this.relationFK_Supplier_SupplierContent);
             this.relationFK_Content_ServiceContent = new global::System.Data.DataRelation("FK_Content_ServiceContent", new global::System.Data.DataColumn[] {
                         this.tableContent.ContentIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableServiceContent.ContentIDColumn}, false);
             this.Relations.Add(this.relationFK_Content_ServiceContent);
+            this.relationFK_Service_ServiceContent = new global::System.Data.DataRelation("FK_Service_ServiceContent", new global::System.Data.DataColumn[] {
+                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableServiceContent.ServiceIDColumn}, false);
+            this.Relations.Add(this.relationFK_Service_ServiceContent);
+            this.relationFK_Service_ServiceWarning = new global::System.Data.DataRelation("FK_Service_ServiceWarning", new global::System.Data.DataColumn[] {
+                        this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableServiceWarning.ServiceIDColumn}, false);
+            this.Relations.Add(this.relationFK_Service_ServiceWarning);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1074,6 +1114,12 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeServiceWarning() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void SchemaChanged(object sender, global::System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == global::System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
@@ -1183,6 +1229,9 @@ namespace TourWriter.Info {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void ServiceContentRowChangeEventHandler(object sender, ServiceContentRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void ServiceWarningRowChangeEventHandler(object sender, ServiceWarningRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -8901,6 +8950,329 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class ServiceWarningDataTable : global::System.Data.TypedTableBase<ServiceWarningRow> {
+            
+            private global::System.Data.DataColumn columnServiceWarningID;
+            
+            private global::System.Data.DataColumn columnServiceID;
+            
+            private global::System.Data.DataColumn columnDescription;
+            
+            private global::System.Data.DataColumn columnValidFrom;
+            
+            private global::System.Data.DataColumn columnValidTo;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningDataTable() {
+                this.TableName = "ServiceWarning";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ServiceWarningDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected ServiceWarningDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ServiceWarningIDColumn {
+                get {
+                    return this.columnServiceWarningID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ServiceIDColumn {
+                get {
+                    return this.columnServiceID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DescriptionColumn {
+                get {
+                    return this.columnDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ValidFromColumn {
+                get {
+                    return this.columnValidFrom;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ValidToColumn {
+                get {
+                    return this.columnValidTo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow this[int index] {
+                get {
+                    return ((ServiceWarningRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ServiceWarningRowChangeEventHandler ServiceWarningRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ServiceWarningRowChangeEventHandler ServiceWarningRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ServiceWarningRowChangeEventHandler ServiceWarningRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event ServiceWarningRowChangeEventHandler ServiceWarningRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddServiceWarningRow(ServiceWarningRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow AddServiceWarningRow(ServiceRow parentServiceRowByFK_Service_ServiceWarning, string Description, System.DateTime ValidFrom, System.DateTime ValidTo) {
+                ServiceWarningRow rowServiceWarningRow = ((ServiceWarningRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        Description,
+                        ValidFrom,
+                        ValidTo};
+                if ((parentServiceRowByFK_Service_ServiceWarning != null)) {
+                    columnValuesArray[1] = parentServiceRowByFK_Service_ServiceWarning[0];
+                }
+                rowServiceWarningRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowServiceWarningRow);
+                return rowServiceWarningRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow FindByServiceWarningID(int ServiceWarningID) {
+                return ((ServiceWarningRow)(this.Rows.Find(new object[] {
+                            ServiceWarningID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                ServiceWarningDataTable cln = ((ServiceWarningDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new ServiceWarningDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnServiceWarningID = base.Columns["ServiceWarningID"];
+                this.columnServiceID = base.Columns["ServiceID"];
+                this.columnDescription = base.Columns["Description"];
+                this.columnValidFrom = base.Columns["ValidFrom"];
+                this.columnValidTo = base.Columns["ValidTo"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnServiceWarningID = new global::System.Data.DataColumn("ServiceWarningID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceWarningID);
+                this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceID);
+                this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDescription);
+                this.columnValidFrom = new global::System.Data.DataColumn("ValidFrom", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidFrom);
+                this.columnValidTo = new global::System.Data.DataColumn("ValidTo", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidTo);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnServiceWarningID}, true));
+                this.columnServiceWarningID.AutoIncrement = true;
+                this.columnServiceWarningID.AutoIncrementSeed = -1;
+                this.columnServiceWarningID.AutoIncrementStep = -1;
+                this.columnServiceWarningID.AllowDBNull = false;
+                this.columnServiceWarningID.ReadOnly = true;
+                this.columnServiceWarningID.Unique = true;
+                this.columnServiceID.AllowDBNull = false;
+                this.columnDescription.MaxLength = 1000;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow NewServiceWarningRow() {
+                return ((ServiceWarningRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new ServiceWarningRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(ServiceWarningRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.ServiceWarningRowChanged != null)) {
+                    this.ServiceWarningRowChanged(this, new ServiceWarningRowChangeEvent(((ServiceWarningRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.ServiceWarningRowChanging != null)) {
+                    this.ServiceWarningRowChanging(this, new ServiceWarningRowChangeEvent(((ServiceWarningRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.ServiceWarningRowDeleted != null)) {
+                    this.ServiceWarningRowDeleted(this, new ServiceWarningRowChangeEvent(((ServiceWarningRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.ServiceWarningRowDeleting != null)) {
+                    this.ServiceWarningRowDeleting(this, new ServiceWarningRowChangeEvent(((ServiceWarningRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveServiceWarningRow(ServiceWarningRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                SupplierSet ds = new SupplierSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "ServiceWarningDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class PaymentTermRow : global::System.Data.DataRow {
@@ -10717,23 +11089,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SupplierRow SupplierRow {
-                get {
-                    return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["SupplierService"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["SupplierService"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermService"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["PaymentTermService"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SupplierRow SupplierRow {
+                get {
+                    return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["SupplierService"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["SupplierService"]);
                 }
             }
             
@@ -10999,6 +11371,17 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetImportIDNull() {
                 this[this.tableService.ImportIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow[] GetServiceWarningRows() {
+                if ((this.Table.ChildRelations["FK_Service_ServiceWarning"] == null)) {
+                    return new ServiceWarningRow[0];
+                }
+                else {
+                    return ((ServiceWarningRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Service_ServiceWarning"])));
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12886,23 +13269,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ContactRow ContactRow {
-                get {
-                    return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactSupplierContact"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["ContactSupplierContact"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SupplierRow SupplierRow {
                 get {
                     return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["SupplierSupplierContact"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["SupplierSupplierContact"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ContactRow ContactRow {
+                get {
+                    return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactSupplierContact"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["ContactSupplierContact"]);
                 }
             }
             
@@ -13648,23 +14031,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public MessageRow MessageRow {
-                get {
-                    return ((MessageRow)(this.GetParentRow(this.Table.ParentRelations["MessageSupplierMessage"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["MessageSupplierMessage"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SupplierRow SupplierRow {
                 get {
                     return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["SupplierSupplierMessage"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["SupplierSupplierMessage"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public MessageRow MessageRow {
+                get {
+                    return ((MessageRow)(this.GetParentRow(this.Table.ParentRelations["MessageSupplierMessage"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["MessageSupplierMessage"]);
                 }
             }
         }
@@ -14323,23 +14706,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SupplierRow SupplierRow {
-                get {
-                    return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["FK_Supplier_SupplierContent"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_Supplier_SupplierContent"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContentRow ContentRow {
                 get {
                     return ((ContentRow)(this.GetParentRow(this.Table.ParentRelations["FK_Content_SupplierContent"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Content_SupplierContent"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SupplierRow SupplierRow {
+                get {
+                    return ((SupplierRow)(this.GetParentRow(this.Table.ParentRelations["FK_Supplier_SupplierContent"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Supplier_SupplierContent"]);
                 }
             }
             
@@ -14421,23 +14804,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ServiceRow ServiceRow {
-                get {
-                    return ((ServiceRow)(this.GetParentRow(this.Table.ParentRelations["FK_Service_ServiceContent"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_Service_ServiceContent"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContentRow ContentRow {
                 get {
                     return ((ContentRow)(this.GetParentRow(this.Table.ParentRelations["FK_Content_ServiceContent"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Content_ServiceContent"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceRow ServiceRow {
+                get {
+                    return ((ServiceRow)(this.GetParentRow(this.Table.ParentRelations["FK_Service_ServiceContent"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Service_ServiceContent"]);
                 }
             }
             
@@ -14451,6 +14834,138 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetContentTypeIDNull() {
                 this[this.tableServiceContent.ContentTypeIDColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class ServiceWarningRow : global::System.Data.DataRow {
+            
+            private ServiceWarningDataTable tableServiceWarning;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal ServiceWarningRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableServiceWarning = ((ServiceWarningDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ServiceWarningID {
+                get {
+                    return ((int)(this[this.tableServiceWarning.ServiceWarningIDColumn]));
+                }
+                set {
+                    this[this.tableServiceWarning.ServiceWarningIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ServiceID {
+                get {
+                    return ((int)(this[this.tableServiceWarning.ServiceIDColumn]));
+                }
+                set {
+                    this[this.tableServiceWarning.ServiceIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Description {
+                get {
+                    try {
+                        return ((string)(this[this.tableServiceWarning.DescriptionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Description\' in table \'ServiceWarning\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableServiceWarning.DescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ValidFrom {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableServiceWarning.ValidFromColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ValidFrom\' in table \'ServiceWarning\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableServiceWarning.ValidFromColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ValidTo {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableServiceWarning.ValidToColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ValidTo\' in table \'ServiceWarning\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableServiceWarning.ValidToColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceRow ServiceRow {
+                get {
+                    return ((ServiceRow)(this.GetParentRow(this.Table.ParentRelations["FK_Service_ServiceWarning"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Service_ServiceWarning"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDescriptionNull() {
+                return this.IsNull(this.tableServiceWarning.DescriptionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDescriptionNull() {
+                this[this.tableServiceWarning.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsValidFromNull() {
+                return this.IsNull(this.tableServiceWarning.ValidFromColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetValidFromNull() {
+                this[this.tableServiceWarning.ValidFromColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsValidToNull() {
+                return this.IsNull(this.tableServiceWarning.ValidToColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetValidToNull() {
+                this[this.tableServiceWarning.ValidToColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -15086,6 +15601,40 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ServiceContentRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class ServiceWarningRowChangeEvent : global::System.EventArgs {
+            
+            private ServiceWarningRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRowChangeEvent(ServiceWarningRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ServiceWarningRow Row {
                 get {
                     return this.eventRow;
                 }

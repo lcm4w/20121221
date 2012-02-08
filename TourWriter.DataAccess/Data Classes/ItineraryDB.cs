@@ -46,6 +46,8 @@ namespace TourWriter.DataAccess
 			// don't persist lookup tables
 			ds.SupplierLookup.AcceptChanges();
 			ds.OptionLookup.AcceptChanges();
+            ds.ServiceWarning.AcceptChanges();
+
 			ItinerarySet changes = (ItinerarySet)ds.GetChanges();
 			if(changes == null)
 			    changes = ds; // ensure change not null after accepting changes above					
