@@ -162,6 +162,7 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from PurchaseItemPaymentsDetail where {1}", cols, GetSqlFilter("Purchases"));
             _purchasesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
+            App.PrepareDataTableForExport(_purchasesDs.Tables[0]);
         }
         
         private void LoadSalesData()
@@ -172,6 +173,7 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from ItinerarySaleDetail where {1}", cols, GetSqlFilter("Sales"));
             _salesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
+            App.PrepareDataTableForExport(_salesDs.Tables[0]);
         }
         
         private void LoadServiceType()
