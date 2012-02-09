@@ -280,6 +280,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         return
                             (item.ChargeType == "ROOM" ) ? (memberCount != 0 ? memberRooms / memberCount : 0) :
                             (item.ChargeType == "GROUP") ? (memberCount != 0 ? 1 / memberCount : 0) :
+                            (item.ChargeType == "PAX"  ) ? (memberCount != 0 ? 1 : memberCount) :
                             1;
                     }
                 case CostTypes.Staff:
