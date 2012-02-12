@@ -129,11 +129,11 @@ namespace TourWriter.Services
         private static string Replace(string text, string tag, string value, string format)
         {
             value = value.Trim(). // clean
-                Replace("\r\n", " ").Replace("\n", " ");  // and remove new-lines
+                Replace("\r\n", " ").Replace("\n", " ");  // remove new-lines
 
             if (format == "csv")
                 if (value.Contains(","))
-                    value = string.Format("\"{0}\"", value); // escape embedded commas
+                    value = value.Replace(',', '.'); // remove comma's from csv file
 
             tag = "[!" + tag + "]";
             return text.Replace(tag, value);
