@@ -83,13 +83,12 @@ namespace TourWriter.Modules.SupplierModule
                 if (OnSupplierSelected != null)
                     OnSupplierSelected(
                         new SupplierSelectedEventArgs(supplierSet.Supplier[0].SupplierID));
-
-
-                //if (App.IsDebugMode && ModifierKeys == Keys.Control)
-                //{
+                
+                if (App.IsDebugMode)
+                {
                     gridServices.AddExportHooks(SupplierSet, gridOptions);
                     gridOptions.AddExportHooks(SupplierSet);
-                //}
+                }
             }
         }
 
