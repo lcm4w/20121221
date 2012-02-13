@@ -93,6 +93,18 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.Appearance appearance60 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance61 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance62 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance63 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance64 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance65 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance66 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance67 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance68 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance69 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance70 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance71 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance72 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance73 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance74 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab1 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab2 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab3 = new Infragistics.Win.UltraWinTabControl.UltraTab();
@@ -119,11 +131,11 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbGrossTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.label12 = new System.Windows.Forms.Label();
             this.cmbNetTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
-            this.label11 = new System.Windows.Forms.Label();
             this.pnlSpatial = new System.Windows.Forms.Panel();
             this.txtLongitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
             this.label10 = new System.Windows.Forms.Label();
             this.txtLatitude = new Infragistics.Win.UltraWinMaskedEdit.UltraMaskedEdit();
+            this.label11 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtMaxPax = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
@@ -140,12 +152,15 @@ namespace TourWriter.Modules.SupplierModule
             this.btnFocDel = new System.Windows.Forms.ToolStripButton();
             this.ultraTabPageControl4 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
+            this.btnServiceWarningAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnServiceWarningDelete = new System.Windows.Forms.ToolStripButton();
+            this.gridServiceWarnings = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.label34 = new System.Windows.Forms.Label();
             this.label45 = new System.Windows.Forms.Label();
             this.txtCheckinMinutesEarly = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtServiceWarning = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.gridServiceTimes = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.label5 = new System.Windows.Forms.Label();
             this.tsServiceTimes = new TourWriter.UserControls.MyToolStrip();
@@ -193,8 +208,9 @@ namespace TourWriter.Modules.SupplierModule
             this.tsFoc.SuspendLayout();
             this.ultraTabPageControl4.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.myToolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCheckinMinutesEarly)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtServiceWarning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServiceTimes)).BeginInit();
             this.tsServiceTimes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceDescription)).BeginInit();
@@ -266,9 +282,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // gridOptions
             // 
-            this.gridOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance1.BackColor = System.Drawing.SystemColors.Window;
             appearance1.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridOptions.DisplayLayout.Appearance = appearance1;
@@ -419,9 +435,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // gridRates
             // 
-            this.gridRates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridRates.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance14.BackColor = System.Drawing.SystemColors.Window;
             appearance14.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridRates.DisplayLayout.Appearance = appearance14;
@@ -561,7 +577,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl1.Controls.Add(this.txtPaymentTerms);
             this.ultraTabPageControl1.Controls.Add(this.label9);
             this.ultraTabPageControl1.Controls.Add(this.tsFoc);
-            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(471, 742);
             // 
@@ -595,15 +611,6 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbNetTaxType.TabIndex = 180;
             this.toolTip1.SetToolTip(this.cmbNetTaxType, "Overrides the ServiceType or Supplier NetTaxType");
             this.cmbNetTaxType.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbNetTaxType_InitializeLayout);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(8, 5);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(126, 13);
-            this.label11.TabIndex = 179;
-            this.label11.Text = "Override supplier location";
             // 
             // pnlSpatial
             // 
@@ -645,6 +652,15 @@ namespace TourWriter.Modules.SupplierModule
             this.txtLatitude.Size = new System.Drawing.Size(130, 20);
             this.txtLatitude.TabIndex = 180;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 5);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(126, 13);
+            this.label11.TabIndex = 179;
+            this.label11.Text = "Override supplier location";
+            // 
             // label43
             // 
             this.label43.BackColor = System.Drawing.Color.Transparent;
@@ -674,7 +690,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtMaxPax.Size = new System.Drawing.Size(47, 21);
             this.txtMaxPax.TabIndex = 176;
             this.toolTip1.SetToolTip(this.txtMaxPax, "Enter the early arrival time in minutes. This is used to recalculate the client s" +
-                    "tart time for vouchers.");
+        "tart time for vouchers.");
             // 
             // label4
             // 
@@ -751,9 +767,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // treeServiceConfigs
             // 
-            this.treeServiceConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeServiceConfigs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeServiceConfigs.FullRowSelect = true;
             this.treeServiceConfigs.Location = new System.Drawing.Point(3, 327);
             this.treeServiceConfigs.MinimumSize = new System.Drawing.Size(200, 200);
@@ -855,19 +871,20 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.ultraTabPageControl4.AutoScroll = true;
             this.ultraTabPageControl4.Controls.Add(this.panel1);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(471, 742);
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.myToolStrip1);
+            this.panel1.Controls.Add(this.gridServiceWarnings);
             this.panel1.Controls.Add(this.label34);
             this.panel1.Controls.Add(this.label45);
             this.panel1.Controls.Add(this.txtCheckinMinutesEarly);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.txtServiceWarning);
             this.panel1.Controls.Add(this.gridServiceTimes);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.tsServiceTimes);
@@ -880,10 +897,114 @@ namespace TourWriter.Modules.SupplierModule
             this.panel1.Size = new System.Drawing.Size(471, 742);
             this.panel1.TabIndex = 8;
             // 
+            // myToolStrip1
+            // 
+            this.myToolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.myToolStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.myToolStrip1.DisableAllMenuItems = true;
+            this.myToolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.myToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnServiceWarningAdd,
+            this.btnServiceWarningDelete});
+            this.myToolStrip1.Location = new System.Drawing.Point(377, 141);
+            this.myToolStrip1.Name = "myToolStrip1";
+            this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.myToolStrip1.Size = new System.Drawing.Size(80, 25);
+            this.myToolStrip1.TabIndex = 126;
+            this.myToolStrip1.Text = "myToolStrip1";
+            // 
+            // btnServiceWarningAdd
+            // 
+            this.btnServiceWarningAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceWarningAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningAdd.Image")));
+            this.btnServiceWarningAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceWarningAdd.Name = "btnServiceWarningAdd";
+            this.btnServiceWarningAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceWarningAdd.Text = "btnFocAdd";
+            this.btnServiceWarningAdd.ToolTipText = "Add new time when the service is available";
+            this.btnServiceWarningAdd.Click += new System.EventHandler(this.btnServiceWarningAdd_Click);
+            // 
+            // btnServiceWarningDelete
+            // 
+            this.btnServiceWarningDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceWarningDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningDelete.Image")));
+            this.btnServiceWarningDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceWarningDelete.Name = "btnServiceWarningDelete";
+            this.btnServiceWarningDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceWarningDelete.Text = "btnServiceDelete";
+            this.btnServiceWarningDelete.ToolTipText = "Delete selected service time";
+            this.btnServiceWarningDelete.Click += new System.EventHandler(this.btnServiceWarningDelete_Click);
+            // 
+            // gridServiceWarnings
+            // 
+            this.gridServiceWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            appearance38.BackColor = System.Drawing.SystemColors.Window;
+            appearance38.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gridServiceWarnings.DisplayLayout.Appearance = appearance38;
+            this.gridServiceWarnings.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            appearance39.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance39.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance39.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance39.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.Appearance = appearance39;
+            appearance40.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.BandLabelAppearance = appearance40;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.Hidden = true;
+            appearance41.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance41.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance41.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance41.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.PromptAppearance = appearance41;
+            this.gridServiceWarnings.DisplayLayout.MaxColScrollRegions = 1;
+            this.gridServiceWarnings.DisplayLayout.MaxRowScrollRegions = 1;
+            appearance42.BackColor = System.Drawing.SystemColors.Window;
+            appearance42.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.gridServiceWarnings.DisplayLayout.Override.ActiveCellAppearance = appearance42;
+            appearance43.BackColor = System.Drawing.SystemColors.Highlight;
+            appearance43.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.gridServiceWarnings.DisplayLayout.Override.ActiveRowAppearance = appearance43;
+            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
+            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
+            appearance44.BackColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.Override.CardAreaAppearance = appearance44;
+            appearance45.BorderColor = System.Drawing.Color.Silver;
+            appearance45.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this.gridServiceWarnings.DisplayLayout.Override.CellAppearance = appearance45;
+            this.gridServiceWarnings.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
+            this.gridServiceWarnings.DisplayLayout.Override.CellPadding = 0;
+            appearance46.BackColor = System.Drawing.SystemColors.Control;
+            appearance46.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance46.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance46.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance46.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.Override.GroupByRowAppearance = appearance46;
+            appearance47.TextHAlignAsString = "Left";
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderAppearance = appearance47;
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
+            appearance48.BackColor = System.Drawing.SystemColors.Window;
+            appearance48.BorderColor = System.Drawing.Color.Silver;
+            this.gridServiceWarnings.DisplayLayout.Override.RowAppearance = appearance48;
+            this.gridServiceWarnings.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
+            appearance49.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.gridServiceWarnings.DisplayLayout.Override.TemplateAddRowAppearance = appearance49;
+            this.gridServiceWarnings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
+            this.gridServiceWarnings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
+            this.gridServiceWarnings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
+            this.gridServiceWarnings.Location = new System.Drawing.Point(3, 166);
+            this.gridServiceWarnings.Name = "gridServiceWarnings";
+            this.gridServiceWarnings.Size = new System.Drawing.Size(453, 97);
+            this.gridServiceWarnings.TabIndex = 125;
+            this.gridServiceWarnings.Text = "Checkin - Checkout";
+            this.gridServiceWarnings.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridServiceWarnings_InitializeLayout);
+            // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(4, 354);
+            this.label34.Location = new System.Drawing.Point(4, 374);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(153, 13);
             this.label34.TabIndex = 113;
@@ -892,7 +1013,7 @@ namespace TourWriter.Modules.SupplierModule
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(4, 235);
+            this.label45.Location = new System.Drawing.Point(4, 275);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(157, 13);
             this.label45.TabIndex = 114;
@@ -908,12 +1029,12 @@ namespace TourWriter.Modules.SupplierModule
             this.txtCheckinMinutesEarly.Size = new System.Drawing.Size(47, 21);
             this.txtCheckinMinutesEarly.TabIndex = 118;
             this.toolTip1.SetToolTip(this.txtCheckinMinutesEarly, "Enter the early arrival time in minutes. This is used to recalculate the client s" +
-                    "tart time for vouchers.");
+        "tart time for vouchers.");
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 145);
+            this.label2.Location = new System.Drawing.Point(3, 150);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(304, 13);
             this.label2.TabIndex = 124;
@@ -928,74 +1049,61 @@ namespace TourWriter.Modules.SupplierModule
             this.label7.TabIndex = 121;
             this.label7.Text = "Start Times for selected Service";
             // 
-            // txtServiceWarning
-            // 
-            this.txtServiceWarning.AcceptsReturn = true;
-            this.txtServiceWarning.AcceptsTab = true;
-            this.txtServiceWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServiceWarning.Location = new System.Drawing.Point(4, 161);
-            this.txtServiceWarning.Multiline = true;
-            this.txtServiceWarning.Name = "txtServiceWarning";
-            this.txtServiceWarning.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtServiceWarning.Size = new System.Drawing.Size(453, 67);
-            this.txtServiceWarning.TabIndex = 123;
-            // 
             // gridServiceTimes
             // 
-            this.gridServiceTimes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            appearance38.BackColor = System.Drawing.SystemColors.Window;
-            appearance38.BorderColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gridServiceTimes.DisplayLayout.Appearance = appearance38;
+            this.gridServiceTimes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            appearance50.BackColor = System.Drawing.SystemColors.Window;
+            appearance50.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gridServiceTimes.DisplayLayout.Appearance = appearance50;
             this.gridServiceTimes.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
-            appearance39.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            appearance39.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance39.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
-            appearance39.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServiceTimes.DisplayLayout.GroupByBox.Appearance = appearance39;
-            appearance40.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServiceTimes.DisplayLayout.GroupByBox.BandLabelAppearance = appearance40;
+            appearance51.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance51.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance51.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance51.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceTimes.DisplayLayout.GroupByBox.Appearance = appearance51;
+            appearance52.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceTimes.DisplayLayout.GroupByBox.BandLabelAppearance = appearance52;
             this.gridServiceTimes.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
             this.gridServiceTimes.DisplayLayout.GroupByBox.Hidden = true;
-            appearance41.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            appearance41.BackColor2 = System.Drawing.SystemColors.Control;
-            appearance41.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance41.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServiceTimes.DisplayLayout.GroupByBox.PromptAppearance = appearance41;
+            appearance53.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance53.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance53.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance53.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceTimes.DisplayLayout.GroupByBox.PromptAppearance = appearance53;
             this.gridServiceTimes.DisplayLayout.MaxColScrollRegions = 1;
             this.gridServiceTimes.DisplayLayout.MaxRowScrollRegions = 1;
-            appearance42.BackColor = System.Drawing.SystemColors.Window;
-            appearance42.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.gridServiceTimes.DisplayLayout.Override.ActiveCellAppearance = appearance42;
-            appearance43.BackColor = System.Drawing.SystemColors.Highlight;
-            appearance43.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.gridServiceTimes.DisplayLayout.Override.ActiveRowAppearance = appearance43;
+            appearance54.BackColor = System.Drawing.SystemColors.Window;
+            appearance54.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.gridServiceTimes.DisplayLayout.Override.ActiveCellAppearance = appearance54;
+            appearance55.BackColor = System.Drawing.SystemColors.Highlight;
+            appearance55.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.gridServiceTimes.DisplayLayout.Override.ActiveRowAppearance = appearance55;
             this.gridServiceTimes.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
             this.gridServiceTimes.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
-            appearance44.BackColor = System.Drawing.SystemColors.Window;
-            this.gridServiceTimes.DisplayLayout.Override.CardAreaAppearance = appearance44;
-            appearance45.BorderColor = System.Drawing.Color.Silver;
-            appearance45.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
-            this.gridServiceTimes.DisplayLayout.Override.CellAppearance = appearance45;
+            appearance56.BackColor = System.Drawing.SystemColors.Window;
+            this.gridServiceTimes.DisplayLayout.Override.CardAreaAppearance = appearance56;
+            appearance57.BorderColor = System.Drawing.Color.Silver;
+            appearance57.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this.gridServiceTimes.DisplayLayout.Override.CellAppearance = appearance57;
             this.gridServiceTimes.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
             this.gridServiceTimes.DisplayLayout.Override.CellPadding = 0;
-            appearance46.BackColor = System.Drawing.SystemColors.Control;
-            appearance46.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance46.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
-            appearance46.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance46.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServiceTimes.DisplayLayout.Override.GroupByRowAppearance = appearance46;
-            appearance47.TextHAlignAsString = "Left";
-            this.gridServiceTimes.DisplayLayout.Override.HeaderAppearance = appearance47;
+            appearance58.BackColor = System.Drawing.SystemColors.Control;
+            appearance58.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance58.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance58.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance58.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceTimes.DisplayLayout.Override.GroupByRowAppearance = appearance58;
+            appearance59.TextHAlignAsString = "Left";
+            this.gridServiceTimes.DisplayLayout.Override.HeaderAppearance = appearance59;
             this.gridServiceTimes.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this.gridServiceTimes.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
-            appearance48.BackColor = System.Drawing.SystemColors.Window;
-            appearance48.BorderColor = System.Drawing.Color.Silver;
-            this.gridServiceTimes.DisplayLayout.Override.RowAppearance = appearance48;
+            appearance60.BackColor = System.Drawing.SystemColors.Window;
+            appearance60.BorderColor = System.Drawing.Color.Silver;
+            this.gridServiceTimes.DisplayLayout.Override.RowAppearance = appearance60;
             this.gridServiceTimes.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
-            appearance49.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.gridServiceTimes.DisplayLayout.Override.TemplateAddRowAppearance = appearance49;
+            appearance61.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.gridServiceTimes.DisplayLayout.Override.TemplateAddRowAppearance = appearance61;
             this.gridServiceTimes.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridServiceTimes.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridServiceTimes.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
@@ -1015,7 +1123,7 @@ namespace TourWriter.Modules.SupplierModule
             this.label5.TabIndex = 116;
             this.label5.Text = "Early arrival";
             this.toolTip1.SetToolTip(this.label5, "Enter the early arrival time in minutes. This is used to recalculate the client s" +
-                    "tart time for vouchers.");
+        "tart time for vouchers.");
             // 
             // tsServiceTimes
             // 
@@ -1065,90 +1173,90 @@ namespace TourWriter.Modules.SupplierModule
             this.label6.TabIndex = 117;
             this.label6.Text = "minutes prior";
             this.toolTip1.SetToolTip(this.label6, "Enter the early arrival time in minutes. This is used to recalculate the client s" +
-                    "tart time for vouchers.");
+        "tart time for vouchers.");
             // 
             // txtServiceDescription
             // 
             this.txtServiceDescription.AcceptsReturn = true;
             this.txtServiceDescription.AcceptsTab = true;
-            this.txtServiceDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServiceDescription.Location = new System.Drawing.Point(4, 251);
+            this.txtServiceDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServiceDescription.Location = new System.Drawing.Point(4, 291);
             this.txtServiceDescription.Multiline = true;
             this.txtServiceDescription.Name = "txtServiceDescription";
             this.txtServiceDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtServiceDescription.Size = new System.Drawing.Size(453, 96);
+            this.txtServiceDescription.Size = new System.Drawing.Size(453, 70);
             this.txtServiceDescription.TabIndex = 111;
             // 
             // txtServiceComments
             // 
             this.txtServiceComments.AcceptsReturn = true;
             this.txtServiceComments.AcceptsTab = true;
-            this.txtServiceComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServiceComments.Location = new System.Drawing.Point(4, 370);
+            this.txtServiceComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServiceComments.Location = new System.Drawing.Point(4, 390);
             this.txtServiceComments.Multiline = true;
             this.txtServiceComments.Name = "txtServiceComments";
             this.txtServiceComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtServiceComments.Size = new System.Drawing.Size(453, 115);
+            this.txtServiceComments.Size = new System.Drawing.Size(453, 70);
             this.txtServiceComments.TabIndex = 112;
             // 
             // gridServices
             // 
-            this.gridServices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            appearance50.BackColor = System.Drawing.SystemColors.Window;
-            appearance50.BorderColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gridServices.DisplayLayout.Appearance = appearance50;
+            this.gridServices.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            appearance62.BackColor = System.Drawing.SystemColors.Window;
+            appearance62.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gridServices.DisplayLayout.Appearance = appearance62;
             this.gridServices.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
-            appearance51.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            appearance51.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance51.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
-            appearance51.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServices.DisplayLayout.GroupByBox.Appearance = appearance51;
-            appearance52.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServices.DisplayLayout.GroupByBox.BandLabelAppearance = appearance52;
+            appearance63.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance63.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance63.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance63.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServices.DisplayLayout.GroupByBox.Appearance = appearance63;
+            appearance64.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServices.DisplayLayout.GroupByBox.BandLabelAppearance = appearance64;
             this.gridServices.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
             this.gridServices.DisplayLayout.GroupByBox.Hidden = true;
-            appearance53.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            appearance53.BackColor2 = System.Drawing.SystemColors.Control;
-            appearance53.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance53.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServices.DisplayLayout.GroupByBox.PromptAppearance = appearance53;
+            appearance65.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance65.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance65.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance65.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServices.DisplayLayout.GroupByBox.PromptAppearance = appearance65;
             this.gridServices.DisplayLayout.MaxColScrollRegions = 1;
             this.gridServices.DisplayLayout.MaxRowScrollRegions = 1;
-            appearance54.BackColor = System.Drawing.SystemColors.Window;
-            appearance54.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.gridServices.DisplayLayout.Override.ActiveCellAppearance = appearance54;
-            appearance55.BackColor = System.Drawing.SystemColors.Highlight;
-            appearance55.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.gridServices.DisplayLayout.Override.ActiveRowAppearance = appearance55;
+            appearance66.BackColor = System.Drawing.SystemColors.Window;
+            appearance66.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.gridServices.DisplayLayout.Override.ActiveCellAppearance = appearance66;
+            appearance67.BackColor = System.Drawing.SystemColors.Highlight;
+            appearance67.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.gridServices.DisplayLayout.Override.ActiveRowAppearance = appearance67;
             this.gridServices.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
             this.gridServices.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
-            appearance56.BackColor = System.Drawing.SystemColors.Window;
-            this.gridServices.DisplayLayout.Override.CardAreaAppearance = appearance56;
-            appearance57.BorderColor = System.Drawing.Color.Silver;
-            appearance57.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
-            this.gridServices.DisplayLayout.Override.CellAppearance = appearance57;
+            appearance68.BackColor = System.Drawing.SystemColors.Window;
+            this.gridServices.DisplayLayout.Override.CardAreaAppearance = appearance68;
+            appearance69.BorderColor = System.Drawing.Color.Silver;
+            appearance69.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this.gridServices.DisplayLayout.Override.CellAppearance = appearance69;
             this.gridServices.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
             this.gridServices.DisplayLayout.Override.CellPadding = 0;
-            appearance58.BackColor = System.Drawing.SystemColors.Control;
-            appearance58.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance58.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
-            appearance58.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance58.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServices.DisplayLayout.Override.GroupByRowAppearance = appearance58;
-            appearance59.TextHAlignAsString = "Left";
-            this.gridServices.DisplayLayout.Override.HeaderAppearance = appearance59;
+            appearance70.BackColor = System.Drawing.SystemColors.Control;
+            appearance70.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance70.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance70.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance70.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServices.DisplayLayout.Override.GroupByRowAppearance = appearance70;
+            appearance71.TextHAlignAsString = "Left";
+            this.gridServices.DisplayLayout.Override.HeaderAppearance = appearance71;
             this.gridServices.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this.gridServices.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
-            appearance60.BackColor = System.Drawing.SystemColors.Window;
-            appearance60.BorderColor = System.Drawing.Color.Silver;
-            this.gridServices.DisplayLayout.Override.RowAppearance = appearance60;
+            appearance72.BackColor = System.Drawing.SystemColors.Window;
+            appearance72.BorderColor = System.Drawing.Color.Silver;
+            this.gridServices.DisplayLayout.Override.RowAppearance = appearance72;
             this.gridServices.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
-            appearance61.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.gridServices.DisplayLayout.Override.TemplateAddRowAppearance = appearance61;
+            appearance73.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.gridServices.DisplayLayout.Override.TemplateAddRowAppearance = appearance73;
             this.gridServices.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this.gridServices.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this.gridServices.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
@@ -1231,9 +1339,9 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.ultraTabSharedControlsPage2);
             this.tabControl.Controls.Add(this.ultraTabPageControl3);
             this.tabControl.Controls.Add(this.ultraTabPageControl4);
@@ -1241,8 +1349,8 @@ namespace TourWriter.Modules.SupplierModule
             this.tabControl.Location = new System.Drawing.Point(2, 26);
             this.tabControl.MinTabWidth = 50;
             this.tabControl.Name = "tabControl";
-            appearance62.FontData.BoldAsString = "True";
-            this.tabControl.SelectedTabAppearance = appearance62;
+            appearance74.FontData.BoldAsString = "True";
+            this.tabControl.SelectedTabAppearance = appearance74;
             this.tabControl.SharedControlsPage = this.ultraTabSharedControlsPage2;
             this.tabControl.Size = new System.Drawing.Size(475, 768);
             this.tabControl.TabIndex = 4;
@@ -1428,8 +1536,10 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.myToolStrip1.ResumeLayout(false);
+            this.myToolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtCheckinMinutesEarly)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtServiceWarning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServiceTimes)).EndInit();
             this.tsServiceTimes.ResumeLayout(false);
             this.tsServiceTimes.PerformLayout();
@@ -1504,7 +1614,6 @@ namespace TourWriter.Modules.SupplierModule
         internal System.Windows.Forms.Label lblServices;
         internal System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtServiceWarning;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         internal System.Windows.Forms.Label lblCurrencyInfo;
         private System.Windows.Forms.Panel panel1;
@@ -1535,5 +1644,9 @@ namespace TourWriter.Modules.SupplierModule
         private Infragistics.Win.UltraWinGrid.UltraCombo cmbNetTaxType;
         private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
         private System.Windows.Forms.Label label12;
+        private Infragistics.Win.UltraWinGrid.UltraGrid gridServiceWarnings;
+        private UserControls.MyToolStrip myToolStrip1;
+        private System.Windows.Forms.ToolStripButton btnServiceWarningAdd;
+        private System.Windows.Forms.ToolStripButton btnServiceWarningDelete;
     }
 }

@@ -184,7 +184,7 @@ namespace TourWriter.Modules.SupplierModule
             txtCheckinMinutesEarly.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.CheckinMinutesEarly");
             txtServiceDescription.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Description");
             txtServiceComments.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Comments");
-            txtServiceWarning.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Warning");
+            gridServiceWarnings.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceServiceWarning");
             txtMaxPax.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.MaxPax");
             txtLatitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Latitude");
             txtLongitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Longitude");
@@ -518,14 +518,28 @@ namespace TourWriter.Modules.SupplierModule
             return paymentTermID;
         }
 
-        internal string GetSelectedServiceWarningMessage()
+        internal string GetSelectedServiceWarningMessage(DateTime bookingDate)
         {
             if (gridServices.ActiveRow != null)
             {
                 int? id = GetSelectedServiceId();
                 if (id.HasValue)
-                    return supplierSet.Service.FindByServiceID((int)id).Warning;
+                {
+                    var sb = new System.Text.StringBuilder();
+                    var warnings = supplierSet.ServiceWarning.Where(w => w.ServiceID == id.Value && 
+                                                                         bookingDate.Date >= w.ValidFrom.Date &&
+                                                                         bookingDate.Date <= w.ValidTo.Date);
+                    int ctr = 0;
+                    foreach (var warning in warnings)
+                    {
+                        ++ctr;
+                        sb.AppendLine(string.Format("{0}. {1}", ctr.ToString(), warning.Description));
+                    }
+
+                    return sb.ToString().TrimEnd();
+                }
             }
+
             return "";
         }
 
@@ -1107,12 +1121,65 @@ namespace TourWriter.Modules.SupplierModule
                     }
                 }
                 else
-                    c.Hidden = true;
+                    c.Hidden = true;                
             }
             int index = 0;
             e.Layout.Bands[0].Columns["StartTime"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["EndTime"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Comment"].Header.VisiblePosition = index;
+
+            GridHelper.SetDefaultGridAppearance(e);
+            e.Layout.AutoFitStyle = AutoFitStyle.ExtendLastColumn;
+        }
+
+        private void gridServiceWarnings_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "ValidFrom")
+                {
+                    c.SortIndicator = SortIndicator.Ascending;
+                    c.Header.Caption = "Valid from";
+                }
+                else if (c.Key == "ValidTo")
+                {
+                    c.Header.Caption = "Valid to";
+                }
+                if (c.Key == "ValidFrom" || c.Key == "ValidTo")
+                {
+                    c.Width = 80;
+                    c.Format = "d";
+                    c.MaskInput = "{date}";
+                    DateTimeEditor editor = c.Editor as DateTimeEditor;
+                    if (editor != null)
+                        editor.DropDownButtonDisplayStyle = Infragistics.Win.ButtonDisplayStyle.Never;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.EditAndSelectText;
+                    if (!allowEditing)
+                    {
+                        c.CellActivation = Activation.NoEdit;
+                        c.CellClickAction = CellClickAction.RowSelect;
+                    }
+                }
+                else if (c.Key == "Description")
+                {
+                    c.CellMultiLine = DefaultableBoolean.True;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    if (!allowEditing)
+                    {
+                        c.CellActivation = Activation.NoEdit;
+                        c.CellClickAction = CellClickAction.RowSelect;
+                    }
+                }
+                else
+                    c.Hidden = true;                                         
+            }
+            int index = 0;
+            e.Layout.Bands[0].Columns["ValidFrom"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["ValidTo"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Description"].Header.VisiblePosition = index;
 
             GridHelper.SetDefaultGridAppearance(e);
             e.Layout.AutoFitStyle = AutoFitStyle.ExtendLastColumn;
@@ -1132,6 +1199,20 @@ namespace TourWriter.Modules.SupplierModule
             GridHelper.SetActiveRow(gridServiceTimes, "ServiceTimeID", r.ServiceTimeID, "StartTime");
         }
 
+        private void btnServiceWarningAdd_Click(object sender, EventArgs e)
+        {
+            if (gridServices.ActiveRow == null)
+                return;
+
+            // add new row
+            SupplierSet.ServiceWarningRow r = supplierSet.ServiceWarning.NewServiceWarningRow();
+            r.ServiceID = (int)gridServices.ActiveRow.Cells["ServiceID"].Value;
+            r.ValidFrom = DateTime.Now;
+            r.ValidTo = DateTime.Now.AddDays(1);
+            supplierSet.ServiceWarning.AddServiceWarningRow(r);
+            GridHelper.SetActiveRow(gridServiceWarnings, "ServiceWarningID", r.ServiceWarningID, "ValidFrom");
+        }
+
         private void btnServiceTimeDelete_Click(object sender, EventArgs e)
         {
             if (gridServiceTimes.ActiveRow == null)
@@ -1139,6 +1220,15 @@ namespace TourWriter.Modules.SupplierModule
 
             if (App.AskDeleteRow())
                 GridHelper.DeleteActiveRow(gridServiceTimes, true);
+        }
+
+        private void btnServiceWarningDelete_Click(object sender, EventArgs e)
+        {
+            if (gridServiceWarnings.ActiveRow == null)
+                return;
+
+            if (App.AskDeleteRow())
+                GridHelper.DeleteActiveRow(gridServiceWarnings, true);
         }
 
         private void treeServiceConfigs_AfterCheck(object sender, NodeEventArgs e)
@@ -1784,8 +1874,8 @@ namespace TourWriter.Modules.SupplierModule
             ToggleGroupColumns(menuItemGroups.Checked);
         }
 
-        #endregion
-
+        #endregion                
+        
         #endregion
     }
 

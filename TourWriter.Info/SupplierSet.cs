@@ -5,6 +5,10 @@ namespace TourWriter.Info {
 
     partial class SupplierSet
     {
+        partial class ServiceWarningDataTable
+        {
+        }
+    
         partial class SupplierDataTable
         {
         }

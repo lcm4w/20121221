@@ -212,7 +212,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         }
 
-        private ItinerarySet.PurchaseItemRow AddNewPurchaseItem(int optionId)
+        private ItinerarySet.PurchaseItemRow AddNewPurchaseItem(int optionId, DateTime bookingDate)
         {
             // additional data.
             SupplierSet.OptionRow option = supplierSet.Option.FindByOptionID(optionId);
@@ -228,7 +228,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 null,
                 option.Net,
                 option.Gross,
-                GetNextDefaultDate(),
+                bookingDate,
                 null,
                 null,
                 Cache.User.UserID,
@@ -624,12 +624,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             
             // show any warnings
-            var warning = serviceEditor1.GetSelectedServiceWarningMessage();
+            var bookingDate = GetNextDefaultDate();            
+            var warning = serviceEditor1.GetSelectedServiceWarningMessage(bookingDate);            
             if (warning != string.Empty)
-            {
-                warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\nContinue?", warning);
-                if (MessageBox.Show(warning, "BookingEditor Warning Message", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
+            {                
+                if (!ShowBookingWarnings(warning))
                 {
                     serviceEditor1.SetSelectedOnActiveOptionRow(false);
                     return;
@@ -637,7 +636,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             // add purchase item
-            var id = AddNewPurchaseItem(e.OptionID).PurchaseItemID;
+            var id = AddNewPurchaseItem(e.OptionID, bookingDate).PurchaseItemID;
 
             UltraGridRow newRow = null;
             foreach (var row in gridBookings.Rows)
@@ -680,10 +679,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             cell.ValueList = list;
 
             cell.Value = list.ValueListItems[1].DataValue;
-            cell.Row.Update();
-
-          
-        }
+            cell.Row.Update();          
+        }        
         
         private void btnOptionDel_Click(object sender, EventArgs e)
         {
@@ -831,6 +828,31 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                             e.Cell.Row.Cells["EndTime"].Value = end.HasValue ? (object) end : DBNull.Value;
                         }
                         break;
+                }                
+            }            
+        }
+
+        private void gridBookings_CellChange(object sender, CellEventArgs e)
+        {    
+            if (e.Cell.Column.Key == "StartDate")
+            {
+                // parse is safe because mask is used on the cell/column                
+                DateTime newDate = DateTime.Parse(e.Cell.Row.Cells["StartDate"].Text);
+                DateTime origDate = (DateTime)e.Cell.Row.Cells["StartDate"].Value;
+
+                // show any warnings                
+                var warning = serviceEditor1.GetSelectedServiceWarningMessage(newDate);
+                if (warning != string.Empty)
+                {
+                    System.Threading.Thread thr = new System.Threading.Thread(delegate() 
+                    {
+                        bool acceptChanges = ShowBookingWarnings(warning);
+                        if (!acceptChanges)
+                        {
+                            gridBookings.Do(grid => e.Cell.Value = origDate);
+                        }
+                    });
+                    thr.Start();
                 }
             }
         }
@@ -841,7 +863,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.RestoreOriginalValue = true;
         }
 
-        #endregion
+        private bool ShowBookingWarnings(string warning)
+        {
+            warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\nContinue?", warning);
+            if (MessageBox.Show(warning, "BookingEditor Warning Message", MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion        
     }
 
     public delegate void OnPurchaseItemAddedHandler(PurchaseItemAddedEventArgs e);

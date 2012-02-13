@@ -264,6 +264,7 @@
     </None>
     <None Include="SupplierSet.xss">
       <DependentUpon>SupplierSet.xsd</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="SupplierSet.xsx">
       <DependentUpon>SupplierSet.xsd</DependentUpon>

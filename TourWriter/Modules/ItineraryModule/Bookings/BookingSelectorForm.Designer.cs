@@ -53,6 +53,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtSupplierName = new System.Windows.Forms.TextBox();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkCurrency = new System.Windows.Forms.CheckBox();
             this.chkIncrementDates = new System.Windows.Forms.CheckBox();
             this.lblBooking = new System.Windows.Forms.Label();
             this.cmbBookings = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
@@ -70,7 +71,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.popupControler = new Infragistics.Win.Misc.UltraPopupControlContainer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.chkCurrency = new System.Windows.Forms.CheckBox();
             this.tabSearch.SuspendLayout();
             this.ultraTabPageControl1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -88,13 +88,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.tabSearch.Controls.Add(this.supplierSearch1);
             this.tabSearch.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSearch.Name = "tabSearch";
-            this.tabSearch.Size = new System.Drawing.Size(642, 427);
+            this.tabSearch.Size = new System.Drawing.Size(642, 449);
             // 
             // supplierSearch1
             // 
-            this.supplierSearch1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.supplierSearch1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.supplierSearch1.BackColor = System.Drawing.Color.Transparent;
             this.supplierSearch1.Location = new System.Drawing.Point(0, 3);
             this.supplierSearch1.Name = "supplierSearch1";
@@ -134,24 +134,24 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // serviceEditor1
             // 
             this.serviceEditor1.AllowEditing = false;
-            this.serviceEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.serviceEditor1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.serviceEditor1.AutoScroll = true;
             this.serviceEditor1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.serviceEditor1.Location = new System.Drawing.Point(2, 26);
             this.serviceEditor1.Name = "serviceEditor1";
             this.serviceEditor1.Size = new System.Drawing.Size(640, 297);
             this.serviceEditor1.TabIndex = 0;
-            this.serviceEditor1.OnRateSelected += new TourWriter.Modules.SupplierModule.OnRateSelectedHandler(this.serviceEditor1_OnRateSelected);
-            this.serviceEditor1.OnOptionCheckedChanged += new TourWriter.Modules.SupplierModule.OnOptionCheckedChangedHandler(this.serviceEditor1_OnOptionCheckedChanged);
             this.serviceEditor1.OnSupplierSelected += new TourWriter.Modules.SupplierModule.OnSupplierSelectedHandler(this.serviceEditor1_OnSupplierSelected);
+            this.serviceEditor1.OnRateSelected += new TourWriter.Modules.SupplierModule.OnRateSelectedHandler(this.serviceEditor1_OnRateSelected);
             this.serviceEditor1.OnOptionSelected += new TourWriter.Modules.SupplierModule.OnOptionSelectedHandler(this.serviceEditor1_OnOptionSelected);
+            this.serviceEditor1.OnOptionCheckedChanged += new TourWriter.Modules.SupplierModule.OnOptionCheckedChangedHandler(this.serviceEditor1_OnOptionCheckedChanged);
             // 
             // txtSupplierName
             // 
-            this.txtSupplierName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSupplierName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSupplierName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSupplierName.Location = new System.Drawing.Point(56, 7);
             this.txtSupplierName.Name = "txtSupplierName";
@@ -184,6 +184,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(642, 117);
             this.panel1.TabIndex = 145;
+            // 
+            // chkCurrency
+            // 
+            this.chkCurrency.AutoSize = true;
+            this.chkCurrency.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkCurrency.Location = new System.Drawing.Point(433, 27);
+            this.chkCurrency.Name = "chkCurrency";
+            this.chkCurrency.Size = new System.Drawing.Size(105, 17);
+            this.chkCurrency.TabIndex = 149;
+            this.chkCurrency.Text = "Update currency";
+            this.toolTip1.SetToolTip(this.chkCurrency, "Update the currency exchange rate on load");
+            this.chkCurrency.UseVisualStyleBackColor = true;
+            this.chkCurrency.Visible = false;
             // 
             // chkIncrementDates
             // 
@@ -218,9 +231,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // gridBookings
             // 
-            this.gridBookings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridBookings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance1.BackColor = System.Drawing.SystemColors.Window;
             appearance1.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.gridBookings.DisplayLayout.Appearance = appearance1;
@@ -281,10 +294,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.gridBookings.TabIndex = 144;
             this.gridBookings.Text = "ultraGrid1";
             this.gridBookings.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
+            this.gridBookings.AfterCellUpdate += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridBookings_AfterCellUpdate);
             this.gridBookings.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridBookings_InitializeLayout);
+            this.gridBookings.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridBookings_CellChange);
             this.gridBookings.AfterCellListCloseUp += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridBookings_AfterCellListCloseUp);
             this.gridBookings.CellDataError += new Infragistics.Win.UltraWinGrid.CellDataErrorEventHandler(this.gridBookings_CellDataError);
-            this.gridBookings.AfterCellUpdate += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridBookings_AfterCellUpdate);
             // 
             // label2
             // 
@@ -353,9 +367,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // tabControl
             // 
-            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl.Controls.Add(this.ultraTabSharedControlsPage7);
             this.tabControl.Controls.Add(this.tabSearch);
             this.tabControl.Controls.Add(this.ultraTabPageControl1);
@@ -406,23 +420,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
+            // popupControler
+            // 
+            this.popupControler.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            // 
             // errorProvider1
             // 
             this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
             this.errorProvider1.ContainerControl = this;
-            // 
-            // chkCurrency
-            // 
-            this.chkCurrency.AutoSize = true;
-            this.chkCurrency.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkCurrency.Location = new System.Drawing.Point(433, 27);
-            this.chkCurrency.Name = "chkCurrency";
-            this.chkCurrency.Size = new System.Drawing.Size(105, 17);
-            this.chkCurrency.TabIndex = 149;
-            this.chkCurrency.Text = "Update currency";
-            this.toolTip1.SetToolTip(this.chkCurrency, "Update the currency exchange rate on load");
-            this.chkCurrency.UseVisualStyleBackColor = true;
-			this.chkCurrency.Visible = false;
             // 
             // BookingSelectorForm
             // 
@@ -442,8 +447,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.Name = "BookingSelectorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "TourWriter - Add new booking";
-            this.Load += new System.EventHandler(this.BookingSelectorForm_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BookingSelectorForm_FormClosing);
+            this.Load += new System.EventHandler(this.BookingSelectorForm_Load);
             this.tabSearch.ResumeLayout(false);
             this.ultraTabPageControl1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

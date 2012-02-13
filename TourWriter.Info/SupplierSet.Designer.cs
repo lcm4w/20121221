@@ -992,7 +992,7 @@ namespace TourWriter.Info {
                         this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableServiceContent.ServiceIDColumn}, false);
             this.Relations.Add(this.relationFK_Service_ServiceContent);
-            this.relationFK_Service_ServiceWarning = new global::System.Data.DataRelation("FK_Service_ServiceWarning", new global::System.Data.DataColumn[] {
+            this.relationFK_Service_ServiceWarning = new global::System.Data.DataRelation("ServiceServiceWarning", new global::System.Data.DataColumn[] {
                         this.tableService.ServiceIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableServiceWarning.ServiceIDColumn}, false);
             this.Relations.Add(this.relationFK_Service_ServiceWarning);

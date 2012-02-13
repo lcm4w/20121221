@@ -320,6 +320,7 @@
     <Compile Include="Forms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\ControlExtensions.cs" />
     <Compile Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.cs">
       <SubType>Form</SubType>
     </Compile>
