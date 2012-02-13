@@ -83,8 +83,8 @@ namespace TourWriter.Modules.SupplierModule
                 if (OnSupplierSelected != null)
                     OnSupplierSelected(
                         new SupplierSelectedEventArgs(supplierSet.Supplier[0].SupplierID));
-                
-                if (App.IsDebugMode)
+
+                if (App.IsDebugMode || Properties.Settings.Default.TmSyncUser.Length > 0)
                 {
                     gridServices.AddExportHooks(SupplierSet, gridOptions);
                     gridOptions.AddExportHooks(SupplierSet);

@@ -295,6 +295,7 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Resources\delete.png" />
     <Compile Include="..\CommonAssemblyInfo.cs">
@@ -329,6 +330,12 @@
     <Compile Include="Services\Travelmesh\DataSyncUi.cs" />
     <Compile Include="Services\Travelmesh\ApiWrapper.cs" />
     <Compile Include="Services\Travelmesh\DataSync.cs" />
+    <Compile Include="Services\Travelmesh\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Services\Travelmesh\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Services\Travelmesh\TrialDatabase.cs" />
     <Compile Include="UserControls\Accounting\ExportForm.cs">
       <SubType>Form</SubType>
@@ -1167,6 +1174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.resx">
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Services\Travelmesh\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Accounting\ExportForm.resx">
       <DependentUpon>ExportForm.cs</DependentUpon>

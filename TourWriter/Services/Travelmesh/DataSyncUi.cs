@@ -102,11 +102,18 @@ namespace TourWriter.Services
                 else if (row.Cells.Exists("OptionName"))
                 {
                     var option = Enumerable.Where(supplierSet.Option, x => x.RowState != DataRowState.Deleted && x.OptionID == (int)row.Cells["OptionID"].Value).FirstOrDefault();
+                    
                     if (option.RateRow.ValidTo < DateTime.Now.AddDays(1))
                     {
-                        App.ShowInfo("You can only push current rates");
+                        App.ShowInfo("Rate must be current.");
                         return;
                     }
+                    if (!(option.Net > 0 && option.Gross > 0))
+                    {
+                        App.ShowInfo("Net and Gross must be greater than 0 (zero).");
+                        return;
+                    }
+
                     var service = option.RateRow.ServiceRow;
                     var supplier = service.SupplierRow;
 
