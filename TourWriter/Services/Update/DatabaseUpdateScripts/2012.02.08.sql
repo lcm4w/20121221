@@ -1993,7 +1993,8 @@ from INFORMATION_SCHEMA.columns
 --order by table_name, column_name
 GO
 
-
+GO
+EXEC sp_refreshview PurchaseItemDetail
 GO
 exec __RefreshViews;
 GO
