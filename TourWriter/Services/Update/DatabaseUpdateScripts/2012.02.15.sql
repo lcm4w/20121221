@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2011.12.18' and (select VersionNumber from AppSettings) <> '2011.12.24' and (select VersionNumber from AppSettings) <> '2012.01.24' and (select VersionNumber from AppSettings) <> '2012.02.01')
+if ((select VersionNumber from AppSettings) <> '2011.12.18' and (select VersionNumber from AppSettings) <> '2011.12.24' and (select VersionNumber from AppSettings) <> '2012.01.24' and (select VersionNumber from AppSettings) <> '2012.02.01' and (select VersionNumber from AppSettings) <> '2012.02.08')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -1993,6 +1993,48 @@ from INFORMATION_SCHEMA.columns
 --order by table_name, column_name
 GO
 
+
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[__Repair_AdminUser]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[__Repair_AdminUser]
+GO
+
+CREATE PROCEDURE [dbo].[__Repair_AdminUser]
+
+AS
+
+-- user
+declare @userId int
+if not exists(select 1 from [user] where username = 'admin') 
+	insert [user] (UserName, [Password]) values ('admin', 'TBU8w5TpJQ4=')
+set @userId = (select UserID from [User] where UserName = 'admin')
+update [User] set [Password] = 'TBU8w5TpJQ4=' where UserID = @userId
+
+-- role
+declare @roleId int
+if not exists(select 1 from [Role] where RoleName = 'Administrator')
+	insert [Role] (RoleName) values ('Administrator')
+set @roleId = (select RoleID from [Role] where RoleName = 'Administrator')
+
+-- user-role
+if not exists(select 1 from [UserRole] where UserID = @userId and RoleID = @roleId) 
+	insert [UserRole] (UserID, RoleID) values (@userId, @roleId)
+
+-- role-permissions	
+insert RolePermission (RoleID, PermissionID) (
+	select @roleId, p.PermissionID 
+	from Permission p
+	left join (
+		select PermissionID
+		from RolePermission
+		where RoleID = @roleId
+	) x on x.PermissionID = p.PermissionID
+	where x.PermissionID is null
+)
+GO
+
+EXEC  [dbo].[__Repair_AdminUser]
+
+
 GO
 EXEC sp_refreshview PurchaseItemDetail
 GO
@@ -2001,7 +2043,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.02.08'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.02.15'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
