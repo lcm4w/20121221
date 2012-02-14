@@ -129,7 +129,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(184, 13);
             this.label12.TabIndex = 139;
-            this.label12.Text = "Enter forward curreny exchange rates";
+            this.label12.Text = "Enter forward currency exchange rates";
             // 
             // panel2
             // 

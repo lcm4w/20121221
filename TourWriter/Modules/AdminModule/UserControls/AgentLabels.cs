@@ -964,6 +964,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			Validate();
 			gridAgents.UpdateData();
 			gridContact.UpdateData();
+            gridMarginOverride.UpdateData();
+            SaveMarginOverrideChanges();
 		}
 
 		#region Agent
