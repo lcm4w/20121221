@@ -22,9 +22,19 @@ namespace TourWriter.Modules.ItineraryModule
         {
             InitializeComponent();
             Icon = Properties.Resources.TourWriter16;
-            this.itinerarySet = itinerarySet;            
+            this.itinerarySet = itinerarySet;
+            Load += NetOverrideForm_Load;
+        }
+
+        void NetOverrideForm_Load(object sender, EventArgs e)
+        {
+            var hasLocks = itinerarySet.PurchaseItem.Any(x => !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
+            if (hasLocks && !App.AskYesNo(
+                "Warning: Itinerary contains locked bookings (exported to Accounting).\r\n\r\nAny changes you make to margins could change the pricing of the locked bookings.\r\n\r\nContinue?")) 
+                Close();
 
             DataBind();
+
         }
 
         private void DataBind()
@@ -168,7 +178,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             if (HasOverrides())
             {
-                if (App.AskYesNo("Remove existing overrides?"))
+                if (App.AskYesNo("Reset existing overrides?"))
                     ClearOverrides();
             }
 

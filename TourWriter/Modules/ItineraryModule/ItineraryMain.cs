@@ -866,7 +866,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cmbAgent.SelectedValue == null || (int)cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
+            if (cmbAgent.SelectedValue == null || (int) cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
                 return;
             int id = (int) cmbAgent.SelectedValue;
 
@@ -877,13 +877,22 @@ namespace TourWriter.Modules.ItineraryModule
             itinerarySet.Itinerary[0].SetAgentContactIDNull();
             RefreshAgentContactBindings();
 
-            // reset agent margins
-            if (HasOverrides())
+            // warn
+            var hasOverrides = HasOverrides();
+            var hasLocks = itinerarySet.PurchaseItem.Any(x => !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
+            if (hasOverrides || hasLocks)
             {
-                const string msg =
-                    "Would you like to re-populate the service type price overrides for this agent?\r\n\r\nWarning: This will remove any existing service type price overrides.";
-                if (!App.AskYesNo(msg)) return;
+                var msg = "";
+                if (hasLocks) msg =
+                    "Warning: Itinerary contains locked bookings (exported to Accounting) - changing the Agent could change the pricing of the locked bookings.\r\n\r\n";
+                
+                msg += "Would you like to re-populate the service type price overrides for this agent?\r\n\r\nWarning: This will remove any existing service type price overrides.";
+
+                if (!App.AskYesNo(msg))
+                    return;
             }
+
+            // set overrides
             AutoPopulateNetOverrides();
             bookingsViewer.RecalculateFinalPricing();
         }
