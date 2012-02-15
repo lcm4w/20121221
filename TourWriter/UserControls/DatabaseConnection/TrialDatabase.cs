@@ -38,6 +38,9 @@ Click OK to login in now :)
 
             txtCompany.Select();
             txtCompany.SelectAll();
+
+            if (App.RuntimeMode != App.RuntimeModes.Release)
+                App.ShowInfo("WARNING: not in RELEASE-mode\r\n\r\nDb will be created in test (local database)");
         }
         
         private bool Save()
