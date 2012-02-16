@@ -4,7 +4,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using Infragistics.Win.UltraWinToolbars;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.BusinessLogic;
 using TourWriter.Global;

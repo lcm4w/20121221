@@ -1344,7 +1344,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 				{
 					// reload contact to reflect changes
                     Cache.AgentSet.Contact.BeginLoadData();
-                    Cache.AgentSet.Contact.LoadDataRow(contact.ContactRow.ItemArray, true);
+                    Cache.AgentSet.Contact.LoadDataRow(((ContactSet.ContactRow)contact.ContactRow).ItemArray, true);
                     Cache.AgentSet.Contact.EndLoadData();
 				}
 				contact.Dispose();
