@@ -658,9 +658,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private bool ValidatePurchaseItem(ItinerarySet.PurchaseItemRow item)
         {
+            var i = 1;
             var message = string.Empty;
 
-            // validate booking dates
+            // rates
             if (!item.IsStartDateNull())
             {
                 var option = itinerarySet.OptionLookup.FindByOptionID(item.OptionID);
@@ -669,17 +670,27 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     var numDays = !item.IsNumberOfDaysNull() ? item.NumberOfDays : 0;
 
                     if (item.StartDate.Date < option.ValidFrom.Date || item.StartDate.Date > option.ValidTo.Date)
-                        message += "Start date does not match dates for this service" + "\r\n";
+                        message += i++ + ". Start date does not match rates\r\n";
                     else if (item.StartDate.AddDays(numDays).Date > option.ValidTo.Date)
-                        message += "End date does not match dates for this service" + "\r\n";
+                        message += i++ + ". End date does not match rates\r\n";
                 }
             }
             
-            // validate discount
+            // discounts
             var calcDiscount = Discounts.CalcDiscount((decimal)item.Quantity, item.GetDiscountRows());
             if ((decimal)item.DiscountUnits != calcDiscount)
-                message += string.Format("Discount mismatch, best discount is: {0}", calcDiscount);
-            
+            {
+                message += string.Format(i++ + ". Discount does not match rates (should be: {0})\r\n", calcDiscount);
+            }
+
+            // currencies
+            if (!item.IsCurrencyCodeNull() &&
+                item.IsCurrencyRateNull() &&
+                item.CurrencyCode != CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]))
+            {
+                message += i++ + ". Currency conversion rate is missing\r\n";
+            }
+
             // apply
             item.RowError = message;
             return message.Length == 0;
