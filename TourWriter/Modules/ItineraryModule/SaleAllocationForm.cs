@@ -301,8 +301,11 @@ namespace TourWriter.Modules.ItineraryModule
                 }
                 else if (c.Key == "Amount")
                 {
+                    var ccy = CurrencyService.GetItineraryCurrencyCode(itinerarySet.Itinerary[0]);
+
                     c.DataType = typeof(Decimal);
-                    c.Format = "c";
+                    c.Format = !string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c";
+                    c.MaskInput = "-nnnnnnn.nn";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.Style = ColumnStyle.DropDown;
                     c.ValueList = e.Layout.Grid.DisplayLayout.ValueLists["ReceiptsList"];
@@ -439,6 +442,8 @@ namespace TourWriter.Modules.ItineraryModule
             e.Layout.Bands[0].Columns.Add("Outstanding");
             e.Layout.Bands[0].Columns.Add("IsAmountAdjusted");
 
+            var ccy = CurrencyService.GetItineraryCurrencyCode(itinerarySet.Itinerary[0]);
+            
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
                 c.CellActivation = Activation.Disabled;
@@ -450,16 +455,16 @@ namespace TourWriter.Modules.ItineraryModule
                 else if (c.Key == "TotalSales")
                 {
                     c.Header.Caption = "Total Sales";
-                    c.DataType = typeof (Decimal);
-                    c.Format = "c";
+                    c.DataType = typeof(Decimal);
+                    c.Format = !string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
                 else if (c.Key == "Amount")
                 {
                     c.Header.Caption = "This Sale";
                     c.DataType = typeof(Decimal);
-                    c.Format = "c";
-                    c.MaskInput = "$-nnnnnnn.nn";
+                    c.Format = !string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c";
+                    c.MaskInput = "-nnnnnnn.nn";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
@@ -468,13 +473,13 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     c.Header.Caption = "Total Gross";
                     c.DataType = typeof(Decimal);
-                    c.Format = "c";
+                    c.Format = !string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
                 else if (c.Key == "Outstanding")
                 {
                     c.DataType = typeof(Decimal);
-                    c.Format = "c";
+                    c.Format = !string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c";
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
                 else if (c.Key == "IsAmountAdjusted")
@@ -493,9 +498,10 @@ namespace TourWriter.Modules.ItineraryModule
             gridAllocations_CreateSummaries(e);
         }
 
-        private static void gridAllocations_CreateSummaries(InitializeLayoutEventArgs e)
+        private void gridAllocations_CreateSummaries(InitializeLayoutEventArgs e)
         {
             GridHelper.SetDefaultSummaryAppearance(e);
+            var ccy = CurrencyService.GetItineraryCurrencyCode(itinerarySet.Itinerary[0]);
 
             // UltraCalcManager required for formula summaries
             e.Layout.Grid.CalcManager = new UltraCalcManager(e.Layout.Grid.Container);
@@ -509,19 +515,19 @@ namespace TourWriter.Modules.ItineraryModule
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["TotalSales"]);
             summary.Key = "TotalSalesTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:" + (!string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c") + "}";
             summary.Appearance.TextHAlign = HAlign.Right;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["TotalGross"]);
             summary.Key = "TotalGrossTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:" + (!string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c") + "}";
             summary.Appearance.TextHAlign = HAlign.Right;
 
             summary = band.Summaries.Add(SummaryType.Sum, band.Columns["Outstanding"]);
             summary.Key = "OutstandingTotal";
             summary.SummaryPosition = SummaryPosition.UseSummaryPositionColumn;
-            summary.DisplayFormat = "${0:###,###,###.00}";
+            summary.DisplayFormat = "{0:" + (!string.IsNullOrEmpty(ccy) ? CurrencyService.GetCurrency(ccy).DisplayFormat : "c") + "}";
             summary.Appearance.TextHAlign = HAlign.Right;
         }
 
