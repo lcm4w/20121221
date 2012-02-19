@@ -16,6 +16,7 @@ using TourWriter.Services;
 using ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle;
 using ColumnStyle=Infragistics.Win.UltraWinGrid.ColumnStyle;
 using Resources=TourWriter.Properties.Resources;
+using System.Text;
 
 namespace TourWriter.Modules.ItineraryModule.DateKicker
 {
@@ -192,6 +193,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                             {
                                 // booking spans multiple rates
                                 row.Cells["Result"].Appearance.Image = Resources.Warning;
+                                row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
                                 row.Cells["Result"].ToolTipText = "Booking spans multiple rates";
                             }
                             else
@@ -224,9 +226,37 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                         {
                             row.Cells["Result"].Value = "Update...";
                             row.Cells["Result"].Appearance.Image = Resources.Cross;
+                            row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
                             row.Cells["Result"].ToolTipText = "No rates found for this date";
                         }));
                     }
+
+                    // temporary code to show warnings
+                    Invoke(new MethodInvoker(
+                    delegate
+                        {
+                            const string sql = @"
+select * from ServiceWarning
+where ServiceID in (	
+	select distinct r.ServiceID
+	from [Option] o left outer join [Rate] r on r.RateID = o.RateID
+	where o.OptionID = @optionId
+) 
+AND ValidFrom <= convert(char(8),@date, 112) + ' 23:59' 
+AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
+
+                        var warnings = DatabaseHelper.ExecuteDataset(sql,
+                            new SqlParameter("@optionId", (int)row.Cells["OptionID"].Value),
+                            new SqlParameter("@date", (DateTime)row.Cells["StartDate"].Value));
+                       
+                        if (warnings.Tables[0].Rows.Count != 0)
+                        {                                                        
+                            row.Cells["Warnings"].Appearance.Image = Resources.Warning;
+                            row.Cells["Warnings"].Appearance.Cursor = Cursors.Hand;
+                            row.Cells["Warnings"].ToolTipText = "Click to view warnings";
+                            row.Cells["Warnings"].Tag = warnings.Tables[0].Rows;
+                        }                                          
+                    }));
 
                     // push row changes to the datasource
                     if (InvokeRequired)
@@ -338,7 +368,22 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 row.Cells["Result"].Appearance.Image = Resources.Tick;
             }
         }
-        
+
+        private void ShowWarnings(UltraGridRow row)
+        {
+            DataRowCollection dataRows = (DataRowCollection)row.Cells["Warnings"].Tag;
+            var sb = new StringBuilder();
+            int ctr = 0;
+            foreach (DataRow dataRow in dataRows)
+            {
+                ++ctr;
+                sb.AppendLine(string.Format("{0}. {1}", ctr.ToString(), dataRow["Description"].ToString()));
+            }
+
+            string warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\n", sb.ToString().TrimEnd());
+            MessageBox.Show(warning, "BookingEditor Warning Message");
+        }
+
         private void btnStartStop_Click(object sender, EventArgs e)
         {
             if (btnStartStop.Text == _origButtonText)
@@ -393,6 +438,8 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 e.Layout.Bands[0].Columns.Add("OldDate");
             if (!e.Layout.Bands[0].Columns.Exists("OldNet"))
                 e.Layout.Bands[0].Columns.Add("OldNet");
+            if (!e.Layout.Bands[0].Columns.Exists("Warnings"))
+                e.Layout.Bands[0].Columns.Add("Warnings");
 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
@@ -414,8 +461,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     c.MaxWidth = 80;
                     c.CellActivation = Activation.ActivateOnly;
                     c.CellAppearance.ForeColor = Color.Blue;
-                    c.CellAppearance.FontData.Underline = DefaultableBoolean.True;
-                    c.CellAppearance.Cursor = Cursors.Hand;
+                    c.CellAppearance.FontData.Underline = DefaultableBoolean.True;                    
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
                 }
@@ -471,6 +517,14 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     c.Format = "c";
                     c.Header.Caption = "New net";
                     c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+                else if (c.Key == "Warnings")
+                {
+                    c.Width = 60;
+                    c.MaxWidth = 60;
+                    c.MinWidth = 60;                    
+                    c.CellAppearance.ImageHAlign = HAlign.Center;
+                    c.CellAppearance.ImageVAlign = VAlign.Middle;
                 }
                 else
                 {
@@ -537,6 +591,10 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 {
                     ChooseOption(cell.Row);
                 }
+                else if (cell.Column.Key == "Warnings" && cell.Tag != null)
+                {
+                    ShowWarnings(cell.Row);
+                }
             }
 
             // if a header is clicked, check if it is the "IsSelected" column
@@ -549,7 +607,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     SelectAll();
                 }
             }
-        }
+        }        
 
         private void dtpNewStartDate_ValueChanged(object sender, EventArgs e)
         {
