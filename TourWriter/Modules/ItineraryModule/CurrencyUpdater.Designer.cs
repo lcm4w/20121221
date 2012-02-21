@@ -56,6 +56,7 @@
             this.cmbCcyService = new System.Windows.Forms.ComboBox();
             this.pnlMargin = new System.Windows.Forms.Panel();
             this.cmbCcyDatepoint = new System.Windows.Forms.ComboBox();
+            this.lnkOptions = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.gridBookings)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRateAdjustment)).BeginInit();
             this.pnlMargin.SuspendLayout();
@@ -275,6 +276,19 @@
             this.cmbCcyDatepoint.TabIndex = 23;
             this.cmbCcyDatepoint.Visible = false;
             // 
+            // lnkOptions
+            // 
+            this.lnkOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkOptions.AutoSize = true;
+            this.lnkOptions.Location = new System.Drawing.Point(15, 484);
+            this.lnkOptions.Name = "lnkOptions";
+            this.lnkOptions.Size = new System.Drawing.Size(47, 13);
+            this.lnkOptions.TabIndex = 24;
+            this.lnkOptions.TabStop = true;
+            this.lnkOptions.Text = "(options)";
+            this.toolTip1.SetToolTip(this.lnkOptions, "Click to enable currency change");
+            this.lnkOptions.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOptions_LinkClicked);
+            // 
             // CurrencyUpdater
             // 
             this.AcceptButton = this.btnOk;
@@ -282,6 +296,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(542, 514);
+            this.Controls.Add(this.lnkOptions);
             this.Controls.Add(this.cmbCcyDatepoint);
             this.Controls.Add(this.pnlMargin);
             this.Controls.Add(this.cmbCcyService);
@@ -324,5 +339,6 @@
         private System.Windows.Forms.ComboBox cmbCcyService;
         private System.Windows.Forms.Panel pnlMargin;
         private System.Windows.Forms.ComboBox cmbCcyDatepoint;
+        private System.Windows.Forms.LinkLabel lnkOptions;
     }
 }

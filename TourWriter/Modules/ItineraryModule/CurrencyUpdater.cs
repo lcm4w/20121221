@@ -57,14 +57,19 @@ namespace TourWriter.Modules.ItineraryModule
                 }
             }
 
-            pnlMargin.Visible = Cache.ToolSet.AppSettings[0].CcyRateSource == "webservice";
-            cmbCcyService.Items.AddRange(new[] { "", "Predefined forward rates", "Yahoo spot rates", "Google spot rates" });
+            pnlMargin.Visible = Cache.ToolSet.AppSettings[0].CcyRateSource != "predefined";
+            cmbCcyService.Items.AddRange(new[] {"Yahoo spot rates", "Google spot rates", "Predefined forward rates" });
+            cmbCcyService.SelectedIndex = Cache.ToolSet.AppSettings[0].CcyRateSource == "yahoo" ? 0
+                                              : Cache.ToolSet.AppSettings[0].CcyRateSource == "google" ? 1
+                                                    : Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined" ? 2 : 0;
+
             cmbCcyDatepoint.Items.AddRange(new[] { "Use booking date", "Use itinerary date" });
-            cmbCcyDatepoint.SelectedIndex = 0;
-            btnUpdate.Text = Cache.ToolSet.AppSettings[0].CcyRateSource == "webservice" ? "Load Internet Rates" : "Load Predefined Rates";
-            cmbCcyService.Visible = App.IsDebugMode;
-            // cmbCcyDatepoint.Visible = App.IsDebugMode; // not visible - visibility controlled by cmCccService.SelectedItem
-            
+            cmbCcyDatepoint.SelectedIndex = Cache.ToolSet.AppSettings[0].CcyDatePoint == "booking" ? 0
+                                                : Cache.ToolSet.AppSettings[0].CcyDatePoint == "itinerary" ? 1 : 0;
+
+            btnUpdate.Text = Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined" ? "Load Predefined Rates" : "Load Internet Rates";
+
+            lnkOptions.Visible = App.IsDebugMode;
             btnUpdate.Select();
             btnUpdate.Focus();
         }
@@ -74,22 +79,10 @@ namespace TourWriter.Modules.ItineraryModule
         {
             try
             {
-                var ccyService = Cache.ToolSet.AppSettings[0].CcyRateSource;
-                
-                // debugging
-                if (cmbCcyService.Visible)
-                {
-                    if (cmbCcyService.Text == "")
-                    {
-                        App.ShowInfo("DEBUG MODE: select service (bottom left).");
-                        return;
-                    }
-                    ccyService =
-                        cmbCcyService.SelectedIndex == 1 ? "predefined" :
-                        cmbCcyService.SelectedIndex == 2 ? "yahoo" :
-                        cmbCcyService.SelectedIndex == 3 ? "google" : "yahoo";
-                }
-                
+                var ccyService = cmbCcyService.SelectedIndex == 0 ? "yahoo" :
+                                 cmbCcyService.SelectedIndex == 1 ? "google" :
+                                 cmbCcyService.SelectedIndex == 2 ? "predefined" :
+                                                                    "yahoo"; // default
                 Cursor = Cursors.WaitCursor;
                 
                 var selectedRows = gridBookings.Rows.ToList().Where(x =>
@@ -109,10 +102,16 @@ namespace TourWriter.Modules.ItineraryModule
 
                 if (ccyService == "predefined")
                 {
-                    UpdateCcyPredefined(selectedRows, GetCcyTo());
+                    var ccyDatepoint = cmbCcyDatepoint.SelectedIndex == 0 ? "booking" :
+                                       cmbCcyDatepoint.SelectedIndex == 1 ? "itinerary" :
+                                                                            "booking"; // default
+
+                    App.Debug(string.Format("Run CCY rate update: 'predefined', '{0}' date", ccyDatepoint));
+                    UpdateCcyPredefined(selectedRows, GetCcyTo(), ccyDatepoint);
                 }
                 else
                 {
+                    App.Debug(string.Format("Run CCY rate update: '{0}'", ccyService));
                     UpdateCcyWebservice(selectedRows, GetCcyTo(), ccyService);
                 }
             }
@@ -154,14 +153,8 @@ namespace TourWriter.Modules.ItineraryModule
             }
         }
 
-        private void UpdateCcyPredefined(IEnumerable<UltraGridRow> selectedRows, string ccyTo)
+        private void UpdateCcyPredefined(IEnumerable<UltraGridRow> selectedRows, string ccyTo, string datepoint)
         {
-            var ccyDatePoint = !Cache.ToolSet.AppSettings[0].IsCcyDatePointNull()
-                                   ? Cache.ToolSet.AppSettings[0].CcyDatePoint
-                                   : "booking";
-            if (cmbCcyDatepoint.Visible)
-                ccyDatePoint = cmbCcyDatepoint.SelectedIndex == 0 ? "booking" : "itinerary";
-
             // update rates in grid
             foreach (var row in selectedRows)
             {
@@ -174,7 +167,7 @@ namespace TourWriter.Modules.ItineraryModule
                 }
                 else
                 {
-                    var date = ccyDatePoint == "booking" ? (DateTime)row.Cells["StartDate"].Value : itinerarySet.Itinerary[0].ArriveDate;
+                    var date = datepoint == "booking" ? (DateTime)row.Cells["StartDate"].Value : itinerarySet.Itinerary[0].ArriveDate;
                     var rateRow = Cache.ToolSet.CurrencyRate.GetCurrencyRate(date.Date, ccyFrom, ccyTo, true).FirstOrDefault();
                     if (rateRow != null) rate = rateRow.Rate;
                 }
@@ -474,16 +467,21 @@ namespace TourWriter.Modules.ItineraryModule
         {
             if (!cmbCcyService.Visible) return;
 
-            if (cmbCcyService.SelectedIndex == 0) 
-                btnUpdate.Text = "";
-            else if (cmbCcyService.SelectedIndex == 1) 
+            if (cmbCcyService.SelectedIndex == 2) 
                 btnUpdate.Text = "Load Predefined Rates";
             else 
                 btnUpdate.Text = "Load Internet Rates";
 
-            var isInternetRates = cmbCcyService.SelectedIndex > 1;
+            var isInternetRates = cmbCcyService.SelectedIndex != 2;
             pnlMargin.Visible = isInternetRates;
             cmbCcyDatepoint.Visible = !isInternetRates;
+        }
+
+        private void lnkOptions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            lnkOptions.Visible = false;
+            cmbCcyService.Visible = true;
+            cmbCcyDatepoint.Visible = cmbCcyService.SelectedIndex == 2;
         }
     }
 }

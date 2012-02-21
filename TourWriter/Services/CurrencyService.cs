@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -259,7 +258,8 @@ namespace TourWriter.Services
 
         public static void WriteDebug(string text)
         {
-            //if (!App.IsDebugMode) return;
+            if (!App.IsDebugMode) return;
+            App.Debug(text);
             //var file = Path.Combine(App.TempFolder, "ccy_test.txt");
             //using (var sw = new StreamWriter(file, true)) sw.WriteLine(text);
         }

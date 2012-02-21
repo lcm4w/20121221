@@ -53,15 +53,15 @@ namespace TourWriter.Modules.AdminModule.UserControls
                 Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined" ? 2 : 0;
             
             cmbDatePoint.SelectedIndex =
-                            Cache.ToolSet.AppSettings[0].IsCcyDatePointNull() ? 0 :
-                            Cache.ToolSet.AppSettings[0].CcyRateSource == "booking" ? 0 :
-                            Cache.ToolSet.AppSettings[0].CcyRateSource == "internet" ? 1 : 0;
-            
+                Cache.ToolSet.AppSettings[0].IsCcyDatePointNull() ? 0 :
+                Cache.ToolSet.AppSettings[0].CcyDatePoint == "booking" ? 0 :
+                Cache.ToolSet.AppSettings[0].CcyDatePoint == "itinerary" ? 1 : 0;
+
+            cmbDatePoint.Enabled = Cache.ToolSet.AppSettings[0].CcyRateSource == "predefined";
             
             cmbRateSource.SelectedIndexChanged += cmbRateSource_SelectedIndexChanged;
             cmbDatePoint.SelectedIndexChanged += cmbDatePoint_SelectedIndexChanged;
-
-
+            
             gridRate.DisplayLayout.ValueLists.Add("CurrencyList");
             gridRate.DisplayLayout.ValueLists["CurrencyList"].SortStyle = ValueListSortStyle.Ascending;
             gridRate.DisplayLayout.ValueLists["CurrencyList"].ValueListItems.Add(DBNull.Value, "");
@@ -318,8 +318,16 @@ namespace TourWriter.Modules.AdminModule.UserControls
             Cache.ToolSet.AppSettings[0].CcyRateSource =
                 cmbRateSource.SelectedIndex == 0 ? "yahoo" :
                 cmbRateSource.SelectedIndex == 1 ? "google" :
-                cmbRateSource.SelectedIndex == 2 ? "predefined" : 
-                "yahoo"; // default
+                cmbRateSource.SelectedIndex == 2 ? "predefined" :
+                                                   "yahoo"; // default
+
+            if (Cache.ToolSet.AppSettings[0].CcyRateSource != "predefined")
+            {
+                Cache.ToolSet.AppSettings[0].CcyDatePoint = "booking";
+                cmbDatePoint.SelectedIndex = 0;
+                cmbDatePoint.Enabled = false;
+            }
+            else cmbDatePoint.Enabled = true;
         }
 
         private void cmbDatePoint_SelectedIndexChanged(object sender, EventArgs e)
@@ -327,7 +335,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             Cache.ToolSet.AppSettings[0].CcyDatePoint =
                 cmbDatePoint.SelectedIndex == 0 ? "booking" :
                 cmbDatePoint.SelectedIndex == 1 ? "itinerary" :
-                "booking"; // default
+                                                  "booking"; // default
 
             Cache.ToolSet.AppSettings[0].CcyDatePoint = cmbDatePoint.SelectedIndex == 0 ? "booking" : "itinerary";
         }
