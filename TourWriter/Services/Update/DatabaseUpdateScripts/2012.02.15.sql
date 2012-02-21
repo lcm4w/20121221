@@ -1059,7 +1059,7 @@ begin
 	CREATE TABLE [dbo].[ServiceWarning](
 		[ServiceWarningID] [int] IDENTITY(1,1) NOT NULL,
 		[ServiceID] [int] NOT NULL,
-		[Description] [varchar](1000) NULL,
+		[Description] [varchar](8000) NULL,
 		[ValidFrom] [datetime] NULL,
 		[ValidTo] [datetime] NULL,
 	 CONSTRAINT [PK_ServiceWarning] PRIMARY KEY CLUSTERED 
@@ -1080,7 +1080,7 @@ GO
 
 CREATE PROCEDURE [dbo].[ServiceWarning_Ins]
 	@ServiceID int,
-	@Description varchar(1000),
+	@Description varchar(8000),
 	@ValidFrom datetime,
 	@ValidTo datetime,
 	@ServiceWarningID int OUTPUT
@@ -1108,7 +1108,7 @@ GO
 CREATE PROCEDURE [dbo].[ServiceWarning_Upd]
 	@ServiceWarningID int,
 	@ServiceID int,
-	@Description varchar(1000),
+	@Description varchar(8000),
 	@ValidFrom datetime,
 	@ValidTo datetime
 AS
