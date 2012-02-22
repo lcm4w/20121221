@@ -92,7 +92,7 @@ namespace TourWriter.Info
         /// <summary>
         /// Gets the net markup, or an average of the service type markups
         /// </summary>
-        public decimal GetNetMarkup()
+        public decimal GetMarginOverride()
         {
             if (!Itinerary[0].IsNetMarginNull())
             {
@@ -113,25 +113,16 @@ namespace TourWriter.Info
 
                 foreach (PurchaseItemRow purchaseItem in PurchaseItem.Rows)
                 {
-                    if (purchaseItem.RowState == DataRowState.Deleted)
-                        continue;
+                    if (purchaseItem.RowState == DataRowState.Deleted) continue;
 
-                    ItineraryMarginOverrideRow row =
-                        ItineraryMarginOverride.FindByItineraryIDServiceTypeID(Itinerary[0].ItineraryID,
-                                                                               purchaseItem.ServiceTypeID);
+                    ItineraryMarginOverrideRow row = ItineraryMarginOverride.FindByItineraryIDServiceTypeID(
+                        Itinerary[0].ItineraryID, purchaseItem.ServiceTypeID);
+
                     if (row != null)
-                    {
-                        totalGross += Itinerary[0].CalculateGrossByNetMargin(purchaseItem.NetTotal,
-                                                                             purchaseItem.GrossTotal,
-                                                                             purchaseItem.NetTotalConverted,
-                                                                             row.Margin);                        
-                    }
+                        totalGross += Itinerary[0].RecalculateGross(purchaseItem.NetTotalConverted, purchaseItem.GrossTotalConverted, row.Margin);
                     else
-                    {
                         totalGross += purchaseItem.GrossTotalConverted;
-                    }
                 }
-
                 return GetMarkup(GetNetBasePrice(), totalGross);
             }
         }
@@ -151,7 +142,7 @@ namespace TourWriter.Info
             else
             {
                 var net = GetNetBasePrice();
-                var mup = GetNetMarkup();
+                var mup = GetMarginOverride();
                 total = net + mup == 0 ? GetGrossBasePrice() : Common.CalcGrossByNetMarkup(net, mup);
 
                 if (!Itinerary[0].IsGrossMarkupNull())
@@ -256,33 +247,33 @@ namespace TourWriter.Info
                 }
             }
 
-            public decimal CalculateGrossByNetMargin(decimal net, decimal gross, decimal total, decimal margin)
+            public decimal RecalculateGross(decimal netFinal, decimal grossFinal, decimal margin)
             {
                 decimal totalGross = 0M;
 
                 if (NetComOrMup == "com")
                 {                    
-                    var commission = ((ItinerarySet)this.tableItinerary.DataSet).GetCommission(net, gross);
+                    var commission = ((ItinerarySet)this.tableItinerary.DataSet).GetCommission(netFinal, grossFinal);
                     if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
                         margin = Math.Max(commission, margin);
                     else if (NetMinOrMax == "max") // ensure maximum, so give us the smallest value
                         margin = Math.Min(commission, margin);
 
-                    totalGross = Common.CalcGrossByNetCommission(total, margin);
+                    totalGross = Common.CalcGrossByNetCommission(netFinal, margin);
                 }
                 else if (NetComOrMup == "mup")
                 {
-                    var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(net, gross);
+                    var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(netFinal, grossFinal);
                     if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
                         margin = Math.Max(markup, margin);
                     else if (NetMinOrMax == "max") // ensure maximum, so give us the smallest value
                         margin = Math.Min(markup, margin);
 
-                    totalGross = Common.CalcGrossByNetMarkup(total, margin);
+                    totalGross = Common.CalcGrossByNetMarkup(netFinal, margin);
                 }
                 else // if (NetComOrMup == "grs")
                 {
-                    totalGross = Common.CalcGrossByGrossCommission(gross, margin);
+                    totalGross = Common.CalcGrossByGrossCommission(grossFinal, margin);
                 }
 
                 return totalGross;

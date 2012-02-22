@@ -567,7 +567,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             if (!itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
             {
-                markup = itinerarySet.GetNetMarkup();
+                markup = itinerarySet.GetMarginOverride();
                 txtGross1.Value = net*(1 + markup/100);
             }
             else

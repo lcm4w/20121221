@@ -109,7 +109,7 @@ namespace TourWriter.Modules.ItineraryModule
             decimal gross2;
 
             if (row["NetMargin"] != DBNull.Value || itinerarySetCopy.ItineraryMarginOverride.Rows.Count > 0)
-                gross1 = itinerarySetCopy.GetNetBasePrice() * (1 + itinerarySetCopy.GetNetMarkup() / 100);
+                gross1 = itinerarySetCopy.GetNetBasePrice() * (1 + itinerarySetCopy.GetMarginOverride() / 100);
             else
                 gross1 = itinerarySetCopy.GetGrossBasePrice();
 
@@ -122,7 +122,7 @@ namespace TourWriter.Modules.ItineraryModule
             row["Subtotal2"] = gross2;
 
             // markup overrides
-            row["NetMarkup"] = (itinerarySetCopy.GetNetMarkup() / 100).ToString("p");
+            row["NetMarkup"] = (itinerarySetCopy.GetMarginOverride() / 100).ToString("p");
 
             if (row["GrossMarkup_OLD"] != DBNull.Value)
                 row["GrossMarkup"] = ((decimal)row["GrossMarkup_OLD"] / 100).ToString("p");
