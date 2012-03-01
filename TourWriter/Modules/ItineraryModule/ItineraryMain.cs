@@ -261,7 +261,10 @@ namespace TourWriter.Modules.ItineraryModule
                 stream1.Position = 0;
                 var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
 
-                var errors = ds.Tables.Cast<DataTable>().SelectMany(table => table.GetErrors()).Aggregate("", (current, error) => current + "\r\n" + (error.RowError));
+                var errors = "";
+                foreach (var table in ds.Tables.Cast<DataTable>())
+                    foreach (var error in table.GetErrors())
+                        errors += "Table '" + table.TableName + "', " + error.RowError;
                 ErrorHelper.SendEmail(ex.Message + errors, ex.ToString(), true, attach1);
                 throw;
             }
@@ -293,7 +296,10 @@ namespace TourWriter.Modules.ItineraryModule
                 ds.WriteXml(stream1, XmlWriteMode.DiffGram);
                 stream1.Position = 0;
                 var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
-                var errors = ds.Tables.Cast<DataTable>().SelectMany(table => table.GetErrors()).Aggregate("", (current, error) => current + "\r\n" + (error.RowError));
+                var errors = "";
+                foreach (var table in ds.Tables.Cast<DataTable>())
+                    foreach (var error in table.GetErrors())
+                        errors += "Table '" + table.TableName + "', " + error.RowError;
                 ErrorHelper.SendEmail("(Note: silent PaymentTerms constraint error) " + ex.Message + errors, ex.ToString(), true, attach1);
                 // TODO: fix negative payment terms, but why is this happening?
                 foreach (var row in ((ItinerarySet)ds).PurchaseItem.

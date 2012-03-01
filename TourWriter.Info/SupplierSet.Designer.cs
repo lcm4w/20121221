@@ -9145,7 +9145,6 @@ namespace TourWriter.Info {
                 this.columnServiceWarningID.ReadOnly = true;
                 this.columnServiceWarningID.Unique = true;
                 this.columnServiceID.AllowDBNull = false;
-                this.columnDescription.MaxLength = 1000;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
