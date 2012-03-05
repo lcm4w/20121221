@@ -18,22 +18,22 @@ namespace TourWriter.Dialogs
         }
         public decimal Net
         {
-            get { return decimal.Round(decimal.Parse(txtNet.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
+            get { return decimal.Parse(txtNet.Value.ToString()); }
             set { txtNet.Value = value; }
         }
         public decimal Markup
         {
-            get { return decimal.Round(decimal.Parse(txtMarkup.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
+            get { return decimal.Parse(txtMarkup.Value.ToString()); }
             set { txtMarkup.Value = value; }
         }
         public decimal Gross
         {
-            get { return decimal.Round(decimal.Parse(txtGross.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
+            get { return decimal.Parse(txtGross.Value.ToString()); }
             set { txtGross.Value = value; }
         }
         public decimal Commission
         {
-            get { return decimal.Round(decimal.Parse(txtCommission.Value.ToString()), 2, MidpointRounding.AwayFromZero); }
+            get { return decimal.Parse(txtCommission.Value.ToString()); }
             set { txtCommission.Value = value; }
         }
 
@@ -138,33 +138,32 @@ namespace TourWriter.Dialogs
                     }
             }
         }
-
-        private decimal RoundValue(decimal value)
+        
+        private decimal CalcGross(decimal net, decimal markup)
         {
+            decimal gross = net + (markup/100*net);
+
+            // round gross to nearest 1, 5, or 10
             if (pnlRounding.Visible)
             {
                 if (chkRoundOne.Checked)
                 {
-                    value = (Decimal.Truncate(value) == value)
-                            ? Decimal.Round(value) : Decimal.Round(value + 0.5m);
+                    gross = (Decimal.Truncate(gross) == gross)
+                            ? Decimal.Round(gross) : Decimal.Round(gross + 0.5m);
                 }
                 else if (chkRoundFive.Checked)
                 {
-                    value = (Decimal.Truncate(value / 5) == (value / 5))
-                            ? Decimal.Round(value / 5) * 5 : Decimal.Round((value / 5) + 0.5m) * 5;
+                    gross = (Decimal.Truncate(gross / 5) == (gross / 5))
+                            ? Decimal.Round(gross / 5) * 5 : Decimal.Round((gross / 5) + 0.5m) * 5;
                 }
                 else if (chkRoundTen.Checked)
                 {
-                    value = (Decimal.Truncate(value / 10) == (value / 10))
-                            ? Decimal.Round(value / 10) * 10 : Decimal.Round((value / 10) + 0.5m) * 10;
+                    gross = (Decimal.Truncate(gross / 10) == (gross / 10))
+                            ? Decimal.Round(gross / 10) * 10 : Decimal.Round((gross / 10) + 0.5m) * 10;
                 }
             }
-            return value;
-        }
 
-        private decimal CalcGross(decimal net, decimal markup)
-        {
-            return RoundValue(net + (markup/100*net));
+            return gross;
         }
 
         private decimal CalcNet(decimal gross, decimal commission)
