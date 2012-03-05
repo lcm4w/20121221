@@ -90,7 +90,7 @@ namespace TourWriter.UserControls.DatabaseConnection
             progressBar.Value = 0;
             progressBar.Style = ProgressBarStyle.Blocks;
             var localFile = Path.Combine(Path.GetTempPath(), "sqlsrvr.exe");
-            Log(string.Format("Downloading file from: {0}\r\n\t to: {1} ...", InstallFile, localFile));
+            Log(string.Format("Downloading software from: {0}\r\n\t to: {1} ...", InstallFile, localFile));
 
             InstallHelper.DeleteFile(localFile);
             _downloader = new WebClient();
@@ -121,7 +121,7 @@ namespace TourWriter.UserControls.DatabaseConnection
             try { EnsureNonArchivePath(@"C:\Program Files\Microsoft SQL Server"); } catch {}
             try { EnsureNonArchivePath(@"C:\Program Files (x86)\Microsoft SQL Server"); } catch {}
             
-            Log("Install file is: " + InstallFile);
+            Log("Install package at: " + InstallFile);
             Log("Installing Sql Server, this stage might take 10 minutes...");
 
             var args = InstallHelper.InstallArgs.Replace("\r\n", " ").Trim();

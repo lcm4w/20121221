@@ -41,7 +41,7 @@ namespace TourWriter.UserControls.DatabaseConnection
             var name = Environment.MachineName + "\\TourWriter";
             var conn = ConnectionInfo.DbConnections.Add("local", name, name);
             ConnectionInfo.UserName = txtUser.Text;
-            ConnectionInfo.Password = ""; // use blank
+            ConnectionInfo.Password = txtPass.Text;
             ConnectionInfo.SelectedConnection = conn.Name;
             ConnectionInfo.AutoLogin = true;
         }
