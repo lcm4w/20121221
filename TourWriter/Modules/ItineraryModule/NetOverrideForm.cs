@@ -28,7 +28,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         void NetOverrideForm_Load(object sender, EventArgs e)
         {
-            var hasLocks = itinerarySet.PurchaseItem.Any(x => !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
+            var hasLocks = itinerarySet.PurchaseItem.Any(x => x.RowState != DataRowState.Deleted && !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
             if (hasLocks && !App.AskYesNo(
                 "Warning: Itinerary contains locked bookings (exported to Accounting).\r\n\r\nAny changes you make to margins could change the pricing of the locked bookings.\r\n\r\nContinue?")) 
                 Close();

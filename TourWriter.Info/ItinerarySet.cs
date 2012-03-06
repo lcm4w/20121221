@@ -251,7 +251,7 @@ namespace TourWriter.Info
             {
                 decimal totalGross = 0M;
 
-                if (NetComOrMup == "com")
+                if (!IsNetComOrMupNull() && NetComOrMup == "com")
                 {                    
                     var commission = ((ItinerarySet)this.tableItinerary.DataSet).GetCommission(netFinal, grossFinal);
                     if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
@@ -261,7 +261,7 @@ namespace TourWriter.Info
 
                     totalGross = Common.CalcGrossByNetCommission(netFinal, margin);
                 }
-                else if (NetComOrMup == "mup")
+                else if (!IsNetComOrMupNull() && NetComOrMup == "mup")
                 {
                     var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(netFinal, grossFinal);
                     if (NetMinOrMax == "min") // ensure minimum, so give us the biggest value
