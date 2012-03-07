@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Reporting.WinForms;
+using TourWriter.Global;
 using TourWriter.Info.Services;
 using TourWriter.Modules.Emailer;
 using TourWriter.Modules.ItineraryModule.Bookings;
@@ -338,19 +339,41 @@ namespace TourWriter.UserControls.Reports
 
         private void SendEmail()
         {
-            var emailBuilder = new ReportEmailBuilder(reportViewer.LocalReport)
-                                   {
-                                       TemplateSubject =
-                                           lblReportName.Text + (ParentForm != null ? ": " + ParentForm.Text : "")
-                                   };
+            // for itinerary reports, add list of possible email recipients
+            var emails = new Dictionary<string, string>();
+            if (ParentForm is Modules.ItineraryModule.ItineraryMain)
+            {
+                var itin = (ParentForm as Modules.ItineraryModule.ItineraryMain).ItinerarySet.Itinerary[0];
 
-            var wizard = new Wizard(Settings.Default.EmailEditorSize)
-                             {
-                                 Text = "TourWriter report email",
-                                 Params = emailBuilder
-                             };
+                // add agent
+                if (!itin.IsAgentIDNull())
+                {
+                    var agent = Cache.AgentSet.Agent.First(x => x.RowState != DataRowState.Deleted && x.AgentID == itin.AgentID);
+                    if (agent != null && !agent.IsEmailNull())
+                        emails.Add(agent.AgentName, agent.Email);
+                }
+
+                // add agent contact
+                if (!itin.IsAgentContactIDNull())
+                {
+                    var contact = Cache.AgentSet.AgentContact.First(x => x.RowState != DataRowState.Deleted && x.ContactID == itin.AgentContactID);
+                    if (contact != null && contact.ContactRow != null && !contact.ContactRow.IsEmail1Null())
+                        emails.Add(contact.Description, contact.ContactRow.Email1);
+                }
+
+                // add clients
+                foreach (var mem in (ParentForm as Modules.ItineraryModule.ItineraryMain).ItinerarySet.ItineraryMember)
+                {
+                    if (mem.ContactRow != null && !mem.ContactRow.IsEmail1Null())
+                        emails.Add(mem.ItineraryMemberName, mem.ContactRow.Email1);
+                }
+            }
+
+            var emailBuilder = new ReportEmailBuilder(reportViewer.LocalReport) {TemplateSubject = lblReportName.Text + (ParentForm != null ? ": " + ParentForm.Text : "")};
+            var wizard = new Wizard(Settings.Default.EmailEditorSize) {Text = "TourWriter report email", Params = emailBuilder};
+
             wizard.AddPage(new TemplateForm());
-            wizard.AddPage(new EmailForm());
+            wizard.AddPage(new EmailForm(new List<string>(emails.Select(e => "\"" + e.Key + "\" <" + e.Value + ">"))));
             wizard.AddPage(new SendForm());
             wizard.Show(this);
             wizard.Next();

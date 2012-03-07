@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
@@ -30,6 +31,13 @@ namespace TourWriter.Modules.Emailer
         public EmailForm()
         {
             InitializeComponent();
+        }
+
+        public EmailForm(IEnumerable<string> recipients)
+        {
+            InitializeComponent();
+
+            foreach (var r in recipients) txtTo.Items.Add(r);
         }
         
         private void EmailForm_Load(object sender, EventArgs e) { }
@@ -125,7 +133,8 @@ namespace TourWriter.Modules.Emailer
 
         private void EmailForm_SetActive(object sender, CancelEventArgs e)
         {
-            BuildAllEmails();
+            if (emailList.Count == 0) 
+                BuildAllEmails();
             LoadNewEmail(currentIndex);
         }
 
@@ -137,6 +146,11 @@ namespace TourWriter.Modules.Emailer
         private void EmailForm_WizardNext(object sender, WizardPageEventArgs e)
         {
             SaveCurrentEmail();
+        }
+
+        private void EmailForm_WizardBack(object sender, WizardPageEventArgs e)
+        {
+            emailList.Clear(); // to cause rebuild
         }
 
 

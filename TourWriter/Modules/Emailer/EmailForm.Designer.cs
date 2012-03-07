@@ -43,7 +43,7 @@ namespace TourWriter.Modules.Emailer
             this.txtAttach = new System.Windows.Forms.TextBox();
             this.txtBody = new System.Windows.Forms.TextBox();
             this.txtSubject = new System.Windows.Forms.TextBox();
-            this.txtTo = new System.Windows.Forms.TextBox();
+            this.txtTo = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,8 +149,8 @@ namespace TourWriter.Modules.Emailer
             // 
             // txtAttach
             // 
-            this.txtAttach.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAttach.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAttach.Location = new System.Drawing.Point(68, 447);
             this.txtAttach.Name = "txtAttach";
             this.txtAttach.Size = new System.Drawing.Size(492, 20);
@@ -159,9 +159,9 @@ namespace TourWriter.Modules.Emailer
             // txtBody
             // 
             this.txtBody.AcceptsReturn = true;
-            this.txtBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBody.Location = new System.Drawing.Point(8, 108);
             this.txtBody.Multiline = true;
             this.txtBody.Name = "txtBody";
@@ -171,8 +171,8 @@ namespace TourWriter.Modules.Emailer
             // 
             // txtSubject
             // 
-            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubject.Location = new System.Drawing.Point(52, 84);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(531, 20);
@@ -180,12 +180,13 @@ namespace TourWriter.Modules.Emailer
             // 
             // txtTo
             // 
-            this.txtTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTo.FormattingEnabled = true;
             this.txtTo.Location = new System.Drawing.Point(52, 60);
             this.txtTo.Name = "txtTo";
-            this.txtTo.Size = new System.Drawing.Size(531, 20);
-            this.txtTo.TabIndex = 31;
+            this.txtTo.Size = new System.Drawing.Size(531, 21);
+            this.txtTo.TabIndex = 32;
             // 
             // EmailForm
             // 
@@ -205,10 +206,11 @@ namespace TourWriter.Modules.Emailer
             this.Name = "EmailForm";
             this.PageText = "Edit emails";
             this.Size = new System.Drawing.Size(591, 473);
+            this.SetActive += new System.ComponentModel.CancelEventHandler(this.EmailForm_SetActive);
+            this.WizardNext += new TourWriter.UserControls.WizardPageEventHandler(this.EmailForm_WizardNext);
+            this.WizardBack += new TourWriter.UserControls.WizardPageEventHandler(this.EmailForm_WizardBack);
             this.QueryCancel += new System.ComponentModel.CancelEventHandler(this.EmailForm_QueryCancel);
             this.Load += new System.EventHandler(this.EmailForm_Load);
-            this.WizardNext += new TourWriter.UserControls.WizardPageEventHandler(this.EmailForm_WizardNext);
-            this.SetActive += new System.ComponentModel.CancelEventHandler(this.EmailForm_SetActive);
             this.Controls.SetChildIndex(this.btnBack, 0);
             this.Controls.SetChildIndex(this.btnNext, 0);
             this.Controls.SetChildIndex(this.lblPosition, 0);
@@ -242,6 +244,6 @@ namespace TourWriter.Modules.Emailer
         private System.Windows.Forms.TextBox txtAttach;
         private System.Windows.Forms.TextBox txtBody;
         private System.Windows.Forms.TextBox txtSubject;
-        private System.Windows.Forms.TextBox txtTo;
+        private System.Windows.Forms.ComboBox txtTo;
     }
 }
