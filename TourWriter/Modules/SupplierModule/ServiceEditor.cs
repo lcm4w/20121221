@@ -1151,9 +1151,6 @@ namespace TourWriter.Modules.SupplierModule
                     c.Width = 80;
                     c.Format = "d";
                     c.MaskInput = "{date}";
-                    DateTimeEditor editor = c.Editor as DateTimeEditor;
-                    if (editor != null)
-                        editor.DropDownButtonDisplayStyle = Infragistics.Win.ButtonDisplayStyle.Never;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.EditAndSelectText;
                     if (!allowEditing)
