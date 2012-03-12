@@ -57,7 +57,6 @@ namespace TourWriter.UserControls.Accounting
             var sql = string.Format("select {0} from ItinerarySaleAllocationDetail where ItinerarySaleID in ({1})", cols, ids);
             
             var ds = DataSetHelper.FillDataSetFromSql(sql);
-            App.PrepareDataTableForExport(ds.Tables[0]);
 
             IEnumerable<DataRow> rows = ds.Tables[0].AsEnumerable();
             return rows;

@@ -162,7 +162,6 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from PurchaseItemPaymentsDetail where {1}", cols, GetSqlFilter("Purchases"));
             _purchasesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
-            App.PrepareDataTableForExport(_purchasesDs.Tables[0]);
         }
         
         private void LoadSalesData()
@@ -173,7 +172,6 @@ namespace TourWriter.UserControls.Accounting
             // run query
             var sql = string.Format("select cast(1 as bit) IsSelected, {0} from ItinerarySaleDetail where {1}", cols, GetSqlFilter("Sales"));
             _salesDs = DataSetHelper.FillDataSetFromSql(sql, 120);
-            App.PrepareDataTableForExport(_salesDs.Tables[0]);
         }
         
         private void LoadServiceType()
@@ -192,7 +190,7 @@ namespace TourWriter.UserControls.Accounting
 
             if (_purchasesDs == null) BindPurchasesGrid();
 
-            if (CanExport(gridPurchases))
+            if (_purchasesDs != null && CanExport(gridPurchases))
             {
                 var template = GetTemplateFileName("Purchases");
                 if (!File.Exists(template))
@@ -200,7 +198,11 @@ namespace TourWriter.UserControls.Accounting
                     App.ShowWarning("Purchases export template file not found: " + template);
                     return;
                 }
-                var rows = _purchasesDs.Tables[0].AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
+
+                var data = _purchasesDs.Copy().Tables[0];
+                App.PrepareDataTableForExport(data);
+                var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
+
                 var export = new ExportForm();
                 export.ExportPurchases(rows, template, GetExportFileName("Purchases"));
                 if (export.ShowDialog() == DialogResult.OK)
@@ -215,7 +217,7 @@ namespace TourWriter.UserControls.Accounting
 
             if (_salesDs == null) BindSalesGrid();
 
-            if (CanExport(gridSales))
+            if (_salesDs != null &&CanExport(gridSales))
             {
                 var template = GetTemplateFileName("Sales");
                 if (!File.Exists(template))
@@ -223,7 +225,11 @@ namespace TourWriter.UserControls.Accounting
                     App.ShowWarning("Sales export template file not found: " + template);
                     return;
                 }
-                var rows = _salesDs.Tables[0].AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
+
+                var data = _salesDs.Copy().Tables[0];
+                App.PrepareDataTableForExport(data);
+                var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
+
                 var export = new ExportForm();
                 export.ExportSales(rows, template, GetExportFileName("Sales"));
                 if (export.ShowDialog() == DialogResult.OK)
@@ -381,6 +387,9 @@ namespace TourWriter.UserControls.Accounting
         {
             foreach (var c in e.Layout.Bands[0].Columns)
             {
+                c.CellActivation = Activation.NoEdit;
+                c.PerformAutoResize(PerformAutoSizeType.AllRowsInBand);
+
                 if (c.Key == "IsSelected")
                 {
                     c.Header.Caption = "";
@@ -403,7 +412,11 @@ namespace TourWriter.UserControls.Accounting
                 if (c.Key != "IsSelected") 
                     c.CellAppearance.ForeColor = Color.Gray;
 
-                // format dates and currencies
+                // formatting
+                if (c.DataType == typeof(int))
+                {
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
                 if (c.DataType == typeof(decimal) || c.DataType == typeof(double))
                 {
                     c.Format = "#0.00";

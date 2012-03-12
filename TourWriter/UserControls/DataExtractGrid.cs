@@ -77,6 +77,35 @@ namespace TourWriter.UserControls
             Services.GridHelper.SetDefaultGridAppearance(e);
             Services.GridHelper.SetDefaultGroupByAppearance(e);
 
+
+
+
+
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                c.CellActivation = Activation.NoEdit;
+                c.PerformAutoResize(PerformAutoSizeType.AllRowsInBand);
+                
+                // formatting
+                if (c.DataType == typeof(int))
+                {
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+                if (c.DataType == typeof(decimal) || c.DataType == typeof(double))
+                {
+                    c.Format = "#0.00";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+                if (c.DataType == typeof(DateTime))
+                {
+                    c.Format = App.GetLocalShortDateFormat();
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                }
+            }
+
+
+
+
             // column chooser
             e.Layout.Override.RowSelectorHeaderStyle = RowSelectorHeaderStyle.ColumnChooserButton;
             e.Layout.Override.RowSelectors = DefaultableBoolean.True;
