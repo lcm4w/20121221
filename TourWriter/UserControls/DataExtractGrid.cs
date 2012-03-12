@@ -185,5 +185,24 @@ namespace TourWriter.UserControls
                 Cursor = Cursors.Default;
             }
         }
+
+        private void btnLoadLayout_Click(object sender, EventArgs e)
+        {
+            var dlg = new OpenFileDialog {Title = "Open Grid Layout file", Filter = "layout files (*.xml)|*.xml|All files (*.*)|*.*", Multiselect = false};
+            if (dlg.ShowDialog() == DialogResult.OK) 
+                grid.DisplayLayout.LoadFromXml(dlg.FileName, PropertyCategories.All);
+        }
+
+        private void btnSaveLayout_Click(object sender, EventArgs e)
+        {
+            var twd = ExternalFilesHelper.GetTourWriterDataFolder();
+            var dlg = new SaveFileDialog {FileName = "layout.xml", Filter = ".xml files (*.xml)|*.xml|All files (*.*)|*.*", RestoreDirectory = true};
+            if(dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (dlg.FileName.Contains(twd) || 
+                    App.AskYesNo("Are you sure you want to save this file outside of your TourWriterData folder (other users may not be able to access it)?"))
+                    grid.DisplayLayout.SaveAsXml(dlg.FileName);
+            }
+        }
     }
 }
