@@ -97,7 +97,7 @@ namespace TourWriter.Reports.Itinerary
                     Fields["DepartDate"].Value = !itin.IsDepartDateNull() ? itin.DepartDate.ToString("dd MMM yyyy, hh:mm tt") : "(no date selected)";
 					Fields["ArriveDate"].Value += " " + this.GetArriveCity(itin);
 					Fields["DepartDate"].Value += " " + this.GetDepartCity(itin);
-					Fields["MarginLabel"].Value = (itin.NetComOrMup == "mup") ? "Adjusted Markup" : "Adjusted Commission";
+					Fields["MarginLabel"].Value = (!itin.IsNetComOrMupNull() && itin.NetComOrMup == "mup") ? "Adjusted Markup" : "Adjusted Commission";
 				}
 
 				//group
