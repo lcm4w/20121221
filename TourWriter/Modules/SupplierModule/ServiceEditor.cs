@@ -533,7 +533,12 @@ namespace TourWriter.Modules.SupplierModule
                     foreach (var warning in warnings)
                     {
                         ++ctr;
-                        sb.AppendLine(string.Format("{0}. {1}", ctr.ToString(), warning.Description));
+                        var expiringSoon = warning.ValidTo < DateTime.Now.AddYears(1);
+
+                        sb.AppendLine(string.Format("{0}. {1}{2}", 
+                            ctr.ToString(),
+                            expiringSoon ? "[until " + warning.ValidTo.ToShortDateString() + "] " : "",
+                            warning.Description));
                     }
 
                     return sb.ToString().TrimEnd();
