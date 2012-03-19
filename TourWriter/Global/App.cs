@@ -1011,6 +1011,8 @@ namespace TourWriter
         {
             if (ds.HasChanges())
             {
+                return true; // don't ask, just soft delete
+
                 if (AskYesNo(
                     "Cannot delete record that is used historically (i.e. service used in booking).\r\n\r\n" +
                     "Do you want to make the data hidden instead?"))
