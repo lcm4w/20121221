@@ -885,7 +885,7 @@ namespace TourWriter.Modules.ItineraryModule
 
             // warn
             var hasOverrides = HasOverrides();
-            var hasLocks = itinerarySet.PurchaseItem.Any(x => !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
+            var hasLocks = itinerarySet.PurchaseItem.Any(x => x.RowState != DataRowState.Deleted && !x.IsIsLockedAccountingNull() && x.IsLockedAccounting);
             if (hasOverrides || hasLocks)
             {
                 var msg = "";
