@@ -96,7 +96,7 @@ namespace TourWriter.Info
         {
             if (!Itinerary[0].IsNetMarginNull())
             {
-                if (Itinerary[0].NetComOrMup == "mup")
+                if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "mup")
                 {
                     return Itinerary[0].NetMargin;
                 }
@@ -271,7 +271,7 @@ namespace TourWriter.Info
 
                     totalGross = Common.CalcGrossByNetMarkup(netFinal, margin);
                 }
-                else // if (NetComOrMup == "grs")
+                else // if (!IsNetComOrMupNull() && NetComOrMup == "grs")
                 {
                     totalGross = Common.CalcGrossByGrossCommission(grossFinal, margin);
                 }
