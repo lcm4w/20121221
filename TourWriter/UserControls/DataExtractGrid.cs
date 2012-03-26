@@ -77,13 +77,9 @@ namespace TourWriter.UserControls
             Services.GridHelper.SetDefaultGridAppearance(e);
             Services.GridHelper.SetDefaultGroupByAppearance(e);
 
-
-
-
-
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
-                c.CellActivation = Activation.NoEdit;
+                //c.CellActivation = Activation.NoEdit; // DON'T do this, affects UserControls/Accounting/Accounting.cs (which actually should be cancelling this here event!).
                 c.PerformAutoResize(PerformAutoSizeType.AllRowsInBand);
                 
                 // formatting
