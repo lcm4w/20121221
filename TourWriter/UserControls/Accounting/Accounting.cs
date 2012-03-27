@@ -327,7 +327,7 @@ namespace TourWriter.UserControls.Accounting
             }
             catch(Exception ex)
             {
-                // fail silently
+                App.ShowInfo("Opps, either your template file could not be found, or it is open in another program (Excel?).\r\n\r\nTemplate file is: " + templateFile);
             }
             finally
             {
