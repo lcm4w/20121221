@@ -684,8 +684,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
 
             // currencies
-            if (!item.IsCurrencyCodeNull() &&
-                item.IsCurrencyRateNull() &&
+            if (!item.IsCurrencyCodeNull() && !string.IsNullOrEmpty(item.CurrencyCode.Trim()) &&
+                item.IsCurrencyRateNull() && 
                 item.CurrencyCode != CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]))
             {
                 message += i++ + ". Currency conversion rate is missing\r\n";
