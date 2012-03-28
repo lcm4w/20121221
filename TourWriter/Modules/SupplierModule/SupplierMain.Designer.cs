@@ -1405,6 +1405,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.txtSupplierDescription.Location = new System.Drawing.Point(369, 367);
+            this.txtSupplierDescription.MinimumSize = new System.Drawing.Size(300, 300);
             this.txtSupplierDescription.Multiline = true;
             this.txtSupplierDescription.Name = "txtSupplierDescription";
             this.txtSupplierDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1444,6 +1445,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierComments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.txtSupplierComments.Location = new System.Drawing.Point(8, 367);
+            this.txtSupplierComments.MinimumSize = new System.Drawing.Size(300, 300);
             this.txtSupplierComments.Multiline = true;
             this.txtSupplierComments.Name = "txtSupplierComments";
             this.txtSupplierComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
