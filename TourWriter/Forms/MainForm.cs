@@ -14,7 +14,6 @@ using Infragistics.Shared;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinScrollBar;
 using Infragistics.Win.UltraWinStatusBar;
-using Infragistics.Win.UltraWinTabbedMdi;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Info;
 using TourWriter.Services;

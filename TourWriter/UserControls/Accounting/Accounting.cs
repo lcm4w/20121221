@@ -198,7 +198,8 @@ namespace TourWriter.UserControls.Accounting
                     App.ShowWarning("Purchases export template file not found: " + template);
                     return;
                 }
-
+                
+                gridPurchases.UltraGrid.UpdateData();
                 var data = _purchasesDs.Copy().Tables[0];
                 App.PrepareDataTableForExport(data);
                 var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
@@ -226,6 +227,7 @@ namespace TourWriter.UserControls.Accounting
                     return;
                 }
 
+                gridSales.UltraGrid.UpdateData();
                 var data = _salesDs.Copy().Tables[0];
                 App.PrepareDataTableForExport(data);
                 var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
