@@ -66,7 +66,7 @@ namespace TourWriter.UserControls
 
                         // purchase item notes
                         foreach (var row in item.GetPurchaseItemNoteRows())
-                            SetInserted(item, "PurchaseItemNoteID", id--);
+                            SetInserted(row, "PurchaseItemNoteID", id--);
                     }
                 }
 
@@ -85,16 +85,13 @@ namespace TourWriter.UserControls
                 // itinerary group
                 foreach (var group in itin.GetItineraryGroupRows())
                 {
-                    SetInserted(@group, "ItineraryGroupID", id--);
+                    SetInserted(group, "ItineraryGroupID", id--);
 
                     // itinerary group members
-                    foreach (var member in @group.GetItineraryMemberRows())
+                    foreach (var member in group.GetItineraryMemberRows())
                     {
                         SetInserted(member, "ItineraryMemberID", id--);
-
-                        // itinerary member payments
-                        foreach (var row in member.GetItineraryPaymentRows())
-                            SetInserted(row, "ItineraryPaymentID", id--);
+                        // don't copy itinerary member payments
                     }
                 }
 

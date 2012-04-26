@@ -30,7 +30,7 @@ namespace TourWriter.Tests
             Assert.AreEqual(src.PurchaseItemNote.Count, test.PurchaseItemNote.Count);
             Assert.AreEqual(src.ItineraryGroup.Count, test.ItineraryGroup.Count);
             Assert.AreEqual(src.ItineraryMember.Count, test.ItineraryMember.Count);
-            Assert.AreEqual(src.ItineraryPayment.Count, test.ItineraryPayment.Count);
+            if(src.ItineraryPayment.Count > 0) Assert.AreNotEqual(src.ItineraryPayment.Count, test.ItineraryPayment.Count); // don't copy payments
             Assert.AreEqual(src.ItineraryPax.Count, test.ItineraryPax.Count);
             Assert.AreEqual(src.ItineraryPaxOverride.Count, test.ItineraryPaxOverride.Count);
             Assert.AreEqual(src.ItineraryMessage.Count, test.ItineraryMessage.Count);
