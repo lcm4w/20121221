@@ -400,6 +400,8 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if (!ValidateRows()) return;
+            
             if (dtpNewStartDate.Value != null)
                 itinerarySet.Itinerary[0].ArriveDate = (DateTime) dtpNewStartDate.Value;
          
@@ -411,6 +413,27 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
             // booking dates
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
             DialogResult = DialogResult.OK;
+        }
+
+        private bool ValidateRows()
+        {
+            var i = 0;
+            foreach (var row in gridBookings.Rows)
+            {
+                i++;
+                if (!(bool)row.Cells["IsSelected"].Value) continue;
+                
+                // warn if setting row to null or zero
+                if (row.Cells["OldNet"].Value != DBNull.Value   // not already null
+                    && (row.Cells["Net"].Value == DBNull.Value   // and setting null
+                        || ((decimal)row.Cells["Net"].Value == 0 && (decimal)row.Cells["OldNet"].Value != 0))) // or changing it to zero
+                {
+                    var msg = string.Format("Warning: row {0} sets new price to {1}. You can exclude this row by unticking it.\r\n\r\nContinue anyway?", i, row.Cells["Net"].Value == DBNull.Value ? "NOTHING" : "ZERO");
+                    var stop = MessageBox.Show(msg, App.MessageCaption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel;
+                    if (stop) return false;
+                }
+            }
+            return true;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
