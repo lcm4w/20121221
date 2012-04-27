@@ -456,7 +456,7 @@ namespace TourWriter.Forms
 
 			// create itinerary copy
             var i = new Itinerary();
-            var newItinerary = UserControls.CopyHelper.CopyAndSaveItinerary(copyItineraryId, newItineraryName);
+            var newItinerary = Services.CopyHelper.CopyAndSaveItinerary(copyItineraryId, newItineraryName);
             var newItineraryId = newItinerary.Itinerary[0].ItineraryID;
             info.SetParentFolderID(newItineraryId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Itinerary);
 
@@ -541,7 +541,7 @@ namespace TourWriter.Forms
 
             // create itinerary copy
             var i = new Supplier();
-            var newSupplier = UserControls.CopyHelper.CopyAndSaveSupplier(copySupplierId, newSupplierName);
+            var newSupplier = Services.CopyHelper.CopyAndSaveSupplier(copySupplierId, newSupplierName);
             var newSupplierId = newSupplier.Supplier[0].SupplierID;
             info.SetParentFolderID(newSupplierId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Supplier);
 
@@ -626,7 +626,7 @@ namespace TourWriter.Forms
 
             // create itinerary copy
             var i = new Contact();
-            var newContact = UserControls.CopyHelper.CopyAndSaveContact(copyContactId, newContactName);
+            var newContact = Services.CopyHelper.CopyAndSaveContact(copyContactId, newContactName);
             var newContactId = newContact.Contact[0].ContactID;
             info.SetParentFolderID(newContactId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Contact);
 

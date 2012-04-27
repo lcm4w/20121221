@@ -2,7 +2,7 @@
 using System.Linq;
 using TourWriter.Info;
 
-namespace TourWriter.UserControls
+namespace TourWriter.Services
 {
     public class CopyHelper
     {

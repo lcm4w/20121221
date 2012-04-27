@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using TourWriter.DataAccess;
 using TourWriter.Info;
+using TourWriter.Services;
 using TourWriter.UserControls;
 
 namespace TourWriter.Tests

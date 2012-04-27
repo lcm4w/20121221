@@ -738,7 +738,7 @@
     <Compile Include="UserControls\Accounting\AccountingGrid.Designer.cs">
       <DependentUpon>AccountingGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Copy\CopyHelpers.cs" />
+    <Compile Include="Services\CopyHelpers.cs" />
     <Compile Include="UserControls\DatabaseConnection\TrialProgress.cs">
       <SubType>Form</SubType>
     </Compile>
