@@ -3,7 +3,6 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
-using Infragistics.Win.Misc;
 using Infragistics.Win.UltraWinGrid;
 using Infragistics.Win.UltraWinTree;
 using TourWriter.Dialogs;

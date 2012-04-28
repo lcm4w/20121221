@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace TourWriter.Info {
 
@@ -82,15 +84,27 @@ namespace TourWriter.Info {
 
             if (deepCopy) // Copy child data
             {
+                // Copy rates
                 foreach (RateRow rate in source.GetRateRows())
                 {
                     CopyRate(rate, newRow.ServiceID, userId, deepCopy, false);
                 }
+
+                // Copy configs
                 foreach (ServiceConfigRow config in source.GetServiceConfigRows())
                 {
                     CopyServiceConfig(config, newRow.ServiceID, userId);
                 }
+
+                // Copy warnings
+                var warnings = ServiceWarning.Rows.Cast<ServiceWarningRow>().AsQueryable()
+                                             .Where(x => x.ServiceID == source.ServiceID).ToList();
+                foreach (ServiceWarningRow warning in warnings)
+                {
+                    CopyServiceWarning(warning, newRow.ServiceID);
+                }                                
             }
+
             return newRow;
         }
 
@@ -178,7 +192,22 @@ namespace TourWriter.Info {
             ServiceConfig.AddServiceConfigRow(newRow);
             return newRow;
         }
-        
+
+        public ServiceWarningRow CopyServiceWarning(ServiceWarningRow source, int parentServiceId)
+        {           
+            ServiceWarningRow newRow = ServiceWarning.NewServiceWarningRow();
+            //newRow.ItemArray = source.ItemArray;
+
+            // Set new values.
+            newRow.ServiceID = parentServiceId;
+            newRow.ValidFrom = source.ValidFrom;
+            newRow.ValidTo = source.ValidTo;
+            newRow.Description = source.Description;
+
+            ServiceWarning.AddServiceWarningRow(newRow);
+            return newRow;
+        }
+
         #endregion
         
     }
