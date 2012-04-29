@@ -29,8 +29,8 @@ namespace TourWriter.UserControls.Accounting
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab3 = new Infragistics.Win.UltraWinTabControl.UltraTab();
-            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab1 = new Infragistics.Win.UltraWinTabControl.UltraTab();
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab2 = new Infragistics.Win.UltraWinTabControl.UltraTab();
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab4 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             this.ultraTabPageControl22 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.label5 = new System.Windows.Forms.Label();
             this.ultraTabPageControl23 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
@@ -41,13 +41,15 @@ namespace TourWriter.UserControls.Accounting
             this.txtTo = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.txtFrom = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.pnlDates = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.itineraryBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.itineraryStatusBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.gridPurchases = new TourWriter.UserControls.DataExtractGrid();
             this.gridSales = new TourWriter.UserControls.DataExtractGrid();
             this.ultraTabPageControl22.SuspendLayout();
@@ -117,15 +119,15 @@ namespace TourWriter.UserControls.Accounting
             this.tabControl.SharedControlsPage = this.ultraTabSharedControlsPage4;
             this.tabControl.Size = new System.Drawing.Size(911, 490);
             this.tabControl.TabIndex = 6;
-            ultraTab3.Key = "Purchases";
-            ultraTab3.TabPage = this.ultraTabPageControl22;
-            ultraTab3.Text = "Purchases";
-            ultraTab1.Key = "Sales";
-            ultraTab1.TabPage = this.ultraTabPageControl23;
-            ultraTab1.Text = "Sales";
+            ultraTab2.Key = "Purchases";
+            ultraTab2.TabPage = this.ultraTabPageControl22;
+            ultraTab2.Text = "Purchases";
+            ultraTab4.Key = "Sales";
+            ultraTab4.TabPage = this.ultraTabPageControl23;
+            ultraTab4.Text = "Sales";
             this.tabControl.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
-            ultraTab3,
-            ultraTab1});
+            ultraTab2,
+            ultraTab4});
             // 
             // lblHeading
             // 
@@ -155,6 +157,8 @@ namespace TourWriter.UserControls.Accounting
             // 
             // pnlDates
             // 
+            this.pnlDates.Controls.Add(this.label4);
+            this.pnlDates.Controls.Add(this.comboBox3);
             this.pnlDates.Controls.Add(this.label3);
             this.pnlDates.Controls.Add(this.comboBox2);
             this.pnlDates.Controls.Add(this.label1);
@@ -164,8 +168,27 @@ namespace TourWriter.UserControls.Accounting
             this.pnlDates.Controls.Add(this.txtFrom);
             this.pnlDates.Location = new System.Drawing.Point(107, 3);
             this.pnlDates.Name = "pnlDates";
-            this.pnlDates.Size = new System.Drawing.Size(562, 34);
+            this.pnlDates.Size = new System.Drawing.Size(809, 34);
             this.pnlDates.TabIndex = 194;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label3.Location = new System.Drawing.Point(374, 12);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.TabIndex = 197;
+            this.label3.Text = "with Booking";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(445, 7);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.TabIndex = 196;
             // 
             // label1
             // 
@@ -206,24 +229,24 @@ namespace TourWriter.UserControls.Accounting
             this.itineraryStatusBindingSource.DataMember = "ItineraryStatus";
             this.itineraryStatusBindingSource.DataSource = typeof(TourWriter.Info.ToolSet);
             // 
-            // comboBox2
+            // label4
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(427, 7);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 196;
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(579, 12);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 13);
+            this.label4.TabIndex = 199;
+            this.label4.Text = "with Itinerary";
             // 
-            // label3
+            // comboBox3
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label3.Location = new System.Drawing.Point(367, 12);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 13);
-            this.label3.TabIndex = 197;
-            this.label3.Text = "with Status";
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(650, 7);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 198;
             // 
             // gridPurchases
             // 
@@ -298,6 +321,8 @@ namespace TourWriter.UserControls.Accounting
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBox3;
 
     }
 }

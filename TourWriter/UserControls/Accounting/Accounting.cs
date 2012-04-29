@@ -110,12 +110,19 @@ namespace TourWriter.UserControls.Accounting
             var list = new List<string> {"Booking / Sale dates", "Itinerary dates"};
             comboBox1.DataSource = list;
 
-            // bind status
+            // bind request status
             var dict = new Dictionary<string, string> {{"", "any"}};
             foreach (var r in Cache.ToolSet.RequestStatus) dict.Add(r.RequestStatusID.ToString(), r.RequestStatusName);
             comboBox2.DataSource = new BindingSource(dict, null);
             comboBox2.DisplayMember = "Value";
             comboBox2.ValueMember = "Key";
+
+            // bind itinerary status
+            var dict2 = new Dictionary<string, string> { { "", "any" } };
+            foreach (var r in Cache.ToolSet.ItineraryStatus) dict2.Add(r.ItineraryStatusID.ToString(), r.ItineraryStatusName);
+            comboBox3.DataSource = new BindingSource(dict2, null);
+            comboBox3.DisplayMember = "Value";
+            comboBox3.ValueMember = "Key";
         }
         
         private void BindPurchasesGrid()
@@ -358,8 +365,11 @@ namespace TourWriter.UserControls.Accounting
                 // status
                 if (queryType == "Purchases")
                 {
-                    var status = comboBox2.SelectedValue == "" ? (int?)null : int.Parse(comboBox2.SelectedValue.ToString());
-                    if (status.HasValue) filter += " and RequestStatusID = " + status;
+                    var requestStatus = comboBox2.SelectedValue == "" ? (int?)null : int.Parse(comboBox2.SelectedValue.ToString());
+                    if (requestStatus.HasValue) filter += " and RequestStatusID = " + requestStatus;
+
+                    var itineraryStatus = comboBox3.SelectedValue == "" ? (int?)null : int.Parse(comboBox3.SelectedValue.ToString());
+                    if (itineraryStatus.HasValue) filter += " and ItineraryStatusID = " + itineraryStatus;
                 }
             }
             else
