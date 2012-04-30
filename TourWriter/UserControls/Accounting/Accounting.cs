@@ -92,6 +92,7 @@ namespace TourWriter.UserControls.Accounting
 
             gridPurchases.InitializeLayoutEvent += GridInitializeLayoutEvent;
             gridPurchases.UltraGrid.InitializeRow += GridInitializeRow;
+            gridPurchases.UltraGrid.DoubleClickRow += gridPurchases_DoubleClickRow;
             gridSales.InitializeLayoutEvent += GridInitializeLayoutEvent;
             gridSales.UltraGrid.InitializeRow += GridInitializeRow;
             gridSales.UltraGrid.DoubleClickRow += gridSales_DoubleClickRow;
@@ -456,6 +457,23 @@ namespace TourWriter.UserControls.Accounting
             EditSales();
         }
         
+        private void gridPurchases_DoubleClickRow(object sender, DoubleClickRowEventArgs e)
+        {
+            if (e.Row.GetType() == typeof(UltraGridEmptyRow) ||
+                e.Row.GetType() == typeof(UltraGridGroupByRow))
+                return;            
+
+            // Sets the ParentFolderID to 0 for now, needs to be update if it causes an issue
+            var info = new NavigationTreeItemInfo(
+                (int)e.Row.Cells["ItineraryID"].Value,
+                (string)e.Row.Cells["ItineraryName"].Value,
+                NavigationTreeItemInfo.ItemTypes.Itinerary,
+                0, true);
+
+            var node = App.MainForm.BuildMenuNode(info);
+            App.MainForm.Load_ItineraryForm(node);
+        }
+
         public ToolStripButton AddToolStripButton(ToolStrip toolstrip, string text, Image image, string toolTipText, EventHandler onClick, bool insertSeperator, int position)
         {
             var button = new ToolStripButton(text, image, onClick);
