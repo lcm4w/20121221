@@ -74,8 +74,8 @@ namespace TourWriter.UserControls
             if (InitializeLayoutEvent != null)
                 InitializeLayoutEvent(sender, e);
 
-            Services.GridHelper.SetDefaultGridAppearance(e);
-            Services.GridHelper.SetDefaultGroupByAppearance(e);
+            GridHelper.SetDefaultGridAppearance(e);
+            GridHelper.SetDefaultGroupByAppearance(e);
 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
@@ -98,10 +98,7 @@ namespace TourWriter.UserControls
                     c.CellAppearance.TextHAlign = HAlign.Right;
                 }
             }
-
-
-
-
+            
             // column chooser
             e.Layout.Override.RowSelectorHeaderStyle = RowSelectorHeaderStyle.ColumnChooserButton;
             e.Layout.Override.RowSelectors = DefaultableBoolean.True;

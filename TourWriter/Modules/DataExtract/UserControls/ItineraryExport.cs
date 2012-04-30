@@ -36,7 +36,7 @@ namespace TourWriter.Modules.DataExtract.UserControls
         {
             var d1 = txtFrom.DateTime.Date.AddSeconds(-1).ToString("yyyy.MM.dd HH:mm");
             var d2 = txtTo.DateTime.Date.AddDays(1).ToString("yyyy.MM.dd HH:mm");
-            var sql = string.Format("select *, x.IsRecordActive from itinerarydetail i left join Itinerary x on i.ItineraryID = x.ItineraryID where i.arrivedate between '{0}' and '{1}'", d1, d2);
+            var sql = string.Format("select x.IsRecordActive, i.* from itinerarydetail i left join Itinerary x on i.ItineraryID = x.ItineraryID where i.arrivedate between '{0}' and '{1}'", d1, d2);
             
             try
             {
