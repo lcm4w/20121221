@@ -182,27 +182,31 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             emailList.Clear();            
             if (_templateForm.GroupBySupplierEmail)
             {
-                var purchaseLineList = itinerarySet.PurchaseLine.Where(x => purchaseLineIdList.Contains(x.PurchaseLineID));
-
-                var supplierList = itinerarySet.SupplierLookup.Where(x => !x.IsEmailNull()).ToList();
-
-                var purchaseLineGroupByEmail = from p in purchaseLineList
-                                               join sup in supplierList on p.SupplierID equals sup.SupplierID
-                                               group p by sup.Email
-                                                   into purchaseGroup
-                                                   select purchaseGroup;
-
-                foreach (var purchaseGroup in purchaseLineGroupByEmail)
+                // ensure all suppliers have email, so we can group by email address
+                var noEmail = itinerarySet.SupplierLookup.Where(x => x.IsEmailNull() || x.Email.Trim() == "").ToList();
+                if (noEmail.Any())
                 {
-                    emailList.Add(new BookingEmailInfo(purchaseGroup));
+                    var s = noEmail.Aggregate("", (current, em) => current + ("  - " + em.SupplierName + "\r\n"));
+                    App.ShowError("Email address required - please enter address in Suppliers(s):\r\n" + s);
+                    SetActiveWindow(ActiveWindow.Template, ActiveWindow.Email);
+                    return;
                 }
+
+                // group on supplier email
+                var purchases = itinerarySet.PurchaseLine.Where(x => purchaseLineIdList.Contains(x.PurchaseLineID));
+                var supplierPurchases = from p in purchases
+                                        join sup in itinerarySet.SupplierLookup on p.SupplierID equals sup.SupplierID
+                                        group p by sup.Email
+                                        into purchaseGroup
+                                        select purchaseGroup;
+
+                foreach (var purchaseLines in supplierPurchases)
+                    emailList.Add(new BookingEmailInfo(purchaseLines));
             }
             else
             {
-                foreach (var row in purchaseLineIdList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
-                {
-                    emailList.Add(new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow>() { row }));
-                }
+                foreach (var purchaseLine in purchaseLineIdList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
+                    emailList.Add(new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow>{purchaseLine}));
             }                              
             
             var templateSettings = templateForm.GetTemplateSettings();

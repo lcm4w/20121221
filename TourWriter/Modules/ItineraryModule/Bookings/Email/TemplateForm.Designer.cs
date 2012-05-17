@@ -57,8 +57,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             // 
             // txtFrom
             // 
-            this.txtFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFrom.Location = new System.Drawing.Point(52, 40);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(344, 20);
@@ -66,8 +66,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             // 
             // txtSubject
             // 
-            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSubject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSubject.Location = new System.Drawing.Point(52, 86);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(344, 20);
@@ -92,6 +92,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkSaveCopy.Size = new System.Drawing.Size(166, 17);
             this.chkSaveCopy.TabIndex = 4;
             this.chkSaveCopy.Text = "Save a copy of the sent email";
+            this.toolTip1.SetToolTip(this.chkSaveCopy, "Save a copy in the Messages tab in Supplier or Itinerary");
             this.chkSaveCopy.UseVisualStyleBackColor = true;
             // 
             // chkBccSender
@@ -103,6 +104,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkBccSender.Size = new System.Drawing.Size(164, 17);
             this.chkBccSender.TabIndex = 5;
             this.chkBccSender.Text = "Bcc to senders email address";
+            this.toolTip1.SetToolTip(this.chkBccSender, "Send copy to yourself (BCC)");
             this.chkBccSender.UseVisualStyleBackColor = true;
             this.chkBccSender.CheckedChanged += new System.EventHandler(this.chkBccSender_CheckedChanged);
             // 
@@ -135,8 +137,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             // 
             // txtBcc
             // 
-            this.txtBcc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBcc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBcc.Location = new System.Drawing.Point(52, 63);
             this.txtBcc.Name = "txtBcc";
             this.txtBcc.Size = new System.Drawing.Size(344, 20);
@@ -151,12 +153,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkShowBookingPrice.Size = new System.Drawing.Size(168, 17);
             this.chkShowBookingPrice.TabIndex = 6;
             this.chkShowBookingPrice.Text = "Show price details for booking";
+            this.toolTip1.SetToolTip(this.chkShowBookingPrice, "Shows or hides the price details on the email");
             this.chkShowBookingPrice.UseVisualStyleBackColor = true;
             // 
             // txtTemplate
             // 
-            this.txtTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTemplate.Location = new System.Drawing.Point(68, 427);
             this.txtTemplate.Name = "txtTemplate";
             this.txtTemplate.Size = new System.Drawing.Size(498, 20);
@@ -186,9 +189,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             // 
             // webBody
             // 
-            this.webBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.webBody.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.webBody.Location = new System.Drawing.Point(3, 136);
             this.webBody.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBody.Name = "webBody";
@@ -204,6 +207,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkReadReceipt.Size = new System.Drawing.Size(129, 17);
             this.chkReadReceipt.TabIndex = 7;
             this.chkReadReceipt.Text = "Include a read receipt";
+            this.toolTip1.SetToolTip(this.chkReadReceipt, "Adds a read receipt to the sent email");
             this.chkReadReceipt.UseVisualStyleBackColor = true;
             // 
             // chkSkip
@@ -215,7 +219,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.chkSkip.Size = new System.Drawing.Size(93, 17);
             this.chkSkip.TabIndex = 41;
             this.chkSkip.Text = "Skip this page";
-            this.toolTip1.SetToolTip(this.chkSkip, "Go straight to the next page when window opens");
+            this.toolTip1.SetToolTip(this.chkSkip, "Next time, go straight to the next page (click Back to see this page).");
             this.chkSkip.UseVisualStyleBackColor = true;
             // 
             // checkGroupByEmail
@@ -227,6 +231,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             this.checkGroupByEmail.Size = new System.Drawing.Size(183, 17);
             this.checkGroupByEmail.TabIndex = 42;
             this.checkGroupByEmail.Text = "Group bookings by Supplier email";
+            this.toolTip1.SetToolTip(this.checkGroupByEmail, "Include all bookings in a single email for each Supplier");
             this.checkGroupByEmail.UseVisualStyleBackColor = true;
             // 
             // TemplateForm

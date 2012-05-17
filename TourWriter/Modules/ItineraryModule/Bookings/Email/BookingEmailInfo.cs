@@ -26,6 +26,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         // email body search-and-replace tags
         private const string HostNameTag = "[!HostName]";
         private const string SupplierNameTag = "[!SupplierName]";
+        private const string PurchaseLineNameTag = "[!BookingName]";
         private const string ItineraryNameTag = "[!ItineraryName]";
         private const string DisplayNameTag = "[!DisplayName]";
         private const string AgentNameTag = "[!AgentName]";
@@ -177,7 +178,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         private string BuildEmailText(string template, ItinerarySet.PurchaseLineRow purchaseLine)
         {
-            var supplier = GetBookingItinerarySet().SupplierLookup.FindBySupplierID(PurchaseLine.SupplierID);
+            var supplier = GetBookingItinerarySet().SupplierLookup.FindBySupplierID(purchaseLine.SupplierID);
             var origin = !purchaseLine.ItineraryRow.IsCountryIDNull() ? Cache.ToolSet.Country.FindByCountryID(purchaseLine.ItineraryRow.CountryID) : null;
             var pax = !purchaseLine.ItineraryRow.IsPaxOverrideNull() ? purchaseLine.ItineraryRow.PaxOverride : 
                 purchaseLine.ItineraryRow.GetItineraryGroupRows().Sum(g => g.GetItineraryMemberRows().Count());
@@ -186,6 +187,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 (!supplier.IsHostNameNull() && supplier.HostName != "" ? supplier.HostName : "Reservations").Trim());
 
             template = ReplaceTag(template, SupplierNameTag, supplier.SupplierName);
+            template = ReplaceTag(template, PurchaseLineNameTag, purchaseLine.PurchaseLineName);
             template = ReplaceTag(template, ItineraryNameTag, purchaseLine.ItineraryRow.ItineraryName);
             template = ReplaceTag(template, DisplayNameTag, !purchaseLine.ItineraryRow.IsDisplayNameNull() ? purchaseLine.ItineraryRow.DisplayName : "");
             template = ReplaceTag(template, AgentNameTag, !purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");

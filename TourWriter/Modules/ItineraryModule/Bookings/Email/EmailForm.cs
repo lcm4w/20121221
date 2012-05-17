@@ -26,17 +26,20 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             btnNext.Enabled = (index < emailList.Count - 1);
             lblPosition.Text = String.Format("Booking email {0} of {1}", index + 1, emailList.Count);
 
-            EmailMessage email = emailList[index].EmailMessage;
-            txtTo.Text = email._To;
-            txtSubject.Text = email.Subject;
-            webBody.DocumentText = email.Body;
+            if (index < emailList.Count)
+            {
+                EmailMessage email = emailList[index].EmailMessage;
+                txtTo.Text = email._To;
+                txtSubject.Text = email.Subject;
+                webBody.DocumentText = email.Body;
 
-            txtAttach.Text = String.Empty;
-            foreach (System.Net.Mail.Attachment att in email.Attachments)
-                txtAttach.Text += att.Name + ",";
-            txtAttach.Text = txtAttach.Text.TrimEnd(',');
+                txtAttach.Text = String.Empty;
+                foreach (System.Net.Mail.Attachment att in email.Attachments)
+                    txtAttach.Text += att.Name + ",";
+                txtAttach.Text = txtAttach.Text.TrimEnd(',');
 
-            currentIndex = index;
+                currentIndex = index;
+            }
         }
 
         private void SaveCurrentEmail()
