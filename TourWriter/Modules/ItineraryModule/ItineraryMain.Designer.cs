@@ -125,6 +125,8 @@ namespace TourWriter.Modules.ItineraryModule
             this.btnMessageDel = new System.Windows.Forms.ToolStripButton();
             this.label35 = new System.Windows.Forms.Label();
             this.ultraTabPageControl1 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbAgentContact = new System.Windows.Forms.ComboBox();
             this.cmbCurrency = new TourWriter.UserControls.NullableComboBox();
             this.lblCurrency = new System.Windows.Forms.Label();
             this.chkReadOnly = new System.Windows.Forms.CheckBox();
@@ -220,8 +222,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolSaveClose = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cmbAgentContact = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.ultraTabPageControl12.SuspendLayout();
             this.ultraTabPageControl11.SuspendLayout();
             this.ultraTabPageControl8.SuspendLayout();
@@ -759,6 +759,29 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(789, 563);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(376, 341);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 13);
+            this.label12.TabIndex = 147;
+            this.label12.Text = "Agent Contact";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cmbAgentContact
+            // 
+            this.cmbAgentContact.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.cmbAgentContact.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbAgentContact.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAgentContact.FormattingEnabled = true;
+            this.cmbAgentContact.Location = new System.Drawing.Point(459, 337);
+            this.cmbAgentContact.Name = "cmbAgentContact";
+            this.cmbAgentContact.Size = new System.Drawing.Size(250, 21);
+            this.cmbAgentContact.TabIndex = 146;
+            // 
             // cmbCurrency
             // 
             this.cmbCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
@@ -1013,6 +1036,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.txtComments.Location = new System.Drawing.Point(7, 302);
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
+            this.txtComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtComments.Size = new System.Drawing.Size(340, 255);
             this.txtComments.TabIndex = 11;
             // 
@@ -1395,7 +1419,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl18.Controls.Add(this.tabControlBookings);
             this.ultraTabPageControl18.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl18.Name = "ultraTabPageControl18";
-            this.ultraTabPageControl18.Size = new System.Drawing.Size(789, 533);
+            this.ultraTabPageControl18.Size = new System.Drawing.Size(789, 563);
             // 
             // tabControlBookings
             // 
@@ -1437,7 +1461,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl19.Controls.Add(this.clientEditor);
             this.ultraTabPageControl19.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl19.Name = "ultraTabPageControl19";
-            this.ultraTabPageControl19.Size = new System.Drawing.Size(789, 533);
+            this.ultraTabPageControl19.Size = new System.Drawing.Size(789, 563);
             // 
             // clientEditor
             // 
@@ -1456,7 +1480,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl2.Controls.Add(this.tabControlAdditional);
             this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(789, 533);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(789, 563);
             // 
             // tabControlAdditional
             // 
@@ -1764,29 +1788,6 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolHelp.Text = "Help";
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
-            // 
-            // cmbAgentContact
-            // 
-            this.cmbAgentContact.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
-            this.cmbAgentContact.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbAgentContact.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAgentContact.FormattingEnabled = true;
-            this.cmbAgentContact.Location = new System.Drawing.Point(459, 337);
-            this.cmbAgentContact.Name = "cmbAgentContact";
-            this.cmbAgentContact.Size = new System.Drawing.Size(250, 21);
-            this.cmbAgentContact.TabIndex = 146;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(376, 341);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(77, 13);
-            this.label12.TabIndex = 147;
-            this.label12.Text = "Agent Contact";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // ItineraryMain
             // 
