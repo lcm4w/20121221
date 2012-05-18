@@ -129,8 +129,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 if ((int)cmbBookingStatus.SelectedValue > -1)
                 {
                     // set the booking status of the purchase items for this booking
-                    foreach (ItinerarySet.PurchaseItemRow item in emailInfo.PurchaseLine.GetPurchaseItemRows())
-                        item.RequestStatusID = (int) cmbBookingStatus.SelectedValue;
+                    foreach (var purchaseLine in emailInfo.PurchaseLines)
+                        foreach (ItinerarySet.PurchaseItemRow item in purchaseLine.GetPurchaseItemRows())
+                            item.RequestStatusID = (int) cmbBookingStatus.SelectedValue;
                 }
                 SetDisplayStatus(gridRow, emailInfo.EmailMessage._Status);
                 return;
