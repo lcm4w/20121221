@@ -920,7 +920,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
             this.tabSupplier.Location = new System.Drawing.Point(2, 21);
             this.tabSupplier.Name = "tabSupplier";
-            this.tabSupplier.Size = new System.Drawing.Size(774, 687);
+            this.tabSupplier.Size = new System.Drawing.Size(774, 625);
             // 
             // scrollBarSetter
             // 
@@ -1160,7 +1160,7 @@ namespace TourWriter.Modules.SupplierModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel4.Location = new System.Drawing.Point(369, 345);
             this.headerLabel4.Name = "headerLabel4";
-            this.headerLabel4.Size = new System.Drawing.Size(399, 16);
+            this.headerLabel4.Size = new System.Drawing.Size(382, 16);
             this.headerLabel4.TabIndex = 140;
             this.headerLabel4.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel4.TextString = "Description";
@@ -1182,7 +1182,7 @@ namespace TourWriter.Modules.SupplierModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel2.Location = new System.Drawing.Point(372, 79);
             this.headerLabel2.Name = "headerLabel2";
-            this.headerLabel2.Size = new System.Drawing.Size(396, 16);
+            this.headerLabel2.Size = new System.Drawing.Size(379, 16);
             this.headerLabel2.TabIndex = 138;
             this.headerLabel2.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel2.TextString = "Contact";
@@ -1418,7 +1418,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierDescription.Multiline = true;
             this.txtSupplierDescription.Name = "txtSupplierDescription";
             this.txtSupplierDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 316);
+            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 295);
             this.txtSupplierDescription.TabIndex = 18;
             // 
             // chkIsSupplierActive
@@ -1457,7 +1457,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierComments.Multiline = true;
             this.txtSupplierComments.Name = "txtSupplierComments";
             this.txtSupplierComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierComments.Size = new System.Drawing.Size(337, 316);
+            this.txtSupplierComments.Size = new System.Drawing.Size(337, 295);
             this.txtSupplierComments.TabIndex = 17;
             // 
             // ultraTabPageControl6
@@ -1467,7 +1467,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl6.Controls.Add(this.serviceEditor1);
             this.ultraTabPageControl6.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl6.Name = "ultraTabPageControl6";
-            this.ultraTabPageControl6.Size = new System.Drawing.Size(828, 671);
+            this.ultraTabPageControl6.Size = new System.Drawing.Size(774, 687);
             // 
             // serviceEditor1
             // 
@@ -1514,7 +1514,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl3.Controls.Add(this.label40);
             this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(828, 671);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(774, 687);
             // 
             // label46
             // 
@@ -2039,7 +2039,7 @@ namespace TourWriter.Modules.SupplierModule
             _override2.NodeStyle = Infragistics.Win.UltraWinTree.NodeStyle.CheckBox;
             _override2.SelectionType = Infragistics.Win.UltraWinTree.SelectType.Extended;
             this.treeSupplierConfigs.Override = _override2;
-            this.treeSupplierConfigs.Size = new System.Drawing.Size(239, 498);
+            this.treeSupplierConfigs.Size = new System.Drawing.Size(239, 481);
             this.treeSupplierConfigs.TabIndex = 1;
             this.treeSupplierConfigs.AfterCheck += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.treeSupplierConfigs_AfterCheck);
             // 
@@ -2080,7 +2080,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
             this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(828, 671);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 687);
             // 
             // tabsAdditional
             // 
@@ -2164,7 +2164,7 @@ namespace TourWriter.Modules.SupplierModule
             this.TabControl_Main.Name = "TabControl_Main";
             this.TabControl_Main.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this.TabControl_Main.ShowTabListButton = Infragistics.Win.DefaultableBoolean.False;
-            this.TabControl_Main.Size = new System.Drawing.Size(778, 710);
+            this.TabControl_Main.Size = new System.Drawing.Size(778, 648);
             this.TabControl_Main.TabIndex = 16;
             ultraTab6.Key = "Supplier";
             ultraTab6.TabPage = this.tabSupplier;
@@ -2189,7 +2189,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(774, 687);
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(774, 625);
             // 
             // pnlMain
             // 
@@ -2199,7 +2199,7 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlMain.Location = new System.Drawing.Point(0, 89);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlMain.Size = new System.Drawing.Size(788, 723);
+            this.pnlMain.Size = new System.Drawing.Size(788, 661);
             this.pnlMain.TabIndex = 17;
             // 
             // menuStrip1
@@ -2373,7 +2373,7 @@ namespace TourWriter.Modules.SupplierModule
             this.AllowDrop = true;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(788, 812);
+            this.ClientSize = new System.Drawing.Size(788, 750);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);

@@ -244,7 +244,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 !service.IsChargeTypeNull() ? service.ChargeType : "", 
                 option.IsDefault,
                 service.CurrencyCode);
-            
+
+            // add voucher note
+            foreach (var row in service.SupplierRow.GetSupplierNoteRows().Where(x => !x.IsShowOnReportNull() && x.ShowOnReport))
+                if (!newItem.PurchaseLineRow.NoteToVoucher.Contains(row.Note))
+                    newItem.PurchaseLineRow.NoteToVoucher += (newItem.PurchaseLineRow.NoteToVoucher.Length > 0 ? "\r\n" : "") + row.Note;
+
             //if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
             btnOk.Enabled = true;
             return newItem;

@@ -364,7 +364,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl2.Controls.Add(this.txtComments);
             this.ultraTabPageControl2.Controls.Add(this.label3);
             this.ultraTabPageControl2.Controls.Add(this.label4);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(795, 393);
             // 
@@ -490,7 +490,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.ultraTabPageControl3.Controls.Add(this.label16);
             this.ultraTabPageControl3.Controls.Add(this.label15);
             this.ultraTabPageControl3.Controls.Add(this.gridMarginOverride);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
             this.ultraTabPageControl3.Size = new System.Drawing.Size(795, 393);
             // 
@@ -514,13 +514,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label14.TabIndex = 160;
             this.label14.Text = "to be";
             // 
-            // cmbMarkup
+            // cmbMargin
             // 
             this.cmbMargin.DisplayMember = "Text";
             this.cmbMargin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMargin.FormattingEnabled = true;
             this.cmbMargin.Location = new System.Drawing.Point(64, 134);
-            this.cmbMargin.Name = "cmbMarkup";
+            this.cmbMargin.Name = "cmbMargin";
             this.cmbMargin.Size = new System.Drawing.Size(110, 21);
             this.cmbMargin.TabIndex = 159;
             this.cmbMargin.ValueMember = "Value";
@@ -590,13 +590,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.label2.Text = "Only when you have default margins set (see grid on right),\r\nthis sets the method" +
     " (markup, commission, or gross) used to \r\ncalculate the margin.";
             // 
-            // cmbMargin
+            // cmbOverride
             // 
             this.cmbOverride.DisplayMember = "Text";
             this.cmbOverride.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOverride.FormattingEnabled = true;
             this.cmbOverride.Location = new System.Drawing.Point(215, 135);
-            this.cmbOverride.Name = "cmbMargin";
+            this.cmbOverride.Name = "cmbOverride";
             this.cmbOverride.Size = new System.Drawing.Size(110, 21);
             this.cmbOverride.TabIndex = 133;
             this.cmbOverride.ValueMember = "Value";
@@ -1169,7 +1169,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
 
 			GridHelper.LayoutCol(gridAgents, "IsDefaultAgent", 1, 20);
-			GridHelper.LayoutCol(gridAgents, "AgentName",		 2, 120);
+			GridHelper.LayoutCol(gridAgents, "AgentName", 2, 120);
 
 			EnableDisableAgents();
 		}

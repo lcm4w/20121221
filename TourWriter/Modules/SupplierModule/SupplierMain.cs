@@ -754,8 +754,17 @@ namespace TourWriter.Modules.SupplierModule
         { 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
             {
-                if (c.Key == "Note")
+                if (c.Key == "ShowOnReport")
                 {
+                    c.Header.Caption = "Auto";
+                    c.Header.ToolTipText = "Always include on voucher reports";
+                    c.Width = 20;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                }
+                else if (c.Key == "Note")
+                {
+                    c.Header.ToolTipText = "The note text";
                     c.CellMultiLine = DefaultableBoolean.True;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
@@ -764,7 +773,8 @@ namespace TourWriter.Modules.SupplierModule
                     c.Hidden = true;
             }
             GridHelper.SetDefaultGridAppearance(e);
-            e.Layout.Bands[0].ColHeadersVisible = false;
+            GridHelper.LayoutCol(gridNotes, "ShowOnReport", 1, 20);
+            e.Layout.Override.RowSelectors = DefaultableBoolean.False;
         }
 
         private void gridNotes_Leave(object sender, EventArgs e)
@@ -777,6 +787,7 @@ namespace TourWriter.Modules.SupplierModule
             SupplierSet.SupplierNoteRow row = supplierSet.SupplierNote.NewSupplierNoteRow();
             row.SupplierID = supplierSet.Supplier[0].SupplierID;
             row.Note = "Enter note here...";
+            row.ShowOnReport = false;
             supplierSet.SupplierNote.AddSupplierNoteRow(row);
 
             GridHelper.SetActiveRow(gridNotes, "SupplierNoteID", row.SupplierNoteID, "Note");
