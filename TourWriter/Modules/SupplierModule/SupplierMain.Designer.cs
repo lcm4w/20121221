@@ -325,7 +325,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
             this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
-            this.ultraTabPageControl5.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl5.Size = new System.Drawing.Size(770, 587);
             // 
             // reportControl
             // 
@@ -333,7 +333,7 @@ namespace TourWriter.Modules.SupplierModule
             this.reportControl.GeneralParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.GeneralParameters")));
             this.reportControl.Location = new System.Drawing.Point(0, 0);
             this.reportControl.Name = "reportControl";
-            this.reportControl.Size = new System.Drawing.Size(824, 491);
+            this.reportControl.Size = new System.Drawing.Size(770, 587);
             this.reportControl.TabIndex = 0;
             // 
             // ultraTabPageControl7
@@ -918,7 +918,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
+            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(774, 625);
             // 
@@ -1418,7 +1418,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierDescription.Multiline = true;
             this.txtSupplierDescription.Name = "txtSupplierDescription";
             this.txtSupplierDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 295);
+            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 336);
             this.txtSupplierDescription.TabIndex = 18;
             // 
             // chkIsSupplierActive
@@ -1457,7 +1457,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierComments.Multiline = true;
             this.txtSupplierComments.Name = "txtSupplierComments";
             this.txtSupplierComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierComments.Size = new System.Drawing.Size(337, 295);
+            this.txtSupplierComments.Size = new System.Drawing.Size(337, 336);
             this.txtSupplierComments.TabIndex = 17;
             // 
             // ultraTabPageControl6
@@ -1467,7 +1467,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl6.Controls.Add(this.serviceEditor1);
             this.ultraTabPageControl6.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl6.Name = "ultraTabPageControl6";
-            this.ultraTabPageControl6.Size = new System.Drawing.Size(774, 687);
+            this.ultraTabPageControl6.Size = new System.Drawing.Size(774, 625);
             // 
             // serviceEditor1
             // 
@@ -1479,7 +1479,7 @@ namespace TourWriter.Modules.SupplierModule
             this.serviceEditor1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.serviceEditor1.Location = new System.Drawing.Point(1, 4);
             this.serviceEditor1.Name = "serviceEditor1";
-            this.serviceEditor1.Size = new System.Drawing.Size(827, 524);
+            this.serviceEditor1.Size = new System.Drawing.Size(775, 621);
             this.serviceEditor1.TabIndex = 0;
             // 
             // ultraTabPageControl3
@@ -1514,7 +1514,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl3.Controls.Add(this.label40);
             this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(774, 687);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(774, 625);
             // 
             // label46
             // 
@@ -2015,7 +2015,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtBankDetails.Multiline = true;
             this.txtBankDetails.Name = "txtBankDetails";
             this.txtBankDetails.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtBankDetails.Size = new System.Drawing.Size(555, 56);
+            this.txtBankDetails.Size = new System.Drawing.Size(555, 128);
             this.txtBankDetails.TabIndex = 4;
             // 
             // label44
@@ -2039,7 +2039,7 @@ namespace TourWriter.Modules.SupplierModule
             _override2.NodeStyle = Infragistics.Win.UltraWinTree.NodeStyle.CheckBox;
             _override2.SelectionType = Infragistics.Win.UltraWinTree.SelectType.Extended;
             this.treeSupplierConfigs.Override = _override2;
-            this.treeSupplierConfigs.Size = new System.Drawing.Size(239, 481);
+            this.treeSupplierConfigs.Size = new System.Drawing.Size(227, 570);
             this.treeSupplierConfigs.TabIndex = 1;
             this.treeSupplierConfigs.AfterCheck += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.treeSupplierConfigs_AfterCheck);
             // 
@@ -2078,9 +2078,9 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 687);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 625);
             // 
             // tabsAdditional
             // 
@@ -2102,7 +2102,7 @@ namespace TourWriter.Modules.SupplierModule
             appearance51.FontData.BoldAsString = "True";
             this.tabsAdditional.SelectedTabAppearance = appearance51;
             this.tabsAdditional.SharedControlsPage = this.ultraTabSharedControlsPage3;
-            this.tabsAdditional.Size = new System.Drawing.Size(828, 517);
+            this.tabsAdditional.Size = new System.Drawing.Size(774, 613);
             this.tabsAdditional.TabIndex = 17;
             ultraTab10.Key = "NewReports";
             ultraTab10.TabPage = this.ultraTabPageControl5;
@@ -2138,7 +2138,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             this.ultraTabSharedControlsPage3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage3.Name = "ultraTabSharedControlsPage3";
-            this.ultraTabSharedControlsPage3.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabSharedControlsPage3.Size = new System.Drawing.Size(770, 587);
             // 
             // tabsAccounting
             // 
