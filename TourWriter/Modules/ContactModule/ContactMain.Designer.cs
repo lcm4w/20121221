@@ -66,6 +66,16 @@ namespace TourWriter.Modules.ContactModule
             this.txtDisplayName = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.lblDisplayName = new System.Windows.Forms.Label();
             this.ultraTabPageControl3 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.txtPostcode = new System.Windows.Forms.TextBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.cmbCity = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.cmbRegion = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.label28 = new System.Windows.Forms.Label();
+            this.cmbState = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.cmbCountry = new Infragistics.Win.UltraWinGrid.UltraCombo();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.txtPostName = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
@@ -102,6 +112,10 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtFirstName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDisplayName)).BeginInit();
             this.ultraTabPageControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbRegion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbState)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCountry)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStreetAddress)).BeginInit();
@@ -123,9 +137,9 @@ namespace TourWriter.Modules.ContactModule
             this.ultraTabPageControl1.Controls.Add(this.groupBox1);
             this.ultraTabPageControl1.Controls.Add(this.txtDisplayName);
             this.ultraTabPageControl1.Controls.Add(this.lblDisplayName);
-            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
-            this.ultraTabPageControl1.Size = new System.Drawing.Size(643, 320);
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(643, 280);
             // 
             // groupBox4
             // 
@@ -143,7 +157,7 @@ namespace TourWriter.Modules.ContactModule
             this.groupBox4.Controls.Add(this.txtUrl);
             this.groupBox4.Location = new System.Drawing.Point(8, 176);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(627, 138);
+            this.groupBox4.Size = new System.Drawing.Size(627, 98);
             this.groupBox4.TabIndex = 92;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Internet";
@@ -409,15 +423,122 @@ namespace TourWriter.Modules.ContactModule
             // 
             // ultraTabPageControl3
             // 
+            this.ultraTabPageControl3.Controls.Add(this.txtPostcode);
+            this.ultraTabPageControl3.Controls.Add(this.label34);
+            this.ultraTabPageControl3.Controls.Add(this.cmbCity);
+            this.ultraTabPageControl3.Controls.Add(this.cmbRegion);
+            this.ultraTabPageControl3.Controls.Add(this.label28);
+            this.ultraTabPageControl3.Controls.Add(this.cmbState);
+            this.ultraTabPageControl3.Controls.Add(this.cmbCountry);
+            this.ultraTabPageControl3.Controls.Add(this.label17);
+            this.ultraTabPageControl3.Controls.Add(this.label16);
+            this.ultraTabPageControl3.Controls.Add(this.label9);
             this.ultraTabPageControl3.Controls.Add(this.label24);
             this.ultraTabPageControl3.Controls.Add(this.label36);
             this.ultraTabPageControl3.Controls.Add(this.txtPostName);
             this.ultraTabPageControl3.Controls.Add(this.txtPostAddress);
             this.ultraTabPageControl3.Controls.Add(this.txtStreetAddress);
             this.ultraTabPageControl3.Controls.Add(this.label25);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(643, 320);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(643, 280);
+            // 
+            // txtPostcode
+            // 
+            this.txtPostcode.Location = new System.Drawing.Point(437, 119);
+            this.txtPostcode.Name = "txtPostcode";
+            this.txtPostcode.Size = new System.Drawing.Size(114, 20);
+            this.txtPostcode.TabIndex = 154;
+            // 
+            // label34
+            // 
+            this.label34.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label34.Location = new System.Drawing.Point(372, 118);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(59, 23);
+            this.label34.TabIndex = 155;
+            this.label34.Text = "Postcode";
+            this.label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cmbCity
+            // 
+            this.cmbCity.CheckedListSettings.CheckStateMember = "";
+            this.cmbCity.Location = new System.Drawing.Point(437, 15);
+            this.cmbCity.Name = "cmbCity";
+            this.cmbCity.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbCity.Size = new System.Drawing.Size(200, 22);
+            this.cmbCity.TabIndex = 146;
+            this.cmbCity.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCity_InitializeLayout);
+            // 
+            // cmbRegion
+            // 
+            this.cmbRegion.CheckedListSettings.CheckStateMember = "";
+            this.cmbRegion.Location = new System.Drawing.Point(437, 41);
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbRegion.Size = new System.Drawing.Size(200, 22);
+            this.cmbRegion.TabIndex = 147;
+            this.cmbRegion.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbRegion_InitializeLayout);
+            // 
+            // label28
+            // 
+            this.label28.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label28.Location = new System.Drawing.Point(372, 41);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(59, 23);
+            this.label28.TabIndex = 153;
+            this.label28.Text = "Region";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cmbState
+            // 
+            this.cmbState.CheckedListSettings.CheckStateMember = "";
+            this.cmbState.Location = new System.Drawing.Point(437, 67);
+            this.cmbState.Name = "cmbState";
+            this.cmbState.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbState.Size = new System.Drawing.Size(200, 22);
+            this.cmbState.TabIndex = 148;
+            this.cmbState.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbState_InitializeLayout);
+            // 
+            // cmbCountry
+            // 
+            this.cmbCountry.CheckedListSettings.CheckStateMember = "";
+            this.cmbCountry.Location = new System.Drawing.Point(437, 93);
+            this.cmbCountry.Name = "cmbCountry";
+            this.cmbCountry.PreferredDropDownSize = new System.Drawing.Size(0, 0);
+            this.cmbCountry.Size = new System.Drawing.Size(200, 22);
+            this.cmbCountry.TabIndex = 149;
+            this.cmbCountry.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCountry_InitializeLayout);
+            // 
+            // label17
+            // 
+            this.label17.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label17.Location = new System.Drawing.Point(372, 67);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(59, 23);
+            this.label17.TabIndex = 152;
+            this.label17.Text = "State";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label16
+            // 
+            this.label16.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label16.Location = new System.Drawing.Point(381, 93);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(50, 23);
+            this.label16.TabIndex = 151;
+            this.label16.Text = "Country";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            this.label9.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label9.Location = new System.Drawing.Point(381, 15);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 23);
+            this.label9.TabIndex = 150;
+            this.label9.Text = "City";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label24
             // 
@@ -430,7 +551,7 @@ namespace TourWriter.Modules.ContactModule
             // 
             // label36
             // 
-            this.label36.Location = new System.Drawing.Point(24, 145);
+            this.label36.Location = new System.Drawing.Point(24, 156);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(68, 23);
             this.label36.TabIndex = 87;
@@ -441,7 +562,7 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.txtPostName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPostName.Location = new System.Drawing.Point(96, 145);
+            this.txtPostName.Location = new System.Drawing.Point(96, 156);
             this.txtPostName.Name = "txtPostName";
             this.txtPostName.Size = new System.Drawing.Size(541, 21);
             this.txtPostName.TabIndex = 2;
@@ -452,10 +573,10 @@ namespace TourWriter.Modules.ContactModule
             this.txtPostAddress.AcceptsTab = true;
             this.txtPostAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPostAddress.Location = new System.Drawing.Point(96, 171);
+            this.txtPostAddress.Location = new System.Drawing.Point(96, 182);
             this.txtPostAddress.Multiline = true;
             this.txtPostAddress.Name = "txtPostAddress";
-            this.txtPostAddress.Size = new System.Drawing.Size(541, 123);
+            this.txtPostAddress.Size = new System.Drawing.Size(541, 96);
             this.txtPostAddress.TabIndex = 3;
             // 
             // txtStreetAddress
@@ -467,12 +588,12 @@ namespace TourWriter.Modules.ContactModule
             this.txtStreetAddress.Location = new System.Drawing.Point(96, 15);
             this.txtStreetAddress.Multiline = true;
             this.txtStreetAddress.Name = "txtStreetAddress";
-            this.txtStreetAddress.Size = new System.Drawing.Size(541, 108);
+            this.txtStreetAddress.Size = new System.Drawing.Size(270, 124);
             this.txtStreetAddress.TabIndex = 1;
             // 
             // label25
             // 
-            this.label25.Location = new System.Drawing.Point(12, 171);
+            this.label25.Location = new System.Drawing.Point(12, 182);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(80, 23);
             this.label25.TabIndex = 66;
@@ -487,7 +608,7 @@ namespace TourWriter.Modules.ContactModule
             this.ultraTabPageControl2.Controls.Add(this.txtNotes);
             this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(643, 320);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(643, 280);
             // 
             // label6
             // 
@@ -534,7 +655,7 @@ namespace TourWriter.Modules.ContactModule
             this.ultraTabPageControl4.Controls.Add(this.treeCategories);
             this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
-            this.ultraTabPageControl4.Size = new System.Drawing.Size(643, 320);
+            this.ultraTabPageControl4.Size = new System.Drawing.Size(643, 280);
             // 
             // label5
             // 
@@ -571,7 +692,7 @@ namespace TourWriter.Modules.ContactModule
             this.tabControl_Main.Location = new System.Drawing.Point(5, 6);
             this.tabControl_Main.Name = "tabControl_Main";
             this.tabControl_Main.SharedControlsPage = this.ultraTabSharedControlsPage1;
-            this.tabControl_Main.Size = new System.Drawing.Size(647, 346);
+            this.tabControl_Main.Size = new System.Drawing.Size(647, 306);
             this.tabControl_Main.TabIndex = 89;
             ultraTab1.Key = "General";
             ultraTab1.TabPage = this.ultraTabPageControl1;
@@ -594,7 +715,7 @@ namespace TourWriter.Modules.ContactModule
             // 
             this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(643, 320);
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(643, 280);
             // 
             // pnlMain
             // 
@@ -659,6 +780,10 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtDisplayName)).EndInit();
             this.ultraTabPageControl3.ResumeLayout(false);
             this.ultraTabPageControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbRegion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbState)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCountry)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPostAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtStreetAddress)).EndInit();
@@ -731,6 +856,16 @@ namespace TourWriter.Modules.ContactModule
         private Infragistics.Win.UltraWinTree.UltraTree treeCategories;
         private Infragistics.Win.UltraWinEditors.UltraTextEditor txtJob;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtPostcode;
+        private System.Windows.Forms.Label label34;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbCity;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbRegion;
+        private System.Windows.Forms.Label label28;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbState;
+        private Infragistics.Win.UltraWinGrid.UltraCombo cmbCountry;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label9;
 
     }
 }

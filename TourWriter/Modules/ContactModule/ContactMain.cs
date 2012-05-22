@@ -9,6 +9,7 @@ using TourWriter.BusinessLogic;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Services;
+using Infragistics.Win.UltraWinGrid;
 
 namespace TourWriter.Modules.ContactModule
 {
@@ -22,6 +23,11 @@ namespace TourWriter.Modules.ContactModule
         public DataRow ContactRow
         {
             get { return contactSet.Contact[0]; }
+        }
+
+        private static ToolSet toolSet
+        {
+            get { return Cache.ToolSet; }
         }
 
         public ContactMain()
@@ -62,7 +68,7 @@ namespace TourWriter.Modules.ContactModule
         private void ContactMain_Load(object sender, EventArgs e)
         {
             Icon = TourWriter.Properties.Resources.TourWriter16;
-            
+
             // bind controls
 
             // name
@@ -89,36 +95,40 @@ namespace TourWriter.Modules.ContactModule
             txtPostName.DataBindings.Add("Text", contactSet.Contact, "PostName");
             txtPostAddress.DataBindings.Add("Text", contactSet.Contact, "PostAddress");
             txtStreetAddress.DataBindings.Add("Text", contactSet.Contact, "StreetAddress");
-//			txtPostCode.DataBindings.Add("Text", contactSet.Contact, "PostCode");
-//			// country
-//			cmbCountry.DataSource = toolSet.Country;
-//			cmbCountry.ValueMember = "CountryID";
-//			cmbCountry.DisplayMember = "CountryName";
-//			cmbCountry.DataBindings.Add("Value", contactSet, "Contact.CountryID");
-//			// state
-//			cmbState.DataSource = toolSet.State;
-//			cmbState.ValueMember = "StateID";
-//			cmbState.DisplayMember = "StateName";
-//			cmbState.DataBindings.Add("Value", contactSet, "Contact.StateID");
-//			// region
-//			cmbRegion.DataSource = toolSet.Region;
-//			cmbRegion.ValueMember = "RegionID";
-//			cmbRegion.DisplayMember = "RegionName";
-//			cmbRegion.DataBindings.Add("Value", contactSet, "Contact.RegionID");			
-//			// city
-//			cmbCity.DataSource = toolSet.City;
-//			cmbCity.ValueMember = "CityID";
-//			cmbCity.DisplayMember = "CityName";
-//			cmbCity.DataBindings.Add("Value", contactSet, "Contact.CityID");
+            txtPostcode.DataBindings.Add("Text", contactSet.Contact, "PostCode");
+
+            // country
+            cmbCountry.DataSource = toolSet.Country;
+            cmbCountry.ValueMember = "CountryID";
+            cmbCountry.DisplayMember = "CountryName";
+            cmbCountry.DataBindings.Add("Value", contactSet, "Contact.CountryID");
+
+            // state
+            cmbState.DataSource = toolSet.State;
+            cmbState.ValueMember = "StateID";
+            cmbState.DisplayMember = "StateName";
+            cmbState.DataBindings.Add("Value", contactSet, "Contact.StateID");
+
+            // region
+            cmbRegion.DataSource = toolSet.Region;
+            cmbRegion.ValueMember = "RegionID";
+            cmbRegion.DisplayMember = "RegionName";
+            cmbRegion.DataBindings.Add("Value", contactSet, "Contact.RegionID");
+
+            // city
+            cmbCity.DataSource = toolSet.City;
+            cmbCity.ValueMember = "CityID";
+            cmbCity.DisplayMember = "CityName";
+            cmbCity.DataBindings.Add("Value", contactSet, "Contact.CityID");
 
             // set selection
             txtDisplayName.Select();
 
             // add events			
-//			this.cmbCountry.ValueChanged += new System.EventHandler(this.cmbCountry_ValueChanged);
-//			this.cmbState.ValueChanged += new System.EventHandler(this.cmbState_ValueChanged);
-//			this.cmbRegion.ValueChanged += new System.EventHandler(this.cmbRegion_ValueChanged);
-//			this.cmbCity.ValueChanged += new System.EventHandler(this.cmbCity_ValueChanged);
+            cmbCountry.ValueChanged += new System.EventHandler(this.cmbCountry_ValueChanged);
+            cmbState.ValueChanged += new System.EventHandler(this.cmbState_ValueChanged);
+            cmbRegion.ValueChanged += new System.EventHandler(this.cmbRegion_ValueChanged);
+            cmbCity.ValueChanged += new System.EventHandler(this.cmbCity_ValueChanged);
 
             LoadContactCategories(contactSet.Contact[0].ContactID);
         }
@@ -154,7 +164,7 @@ namespace TourWriter.Modules.ContactModule
                 {
                     // save changes
                     Contact contact = new Contact();
-                    ContactSet changes = (ContactSet) contactSet.GetChanges();
+                    ContactSet changes = (ContactSet)contactSet.GetChanges();
                     if (changes == null)
                     {
                         SetDataCleanName();
@@ -196,10 +206,10 @@ namespace TourWriter.Modules.ContactModule
         protected override string GetDisplayName()
         {
             string s = "TourWriter contact";
-            
+
             if (contactSet != null && contactSet.Contact.Count > 0)
                 return s + ": " + contactSet.Contact[0].ContactName;
-            
+
             return s;
         }
 
@@ -212,13 +222,13 @@ namespace TourWriter.Modules.ContactModule
             {
                 UltraTreeNode node =
                     new UltraTreeNode(row.ContactCategoryID.ToString(), row.ContactCategoryName);
-                
+
                 int categoryId = row.ContactCategoryID;
 
                 var rows = from r in contactSet.ContactContactCategory
-                            where r.ContactID == contactId &&
-                                  r.ContactCategoryID == categoryId
-                            select r;
+                           where r.ContactID == contactId &&
+                                 r.ContactCategoryID == categoryId
+                           select r;
 
                 node.CheckedState = (rows.Count() > 0) ? CheckState.Checked : CheckState.Unchecked;
                 treeCategories.Nodes.Add(node);
@@ -229,7 +239,7 @@ namespace TourWriter.Modules.ContactModule
         private void treeCategories_AfterCheck(object sender, NodeEventArgs e)
         {
             bool accept = (e.TreeNode.CheckedState == CheckState.Checked);
-            
+
             ContactSet.ContactRow contact = contactSet.Contact[0];
             ToolSet.ContactCategoryRow category =
                 Cache.ToolSet.ContactCategory.FindByContactCategoryID(int.Parse(e.TreeNode.Key));
@@ -293,5 +303,150 @@ namespace TourWriter.Modules.ContactModule
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        #region Combo boxes event handlers
+        private void cmbCity_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "CityName")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbRegion_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "RegionName")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbState_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "StateName")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbCountry_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            // show/hide columns 
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "CountryName")
+                    c.Band.SortedColumns.Add(c, false);
+                else
+                    c.Hidden = true;
+            }
+            // configure
+            GridHelper.Configure_OLD(e, true, false, false);
+        }
+
+        private void cmbCity_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbCity.ActiveRow != null && (contactSet.Contact[0].IsCityIDNull() ||
+                                                  (int)cmbCity.ActiveRow.Cells["CityID"].Value !=
+                                                  contactSet.Contact[0].CityID))
+                {
+                    // push change to dataset
+                    contactSet.Contact[0].CityID = (int)cmbCity.ActiveRow.Cells["CityID"].Value;
+                    // auto-fill parent list
+                    cmbRegion.Value = (int)cmbCity.ActiveRow.Cells["RegionID"].Value;
+                }
+                else
+                    // clear parent list
+                    cmbRegion.Value = null;
+            }
+            catch (Exception ex)
+            {
+                App.Error(ex);
+            }
+        }
+
+        private void cmbRegion_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbRegion.ActiveRow != null && (contactSet.Contact[0].IsRegionIDNull() ||
+                                                    (int)cmbRegion.ActiveRow.Cells["RegionID"].Value !=
+                                                    contactSet.Contact[0].RegionID))
+                {
+                    // push change to dataset
+                    contactSet.Contact[0].RegionID = (int)cmbRegion.ActiveRow.Cells["RegionID"].Value;
+                    // auto-fill parent list
+                    cmbState.Value = (int)cmbRegion.ActiveRow.Cells["StateID"].Value;
+                }
+                else
+                    // clear parent list
+                    cmbState.Value = null;
+            }
+            catch (Exception ex)
+            {
+                App.Error(ex);
+            }
+        }
+
+        private void cmbState_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbState.ActiveRow != null && (contactSet.Contact[0].IsStateIDNull() ||
+                                                   (int)cmbState.ActiveRow.Cells["StateID"].Value !=
+                                                   contactSet.Contact[0].StateID))
+                {
+                    // push change to dataset
+                    contactSet.Contact[0].StateID = (int)cmbState.ActiveRow.Cells["StateID"].Value;
+                    // auto-fill parent list
+                    cmbCountry.Value = (int)cmbState.ActiveRow.Cells["CountryID"].Value;
+                }
+                else
+                    // clear parent list
+                    cmbCountry.Value = null;
+            }
+            catch (Exception ex)
+            {
+                App.Error(ex);
+            }
+        }
+
+        private void cmbCountry_ValueChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbCountry.ActiveRow != null && (contactSet.Contact[0].IsCountryIDNull() ||
+                                                     (int)cmbCountry.ActiveRow.Cells["CountryID"].Value !=
+                                                     contactSet.Contact[0].CountryID))
+                {
+                    // push change to dataset
+                    contactSet.Contact[0].CountryID = (int)cmbCountry.ActiveRow.Cells["CountryID"].Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.Error(ex);
+            }
+        }
+        #endregion
     }
 }
