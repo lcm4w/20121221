@@ -606,6 +606,132 @@ select
 END
 GO
 
+
+ALTER VIEW [dbo].[ContactDetail]
+AS
+select 
+	cont.ContactID,  
+	ContactName,
+	Title,
+	FirstName,
+	LastName,
+	JobDescription,
+	StreetAddress,
+	PostAddress,
+	CityName,
+	RegionName,
+	StateName,
+	CountryName,
+	PostCode,
+	WorkPhone,
+	HomePhone,
+	CellPhone,
+	Fax,
+	Email1,
+	Email2,
+	Website,
+	BirthDate,
+	Notes,
+	ItineraryCount,
+	FolderName,
+	cont.ParentFolderID,
+	(   SELECT CAST(ContactCategory.ContactCategoryName AS VARCHAR)+',' FROM ContactCategory
+	    INNER JOIN ContactContactCategory ON ContactCategory.ContactCategoryID = ContactContactCategory.ContactCategoryID
+	    WHERE ContactContactCategory.ContactID = cont.ContactID
+	    FOR XML PATH ('')	
+    ) AS Categories
+from Contact as cont
+left outer join City as city on city.CityID = cont.CityID 
+left outer join Region as region on region.RegionID = cont.RegionID 
+left outer join [State] as stat on stat.StateID = cont.StateID 
+left outer join Country as country on country.CountryID = cont.CountryID  
+left outer join Folder as fld on fld.FolderId = cont.ParentFolderId
+left outer join
+(
+	select ContactID, count(ItineraryID) as ItineraryCount
+	from ItineraryMember mem
+	left outer join ItineraryGroup grp on mem.ItineraryGroupID = grp.ItineraryGroupID
+	where ContactID is not null 
+	group by ContactID
+) cnt on cnt.ContactID = cont.ContactID
+where (IsDeleted is null OR IsDeleted = 0);
+GO
+
+ALTER VIEW [dbo].[SupplierDetail]
+AS
+select 
+	SupplierID,  
+	SupplierName,
+	[Description] as SupplierDescription,
+	[Comments] as SupplierComments,
+	HostName,
+	StreetAddress,
+	PostAddress,
+	CityName,
+	RegionName,
+	StateName,
+	CountryName,
+	Postcode,
+	Latitude,
+	Longitude,
+	Phone,
+	MobilePhone,
+	FreePhone,
+	Fax,
+	Email,
+	Website,
+	CancellationPolicy,
+	isnull(GradeName, '') as Grade1,
+	isnull(GradeExternalName, '') as Grade2,
+	sup.ParentFolderID as SupplierParentFolderID
+from Supplier as sup
+left outer join City as city on city.CityID = sup.CityID 
+left outer join Region as region on region.RegionID = sup.RegionID 
+left outer join [State] as stat on stat.StateID = sup.StateID 
+left outer join Country as country on country.CountryID = sup.CountryID 
+left outer join Grade as grade on grade.GradeID = sup.GradeID 
+left outer join GradeExternal as gradeEx on gradeEx.GradeExternalID = sup.GradeExternalID
+where (IsDeleted is null OR IsDeleted = 0);
+GO
+
+
+ALTER VIEW [dbo].[SupplierRatesDetail]
+AS
+
+select 
+	sup.*,
+	serv.ServiceName,
+	serv.[Description] as ServiceDescription,
+	serv.Comments as ServiceComments,
+	isnull(serv.Latitude, sup.Latitude) as ServiceLatitude,
+	isnull(serv.Longitude, sup.Longitude) as ServiceLongitude,
+	serv.MaxPax,
+	serv.CheckinTime,
+	serv.CheckoutTime,
+	serv.CheckinMinutesEarly,
+	serv.IsRecordActive,
+	serv.CurrencyCode as ServiceCurrencyCode,
+	c.DisplayFormat as ServiceCurrencyFormat,
+	stype.*,
+	rate.ValidFrom as RateValidFrom,
+	rate.ValidTo as RateValidTo,
+	opt.OptionName,
+	opt.Net,
+	opt.Gross,	
+	case when (opt.Gross != 0) then (opt.Gross - opt.Net)/opt.Gross*100 else null end as Commission,
+	case when (opt.Net != 0 ) then (opt.Gross - opt.Net)/opt.Net*100 else null end as Markup,
+	opt.PricingOption
+from [service] serv
+left outer join ServiceTypeDetail stype on serv.ServiceTypeID = stype.ServiceTypeID
+left outer join SupplierDetail sup on serv.SupplierID = sup.SupplierID
+right outer join Rate rate on serv.ServiceID = rate.ServiceID
+right outer join [Option] opt on rate.RateID = opt.RateID
+left join Currency c on serv.CurrencyCode = c.CurrencyCode COLLATE DATABASE_DEFAULT
+where (opt.IsDeleted is null OR opt.IsDeleted = 0)
+  and (rate.IsDeleted is null OR rate.IsDeleted = 0)
+  and (serv.IsDeleted is null OR serv.IsDeleted = 0);
+GO
+
 exec __RefreshViews;
 GO
 ----------------------------------------------------------------------------------------
