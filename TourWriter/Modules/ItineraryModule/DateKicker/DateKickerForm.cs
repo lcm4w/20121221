@@ -407,11 +407,15 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
          
             if (dtpNewEndDate.Value != null)
                 itinerarySet.Itinerary[0].DepartDate = (DateTime) dtpNewEndDate.Value;
-         
-            //itinerarySet.Itinerary[0].AcceptChanges();
-
+        
             // booking dates
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
+
+            // If dates are changed but not rates, then date changes are not kept in Merge above (cos dates are not flagging row as 'Modified', but rates are).
+            // Not sure why , so lets just manually set dates here...
+            foreach (var row in purchaseItemTable)
+                itinerarySet.PurchaseItem.First(x => x.PurchaseItemID == row.PurchaseItemID).StartDate = row.StartDate;
+
             DialogResult = DialogResult.OK;
         }
 
@@ -514,8 +518,6 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
                     c.Header.Caption = "New date";
                     c.Style = ColumnStyle.Date;
                     c.Format = App.GetLocalShortDateFormat();
-                    //c.EditorControl = new UltraTextEditor();
-                    
                     c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
                     c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
                     c.CellActivation = Activation.AllowEdit;
