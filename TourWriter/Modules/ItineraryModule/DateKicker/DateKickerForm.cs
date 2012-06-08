@@ -123,11 +123,13 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
             foreach (UltraGridRow row in gridBookings.Rows)
             {
                 // set date
-                if ((bool)row.Cells["IsSelected"].Value)
-                    row.Cells["StartDate"].Value = ((DateTime)row.Cells["OldDate"].Value).AddDays(daysOffset);
-                else // reset date
-                    row.Cells["StartDate"].Value = ((DateTime)row.Cells["OldDate"].Value);
-
+                if (row.Cells["OldDate"].Value != DBNull.Value)
+                {
+                    if ((bool) row.Cells["IsSelected"].Value)
+                        row.Cells["StartDate"].Value = ((DateTime) row.Cells["OldDate"].Value).AddDays(daysOffset);
+                    else // reset date
+                        row.Cells["StartDate"].Value = ((DateTime) row.Cells["OldDate"].Value);
+                }
                 // reset price
                 if (row.Cells["OldNet"].Value != null && row.Cells["OldNet"].Value != DBNull.Value)
                     row.Cells["Net"].Value = row.Cells["OldNet"].Value;
@@ -413,8 +415,8 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
 
             // If dates are changed but not rates, then date changes are not kept in Merge above (cos dates are not flagging row as 'Modified', but rates are).
             // Not sure why , so lets just manually set dates here...
-            foreach (var row in purchaseItemTable)
-                itinerarySet.PurchaseItem.First(x => x.PurchaseItemID == row.PurchaseItemID).StartDate = row.StartDate;
+            foreach (var row in purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted && !x.IsStartDateNull()))
+                itinerarySet.PurchaseItem.First(x => x.PurchaseItemID == row.PurchaseItemID && !x.IsStartDateNull()).StartDate = row.StartDate;
 
             DialogResult = DialogResult.OK;
         }
