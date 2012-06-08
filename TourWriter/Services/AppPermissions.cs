@@ -37,6 +37,7 @@ namespace TourWriter.Services
             CustomReportsRun            = 24,
             CurrencyRatesEdit           = 25,
             ItineraryRefreshCcyRates    = 26,
+            ItinerarySetInvoiced        = 27,
 		}
 
 		

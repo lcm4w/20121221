@@ -45,6 +45,11 @@ if not Exists(select * from sys.columns where Name = N'Title' and Object_ID = Ob
 		ADD [Title] varchar(50) NULL;
 GO
 
+if not Exists(select * from Permission where PermissionName = 'Itinerary - set invoiced status')
+	insert Permission (PermissionName) values ('Itinerary - set invoiced status')
+
+GO
+
 
 ------------------------------------------
 
