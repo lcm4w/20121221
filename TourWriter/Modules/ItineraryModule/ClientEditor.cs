@@ -396,16 +396,26 @@ namespace TourWriter.Modules.ItineraryModule
                     c.CellButtonAppearance.ImageHAlign = HAlign.Center;
                     c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
                 }
+                else if (c.Key == "Title")
+                {
+                    c.Width = 50;
+                    c.MinWidth = 50;
+                    c.MaxWidth = 50;
+                    c.Header.Caption = "Title";
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.CellActivation = Activation.AllowEdit;
+                }
                 else
                     c.Hidden = true;
             }
 
             int index = 0;
+            e.Layout.Bands[0].Columns["Title"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["ItineraryMemberName"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Comments"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["AgeGroupID"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Age"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Edit"].Header.VisiblePosition = index;
+            e.Layout.Bands[0].Columns["Edit"].Header.VisiblePosition = index++;
 
             GridHelper.SetDefaultGridAppearance(e);
             e.Layout.Override.RowSizing = RowSizing.AutoFree;
