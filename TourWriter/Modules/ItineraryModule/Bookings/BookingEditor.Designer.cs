@@ -549,6 +549,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.gridItems.Text = "Booking Items";
             this.gridItems.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
             this.gridItems.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridItems_InitializeLayout);
+            this.gridItems.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridItems_MouseUp);
             this.gridItems.AfterRowActivate += new System.EventHandler(this.gridItems_AfterRowActivate);
             this.gridItems.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridItems_InitializeRow);
             this.gridItems.Validated += new System.EventHandler(this.gridItems_Validated);

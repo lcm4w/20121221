@@ -629,7 +629,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (!e.Layout.Bands[0].Columns.Exists("NetTotal"))
                 e.Layout.Bands[0].Columns.Add("NetTotal");
             if (!e.Layout.Bands[0].Columns.Exists("GrossFinal"))
-                e.Layout.Bands[0].Columns.Add("GrossFinal");
+                e.Layout.Bands[0].Columns.Add("GrossFinal");           
 
             // show/hide columns 
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
@@ -710,6 +710,23 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellActivation = Activation.NoEdit;
                     c.TabStop = false;
                 }
+                else if (c.Key == "IsInvoiced")
+                {
+                    c.Header.Caption = string.Empty;
+                    c.Header.ToolTipText = "Invoiced";                   
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.Header.Appearance.Image = Properties.Resources.CheckBox;
+                    c.Header.Appearance.ImageHAlign = HAlign.Center;
+                    c.Header.Appearance.ImageVAlign = VAlign.Middle;
+                    c.Width = 30;
+                    c.MaxWidth = 30;
+                    c.SortIndicator = SortIndicator.Disabled;
+
+                    // permissions
+                    c.Header.Enabled = AppPermissions.UserHasPermission(AppPermissions.Permissions.ItinerarySetInvoiced);
+                    c.CellActivation = AppPermissions.UserHasPermission(AppPermissions.Permissions.ItinerarySetInvoiced)
+                                           ? Activation.AllowEdit : Activation.Disabled;
+                }
                 else
                     c.Hidden = true;
             }
@@ -724,6 +741,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["DiscountUnits"].Width = 12;
             e.Layout.Bands[0].Columns["NetTotal"].Width = 60;
             e.Layout.Bands[0].Columns["GrossFinal"].Width = 60;
+            e.Layout.Bands[0].Columns["IsInvoiced"].Width = 30;
 
             var index = 0;
             e.Layout.Bands[0].Columns["PurchaseItemName"].Header.VisiblePosition = index++;
@@ -734,10 +752,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["Quantity"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["DiscountUnits"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetTotal"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index;
-
+            e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["IsInvoiced"].Header.VisiblePosition = index++;
+            
             GridHelper.SetDefaultGridAppearance(e);
             GridHelper.SetDefaultGroupByAppearance(e);
+
+            // override defaults
+            e.Layout.Override.RowSelectors = DefaultableBoolean.False;
 
             // add summaries
             BookingsViewer.SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
@@ -764,6 +786,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             hasOverride = CurrencyService.GetItineraryCurrencyCode(itinerary) != null;
             format = "{0:" + (hasOverride ? CurrencyService.GetCurrency(itinerary.CurrencyCode).DisplayFormat : "c") + "}";
             if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
+
+            bool isInvoiced= e.Row.Cells["IsInvoiced"].Value != DBNull.Value &&
+                             (bool)e.Row.Cells["IsInvoiced"].Value;
+            e.Row.Cells["IsInvoiced"].Value = isInvoiced;
         }
 
         private void gridItems_AfterRowActivate(object sender, EventArgs e)
@@ -921,6 +947,55 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void btnChangeOption_Click(object sender, EventArgs e)
         {
             ChangePurchaseItemOption();
+        }
+
+        private void gridItems_MouseUp(object sender, MouseEventArgs e)
+        {
+            UIElement clickedElement =
+                gridItems.DisplayLayout.UIElement.ElementFromPoint(gridItems.PointToClient(MousePosition));
+
+            if (clickedElement == null)
+                return;
+
+            // if a header is clicked, check if it is the "IsInvoiced" column
+            HeaderUIElement headerElement = (HeaderUIElement)clickedElement.GetAncestor(typeof(HeaderUIElement));
+            if (headerElement != null)
+            {
+                UltraGridColumn column = (UltraGridColumn)headerElement.GetContext(typeof(UltraGridColumn));
+                if (column.Key == "IsInvoiced" && AppPermissions.UserHasPermission(AppPermissions.Permissions.ItinerarySetInvoiced))
+                {
+                    SelectAll();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Toggles the "IsInvoiced" column on all rows.
+        /// </summary>
+        private void SelectAll()
+        {
+            bool unselectAll = true;
+
+            foreach (UltraGridRow row in gridItems.Rows)
+            {
+                bool isRowLocked = row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
+                                   (bool)row.Cells["IsLockedAccounting"].Value;
+
+                if (isRowLocked || (bool)row.Cells["IsInvoiced"].Value)
+                    continue;
+
+                row.Cells["IsInvoiced"].Value = true;
+                unselectAll = false;
+            }
+           
+            if (unselectAll)
+            {
+                // if all of the rows are already selected, then unselect all
+                foreach (UltraGridRow row in gridItems.Rows)
+                {
+                    row.Cells["IsInvoiced"].Value = false;
+                }
+            }
         }
 
         #endregion        

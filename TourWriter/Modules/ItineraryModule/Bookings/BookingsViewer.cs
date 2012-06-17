@@ -27,7 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
-        private const string GridLayoutVersion = "v2.5"; // bump this (any new name) to cause grid to reset to pick up changes
+        private const string GridLayoutVersion = "v2.6"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -1057,6 +1057,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.CellAppearance.ImageHAlign = HAlign.Left;
                     c.CellAppearance.ImageVAlign = VAlign.Middle;
                 }
+                else if (c.Key == "IsInvoiced")
+                {
+                    c.Header.Caption = "Invoiced";
+                    c.Header.ToolTipText = "Is the booking invoiced. Double-click to edit.";
+                    c.CellActivation = Activation.Disabled;
+                }
                 else
                 {
                     c.Hidden = true;
@@ -1095,9 +1101,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["GrossTotal"].Width = 120;
             e.Layout.Bands[0].Columns["NetFinal"].Width = 120;
             e.Layout.Bands[0].Columns["GrossFinal"].Width = 120;
+            e.Layout.Bands[0].Columns["IsInvoiced"].Width = 60;
 
-            int index = 0;
-
+            var index = 0;
             e.Layout.Bands[0].Columns["Flags"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["IsLockedAccounting"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["PurchaseLineID"].Header.VisiblePosition = index++;
@@ -1126,7 +1132,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["BaseCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["CurrencyRate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetFinal"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index;
+            e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["IsInvoiced"].Header.VisiblePosition = index++;
           
 
             // Set defaults
