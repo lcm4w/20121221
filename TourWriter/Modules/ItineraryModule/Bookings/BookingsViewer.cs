@@ -1760,7 +1760,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == id).FirstOrDefault();
             new ItineraryPaxOverride(item).ShowDialog();
         }
-        
+
+        private void replaceSupplierMenuItem_Click(object sender, EventArgs e)
+        {
+            if (grid.ActiveRow == null) return;
+
+            DateTime startDate;
+            bool hasStartDate = DateTime.TryParse(grid.ActiveRow.Cells["StartDate"].Value.ToString(), out startDate);
+            var origItemId = (int) grid.ActiveRow.Cells["PurchaseItemID"].Value;
+
+            var selector = new BookingSelectorForm(itinerarySet, itineraryMain, hasStartDate ? startDate : (DateTime?)null);
+            if (selector.ShowDialog() == DialogResult.OK)
+            {
+                var origItem = itinerarySet.PurchaseItem.FirstOrDefault(x => x.PurchaseItemID == origItemId);
+                if (origItem != null) origItem.Delete();
+            }
+        }
         #endregion
     }
 

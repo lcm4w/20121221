@@ -64,6 +64,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtItineraryCurrency = new System.Windows.Forms.TextBox();
             this.lnkItineraryCurrency = new System.Windows.Forms.LinkLabel();
             this.chkLockGrossOverride = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -100,7 +101,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.txtItineraryCurrency = new System.Windows.Forms.TextBox();
+            this.replaceSupplierMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).BeginInit();
@@ -121,9 +122,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             // grid
             // 
-            this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             appearance1.BackColor = System.Drawing.SystemColors.Window;
             appearance1.BorderColor = System.Drawing.SystemColors.InactiveCaption;
             this.grid.DisplayLayout.Appearance = appearance1;
@@ -434,6 +435,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Final price";
             // 
+            // txtItineraryCurrency
+            // 
+            this.txtItineraryCurrency.Location = new System.Drawing.Point(283, 36);
+            this.txtItineraryCurrency.Name = "txtItineraryCurrency";
+            this.txtItineraryCurrency.ReadOnly = true;
+            this.txtItineraryCurrency.Size = new System.Drawing.Size(128, 20);
+            this.txtItineraryCurrency.TabIndex = 141;
+            this.txtItineraryCurrency.TabStop = false;
+            // 
             // lnkItineraryCurrency
             // 
             this.lnkItineraryCurrency.AutoSize = true;
@@ -500,49 +510,50 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.deleteToolStripMenuItem,
             this.paxOverrideMenuItem,
             this.changeOptionToolStripMenuItem,
-            this.editFlagsToolStripMenuItem});
+            this.editFlagsToolStripMenuItem,
+            this.replaceSupplierMenuItem});
             this.bookingGridMenu.Name = "contextMenuStrip1";
-            this.bookingGridMenu.Size = new System.Drawing.Size(154, 114);
+            this.bookingGridMenu.Size = new System.Drawing.Size(161, 180);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // paxOverrideMenuItem
             // 
             this.paxOverrideMenuItem.Name = "paxOverrideMenuItem";
-            this.paxOverrideMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.paxOverrideMenuItem.Size = new System.Drawing.Size(160, 22);
             this.paxOverrideMenuItem.Text = "Pax override";
             this.paxOverrideMenuItem.Click += new System.EventHandler(this.paxOverrideMenuItem_Click);
             // 
             // changeOptionToolStripMenuItem
             // 
             this.changeOptionToolStripMenuItem.Name = "changeOptionToolStripMenuItem";
-            this.changeOptionToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.changeOptionToolStripMenuItem.Text = "Change option";
+            this.changeOptionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.changeOptionToolStripMenuItem.Text = "Swap out Service/Option";
             this.changeOptionToolStripMenuItem.Click += new System.EventHandler(this.btnChangeOption_Click);
             // 
             // editFlagsToolStripMenuItem
             // 
             this.editFlagsToolStripMenuItem.Name = "editFlagsToolStripMenuItem";
-            this.editFlagsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.editFlagsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.editFlagsToolStripMenuItem.Text = "Edit flags";
             this.editFlagsToolStripMenuItem.Click += new System.EventHandler(this.btnEditFlags_Click);
             // 
@@ -598,7 +609,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnMoveDates
             // 
             this.btnMoveDates.Name = "btnMoveDates";
-            this.btnMoveDates.Size = new System.Drawing.Size(232, 22);
+            this.btnMoveDates.Size = new System.Drawing.Size(224, 22);
             this.btnMoveDates.Text = "Rates and dates update...";
             this.btnMoveDates.ToolTipText = "Refresh rates or Move bookings to new dates";
             this.btnMoveDates.Click += new System.EventHandler(this.btnMoveDates_Click);
@@ -606,35 +617,35 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnUpdateCurrency
             // 
             this.btnUpdateCurrency.Name = "btnUpdateCurrency";
-            this.btnUpdateCurrency.Size = new System.Drawing.Size(232, 22);
+            this.btnUpdateCurrency.Size = new System.Drawing.Size(224, 22);
             this.btnUpdateCurrency.Text = "Currency exchange update...";
             this.btnUpdateCurrency.Click += new System.EventHandler(this.btnUpdateCurrency_Click);
             // 
             // btnLockEdit
             // 
             this.btnLockEdit.Name = "btnLockEdit";
-            this.btnLockEdit.Size = new System.Drawing.Size(232, 22);
+            this.btnLockEdit.Size = new System.Drawing.Size(224, 22);
             this.btnLockEdit.Text = "Show lock bookings column";
             this.btnLockEdit.ToolTipText = "Set bookings to read-only so they cannot be changed";
-            this.btnLockEdit.Click += new System.EventHandler(this.btnLockEdit_Click);
             this.btnLockEdit.Visible = false;
+            this.btnLockEdit.Click += new System.EventHandler(this.btnLockEdit_Click);
             // 
             // btnEditFlags
             // 
             this.btnEditFlags.Name = "btnEditFlags";
-            this.btnEditFlags.Size = new System.Drawing.Size(232, 22);
+            this.btnEditFlags.Size = new System.Drawing.Size(224, 22);
             this.btnEditFlags.Text = "Edit flags";
             this.btnEditFlags.Click += new System.EventHandler(this.btnEditFlags_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(221, 6);
             // 
             // btnPrint
             // 
             this.btnPrint.Name = "btnPrint";
-            this.btnPrint.Size = new System.Drawing.Size(232, 22);
+            this.btnPrint.Size = new System.Drawing.Size(224, 22);
             this.btnPrint.Text = "Print preview...";
             this.btnPrint.ToolTipText = "Open the print preview screen ready for printing";
             this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
@@ -642,7 +653,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnExportExcel
             // 
             this.btnExportExcel.Name = "btnExportExcel";
-            this.btnExportExcel.Size = new System.Drawing.Size(232, 22);
+            this.btnExportExcel.Size = new System.Drawing.Size(224, 22);
             this.btnExportExcel.Text = "Export grid to Excel...";
             this.btnExportExcel.ToolTipText = "Export the current data view to Excel file";
             this.btnExportExcel.Click += new System.EventHandler(this.btnExportExcel_Click);
@@ -650,12 +661,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(229, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
             // 
             // btnFilter
             // 
             this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(232, 22);
+            this.btnFilter.Size = new System.Drawing.Size(224, 22);
             this.btnFilter.Text = "Show column filters";
             this.btnFilter.ToolTipText = "Filter the visible data";
             this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
@@ -663,7 +674,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // btnResetGrid
             // 
             this.btnResetGrid.Name = "btnResetGrid";
-            this.btnResetGrid.Size = new System.Drawing.Size(232, 22);
+            this.btnResetGrid.Size = new System.Drawing.Size(224, 22);
             this.btnResetGrid.Text = "Reset grid layout";
             this.btnResetGrid.ToolTipText = "Reset the layout to original settings";
             this.btnResetGrid.Click += new System.EventHandler(this.btnResetGrid_Click);
@@ -763,14 +774,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.ToolTipText = "Delete selected booking and related items";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // txtItineraryCurrency
+            // replaceSupplierMenuItem
             // 
-            this.txtItineraryCurrency.Location = new System.Drawing.Point(283, 36);
-            this.txtItineraryCurrency.Name = "txtItineraryCurrency";
-            this.txtItineraryCurrency.ReadOnly = true;
-            this.txtItineraryCurrency.Size = new System.Drawing.Size(128, 20);
-            this.txtItineraryCurrency.TabIndex = 141;
-            this.txtItineraryCurrency.TabStop = false;
+            this.replaceSupplierMenuItem.Name = "replaceSupplierMenuItem";
+            this.replaceSupplierMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.replaceSupplierMenuItem.Text = "Swap out Supplier";
+            this.replaceSupplierMenuItem.Click += new System.EventHandler(this.replaceSupplierMenuItem_Click);
             // 
             // BookingsViewer
             // 
@@ -872,5 +881,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripMenuItem paxOverrideMenuItem;
         private System.Windows.Forms.LinkLabel lnkItineraryCurrency;
         private System.Windows.Forms.TextBox txtItineraryCurrency;
+        private System.Windows.Forms.ToolStripMenuItem replaceSupplierMenuItem;
     }
 }

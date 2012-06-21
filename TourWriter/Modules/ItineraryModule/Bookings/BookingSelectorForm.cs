@@ -24,8 +24,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private readonly ItinerarySet itinerarySet;
         private readonly ItinerarySet tempItinerarySet;
         private ItinerarySet.PurchaseLineRow purchaseLine;
-
         private ItineraryMain itineraryMain;
+        private DateTime? startDate;
 
         public enum PageType { Search, Select }
         
@@ -49,6 +49,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             GridHelper.SetNumberOfDaysPicker(gridBookings);
             SetPage(PageType.Search);
+        }
+
+        public BookingSelectorForm(ItinerarySet itinerarySet, ItineraryMain itineraryMain, DateTime? startDate) : this(itinerarySet, itineraryMain)
+        {
+            this.startDate = startDate;
         }       
 
         private void BookingSelectorForm_Load(object sender, EventArgs e)
@@ -629,7 +634,17 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             
             // show any warnings
-            var bookingDate = GetNextDefaultDate();            
+            var bookingDate = DateTime.MinValue;
+            if (!startDate.HasValue)
+            {
+                bookingDate = GetNextDefaultDate();
+            }
+            else
+            {
+                bookingDate = startDate.Value;
+                startDate = null;
+            }
+
             var warning = serviceEditor1.GetSelectedServiceWarningMessage(bookingDate);            
             if (warning != string.Empty)
             {                
