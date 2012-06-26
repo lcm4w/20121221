@@ -885,8 +885,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private bool ShowBookingWarnings(string warning)
         {
-            warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\nContinue?", warning);
-            if (MessageBox.Show(warning, "BookingEditor Warning Message", MessageBoxButtons.OKCancel,
+            warning = string.Format("\r\n{0}\r\n\r\nContinue?", warning);
+            if (MessageBox.Show(warning, "Supplier warning message", MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
             {
                 return false;

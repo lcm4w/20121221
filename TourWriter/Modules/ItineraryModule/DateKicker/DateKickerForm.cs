@@ -382,8 +382,8 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
                 sb.AppendLine(string.Format("{0}. {1}", ctr.ToString(), dataRow["Description"].ToString()));
             }
 
-            string warning = string.Format("Booking warning message:\r\n\r\n{0}\r\n\r\n", sb.ToString().TrimEnd());
-            MessageBox.Show(warning, "BookingEditor Warning Message");
+            string warning = string.Format("\r\n{0}\r\n\r\n", sb.ToString().TrimEnd());
+            MessageBox.Show(warning, "Supplier warning message");
         }
 
         private void btnStartStop_Click(object sender, EventArgs e)
