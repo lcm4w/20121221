@@ -196,6 +196,7 @@ namespace TourWriter
         {
             get
             {
+                return false;
                 return Cache.ToolSet.AppSettings.Count > 0 && (
                        //Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "bbe982ab-c8e2-4db4-8eac-06801a810540".ToLower() ||    // sx au
                        Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "49ad26fd-6582-493a-b998-b9ba244d082f".ToLower() ||    // sx nz
