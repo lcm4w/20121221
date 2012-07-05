@@ -36,7 +36,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private ItineraryMain itineraryMain;
 
-        internal ItinerarySet ItinerarySet  
+        internal ItinerarySet ItinerarySet
         {
             get { return itinerarySet; }
             set
@@ -57,16 +57,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         public BookingsViewer()
         {
             InitializeComponent();
-            
+
             GridLayoutFileName = App.Path_UserApplicationData + "BookingGridLayout.xml";
             HandleDestroyed += BookingsViewer_HandleDestroyed;
             itineraryMain = ParentForm as ItineraryMain;
-            
+
             // TODO: hide flags feature for now, see also line 1004 ---
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
             // ---------------------------------------------------------------
         }
-        
+
         private void BookingsViewer_Load(object sender, EventArgs e)
         {
             if (!DesignMode)
@@ -130,7 +130,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var nullRow = Cache.ToolSet.Currency.NewCurrencyRow();
             nullRow.CurrencyCode = nullRow.DisplayName = "";
             list.Insert(0, nullRow);
-            
+
             grid.DataSource = itinerarySet.PurchaseItem;
             itineraryBindingSource.DataSource = itinerarySet.Itinerary;
             txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
@@ -175,7 +175,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             txtGross2.FormatString = format;
             txtGross1.FormatString = format;
             txtSell.FormatString = format;
-            txtItineraryCurrency.Text = 
+            txtItineraryCurrency.Text =
                 (currencyInfo == null || CurrencyService.GetApplicationCurrencyCode() == currencyInfo.CurrencyCode) ?
                 "default: " + CurrencyService.GetApplicationCurrencyCode() : currencyInfo.DisplayName;
 
@@ -223,7 +223,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 grid.DisplayLayout.LoadFromXml(
                     GridLayoutFileName,
                     PropertyCategories.Groups | PropertyCategories.SortedColumns);
-                
+
                 SetGridExpanded();
             }
             else
@@ -232,7 +232,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // check accting permission
             grid.DisplayLayout.Bands[0].Columns["IsLockedAccounting"].CellActivation =
                 AppPermissions.UserHasPermission(AppPermissions.Permissions.AccountingEdit) ? Activation.AllowEdit : Activation.Disabled;
-            
+
             // custom sort comparer for date column
             grid.DisplayLayout.Bands[0].Columns["StartDate"].SortComparer = new DateSortComparer();
 
@@ -299,7 +299,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
             }
         }
-        
+
         internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
         {
             e.Layout.Grid.CalcManager = new UltraCalcManager(e.Layout.Grid.Container);
@@ -370,10 +370,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     SummaryDisplayAreas.BottomFixed | SummaryDisplayAreas.RootRowsFootersOnly;
             }
         }
-        
+
         public void SearchBookings()
         {
-            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet,itineraryMain);
+            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet, itineraryMain);
             bookingSelector.SetPage(BookingSelectorForm.PageType.Search);
 
             bookingSelector.ShowDialog();
@@ -381,7 +381,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         }
 
         private bool isLoadingSupplier;
-        public void AddNewBooking(int supplierId,ItineraryMain itineraryMain)
+        public void AddNewBooking(int supplierId, ItineraryMain itineraryMain)
         {
             this.itineraryMain = itineraryMain;
             // added to disable multiple drag-drop events queuing up
@@ -392,7 +392,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             Cursor = Cursors.WaitCursor;
             Application.DoEvents();
 
-            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet,itineraryMain);
+            BookingSelectorForm bookingSelector = new BookingSelectorForm(itinerarySet, itineraryMain);
             bookingSelector.LoadSupplier(supplierId, null, null);
             bookingSelector.SetPage(BookingSelectorForm.PageType.Select);
 
@@ -498,7 +498,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             else overrideWarning.SetError(label8, ""); // reset
         }
-        
+
         private void EditNetOverride()
         {
             NetOverrideForm overrideForm = new NetOverrideForm(itinerarySet);
@@ -560,7 +560,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // -------------
 
-            
+
             decimal net, markup, gross, final;
             net = itinerarySet.GetNetBasePrice();
             final = itinerarySet.GetGrossFinalPrice();
@@ -568,7 +568,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (!itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
             {
                 markup = itinerarySet.GetMarginOverride();
-                txtGross1.Value = net*(1 + markup/100);
+                txtGross1.Value = net * (1 + markup / 100);
             }
             else
             {
@@ -598,9 +598,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var itinerary = itinerarySet.Itinerary[0];
             var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
             var format = "{0:" + (currencyInfo != null ? currencyInfo.DisplayFormat : "c") + "}";
-            
+
             var amount = string.Format(format, yieldAmount);
-            var percent = (yieldPercent/100).ToString("p");
+            var percent = (yieldPercent / 100).ToString("p");
             txtCommission.Text = string.Format("{0} ({1})", amount, percent);
         }
 
@@ -638,9 +638,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 return;
 
             var isLocked = row.Cells.Exists("IsLockedAccounting") &&
-                row.Cells["IsLockedAccounting"] != null && 
+                row.Cells["IsLockedAccounting"] != null &&
                 row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
-                row.Cells["IsLockedAccounting"].Value != null && 
+                row.Cells["IsLockedAccounting"].Value != null &&
                 (bool)row.Cells["IsLockedAccounting"].Value;
 
             btnCopy.Enabled = !row.IsGroupByRow;
@@ -675,7 +675,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                         message += i++ + ". End date does not match rates\r\n";
                 }
             }
-            
+
             // discounts
             var calcDiscount = Discounts.CalcDiscount((decimal)item.Quantity, item.GetDiscountRows());
             if ((decimal)item.DiscountUnits != calcDiscount)
@@ -685,7 +685,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // currencies
             if (!item.IsCurrencyCodeNull() && !string.IsNullOrEmpty(item.CurrencyCode.Trim()) &&
-                item.IsCurrencyRateNull() && 
+                item.IsCurrencyRateNull() &&
                 item.CurrencyCode != CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]))
             {
                 message += i++ + ". Currency conversion rate is missing\r\n";
@@ -695,7 +695,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             item.RowError = message;
             return message.Length == 0;
         }
-        
+
         private void SetFlags(UltraGridRow row)
         {
             var purchaseItemId = (int)row.Cells["PurchaseItemID"].Value;
@@ -703,7 +703,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                                                     note.PurchaseItemID == purchaseItemId);
 
             var flagImageList = new List<Bitmap>();
-            var message = String.Empty;    
+            var message = String.Empty;
 
             foreach (var note in notes)
             {
@@ -730,7 +730,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             template.ParentTemplateCategoryID = App.TemplateCategoryBookingEmail;
             Cache.ToolSet.Template.AddTemplateRow(template);
         }
-        
+
         void BookingsViewer_HandleDestroyed(object sender, EventArgs e)
         {
             SaveGridLayout();
@@ -1061,7 +1061,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     c.Header.Caption = "Invoiced";
                     c.Header.ToolTipText = "Is the booking invoiced. Double-click to edit.";
-                    c.CellActivation = Activation.Disabled;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
                 }
                 else
                 {
@@ -1134,7 +1135,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["NetFinal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["GrossFinal"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["IsInvoiced"].Header.VisiblePosition = index++;
-          
+
 
             // Set defaults
             GridHelper.SetDefaultGridAppearance(e);
@@ -1146,29 +1147,29 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;
             e.Layout.Override.SupportDataErrorInfo = SupportDataErrorInfo.RowsAndCells;
-            
+
             SetGridSummaries(e, CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]));
         }
 
         private void grid_InitializeRow(object sender, InitializeRowEventArgs e)
         {
             if (e.Row.Band.Key != "PurchaseItem") return;
-            
+
             try
             {
                 // Set the purchaseline name.
                 e.Row.Cells["PurchaseLineName"].Value = itinerarySet.PurchaseLine.FindByPurchaseLineID(
-                    (int) e.Row.Cells["PurchaseLineID"].Value).PurchaseLineName;
+                    (int)e.Row.Cells["PurchaseLineID"].Value).PurchaseLineName;
 
                 var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
                 var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == itemId).FirstOrDefault();
                 if (item == null) return;
-                
+
                 // Set the city name.
                 int? cityId = itinerarySet.GetPurchaseItemCityId(itemId);
                 if (cityId.HasValue)
                 {
-                    ToolSet.CityRow city = Cache.ToolSet.City.FindByCityID((int) cityId);
+                    ToolSet.CityRow city = Cache.ToolSet.City.FindByCityID((int)cityId);
                     if (city != null && city.CityName != null)
                     {
                         e.Row.Cells["CityName"].Value = city.CityName;
@@ -1182,7 +1183,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 int? regionId = itinerarySet.GetPurchaseItemRegionId(itemId);
                 if (regionId.HasValue)
                 {
-                    ToolSet.RegionRow region = Cache.ToolSet.Region.FindByRegionID((int) regionId);
+                    ToolSet.RegionRow region = Cache.ToolSet.Region.FindByRegionID((int)regionId);
                     if (region != null && region.RegionName != null)
                         e.Row.Cells["RegionName"].Value = region.RegionName;
                     else
@@ -1192,14 +1193,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 int? gradeId = itinerarySet.GetPurchaseItemGradeId(itemId);
                 if (gradeId.HasValue)
                 {
-                    ToolSet.GradeRow grade = Cache.ToolSet.Grade.FindByGradeID((int) gradeId);
+                    ToolSet.GradeRow grade = Cache.ToolSet.Grade.FindByGradeID((int)gradeId);
                     e.Row.Cells["Grade"].Value = (grade != null) ? grade.GradeName : null;
                 }
                 int? gradeExternalId = itinerarySet.GetPurchaseItemGradeExternalId(itemId);
                 if (gradeExternalId.HasValue)
                 {
                     ToolSet.GradeExternalRow gradeExternal
-                        = Cache.ToolSet.GradeExternal.FindByGradeExternalID((int) gradeExternalId);
+                        = Cache.ToolSet.GradeExternal.FindByGradeExternalID((int)gradeExternalId);
                     e.Row.Cells["GradeExternal"].Value = (gradeExternal != null) ? gradeExternal.GradeExternalName : null;
                 }
 
@@ -1217,7 +1218,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 format = "{0:" + (hasOverride ? CurrencyService.GetCurrency(itinerary.CurrencyCode).DisplayFormat : "c") + "}";
                 if (e.Row.Band.Columns.Exists("NetFinal")) e.Row.Cells["NetFinal"].Value = string.Format(format, item.NetTotalConverted);
                 if (e.Row.Band.Columns.Exists("GrossFinal")) e.Row.Cells["GrossFinal"].Value = string.Format(format, item.GrossTotalConverted);
-                
+
                 // Set default EndDate
                 if (e.Row.Band.Columns.Exists("DefaultEndDate"))
                 {
@@ -1225,10 +1226,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     if (!item.IsStartDateNull() && !item.IsNumberOfDaysNull())
                         e.Row.Cells["DefaultEndDate"].Value = item.StartDate.Date.AddDays(item.NumberOfDays).ToShortDateString();
                 }
-                
+
                 // disable the row if it has been exported to accounting
                 if (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
-                    (bool) e.Row.Cells["IsLockedAccounting"].Value)
+                    (bool)e.Row.Cells["IsLockedAccounting"].Value)
                 {
                     SetRowLocked(e.Row, true);
                     EnableDisableButtons(e.Row);
@@ -1240,15 +1241,21 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
                 e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
-                
+
+                // Set IsInvoiced value if null
+                if (e.Row.Cells["IsInvoiced"].Value == DBNull.Value)
+                {
+                    e.Row.Cells["IsInvoiced"].Value = false;
+                }
+
                 ValidatePurchaseItem(item);
                 SetFlags(e.Row);
             }
             catch (ArgumentException ex)
             {
-                if (ex.Message.Contains("Key not found")) 
+                if (ex.Message.Contains("Key not found"))
                 {
-                    ResetGridLayout(); 
+                    ResetGridLayout();
                     ErrorHelper.SendEmail(ex, true);
                 }
                 else { throw; }
@@ -1332,10 +1339,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 int supplierId = itinerarySet.PurchaseLine.FindByPurchaseLineID(
                     (int)grid.ActiveRow.Cells["PurchaseLineID"].Value).SupplierID;
                 itineraryMain = ParentForm as ItineraryMain;
-                AddNewBooking(supplierId,this.itineraryMain);
+                AddNewBooking(supplierId, this.itineraryMain);
             }
         }
-        
+
         private void grid_BeforeRowsDeleted(object sender, BeforeRowsDeletedEventArgs e)
         {
             e.DisplayPromptMsg = false;
@@ -1369,13 +1376,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var doDelete = rows.Count == 1 ? App.AskDeleteRow() : rows.Count > 1 ? App.AskDeleteRows(rows.Count) : false;
             if (!doDelete) return;
 
-            for (var i = rows.Count-1; i >= 0; i--)
+            for (var i = rows.Count - 1; i >= 0; i--)
             {
                 var id = (int)rows[i].Cells["PurchaseLineID"].Value;
                 var line = itinerarySet.PurchaseLine.FindByPurchaseLineID(id);
 
                 rows[i].Delete(false);
-                if (line.GetPurchaseItemRows().Length == 0) 
+                if (line.GetPurchaseItemRows().Length == 0)
                     line.Delete();
             }
         }
@@ -1611,8 +1618,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-
-
         private void grid_BeforeExitEditMode(object sender, Infragistics.Win.UltraWinGrid.BeforeExitEditModeEventArgs e)
         {
             var activeCell = grid.ActiveCell;
@@ -1620,7 +1625,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 DateTime newDate, origDate;
                 if (activeCell.Value != null && !(activeCell.Value is DBNull) &&
-                    activeCell.EditorResolved != null && !(activeCell.EditorResolved.Value is DBNull) && 
+                    activeCell.EditorResolved != null && !(activeCell.EditorResolved.Value is DBNull) &&
                     DateTime.TryParse(activeCell.EditorResolved.Value.ToString(), out newDate) &&
                     DateTime.TryParse(activeCell.Value.ToString(), out origDate) &&
                     newDate != origDate &&
@@ -1628,7 +1633,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 {
                     var delta = (newDate.Date - origDate.Date).Days;
                     var dateKicker = new DateKickerForm(itinerarySet, 0, true);
-                    dateKicker.SetSelectedRow((int) activeCell.Row.Cells["PurchaseItemID"].Value, delta);
+                    dateKicker.SetSelectedRow((int)activeCell.Row.Cells["PurchaseItemID"].Value, delta);
                     if (dateKicker.ShowDialog() == DialogResult.OK)
                     {
                         RecalculateFinalPricing();
@@ -1642,10 +1647,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void grid_AfterCellListCloseUp(object sender, CellEventArgs e)
         {
-            if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved != null) 
+            if (e.Cell.Column.Key == "StartDate" && e.Cell.EditorResolved != null)
                 e.Cell.EditorResolved.ExitEditMode(true, true);
         }
-        
+
         private void txtMarkupOverride_Validated(object sender, EventArgs e)
         {
             RecalculateFinalPricing();
@@ -1684,14 +1689,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void btnChangeOption_Click(object sender, EventArgs e)
         {
-            ChangePurchaseItemOption(); 
+            ChangePurchaseItemOption();
         }
 
         private void btnUpdateCurrency_Click(object sender, EventArgs e)
         {
             RunCurrencyUpdater();
         }
-        
+
         private void chkLockGrossOverride_CheckedChanged(object sender, EventArgs e)
         {
             if (itinerarySet.Itinerary[0].IsGrossOverrideNull())
@@ -1722,10 +1727,31 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 var row = GridHelper.GetValidClickRow(grid);
                 if (row != null)
-                {                    
+                {
                     grid.ContextMenuStrip = null;
                 }
             }
+            else
+            {
+                UIElement clickedElement = grid.DisplayLayout.UIElement.ElementFromPoint(grid.PointToClient(MousePosition));
+
+                if (clickedElement == null)
+                    return;
+
+                if (clickedElement.Parent is CheckEditorCheckBoxUIElement)
+                    ToggleIsInvoicedOrOpenEditor(clickedElement.SelectableItem as UltraGridRow);
+            }
+        }
+
+        private void ToggleIsInvoicedOrOpenEditor(UltraGridRow row)
+        {
+            var itemCount = itinerarySet.PurchaseItem.Count(x => x.RowState != DataRowState.Deleted &&
+                                                                 x.PurchaseLineID == (int)row.Cells["PurchaseLineID"].Value);
+            if (itemCount <= 1)
+                row.Cells["IsInvoiced"].Value = !(bool)row.Cells["IsInvoiced"].Value;
+            else
+                OpenBookingEditor((int)row.Cells["PurchaseLineID"].Value,
+                                  (int)row.Cells["PurchaseItemID"].Value);
         }
 
         private void btnAddNewTemplate_Click(object sender, EventArgs e)
@@ -1741,7 +1767,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void btnRemoveTemplate_Click(object sender, EventArgs e)
         {
             int templateId;
-            if (int.TryParse( ((ToolStripItem)sender).Tag.ToString(), out templateId))
+            if (int.TryParse(((ToolStripItem)sender).Tag.ToString(), out templateId))
             {
                 var row = Cache.ToolSet.Template.FindByTemplateID(templateId);
                 if (row != null && App.AskDeleteRow())
@@ -1767,7 +1793,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             DateTime startDate;
             bool hasStartDate = DateTime.TryParse(grid.ActiveRow.Cells["StartDate"].Value.ToString(), out startDate);
-            var origItemId = (int) grid.ActiveRow.Cells["PurchaseItemID"].Value;
+            var origItemId = (int)grid.ActiveRow.Cells["PurchaseItemID"].Value;
 
             var selector = new BookingSelectorForm(itinerarySet, itineraryMain, hasStartDate ? startDate : (DateTime?)null);
             if (selector.ShowDialog() == DialogResult.OK)
