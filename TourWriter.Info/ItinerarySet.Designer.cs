@@ -78,21 +78,21 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationItineraryPurchaseLine;
         
-        private global::System.Data.DataRelation relationPurchaseLinePurchaseItem;
-        
         private global::System.Data.DataRelation relationPaymentTermPurchaseItem;
+        
+        private global::System.Data.DataRelation relationPurchaseLinePurchaseItem;
         
         private global::System.Data.DataRelation relationPurchaseItemPurchaseItemNote;
         
         private global::System.Data.DataRelation relationItineraryItineraryGroup;
         
-        private global::System.Data.DataRelation relationItineraryGroupGroupMember;
-        
         private global::System.Data.DataRelation relationContactGroupMember;
         
-        private global::System.Data.DataRelation relationItineraryItineraryMessage;
+        private global::System.Data.DataRelation relationItineraryGroupGroupMember;
         
         private global::System.Data.DataRelation relationMessageItineraryMessage;
+        
+        private global::System.Data.DataRelation relationItineraryItineraryMessage;
         
         private global::System.Data.DataRelation relationMessageSupplierMessage;
         
@@ -104,9 +104,9 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationItinerarySaleItinerarySaleAllocation;
         
-        private global::System.Data.DataRelation relationFK_PurchaseItem_ItineraryPaxOverride;
-        
         private global::System.Data.DataRelation relationFK_ItineraryPax_ItineraryPaxOverride;
+        
+        private global::System.Data.DataRelation relationFK_PurchaseItem_ItineraryPaxOverride;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -764,21 +764,21 @@ namespace TourWriter.Info {
             this.relationItineraryItineraryPax = this.Relations["ItineraryItineraryPax"];
             this.relationItineraryItineraryMarginOverride = this.Relations["ItineraryItineraryMarginOverride"];
             this.relationItineraryPurchaseLine = this.Relations["ItineraryPurchaseLine"];
-            this.relationPurchaseLinePurchaseItem = this.Relations["PurchaseLinePurchaseItem"];
             this.relationPaymentTermPurchaseItem = this.Relations["PaymentTermPurchaseItem"];
+            this.relationPurchaseLinePurchaseItem = this.Relations["PurchaseLinePurchaseItem"];
             this.relationPurchaseItemPurchaseItemNote = this.Relations["PurchaseItemPurchaseItemNote"];
             this.relationItineraryItineraryGroup = this.Relations["ItineraryItineraryGroup"];
-            this.relationItineraryGroupGroupMember = this.Relations["ItineraryGroupGroupMember"];
             this.relationContactGroupMember = this.Relations["ContactGroupMember"];
-            this.relationItineraryItineraryMessage = this.Relations["ItineraryItineraryMessage"];
+            this.relationItineraryGroupGroupMember = this.Relations["ItineraryGroupGroupMember"];
             this.relationMessageItineraryMessage = this.Relations["MessageItineraryMessage"];
+            this.relationItineraryItineraryMessage = this.Relations["ItineraryItineraryMessage"];
             this.relationMessageSupplierMessage = this.Relations["MessageSupplierMessage"];
             this.relationItineraryItineraryPubFile = this.Relations["ItineraryItineraryPubFile"];
             this.relationFK_ItineraryMember_ItineraryPayment = this.Relations["FK_ItineraryMember_ItineraryPayment"];
             this.relationFK_Itinerary_ItinerarySale = this.Relations["FK_Itinerary_ItinerarySale"];
             this.relationItinerarySaleItinerarySaleAllocation = this.Relations["ItinerarySaleItinerarySaleAllocation"];
-            this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
             this.relationFK_ItineraryPax_ItineraryPaxOverride = this.Relations["FK_ItineraryPax_ItineraryPaxOverride"];
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -865,19 +865,19 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseLineIDColumn});
-            this.tablePurchaseItem.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermPurchaseItem", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PaymentTermIDColumn});
             this.tablePurchaseItem.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.SetNull;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseLineIDColumn});
+            this.tablePurchaseItem.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("PurchaseItemPurchaseItemNote", new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
@@ -893,13 +893,6 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
-                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMember.ItineraryGroupIDColumn});
-            this.tableItineraryMember.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("ContactGroupMember", new global::System.Data.DataColumn[] {
                         this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMember.ContactIDColumn});
@@ -907,16 +900,23 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
-                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMessage.ItineraryIDColumn});
-            this.tableItineraryMessage.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
+                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMember.ItineraryGroupIDColumn});
+            this.tableItineraryMember.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("MessageItineraryMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMessage.MessageIDColumn});
+            this.tableItineraryMessage.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMessage.ItineraryIDColumn});
             this.tableItineraryMessage.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -956,16 +956,16 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryPaxOverride.PurchaseItemIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.ItineraryPaxIDColumn});
             this.tableItineraryPaxOverride.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
-                        this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryPaxOverride.ItineraryPaxIDColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn});
             this.tableItineraryPaxOverride.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -986,14 +986,14 @@ namespace TourWriter.Info {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseLine.ItineraryIDColumn}, false);
             this.Relations.Add(this.relationItineraryPurchaseLine);
-            this.relationPurchaseLinePurchaseItem = new global::System.Data.DataRelation("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseLineIDColumn}, false);
-            this.Relations.Add(this.relationPurchaseLinePurchaseItem);
             this.relationPaymentTermPurchaseItem = new global::System.Data.DataRelation("PaymentTermPurchaseItem", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PaymentTermIDColumn}, false);
             this.Relations.Add(this.relationPaymentTermPurchaseItem);
+            this.relationPurchaseLinePurchaseItem = new global::System.Data.DataRelation("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseLineIDColumn}, false);
+            this.Relations.Add(this.relationPurchaseLinePurchaseItem);
             this.relationPurchaseItemPurchaseItemNote = new global::System.Data.DataRelation("PurchaseItemPurchaseItemNote", new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItemNote.PurchaseItemIDColumn}, false);
@@ -1002,22 +1002,22 @@ namespace TourWriter.Info {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryGroup.ItineraryIDColumn}, false);
             this.Relations.Add(this.relationItineraryItineraryGroup);
-            this.relationItineraryGroupGroupMember = new global::System.Data.DataRelation("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
-                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMember.ItineraryGroupIDColumn}, false);
-            this.Relations.Add(this.relationItineraryGroupGroupMember);
             this.relationContactGroupMember = new global::System.Data.DataRelation("ContactGroupMember", new global::System.Data.DataColumn[] {
                         this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMember.ContactIDColumn}, false);
             this.Relations.Add(this.relationContactGroupMember);
-            this.relationItineraryItineraryMessage = new global::System.Data.DataRelation("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
-                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMessage.ItineraryIDColumn}, false);
-            this.Relations.Add(this.relationItineraryItineraryMessage);
+            this.relationItineraryGroupGroupMember = new global::System.Data.DataRelation("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
+                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMember.ItineraryGroupIDColumn}, false);
+            this.Relations.Add(this.relationItineraryGroupGroupMember);
             this.relationMessageItineraryMessage = new global::System.Data.DataRelation("MessageItineraryMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMessage.MessageIDColumn}, false);
             this.Relations.Add(this.relationMessageItineraryMessage);
+            this.relationItineraryItineraryMessage = new global::System.Data.DataRelation("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMessage.ItineraryIDColumn}, false);
+            this.Relations.Add(this.relationItineraryItineraryMessage);
             this.relationMessageSupplierMessage = new global::System.Data.DataRelation("MessageSupplierMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierMessage.MessageIDColumn}, false);
@@ -1038,14 +1038,14 @@ namespace TourWriter.Info {
                         this.tableItinerarySale.ItinerarySaleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItinerarySaleAllocation.ItinerarySaleIDColumn}, false);
             this.Relations.Add(this.relationItinerarySaleItinerarySaleAllocation);
-            this.relationFK_PurchaseItem_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
-            this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
             this.relationFK_ItineraryPax_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
                         this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryPaxOverride.ItineraryPaxIDColumn}, false);
             this.Relations.Add(this.relationFK_ItineraryPax_ItineraryPaxOverride);
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
+            this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2397,7 +2397,7 @@ namespace TourWriter.Info {
                 this.columnItineraryName.AllowDBNull = false;
                 this.columnArriveNote.MaxLength = 2000;
                 this.columnDepartNote.MaxLength = 2000;
-                this.columnComments.MaxLength = 4000;
+                this.columnComments.MaxLength = 8000;
                 this.columnIsRecordActive.DefaultValue = ((bool)(true));
                 this.columnParentFolderID.DefaultValue = ((int)(0));
                 this.columnRowVersion.ReadOnly = true;
@@ -13783,23 +13783,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseLineRow PurchaseLineRow {
-                get {
-                    return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["PurchaseLinePurchaseItem"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermPurchaseItem"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["PaymentTermPurchaseItem"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseLineRow PurchaseLineRow {
+                get {
+                    return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["PurchaseLinePurchaseItem"]);
                 }
             }
             
@@ -15734,23 +15734,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryGroupRow ItineraryGroupRow {
-                get {
-                    return ((ItineraryGroupRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryGroupGroupMember"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryGroupGroupMember"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactRow ContactRow {
                 get {
                     return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactGroupMember"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["ContactGroupMember"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryGroupRow ItineraryGroupRow {
+                get {
+                    return ((ItineraryGroupRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryGroupGroupMember"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryGroupGroupMember"]);
                 }
             }
             
@@ -16318,23 +16318,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryRow ItineraryRow {
-                get {
-                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryItineraryMessage"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryItineraryMessage"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MessageRow MessageRow {
                 get {
                     return ((MessageRow)(this.GetParentRow(this.Table.ParentRelations["MessageItineraryMessage"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["MessageItineraryMessage"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryRow ItineraryRow {
+                get {
+                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryItineraryMessage"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryItineraryMessage"]);
                 }
             }
         }
@@ -18463,23 +18463,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseItemRow PurchaseItemRow {
-                get {
-                    return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryPaxRow ItineraryPaxRow {
                 get {
                     return ((ItineraryPaxRow)(this.GetParentRow(this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseItemRow PurchaseItemRow {
+                get {
+                    return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"]);
                 }
             }
             

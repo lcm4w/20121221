@@ -134,7 +134,6 @@ namespace TourWriter.Modules.SupplierModule
             this.txtTemplateFile = new System.Windows.Forms.TextBox();
             this.btnChooseTemplate = new System.Windows.Forms.Button();
             this.tabSupplier = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.scrollBarSetter = new System.Windows.Forms.Label();
             this.btnSupplierFreePhone = new System.Windows.Forms.PictureBox();
             this.btnSupplierMobile = new System.Windows.Forms.PictureBox();
             this.btnSupplierPhone = new System.Windows.Forms.PictureBox();
@@ -343,7 +342,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl7.Controls.Add(this.grpReports);
             this.ultraTabPageControl7.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl7.Name = "ultraTabPageControl7";
-            this.ultraTabPageControl7.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl7.Size = new System.Drawing.Size(770, 587);
             // 
             // label30
             // 
@@ -401,7 +400,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl8.Controls.Add(this.label35);
             this.ultraTabPageControl8.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl8.Name = "ultraTabPageControl8";
-            this.ultraTabPageControl8.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl8.Size = new System.Drawing.Size(770, 587);
             // 
             // gridMessages
             // 
@@ -524,14 +523,14 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl11.Controls.Add(this.contentControl1);
             this.ultraTabPageControl11.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl11.Name = "ultraTabPageControl11";
-            this.ultraTabPageControl11.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl11.Size = new System.Drawing.Size(770, 587);
             // 
             // contentControl1
             // 
             this.contentControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.contentControl1.Location = new System.Drawing.Point(0, 0);
             this.contentControl1.Name = "contentControl1";
-            this.contentControl1.Size = new System.Drawing.Size(824, 491);
+            this.contentControl1.Size = new System.Drawing.Size(770, 587);
             this.contentControl1.TabIndex = 0;
             // 
             // ultraTabPageControl9
@@ -541,7 +540,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl9.Controls.Add(this.label32);
             this.ultraTabPageControl9.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl9.Name = "ultraTabPageControl9";
-            this.ultraTabPageControl9.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl9.Size = new System.Drawing.Size(770, 587);
             // 
             // gridPublishing
             // 
@@ -667,7 +666,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl1.Controls.Add(this.label19);
             this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
-            this.ultraTabPageControl1.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(770, 587);
             // 
             // gridContact
             // 
@@ -810,7 +809,7 @@ namespace TourWriter.Modules.SupplierModule
             this.ultraTabPageControl4.Controls.Add(this.groupBox1);
             this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
-            this.ultraTabPageControl4.Size = new System.Drawing.Size(824, 491);
+            this.ultraTabPageControl4.Size = new System.Drawing.Size(770, 587);
             // 
             // groupBox1
             // 
@@ -869,7 +868,6 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.AutoScroll = true;
             this.tabSupplier.AutoScrollMinSize = new System.Drawing.Size(720, 510);
             this.tabSupplier.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tabSupplier.Controls.Add(this.scrollBarSetter);
             this.tabSupplier.Controls.Add(this.btnSupplierFreePhone);
             this.tabSupplier.Controls.Add(this.btnSupplierMobile);
             this.tabSupplier.Controls.Add(this.btnSupplierPhone);
@@ -918,17 +916,9 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
+            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(774, 625);
-            // 
-            // scrollBarSetter
-            // 
-            this.scrollBarSetter.AutoSize = true;
-            this.scrollBarSetter.Location = new System.Drawing.Point(716, 653);
-            this.scrollBarSetter.Name = "scrollBarSetter";
-            this.scrollBarSetter.Size = new System.Drawing.Size(0, 13);
-            this.scrollBarSetter.TabIndex = 151;
             // 
             // btnSupplierFreePhone
             // 
@@ -1160,7 +1150,7 @@ namespace TourWriter.Modules.SupplierModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel4.Location = new System.Drawing.Point(369, 345);
             this.headerLabel4.Name = "headerLabel4";
-            this.headerLabel4.Size = new System.Drawing.Size(382, 16);
+            this.headerLabel4.Size = new System.Drawing.Size(399, 16);
             this.headerLabel4.TabIndex = 140;
             this.headerLabel4.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel4.TextString = "Description";
@@ -1182,7 +1172,7 @@ namespace TourWriter.Modules.SupplierModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel2.Location = new System.Drawing.Point(372, 79);
             this.headerLabel2.Name = "headerLabel2";
-            this.headerLabel2.Size = new System.Drawing.Size(379, 16);
+            this.headerLabel2.Size = new System.Drawing.Size(396, 16);
             this.headerLabel2.TabIndex = 138;
             this.headerLabel2.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel2.TextString = "Contact";
@@ -1418,7 +1408,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierDescription.Multiline = true;
             this.txtSupplierDescription.Name = "txtSupplierDescription";
             this.txtSupplierDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 336);
+            this.txtSupplierDescription.Size = new System.Drawing.Size(340, 255);
             this.txtSupplierDescription.TabIndex = 18;
             // 
             // chkIsSupplierActive
@@ -1457,7 +1447,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierComments.Multiline = true;
             this.txtSupplierComments.Name = "txtSupplierComments";
             this.txtSupplierComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSupplierComments.Size = new System.Drawing.Size(337, 336);
+            this.txtSupplierComments.Size = new System.Drawing.Size(337, 255);
             this.txtSupplierComments.TabIndex = 17;
             // 
             // ultraTabPageControl6
@@ -2078,7 +2068,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 625);
             // 
@@ -2575,7 +2565,6 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.Label label46;
         private Infragistics.Win.UltraWinGrid.UltraCombo cmbGrossTaxType;
         private Infragistics.Win.UltraWinTabControl.UltraTabPageControl tabSupplier;
-        private System.Windows.Forms.Label scrollBarSetter;
         private System.Windows.Forms.PictureBox btnSupplierFreePhone;
         private System.Windows.Forms.PictureBox btnSupplierMobile;
         private System.Windows.Forms.PictureBox btnSupplierPhone;
