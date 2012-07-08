@@ -61,6 +61,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private const string ItemPriceTag = "[!ItemPrice]";
         private const string ItemCommissionTag = "[!ItemCommission]";
         private const string ItemTotalTag = "[!ItemTotal]";
+        private const string ItemFocTag = "[!ItemFoc]";
         private const string ItemPriceEndTag = "[!ItemPriceEnd]";
         private const string BookingDetailEndTag = "[!BookingDetailEnd]";
         internal const string SubjectStartTag = "[!SubjectStart]";
@@ -333,6 +334,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                     priceText = ReplaceTag(priceText, ItemTotalTag, !string.IsNullOrEmpty(total) ? total : "");
                 }
                 detailText = detailText.Replace(priceTemplate, priceText);
+                detailText = ReplaceTag(detailText, ItemFocTag, !item.IsDiscountUnitsNull() ? ((int)item.DiscountUnits).ToString() : "");
 
                 bookingDetail += detailText;
             }
