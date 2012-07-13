@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2012.06.08')
+if ((select VersionNumber from AppSettings) <> '2012.06.08' and (select VersionNumber from AppSettings) <> '2012.07.07')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -33,6 +33,9 @@ IF @@TRANCOUNT=0 BEGIN INSERT INTO #tmpErrors (Error) SELECT 1 BEGIN TRANSACTION
 GO
 
 ----------------------------------------------------------------------------------------
+GO
+update PurchaseItem set IsInvoiced = 0 where IsInvoiced is NULL
+
 GO
 ALTER VIEW [dbo].[ItineraryDetail]
 AS
@@ -172,7 +175,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.07.07'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.07.13'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO

@@ -1242,12 +1242,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Row.Cells["BaseCurrency"].Value = CurrencyService.GetItineraryCurrencyCodeOrDefault(itinerarySet.Itinerary[0]);
                 e.Row.Cells["BookingCurrency"].Value = CurrencyService.GetPurchaseItemCurrencyCodeOrDefault(item);
 
-                // Set IsInvoiced value if null
-                if (e.Row.Cells["IsInvoiced"].Value == DBNull.Value)
-                {
-                    e.Row.Cells["IsInvoiced"].Value = false;
-                }
-
                 ValidatePurchaseItem(item);
                 SetFlags(e.Row);
             }
@@ -1748,7 +1742,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var itemCount = itinerarySet.PurchaseItem.Count(x => x.RowState != DataRowState.Deleted &&
                                                                  x.PurchaseLineID == (int)row.Cells["PurchaseLineID"].Value);
             if (itemCount <= 1)
-                row.Cells["IsInvoiced"].Value = !(bool)row.Cells["IsInvoiced"].Value;
+                row.Cells["IsInvoiced"].Value = row.Cells["IsInvoiced"].Value == DBNull.Value || !(bool)row.Cells["IsInvoiced"].Value;
             else
                 OpenBookingEditor((int)row.Cells["PurchaseLineID"].Value,
                                   (int)row.Cells["PurchaseItemID"].Value);

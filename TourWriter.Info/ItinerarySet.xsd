@@ -217,7 +217,7 @@
               <xs:element name="GrossTotalConverted" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="GrossTotalConverted" msprop:Generator_ColumnVarNameInTable="columnGrossTotalConverted" msprop:Generator_ColumnPropNameInTable="GrossTotalConvertedColumn" msprop:Generator_UserColumnName="GrossTotalConverted" type="xs:decimal" minOccurs="0" />
               <xs:element name="DiscountUnits" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="DiscountUnits" msprop:Generator_ColumnVarNameInTable="columnDiscountUnits" msprop:Generator_ColumnPropNameInTable="DiscountUnitsColumn" msprop:Generator_UserColumnName="DiscountUnits" type="xs:double" minOccurs="0" />
               <xs:element name="DiscountType" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="DiscountType" msprop:Generator_ColumnVarNameInTable="columnDiscountType" msprop:Generator_ColumnPropNameInTable="DiscountTypeColumn" msprop:Generator_UserColumnName="DiscountType" type="xs:string" minOccurs="0" />
-              <xs:element name="IsInvoiced" msprop:Generator_ColumnVarNameInTable="columnIsInvoiced" msprop:Generator_ColumnPropNameInRow="IsInvoiced" msprop:Generator_ColumnPropNameInTable="IsInvoicedColumn" msprop:Generator_UserColumnName="IsInvoiced" type="xs:boolean" minOccurs="0" />
+              <xs:element name="IsInvoiced" msprop:nullValue="false" msprop:Generator_ColumnVarNameInTable="columnIsInvoiced" msprop:Generator_ColumnPropNameInRow="IsInvoiced" msprop:Generator_ColumnPropNameInTable="IsInvoicedColumn" msprop:Generator_UserColumnName="IsInvoiced" type="xs:boolean" default="false" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
