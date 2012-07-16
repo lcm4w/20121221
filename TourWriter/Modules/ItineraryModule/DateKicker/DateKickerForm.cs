@@ -138,6 +138,7 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                 row.Cells["Result"].Appearance.Image = null;
                 row.Cells["Result"].ToolTipText = "";
                 row.Cells["Result"].Value = "";
+                row.Update();
             }
         }
 
@@ -412,11 +413,6 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
         
             // booking dates
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
-
-            // If dates are changed but not rates, then date changes are not kept in Merge above (cos dates are not flagging row as 'Modified', but rates are).
-            // Not sure why , so lets just manually set dates here...
-            foreach (var row in purchaseItemTable.Where(x => x.RowState != DataRowState.Deleted && !x.IsStartDateNull()))
-                itinerarySet.PurchaseItem.First(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == row.PurchaseItemID && !x.IsStartDateNull()).StartDate = row.StartDate;
 
             DialogResult = DialogResult.OK;
         }
