@@ -719,6 +719,8 @@ namespace TourWriter.Forms
                 Cursor = Cursors.Default;
                 if (Services.ErrorHelper.IsFileAccessError(ex))
                     App.ShowFileNotFound(f);
+                else if (ex is System.InvalidOperationException)
+                    App.ShowFileNotFound(f);
                 else throw;
             }
             finally
