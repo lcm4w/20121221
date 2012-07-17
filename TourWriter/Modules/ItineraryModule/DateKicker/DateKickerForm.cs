@@ -120,15 +120,19 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 
         private void SetNewBookingDates(int daysOffset)
         {
+            if (!chkUpdateStartDate.Checked) return;
+            
             foreach (UltraGridRow row in gridBookings.Rows)
             {
                 // set date
                 if (row.Cells["OldDate"].Value != DBNull.Value)
                 {
-                    if ((bool) row.Cells["IsSelected"].Value)
+                    if ((bool)row.Cells["IsSelected"].Value)
+                    {
                         row.Cells["StartDate"].Value = ((DateTime) row.Cells["OldDate"].Value).AddDays(daysOffset);
-                    else // reset date
-                        row.Cells["StartDate"].Value = ((DateTime) row.Cells["OldDate"].Value);
+                        if (row.Cells["EndDate"].Value != DBNull.Value)
+                            row.Cells["EndDate"].Value = ((DateTime) row.Cells["EndDate"].Value).AddDays((int) txtDayOffset.Value);
+                    }
                 }
                 // reset price
                 if (row.Cells["OldNet"].Value != null && row.Cells["OldNet"].Value != DBNull.Value)
@@ -160,20 +164,8 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
 
                 if ((bool)row.Cells["IsSelected"].Value && row.Cells["StartDate"].Value != DBNull.Value)
                 {
-                    //DateTime startDate = ((DateTime) row.Cells["OldDate"].Value).AddDays((int) txtDayOffset.Value);
-                    var startDate = (DateTime) row.Cells["StartDate"].Value;
-
-                    DateTime? endDate = null;
-                    if (row.Cells["EndDate"].Value != DBNull.Value)
-                        endDate = ((DateTime)row.Cells["EndDate"].Value).AddDays((int)txtDayOffset.Value);
-
-                    Invoke(new MethodInvoker(
-                    delegate
-                    {
-                        row.Cells["StartDate"].Value = startDate;
-                        if (endDate != null)
-                            row.Cells["EndDate"].Value = (DateTime)endDate;
-                    }));
+                    var startDate = (DateTime)row.Cells["StartDate"].Value;
+                    var endDate = row.Cells["EndDate"].Value != DBNull.Value ? (DateTime?)row.Cells["EndDate"].Value : null;
 
                     SqlParameter paramOptionID = new SqlParameter("@OptionID", row.Cells["OptionID"].Value);
                     SqlParameter paramStartDate = new SqlParameter("@NewDate", startDate);
@@ -413,7 +405,6 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
         
             // booking dates
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
-
             DialogResult = DialogResult.OK;
         }
 
