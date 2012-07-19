@@ -273,9 +273,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void PopulateBookingsList(int supplierId)
         {
             // Get existing bookings for this supplier.
-            var lines = from line in itinerarySet.PurchaseLine
-                        where (line.RowState != DataRowState.Deleted && line.SupplierID == supplierId)
-                        select line;
+            var lines = itinerarySet.GetSupplierBookings(supplierId);
 
             // Add supplier bookings.
             cmbBookings.Items.Clear();

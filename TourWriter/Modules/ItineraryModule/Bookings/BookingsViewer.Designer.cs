@@ -78,6 +78,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.paxOverrideMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeOptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editFlagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.replaceSupplierMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveToNewBookingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbBookings = new System.Windows.Forms.ToolStripComboBox();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
             this.btnTools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnMoveDates = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +104,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.replaceSupplierMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtGrossOverride)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itineraryBindingSource)).BeginInit();
@@ -511,51 +513,75 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.paxOverrideMenuItem,
             this.changeOptionToolStripMenuItem,
             this.editFlagsToolStripMenuItem,
-            this.replaceSupplierMenuItem});
+            this.replaceSupplierMenuItem,
+            this.moveToNewBookingMenuItem});
             this.bookingGridMenu.Name = "contextMenuStrip1";
-            this.bookingGridMenu.Size = new System.Drawing.Size(161, 180);
+            this.bookingGridMenu.Size = new System.Drawing.Size(206, 202);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // paxOverrideMenuItem
             // 
             this.paxOverrideMenuItem.Name = "paxOverrideMenuItem";
-            this.paxOverrideMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.paxOverrideMenuItem.Size = new System.Drawing.Size(205, 22);
             this.paxOverrideMenuItem.Text = "Pax override";
             this.paxOverrideMenuItem.Click += new System.EventHandler(this.paxOverrideMenuItem_Click);
             // 
             // changeOptionToolStripMenuItem
             // 
             this.changeOptionToolStripMenuItem.Name = "changeOptionToolStripMenuItem";
-            this.changeOptionToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.changeOptionToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.changeOptionToolStripMenuItem.Text = "Swap out Service/Option";
             this.changeOptionToolStripMenuItem.Click += new System.EventHandler(this.btnChangeOption_Click);
             // 
             // editFlagsToolStripMenuItem
             // 
             this.editFlagsToolStripMenuItem.Name = "editFlagsToolStripMenuItem";
-            this.editFlagsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.editFlagsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.editFlagsToolStripMenuItem.Text = "Edit flags";
             this.editFlagsToolStripMenuItem.Click += new System.EventHandler(this.btnEditFlags_Click);
+            // 
+            // replaceSupplierMenuItem
+            // 
+            this.replaceSupplierMenuItem.Name = "replaceSupplierMenuItem";
+            this.replaceSupplierMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.replaceSupplierMenuItem.Text = "Swap out Supplier";
+            this.replaceSupplierMenuItem.Click += new System.EventHandler(this.replaceSupplierMenuItem_Click);
+            // 
+            // moveToNewBookingMenuItem
+            // 
+            this.moveToNewBookingMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmbBookings});
+            this.moveToNewBookingMenuItem.Name = "moveToNewBookingMenuItem";
+            this.moveToNewBookingMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.moveToNewBookingMenuItem.Text = "Move booking too...";
+            this.moveToNewBookingMenuItem.DropDownOpening += new System.EventHandler(this.moveToNewBookingMenuItem_DropDownOpening);
+            // 
+            // cmbBookings
+            // 
+            this.cmbBookings.DropDownWidth = 121;
+            this.cmbBookings.Name = "cmbBookings";
+            this.cmbBookings.Size = new System.Drawing.Size(121, 23);
+            this.cmbBookings.SelectedIndexChanged += new System.EventHandler(this.cmbBookings_SelectedIndexChanged);
             // 
             // myToolStrip1
             // 
@@ -774,13 +800,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.ToolTipText = "Delete selected booking and related items";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // replaceSupplierMenuItem
-            // 
-            this.replaceSupplierMenuItem.Name = "replaceSupplierMenuItem";
-            this.replaceSupplierMenuItem.Size = new System.Drawing.Size(160, 22);
-            this.replaceSupplierMenuItem.Text = "Swap out Supplier";
-            this.replaceSupplierMenuItem.Click += new System.EventHandler(this.replaceSupplierMenuItem_Click);
-            // 
             // BookingsViewer
             // 
             this.AutoScroll = true;
@@ -882,5 +901,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.LinkLabel lnkItineraryCurrency;
         private System.Windows.Forms.TextBox txtItineraryCurrency;
         private System.Windows.Forms.ToolStripMenuItem replaceSupplierMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveToNewBookingMenuItem;
+        private System.Windows.Forms.ToolStripComboBox cmbBookings;
     }
 }

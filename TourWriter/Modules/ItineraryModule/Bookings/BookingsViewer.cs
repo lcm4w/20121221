@@ -64,7 +64,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // TODO: hide flags feature for now, see also line 1004 ---
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
-            // ---------------------------------------------------------------
         }
 
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -75,7 +74,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 RefreshEmailTemplateMenu();
             }
         }
-
+        
         internal void RefreshEmailTemplateMenu()
         {
             btnBookings.DropDownItems.Clear();
@@ -1796,6 +1795,59 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (origItem != null) origItem.Delete();
             }
         }
+
+        private void moveToNewBookingMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (cmbBookings.ComboBox == null) return;
+            cmbBookings.SelectedIndexChanged -= cmbBookings_SelectedIndexChanged;
+            cmbBookings.Items.Clear();
+            cmbBookings.ComboBox.Width = 200;
+            cmbBookings.ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBookings.ComboBox.ValueMember = "Key";
+            cmbBookings.ComboBox.DisplayMember = "Value";
+
+            var currentLineId = (int)grid.ActiveRow.Cells["PurchaseLineID"].Value;
+            var supplierId = itinerarySet.PurchaseLine.FindByPurchaseLineID(currentLineId).SupplierID;
+            cmbBookings.Items.Add(new KeyValuePair<int?, string>(null, "Create new..."));
+            foreach (var line in itinerarySet.GetSupplierBookings(supplierId))
+            {
+                var item = new KeyValuePair<int?, string>(
+                    line.PurchaseLineID, string.Format("({0}) {1}", line.PurchaseLineID, line.PurchaseLineName));
+                cmbBookings.Items.Add(item);
+                if (line.PurchaseLineID == currentLineId) cmbBookings.SelectedIndex = cmbBookings.Items.Count - 1;
+            }
+            cmbBookings.SelectedIndexChanged += cmbBookings_SelectedIndexChanged;
+        }
+
+        private void cmbBookings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var newLineId = ((KeyValuePair<int?, string>)cmbBookings.SelectedItem).Key;
+            var oldLineId = (int)grid.ActiveRow.Cells["PurchaseLineID"].Value;
+
+            if (newLineId != oldLineId)
+            {
+                grid.SuspendLayout();
+
+                var oldItem = itinerarySet.PurchaseItem.First(x => x.RowState != DataRowState.Deleted &&
+                    x.PurchaseItemID == (int)grid.ActiveRow.Cells["PurchaseItemID"].Value);
+                var oldLine = itinerarySet.PurchaseLine.First(x => x.RowState != DataRowState.Deleted &&
+                    x.PurchaseLineID == (int)grid.ActiveRow.Cells["PurchaseLineID"].Value);
+
+                if (!newLineId.HasValue) 
+                    newLineId = itinerarySet.CopyPurchaseLine(oldLine, null, Cache.User.UserID, false).PurchaseLineID;
+                // have to always create a 'new' item row (not just update line Id) or dataset will barf a constraint error
+                var newItem = itinerarySet.CopyPurchaseItem(oldItem, (int)newLineId, "", Cache.User.UserID);
+               
+                // clean up
+                oldItem.Delete(); // delete old item
+                if (oldLine.GetPurchaseItemRows().Count(x => x.RowState != DataRowState.Deleted) == 0)
+                    oldLine.Delete(); // delete old line if empty
+
+                grid.ResumeLayout();
+            }
+            bookingGridMenu.Close();
+        }
+
         #endregion
     }
 

@@ -970,5 +970,13 @@ namespace TourWriter.Info
         }
 
         #endregion        
+
+        // Returns existing bookings for this supplier
+        public IEnumerable<PurchaseLineRow> GetSupplierBookings(int supplierId)
+        {
+             return from line in PurchaseLine
+                    where (line.RowState != DataRowState.Deleted && line.SupplierID == supplierId)
+                    select line;
+        }
     }    
 }
