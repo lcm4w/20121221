@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2012.06.08' and (select VersionNumber from AppSettings) <> '2012.07.07')
+if ((select VersionNumber from AppSettings) <> '2012.06.08' and (select VersionNumber from AppSettings) <> '2012.07.07' and (select VersionNumber from AppSettings) <> '2012.07.13')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -170,12 +170,75 @@ select
 
 GO
 
+ALTER VIEW [dbo].[ContactDetail]
+AS
+SELECT
+    cont.ContactID,
+    ContactName,
+    Title,
+    FirstName,
+    LastName,
+    JobDescription,
+    StreetAddress,
+    PostAddress,
+    CityName,
+    RegionName,
+    StateName,
+    CountryName,
+    PostCode,
+    WorkPhone,
+    HomePhone,
+    CellPhone,
+    Fax,
+    Email1,
+    Email2,
+    Website,
+    BirthDate,
+    Notes,
+    ItineraryCount,
+    FolderName,
+    cont.ParentFolderID,
+	(   SELECT STUFF(( 
+			SELECT ', ' + c.ContactCategoryName
+			FROM ContactCategory c
+			INNER JOIN ContactContactCategory cc ON c.ContactCategoryID = cc.ContactCategoryID
+			WHERE cc.ContactID = cont.ContactID
+			FOR XML PATH (''), TYPE 
+		).value('.', 'VARCHAR(MAX)'), 1, 2,'')
+    ) AS Categories,
+    (   SELECT STUFF(( 
+			SELECT ', ' + a.AgentName
+			FROM Contact c1
+			LEFT JOIN AgentContact ac ON ac.ContactID = c1.ContactID
+			LEFT JOIN Agent a ON a.AgentID = ac.AgentID
+			WHERE c1.ContactID = cont.ContactID
+			FOR XML PATH (''), TYPE 
+		).value('.', 'VARCHAR(MAX)'), 1, 2,'')
+    ) AS Agents
+FROM Contact AS cont
+LEFT OUTER JOIN City AS city ON city.CityID = cont.CityID
+LEFT OUTER JOIN Region AS region ON region.RegionID = cont.RegionID
+LEFT OUTER JOIN [State] AS stat ON stat.StateID = cont.StateID
+LEFT OUTER JOIN Country AS country ON country.CountryID = cont.CountryID
+LEFT OUTER JOIN Folder AS fld ON fld.FolderId = cont.ParentFolderId
+LEFT OUTER JOIN
+(   SELECT ContactID, COUNT(ItineraryID) AS ItineraryCount
+    FROM ItineraryMember mem
+    LEFT OUTER JOIN ItineraryGroup grp ON mem.ItineraryGroupID = grp.ItineraryGroupID
+    WHERE ContactID IS NOT NULL
+    GROUP BY ContactID
+) cnt ON cnt.ContactID = cont.ContactID
+WHERE (IsDeleted IS NULL OR IsDeleted = 0);
+
+
+GO
+
 exec __RefreshViews;
 GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.07.13'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.07.19'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
