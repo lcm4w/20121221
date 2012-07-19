@@ -162,75 +162,76 @@ namespace TourWriter.Modules.ItineraryModule.DateKicker
                     row.Cells["Result"].ToolTipText = string.Empty;
                 }));
 
-                if ((bool)row.Cells["IsSelected"].Value && row.Cells["StartDate"].Value != DBNull.Value)
+                // is it selected/valid
+                if (!((bool) row.Cells["IsSelected"].Value) || row.Cells["StartDate"].Value == DBNull.Value) continue;
+
+                var startDate = (DateTime)row.Cells["StartDate"].Value;
+                var endDate = row.Cells["EndDate"].Value != DBNull.Value ? (DateTime?)row.Cells["EndDate"].Value : null;
+
+                SqlParameter paramOptionID = new SqlParameter("@OptionID", row.Cells["OptionID"].Value);
+                SqlParameter paramStartDate = new SqlParameter("@NewDate", startDate);
+                ItinerarySet.OptionLookupDataTable optionLookup = new ItinerarySet.OptionLookupDataTable();
+                DataSetHelper.FillDataTable(optionLookup, "_Option_GetNewFromDate", paramOptionID, paramStartDate);
+
+                if (optionLookup.Rows.Count > 0)
                 {
-                    var startDate = (DateTime)row.Cells["StartDate"].Value;
-                    var endDate = row.Cells["EndDate"].Value != DBNull.Value ? (DateTime?)row.Cells["EndDate"].Value : null;
-
-                    SqlParameter paramOptionID = new SqlParameter("@OptionID", row.Cells["OptionID"].Value);
-                    SqlParameter paramStartDate = new SqlParameter("@NewDate", startDate);
-                    ItinerarySet.OptionLookupDataTable optionLookup = new ItinerarySet.OptionLookupDataTable();
-                    DataSetHelper.FillDataTable(optionLookup, "_Option_GetNewFromDate", paramOptionID, paramStartDate);
-
-                    if (optionLookup.Rows.Count > 0)
-                    {
-                        Invoke(new MethodInvoker(
-                        delegate
-                        {
-                            // if the end date is null, calculate it based on NumberOfDays
-                            if (endDate == null && row.Cells["NumberOfDays"].Value != DBNull.Value)
-                            {
-                                double numberOfDays = (double)row.Cells["NumberOfDays"].Value;
-                                endDate = startDate.AddDays(numberOfDays);
-                            }
-
-                            if (endDate != null && endDate > optionLookup[0].ValidTo)
-                            {
-                                // booking spans multiple rates
-                                row.Cells["Result"].Appearance.Image = Resources.Warning;
-                                row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
-                                row.Cells["Result"].ToolTipText = "Booking spans multiple rates";
-                            }
-                            else
-                            {
-                                row.Cells["Result"].Appearance.Image = Resources.Tick;
-                            }
-                        }));
-
-                        // commented out below to update existing Rates too, with possible updates from the same underlying Option
-                        //if (optionLookup[0].OptionID != (int) row.Cells["OptionID"].Value)
-                        //{
-                            // new rates are different so update the booking data
-                            itinerarySet.OptionLookup.Merge(optionLookup, false);
-                            itinerarySet.OptionLookup.AcceptChanges();
-
-                            Invoke(new MethodInvoker(
-                            delegate
-                            {
-                                row.Cells["OptionID"].Value = optionLookup[0].OptionID;
-                                row.Cells["Net"].Value = (!optionLookup[0].IsNetNull()) ? optionLookup[0].Net : 0;
-                                row.Cells["Gross"].Value = (!optionLookup[0].IsGrossNull()) ? optionLookup[0].Gross : 0;
-                            }));
-                        //}
-                    }
-                    else
-                    {
-                        // failed to update rates
-                        Invoke(new MethodInvoker(
-                        delegate
-                        {
-                            row.Cells["Result"].Value = "Update...";
-                            row.Cells["Result"].Appearance.Image = Resources.Cross;
-                            row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
-                            row.Cells["Result"].ToolTipText = "No rates found for this date";
-                        }));
-                    }
-
-                    // temporary code to show warnings
                     Invoke(new MethodInvoker(
-                    delegate
-                        {
-                            const string sql = @"
+                               delegate
+                                   {
+                                       // if the end date is null, calculate it based on NumberOfDays
+                                       if (endDate == null && row.Cells["NumberOfDays"].Value != DBNull.Value)
+                                       {
+                                           double numberOfDays = (double)row.Cells["NumberOfDays"].Value;
+                                           endDate = startDate.AddDays(numberOfDays);
+                                       }
+
+                                       if (endDate != null && endDate > optionLookup[0].ValidTo)
+                                       {
+                                           // booking spans multiple rates
+                                           row.Cells["Result"].Appearance.Image = Resources.Warning;
+                                           row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
+                                           row.Cells["Result"].ToolTipText = "Booking spans multiple rates";
+                                       }
+                                       else
+                                       {
+                                           row.Cells["Result"].Appearance.Image = Resources.Tick;
+                                       }
+                                   }));
+
+                    // commented out below to update existing Rates too, with possible updates from the same underlying Option
+                    //if (optionLookup[0].OptionID != (int) row.Cells["OptionID"].Value)
+                    //{
+                    // new rates are different so update the booking data
+                    itinerarySet.OptionLookup.Merge(optionLookup, false);
+                    itinerarySet.OptionLookup.AcceptChanges();
+
+                    Invoke(new MethodInvoker(
+                               delegate
+                                   {
+                                       row.Cells["OptionID"].Value = optionLookup[0].OptionID;
+                                       row.Cells["Net"].Value = (!optionLookup[0].IsNetNull()) ? optionLookup[0].Net : 0;
+                                       row.Cells["Gross"].Value = (!optionLookup[0].IsGrossNull()) ? optionLookup[0].Gross : 0;
+                                   }));
+                    //}
+                }
+                else
+                {
+                    // failed to update rates
+                    Invoke(new MethodInvoker(
+                               delegate
+                                   {
+                                       row.Cells["Result"].Value = "Update...";
+                                       row.Cells["Result"].Appearance.Image = Resources.Cross;
+                                       row.Cells["Result"].Appearance.Cursor = Cursors.Hand;
+                                       row.Cells["Result"].ToolTipText = "No rates found for this date";
+                                   }));
+                }
+
+                // temporary code to show warnings
+                Invoke(new MethodInvoker(
+                           delegate
+                               {
+                                   const string sql = @"
 select * from ServiceWarning
 where ServiceID in (	
 	select distinct r.ServiceID
@@ -240,31 +241,30 @@ where ServiceID in (
 AND ValidFrom <= convert(char(8),@date, 112) + ' 23:59' 
 AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
 
-                        var warnings = DatabaseHelper.ExecuteDataset(sql,
-                            new SqlParameter("@optionId", (int)row.Cells["OptionID"].Value),
-                            new SqlParameter("@date", (DateTime)row.Cells["StartDate"].Value));
+                                   var warnings = DatabaseHelper.ExecuteDataset(sql,
+                                                                                new SqlParameter("@optionId", (int)row.Cells["OptionID"].Value),
+                                                                                new SqlParameter("@date", (DateTime)row.Cells["StartDate"].Value));
                        
-                        if (warnings.Tables[0].Rows.Count != 0)
-                        {                                                        
-                            row.Cells["Warnings"].Appearance.Image = Resources.Warning;
-                            row.Cells["Warnings"].Appearance.Cursor = Cursors.Hand;
-                            row.Cells["Warnings"].ToolTipText = "Click to view warnings";
-                            row.Cells["Warnings"].Tag = warnings.Tables[0].Rows;
-                        }                                          
-                    }));
+                                   if (warnings.Tables[0].Rows.Count != 0)
+                                   {                                                        
+                                       row.Cells["Warnings"].Appearance.Image = Resources.Warning;
+                                       row.Cells["Warnings"].Appearance.Cursor = Cursors.Hand;
+                                       row.Cells["Warnings"].ToolTipText = "Click to view warnings";
+                                       row.Cells["Warnings"].Tag = warnings.Tables[0].Rows;
+                                   }                                          
+                               }));
 
-                    // push row changes to the datasource
-                    if (InvokeRequired)
-                        Invoke(new MethodInvoker(delegate { row.Update(); }));
-                    else
-                        row.Update();
+                // push row changes to the datasource
+                if (InvokeRequired)
+                    Invoke(new MethodInvoker(delegate { row.Update(); }));
+                else
+                    row.Update();
 
 
-                    if (InvokeRequired)
-                        Invoke(new MethodInvoker(delegate { row.Activate(); }));
-                    else
-                        row.Activate();
-                }
+                if (InvokeRequired)
+                    Invoke(new MethodInvoker(delegate { row.Activate(); }));
+                else
+                    row.Activate();
             }
 
             if (InvokeRequired)
@@ -403,7 +403,21 @@ AND ValidTo >= convert(char(8),@date, 112) + ' 00:00';";
             if (dtpNewEndDate.Value != null)
                 itinerarySet.Itinerary[0].DepartDate = (DateTime) dtpNewEndDate.Value;
         
-            // booking dates
+            // Ouch; want to ignore 'unselected' rows, so lets revert their values back to original
+            foreach(var row in gridBookings.Rows.Where(x => !(bool)x.Cells["IsSelected"].Value))
+            {
+                var id = (int)row.Cells["PurchaseItemID"].Value;
+                var rowNew = purchaseItemTable.First(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == id);
+                var rowOld = itinerarySet.PurchaseItem.First(x => x.RowState != DataRowState.Deleted && x.PurchaseItemID == id);
+                if (rowNew == null || rowOld == null) continue;
+
+                rowNew.OptionID = rowOld.OptionID;
+                rowNew.Net = rowOld.Net;
+                rowNew.Gross = rowOld.Gross;
+                if (rowOld.IsStartDateNull()) rowNew.SetStartDateNull(); else rowNew.StartDate = rowOld.StartDate;
+                if(rowOld.IsEndDateNull()) rowNew.SetEndDateNull(); else rowNew.EndDate = rowOld.EndDate;
+            }
+
             itinerarySet.PurchaseItem.Merge(purchaseItemTable, false);
             DialogResult = DialogResult.OK;
         }
