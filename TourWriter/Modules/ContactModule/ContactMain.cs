@@ -131,6 +131,7 @@ namespace TourWriter.Modules.ContactModule
             cmbCity.ValueChanged += new System.EventHandler(this.cmbCity_ValueChanged);
 
             LoadContactCategories(contactSet.Contact[0].ContactID);
+            CalculateAge();
         }
 
         protected override bool IsDataDirty()
@@ -273,6 +274,11 @@ namespace TourWriter.Modules.ContactModule
                 contactSet.Contact[0].SetBirthDateNull();
         }
 
+        private void txtBirthDate_ValueChanged(object sender, EventArgs e)
+        {
+            CalculateAge();
+        }
+
         private void txtDisplayName_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtDisplayName.Text.Trim()))
@@ -302,6 +308,21 @@ namespace TourWriter.Modules.ContactModule
             SaveDataChanges();
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void CalculateAge()
+        {
+            if (txtBirthDate.Value != null)
+            {
+                DateTime birthDate = DateTime.Parse(txtBirthDate.Value.ToString());
+                DateTime now = DateTime.Today; 
+                
+                int years = now.Year - birthDate.Year; 
+                if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day)) 
+                    --years;
+
+                txtAge.Text = years.ToString();              
+            }
         }
 
         #region Combo boxes event handlers
