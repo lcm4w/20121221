@@ -173,7 +173,7 @@ namespace TourWriter.Forms
 		}
 			
 		private void PrepareDataSetErrorMessages()
-		{						
+		{
 			foreach(DataTable dt in ds.Tables)
 			{
 				foreach(DataRow dr in dt.GetErrors())
@@ -202,13 +202,23 @@ namespace TourWriter.Forms
 								if (!((dr.IsNull(dc, DataRowVersion.Current) || dr.IsNull(dc, DataRowVersion.Original)) ||
 									(dr[dc, DataRowVersion.Current].ToString() == dr[dc, DataRowVersion.Original].ToString())))
 								{
-									// set the row error
-									dr.RowError = String.Format(
-										"Failed to modify row in table {0}, as it was modified by another user since you opened it.", dr.Table.TableName);
-											
-									// set the col error
-									string origVal = dr[dc, DataRowVersion.Original].ToString();
-									dr.SetColumnError(dc, "Column was modified by another user. Their value is: " + origVal);
+
+                                    // original vals for debugging ===============
+								    var tblName = dr.Table.TableName;
+								    var colName = dc.ColumnName;
+                                    var drError = dr.RowError;
+                                    var dcError = dr.GetColumnError(dc);
+                                    var currVal = dr[dc, DataRowVersion.Current];
+                                    var origVal = dr[dc, DataRowVersion.Original];
+                                    // ===========================================
+
+
+                                    // set the row error
+                                    dr.RowError = String.Format(
+                                        "Failed to modify row in table {0}, as it was modified by another user since you opened it.", dr.Table.TableName);
+
+                                    // set the col error
+                                    dr.SetColumnError(dc, "Column was modified by another user. Their value is: " + origVal);
 									
 									errorColumnsFound = true;
 								}
