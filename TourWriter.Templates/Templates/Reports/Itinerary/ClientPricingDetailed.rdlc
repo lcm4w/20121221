@@ -198,7 +198,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="Itinerary " + iif(not isnothing(First(Fields!CustomCode.Value, "PurchaseItemDetail")), "Ref: " + First(Fields!CustomCode.Value, "PurchaseItemDetail"), "Id: " + CInt(First(Fields!ItineraryID.Value, "PurchaseItemDetail")).ToString()) +
+                <Value>="Itinerary " + iif(not len(First(Fields!CustomCode.Value, "PurchaseItemDetail"))=0, "Ref: " + First(Fields!CustomCode.Value, "PurchaseItemDetail"), "Id: " + CInt(First(Fields!ItineraryID.Value, "PurchaseItemDetail")).ToString()) +
 ",  From: " + iif(not isnothing(First(Fields!ArriveDate.Value, "PurchaseItemDetail")), CDate(First(Fields!ArriveDate.Value, "PurchaseItemDetail")).ToString("d MMM yyyy"), "...") + 
 iif(not isnothing(First(Fields!ArriveCityName.Value, "PurchaseItemDetail")), " (" + First(Fields!ArriveCityName.Value, "PurchaseItemDetail") + ")", "") +
 ",  To: " + iif(not isnothing(First(Fields!DepartDate.Value, "PurchaseItemDetail")), CDate(First(Fields!DepartDate.Value, "PurchaseItemDetail")).ToString("d MMM yyyy"), "...") + 
@@ -1540,7 +1540,6 @@ iif(not isnothing(First(Fields!ItineraryLength.Value, "PurchaseItemDetail")), ",
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <KeepTogether>true</KeepTogether>
         <DataSetName>PurchaseItemDetail</DataSetName>
         <Top>2.5cm</Top>
         <Height>2.40002cm</Height>
