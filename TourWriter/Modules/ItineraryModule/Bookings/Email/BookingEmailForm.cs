@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -183,7 +184,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             if (_templateForm.GroupBySupplierEmail)
             {
                 // ensure all suppliers have email, so we can group by email address
-                var noEmail = itinerarySet.SupplierLookup.Where(x => x.IsEmailNull() || x.Email.Trim() == "").ToList();
+                var noEmail = Enumerable.Where(itinerarySet.SupplierLookup, x => x.IsEmailNull() || x.Email.Trim() == "").ToList();
                 if (noEmail.Any())
                 {
                     var s = noEmail.Aggregate("", (current, em) => current + ("  - " + em.SupplierName + "\r\n"));
@@ -193,7 +194,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
                 }
 
                 // group on supplier email
-                var purchases = itinerarySet.PurchaseLine.Where(x => purchaseLineIdList.Contains(x.PurchaseLineID));
+                var purchases = Enumerable.Where(itinerarySet.PurchaseLine, x => x.RowState != DataRowState.Deleted && purchaseLineIdList.Contains(x.PurchaseLineID));
                 var supplierPurchases = from p in purchases
                                         join sup in itinerarySet.SupplierLookup on p.SupplierID equals sup.SupplierID
                                         group p by sup.Email
