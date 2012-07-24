@@ -445,6 +445,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             bool isLocked = (row.Cells["IsLockedAccounting"].Value != DBNull.Value
                             && (bool)row.Cells["IsLockedAccounting"].Value);
 
+            // NOTE: locking of rows/cells for the grid is handled in gridItems_RowInitialize()
+
             btnDelete.Enabled = !isLocked;
             btnChangeOption.Enabled = !isLocked;
 
@@ -769,8 +771,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void gridItems_InitializeRow(object sender, InitializeRowEventArgs e)
         {
             // disable the row if it has been exported to accounting
-            var isLocked = (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value && (bool) e.Row.Cells["IsLockedAccounting"].Value);
-            e.Row.Activation = isLocked ? Activation.Disabled : Activation.AllowEdit;
+            var isLocked = (e.Row.Cells["IsLockedAccounting"].Value != DBNull.Value && (bool)e.Row.Cells["IsLockedAccounting"].Value);
+            BookingsViewer.SetRowLocked(e.Row, isLocked);
             
             var itemId = (int)e.Row.Cells["PurchaseItemID"].Value;
             var item = itinerarySet.PurchaseItem.Where(i => i.RowState != DataRowState.Deleted && i.PurchaseItemID == itemId).FirstOrDefault();
@@ -978,10 +980,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             foreach (UltraGridRow row in gridItems.Rows)
             {
-                bool isRowLocked = row.Cells["IsLockedAccounting"].Value != DBNull.Value &&
-                                   (bool)row.Cells["IsLockedAccounting"].Value;
-
-                if (isRowLocked || (bool)row.Cells["IsInvoiced"].Value)
+                if ((bool)row.Cells["IsInvoiced"].Value)
                     continue;
 
                 row.Cells["IsInvoiced"].Value = true;

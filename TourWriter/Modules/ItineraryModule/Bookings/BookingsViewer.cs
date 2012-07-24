@@ -213,7 +213,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         }
 
         #endregion
-
+        
         private void LoadGridLayout()
         {
             /** Load from file **/
@@ -284,19 +284,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 OnOpenBooking(new BookingsViewerEditBookingEventArgs(purchaseLineId, purchaseItemId));
         }
 
-        private void SetRowLocked(UltraGridRow row, bool locked)
+        internal static void SetRowLocked(UltraGridRow row, bool locked)
         {
-            foreach (UltraGridColumn column in grid.DisplayLayout.Bands[0].Columns)
-            {
-                if (column.Key != "IsLockedAccounting"
-                    && column.Key != "PurchaseItemName"
-                    && column.Key != "BookingReference"
-                    && column.Key != "StartTime"
-                    && column.Key != "EndTime")
-                {
-                    row.Cells[column].Activation = (locked) ? Activation.Disabled : Activation.AllowEdit;
-                }
-            }
+            var excludeCols = new[] { "IsLockedAccounting", "PurchaseItemName", "BookingReference", "StartTime", "EndTime", "IsInvoiced" };
+            foreach (var column in row.Band.Columns.Cast<UltraGridColumn>().Where(column => !excludeCols.Contains(column.Key)))
+                row.Cells[column].Activation = (locked) ? Activation.Disabled : Activation.AllowEdit;
         }
 
         internal static void SetGridSummaries(InitializeLayoutEventArgs e, string itineraryCurrencyCode)
