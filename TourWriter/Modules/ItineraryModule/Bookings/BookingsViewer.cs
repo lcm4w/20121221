@@ -27,7 +27,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 {
     public partial class BookingsViewer : UserControl
     {
-        private const string GridLayoutVersion = "v2.6"; // bump this (any new name) to cause grid to reset to pick up changes
+        private const string GridLayoutVersion = "v2.7"; // bump this (any new name) to cause grid to reset to pick up changes
         public event OnBookingsViewerEditBookingHandler OnOpenBooking;
 
         private readonly string GridLayoutFileName;
@@ -1591,23 +1591,32 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void grid_CellChange(object sender, CellEventArgs e)
         {
-            // Purchase line name is an unbound column, so need to catch edits
-            // and manually update its underlying datasource.
             if (e.Cell.Column.Key == "PurchaseLineName")
             {
+                // Purchase line name is an unbound column, so need to catch edits
+                // and manually update its underlying datasource.
                 int lineId = (int)e.Cell.Row.Cells["PurchaseLineID"].Value;
                 ItinerarySet.PurchaseLineRow row = itinerarySet.PurchaseLine.FindByPurchaseLineID(lineId);
                 if (row.PurchaseLineName != e.Cell.Text)
                     row.PurchaseLineName = e.Cell.Text;
-                return;
+            }
+            else if (e.Cell.Column.Key == "IsLockedAccounting")
+            {
+                // When the "Locked" checkbox is clicked, it needs to be forced out of edit mode
+                // so that the row will immediately reflect the change (become enabled/disabled)
+                e.Cell.EditorResolved.ExitEditMode(true, true);
             }
 
-            // When the "Locked" checkbox is clicked, it needs to be forced out of edit mode
-            // so that the row will immediately reflect the change (become enabled/disabled)
-            if (e.Cell.Column.Key == "IsLockedAccounting")
+            else if (e.Cell.Column.Key == "IsInvoiced")
             {
-                e.Cell.EditorResolved.ExitEditMode(true, true);
-                return;
+                // if this PurchaseItem is one of multiple in this booking (PurchaseLine) then open editor
+                // so that user can see and handle the other related items.
+                var row = e.Cell.Row;
+                var hasSiblings = itinerarySet.PurchaseItem.Count(x => 
+                    x.RowState != DataRowState.Deleted && x.PurchaseLineID == (int)row.Cells["PurchaseLineID"].Value) > 1;
+
+                if (hasSiblings)
+                    OpenBookingEditor((int)row.Cells["PurchaseLineID"].Value, (int)row.Cells["PurchaseItemID"].Value);
             }
         }
 
@@ -1724,27 +1733,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     grid.ContextMenuStrip = null;
                 }
             }
-            else
-            {
-                UIElement clickedElement = grid.DisplayLayout.UIElement.ElementFromPoint(grid.PointToClient(MousePosition));
-
-                if (clickedElement == null)
-                    return;
-
-                if (clickedElement.Parent is CheckEditorCheckBoxUIElement)
-                    ToggleIsInvoicedOrOpenEditor(clickedElement.SelectableItem as UltraGridRow);
-            }
-        }
-
-        private void ToggleIsInvoicedOrOpenEditor(UltraGridRow row)
-        {
-            var itemCount = itinerarySet.PurchaseItem.Count(x => x.RowState != DataRowState.Deleted &&
-                                                                 x.PurchaseLineID == (int)row.Cells["PurchaseLineID"].Value);
-            if (itemCount <= 1)
-                row.Cells["IsInvoiced"].Value = row.Cells["IsInvoiced"].Value == DBNull.Value || !(bool)row.Cells["IsInvoiced"].Value;
-            else
-                OpenBookingEditor((int)row.Cells["PurchaseLineID"].Value,
-                                  (int)row.Cells["PurchaseItemID"].Value);
         }
 
         private void btnAddNewTemplate_Click(object sender, EventArgs e)
