@@ -550,7 +550,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.changeOptionToolStripMenuItem.Name = "changeOptionToolStripMenuItem";
             this.changeOptionToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.changeOptionToolStripMenuItem.Text = "Swap out Service/Option";
+            this.changeOptionToolStripMenuItem.Text = "Change to new Service/Option";
             this.changeOptionToolStripMenuItem.Click += new System.EventHandler(this.btnChangeOption_Click);
             // 
             // editFlagsToolStripMenuItem
@@ -564,7 +564,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.replaceSupplierMenuItem.Name = "replaceSupplierMenuItem";
             this.replaceSupplierMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.replaceSupplierMenuItem.Text = "Swap out Supplier";
+            this.replaceSupplierMenuItem.Text = "Change to new Supplier";
             this.replaceSupplierMenuItem.Click += new System.EventHandler(this.replaceSupplierMenuItem_Click);
             // 
             // moveToNewBookingMenuItem
