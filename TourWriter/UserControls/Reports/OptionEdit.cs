@@ -63,69 +63,75 @@ namespace TourWriter.UserControls.Reports
                     break;
                 case "@ContentTypeID":
                     label.Text = "Content Type";
-                    editor = new ComboBox { Width = 120, DropDownStyle = ComboBoxStyle.DropDownList, 
+                    editor = new ComboBox { Width = 120, DropDownStyle = ComboBoxStyle.DropDownList,
                         DataSource = Cache.ToolSet.ContentType, ValueMember = "ContentTypeID", DisplayMember = "ContentTypeName" };
                     break;
                 case "@ServiceTypeIDList":
                     label.Text = "Service types";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.ServiceType.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.ServiceType.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ServiceTypeName).CopyToDataTable(), "ServiceTypeID", "ServiceTypeName", false);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@PurchaseLineIDList":
                     label.Text = "Booking lines";
                     editor = new CheckBoxSet();
-                    (editor as CheckBoxSet).Initialise(
-                        _sqlParameters[SqlExpression.ParameterName], "PurchaseLineID", "PurchaseLineName", false);
+                    (editor as CheckBoxSet).Initialise(_sqlParameters[SqlExpression.ParameterName], "PurchaseLineID", "PurchaseLineName", false);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@AssignedToIDList":
                     label.Text = "Assigned to";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.User.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.User.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.DisplayName).CopyToDataTable(), "UserID", "DisplayName", false);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@ItineraryStatusIDList":
                     label.Text = "Itinerary status";
                     editor = new CheckBoxSet();
-                    (editor as CheckBoxSet).Initialise(
-                        Cache.ToolSet.ItineraryStatus.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ItineraryStatusName).CopyToDataTable(), "ItineraryStatusID", "ItineraryStatusName", true);
+                    if (Cache.ToolSet.ItineraryStatus.Count == 0) break;
+                    (editor as CheckBoxSet).Initialise(Cache.ToolSet.ItineraryStatus.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ItineraryStatusName).CopyToDataTable(), "ItineraryStatusID", "ItineraryStatusName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@RequestStatusIDList":
                     label.Text = "Booking status";
                     editor = new CheckBoxSet();
-                    (editor as CheckBoxSet).Initialise(
-                        Cache.ToolSet.RequestStatus.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.RequestStatusName).CopyToDataTable(), "RequestStatusID", "RequestStatusName", true);
+                    if (Cache.ToolSet.RequestStatus.Count == 0) break;
+                    (editor as CheckBoxSet).Initialise(Cache.ToolSet.RequestStatus.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.RequestStatusName).CopyToDataTable(), "RequestStatusID", "RequestStatusName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@BranchIDList":
                     label.Text = "Branch";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.Branch.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.Branch.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.BranchName).CopyToDataTable(), "BranchID", "BranchName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@DepartmentIDList":
                     label.Text = "Department";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.Department.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.Department.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.DepartmentName).CopyToDataTable(), "DepartmentID", "DepartmentName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@UserIDList":
                     label.Text = "Assigned to";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.User.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.User.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.DisplayName).CopyToDataTable(), "UserID", "DisplayName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@AgentIDList":
                     label.Text = "Agent";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.Agent.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.Agent.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.AgentName).CopyToDataTable(), "AgentID", "AgentName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
                 case "@ContactCategoryIDList":
                     label.Text = "Contact Category";
                     editor = new CheckBoxSet();
+                    if (Cache.ToolSet.ContactCategory.Count == 0) break;
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.ContactCategory.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.ContactCategoryName).CopyToDataTable(), "ContactCategoryID", "ContactCategoryName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
