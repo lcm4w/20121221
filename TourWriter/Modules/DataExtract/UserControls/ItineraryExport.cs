@@ -42,20 +42,8 @@ namespace TourWriter.Modules.DataExtract.UserControls
             {
                 Cursor.Current = Cursors.WaitCursor;
 
-                grid.DataSource = null;
                 var ds = Info.Services.DataSetHelper.FillDataset(new DataSet(), sql);
-                if (grid.DataSource == null)
-                    grid.DataSource = ds.Tables[0];
-                else
-                {
-                    // merge to retain grid layout
-                    var dt = grid.DataSource as DataTable;
-                    if (dt != null)
-                    {
-                        dt.Clear();
-                        dt.Merge(ds.Tables[0], false);
-                    }  
-                }
+                grid.DataSource = ds.Tables[0];
             }
             finally
             {

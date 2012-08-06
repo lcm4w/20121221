@@ -20,7 +20,6 @@ namespace TourWriter.Modules.DataExtract.UserControls
 
         private void LoadData()
         {
-            grid.DataSource = null;
             var ds = DataSetHelper.FillDataset(new DataSet(), "select * from ContactDetail");
             grid.DataSource = ds.Tables[0];
         }

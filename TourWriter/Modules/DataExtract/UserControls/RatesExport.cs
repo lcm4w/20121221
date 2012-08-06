@@ -62,7 +62,6 @@ namespace TourWriter.Modules.DataExtract.UserControls
             {
                 Cursor.Current = Cursors.WaitCursor;
 
-                gridReport.DataSource = null;
                 var ds = DataSetHelper.FillDataset(new DataSet(), sql);
                 gridReport.DataSource = ds.Tables[0];
             }

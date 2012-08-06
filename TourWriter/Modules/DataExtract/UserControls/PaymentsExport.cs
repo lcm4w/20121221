@@ -3,8 +3,6 @@ using System.Data.SqlClient;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
-using Infragistics.Win.UltraWinTree;
-using TourWriter.Info;
 
 namespace TourWriter.Modules.DataExtract.UserControls
 {
