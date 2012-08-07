@@ -322,7 +322,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl5
             // 
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
-            this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
             this.ultraTabPageControl5.Size = new System.Drawing.Size(770, 587);
             // 
@@ -374,7 +374,7 @@ namespace TourWriter.Modules.SupplierModule
             this.optReports.ItemSpacingVertical = 20;
             this.optReports.Location = new System.Drawing.Point(5, 21);
             this.optReports.Name = "optReports";
-            this.optReports.Size = new System.Drawing.Size(202, 462);
+            this.optReports.Size = new System.Drawing.Size(202, 563);
             this.optReports.TabIndex = 57;
             this.optReports.TextIndentation = 4;
             this.optReports.ValueChanged += new System.EventHandler(this.optReport_ValueChanged);
@@ -387,7 +387,7 @@ namespace TourWriter.Modules.SupplierModule
             this.grpReports.BackColor = System.Drawing.Color.Transparent;
             this.grpReports.Location = new System.Drawing.Point(213, 19);
             this.grpReports.Name = "grpReports";
-            this.grpReports.Size = new System.Drawing.Size(600, 462);
+            this.grpReports.Size = new System.Drawing.Size(554, 563);
             this.grpReports.TabIndex = 56;
             this.grpReports.TabStop = false;
             this.grpReports.Text = "Report name";
@@ -463,7 +463,7 @@ namespace TourWriter.Modules.SupplierModule
             this.gridMessages.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridMessages.Location = new System.Drawing.Point(4, 30);
             this.gridMessages.Name = "gridMessages";
-            this.gridMessages.Size = new System.Drawing.Size(809, 458);
+            this.gridMessages.Size = new System.Drawing.Size(763, 554);
             this.gridMessages.TabIndex = 121;
             this.gridMessages.Text = "ultraGrid1";
             this.gridMessages.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridMessages_InitializeLayout);
@@ -479,7 +479,7 @@ namespace TourWriter.Modules.SupplierModule
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMessagesAdd,
             this.btnMessageDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(764, 7);
+            this.myToolStrip2.Location = new System.Drawing.Point(719, 7);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
@@ -603,7 +603,7 @@ namespace TourWriter.Modules.SupplierModule
             this.gridPublishing.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridPublishing.Location = new System.Drawing.Point(4, 30);
             this.gridPublishing.Name = "gridPublishing";
-            this.gridPublishing.Size = new System.Drawing.Size(809, 458);
+            this.gridPublishing.Size = new System.Drawing.Size(763, 554);
             this.gridPublishing.TabIndex = 122;
             this.gridPublishing.Text = "ultraGrid1";
             this.gridPublishing.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridPublishing_InitializeLayout);
@@ -620,7 +620,7 @@ namespace TourWriter.Modules.SupplierModule
             this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnPublishingAdd,
             this.btnPublishingDel});
-            this.myToolStrip1.Location = new System.Drawing.Point(764, 7);
+            this.myToolStrip1.Location = new System.Drawing.Point(718, 7);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip1.Size = new System.Drawing.Size(49, 25);
@@ -729,7 +729,7 @@ namespace TourWriter.Modules.SupplierModule
             this.gridContact.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridContact.Location = new System.Drawing.Point(4, 30);
             this.gridContact.Name = "gridContact";
-            this.gridContact.Size = new System.Drawing.Size(809, 458);
+            this.gridContact.Size = new System.Drawing.Size(762, 554);
             this.gridContact.TabIndex = 123;
             this.gridContact.Text = "ultraGrid1";
             this.gridContact.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridContact_InitializeLayout);
@@ -748,7 +748,7 @@ namespace TourWriter.Modules.SupplierModule
             this.toolStripSeparator1,
             this.btnContactAdd,
             this.btnContactDel});
-            this.tsRates.Location = new System.Drawing.Point(735, 7);
+            this.tsRates.Location = new System.Drawing.Point(688, 7);
             this.tsRates.Name = "tsRates";
             this.tsRates.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.tsRates.Size = new System.Drawing.Size(78, 25);
@@ -807,7 +807,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl4
             // 
             this.ultraTabPageControl4.Controls.Add(this.groupBox1);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(770, 587);
             // 
@@ -821,7 +821,7 @@ namespace TourWriter.Modules.SupplierModule
             this.groupBox1.Controls.Add(this.btnChooseTemplate);
             this.groupBox1.Location = new System.Drawing.Point(3, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(817, 98);
+            this.groupBox1.Size = new System.Drawing.Size(764, 98);
             this.groupBox1.TabIndex = 151;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Export to Excel";
@@ -916,7 +916,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
+            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(774, 625);
             // 
@@ -2068,7 +2068,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 625);
             // 
