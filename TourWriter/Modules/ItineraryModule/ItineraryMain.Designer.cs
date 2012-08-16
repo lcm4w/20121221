@@ -222,6 +222,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolSaveClose = new System.Windows.Forms.ToolStripButton();
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.itineraryTasks1 = new TourWriter.Modules.ItineraryModule.ItineraryTasks();
             this.ultraTabPageControl12.SuspendLayout();
             this.ultraTabPageControl11.SuspendLayout();
             this.ultraTabPageControl8.SuspendLayout();
@@ -269,7 +270,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl12.Controls.Add(this.bookingsViewer);
             this.ultraTabPageControl12.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl12.Name = "ultraTabPageControl12";
-            this.ultraTabPageControl12.Size = new System.Drawing.Size(783, 536);
+            this.ultraTabPageControl12.Size = new System.Drawing.Size(894, 743);
             // 
             // bookingsViewer
             // 
@@ -279,7 +280,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.bookingsViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bookingsViewer.Location = new System.Drawing.Point(0, 0);
             this.bookingsViewer.Name = "bookingsViewer";
-            this.bookingsViewer.Size = new System.Drawing.Size(783, 536);
+            this.bookingsViewer.Size = new System.Drawing.Size(894, 743);
             this.bookingsViewer.TabIndex = 0;
             this.bookingsViewer.OnOpenBooking += new TourWriter.Modules.ItineraryModule.Bookings.OnBookingsViewerEditBookingHandler(this.bookingsViewer_OnOpenBooking);
             // 
@@ -288,7 +289,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl11.Controls.Add(this.bookingsQuote);
             this.ultraTabPageControl11.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl11.Name = "ultraTabPageControl11";
-            this.ultraTabPageControl11.Size = new System.Drawing.Size(783, 504);
+            this.ultraTabPageControl11.Size = new System.Drawing.Size(783, 536);
             // 
             // bookingsQuote
             // 
@@ -296,15 +297,15 @@ namespace TourWriter.Modules.ItineraryModule
             this.bookingsQuote.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bookingsQuote.Location = new System.Drawing.Point(0, 0);
             this.bookingsQuote.Name = "bookingsQuote";
-            this.bookingsQuote.Size = new System.Drawing.Size(783, 504);
+            this.bookingsQuote.Size = new System.Drawing.Size(783, 536);
             this.bookingsQuote.TabIndex = 0;
             // 
             // ultraTabPageControl8
             // 
             this.ultraTabPageControl8.Controls.Add(this.reportControl);
-            this.ultraTabPageControl8.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl8.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl8.Name = "ultraTabPageControl8";
-            this.ultraTabPageControl8.Size = new System.Drawing.Size(787, 533);
+            this.ultraTabPageControl8.Size = new System.Drawing.Size(898, 743);
             // 
             // reportControl
             // 
@@ -312,7 +313,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.reportControl.GeneralParameters = ((System.Collections.Generic.Dictionary<string, object>)(resources.GetObject("reportControl.GeneralParameters")));
             this.reportControl.Location = new System.Drawing.Point(0, 0);
             this.reportControl.Name = "reportControl";
-            this.reportControl.Size = new System.Drawing.Size(787, 533);
+            this.reportControl.Size = new System.Drawing.Size(898, 743);
             this.reportControl.TabIndex = 0;
             // 
             // ultraTabPageControl6
@@ -324,7 +325,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl6.Controls.Add(this.optReport);
             this.ultraTabPageControl6.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl6.Name = "ultraTabPageControl6";
-            this.ultraTabPageControl6.Size = new System.Drawing.Size(787, 503);
+            this.ultraTabPageControl6.Size = new System.Drawing.Size(898, 743);
             // 
             // label11
             // 
@@ -333,7 +334,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.label11.ForeColor = System.Drawing.Color.Red;
             this.label11.Location = new System.Drawing.Point(6, 3);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(775, 13);
+            this.label11.Size = new System.Drawing.Size(886, 13);
             this.label11.TabIndex = 154;
             this.label11.Text = "NOTE: This page will be removed in the future (once new reports are completed for" +
     " you).";
@@ -349,7 +350,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.groupBox1.Controls.Add(this.btnChooseTemplate);
             this.groupBox1.Location = new System.Drawing.Point(6, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(775, 54);
+            this.groupBox1.Size = new System.Drawing.Size(886, 54);
             this.groupBox1.TabIndex = 153;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Export to Excel";
@@ -366,7 +367,7 @@ namespace TourWriter.Modules.ItineraryModule
             // btnExportToExcel
             // 
             this.btnExportToExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExportToExcel.Location = new System.Drawing.Point(694, 20);
+            this.btnExportToExcel.Location = new System.Drawing.Point(805, 20);
             this.btnExportToExcel.Name = "btnExportToExcel";
             this.btnExportToExcel.Size = new System.Drawing.Size(75, 23);
             this.btnExportToExcel.TabIndex = 148;
@@ -380,13 +381,13 @@ namespace TourWriter.Modules.ItineraryModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtTemplateFile.Location = new System.Drawing.Point(93, 22);
             this.txtTemplateFile.Name = "txtTemplateFile";
-            this.txtTemplateFile.Size = new System.Drawing.Size(561, 21);
+            this.txtTemplateFile.Size = new System.Drawing.Size(672, 21);
             this.txtTemplateFile.TabIndex = 149;
             // 
             // btnChooseTemplate
             // 
             this.btnChooseTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChooseTemplate.Location = new System.Drawing.Point(654, 21);
+            this.btnChooseTemplate.Location = new System.Drawing.Point(765, 21);
             this.btnChooseTemplate.Name = "btnChooseTemplate";
             this.btnChooseTemplate.Size = new System.Drawing.Size(27, 23);
             this.btnChooseTemplate.TabIndex = 150;
@@ -413,7 +414,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.grpReports.Controls.Add(this.pnlReports);
             this.grpReports.Location = new System.Drawing.Point(199, 88);
             this.grpReports.Name = "grpReports";
-            this.grpReports.Size = new System.Drawing.Size(585, 412);
+            this.grpReports.Size = new System.Drawing.Size(696, 652);
             this.grpReports.TabIndex = 56;
             this.grpReports.TabStop = false;
             this.grpReports.Text = "Report name";
@@ -423,7 +424,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.pnlReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlReports.Location = new System.Drawing.Point(3, 17);
             this.pnlReports.Name = "pnlReports";
-            this.pnlReports.Size = new System.Drawing.Size(579, 392);
+            this.pnlReports.Size = new System.Drawing.Size(690, 632);
             this.pnlReports.TabIndex = 55;
             // 
             // optReport
@@ -464,7 +465,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.optReport.ItemSpacingVertical = 10;
             this.optReport.Location = new System.Drawing.Point(5, 94);
             this.optReport.Name = "optReport";
-            this.optReport.Size = new System.Drawing.Size(188, 406);
+            this.optReport.Size = new System.Drawing.Size(188, 646);
             this.optReport.TabIndex = 54;
             this.optReport.TextIndentation = 4;
             this.optReport.ValueChanged += new System.EventHandler(this.optReport_ValueChanged);
@@ -474,7 +475,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl3.Controls.Add(this.publisher1);
             this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
-            this.ultraTabPageControl3.Size = new System.Drawing.Size(787, 503);
+            this.ultraTabPageControl3.Size = new System.Drawing.Size(898, 743);
             // 
             // publisher1
             // 
@@ -484,7 +485,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.publisher1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.publisher1.Location = new System.Drawing.Point(2, 0);
             this.publisher1.Name = "publisher1";
-            this.publisher1.Size = new System.Drawing.Size(783, 500);
+            this.publisher1.Size = new System.Drawing.Size(894, 740);
             this.publisher1.TabIndex = 1;
             // 
             // tabAccounting
@@ -492,14 +493,14 @@ namespace TourWriter.Modules.ItineraryModule
             this.tabAccounting.Controls.Add(this.accounting1);
             this.tabAccounting.Location = new System.Drawing.Point(-10000, -10000);
             this.tabAccounting.Name = "tabAccounting";
-            this.tabAccounting.Size = new System.Drawing.Size(787, 503);
+            this.tabAccounting.Size = new System.Drawing.Size(898, 743);
             // 
             // accounting1
             // 
             this.accounting1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.accounting1.Location = new System.Drawing.Point(0, 0);
             this.accounting1.Name = "accounting1";
-            this.accounting1.Size = new System.Drawing.Size(787, 503);
+            this.accounting1.Size = new System.Drawing.Size(898, 743);
             this.accounting1.TabIndex = 0;
             // 
             // ultraTabPageControl4
@@ -507,9 +508,9 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl4.Controls.Add(this.gridMessages);
             this.ultraTabPageControl4.Controls.Add(this.myToolStrip2);
             this.ultraTabPageControl4.Controls.Add(this.label35);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
-            this.ultraTabPageControl4.Size = new System.Drawing.Size(787, 503);
+            this.ultraTabPageControl4.Size = new System.Drawing.Size(898, 743);
             // 
             // gridMessages
             // 
@@ -640,7 +641,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.gridMessages.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this.gridMessages.Location = new System.Drawing.Point(2, 26);
             this.gridMessages.Name = "gridMessages";
-            this.gridMessages.Size = new System.Drawing.Size(789, 475);
+            this.gridMessages.Size = new System.Drawing.Size(900, 717);
             this.gridMessages.TabIndex = 127;
             this.gridMessages.Text = "ultraGrid1";
             this.gridMessages.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridMessages_InitializeLayout);
@@ -662,7 +663,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnMessagesAdd,
             this.btnMessageDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(737, 3);
+            this.myToolStrip2.Location = new System.Drawing.Point(848, 3);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
@@ -755,9 +756,10 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl1.Controls.Add(this.label64);
             this.ultraTabPageControl1.Controls.Add(this.label62);
             this.ultraTabPageControl1.Controls.Add(this.label38);
+            this.ultraTabPageControl1.Controls.Add(this.itineraryTasks1);
             this.ultraTabPageControl1.Location = new System.Drawing.Point(2, 21);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
-            this.ultraTabPageControl1.Size = new System.Drawing.Size(789, 563);
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(900, 773);
             // 
             // label12
             // 
@@ -1037,7 +1039,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
             this.txtComments.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtComments.Size = new System.Drawing.Size(340, 255);
+            this.txtComments.Size = new System.Drawing.Size(340, 528);
             this.txtComments.TabIndex = 11;
             // 
             // txtDepartNote
@@ -1160,7 +1162,7 @@ namespace TourWriter.Modules.ItineraryModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel4.Location = new System.Drawing.Point(372, 283);
             this.headerLabel4.Name = "headerLabel4";
-            this.headerLabel4.Size = new System.Drawing.Size(330, 16);
+            this.headerLabel4.Size = new System.Drawing.Size(424, 16);
             this.headerLabel4.TabIndex = 135;
             this.headerLabel4.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel4.TextString = "Additional";
@@ -1182,7 +1184,7 @@ namespace TourWriter.Modules.ItineraryModule
             | System.Windows.Forms.AnchorStyles.Right)));
             this.headerLabel2.Location = new System.Drawing.Point(372, 79);
             this.headerLabel2.Name = "headerLabel2";
-            this.headerLabel2.Size = new System.Drawing.Size(330, 16);
+            this.headerLabel2.Size = new System.Drawing.Size(424, 16);
             this.headerLabel2.TabIndex = 133;
             this.headerLabel2.TextHAlign = Infragistics.Win.HAlign.Default;
             this.headerLabel2.TextString = "Itinerary End";
@@ -1419,7 +1421,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl18.Controls.Add(this.tabControlBookings);
             this.ultraTabPageControl18.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl18.Name = "ultraTabPageControl18";
-            this.ultraTabPageControl18.Size = new System.Drawing.Size(789, 563);
+            this.ultraTabPageControl18.Size = new System.Drawing.Size(900, 773);
             // 
             // tabControlBookings
             // 
@@ -1437,7 +1439,7 @@ namespace TourWriter.Modules.ItineraryModule
             appearance15.FontData.BoldAsString = "True";
             this.tabControlBookings.SelectedTabAppearance = appearance15;
             this.tabControlBookings.SharedControlsPage = this.ultraTabSharedControlsPage4;
-            this.tabControlBookings.Size = new System.Drawing.Size(787, 562);
+            this.tabControlBookings.Size = new System.Drawing.Size(898, 769);
             this.tabControlBookings.TabIndex = 3;
             ultraTab9.Key = "List";
             ultraTab9.TabPage = this.ultraTabPageControl12;
@@ -1453,7 +1455,7 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             this.ultraTabSharedControlsPage4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage4.Name = "ultraTabSharedControlsPage4";
-            this.ultraTabSharedControlsPage4.Size = new System.Drawing.Size(783, 536);
+            this.ultraTabSharedControlsPage4.Size = new System.Drawing.Size(894, 743);
             // 
             // ultraTabPageControl19
             // 
@@ -1461,7 +1463,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl19.Controls.Add(this.clientEditor);
             this.ultraTabPageControl19.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl19.Name = "ultraTabPageControl19";
-            this.ultraTabPageControl19.Size = new System.Drawing.Size(789, 563);
+            this.ultraTabPageControl19.Size = new System.Drawing.Size(900, 773);
             // 
             // clientEditor
             // 
@@ -1472,7 +1474,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.clientEditor.EnableGroups = true;
             this.clientEditor.Location = new System.Drawing.Point(0, 3);
             this.clientEditor.Name = "clientEditor";
-            this.clientEditor.Size = new System.Drawing.Size(788, 560);
+            this.clientEditor.Size = new System.Drawing.Size(899, 770);
             this.clientEditor.TabIndex = 0;
             // 
             // ultraTabPageControl2
@@ -1480,7 +1482,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.ultraTabPageControl2.Controls.Add(this.tabControlAdditional);
             this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(789, 563);
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(900, 773);
             // 
             // tabControlAdditional
             // 
@@ -1501,7 +1503,7 @@ namespace TourWriter.Modules.ItineraryModule
             appearance16.FontData.BoldAsString = "True";
             this.tabControlAdditional.SelectedTabAppearance = appearance16;
             this.tabControlAdditional.SharedControlsPage = this.ultraTabSharedControlsPage2;
-            this.tabControlAdditional.Size = new System.Drawing.Size(791, 559);
+            this.tabControlAdditional.Size = new System.Drawing.Size(902, 769);
             this.tabControlAdditional.TabIndex = 0;
             ultraTab12.Key = "NewReports";
             ultraTab12.TabPage = this.ultraTabPageControl8;
@@ -1530,7 +1532,7 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             this.ultraTabSharedControlsPage2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage2.Name = "ultraTabSharedControlsPage2";
-            this.ultraTabSharedControlsPage2.Size = new System.Drawing.Size(787, 533);
+            this.ultraTabSharedControlsPage2.Size = new System.Drawing.Size(898, 743);
             // 
             // ultraTabPageControl7
             // 
@@ -1563,7 +1565,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.tabControl_Main.ScrollButtons = Infragistics.Win.UltraWinTabs.TabScrollButtons.None;
             this.tabControl_Main.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this.tabControl_Main.ShowTabListButton = Infragistics.Win.DefaultableBoolean.False;
-            this.tabControl_Main.Size = new System.Drawing.Size(793, 586);
+            this.tabControl_Main.Size = new System.Drawing.Size(904, 796);
             this.tabControl_Main.TabIndex = 0;
             this.tabControl_Main.TabLayoutStyle = Infragistics.Win.UltraWinTabs.TabLayoutStyle.SingleRowFixed;
             ultraTab5.Key = "Itinerary";
@@ -1590,7 +1592,7 @@ namespace TourWriter.Modules.ItineraryModule
             // 
             this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
-            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(789, 563);
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(900, 773);
             // 
             // panel3
             // 
@@ -1599,7 +1601,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 89);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(799, 596);
+            this.panel3.Size = new System.Drawing.Size(910, 806);
             this.panel3.TabIndex = 6;
             // 
             // pnlMain
@@ -1611,7 +1613,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlMain.Size = new System.Drawing.Size(799, 596);
+            this.pnlMain.Size = new System.Drawing.Size(910, 806);
             this.pnlMain.TabIndex = 1;
             // 
             // itinerarySetLoaderThread
@@ -1632,7 +1634,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 40);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(799, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(910, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1742,7 +1744,7 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolHelp});
             this.toolStrip1.Location = new System.Drawing.Point(0, 64);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(799, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(910, 25);
             this.toolStrip1.TabIndex = 24;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1789,11 +1791,20 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolHelp.ToolTipText = "Help for this screen";
             this.toolHelp.Click += new System.EventHandler(this.menuHelp_Click);
             // 
+            // itineraryTasks1
+            // 
+            this.itineraryTasks1.AutoScroll = true;
+            this.itineraryTasks1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.itineraryTasks1.Location = new System.Drawing.Point(379, 550);
+            this.itineraryTasks1.Name = "itineraryTasks1";
+            this.itineraryTasks1.Size = new System.Drawing.Size(418, 286);
+            this.itineraryTasks1.TabIndex = 148;
+            // 
             // ItineraryMain
             // 
             this.AllowDrop = true;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 14);
-            this.ClientSize = new System.Drawing.Size(799, 685);
+            this.ClientSize = new System.Drawing.Size(910, 895);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1989,5 +2000,6 @@ namespace TourWriter.Modules.ItineraryModule
         private Label label12;
         private ComboBox cmbAgentContact;
         private UserControls.NullableComboBox cmbCurrency;
+        private ItineraryTasks itineraryTasks1;
     }
 }

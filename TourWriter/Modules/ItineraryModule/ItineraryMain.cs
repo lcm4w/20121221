@@ -162,6 +162,7 @@ namespace TourWriter.Modules.ItineraryModule
             clientEditor.ItinerarySet = itinerarySet;
             publisher1.ItinerarySet = itinerarySet;
             accounting1.ItinerarySet = itinerarySet;
+            itineraryTasks1.ItinerarySet = itinerarySet;
 
             // add event to track when data changed
             foreach (DataTable dt in itinerarySet.Tables)
@@ -498,7 +499,12 @@ namespace TourWriter.Modules.ItineraryModule
                         itinerarySet.WriteXml(stream1, XmlWriteMode.DiffGram);
                         stream1.Position = 0;
                         var attach1 = new System.Net.Mail.Attachment(stream1, "ds1.xml", System.Net.Mime.MediaTypeNames.Text.Xml);
-                        ErrorHelper.SendEmail(ex, true, attach1);
+
+                        var errors = "";
+                        foreach (var table in itinerarySet.Tables.Cast<DataTable>())
+                            foreach (var error in table.GetErrors())
+                                errors += "Table '" + table.TableName + "', " + error.RowError;
+                        ErrorHelper.SendEmail(ex.Message + errors, ex.ToString(), true, attach1);
                         throw;
                     }
                     finally

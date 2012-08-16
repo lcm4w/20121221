@@ -327,6 +327,9 @@
     <Compile Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.Designer.cs">
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ItineraryModule\ItineraryTasks.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Services\Discounts.cs" />
     <Compile Include="Services\Travelmesh\DataSyncUi.cs" />
     <Compile Include="Services\Travelmesh\ApiWrapper.cs" />
@@ -1176,6 +1179,9 @@
     <EmbeddedResource Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.resx">
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\ItineraryTasks.resx">
+      <DependentUpon>ItineraryTasks.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Services\Travelmesh\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -1585,6 +1591,7 @@
     <None Include="Resources\new red.png" />
     <None Include="Resources\group_add.png" />
     <Content Include="Resources\world_add.png" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.08.16.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.07.19.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.06.08.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.05.21.sql" />
