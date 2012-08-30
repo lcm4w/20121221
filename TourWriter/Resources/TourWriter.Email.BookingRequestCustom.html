@@ -1,0 +1,77 @@
+<html>
+<head>
+<style type="text/css">
+body	{ font-family: verdana; font-size: 10pt; color: black; }
+td	    { font-family: verdana; font-size: 10pt; color: black; }
+</style>
+</head>
+<body>
+[!SubjectStart]Booking Request for [!ItineraryName].[!SubjectEnd]
+<p>
+Dear [!HostName],
+</p>
+
+<p>
+Please reserve and confirm the following bookings.
+</p>
+
+<p>
+Booking number: [!BookingID]
+</p>
+
+[!BookingDetailStart]<p>
+Booking [!ItemCount] <br />
+&nbsp;&nbsp;Name: [!ItemName] <br />
+&nbsp;&nbsp;Description: [!ItemDesc] <br />
+&nbsp;&nbsp;[!ItemStartText]: [!ItemStartDate] <br />
+[!ItemEndDateStart]
+&nbsp;&nbsp;[!ItemEndText]: [!ItemEndDate] <br />
+&nbsp;&nbsp;[!ItemLengthText]: [!ItemLength] <br />
+[!ItemEndDateEnd]
+&nbsp;&nbsp;Quantity: [!ItemQuantity] <br />
+[!ItemReferenceStart]
+&nbsp;&nbsp;Your ref: [!ItemReference] <br />
+[!ItemReferenceEnd]
+[!ItemPriceStart]
+&nbsp;&nbsp;Price: [!ItemPrice] <br />
+&nbsp;&nbsp;Commission: [!ItemCommission] <br />
+&nbsp;&nbsp;Total Net: [!ItemTotal] <br />
+[!ItemPriceEnd]
+</p>[!BookingDetailEnd]
+
+<p>
+[!ClientDetailStart]
+Client [!ClientCount] <br />
+&nbsp;&nbsp;Name: [!ClientTitleStart][!ClientTitle] [!ClientTitleEnd][!ClientName] <br />
+[!ClientCommentsStart]
+&nbsp;&nbsp;Comments: [!ClientComments] <br />
+[!ClientCommentsEnd]
+[!ClientAgeGroupStart]
+&nbsp;&nbsp;Age Group: [!ClientAgeGroup] <br />
+[!ClientAgeGroupEnd]
+[!ClientAgeStart]
+&nbsp;&nbsp;Age: [!ClientAge] <br />
+[!ClientAgeEnd]
+[!ClientDetailEnd]
+</p>
+
+<p>
+Booking Notes: [!BookingNotes]
+</p>
+
+<p>
+Client Notes: [!ClientNotes]
+</p>
+
+<p>
+Regards,<br/>
+[!UserName]
+</p>
+
+<p>
+&nbsp;<br />
+Email generated from <a href="www.tourwriter.com">TourWriter</a> - <i>taking the time out of travel itineraries</i>
+</p>
+
+</body>
+</html>

@@ -8,7 +8,6 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Services;
@@ -22,6 +21,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         // email body table and row settings
         private readonly string htmlTableTemplate = "<table cellspacing=\"0\" cellpadding=\"0\">";
         private readonly string htmlRowTemplateBookings = "<tr valign=top><td width=20></td><td>{0}:&nbsp;&nbsp;</td><td>{1}</td></tr>";
+        private readonly string htmlRowTemplateClients = "<tr valign=top><td width=20></td><td>{0}:&nbsp;&nbsp;</td><td>{1}</td></tr>";
         
         // email body search-and-replace tags
         private const string HostNameTag = "[!HostName]";
@@ -36,6 +36,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private const string PaxCountTag = "[!PaxCount]";
         private const string BookingIdTag = "[!BookingID]";
         private const string BookingDetailsTag = "[!BookingDetails]";
+        private const string ClientDetailsTag = "[!ClientDetails]";
         private const string BookingNotesTag = "[!BookingNotes]";
         private const string ClientNotesTag = "[!ClientNotes]";
         private const string UserNameTag = "[!UserName]";
@@ -64,6 +65,24 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private const string ItemFocTag = "[!ItemFoc]";
         private const string ItemPriceEndTag = "[!ItemPriceEnd]";
         private const string BookingDetailEndTag = "[!BookingDetailEnd]";
+
+        private const string ClientDetailStartTag = "[!ClientDetailStart]";
+        private const string ClientCountTag = "[!ClientCount]";
+        private const string ClientTitleStartTag = "[!ClientTitleStart]";
+        private const string ClientTitleTag = "[!ClientTitle]";
+        private const string ClientTitleEndTag = "[!ClientTitleEnd]";
+        private const string ClientNameTag = "[!ClientName]";
+        private const string ClientCommentsStartTag = "[!ClientCommentsStart]";
+        private const string ClientCommentsTag = "[!ClientComments]";
+        private const string ClientCommentsEndTag = "[!ClientCommentsEnd]";
+        private const string ClientAgeGroupStartTag = "[!ClientAgeGroupStart]";
+        private const string ClientAgeGroupTag = "[!ClientAgeGroup]";
+        private const string ClientAgeGroupEndTag = "[!ClientAgeGroupEnd]";
+        private const string ClientAgeStartTag = "[!ClientAgeStart]";
+        private const string ClientAgeTag = "[!ClientAge]";
+        private const string ClientAgeEndTag = "[!ClientAgeEnd]";
+        private const string ClientDetailEndTag = "[!ClientDetailEnd]";
+
         internal const string SubjectStartTag = "[!SubjectStart]";
         internal const string SubjectEndTag = "[!SubjectEnd]";
 
@@ -192,11 +211,130 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, PaxCountTag, pax.ToString());
             template = ReplaceTag(template, BookingIdTag, purchaseLine.PurchaseLineID.ToString());
             template = ReplaceBookingDetailsTag(template, purchaseLine);
+            template = ReplaceClientDetailsTag(template, purchaseLine);
             template = ReplaceTag(template, BookingNotesTag, BuildBookingNotes(purchaseLine));
             template = ReplaceTag(template, ClientNotesTag, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
             template = ReplaceTag(template, UserNameTag, Cache.User.DisplayName);
             template = ReplaceTag(template, UserEmailTag, Cache.User.Email);
 
+            return template;
+        }
+
+        private string ReplaceClientDetailsTag(string template, ItinerarySet.PurchaseLineRow purchaseLine)
+        {
+            if (template.Contains(ClientDetailStartTag))
+            {
+                // new email template, with custom client details
+                return InsertCustomClientDetails(template, purchaseLine);
+            }
+            // handle old email templates (which don't allow custom client details)
+            return ReplaceTag(template, ClientDetailsTag, BuildClientDetails(purchaseLine));
+        }
+
+        private string BuildClientDetails(ItinerarySet.PurchaseLineRow line)
+        {
+            StringBuilder sbDetails = new StringBuilder();
+
+            var itinerarySet = (ItinerarySet)line.Table.DataSet;
+
+            int index = 1;
+            foreach (ItinerarySet.ItineraryMemberRow item in itinerarySet.ItineraryMember)
+            {
+                var sb = new StringBuilder();
+                string heading = "Client" + ((itinerarySet.ItineraryMember.Count > 1) ? " " + index++ : "");
+
+                // create client details
+                if (item.IsTitleNull())
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Name", item.ItineraryMemberName));
+                else
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Name", item.Title + " " + item.ItineraryMemberName));
+                if (!item.IsCommentsNull())
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Comments", item.Comments));
+                if (!item.IsAgeGroupIDNull())
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Age Group", GetAgeGroup(item.AgeGroupID)));
+                if (!item.IsAgeNull())
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Age", item.Age));
+                else if (!item.IsContactIDNull() && GetContactAge(item.ContactID) != "")
+                    sb.AppendLine(NewTableRow(htmlRowTemplateClients, "Age", GetContactAge(item.ContactID)));
+
+                sbDetails.AppendLine(NewTable(heading, htmlTableTemplate, sb.ToString()));
+            }
+            return sbDetails.ToString();
+        }
+
+        private string InsertCustomClientDetails(string template, ItinerarySet.PurchaseLineRow line)
+        {
+            var detailStart = template.IndexOf(ClientDetailStartTag);
+            var detailEnd = template.IndexOf(ClientDetailEndTag) + ClientDetailEndTag.Length;
+            var detailTemplate = template.Substring(detailStart, detailEnd - detailStart);
+
+            var titleStart = template.IndexOf(ClientTitleStartTag);
+            var titleEnd = template.IndexOf(ClientTitleEndTag) + ClientTitleEndTag.Length;
+            var titleTemplate = template.Substring(titleStart, titleEnd - titleStart);
+
+            var commentsStart = template.IndexOf(ClientCommentsStartTag);
+            var commentsEnd = template.IndexOf(ClientCommentsEndTag) + ClientCommentsEndTag.Length;
+            var commentsTemplate = template.Substring(commentsStart, commentsEnd - commentsStart);
+
+            var ageGroupStart = template.IndexOf(ClientAgeGroupStartTag);
+            var ageGroupEnd = template.IndexOf(ClientAgeGroupEndTag) + ClientAgeGroupEndTag.Length;
+            var ageGroupTemplate = template.Substring(ageGroupStart, ageGroupEnd - ageGroupStart);
+
+            var ageStart = detailTemplate.IndexOf(ClientAgeStartTag);
+            var ageEnd = detailTemplate.IndexOf(ClientAgeEndTag) + ClientAgeEndTag.Length;
+            var ageTemplate = detailTemplate.Substring(ageStart, ageEnd - ageStart);
+
+            var i = 1;
+            string clientDetail = "", detailText;
+            var itinerarySet = (ItinerarySet)line.Table.DataSet;
+            foreach (ItinerarySet.ItineraryMemberRow member in itinerarySet.ItineraryMember)
+            {
+                detailText = detailTemplate.Replace(ClientDetailStartTag, "").Replace(ClientDetailEndTag, "");
+
+                detailText = ReplaceTag(detailText, ClientCountTag, i++.ToString());
+
+                var titleText = "";
+                if (!member.IsTitleNull())
+                {
+                    titleText = titleTemplate.Replace(ClientTitleStartTag, "").Replace(ClientTitleEndTag, "");
+                    titleText = ReplaceTag(titleText, ClientTitleTag, member.Title);
+                }
+                detailText = detailText.Replace(titleTemplate, titleText);
+
+                var commentsText = "";
+                if (!member.IsCommentsNull())
+                {
+                    commentsText = commentsTemplate.Replace(ClientCommentsStartTag, "").Replace(ClientCommentsEndTag, "");
+                    commentsText = ReplaceTag(commentsText, ClientCommentsTag, member.Comments);
+                }
+                detailText = detailText.Replace(commentsTemplate, commentsText);
+
+                var ageGroupText = "";
+                if (!member.IsAgeGroupIDNull())
+                {
+                    ageGroupText = ageGroupTemplate.Replace(ClientAgeGroupStartTag, "").Replace(ClientAgeGroupEndTag, "");
+                    ageGroupText = ReplaceTag(ageGroupText, ClientAgeGroupTag, GetAgeGroup(member.AgeGroupID));
+                }
+                detailText = detailText.Replace(ageGroupTemplate, ageGroupText);
+
+                var ageText = "";
+                if (!member.IsAgeNull())
+                {
+                    ageText = ageTemplate.Replace(ClientAgeStartTag, "").Replace(ClientAgeEndTag, "");
+                    ageText = ReplaceTag(ageText, ClientAgeTag, member.Age.ToString());
+                }
+                else if (!member.IsContactIDNull() && GetContactAge(member.ContactID) != "")
+                {
+                    ageText = ageTemplate.Replace(ClientAgeStartTag, "").Replace(ClientAgeEndTag, "");
+                    ageText = ReplaceTag(ageText, ClientAgeTag, GetContactAge(member.ContactID));
+                }
+                detailText = detailText.Replace(ageTemplate, ageText);
+
+                detailText = ReplaceTag(detailText, ClientNameTag, member.ItineraryMemberName);
+
+                clientDetail += detailText;
+            }
+            template = template.Replace(detailTemplate, clientDetail);
             return template;
         }
 
@@ -414,6 +552,38 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             return String.Format("{0} <{1}>", name, email);
         }
 
+        private static string GetAgeGroup(int ageGroupId)
+        {
+            var ageGroup = Cache.ToolSet.AgeGroup.FindByAgeGroupID(ageGroupId);
+
+            if (!ageGroup.IsAgeGroupNameNull())
+                return ageGroup.AgeGroupName;
+
+            return "Adult";
+        }
+
+        private static string GetContactAge(int contactId)
+        {
+            TourWriter.BusinessLogic.Contact c = new TourWriter.BusinessLogic.Contact();
+            TourWriter.Info.ContactSet contactSet  = c.GetContactSet(contactId);
+
+            if (!contactSet.Contact[0].IsBirthDateNull())
+                return CalculateAge(contactSet.Contact[0].BirthDate);
+
+            return "";
+        }
+
+        private static string CalculateAge(DateTime bd)
+        {
+            DateTime birthDate = DateTime.Parse(bd.ToString());
+            DateTime now = DateTime.Today;
+
+            int years = now.Year - birthDate.Year;
+            if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day))
+                --years;
+
+            return years.ToString();
+        }
 
         private static string NewTable(string heading, string tableTemplate, string tableRowHtml)
         {
