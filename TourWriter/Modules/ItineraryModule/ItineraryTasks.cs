@@ -1,4 +1,6 @@
 using System;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -23,6 +25,29 @@ namespace TourWriter.Modules.ItineraryModule
         public ItineraryTasks()
         {
             InitializeComponent();
+        }
+
+        private int AddNewTask(string name)
+        {
+            //TODO: WTF HACK!!
+            //Code below (add Task and Itinerary task rows) causes Constraint Exception on ItinerarySet save.
+            //Workaround is to also edit any other table/row/field before saving, manualy or prog.
+            //So lets first bullshit-edit the ItineryName...
+            _itinerarySet.Itinerary[0].ItineraryName = _itinerarySet.Itinerary[0].ItineraryName;
+
+            // add new task row and new itinerarytask row           
+            var task = _itinerarySet.Task.NewTaskRow();
+            task.TaskName = name;
+            _itinerarySet.Task.AddTaskRow(task);
+            //task.EndEdit();
+
+            // add the itinerary task
+            var i = _itinerarySet.ItineraryTask.NewItineraryTaskRow();
+            i.TaskID = task.TaskID;
+            i.ItineraryID = _itinerarySet.Itinerary[0].ItineraryID;
+            _itinerarySet.ItineraryTask.AddItineraryTaskRow(i);
+
+            return task.TaskID;
         }
 
         private void ItineraryTasks_Load(object sender, EventArgs e)
@@ -52,6 +77,7 @@ namespace TourWriter.Modules.ItineraryModule
                     c.Header.VisiblePosition = 1;
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
+                    c.SortIndicator = SortIndicator.Ascending;
                 }
                 else if (c.Key == "DateDue")
                 {
@@ -86,6 +112,19 @@ namespace TourWriter.Modules.ItineraryModule
 
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
+            
+            e.Layout.Bands[0].Columns["IsComplete"].Width = 20;
+            e.Layout.Bands[0].Columns["TaskName"].Width = 80;
+            e.Layout.Bands[0].Columns["DateDue"].Width = 40;
+            e.Layout.Bands[0].Columns["DateCompleted"].Width = 40;
+            e.Layout.Bands[0].Columns["Note"].Width = 200;
+
+            var index = 0;
+            e.Layout.Bands[0].Columns["IsComplete"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["TaskName"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["DateDue"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["DateCompleted"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Note"].Header.VisiblePosition = index++;
         }
         
         private void gridTasks_InitializeRow(object sender, InitializeRowEventArgs e)
@@ -107,25 +146,8 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void btnTasksAdd_Click(object sender, EventArgs e)
         {
-            //TODO: WTF HACK!!
-            //Code below (add Task and Itinerary task rows) causes Constraint Exception on ItinerarySet save.
-            //Workaround is to also edit any other table/row/field before saving, manualy or prog.
-            //So lets first bullshit-edit the ItineryName...
-            _itinerarySet.Itinerary[0].ItineraryName = _itinerarySet.Itinerary[0].ItineraryName;
-
-            // add new task row and new itinerarytask row           
-            var task = _itinerarySet.Task.NewTaskRow();
-            task.TaskName = "New task...";
-            _itinerarySet.Task.AddTaskRow(task);
-            //task.EndEdit();
-
-            // add the itinerary task
-            var i = _itinerarySet.ItineraryTask.NewItineraryTaskRow();
-            i.TaskID = task.TaskID;
-            i.ItineraryID = _itinerarySet.Itinerary[0].ItineraryID;
-            _itinerarySet.ItineraryTask.AddItineraryTaskRow(i);
-
-            GridHelper.SetActiveRow(gridTasks, "TaskID", task.TaskID, "TaskName");
+            var id = AddNewTask("New task...");
+            GridHelper.SetActiveRow(gridTasks, "TaskID", id, "TaskName");
         }
 
         private void btnTasksDel_Click(object sender, EventArgs e)
@@ -134,14 +156,28 @@ namespace TourWriter.Modules.ItineraryModule
                 GridHelper.DeleteActiveRow(gridTasks, true);
         }
         
+        private void btnPopulate_Click(object sender, EventArgs e)
+        {
+            if (!App.AskYesNo("Do you want to add the Default Tasks (only adds where missing)?")) return;
+
+            var defaults = Global.Cache.ToolSet.Task.Where(x => x.RowState != DataRowState.Deleted).Select(x => x.TaskName);
+            var existing = _itinerarySet.Task.Where(x => x.RowState != DataRowState.Deleted).Select(x => x.TaskName);
+
+            foreach (var task in defaults.Except(existing))
+                AddNewTask(task);
+        }
+        
         // ---------------------------------------------------------------------------
         #region Designer
 
         private Infragistics.Win.UltraWinGrid.UltraGrid gridTasks;
         private TourWriter.UserControls.MyToolStrip myToolStrip2;
-        private ToolStripButton btnTypeAdd;
-        private ToolStripButton btnTypeDel;
-        private System.ComponentModel.Container components = null;
+        private ToolStripButton btnTaskAdd;
+        private ToolStripButton btnTaskDel;
+        private ToolStripButton btnPopulate;
+        private ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.ComponentModel.IContainer components;
         
         protected override void Dispose(bool disposing)
         {
@@ -162,10 +198,15 @@ namespace TourWriter.Modules.ItineraryModule
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItineraryTasks));
             this.gridTasks = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.myToolStrip2 = new TourWriter.UserControls.MyToolStrip();
-            this.btnTypeAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeDel = new System.Windows.Forms.ToolStripButton();
+            this.btnTaskAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnTaskDel = new System.Windows.Forms.ToolStripButton();
+            this.btnPopulate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridTasks)).BeginInit();
             this.myToolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -181,8 +222,8 @@ namespace TourWriter.Modules.ItineraryModule
             this.gridTasks.TabIndex = 14;
             this.gridTasks.Text = "Tasks";
             this.gridTasks.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridType_InitializeLayout);
-            this.gridTasks.InitializeRow += new InitializeRowEventHandler(gridTasks_InitializeRow);
-            this.gridTasks.CellChange += new CellEventHandler(gridTasks_CellChange);
+            this.gridTasks.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridTasks_InitializeRow);
+            this.gridTasks.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridTasks_CellChange);
             // 
             // myToolStrip2
             // 
@@ -192,32 +233,53 @@ namespace TourWriter.Modules.ItineraryModule
             this.myToolStrip2.Dock = System.Windows.Forms.DockStyle.None;
             this.myToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.myToolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTypeAdd,
-            this.btnTypeDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(458, -2);
+            this.btnPopulate,
+            this.toolStripSeparator1,
+            this.btnTaskAdd,
+            this.btnTaskDel});
+            this.myToolStrip2.Location = new System.Drawing.Point(363, -2);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(49, 25);
+            this.myToolStrip2.Size = new System.Drawing.Size(144, 25);
             this.myToolStrip2.TabIndex = 130;
             this.myToolStrip2.Text = "myToolStrip2";
+            this.myToolStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.myToolStrip2_ItemClicked);
             // 
-            // btnTypeAdd
+            // btnTaskAdd
             // 
-            this.btnTypeAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTypeAdd.Image = global::TourWriter.Properties.Resources.Plus;
-            this.btnTypeAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeAdd.Name = "btnTypeAdd";
-            this.btnTypeAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnTypeAdd.Click += new System.EventHandler(this.btnTasksAdd_Click);
+            this.btnTaskAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTaskAdd.Image = global::TourWriter.Properties.Resources.Plus;
+            this.btnTaskAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTaskAdd.Name = "btnTaskAdd";
+            this.btnTaskAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnTaskAdd.ToolTipText = "Add new Task";
+            this.btnTaskAdd.Click += new System.EventHandler(this.btnTasksAdd_Click);
             // 
-            // btnTypeDel
+            // btnTaskDel
             // 
-            this.btnTypeDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTypeDel.Image = global::TourWriter.Properties.Resources.Remove;
-            this.btnTypeDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeDel.Name = "btnTypeDel";
-            this.btnTypeDel.Size = new System.Drawing.Size(23, 22);
-            this.btnTypeDel.Click += new System.EventHandler(this.btnTasksDel_Click);
+            this.btnTaskDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTaskDel.Image = global::TourWriter.Properties.Resources.Remove;
+            this.btnTaskDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTaskDel.Name = "btnTaskDel";
+            this.btnTaskDel.Size = new System.Drawing.Size(23, 22);
+            this.btnTaskDel.ToolTipText = "Delete selecte Task";
+            this.btnTaskDel.Click += new System.EventHandler(this.btnTasksDel_Click);
+            // 
+            // btnPopulate
+            // 
+            this.btnPopulate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnPopulate.Image = ((System.Drawing.Image)(resources.GetObject("btnPopulate.Image")));
+            this.btnPopulate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPopulate.Name = "btnPopulate";
+            this.btnPopulate.Size = new System.Drawing.Size(58, 22);
+            this.btnPopulate.Text = "Populate";
+            this.btnPopulate.ToolTipText = "Re/Populate from Default Tasks";
+            this.btnPopulate.Click += new System.EventHandler(this.btnPopulate_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // ItineraryTasks
             // 
@@ -236,6 +298,11 @@ namespace TourWriter.Modules.ItineraryModule
 
         }
         #endregion
+
+        private void myToolStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
         #endregion
     }
 }
