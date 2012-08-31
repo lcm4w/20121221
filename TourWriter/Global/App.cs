@@ -394,6 +394,12 @@ namespace TourWriter
             return PerformOpenExternalFileDialog(ensureCommonFilesPath, dialogTitle, "", fileTypeFilter, filterIndex, true);
         }
 
+        internal static void SelectExternalFileInFolder(string filename)
+        {
+            string argument = "/select, \"" + filename + "\"";
+            System.Diagnostics.Process.Start("explorer.exe", argument); 
+        }
+
         private static string _lastDir = "";
         private static string[] PerformOpenExternalFileDialog(bool ensureCommonFilesPath, string dialogTitle, string filename, string fileTypeFilter, int filterIndex, bool multiSelect)
         {
@@ -408,8 +414,13 @@ namespace TourWriter
                               RestoreDirectory = false,
                               Multiselect = multiSelect
                           };
-            if (filename != "") dlg.FileName = filename;
-            dlg.InitialDirectory = _lastDir;
+            if (filename != "")
+            {
+                dlg.InitialDirectory = Path.GetDirectoryName(filename);
+                dlg.FileName = Path.GetFileName(filename);
+            }
+            else
+                dlg.InitialDirectory = _lastDir;
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -442,7 +453,7 @@ namespace TourWriter
                 {
                     const string msg = "Warning: you have selected a file that is outside of your external files location (Tools->Options->Administration).\r\n" +
                                        " It is strongly recommended that you move this file into the external files location, before adding it here.\r\n\r\n" +
-                                       "Click OK to continue anyway, or Cancel to canel this operation";
+                                       "Click OK to continue anyway, or Cancel to cancel this operation";
 
                     if (MessageBox.Show(msg, MessageCaption, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
                         == DialogResult.Cancel)

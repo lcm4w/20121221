@@ -36,6 +36,7 @@
             this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menuRename = new System.Windows.Forms.ToolStripMenuItem();
             this.menuChangeReportFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuOpenFileLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.treeReportsImageList = new System.Windows.Forms.ImageList(this.components);
             this.treeReportsContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -69,9 +70,10 @@
             this.menuAddCategory,
             this.menuDelete,
             this.menuRename,
-            this.menuChangeReportFile});
+            this.menuChangeReportFile,
+            this.menuOpenFileLocation});
             this.treeReportsContextMenu.Name = "treeReportsMenu";
-            this.treeReportsContextMenu.Size = new System.Drawing.Size(170, 136);
+            this.treeReportsContextMenu.Size = new System.Drawing.Size(170, 158);
             this.treeReportsContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.treeReportsContextMenu_Opening);
             // 
             // menuAddReport
@@ -109,6 +111,13 @@
             this.menuChangeReportFile.Text = "Change report file";
             this.menuChangeReportFile.Click += new System.EventHandler(this.menuChangeReportFile_Click);
             // 
+            // menuOpenFileLocation
+            // 
+            this.menuOpenFileLocation.Name = "menuOpenFileLocation";
+            this.menuOpenFileLocation.Size = new System.Drawing.Size(169, 22);
+            this.menuOpenFileLocation.Text = "Open file location";
+            this.menuOpenFileLocation.Click += new System.EventHandler(this.menuOpenFileLocation_Click);
+            // 
             // treeReportsImageList
             // 
             this.treeReportsImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -137,5 +146,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuRename;
         private System.Windows.Forms.ToolStripMenuItem menuChangeReportFile;
         private System.Windows.Forms.ToolStripMenuItem menuAddCategory;
+        private System.Windows.Forms.ToolStripMenuItem menuOpenFileLocation;
     }
 }

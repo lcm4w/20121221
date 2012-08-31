@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Properties;
+using TourWriter.Services;
 
 namespace TourWriter.UserControls.Reports
 {
@@ -107,11 +108,12 @@ namespace TourWriter.UserControls.Reports
 
         private TreeNode AddReportNode(TreeNode parent, ToolSet.TemplateRow report)
         {
-            var node = new TreeNode
+            var node = new ReportNode
                            {
                                Name = "Report." + report.TemplateID,
                                Text = report.TemplateName,
                                Tag = report.ParentTemplateCategoryID,
+                               FilePath = report.FilePath,
                                ImageKey = "Report",
                                SelectedImageKey = "Report",
                                ContextMenuStrip = treeReportsContextMenu
@@ -279,12 +281,25 @@ namespace TourWriter.UserControls.Reports
 
         private void ChangeSelectedReportFile()
         {
-            string reportFile = App.SelectExternalFile(true, "Select report file(s)", "Reports (*.rdlc)|*.rdlc|All files (*.*)|*.*", 0);
+            string reportFile = ((ReportNode)treeReports.SelectedNode).FilePath;
+            reportFile = App.SelectExternalFile(true, "Select report file(s)", reportFile, "Reports (*.rdlc)|*.rdlc|All files (*.*)|*.*", 0);
             if (String.IsNullOrEmpty(reportFile))
                 return;
 
             var report = GetReportRow(treeReports.SelectedNode);
             report.FilePath = reportFile;
+        }
+
+        private void OpenSelectedReportFile()
+        {
+            if (!(treeReports.SelectedNode is ReportNode)) return;
+            var file = ExternalFilesHelper.ConvertToAbsolutePath(((ReportNode) treeReports.SelectedNode).FilePath);
+            if (!File.Exists(file))
+            {
+                App.ShowWarning("File does not exist: " + file);
+                return;
+            }
+            App.SelectExternalFileInFolder(file);
         }
 
         #region Events
@@ -312,6 +327,11 @@ namespace TourWriter.UserControls.Reports
         private void menuChangeReportFile_Click(object sender, EventArgs e)
         {
             ChangeSelectedReportFile();
+        }
+
+        private void menuOpenFileLocation_Click(object sender, EventArgs e)
+        {
+            OpenSelectedReportFile();
         }
 
         private void treeReports_ItemDrag(object sender, ItemDragEventArgs e)
@@ -415,42 +435,50 @@ namespace TourWriter.UserControls.Reports
         {
             var node = treeReports.SelectedNode;
 
+            // not on a node
             if (node == null)
             {
                 treeReports.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
                 treeReports.ContextMenuStrip.Items["menuDelete"].Visible = false;
                 treeReports.ContextMenuStrip.Items["menuRename"].Visible = false;
+                treeReports.ContextMenuStrip.Items["menuOpenFileLocation"].Visible = false;
                 return;
             }
 
             if (node.ContextMenuStrip == null)
                 node.ContextMenuStrip = treeReportsContextMenu;
 
+            // is default/standard folder
             var isDefaultReports = node.Text == "Standard" || IsDefaultReport(node);
             if (isDefaultReports)
             {
                 node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
                 node.ContextMenuStrip.Items["menuDelete"].Visible = false;
                 node.ContextMenuStrip.Items["menuRename"].Visible = false;
+                node.ContextMenuStrip.Items["menuOpenFileLocation"].Visible = false;
                 //App.ShowInfo(DefaultReportsMessage);
                 return;
             }
 
+            // is the custom folder
             var isCustomReportParent = node.Text == "Custom";
             if (isCustomReportParent)
             {
                 node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = false;
                 node.ContextMenuStrip.Items["menuDelete"].Visible = false;
                 node.ContextMenuStrip.Items["menuRename"].Visible = false;
+                node.ContextMenuStrip.Items["menuOpenFileLocation"].Visible = false;
                 return;
             }
 
+            // is a report-file node
             var isReport = IsReportNode(node) || node.Name.StartsWith("Report");
             if (isReport)
             {
                 node.ContextMenuStrip.Items["menuChangeReportFile"].Visible = IsReportNode(node);
                 node.ContextMenuStrip.Items["menuDelete"].Visible = true;
                 node.ContextMenuStrip.Items["menuRename"].Visible = true;
+                node.ContextMenuStrip.Items["menuOpenFileLocation"].Visible = true;
             }
         }
 
@@ -491,5 +519,10 @@ namespace TourWriter.UserControls.Reports
             ReportName = reportName;
             ReportPath = reportPath;
         }
+    }
+
+    class ReportNode : TreeNode
+    {
+        public string FilePath { get; set; }
     }
 }
