@@ -295,6 +295,7 @@ namespace TourWriter.Modules.AdminModule
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem9 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem10 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem11 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
+            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem16 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup ultraExplorerBarGroup3 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarGroup();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem12 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem13 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
@@ -321,6 +322,7 @@ namespace TourWriter.Modules.AdminModule
             this.toolHelp = new System.Windows.Forms.ToolStripButton();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AdminMenu)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -347,9 +349,9 @@ namespace TourWriter.Modules.AdminModule
             // 
             // panel3
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.AutoScroll = true;
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
             this.panel3.Controls.Add(this.splitter1);
@@ -406,6 +408,8 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem10.Text = "Currencies";
             ultraExplorerBarItem11.Key = "Accounting";
             ultraExplorerBarItem11.Text = "Accounting setup";
+            ultraExplorerBarItem16.Key = "Tasks";
+            ultraExplorerBarItem16.Text = "Default Tasks";
             ultraExplorerBarGroup2.Items.AddRange(new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem[] {
             ultraExplorerBarItem4,
             ultraExplorerBarItem5,
@@ -414,7 +418,8 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem8,
             ultraExplorerBarItem9,
             ultraExplorerBarItem10,
-            ultraExplorerBarItem11});
+            ultraExplorerBarItem11,
+            ultraExplorerBarItem16});
             ultraExplorerBarGroup2.Key = "DataSetup";
             ultraExplorerBarGroup2.Text = "Data setup";
             ultraExplorerBarItem12.Key = "EmailSettings";
@@ -594,6 +599,7 @@ namespace TourWriter.Modules.AdminModule
             this.Controls.SetChildIndex(this.panel2, 0);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.AdminMenu)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
