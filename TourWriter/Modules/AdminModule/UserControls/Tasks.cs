@@ -75,9 +75,11 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // gridTasks
             // 
+            this.gridTasks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gridTasks.Location = new System.Drawing.Point(16, 102);
             this.gridTasks.Name = "gridTasks";
-            this.gridTasks.Size = new System.Drawing.Size(263, 328);
+            this.gridTasks.Size = new System.Drawing.Size(263, 354);
             this.gridTasks.TabIndex = 129;
             this.gridTasks.Text = "Default Tasks";
             this.gridTasks.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridTasks_InitializeLayout);
@@ -125,7 +127,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.Controls.Add(this.lblHeading);
             this.Controls.Add(this.label4);
             this.Name = "Tasks";
-            this.Size = new System.Drawing.Size(460, 435);
+            this.Size = new System.Drawing.Size(493, 469);
             this.Load += new System.EventHandler(this.Tasks_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridTasks)).EndInit();
             this.myToolStrip1.ResumeLayout(false);

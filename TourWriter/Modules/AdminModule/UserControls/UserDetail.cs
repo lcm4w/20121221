@@ -95,7 +95,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // lblHeading
             // 
             this.lblHeading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeading.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.lblHeading.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblHeading.Location = new System.Drawing.Point(12, 4);
             this.lblHeading.Name = "lblHeading";
             this.lblHeading.Size = new System.Drawing.Size(480, 28);

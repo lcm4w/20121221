@@ -97,7 +97,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // lblHeading
             // 
             resources.ApplyResources(this.lblHeading, "lblHeading");
-            this.lblHeading.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.lblHeading.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblHeading.Name = "lblHeading";
             // 
             // myToolStrip2
