@@ -208,16 +208,11 @@ namespace TourWriter
         {
             get
             {
-                return false; // TODO: lets see if they're even using this?
-
-                // enz and walsh's
-                return Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4" ||
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991";
+                return Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4" ||//ENZ
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991" ||//Walshes
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575e7900-bf13-42d1-a661-2242510c3359";  // TE
             }
         }
-
-        
-
 
         #endregion
 
