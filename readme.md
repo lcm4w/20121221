@@ -1,0 +1,1 @@
+See setup instructions [here](https://github.com/seba-i/TourWriter.Client/wiki)
