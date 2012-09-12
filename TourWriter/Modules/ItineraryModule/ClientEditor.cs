@@ -438,6 +438,9 @@ namespace TourWriter.Modules.ItineraryModule
                 {
                     // Open contact dialog to create new contact row
                     ContactMain contact = new ContactMain();
+                    if (row.Cells["ItineraryMemberName"].Value != DBNull.Value)
+                        if (row.Cells["ItineraryMemberName"].Value.ToString() != String.Empty)
+                            contact.ContactRow["ContactName"] = row.Cells["ItineraryMemberName"].Value.ToString();
 
                     if (contact.ShowDialog() == DialogResult.OK)
                     {
@@ -451,6 +454,7 @@ namespace TourWriter.Modules.ItineraryModule
                         
                         // Add FK value
                         row.Cells["ContactID"].Value = c.ContactID;
+                        row.Cells["ItineraryMemberName"].Value = c.ContactName;
                     }
                 }
             }
