@@ -9,6 +9,7 @@ using TourWriter.Modules.ItineraryModule.Bookings.Email;
 using TourWriter.Properties;
 using TourWriter.UserControls;
 using Resources=TourWriter.Properties.Resources;
+using System.Linq;
 
 namespace TourWriter.Modules.ItineraryModule.Bookings
 {
@@ -80,8 +81,14 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void SendBookingRequest(List<int> idList)
         {
-            BookingEmailForm bookingEmailer = new BookingEmailForm(itinerarySet, idList);
-            bookingEmailer.ShowDialog();
+            var isDirty = idList.Any(id => id < 0);
+            if (isDirty)
+                App.ShowWarning("Please save your bookings before sending booking email(s).");
+            else
+            {
+                BookingEmailForm bookingEmailer = new BookingEmailForm(itinerarySet, idList);
+                bookingEmailer.ShowDialog();
+			}
         }
 
         internal void SetBindingContext(BindingContext bindingContext)

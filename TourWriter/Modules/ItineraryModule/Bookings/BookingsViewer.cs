@@ -418,10 +418,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private void SendBookingRequest(IEnumerable<int> idList, string defaultTemplate)
+        private void SendBookingRequest(List<int> idList, string defaultTemplate)
         {
-            var bookingEmailer = new BookingEmailForm(itinerarySet, idList, defaultTemplate);
-            bookingEmailer.Show();
+            var isDirty = idList.Any(id => id < 0);
+            if (isDirty)
+                App.ShowWarning("Please save your bookings before sending booking email(s).");
+            else
+            {
+                var bookingEmailer = new BookingEmailForm(itinerarySet, idList, defaultTemplate);
+                bookingEmailer.Show();
+			}
         }
 
         internal void SetBindingContext(BindingContext bindingContext)
