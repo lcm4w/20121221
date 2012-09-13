@@ -150,6 +150,14 @@ namespace TourWriter.UserControls.Reports
                     (editor as CheckBoxSet).Initialise(t, "value", "text", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
+                case "@IsInvoicedList":
+                    label.Text = "Invoiced Bookings";
+                    editor = new CheckBoxSet();
+                    var Inv = new DataTable(); Inv.Columns.Add("value"); Inv.Columns.Add("text");
+                    Inv.Rows.Add(0, "Not Invoiced"); Inv.Rows.Add(1, "Invoiced");
+                    (editor as CheckBoxSet).Initialise(Inv, "value", "text", true);
+                    (editor as CheckBoxSet).CheckAll(true);
+                    break;
                 default:
                     Enabled = false;
                     throw new ArgumentException("Report sql parameter not recognised: " + SqlExpression.ParameterName);
