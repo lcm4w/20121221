@@ -58,7 +58,7 @@ namespace TourWriter.Info
         }
 
         /// <summary>
-        /// Gets the sum of the booking net prices, excluding final overrides.
+        /// Gets the sum of the booking net prices, excluding margin/final overrides.
         /// </summary>
         /// <returns></returns>
         public decimal GetNetBasePrice()
@@ -74,7 +74,7 @@ namespace TourWriter.Info
         }
 
         /// <summary>
-        /// Gets the sum of the booking gross prices, excluding final overrides.
+        /// Gets the sum of the booking gross prices, excluding margin/final overrides.
         /// </summary>
         /// <returns></returns>
         public decimal GetGrossBasePrice()
@@ -94,20 +94,30 @@ namespace TourWriter.Info
         /// </summary>
         public decimal GetMarginOverride()
         {
-            if (!Itinerary[0].IsNetMarginNull())
+            var isOverrideAll = !Itinerary[0].IsNetMarginNull();
+
+            // bulk override all PurchaseItems
+            if (isOverrideAll)
             {
                 if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "mup")
                 {
                     return Itinerary[0].NetMargin;
                 }
-                else
+                else if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "com")
                 {
                     // convert commission to markup
                     decimal comm = (Itinerary[0].NetMargin != 100) ? Itinerary[0].NetMargin : 99.99m;
                     return (((100 / (100 - comm)) - 1) * 100);
                 }
+                else // NetComOrMup == "grs"
+                {
+                    // HACK: we don't want to use this, cos if 'grs' then we need to handle differently (this is done a bit higher up the chain).
+                    // so return something crazy to make it obvious if this get through to UI (eg it should not get through to UI).
+                    return 9999999999;
+                }
             }
-            else
+            // individual override per PurchaseItem
+            else 
             {
                 decimal totalGross = 0;
 
@@ -115,11 +125,11 @@ namespace TourWriter.Info
                 {
                     if (purchaseItem.RowState == DataRowState.Deleted) continue;
 
-                    ItineraryMarginOverrideRow row = ItineraryMarginOverride.FindByItineraryIDServiceTypeID(
+                    var itinMargin = ItineraryMarginOverride.FindByItineraryIDServiceTypeID(
                         Itinerary[0].ItineraryID, purchaseItem.ServiceTypeID);
 
-                    if (row != null)
-                        totalGross += Itinerary[0].RecalculateGross(purchaseItem.NetTotalConverted, purchaseItem.GrossTotalConverted, row.Margin);
+                    if (itinMargin != null)
+                        totalGross += Itinerary[0].RecalculateGross(purchaseItem.NetTotalConverted, purchaseItem.GrossTotalConverted, itinMargin.Margin);
                     else
                         totalGross += purchaseItem.GrossTotalConverted;
                 }
@@ -141,10 +151,20 @@ namespace TourWriter.Info
             }
             else
             {
-                var net = GetNetBasePrice();
-                var mup = GetMarginOverride();
-                total = net + mup == 0 ? GetGrossBasePrice() : Common.CalcGrossByNetMarkup(net, mup);
-
+                // special case when 'grs' (discount)
+                if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "grs")
+                {
+                    var gross = GetGrossBasePrice();
+                    total = Common.CalcGrossByGrossCommission(gross, Itinerary[0].NetMargin);
+                }
+                else
+                {
+                    var net = GetNetBasePrice();
+                    var margin = GetMarginOverride();
+                    total = net + margin == 0 ? GetGrossBasePrice() : Common.CalcGrossByNetMarkup(net, margin);
+                }
+                
+                // apply final itinerary overrde
                 if (!Itinerary[0].IsGrossMarkupNull())
                     total *= (1 + Itinerary[0].GrossMarkup / 100);
             }
@@ -251,6 +271,7 @@ namespace TourWriter.Info
             {
                 decimal totalGross = 0M;
 
+                // commission
                 if (!IsNetComOrMupNull() && NetComOrMup == "com")
                 {                    
                     var commission = ((ItinerarySet)this.tableItinerary.DataSet).GetCommission(netFinal, grossFinal);
@@ -261,6 +282,7 @@ namespace TourWriter.Info
 
                     totalGross = Common.CalcGrossByNetCommission(netFinal, margin);
                 }
+                // markup
                 else if (!IsNetComOrMupNull() && NetComOrMup == "mup")
                 {
                     var markup = ((ItinerarySet)this.tableItinerary.DataSet).GetMarkup(netFinal, grossFinal);
@@ -271,6 +293,7 @@ namespace TourWriter.Info
 
                     totalGross = Common.CalcGrossByNetMarkup(netFinal, margin);
                 }
+                // discount on gross
                 else // if (!IsNetComOrMupNull() && NetComOrMup == "grs")
                 {
                     totalGross = Common.CalcGrossByGrossCommission(grossFinal, margin);

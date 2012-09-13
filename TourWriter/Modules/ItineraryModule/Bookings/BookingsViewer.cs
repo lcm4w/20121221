@@ -535,7 +535,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private decimal yieldPercent;
         public void RecalculateFinalPricing()
         {
-            // -- testing --
+            // -- testing -- WARNING: might be out of date after Seba changes to this method body on 13 Sept 2012.
 
             //var hasOverrides = !itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0;
 
@@ -557,33 +557,43 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // -------------
 
+            var net = itinerarySet.GetNetBasePrice();
+            var final = itinerarySet.GetGrossFinalPrice();
 
-            decimal net, markup, gross, final;
-            net = itinerarySet.GetNetBasePrice();
-            final = itinerarySet.GetGrossFinalPrice();
-
-            if (!itinerarySet.Itinerary[0].IsNetMarginNull() || itinerarySet.ItineraryMarginOverride.Rows.Count > 0)
+            // process any itinerary or servicetype margin overides
+            if (!itinerarySet.Itinerary[0].IsNetMarginNull() || // has itinerary margin override
+                itinerarySet.ItineraryMarginOverride.Rows.Count > 0) // has servicetype margin overrides
             {
-                markup = itinerarySet.GetMarginOverride();
-                txtGross1.Value = net * (1 + markup / 100);
+                // special case when margin override is 'grs' (discount)
+                if (!itinerarySet.Itinerary[0].IsNetComOrMupNull() && itinerarySet.Itinerary[0].NetComOrMup == "grs")
+                {
+                    var gross = itinerarySet.GetGrossBasePrice();
+                    txtGross1.Value = Common.CalcGrossByGrossCommission(gross, itinerarySet.Itinerary[0].NetMargin);
+                }
+                else // margin override markup 'mup' or commission 'grs'
+                {
+                    var markup = itinerarySet.GetMarginOverride();
+                    txtGross1.Value = net * (1 + markup / 100);
+                }
             }
-            else
+            else // no margin overrides
             {
-                gross = itinerarySet.GetGrossBasePrice();
+                var gross = itinerarySet.GetGrossBasePrice();
                 txtGross1.Value = gross;
             }
 
+            // process any final markup/down
             if (!itinerarySet.Itinerary[0].IsGrossMarkupNull())
             {
                 var val = decimal.Parse(txtGross1.Value.ToString());
                 txtGross2.Value = val * (1 + itinerarySet.Itinerary[0].GrossMarkup / 100);
             }
-            else
+            else // no final markup/down override
             {
                 txtGross2.Value = txtGross1.Value;
             }
 
-            // final sell
+            // process final sell price and yield
             yieldAmount = final - net;
             yieldPercent = Common.CalcCommissionByNetGross(net, final);
             txtSell.Value = final;
