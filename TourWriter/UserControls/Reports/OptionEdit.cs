@@ -114,6 +114,13 @@ namespace TourWriter.UserControls.Reports
                     (editor as CheckBoxSet).Initialise(Cache.ToolSet.City.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.CityName).CopyToDataTable(), "CityID", "CityName", true);
                     (editor as CheckBoxSet).CheckAll(true);
                     break;
+                case "@CountryIDList":
+                    label.Text = "Country";
+                    editor = new CheckBoxSet();
+                    if (Cache.ToolSet.Country.Count == 0) break;
+                    (editor as CheckBoxSet).Initialise(Cache.ToolSet.Country.Where(x => x.RowState != DataRowState.Deleted).OrderBy(x => x.CountryName).CopyToDataTable(), "CountryID", "CountryName", true);
+                    (editor as CheckBoxSet).CheckAll(true);
+                    break;
                 case "@DepartmentIDList":
                     label.Text = "Department";
                     editor = new CheckBoxSet();
