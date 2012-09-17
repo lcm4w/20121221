@@ -31,6 +31,7 @@ namespace TourWriter.Modules.SupplierModule
             get { return Cache.ToolSet; }
         }
         internal SupplierSet.ContentDataTable ContentTableCache { get; set; }
+        internal bool ContentTableCacheIsDirty { get; set; }
 
         public SupplierMain()
         {

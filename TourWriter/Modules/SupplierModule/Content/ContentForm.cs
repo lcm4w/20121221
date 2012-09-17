@@ -29,7 +29,7 @@ namespace TourWriter.Modules.SupplierModule.Content
         private void LoadData()
         {
             // load content data
-            if (_mainForm.ContentTableCache == null)
+            if (_mainForm.ContentTableCache == null || _mainForm.ContentTableCacheIsDirty)
             {
                 Cursor = Cursors.WaitCursor;
                 Thread.Sleep(200); // show cursor...
@@ -39,6 +39,7 @@ namespace TourWriter.Modules.SupplierModule.Content
                     var reader = Info.Services.DatabaseHelper.ExecuteReader(sql);
                     _mainForm.ContentTableCache = new Info.SupplierSet.ContentDataTable();
                     _mainForm.ContentTableCache.Load(reader);
+                    _mainForm.ContentTableCacheIsDirty = false;
                 }
                 finally { Cursor = Cursors.Default; }
             }
@@ -56,6 +57,12 @@ namespace TourWriter.Modules.SupplierModule.Content
                         break;
                     }
             } 
+        }
+
+        private void SetContentCachesDirty()
+        {
+            foreach (var supplierForm in _mainForm.MdiParent.MdiChildren.Where(x => x.GetType() == typeof(SupplierMain)))
+                ((SupplierMain)supplierForm).ContentTableCacheIsDirty = true;
         }
 
         private void ContentForm_Load(object sender, EventArgs e)
@@ -117,8 +124,10 @@ namespace TourWriter.Modules.SupplierModule.Content
                 ContentId = id;
                 DialogResult = DialogResult.OK;
             }
-        }
 
+            SetContentCachesDirty();
+        }
+        
         private void btnDel_Click(object sender, EventArgs e)
         {
             var row = grid.ActiveRow;
@@ -128,7 +137,7 @@ namespace TourWriter.Modules.SupplierModule.Content
             // delete
             var id = (int)row.Cells["ContentID"].Value;
             Info.Services.DatabaseHelper.ExecuteScalar(string.Format("delete content where contentid = {0}", id));
-            
+
             // remove from cache
             var c = _mainForm.ContentTableCache.Where(x => x.RowState != DataRowState.Deleted && x.ContentID == id).FirstOrDefault();
             if (c != null)
@@ -153,6 +162,8 @@ namespace TourWriter.Modules.SupplierModule.Content
                 c.Delete();
                 c.AcceptChanges();
             }
+
+            SetContentCachesDirty();
 
             if ((i > grid.Rows.Count - 1 ? --i : i) > -1)
                 grid.ActiveRow = grid.Rows[i];
