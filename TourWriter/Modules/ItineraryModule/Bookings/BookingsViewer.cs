@@ -568,7 +568,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (!itinerarySet.Itinerary[0].IsNetComOrMupNull() && itinerarySet.Itinerary[0].NetComOrMup == "grs")
                 {
                     var gross = itinerarySet.GetGrossBasePrice();
-                    txtGross1.Value = Common.CalcGrossByGrossCommission(gross, itinerarySet.Itinerary[0].NetMargin);
+                    var margin = itinerarySet.GetMarginOverride();
+                    txtGross1.Value = Common.CalcGrossByGrossCommission(gross, margin);
                 }
                 else // margin override markup 'mup' or commission 'grs'
                 {

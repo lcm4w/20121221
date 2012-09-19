@@ -111,9 +111,7 @@ namespace TourWriter.Info
                 }
                 else // NetComOrMup == "grs"
                 {
-                    // HACK: we don't want to use this, cos if 'grs' then we need to handle differently (this is done a bit higher up the chain).
-                    // so return something crazy to make it obvious if this get through to UI (eg it should not get through to UI).
-                    return 9999999999;
+                    return Itinerary[0].NetMargin;
                 }
             }
             // individual override per PurchaseItem
@@ -155,7 +153,8 @@ namespace TourWriter.Info
                 if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "grs")
                 {
                     var gross = GetGrossBasePrice();
-                    total = Common.CalcGrossByGrossCommission(gross, Itinerary[0].NetMargin);
+                    var margin = GetMarginOverride();
+                    total = Common.CalcGrossByGrossCommission(gross, margin);
                 }
                 else
                 {

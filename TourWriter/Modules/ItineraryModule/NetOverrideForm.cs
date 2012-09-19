@@ -460,6 +460,7 @@ namespace TourWriter.Modules.ItineraryModule
         private void rdMasterOverride_CheckedChanged(object sender, EventArgs e)
         {
             txtMasterOverride.Enabled = rdMasterOverride.Checked;
+            if (rdMasterOverride.Checked) txtMasterOverride.Select();
         }
 
         private void rdServiceTypeOverride_CheckedChanged(object sender, EventArgs e)
