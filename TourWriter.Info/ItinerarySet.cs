@@ -131,7 +131,9 @@ namespace TourWriter.Info
                     else
                         totalGross += purchaseItem.GrossTotalConverted;
                 }
-                return GetMarkup(GetNetBasePrice(), totalGross);
+                var totalNet = GetNetBasePrice();
+                var markup = GetMarkup(totalNet, totalGross);
+                return markup;
             }
         }
 

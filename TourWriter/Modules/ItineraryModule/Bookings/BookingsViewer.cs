@@ -559,19 +559,19 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             var net = itinerarySet.GetNetBasePrice();
             var final = itinerarySet.GetGrossFinalPrice();
+            var hasMasterOverride = !itinerarySet.Itinerary[0].IsNetMarginNull(); // override-all
+            var hasServiceTypeOverrides = itinerarySet.ItineraryMarginOverride.Rows.Count > 0; // override per service type
 
-            // process any itinerary or servicetype margin overides
-            if (!itinerarySet.Itinerary[0].IsNetMarginNull() || // has itinerary margin override
-                itinerarySet.ItineraryMarginOverride.Rows.Count > 0) // has servicetype margin overrides
+            if (hasMasterOverride || hasServiceTypeOverrides) // has any overrides
             {
-                // special case when margin override is 'grs' (discount)
-                if (!itinerarySet.Itinerary[0].IsNetComOrMupNull() && itinerarySet.Itinerary[0].NetComOrMup == "grs")
+                // special case when override-all is 'grs' (discount)
+                if (hasMasterOverride && !itinerarySet.Itinerary[0].IsNetComOrMupNull() && itinerarySet.Itinerary[0].NetComOrMup == "grs")
                 {
                     var gross = itinerarySet.GetGrossBasePrice();
                     var margin = itinerarySet.GetMarginOverride();
                     txtGross1.Value = Common.CalcGrossByGrossCommission(gross, margin);
                 }
-                else // margin override markup 'mup' or commission 'grs'
+                else // master override-all com or mup (not grs), or any override at service type level
                 {
                     var markup = itinerarySet.GetMarginOverride();
                     txtGross1.Value = net * (1 + markup / 100);
