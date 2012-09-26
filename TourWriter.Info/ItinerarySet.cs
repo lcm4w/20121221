@@ -144,15 +144,17 @@ namespace TourWriter.Info
         public decimal GetGrossFinalPrice()
         {
             decimal total;
+            var hasFinalOverride = !Itinerary[0].IsGrossOverrideNull();
 
-            if (!Itinerary[0].IsGrossOverrideNull())
+            if (hasFinalOverride)
             {
                 total = Itinerary[0].GrossOverride;
             }
             else
             {
-                // special case when 'grs' (discount)
-                if (!Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "grs")
+                // special case when override-all-servicetypes and 'grs' (discount)
+                var hasDefaultServiceOverride = !Itinerary[0].IsNetMarginNull();
+                if (hasDefaultServiceOverride && !Itinerary[0].IsNetComOrMupNull() && Itinerary[0].NetComOrMup == "grs")
                 {
                     var gross = GetGrossBasePrice();
                     var margin = GetMarginOverride();
@@ -162,7 +164,9 @@ namespace TourWriter.Info
                 {
                     var net = GetNetBasePrice();
                     var margin = GetMarginOverride();
-                    total = net + margin == 0 ? GetGrossBasePrice() : Common.CalcGrossByNetMarkup(net, margin);
+                    total = (net + margin == 0)
+                                ? GetGrossBasePrice()
+                                : Common.CalcGrossByNetMarkup(net, margin);
                 }
                 
                 // apply final itinerary overrde

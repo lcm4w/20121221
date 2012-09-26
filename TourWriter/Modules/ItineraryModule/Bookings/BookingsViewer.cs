@@ -574,7 +574,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 else // master override-all com or mup (not grs), or any override at service type level
                 {
                     var markup = itinerarySet.GetMarginOverride();
-                    txtGross1.Value = net * (1 + markup / 100);
+                    txtGross1.Value = Common.CalcGrossByNetMarkup(net, markup);
                 }
             }
             else // no margin overrides
