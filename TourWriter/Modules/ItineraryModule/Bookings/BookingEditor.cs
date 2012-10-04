@@ -12,6 +12,7 @@ using TourWriter.Dialogs;
 using TourWriter.Forms;
 using TourWriter.Global;
 using TourWriter.Info;
+using TourWriter.Modules.ContactModule;
 using TourWriter.Services;
 using ButtonDisplayStyle = Infragistics.Win.UltraWinGrid.ButtonDisplayStyle;
 using ColumnStyle = Infragistics.Win.UltraWinGrid.ColumnStyle;
@@ -26,6 +27,9 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private List<string> supplierNotesList;
         private const string emptySupplierNotesMessage = "< none available >";
         private BindingSource _bindingSource;
+
+        private ItinerarySet ClonedItinerarySet { get; set; }
+        private ItinerarySet.RoomTypeDataTable ClonedRoomTypes { get; set; }
 
         public BindingSource BindingSource
         {
@@ -91,7 +95,46 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             dd = txtNotePrivate.ButtonsRight[0] as DropDownEditorButton;
             if (dd != null)
                 dd.Control = new Panel();
+
+            //passangers tab      
+            //room types                       
+            btnAddOptionType.DropDownItems.Clear();
+            btnAddOptionType.DropDownItems.Add(new ToolStripMenuItem("Add for...") { Enabled = false });
+            btnAddOptionType.DropDownItems.Add(new ToolStripSeparator());
+            foreach (var option in Global.Cache.ToolSet.OptionType)
+            {
+                btnAddOptionType.DropDownItems.Add(new ToolStripMenuItem(option["OptionTypeName"].ToString(), null, btnAddRoomType_Click) { Tag = option["OptionTypeID"].ToString() });
+            }
+            ClonedRoomTypes.ColumnChanged += RoomType_ColumnChanged;
+            gridRoomTypes.DataSource = ClonedRoomTypes;//itinerarySet.RoomType;
+
+            // Members
+            gridMembers.DisplayLayout.ValueLists.Add("AgeGroupsList");
+            gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].SortStyle = ValueListSortStyle.Ascending;
+            gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].ValueListItems.Add(DBNull.Value, "(none)");
+            foreach (ToolSet.AgeGroupRow r in Cache.ToolSet.AgeGroup.Rows)
+            {
+                if (r.RowState == DataRowState.Deleted)
+                    continue;
+
+                gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].ValueListItems.Add(r.AgeGroupID, r.AgeGroupName);
+            }
+
+            gridMembers.DisplayLayout.ValueLists.Add("AgentList");
+            gridMembers.DisplayLayout.ValueLists["AgentList"].SortStyle = ValueListSortStyle.Ascending;
+            gridMembers.DisplayLayout.ValueLists["AgentList"].ValueListItems.Add(DBNull.Value, "(none)");
+            foreach (ToolSet.AgentRow r in Cache.ToolSet.Agent.Rows)
+            {
+                if (r.RowState == DataRowState.Deleted)
+                    continue;
+                gridMembers.DisplayLayout.ValueLists["AgentList"].ValueListItems.Add(r.AgentID, r.AgentName);
+            }
+
+            gridMembers.DisplayLayout.ValueLists.Add("RoomList");
+            UpdateRoomTypeDDL();            
+            gridMembers.SetDataBinding(ClonedItinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");           
         }
+        
 
         private void PurchaseLine_CurrentChanged(object sender, EventArgs e)
         {
@@ -167,7 +210,28 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var currencyInfo = CurrencyService.GetCurrency(itinerary.CurrencyCode);
             var format = "{0:" + (currencyInfo != null ? currencyInfo.DisplayFormat : "c") + "}";
             gridItems.DisplayLayout.Bands[0].Summaries["GrossFinal"].DisplayFormat = format;
+
+            //clone
+            ClonedItinerarySet = (ItinerarySet)itinerarySet.Copy();
+            ClonedRoomTypes = (ItinerarySet.RoomTypeDataTable)itinerarySet.RoomType.Copy();
+            ClonedItinerarySet.ItineraryMember.ItineraryMemberRowDeleting += ClonedItineraryMember_ItineraryMemberRowDeleting;          
+            ClonedRoomTypes.RoomTypeRowDeleting+=ClonedRoomTypes_RoomTypeRowDeleting;
         }
+
+        private void ClonedRoomTypes_RoomTypeRowDeleting(object sender, ItinerarySet.RoomTypeRowChangeEvent e)
+        {
+            itinerarySet.RoomType.FindByRoomTypeID(int.Parse(e.Row["RoomTypeID"].ToString())).Delete();
+        }
+
+        private void ClonedItineraryMember_ItineraryMemberRowDeleting(object sender, ItinerarySet.ItineraryMemberRowChangeEvent e)
+        {
+            var memberID = int.Parse(e.Row["ItineraryMemberID"].ToString());
+            var memberRow = itinerarySet.ItineraryMember.FindByItineraryMemberID(memberID);
+            if (memberRow != null)
+            {
+                memberRow.Delete();
+            }
+        }      
 
         private void OnPurchaseItemActivated(int purchaseItemId)
         {
@@ -997,7 +1061,437 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        #endregion        
+        #endregion    
+    
+        #region Passangers
+
+        #region GridRoomTypes
+        private void gridRoomTypes_AfterRowActivate(object sender, EventArgs e)
+        {
+            FilterMembersRow();
+        }
+
+        private void gridRoomTypes_InitializeLayout(object sender, Infragistics.Win.UltraWinGrid.InitializeLayoutEventArgs e)
+        {
+            //add custom column         
+            if (!e.Layout.Bands[0].Columns.Exists("Actual"))
+                e.Layout.Bands[0].Columns.Add("Actual");
+
+            // show/hide columns 
+            foreach (var c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "RoomTypeID" || c.Key == "ItineraryID" || c.Key == "OptionTypeID")
+                {
+                    c.Hidden = true;
+                }
+                else if (c.Key == "RoomTypeName")
+                {
+                    c.Header.Caption = "Room Name";
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.CellActivation = Activation.AllowEdit;
+                }
+                else if (c.Key == "Quantity")
+                {
+                    c.Header.Caption = "Pax Override";
+                    c.Width = 115;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.CellActivation = Activation.AllowEdit;
+                }
+                else if (c.Key == "Actual")
+                {
+
+                }
+            }
+            GridHelper.SetDefaultGridAppearance(e);
+            CalculateRoomType();
+        }
+        #endregion
+
+        #region gridMembers
+
+        private void gridMembers_InitializeLayout(object sender, Infragistics.Win.UltraWinGrid.InitializeLayoutEventArgs e)
+        {
+            e.Layout.Bands[0].Columns.Insert(0, "Edit");
+
+            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "ItineraryMemberName")
+                {
+                    c.Width = 100;
+                    c.Header.Caption = "Person name";
+                    c.Header.ToolTipText = "Client name";
+                    c.Band.SortedColumns.Add(c, false);
+                    c.CellMultiLine = DefaultableBoolean.True;
+                    //c.CellClickAction = CellClickAction.Edit;
+                    //c.CellActivation = Activation.AllowEdit;
+                }
+                else if (c.Key == "Title")
+                {
+                    c.Width = 40;
+                    c.MinWidth = 40;
+                    c.MaxWidth = 40;
+                    c.Header.Caption = "Title";
+                    //c.CellClickAction = CellClickAction.Edit;
+                    //c.CellActivation = Activation.AllowEdit;
+                }
+                else if (c.Key == "Comments")
+                {
+                    c.Width = 140;
+                    c.Header.Caption = "Comments";
+                    c.Header.ToolTipText = "Comments (private)";
+                    c.CellMultiLine = DefaultableBoolean.True;
+                    //c.CellClickAction = CellClickAction.Edit;
+                    //c.CellActivation = Activation.AllowEdit;
+                    c.VertScrollBar = true;
+                }
+                else if (c.Key == "AgeGroupID")
+                {
+                    c.Width = 65;
+                    c.MinWidth = 65;
+                    c.MaxWidth = 65;
+                    c.Header.Caption = "Age-group";
+                    c.Header.ToolTipText = "Age-group category";
+                    c.Style = ColumnStyle.DropDownList;
+                    c.ValueList = gridMembers.DisplayLayout.ValueLists["AgeGroupsList"];
+                }
+                else if (c.Key == "Age")
+                {
+                    c.Width = 35;
+                    c.MinWidth = 35;
+                    c.MaxWidth = 35;
+                    c.MaskInput = "nnn";
+                    c.Header.ToolTipText = "Client age";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    //c.CellClickAction = CellClickAction.Edit;
+                    //c.CellActivation = Activation.AllowEdit;
+                }
+                else if (c.Key == "Edit")
+                {
+                    c.Width = 40;
+                    c.MinWidth = 40;
+                    c.MaxWidth = 40;
+                    c.Header.Caption = "More";
+                    c.Header.ToolTipText = "Full contact details";
+                    c.Style = ColumnStyle.Button;
+                    c.CellButtonAppearance.Image = TourWriter.Properties.Resources.PageEdit;
+                    c.CellButtonAppearance.ImageHAlign = HAlign.Center;
+                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
+                }
+                else if (c.Key == "RoomTypeID" )
+                {
+                    c.Header.Caption = "Room Type";
+                    c.Width = 70;
+                    c.MinWidth = 70;
+                    c.MaxWidth = 70;
+                    c.Header.ToolTipText = "Roomtype category";
+                    c.Style = ColumnStyle.DropDownList;
+                    c.ValueList = gridMembers.DisplayLayout.ValueLists["RoomList"];
+                }
+                else if (c.Key == "AgentID")
+                {
+                    c.Header.Caption = "Agent";
+                    c.Width = 70;
+                    c.MinWidth = 70;
+                    //c.MaxWidth = 70;
+                    c.Style = ColumnStyle.DropDownList;
+                    c.ValueList = gridMembers.DisplayLayout.ValueLists["AgentList"];
+                    
+                }
+                else if (c.Key == "PriceOverride" && App.ShowRoomTypes)
+                {
+                    c.Width = 80;
+                    c.MinWidth = 80;
+                    c.MaxWidth = 80;
+                    c.Header.Caption = "Price Override";
+                    c.Header.ToolTipText = "Value of payment";
+                    c.Format = "#0.00";
+                    c.MaskInput = "{LOC}-nnnnnn.nn";
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    //c.CellActivation = Activation.AllowEdit;
+                    //c.CellClickAction = CellClickAction.Edit;
+                }
+                else if (c.Key == "RoomName" )
+                {
+                    c.Width = 80;
+                    c.MinWidth = 80;
+                    c.MaxWidth = 80;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                }
+                else
+                    c.Hidden = true;
+                if (!App.ShowRoomTypes && gridMembers.Rows.Count > 0)
+                {
+                    gridMembers.ActiveRow = gridMembers.Rows[0];
+                }
+            }
+
+            int index = 0;
+            e.Layout.Bands[0].Columns["Title"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["ItineraryMemberName"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["AgentID"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["RoomTypeID"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["PriceOverride"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["RoomName"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Comments"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["AgeGroupID"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Age"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["Edit"].Header.VisiblePosition = index++;
+
+            GridHelper.SetDefaultGridAppearance(e);
+            e.Layout.Override.RowSizing = RowSizing.AutoFree;        
+        }
+
+        private void gridMembers_AfterExitEditMode(object sender, EventArgs e)
+        {
+            if (gridMembers.ActiveCell.Column.Key != "RoomTypeID") return;
+            if (gridRoomTypes.Rows.Count == 0) return;
+            if (App.AskYesNo("Override member list ?"))
+            {
+                int memberID = int.Parse(gridMembers.ActiveRow.Cells["ItineraryMemberID"].Value.ToString());
+                int roomTypeID = int.Parse(gridMembers.ActiveRow.Cells["RoomTypeID"].Value.ToString());
+                itinerarySet.ItineraryMember.FindByItineraryMemberID(memberID).RoomTypeID = roomTypeID;
+            }
+            CalculateRoomType();
+            FilterMembersRow();
+        }
+
+        private void gridMembers_ClickCellButton(object sender, CellEventArgs e)
+        {
+            gridMembers_HandleEditRequest(e.Cell.Row);
+        }
+
+        private void gridMembers_HandleEditRequest(UltraGridRow row)
+        {
+            if (row == null)
+                return;
+
+            if (row.Cells["ContactID"].Value == DBNull.Value)
+            {
+                // Contact detail does not exist
+                if (App.AskCreateRow())
+                {
+                    // Open contact dialog to create new contact row
+                    var contact = new ContactMain();
+                    if (row.Cells["ItineraryMemberName"].Value != DBNull.Value)
+                        if (row.Cells["ItineraryMemberName"].Value.ToString() != String.Empty)
+                            contact.ContactRow["ContactName"] = row.Cells["ItineraryMemberName"].Value.ToString();
+
+                    if (contact.ShowDialog() == DialogResult.OK)
+                    {
+                        // Get new Contact row
+                        var c = (ContactSet.ContactRow)contact.ContactRow;
+
+                        // Load contact row into this itinerarySet
+                        itinerarySet.Contact.BeginLoadData();
+                        itinerarySet.Contact.LoadDataRow(c.ItemArray, true);
+                        itinerarySet.Contact.EndLoadData();
+
+                        // Add FK value
+                        row.Cells["ContactID"].Value = c.ContactID;
+                        row.Cells["ItineraryMemberName"].Value = c.ContactName;
+                    }
+                }
+            }
+            else
+            {
+                // Open existing contact record
+                var contact = new ContactMain((int)row.Cells["ContactID"].Value);
+
+                if (contact.ShowDialog() == DialogResult.OK)
+                {
+                    // Reload contact to reflect changes
+                    itinerarySet.Contact.BeginLoadData();
+                    itinerarySet.Contact.LoadDataRow(contact.ContactRow.ItemArray, true);
+                    itinerarySet.Contact.EndLoadData();
+                }
+                contact.Dispose();
+            }
+        }
+
+        private void gridMembers_CellChange(object sender, CellEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region RoomType Buttons
+        private void RoomType_ColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            if (e.Column.ColumnName == "RoomTypeName")
+            {
+                UpdateRoomTypeDDL();
+            }
+        }
+
+        private void btnAddRoomType_Click(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripDropDownItem;
+            if (item == null) return;
+
+            var optionTypeID = int.Parse(item.Tag.ToString());
+            if ((from DataRow r in ClonedItinerarySet.RoomType.Rows where r.RowState != DataRowState.Deleted && r["OptionTypeID"].ToString() == optionTypeID.ToString() select r).SingleOrDefault() == null)
+            {
+                var rt = ClonedRoomTypes.NewRoomTypeRow();//ClonedItinerarySet.RoomType.NewRoomTypeRow();
+                rt.ItineraryID = ClonedItinerarySet.Itinerary[0].ItineraryID;
+                rt.OptionTypeID = int.Parse(item.Tag.ToString());
+                rt.RoomTypeName = item.Text;
+                ClonedRoomTypes.AddRoomTypeRow(rt);
+                //itinerarySet.RoomType.AddRoomTypeRow(rt);
+
+                GridHelper.SetActiveRow(gridRoomTypes, "RoomTypeID", rt.RoomTypeID, "RoomTypeName");
+                UpdateRoomTypeDDL();
+                CalculateRoomType();
+            }
+            else
+            {
+                MessageBox.Show(App.GetResourceString("ShowRowAlreadyExists"));
+            }
+        }
+
+         private void btnDel_Click(object sender, EventArgs e)
+        {
+            if (gridRoomTypes.ActiveRow != null && App.AskDeleteRow())
+            {               
+                GridHelper.DeleteActiveRow(gridRoomTypes, true);
+            }
+        }
+
+         private void btnAll_Click(object sender, EventArgs e)
+         {
+             gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].ClearFilterConditions();
+             if (gridRoomTypes.ActiveRow != null)
+             {
+                 gridRoomTypes.ActiveRow.Selected = false;
+                 gridRoomTypes.ActiveRow = null;
+             }
+         }
+
+        #endregion
+
+         #region Members Buttons
+         private void btnAddMember_Click(object sender, EventArgs e)
+         {
+             AddContact(null);
+         }
+
+         private void btnDeleteMember_Click(object sender, EventArgs e)
+         {
+             if (gridMembers.ActiveRow != null && App.AskDeleteRow())
+             {
+                 GridHelper.DeleteActiveRow(gridMembers, true);
+                 CalculateRoomType();
+                 //CalculateRoomType(int.Parse(gridMembers.ActiveRow.Cells["RoomTypeID"].Value.ToString()));
+             }
+         }
+
+         private void btnMemberEdit_Click(object sender, EventArgs e)
+         {
+             gridMembers_HandleEditRequest(gridMembers.ActiveRow);
+         }                
+         #endregion                         
+
+         internal void AddContact(int? contactId)
+         {
+             CommitOpenEdits();
+
+             int groupId = GetDefaultItinerayGroup().ItineraryGroupID;
+             ItinerarySet.ItineraryMemberRow r = ClonedItinerarySet.ItineraryMember.NewItineraryMemberRow();
+
+             r.ItineraryGroupID = groupId;
+             if (gridRoomTypes.ActiveRow != null)
+             {
+                 r.RoomTypeID = int.Parse(gridRoomTypes.ActiveRow.Cells["OptionTypeID"].Value.ToString());
+             }
+
+             r.AddedOn = DateTime.Now;
+             r.AddedBy = TourWriter.Global.Cache.User.UserID;
+             bool isFirstRow = (ClonedItinerarySet.ItineraryMember.Rows.Count == 0);
+             r.IsDefaultContact = isFirstRow;
+             r.IsDefaultBilling = isFirstRow;
+             if (Cache.ToolSet.AgeGroup.Rows.Count > 0)
+                 r.AgeGroupID = (int)Cache.ToolSet.AgeGroup.Rows[0]["AgeGroupID"];
+
+             if (contactId.HasValue)
+             {
+                 if (ClonedItinerarySet.Contact.FindByContactID((int)contactId) == null)
+                 {
+                     // Import contact to handle constraints
+                     Contact c = new Contact();
+                     ContactSet.ContactRow contact = c.GetContactSet((int)contactId).Contact[0];
+                     ClonedItinerarySet.Contact.ImportRow(contact);
+                 }
+                 r.ItineraryMemberName = ClonedItinerarySet.Contact.FindByContactID((int)contactId).ContactName;
+                 r.ContactID = (int)contactId;
+             }
+             else
+             {
+                 r.ItineraryMemberName = App.CreateUniqueNameValue(
+                     gridMembers.Rows, "ItineraryMemberName", "New Member");
+             }
+
+             ClonedItinerarySet.ItineraryMember.AddItineraryMemberRow(r);
+             itinerarySet.ItineraryMember.ImportRow(r);
+             itinerarySet.ItineraryMember.AcceptChanges();
+             GridHelper.SetActiveRow(gridMembers, "ItineraryMemberID", r.ItineraryMemberID, "ItineraryMemberName");            
+             CalculateRoomType();               
+         }
+
+         private void CommitOpenEdits()
+         {
+             gridMembers.UpdateData();
+             gridRoomTypes.UpdateData();
+         }
+
+         private ItinerarySet.ItineraryGroupRow GetDefaultItinerayGroup()
+         {
+             if (ClonedItinerarySet.ItineraryGroup.Rows.Count == 0)
+             {
+                 // Add new row
+                 ItinerarySet.ItineraryGroupRow r = ClonedItinerarySet.ItineraryGroup.NewItineraryGroupRow();
+                 r.ItineraryID = ClonedItinerarySet.Itinerary[0].ItineraryID;
+                 r.ItineraryGroupName = ClonedItinerarySet.Itinerary[0].ItineraryName;
+                 r.AddedBy = TourWriter.Global.Cache.User.UserID;
+                 r.AddedOn = DateTime.Now;
+                 ClonedItinerarySet.ItineraryGroup.AddItineraryGroupRow(r);
+             }
+
+             // Return the default itinerary group.
+             return ClonedItinerarySet.ItineraryGroup[0];
+         }
+
+        private void UpdateRoomTypeDDL()
+        {
+            gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Clear();
+            gridMembers.DisplayLayout.ValueLists["RoomList"].SortStyle = ValueListSortStyle.Ascending;
+            gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add(DBNull.Value, "(none)");
+            foreach (DataRow r in itinerarySet.RoomType.Rows)
+            {
+                if (r.RowState == DataRowState.Deleted)
+                    continue;
+
+                gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add(r["OptionTypeID"], r["RoomTypeName"].ToString());
+            }
+        }
+
+        private void CalculateRoomType()
+        {            
+            foreach (UltraGridRow r in gridRoomTypes.Rows)
+            {
+                UltraGridRow r1 = r;
+                var roomTypeTotal = (from DataRow m in ClonedItinerarySet.ItineraryMember.Rows where m.RowState != DataRowState.Deleted && m["RoomTypeID"].ToString() == r1.Cells["OptionTypeID"].Value.ToString() select m).Count();//Count(r => r.RowState != DataRowState.Deleted);
+                r.Cells["Actual"].Value = roomTypeTotal;
+           
+            }
+            gridRoomTypes.UpdateData();
+        }
+        private void FilterMembersRow()
+        {           
+            if (gridRoomTypes.ActiveRow == null) return;
+            gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].ClearFilterConditions(); //RoomTypeID
+            gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].FilterConditions.Add(FilterComparisionOperator.Equals, gridRoomTypes.ActiveRow.Cells["RoomTypeName"].Value.ToString());//int.Parse(gridRoomTypes.ActiveRow.Cells["OptionTypeID"].Value.ToString())); //RoomTypeName          
+        }
+        #endregion                    
     }
 
     public delegate void OnBookingEditorOpenSupplierHandler(BookingEditorOpenSupplierEventArgs e);

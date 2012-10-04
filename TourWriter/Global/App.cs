@@ -214,6 +214,14 @@ namespace TourWriter
             }
         }
 
+        internal static bool ShowRoomTypes
+        {
+            get
+            {
+                //atm, do not show
+                return true;
+            }
+        }
         #endregion
 
         #region Network

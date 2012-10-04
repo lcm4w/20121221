@@ -15,6 +15,7 @@ using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Modules.ItineraryModule.Bookings;
 using TourWriter.Modules.ItineraryModule.DateKicker;
+using TourWriter.Modules.ItineraryModule.RoomTypes;
 using TourWriter.Services;
 using CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction;
 using SupplierMessage = TourWriter.Reports.Itinerary.SupplierMessage;
@@ -159,7 +160,7 @@ namespace TourWriter.Modules.ItineraryModule
             bookingsViewer.ItinerarySet = itinerarySet;
             bookingsViewer.SetBindingContext(BindingContext);
             bookingsQuote.ItinerarySet = itinerarySet;
-            clientEditor.ItinerarySet = itinerarySet;
+            clientEditor.ItinerarySet = itinerarySet;            
             publisher1.ItinerarySet = itinerarySet;
             accounting1.ItinerarySet = itinerarySet;
             itineraryTasks1.ItinerarySet = itinerarySet;
@@ -1235,6 +1236,6 @@ namespace TourWriter.Modules.ItineraryModule
             OpenHelp();
         }
 
-        #endregion
+        #endregion      
     }
 }
