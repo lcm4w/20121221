@@ -46,6 +46,57 @@ GO
 
 
 GO
+PRINT N'Altering [dbo].[ItineraryMember]...';
+
+if not Exists(select * from sys.columns where Name = N'RoomTypeID' and Object_ID = Object_ID(N'ItineraryMember'))
+	ALTER TABLE [dbo].[ItineraryMember]
+		ADD [RoomTypeID] INT NULL;
+GO
+if not Exists(select * from sys.columns where Name = N'AgentID' and Object_ID = Object_ID(N'ItineraryMember'))
+	ALTER TABLE [dbo].[ItineraryMember]
+		ADD [AgentID] INT NULL;
+GO
+if not Exists(select * from sys.columns where Name = N'PriceOverride' and Object_ID = Object_ID(N'ItineraryMember'))
+	ALTER TABLE [dbo].[ItineraryMember]
+		ADD [PriceOverride] DECIMAL (18, 2) NULL;
+GO
+if not Exists(select * from sys.columns where Name = N'RoomName' and Object_ID = Object_ID(N'ItineraryMember'))
+	ALTER TABLE [dbo].[ItineraryMember]
+		ADD [RoomName] VARCHAR (50) NULL;
+GO
+
+GO
+
+PRINT N'Creating [dbo].[RoomType]...';
+
+
+GO
+
+
+if not exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType]') and OBJECTPROPERTY(id, N'IsTable') = 1)
+begin
+
+	CREATE TABLE [dbo].[RoomType] (
+		[RoomTypeID]   INT           IDENTITY (1, 1) NOT NULL,
+		[ItineraryID]  INT           NOT NULL,
+		[OptionTypeID] INT           NULL,
+		[RoomTypeName] VARCHAR (100) NOT NULL,
+		[Quantity]     INT           NULL,
+		CONSTRAINT [PK_RoomType] PRIMARY KEY CLUSTERED ([RoomTypeID] ASC)
+	);
+
+	ALTER TABLE [dbo].[RoomType] WITH NOCHECK
+		ADD CONSTRAINT [FK_RoomType_Itinerary] FOREIGN KEY ([ItineraryID]) REFERENCES [dbo].[Itinerary] ([ItineraryID]) ON DELETE CASCADE ON UPDATE CASCADE;
+
+	ALTER TABLE [dbo].[RoomType] WITH NOCHECK
+		ADD CONSTRAINT [FK_RoomType_OptionType] FOREIGN KEY ([OptionTypeID]) REFERENCES [dbo].[OptionType] ([OptionTypeID]) ON DELETE SET NULL ON UPDATE CASCADE;
+
+end
+GO
+
+
+
+GO
 PRINT N'Altering [dbo].[_ItinerarySet_Sel_ByID]...';
 
 
@@ -306,7 +357,11 @@ SELECT
 	[AddedOn],
 	[AddedBy],
 	[RowVersion],
-	[Title]
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
 FROM [dbo].[ItineraryMember]
 WHERE
 	[ItineraryGroupID] IN ( 
@@ -548,13 +603,368 @@ SELECT
 	[TaskID]
 FROM [dbo].[ItineraryTask]
 where ItineraryID = @ItineraryID
+
+-- RoomType --
+SELECT
+	[RoomTypeID],
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+FROM [dbo].[RoomType]
+where ItineraryID = @ItineraryID
+
 GO
-PRINT N'Altering [dbo].[PurchaseItem_Ins]...';
+
+
 
 
 GO
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Ins]
+GO
 
-ALTER PROCEDURE [dbo].[PurchaseItem_Ins]
+CREATE PROCEDURE [dbo].[ItineraryMember_Ins]
+	@ItineraryGroupID int,
+	@ItineraryMemberName varchar(100),
+	@ContactID int,
+	@AgeGroupID int,
+	@Age int,
+	@ArriveDate datetime,
+	@ArriveCityID int,
+	@ArriveFlight varchar(50),
+	@DepartDate datetime,
+	@DepartCityID int,
+	@DepartFlight varchar(50),
+	@IsDefaultContact bit,
+	@IsDefaultBilling bit,
+	@Comments varchar(500),
+	@AddedOn datetime,
+	@AddedBy int,
+	@Title varchar(50),
+	@RoomTypeID int,
+	@AgentID int,
+	@PriceOverride decimal(18, 2),
+	@RoomName varchar(50),
+	@ItineraryMemberID int OUTPUT
+AS
+INSERT [dbo].[ItineraryMember]
+(
+	[ItineraryGroupID],
+	[ItineraryMemberName],
+	[ContactID],
+	[AgeGroupID],
+	[Age],
+	[ArriveDate],
+	[ArriveCityID],
+	[ArriveFlight],
+	[DepartDate],
+	[DepartCityID],
+	[DepartFlight],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[Comments],
+	[AddedOn],
+	[AddedBy],
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
+)
+VALUES
+(
+	@ItineraryGroupID,
+	@ItineraryMemberName,
+	@ContactID,
+	@AgeGroupID,
+	@Age,
+	@ArriveDate,
+	@ArriveCityID,
+	@ArriveFlight,
+	@DepartDate,
+	@DepartCityID,
+	@DepartFlight,
+	@IsDefaultContact,
+	@IsDefaultBilling,
+	@Comments,
+	@AddedOn,
+	@AddedBy,
+	@Title,
+	@RoomTypeID,
+	@AgentID,
+	@PriceOverride,
+	@RoomName
+)
+SELECT @ItineraryMemberID=SCOPE_IDENTITY()
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Upd]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Upd]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Upd]
+	@ItineraryMemberID int,
+	@ItineraryGroupID int,
+	@ItineraryMemberName varchar(100),
+	@ContactID int,
+	@AgeGroupID int,
+	@Age int,
+	@ArriveDate datetime,
+	@ArriveCityID int,
+	@ArriveFlight varchar(50),
+	@DepartDate datetime,
+	@DepartCityID int,
+	@DepartFlight varchar(50),
+	@IsDefaultContact bit,
+	@IsDefaultBilling bit,
+	@Comments varchar(500),
+	@AddedOn datetime,
+	@AddedBy int,
+	@RowVersion timestamp,
+	@Title varchar(50),
+	@RoomTypeID int,
+	@AgentID int,
+	@PriceOverride decimal(18, 2),
+	@RoomName varchar(50)
+AS
+UPDATE [dbo].[ItineraryMember]
+SET 
+	[ItineraryGroupID] = @ItineraryGroupID,
+	[ItineraryMemberName] = @ItineraryMemberName,
+	[ContactID] = @ContactID,
+	[AgeGroupID] = @AgeGroupID,
+	[Age] = @Age,
+	[ArriveDate] = @ArriveDate,
+	[ArriveCityID] = @ArriveCityID,
+	[ArriveFlight] = @ArriveFlight,
+	[DepartDate] = @DepartDate,
+	[DepartCityID] = @DepartCityID,
+	[DepartFlight] = @DepartFlight,
+	[IsDefaultContact] = @IsDefaultContact,
+	[IsDefaultBilling] = @IsDefaultBilling,
+	[Comments] = @Comments,
+	[AddedOn] = @AddedOn,
+	[AddedBy] = @AddedBy,
+	[Title] = @Title,
+	[RoomTypeID] = @RoomTypeID,
+	[AgentID] = @AgentID,
+	[PriceOverride] = @PriceOverride,
+	[RoomName] = @RoomName
+WHERE
+	[ItineraryMemberID] = @ItineraryMemberID
+	AND [RowVersion] = @RowVersion
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Upd_ByItineraryGroupID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Upd_ByItineraryGroupID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Upd_ByItineraryGroupID]
+	@ItineraryGroupID int,
+	@ItineraryGroupIDOld int
+AS
+UPDATE [dbo].[ItineraryMember]
+SET
+	[ItineraryGroupID] = @ItineraryGroupID
+WHERE
+	[ItineraryGroupID] = @ItineraryGroupIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Upd_ByContactID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Upd_ByContactID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Upd_ByContactID]
+	@ContactID int,
+	@ContactIDOld int
+AS
+UPDATE [dbo].[ItineraryMember]
+SET
+	[ContactID] = @ContactID
+WHERE
+	[ContactID] = @ContactIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Del]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Del]
+	@ItineraryMemberID int,
+	@RowVersion timestamp
+AS
+DELETE FROM [dbo].[ItineraryMember]
+WHERE
+	[ItineraryMemberID] = @ItineraryMemberID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Del_ByItineraryGroupID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Del_ByItineraryGroupID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Del_ByItineraryGroupID]
+	@ItineraryGroupID int
+AS
+DELETE
+FROM [dbo].[ItineraryMember]
+WHERE
+	[ItineraryGroupID] = @ItineraryGroupID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Del_ByContactID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Del_ByContactID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Del_ByContactID]
+	@ContactID int
+AS
+DELETE
+FROM [dbo].[ItineraryMember]
+WHERE
+	[ContactID] = @ContactID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Sel_ByID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Sel_ByID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Sel_ByID]
+	@ItineraryMemberID int
+AS
+SET NOCOUNT ON
+SELECT
+	[ItineraryMemberID],
+	[ItineraryGroupID],
+	[ItineraryMemberName],
+	[ContactID],
+	[AgeGroupID],
+	[Age],
+	[ArriveDate],
+	[ArriveCityID],
+	[ArriveFlight],
+	[DepartDate],
+	[DepartCityID],
+	[DepartFlight],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[Comments],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
+FROM [dbo].[ItineraryMember]
+WHERE
+	[ItineraryMemberID] = @ItineraryMemberID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Sel_All]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Sel_All]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[ItineraryMemberID],
+	[ItineraryGroupID],
+	[ItineraryMemberName],
+	[ContactID],
+	[AgeGroupID],
+	[Age],
+	[ArriveDate],
+	[ArriveCityID],
+	[ArriveFlight],
+	[DepartDate],
+	[DepartCityID],
+	[DepartFlight],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[Comments],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
+FROM [dbo].[ItineraryMember]
+ORDER BY 
+	[ItineraryMemberID] ASC
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Sel_ByItineraryGroupID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Sel_ByItineraryGroupID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Sel_ByItineraryGroupID]
+	@ItineraryGroupID int
+AS
+SET NOCOUNT ON
+SELECT
+	[ItineraryMemberID],
+	[ItineraryGroupID],
+	[ItineraryMemberName],
+	[ContactID],
+	[AgeGroupID],
+	[Age],
+	[ArriveDate],
+	[ArriveCityID],
+	[ArriveFlight],
+	[DepartDate],
+	[DepartCityID],
+	[DepartFlight],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[Comments],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
+FROM [dbo].[ItineraryMember]
+WHERE
+	[ItineraryGroupID] = @ItineraryGroupID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[ItineraryMember_Sel_ByContactID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[ItineraryMember_Sel_ByContactID]
+GO
+
+CREATE PROCEDURE [dbo].[ItineraryMember_Sel_ByContactID]
+	@ContactID int
+AS
+SET NOCOUNT ON
+SELECT
+	[ItineraryMemberID],
+	[ItineraryGroupID],
+	[ItineraryMemberName],
+	[ContactID],
+	[AgeGroupID],
+	[Age],
+	[ArriveDate],
+	[ArriveCityID],
+	[ArriveFlight],
+	[DepartDate],
+	[DepartCityID],
+	[DepartFlight],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[Comments],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[Title],
+	[RoomTypeID],
+	[AgentID],
+	[PriceOverride],
+	[RoomName]
+FROM [dbo].[ItineraryMember]
+WHERE
+	[ContactID] = @ContactID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Ins]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Ins]
 	@PurchaseLineID int,
 	@OptionID int,
 	@PurchaseItemName varchar(255),
@@ -631,163 +1041,11 @@ VALUES
 )
 SELECT @PurchaseItemID=SCOPE_IDENTITY()
 GO
-PRINT N'Altering [dbo].[PurchaseItem_Sel_All]...';
 
-
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Upd]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Upd]
 GO
 
-ALTER PROCEDURE [dbo].[PurchaseItem_Sel_All]
-AS
-SET NOCOUNT ON
-SELECT
-	[PurchaseItemID],
-	[PurchaseLineID],
-	[OptionID],
-	[PurchaseItemName],
-	[BookingReference],
-	[StartDate],
-	[StartTime],
-	[EndDate],
-	[EndTime],
-	[Net],
-	[Gross],
-	[CurrencyRate],
-	[Quantity],
-	[NumberOfDays],
-	[PaymentTermID],
-	[RequestStatusID],
-	[IsLockedAccounting],
-	[AddedOn],
-	[AddedBy],
-	[RowVersion],
-	[DiscountUnits],
-	[DiscountType],
-	[IsInvoiced],
-	[SortDate]
-FROM [dbo].[PurchaseItem]
-ORDER BY 
-	[PurchaseItemID] ASC
-GO
-PRINT N'Altering [dbo].[PurchaseItem_Sel_ByID]...';
-
-
-GO
-
-ALTER PROCEDURE [dbo].[PurchaseItem_Sel_ByID]
-	@PurchaseItemID int
-AS
-SET NOCOUNT ON
-SELECT
-	[PurchaseItemID],
-	[PurchaseLineID],
-	[OptionID],
-	[PurchaseItemName],
-	[BookingReference],
-	[StartDate],
-	[StartTime],
-	[EndDate],
-	[EndTime],
-	[Net],
-	[Gross],
-	[CurrencyRate],
-	[Quantity],
-	[NumberOfDays],
-	[PaymentTermID],
-	[RequestStatusID],
-	[IsLockedAccounting],
-	[AddedOn],
-	[AddedBy],
-	[RowVersion],
-	[DiscountUnits],
-	[DiscountType],
-	[IsInvoiced],
-	[SortDate]
-FROM [dbo].[PurchaseItem]
-WHERE
-	[PurchaseItemID] = @PurchaseItemID
-GO
-PRINT N'Altering [dbo].[PurchaseItem_Sel_ByOptionID]...';
-
-
-GO
-
-ALTER PROCEDURE [dbo].[PurchaseItem_Sel_ByOptionID]
-	@OptionID int
-AS
-SET NOCOUNT ON
-SELECT
-	[PurchaseItemID],
-	[PurchaseLineID],
-	[OptionID],
-	[PurchaseItemName],
-	[BookingReference],
-	[StartDate],
-	[StartTime],
-	[EndDate],
-	[EndTime],
-	[Net],
-	[Gross],
-	[CurrencyRate],
-	[Quantity],
-	[NumberOfDays],
-	[PaymentTermID],
-	[RequestStatusID],
-	[IsLockedAccounting],
-	[AddedOn],
-	[AddedBy],
-	[RowVersion],
-	[DiscountUnits],
-	[DiscountType],
-	[IsInvoiced],
-	[SortDate]
-FROM [dbo].[PurchaseItem]
-WHERE
-	[OptionID] = @OptionID
-GO
-PRINT N'Altering [dbo].[PurchaseItem_Sel_ByPurchaseLineID]...';
-
-
-GO
-
-ALTER PROCEDURE [dbo].[PurchaseItem_Sel_ByPurchaseLineID]
-	@PurchaseLineID int
-AS
-SET NOCOUNT ON
-SELECT
-	[PurchaseItemID],
-	[PurchaseLineID],
-	[OptionID],
-	[PurchaseItemName],
-	[BookingReference],
-	[StartDate],
-	[StartTime],
-	[EndDate],
-	[EndTime],
-	[Net],
-	[Gross],
-	[CurrencyRate],
-	[Quantity],
-	[NumberOfDays],
-	[PaymentTermID],
-	[RequestStatusID],
-	[IsLockedAccounting],
-	[AddedOn],
-	[AddedBy],
-	[RowVersion],
-	[DiscountUnits],
-	[DiscountType],
-	[IsInvoiced],
-	[SortDate]
-FROM [dbo].[PurchaseItem]
-WHERE
-	[PurchaseLineID] = @PurchaseLineID
-GO
-PRINT N'Altering [dbo].[PurchaseItem_Upd]...';
-
-
-GO
-
-ALTER PROCEDURE [dbo].[PurchaseItem_Upd]
+CREATE PROCEDURE [dbo].[PurchaseItem_Upd]
 	@PurchaseItemID int,
 	@PurchaseLineID int,
 	@OptionID int,
@@ -842,6 +1100,517 @@ WHERE
 	AND [RowVersion] = @RowVersion
 GO
 
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Upd_ByPurchaseLineID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Upd_ByPurchaseLineID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Upd_ByPurchaseLineID]
+	@PurchaseLineID int,
+	@PurchaseLineIDOld int
+AS
+UPDATE [dbo].[PurchaseItem]
+SET
+	[PurchaseLineID] = @PurchaseLineID
+WHERE
+	[PurchaseLineID] = @PurchaseLineIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Upd_ByOptionID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Upd_ByOptionID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Upd_ByOptionID]
+	@OptionID int,
+	@OptionIDOld int
+AS
+UPDATE [dbo].[PurchaseItem]
+SET
+	[OptionID] = @OptionID
+WHERE
+	[OptionID] = @OptionIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Del]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Del]
+	@PurchaseItemID int,
+	@RowVersion timestamp
+AS
+DELETE FROM [dbo].[PurchaseItem]
+WHERE
+	[PurchaseItemID] = @PurchaseItemID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Del_ByPurchaseLineID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Del_ByPurchaseLineID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Del_ByPurchaseLineID]
+	@PurchaseLineID int
+AS
+DELETE
+FROM [dbo].[PurchaseItem]
+WHERE
+	[PurchaseLineID] = @PurchaseLineID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Del_ByOptionID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Del_ByOptionID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Del_ByOptionID]
+	@OptionID int
+AS
+DELETE
+FROM [dbo].[PurchaseItem]
+WHERE
+	[OptionID] = @OptionID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Sel_ByID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Sel_ByID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Sel_ByID]
+	@PurchaseItemID int
+AS
+SET NOCOUNT ON
+SELECT
+	[PurchaseItemID],
+	[PurchaseLineID],
+	[OptionID],
+	[PurchaseItemName],
+	[BookingReference],
+	[StartDate],
+	[StartTime],
+	[EndDate],
+	[EndTime],
+	[Net],
+	[Gross],
+	[CurrencyRate],
+	[Quantity],
+	[NumberOfDays],
+	[PaymentTermID],
+	[RequestStatusID],
+	[IsLockedAccounting],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[DiscountUnits],
+	[DiscountType],
+	[IsInvoiced],
+	[SortDate]
+FROM [dbo].[PurchaseItem]
+WHERE
+	[PurchaseItemID] = @PurchaseItemID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Sel_All]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Sel_All]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[PurchaseItemID],
+	[PurchaseLineID],
+	[OptionID],
+	[PurchaseItemName],
+	[BookingReference],
+	[StartDate],
+	[StartTime],
+	[EndDate],
+	[EndTime],
+	[Net],
+	[Gross],
+	[CurrencyRate],
+	[Quantity],
+	[NumberOfDays],
+	[PaymentTermID],
+	[RequestStatusID],
+	[IsLockedAccounting],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[DiscountUnits],
+	[DiscountType],
+	[IsInvoiced],
+	[SortDate]
+FROM [dbo].[PurchaseItem]
+ORDER BY 
+	[PurchaseItemID] ASC
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Sel_ByPurchaseLineID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Sel_ByPurchaseLineID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Sel_ByPurchaseLineID]
+	@PurchaseLineID int
+AS
+SET NOCOUNT ON
+SELECT
+	[PurchaseItemID],
+	[PurchaseLineID],
+	[OptionID],
+	[PurchaseItemName],
+	[BookingReference],
+	[StartDate],
+	[StartTime],
+	[EndDate],
+	[EndTime],
+	[Net],
+	[Gross],
+	[CurrencyRate],
+	[Quantity],
+	[NumberOfDays],
+	[PaymentTermID],
+	[RequestStatusID],
+	[IsLockedAccounting],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[DiscountUnits],
+	[DiscountType],
+	[IsInvoiced],
+	[SortDate]
+FROM [dbo].[PurchaseItem]
+WHERE
+	[PurchaseLineID] = @PurchaseLineID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[PurchaseItem_Sel_ByOptionID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[PurchaseItem_Sel_ByOptionID]
+GO
+
+CREATE PROCEDURE [dbo].[PurchaseItem_Sel_ByOptionID]
+	@OptionID int
+AS
+SET NOCOUNT ON
+SELECT
+	[PurchaseItemID],
+	[PurchaseLineID],
+	[OptionID],
+	[PurchaseItemName],
+	[BookingReference],
+	[StartDate],
+	[StartTime],
+	[EndDate],
+	[EndTime],
+	[Net],
+	[Gross],
+	[CurrencyRate],
+	[Quantity],
+	[NumberOfDays],
+	[PaymentTermID],
+	[RequestStatusID],
+	[IsLockedAccounting],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[DiscountUnits],
+	[DiscountType],
+	[IsInvoiced],
+	[SortDate]
+FROM [dbo].[PurchaseItem]
+WHERE
+	[OptionID] = @OptionID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Ins]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Ins]
+	@ItineraryID int,
+	@OptionTypeID int,
+	@RoomTypeName varchar(100),
+	@Quantity int,
+	@RoomTypeID int OUTPUT
+AS
+INSERT [dbo].[RoomType]
+(
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+)
+VALUES
+(
+	@ItineraryID,
+	@OptionTypeID,
+	@RoomTypeName,
+	@Quantity
+)
+SELECT @RoomTypeID=SCOPE_IDENTITY()
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Upd]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Upd]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Upd]
+	@RoomTypeID int,
+	@ItineraryID int,
+	@OptionTypeID int,
+	@RoomTypeName varchar(100),
+	@Quantity int
+AS
+UPDATE [dbo].[RoomType]
+SET 
+	[ItineraryID] = @ItineraryID,
+	[OptionTypeID] = @OptionTypeID,
+	[RoomTypeName] = @RoomTypeName,
+	[Quantity] = @Quantity
+WHERE
+	[RoomTypeID] = @RoomTypeID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Upd_ByItineraryID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Upd_ByItineraryID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Upd_ByItineraryID]
+	@ItineraryID int,
+	@ItineraryIDOld int
+AS
+UPDATE [dbo].[RoomType]
+SET
+	[ItineraryID] = @ItineraryID
+WHERE
+	[ItineraryID] = @ItineraryIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Upd_ByOptionTypeID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Upd_ByOptionTypeID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Upd_ByOptionTypeID]
+	@OptionTypeID int,
+	@OptionTypeIDOld int
+AS
+UPDATE [dbo].[RoomType]
+SET
+	[OptionTypeID] = @OptionTypeID
+WHERE
+	[OptionTypeID] = @OptionTypeIDOld
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Del]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Del]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Del]
+	@RoomTypeID int
+AS
+DELETE FROM [dbo].[RoomType]
+WHERE
+	[RoomTypeID] = @RoomTypeID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Del_ByItineraryID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Del_ByItineraryID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Del_ByItineraryID]
+	@ItineraryID int
+AS
+DELETE
+FROM [dbo].[RoomType]
+WHERE
+	[ItineraryID] = @ItineraryID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Del_ByOptionTypeID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Del_ByOptionTypeID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Del_ByOptionTypeID]
+	@OptionTypeID int
+AS
+DELETE
+FROM [dbo].[RoomType]
+WHERE
+	[OptionTypeID] = @OptionTypeID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Sel_ByID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Sel_ByID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Sel_ByID]
+	@RoomTypeID int
+AS
+SET NOCOUNT ON
+SELECT
+	[RoomTypeID],
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+FROM [dbo].[RoomType]
+WHERE
+	[RoomTypeID] = @RoomTypeID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Sel_All]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Sel_All]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Sel_All]
+AS
+SET NOCOUNT ON
+SELECT
+	[RoomTypeID],
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+FROM [dbo].[RoomType]
+ORDER BY 
+	[RoomTypeID] ASC
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Sel_ByItineraryID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Sel_ByItineraryID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Sel_ByItineraryID]
+	@ItineraryID int
+AS
+SET NOCOUNT ON
+SELECT
+	[RoomTypeID],
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+FROM [dbo].[RoomType]
+WHERE
+	[ItineraryID] = @ItineraryID
+GO
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[RoomType_Sel_ByOptionTypeID]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[RoomType_Sel_ByOptionTypeID]
+GO
+
+CREATE PROCEDURE [dbo].[RoomType_Sel_ByOptionTypeID]
+	@OptionTypeID int
+AS
+SET NOCOUNT ON
+SELECT
+	[RoomTypeID],
+	[ItineraryID],
+	[OptionTypeID],
+	[RoomTypeName],
+	[Quantity]
+FROM [dbo].[RoomType]
+WHERE
+	[OptionTypeID] = @OptionTypeID
+GO
+
+GO
+
+PRINT N'Refreshing [dbo].[ItineraryServiceTypePricing]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryServiceTypePricing';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItemPayments]...';
+
+
+GO
+--EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItemPayments';
+
+
+GO
+PRINT N'Refreshing [dbo].[_DataExtract_ItineraryFinancials]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo._DataExtract_ItineraryFinancials';
+
+
+GO
+PRINT N'Refreshing [dbo].[ItineraryMember_Del]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryMember_Del';
+
+
+GO
+PRINT N'Refreshing [dbo].[ItineraryMember_Del_ByContactID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryMember_Del_ByContactID';
+
+
+GO
+PRINT N'Refreshing [dbo].[ItineraryMember_Del_ByItineraryGroupID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryMember_Del_ByItineraryGroupID';
+
+
+GO
+PRINT N'Refreshing [dbo].[ItineraryMember_Upd_ByContactID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryMember_Upd_ByContactID';
+
+
+GO
+PRINT N'Refreshing [dbo].[ItineraryMember_Upd_ByItineraryGroupID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.ItineraryMember_Upd_ByItineraryGroupID';
+
+
+GO
+PRINT N'Refreshing [dbo].[_ItinerarySet_Copy_ByID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo._ItinerarySet_Copy_ByID';
+
+
+GO
+PRINT N'Refreshing [dbo].[_Report_WhoUsedSupplier]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo._Report_WhoUsedSupplier';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItem_Del]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItem_Del';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItem_Del_ByOptionID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItem_Del_ByOptionID';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItem_Del_ByPurchaseLineID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItem_Del_ByPurchaseLineID';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItem_Upd_ByOptionID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItem_Upd_ByOptionID';
+
+
+GO
+PRINT N'Refreshing [dbo].[PurchaseItem_Upd_ByPurchaseLineID]...';
+
+
+GO
+EXECUTE sp_refreshsqlmodule N'dbo.PurchaseItem_Upd_ByPurchaseLineID';
 
 
 

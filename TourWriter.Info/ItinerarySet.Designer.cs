@@ -74,6 +74,8 @@ namespace TourWriter.Info {
         
         private ItineraryTaskDataTable tableItineraryTask;
         
+        private RoomTypeDataTable tableRoomType;
+        
         private global::System.Data.DataRelation relationPaymentTermItinerary;
         
         private global::System.Data.DataRelation relationItineraryItineraryPax;
@@ -82,21 +84,21 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationItineraryPurchaseLine;
         
-        private global::System.Data.DataRelation relationPurchaseLinePurchaseItem;
-        
         private global::System.Data.DataRelation relationPaymentTermPurchaseItem;
+        
+        private global::System.Data.DataRelation relationPurchaseLinePurchaseItem;
         
         private global::System.Data.DataRelation relationPurchaseItemPurchaseItemNote;
         
         private global::System.Data.DataRelation relationItineraryItineraryGroup;
         
-        private global::System.Data.DataRelation relationItineraryGroupGroupMember;
-        
         private global::System.Data.DataRelation relationContactGroupMember;
         
-        private global::System.Data.DataRelation relationItineraryItineraryMessage;
+        private global::System.Data.DataRelation relationItineraryGroupGroupMember;
         
         private global::System.Data.DataRelation relationMessageItineraryMessage;
+        
+        private global::System.Data.DataRelation relationItineraryItineraryMessage;
         
         private global::System.Data.DataRelation relationMessageSupplierMessage;
         
@@ -108,9 +110,11 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationItinerarySaleItinerarySaleAllocation;
         
+        private global::System.Data.DataRelation relationFK_ItineraryPax_ItineraryPaxOverride;
+        
         private global::System.Data.DataRelation relationFK_PurchaseItem_ItineraryPaxOverride;
         
-        private global::System.Data.DataRelation relationFK_ItineraryPax_ItineraryPaxOverride;
+        private global::System.Data.DataRelation relationItinerary_RoomType;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -214,6 +218,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ItineraryTask"] != null)) {
                     base.Tables.Add(new ItineraryTaskDataTable(ds.Tables["ItineraryTask"]));
+                }
+                if ((ds.Tables["RoomType"] != null)) {
+                    base.Tables.Add(new RoomTypeDataTable(ds.Tables["RoomType"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -485,6 +492,16 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public RoomTypeDataTable RoomType {
+            get {
+                return this.tableRoomType;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -624,6 +641,9 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["ItineraryTask"] != null)) {
                     base.Tables.Add(new ItineraryTaskDataTable(ds.Tables["ItineraryTask"]));
+                }
+                if ((ds.Tables["RoomType"] != null)) {
+                    base.Tables.Add(new RoomTypeDataTable(ds.Tables["RoomType"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -808,25 +828,32 @@ namespace TourWriter.Info {
                     this.tableItineraryTask.InitVars();
                 }
             }
+            this.tableRoomType = ((RoomTypeDataTable)(base.Tables["RoomType"]));
+            if ((initTable == true)) {
+                if ((this.tableRoomType != null)) {
+                    this.tableRoomType.InitVars();
+                }
+            }
             this.relationPaymentTermItinerary = this.Relations["PaymentTermItinerary"];
             this.relationItineraryItineraryPax = this.Relations["ItineraryItineraryPax"];
             this.relationItineraryItineraryMarginOverride = this.Relations["ItineraryItineraryMarginOverride"];
             this.relationItineraryPurchaseLine = this.Relations["ItineraryPurchaseLine"];
-            this.relationPurchaseLinePurchaseItem = this.Relations["PurchaseLinePurchaseItem"];
             this.relationPaymentTermPurchaseItem = this.Relations["PaymentTermPurchaseItem"];
+            this.relationPurchaseLinePurchaseItem = this.Relations["PurchaseLinePurchaseItem"];
             this.relationPurchaseItemPurchaseItemNote = this.Relations["PurchaseItemPurchaseItemNote"];
             this.relationItineraryItineraryGroup = this.Relations["ItineraryItineraryGroup"];
-            this.relationItineraryGroupGroupMember = this.Relations["ItineraryGroupGroupMember"];
             this.relationContactGroupMember = this.Relations["ContactGroupMember"];
-            this.relationItineraryItineraryMessage = this.Relations["ItineraryItineraryMessage"];
+            this.relationItineraryGroupGroupMember = this.Relations["ItineraryGroupGroupMember"];
             this.relationMessageItineraryMessage = this.Relations["MessageItineraryMessage"];
+            this.relationItineraryItineraryMessage = this.Relations["ItineraryItineraryMessage"];
             this.relationMessageSupplierMessage = this.Relations["MessageSupplierMessage"];
             this.relationItineraryItineraryPubFile = this.Relations["ItineraryItineraryPubFile"];
             this.relationFK_ItineraryMember_ItineraryPayment = this.Relations["FK_ItineraryMember_ItineraryPayment"];
             this.relationFK_Itinerary_ItinerarySale = this.Relations["FK_Itinerary_ItinerarySale"];
             this.relationItinerarySaleItinerarySaleAllocation = this.Relations["ItinerarySaleItinerarySaleAllocation"];
-            this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
             this.relationFK_ItineraryPax_ItineraryPaxOverride = this.Relations["FK_ItineraryPax_ItineraryPaxOverride"];
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
+            this.relationItinerary_RoomType = this.Relations["Itinerary_RoomType"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -888,6 +915,8 @@ namespace TourWriter.Info {
             base.Tables.Add(this.tableTask);
             this.tableItineraryTask = new ItineraryTaskDataTable();
             base.Tables.Add(this.tableItineraryTask);
+            this.tableRoomType = new RoomTypeDataTable();
+            base.Tables.Add(this.tableRoomType);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermItinerary", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
@@ -917,19 +946,19 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseLineIDColumn});
-            this.tablePurchaseItem.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermPurchaseItem", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PaymentTermIDColumn});
             this.tablePurchaseItem.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.SetNull;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseLineIDColumn});
+            this.tablePurchaseItem.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("PurchaseItemPurchaseItemNote", new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
@@ -945,13 +974,6 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
-                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMember.ItineraryGroupIDColumn});
-            this.tableItineraryMember.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("ContactGroupMember", new global::System.Data.DataColumn[] {
                         this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMember.ContactIDColumn});
@@ -959,16 +981,23 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
-                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMessage.ItineraryIDColumn});
-            this.tableItineraryMessage.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
+                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMember.ItineraryGroupIDColumn});
+            this.tableItineraryMember.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("MessageItineraryMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMessage.MessageIDColumn});
+            this.tableItineraryMessage.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMessage.ItineraryIDColumn});
             this.tableItineraryMessage.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1008,13 +1037,6 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryPaxOverride.PurchaseItemIDColumn});
-            this.tableItineraryPaxOverride.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
                         this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryPaxOverride.ItineraryPaxIDColumn});
@@ -1022,16 +1044,23 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Task_ItineraryTask", new global::System.Data.DataColumn[] {
-                        this.tableTask.TaskIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryTask.TaskIDColumn});
-            this.tableItineraryTask.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn});
+            this.tableItineraryPaxOverride.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Itinerary_ItineraryTask", new global::System.Data.DataColumn[] {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryTask.ItineraryIDColumn});
+            this.tableItineraryTask.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Task_ItineraryTask", new global::System.Data.DataColumn[] {
+                        this.tableTask.TaskIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryTask.TaskIDColumn});
             this.tableItineraryTask.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -1052,14 +1081,14 @@ namespace TourWriter.Info {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseLine.ItineraryIDColumn}, false);
             this.Relations.Add(this.relationItineraryPurchaseLine);
-            this.relationPurchaseLinePurchaseItem = new global::System.Data.DataRelation("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseLineIDColumn}, false);
-            this.Relations.Add(this.relationPurchaseLinePurchaseItem);
             this.relationPaymentTermPurchaseItem = new global::System.Data.DataRelation("PaymentTermPurchaseItem", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PaymentTermIDColumn}, false);
             this.Relations.Add(this.relationPaymentTermPurchaseItem);
+            this.relationPurchaseLinePurchaseItem = new global::System.Data.DataRelation("PurchaseLinePurchaseItem", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseLine.PurchaseLineIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseLineIDColumn}, false);
+            this.Relations.Add(this.relationPurchaseLinePurchaseItem);
             this.relationPurchaseItemPurchaseItemNote = new global::System.Data.DataRelation("PurchaseItemPurchaseItemNote", new global::System.Data.DataColumn[] {
                         this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
                         this.tablePurchaseItemNote.PurchaseItemIDColumn}, false);
@@ -1068,22 +1097,22 @@ namespace TourWriter.Info {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryGroup.ItineraryIDColumn}, false);
             this.Relations.Add(this.relationItineraryItineraryGroup);
-            this.relationItineraryGroupGroupMember = new global::System.Data.DataRelation("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
-                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMember.ItineraryGroupIDColumn}, false);
-            this.Relations.Add(this.relationItineraryGroupGroupMember);
             this.relationContactGroupMember = new global::System.Data.DataRelation("ContactGroupMember", new global::System.Data.DataColumn[] {
                         this.tableContact.ContactIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMember.ContactIDColumn}, false);
             this.Relations.Add(this.relationContactGroupMember);
-            this.relationItineraryItineraryMessage = new global::System.Data.DataRelation("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
-                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryMessage.ItineraryIDColumn}, false);
-            this.Relations.Add(this.relationItineraryItineraryMessage);
+            this.relationItineraryGroupGroupMember = new global::System.Data.DataRelation("ItineraryGroupGroupMember", new global::System.Data.DataColumn[] {
+                        this.tableItineraryGroup.ItineraryGroupIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMember.ItineraryGroupIDColumn}, false);
+            this.Relations.Add(this.relationItineraryGroupGroupMember);
             this.relationMessageItineraryMessage = new global::System.Data.DataRelation("MessageItineraryMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryMessage.MessageIDColumn}, false);
             this.Relations.Add(this.relationMessageItineraryMessage);
+            this.relationItineraryItineraryMessage = new global::System.Data.DataRelation("ItineraryItineraryMessage", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryMessage.ItineraryIDColumn}, false);
+            this.Relations.Add(this.relationItineraryItineraryMessage);
             this.relationMessageSupplierMessage = new global::System.Data.DataRelation("MessageSupplierMessage", new global::System.Data.DataColumn[] {
                         this.tableMessage.MessageIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableSupplierMessage.MessageIDColumn}, false);
@@ -1104,14 +1133,18 @@ namespace TourWriter.Info {
                         this.tableItinerarySale.ItinerarySaleIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItinerarySaleAllocation.ItinerarySaleIDColumn}, false);
             this.Relations.Add(this.relationItinerarySaleItinerarySaleAllocation);
-            this.relationFK_PurchaseItem_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
-                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
-            this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
             this.relationFK_ItineraryPax_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_ItineraryPax_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
                         this.tableItineraryPax.ItineraryPaxIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryPaxOverride.ItineraryPaxIDColumn}, false);
             this.Relations.Add(this.relationFK_ItineraryPax_ItineraryPaxOverride);
+            this.relationFK_PurchaseItem_ItineraryPaxOverride = new global::System.Data.DataRelation("FK_PurchaseItem_ItineraryPaxOverride", new global::System.Data.DataColumn[] {
+                        this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
+            this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
+            this.relationItinerary_RoomType = new global::System.Data.DataRelation("Itinerary_RoomType", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableRoomType.ItineraryIDColumn}, false);
+            this.Relations.Add(this.relationItinerary_RoomType);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1266,6 +1299,12 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeRoomType() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void SchemaChanged(object sender, global::System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == global::System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
@@ -1393,6 +1432,9 @@ namespace TourWriter.Info {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void ItineraryTaskRowChangeEventHandler(object sender, ItineraryTaskRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void RoomTypeRowChangeEventHandler(object sender, RoomTypeRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -11817,6 +11859,330 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class RoomTypeDataTable : global::System.Data.TypedTableBase<RoomTypeRow> {
+            
+            private global::System.Data.DataColumn columnRoomTypeID;
+            
+            private global::System.Data.DataColumn columnItineraryID;
+            
+            private global::System.Data.DataColumn columnOptionTypeID;
+            
+            private global::System.Data.DataColumn columnRoomTypeName;
+            
+            private global::System.Data.DataColumn columnQuantity;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeDataTable() {
+                this.TableName = "RoomType";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal RoomTypeDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected RoomTypeDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoomTypeIDColumn {
+                get {
+                    return this.columnRoomTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItineraryIDColumn {
+                get {
+                    return this.columnItineraryID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn OptionTypeIDColumn {
+                get {
+                    return this.columnOptionTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoomTypeNameColumn {
+                get {
+                    return this.columnRoomTypeName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QuantityColumn {
+                get {
+                    return this.columnQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow this[int index] {
+                get {
+                    return ((RoomTypeRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event RoomTypeRowChangeEventHandler RoomTypeRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event RoomTypeRowChangeEventHandler RoomTypeRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event RoomTypeRowChangeEventHandler RoomTypeRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event RoomTypeRowChangeEventHandler RoomTypeRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddRoomTypeRow(RoomTypeRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow AddRoomTypeRow(ItineraryRow parentItineraryRowByItinerary_RoomType, int OptionTypeID, string RoomTypeName, int Quantity) {
+                RoomTypeRow rowRoomTypeRow = ((RoomTypeRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        null,
+                        OptionTypeID,
+                        RoomTypeName,
+                        Quantity};
+                if ((parentItineraryRowByItinerary_RoomType != null)) {
+                    columnValuesArray[1] = parentItineraryRowByItinerary_RoomType[0];
+                }
+                rowRoomTypeRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowRoomTypeRow);
+                return rowRoomTypeRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow FindByRoomTypeID(int RoomTypeID) {
+                return ((RoomTypeRow)(this.Rows.Find(new object[] {
+                            RoomTypeID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                RoomTypeDataTable cln = ((RoomTypeDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new RoomTypeDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnRoomTypeID = base.Columns["RoomTypeID"];
+                this.columnItineraryID = base.Columns["ItineraryID"];
+                this.columnOptionTypeID = base.Columns["OptionTypeID"];
+                this.columnRoomTypeName = base.Columns["RoomTypeName"];
+                this.columnQuantity = base.Columns["Quantity"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnRoomTypeID = new global::System.Data.DataColumn("RoomTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoomTypeID);
+                this.columnItineraryID = new global::System.Data.DataColumn("ItineraryID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItineraryID);
+                this.columnOptionTypeID = new global::System.Data.DataColumn("OptionTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOptionTypeID);
+                this.columnRoomTypeName = new global::System.Data.DataColumn("RoomTypeName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoomTypeName);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantity);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnRoomTypeID}, true));
+                this.columnRoomTypeID.AutoIncrement = true;
+                this.columnRoomTypeID.AutoIncrementSeed = -1;
+                this.columnRoomTypeID.AutoIncrementStep = -1;
+                this.columnRoomTypeID.AllowDBNull = false;
+                this.columnRoomTypeID.ReadOnly = true;
+                this.columnRoomTypeID.Unique = true;
+                this.columnItineraryID.AllowDBNull = false;
+                this.columnRoomTypeName.AllowDBNull = false;
+                this.columnRoomTypeName.MaxLength = 100;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow NewRoomTypeRow() {
+                return ((RoomTypeRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new RoomTypeRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(RoomTypeRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.RoomTypeRowChanged != null)) {
+                    this.RoomTypeRowChanged(this, new RoomTypeRowChangeEvent(((RoomTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.RoomTypeRowChanging != null)) {
+                    this.RoomTypeRowChanging(this, new RoomTypeRowChangeEvent(((RoomTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.RoomTypeRowDeleted != null)) {
+                    this.RoomTypeRowDeleted(this, new RoomTypeRowChangeEvent(((RoomTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.RoomTypeRowDeleting != null)) {
+                    this.RoomTypeRowDeleting(this, new RoomTypeRowChangeEvent(((RoomTypeRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveRoomTypeRow(RoomTypeRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ItinerarySet ds = new ItinerarySet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "RoomTypeDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class PaymentTermRow : global::System.Data.DataRow {
@@ -13247,6 +13613,17 @@ namespace TourWriter.Info {
                     return ((ItineraryPaxRow[])(base.GetChildRows(this.Table.ChildRelations["ItineraryItineraryPax"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow[] GetRoomTypeRows() {
+                if ((this.Table.ChildRelations["Itinerary_RoomType"] == null)) {
+                    return new RoomTypeRow[0];
+                }
+                else {
+                    return ((RoomTypeRow[])(base.GetChildRows(this.Table.ChildRelations["Itinerary_RoomType"])));
+                }
+            }
         }
         
         /// <summary>
@@ -14512,23 +14889,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseLineRow PurchaseLineRow {
-                get {
-                    return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["PurchaseLinePurchaseItem"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermPurchaseItem"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["PaymentTermPurchaseItem"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseLineRow PurchaseLineRow {
+                get {
+                    return ((PurchaseLineRow)(this.GetParentRow(this.Table.ParentRelations["PurchaseLinePurchaseItem"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["PurchaseLinePurchaseItem"]);
                 }
             }
             
@@ -16475,23 +16852,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryGroupRow ItineraryGroupRow {
-                get {
-                    return ((ItineraryGroupRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryGroupGroupMember"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryGroupGroupMember"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactRow ContactRow {
                 get {
                     return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactGroupMember"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["ContactGroupMember"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryGroupRow ItineraryGroupRow {
+                get {
+                    return ((ItineraryGroupRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryGroupGroupMember"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryGroupGroupMember"]);
                 }
             }
             
@@ -17059,23 +17436,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ItineraryRow ItineraryRow {
-                get {
-                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryItineraryMessage"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryItineraryMessage"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MessageRow MessageRow {
                 get {
                     return ((MessageRow)(this.GetParentRow(this.Table.ParentRelations["MessageItineraryMessage"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["MessageItineraryMessage"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryRow ItineraryRow {
+                get {
+                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["ItineraryItineraryMessage"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["ItineraryItineraryMessage"]);
                 }
             }
         }
@@ -19204,23 +19581,23 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseItemRow PurchaseItemRow {
-                get {
-                    return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryPaxRow ItineraryPaxRow {
                 get {
                     return ((ItineraryPaxRow)(this.GetParentRow(this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_ItineraryPax_ItineraryPaxOverride"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public PurchaseItemRow PurchaseItemRow {
+                get {
+                    return ((PurchaseItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_PurchaseItem_ItineraryPaxOverride"]);
                 }
             }
             
@@ -19584,6 +19961,121 @@ namespace TourWriter.Info {
                 set {
                     this[this.tableItineraryTask.TaskIDColumn] = value;
                 }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class RoomTypeRow : global::System.Data.DataRow {
+            
+            private RoomTypeDataTable tableRoomType;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal RoomTypeRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableRoomType = ((RoomTypeDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int RoomTypeID {
+                get {
+                    return ((int)(this[this.tableRoomType.RoomTypeIDColumn]));
+                }
+                set {
+                    this[this.tableRoomType.RoomTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ItineraryID {
+                get {
+                    return ((int)(this[this.tableRoomType.ItineraryIDColumn]));
+                }
+                set {
+                    this[this.tableRoomType.ItineraryIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int OptionTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableRoomType.OptionTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OptionTypeID\' in table \'RoomType\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRoomType.OptionTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RoomTypeName {
+                get {
+                    return ((string)(this[this.tableRoomType.RoomTypeNameColumn]));
+                }
+                set {
+                    this[this.tableRoomType.RoomTypeNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Quantity {
+                get {
+                    try {
+                        return ((int)(this[this.tableRoomType.QuantityColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Quantity\' in table \'RoomType\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRoomType.QuantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryRow ItineraryRow {
+                get {
+                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["Itinerary_RoomType"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["Itinerary_RoomType"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsOptionTypeIDNull() {
+                return this.IsNull(this.tableRoomType.OptionTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetOptionTypeIDNull() {
+                this[this.tableRoomType.OptionTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsQuantityNull() {
+                return this.IsNull(this.tableRoomType.QuantityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetQuantityNull() {
+                this[this.tableRoomType.QuantityColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -20423,6 +20915,40 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryTaskRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class RoomTypeRowChangeEvent : global::System.EventArgs {
+            
+            private RoomTypeRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRowChangeEvent(RoomTypeRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public RoomTypeRow Row {
                 get {
                     return this.eventRow;
                 }
