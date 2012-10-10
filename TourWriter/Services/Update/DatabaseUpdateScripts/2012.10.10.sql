@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2012.08.16')
+if ((select VersionNumber from AppSettings) <> '2012.08.16' and (select VersionNumber from AppSettings) <> '2012.10.05')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -33,6 +33,21 @@ IF @@TRANCOUNT=0 BEGIN INSERT INTO #tmpErrors (Error) SELECT 1 BEGIN TRANSACTION
 GO
 
 ----------------------------------------------------------------------------------------
+
+GO
+PRINT N'alter Supplier-Grade constraint on-delete to set null, not cascade';
+
+GO
+ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [FK_Supplier_Grade];
+GO
+ALTER TABLE [dbo].[Supplier] WITH NOCHECK
+  ADD CONSTRAINT [FK_Supplier_Grade] FOREIGN KEY ([GradeID]) REFERENCES [dbo].[Grade] ([GradeID]) ON DELETE SET NULL ON UPDATE CASCADE;
+GO
+ALTER TABLE [dbo].[Supplier] DROP CONSTRAINT [FK_Supplier_GradeExternal];
+GO
+ALTER TABLE [dbo].[Supplier] WITH NOCHECK
+  ADD CONSTRAINT [FK_Supplier_GradeExternal] FOREIGN KEY ([GradeExternalID]) REFERENCES [dbo].[GradeExternal] ([GradeExternalID]) ON DELETE SET NULL ON UPDATE CASCADE;
+GO
 
 GO
 PRINT N'Add new column SortDate...';
@@ -1619,7 +1634,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.10.05'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2012.10.10'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
