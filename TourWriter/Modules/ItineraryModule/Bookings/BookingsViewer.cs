@@ -478,8 +478,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 string s = App.GetResourceString("PriceOverrideConflict");
                 if (App.AskYesNo(String.Format(s, price)))
                 {
-                    itinerarySet.Itinerary[0].SetGrossOverrideNull();
+                    chkLockGrossOverride.Checked = false;
+
+                    // remove override
                     txtPriceOverride.Value = null;
+                    itinerarySet.Itinerary[0].SetGrossOverrideNull();
+                    itinerarySet.Itinerary[0].IsLockedGrossOverride = false;
+
                     RecalculateFinalPricing();
                 }
             }
@@ -1710,13 +1715,27 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void chkLockGrossOverride_CheckedChanged(object sender, EventArgs e)
         {
-            if (itinerarySet.Itinerary[0].IsGrossOverrideNull())
-            {
-                itinerarySet.Itinerary[0].GrossOverride = itinerarySet.GetGrossFinalPrice();
-                txtPriceOverride.Value = itinerarySet.Itinerary[0].GrossOverride;
-            }
 
-            txtPriceOverride.ReadOnly = chkLockGrossOverride.Checked;
+            if (chkLockGrossOverride.Checked)
+            {
+                // lock it
+                txtPriceOverride.ReadOnly = true;
+                itinerarySet.Itinerary[0].IsLockedGrossOverride = true;
+
+                // and set override (if to set already) to current gross price
+                if (itinerarySet.Itinerary[0].IsGrossOverrideNull())
+                {
+                    var price = itinerarySet.GetGrossFinalPrice();
+                    txtPriceOverride.Value = price;
+                    itinerarySet.Itinerary[0].GrossOverride = price;
+                }
+            }
+            else
+            {
+                // unlock it but leave override price for user to remove
+                txtPriceOverride.ReadOnly = false;
+                itinerarySet.Itinerary[0].IsLockedGrossOverride = false;
+            }
         }
 
         private void grid_MouseDown(object sender, MouseEventArgs e)
