@@ -101,6 +101,8 @@
               <xs:element name="AgentContactID" msprop:Generator_ColumnVarNameInTable="columnAgentContactID" msprop:Generator_ColumnPropNameInRow="AgentContactID" msprop:Generator_ColumnPropNameInTable="AgentContactIDColumn" msprop:Generator_UserColumnName="AgentContactID" type="xs:int" default="0" minOccurs="0" />
               <xs:element name="UpdatedOn" msprop:Generator_ColumnVarNameInTable="columnUpdatedOn" msprop:Generator_ColumnPropNameInRow="UpdatedOn" msprop:Generator_ColumnPropNameInTable="UpdatedOnColumn" msprop:Generator_UserColumnName="UpdatedOn" type="xs:dateTime" minOccurs="0" />
               <xs:element name="AllocationsItineraryID" msprop:Generator_ColumnVarNameInTable="columnAllocationsItineraryID" msprop:Generator_ColumnPropNameInRow="AllocationsItineraryID" msprop:Generator_ColumnPropNameInTable="AllocationsItineraryIDColumn" msprop:Generator_UserColumnName="AllocationsItineraryID" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="ItineraryTypeID" msprop:Generator_ColumnVarNameInTable="columnItineraryTypeID" msprop:Generator_ColumnPropNameInRow="ItineraryTypeID" msprop:Generator_ColumnPropNameInTable="ItineraryTypeIDColumn" msprop:Generator_UserColumnName="ItineraryTypeID" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Preferences" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Preferences" msprop:Generator_ColumnVarNameInTable="columnPreferences" msprop:Generator_ColumnPropNameInTable="PreferencesColumn" msprop:Generator_UserColumnName="Preferences" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -265,6 +267,9 @@
               <xs:element name="JobDescription" msprop:Generator_ColumnVarNameInTable="columnJobDescription" msprop:Generator_ColumnPropNameInRow="JobDescription" msprop:Generator_ColumnPropNameInTable="JobDescriptionColumn" msprop:Generator_UserColumnName="JobDescription" type="xs:string" minOccurs="0" />
               <xs:element name="PassportNumber" msprop:Generator_ColumnVarNameInTable="columnPassportNumber" msprop:Generator_ColumnPropNameInRow="PassportNumber" msprop:Generator_ColumnPropNameInTable="PassportNumberColumn" msprop:Generator_UserColumnName="PassportNumber" type="xs:string" minOccurs="0" />
               <xs:element name="PassportExpiry" msprop:Generator_ColumnVarNameInTable="columnPassportExpiry" msprop:Generator_ColumnPropNameInRow="PassportExpiry" msprop:Generator_ColumnPropNameInTable="PassportExpiryColumn" msprop:Generator_UserColumnName="PassportExpiry" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdatedOn" msprop:Generator_ColumnVarNameInTable="columnUpdatedOn" msprop:Generator_ColumnPropNameInRow="UpdatedOn" msprop:Generator_ColumnPropNameInTable="UpdatedOnColumn" msprop:Generator_UserColumnName="UpdatedOn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Sex" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Sex" msprop:Generator_ColumnVarNameInTable="columnSex" msprop:Generator_ColumnPropNameInTable="SexColumn" msprop:Generator_UserColumnName="Sex" type="xs:string" minOccurs="0" />
+              <xs:element name="Preferences" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Preferences" msprop:Generator_ColumnVarNameInTable="columnPreferences" msprop:Generator_ColumnPropNameInTable="PreferencesColumn" msprop:Generator_UserColumnName="Preferences" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -329,6 +334,7 @@
               <xs:element name="AgentID" msprop:Generator_ColumnVarNameInTable="columnAgentID" msprop:Generator_ColumnPropNameInRow="AgentID" msprop:Generator_ColumnPropNameInTable="AgentIDColumn" msprop:Generator_UserColumnName="AgentID" type="xs:int" minOccurs="0" />
               <xs:element name="PriceOverride" msprop:Generator_ColumnVarNameInTable="columnPriceOverride" msprop:Generator_ColumnPropNameInRow="PriceOverride" msprop:Generator_ColumnPropNameInTable="PriceOverrideColumn" msprop:Generator_UserColumnName="PriceOverride" type="xs:decimal" minOccurs="0" />
               <xs:element name="RoomName" msprop:Generator_ColumnVarNameInTable="columnRoomName" msprop:Generator_ColumnPropNameInRow="RoomName" msprop:Generator_ColumnPropNameInTable="RoomNameColumn" msprop:Generator_UserColumnName="RoomName" type="xs:string" minOccurs="0" />
+              <xs:element name="Preferences" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Preferences" msprop:Generator_ColumnVarNameInTable="columnPreferences" msprop:Generator_ColumnPropNameInTable="PreferencesColumn" msprop:Generator_UserColumnName="Preferences" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

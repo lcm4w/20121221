@@ -394,6 +394,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnUpdatedOn;
             
+            private global::System.Data.DataColumn columnSex;
+            
+            private global::System.Data.DataColumn columnPreferences;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactDataTable() {
@@ -685,6 +689,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SexColumn {
+                get {
+                    return this.columnSex;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PreferencesColumn {
+                get {
+                    return this.columnPreferences;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -751,7 +771,9 @@ namespace TourWriter.Info {
                         string JobDescription, 
                         string PassportNumber, 
                         System.DateTime PassportExpiry, 
-                        System.DateTime UpdatedOn) {
+                        System.DateTime UpdatedOn, 
+                        string Sex, 
+                        string Preferences) {
                 ContactRow rowContactRow = ((ContactRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -785,7 +807,9 @@ namespace TourWriter.Info {
                         JobDescription,
                         PassportNumber,
                         PassportExpiry,
-                        UpdatedOn};
+                        UpdatedOn,
+                        Sex,
+                        Preferences};
                 rowContactRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowContactRow);
                 return rowContactRow;
@@ -847,6 +871,8 @@ namespace TourWriter.Info {
                 this.columnPassportNumber = base.Columns["PassportNumber"];
                 this.columnPassportExpiry = base.Columns["PassportExpiry"];
                 this.columnUpdatedOn = base.Columns["UpdatedOn"];
+                this.columnSex = base.Columns["Sex"];
+                this.columnPreferences = base.Columns["Preferences"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -916,6 +942,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnPassportExpiry);
                 this.columnUpdatedOn = new global::System.Data.DataColumn("UpdatedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUpdatedOn);
+                this.columnSex = new global::System.Data.DataColumn("Sex", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSex);
+                this.columnPreferences = new global::System.Data.DataColumn("Preferences", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPreferences);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ContactSetKey1", new global::System.Data.DataColumn[] {
                                 this.columnContactID}, true));
                 this.columnContactID.AutoIncrement = true;
@@ -1863,6 +1893,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Sex {
+                get {
+                    if (this.IsSexNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableContact.SexColumn]));
+                    }
+                }
+                set {
+                    this[this.tableContact.SexColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Preferences {
+                get {
+                    if (this.IsPreferencesNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableContact.PreferencesColumn]));
+                    }
+                }
+                set {
+                    this[this.tableContact.PreferencesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTitleNull() {
                 return this.IsNull(this.tableContact.TitleColumn);
             }
@@ -2219,6 +2281,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetUpdatedOnNull() {
                 this[this.tableContact.UpdatedOnColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSexNull() {
+                return this.IsNull(this.tableContact.SexColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSexNull() {
+                this[this.tableContact.SexColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPreferencesNull() {
+                return this.IsNull(this.tableContact.PreferencesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPreferencesNull() {
+                this[this.tableContact.PreferencesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

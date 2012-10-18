@@ -139,7 +139,8 @@ namespace TourWriter.Services
 
             e.Layout.Override.CellClickAction = CellClickAction.RowSelect;
             e.Layout.Override.SelectTypeRow = SelectType.None;
-            e.Layout.ViewStyle = ViewStyle.SingleBand;
+            try {e.Layout.ViewStyle = ViewStyle.SingleBand;}
+            catch (NotSupportedException ex) {if (!ex.Message.StartsWith("Can't change ViewStyle")) throw; /*else ignore*/}
             e.Layout.AutoFitStyle = AutoFitStyle.ResizeAllColumns;
             e.Layout.Override.RowSelectors = DefaultableBoolean.True;
             e.Layout.Override.RowSizing = RowSizing.AutoFree;

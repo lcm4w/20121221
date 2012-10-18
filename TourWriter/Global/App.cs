@@ -208,12 +208,23 @@ namespace TourWriter
         {
             get
             {
-                return Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4" ||//ENZ
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991" ||//Walshes
-                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575e7900-bf13-42d1-a661-2242510c3359";  // TE
+                return App.IsDebugMode || // CTRL+ALT+D
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "d949d605-e05f-47a7-9a9d-0d5fca50b2b4".ToLower() || // ENZ
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "0d83ad36-b7c5-402f-8e41-84744b6c9991".ToLower() || // Walshes
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575e7900-bf13-42d1-a661-2242510c3359".ToLower();   // TE
             }
         }
 
+        internal static bool ShowItineraryAllocations
+        {
+            get
+            {
+                return true;
+                return App.IsDebugMode || // CTRL+ALT+D
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "1E6C88C5-A7E6-4477-9FF9-44862FC025A9".ToLower() || // ABT
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "89D91837-1EC7-4D16-B4A7-40B2C34E7D78".ToLower();   // ABT test
+            }
+        }
         #endregion
 
         #region Network

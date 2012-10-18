@@ -95,6 +95,17 @@ namespace TourWriter.Services
                     }
                 }
 
+                
+                //itinerary allocations
+                foreach (var alloc in itin.GetAllocationRows())
+                {
+                    SetInserted(alloc, "AllocationID", id--);
+                    //alloc agents
+                    foreach(var agent in alloc.GetAllocationAgentRows())
+                    {
+                        SetInserted(agent);//, "AgentID", id--);
+                    }
+                }
                 // itinerary pax
                 foreach (var pax in itin.GetItineraryPaxRows())
                 {
@@ -114,6 +125,7 @@ namespace TourWriter.Services
 
                 }
             }
+            copy.Itinerary[0].AllocationsItineraryID = src.Itinerary[0].ItineraryID;
             return copy;
         }
 

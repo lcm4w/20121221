@@ -92,7 +92,7 @@ namespace TourWriter.DataAccess
 		public int Copy(int origID, string newName, int userID)
 		{
 			object o = SqlHelper.ExecuteScalar(connectionString, 
-				"_ItinerarySet_Copy_ByID", origID, newName, DateTime.Now, userID);
+				"_ItinerarySet_Copy_ByID", origID, newName, userID);
                  			
 			return int.Parse(o.ToString());
 		}

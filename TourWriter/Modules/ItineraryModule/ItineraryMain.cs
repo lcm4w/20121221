@@ -194,6 +194,23 @@ namespace TourWriter.Modules.ItineraryModule
             Cache.ToolSet.Template.ColumnChanged += DataTable_ColumnChanged;
             bookingsViewer.RecalculateFinalPricing();
             bookingsViewer.SetItineraryCurrencyInfo();
+
+            //pnlAllocations.Visible = App.ShowItineraryAllocations;
+            if (App.ShowItineraryAllocations)
+            {
+                pnlAllocations.Visible = true;
+                if (!itinerarySet.Itinerary[0].IsAllocationsItineraryIDNull())
+                {                    
+                    lblAllocations.Text = "Master";                   
+                    txtAgentAllocation.Text = itinerarySet.Itinerary[0].AllocationsItineraryID.ToString();
+                    txtAgentAllocation.Size = new Size(168,txtAgentAllocation.Size.Height);
+                    btnAgentAllocation.Visible = false;
+                }
+                else
+                {
+                    GetAllocatedAgents(false);
+                }              
+            }        
         }
         
         private void ItineraryMain_Shown(object sender, EventArgs e)
@@ -489,6 +506,7 @@ namespace TourWriter.Modules.ItineraryModule
                         }
                         // Update main form
                         UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
+                        GetAllocatedAgents(false);
                         SetDataCleanName();
 
                         //accounting1.RefreshRequired = true;
@@ -646,7 +664,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void DataTable_ColumnChanged(object sender, DataColumnChangeEventArgs e)
         {
-            SetDataDirtyName();
+            SetDataDirtyName(); 
         }
 
         private void DataTable_RowChanged(object sender, DataRowChangeEventArgs e)
@@ -1235,6 +1253,38 @@ namespace TourWriter.Modules.ItineraryModule
             OpenHelp();
         }
 
+        #endregion
+
+        #region Allocations
+        private void btnAgentAllocation_Click(object sender, EventArgs e)
+        {            
+            var allocAgents = new AllocationAgentsForm();
+            allocAgents.ItinerarySet = itinerarySet;
+            if (allocAgents.ShowDialog() == DialogResult.OK)
+            {
+                GetAllocatedAgents(true);                
+            }
+        }
+
+        private void GetAllocatedAgents(bool IsTotalNeeded)
+        {
+            var allocation = itinerarySet.Allocation.SingleOrDefault(x => x.ItineraryID == itinerarySet.Itinerary[0].ItineraryID);
+            if (allocation == null) return;
+            var agentsAllocated = "";
+            var totalQuantity = 0;
+            foreach (var r in allocation.GetAllocationAgentRows())
+            {
+                var agent = Cache.ToolSet.Agent.FindByAgentID(r.AgentID);
+                if (agent == null) continue;
+                if (!string.IsNullOrEmpty(agent.AgentName))
+                {
+                    agentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + r.Quantity + "]" + ", ");
+                    totalQuantity += r.Quantity;
+                }
+            }
+            if (IsTotalNeeded) itinerarySet.Allocation[0].Quantity = totalQuantity;
+            txtAgentAllocation.Text = string.IsNullOrEmpty(agentsAllocated) ? "" : agentsAllocated.Remove(agentsAllocated.LastIndexOf(","));
+        }
         #endregion
     }
 }

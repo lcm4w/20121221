@@ -2035,6 +2035,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnAllocationsItineraryID;
             
+            private global::System.Data.DataColumn columnItineraryTypeID;
+            
+            private global::System.Data.DataColumn columnPreferences;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryDataTable() {
@@ -2414,6 +2418,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItineraryTypeIDColumn {
+                get {
+                    return this.columnItineraryTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PreferencesColumn {
+                get {
+                    return this.columnPreferences;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2491,7 +2511,9 @@ namespace TourWriter.Info {
                         string NetMinOrMax, 
                         int AgentContactID, 
                         System.DateTime UpdatedOn, 
-                        int AllocationsItineraryID) {
+                        int AllocationsItineraryID, 
+                        int ItineraryTypeID, 
+                        string Preferences) {
                 ItineraryRow rowItineraryRow = ((ItineraryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2536,7 +2558,9 @@ namespace TourWriter.Info {
                         NetMinOrMax,
                         AgentContactID,
                         UpdatedOn,
-                        AllocationsItineraryID};
+                        AllocationsItineraryID,
+                        ItineraryTypeID,
+                        Preferences};
                 if ((parentPaymentTermRowByPaymentTermItinerary != null)) {
                     columnValuesArray[19] = parentPaymentTermRowByPaymentTermItinerary[0];
                 }
@@ -2612,6 +2636,8 @@ namespace TourWriter.Info {
                 this.columnAgentContactID = base.Columns["AgentContactID"];
                 this.columnUpdatedOn = base.Columns["UpdatedOn"];
                 this.columnAllocationsItineraryID = base.Columns["AllocationsItineraryID"];
+                this.columnItineraryTypeID = base.Columns["ItineraryTypeID"];
+                this.columnPreferences = base.Columns["Preferences"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2703,6 +2729,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnUpdatedOn);
                 this.columnAllocationsItineraryID = new global::System.Data.DataColumn("AllocationsItineraryID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAllocationsItineraryID);
+                this.columnItineraryTypeID = new global::System.Data.DataColumn("ItineraryTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItineraryTypeID);
+                this.columnPreferences = new global::System.Data.DataColumn("Preferences", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPreferences);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryID}, true));
                 this.columnItineraryID.AutoIncrement = true;
@@ -2721,6 +2751,7 @@ namespace TourWriter.Info {
                 this.columnCurrencyCode.MaxLength = 3;
                 this.columnAgentContactID.DefaultValue = ((int)(0));
                 this.columnAllocationsItineraryID.DefaultValue = ((int)(0));
+                this.columnItineraryTypeID.DefaultValue = ((int)(0));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5173,6 +5204,12 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnPassportExpiry;
             
+            private global::System.Data.DataColumn columnUpdatedOn;
+            
+            private global::System.Data.DataColumn columnSex;
+            
+            private global::System.Data.DataColumn columnPreferences;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactDataTable() {
@@ -5456,6 +5493,30 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn UpdatedOnColumn {
+                get {
+                    return this.columnUpdatedOn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SexColumn {
+                get {
+                    return this.columnSex;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PreferencesColumn {
+                get {
+                    return this.columnPreferences;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5521,7 +5582,10 @@ namespace TourWriter.Info {
                         bool IsDeleted, 
                         string JobDescription, 
                         string PassportNumber, 
-                        System.DateTime PassportExpiry) {
+                        System.DateTime PassportExpiry, 
+                        System.DateTime UpdatedOn, 
+                        string Sex, 
+                        string Preferences) {
                 ContactRow rowContactRow = ((ContactRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -5554,7 +5618,10 @@ namespace TourWriter.Info {
                         IsDeleted,
                         JobDescription,
                         PassportNumber,
-                        PassportExpiry};
+                        PassportExpiry,
+                        UpdatedOn,
+                        Sex,
+                        Preferences};
                 rowContactRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowContactRow);
                 return rowContactRow;
@@ -5615,6 +5682,9 @@ namespace TourWriter.Info {
                 this.columnJobDescription = base.Columns["JobDescription"];
                 this.columnPassportNumber = base.Columns["PassportNumber"];
                 this.columnPassportExpiry = base.Columns["PassportExpiry"];
+                this.columnUpdatedOn = base.Columns["UpdatedOn"];
+                this.columnSex = base.Columns["Sex"];
+                this.columnPreferences = base.Columns["Preferences"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5682,6 +5752,12 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnPassportNumber);
                 this.columnPassportExpiry = new global::System.Data.DataColumn("PassportExpiry", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPassportExpiry);
+                this.columnUpdatedOn = new global::System.Data.DataColumn("UpdatedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUpdatedOn);
+                this.columnSex = new global::System.Data.DataColumn("Sex", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSex);
+                this.columnPreferences = new global::System.Data.DataColumn("Preferences", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPreferences);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey4", new global::System.Data.DataColumn[] {
                                 this.columnContactID}, true));
                 this.columnContactID.AutoIncrement = true;
@@ -6284,6 +6360,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnRoomName;
             
+            private global::System.Data.DataColumn columnPreferences;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryMemberDataTable() {
@@ -6503,6 +6581,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PreferencesColumn {
+                get {
+                    return this.columnPreferences;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6560,7 +6646,8 @@ namespace TourWriter.Info {
                         int RoomTypeID, 
                         int AgentID, 
                         decimal PriceOverride, 
-                        string RoomName) {
+                        string RoomName, 
+                        string Preferences) {
                 ItineraryMemberRow rowItineraryMemberRow = ((ItineraryMemberRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -6585,7 +6672,8 @@ namespace TourWriter.Info {
                         RoomTypeID,
                         AgentID,
                         PriceOverride,
-                        RoomName};
+                        RoomName,
+                        Preferences};
                 if ((parentItineraryGroupRowByItineraryGroupGroupMember != null)) {
                     columnValuesArray[1] = parentItineraryGroupRowByItineraryGroupGroupMember[0];
                 }
@@ -6644,6 +6732,7 @@ namespace TourWriter.Info {
                 this.columnAgentID = base.Columns["AgentID"];
                 this.columnPriceOverride = base.Columns["PriceOverride"];
                 this.columnRoomName = base.Columns["RoomName"];
+                this.columnPreferences = base.Columns["Preferences"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6695,6 +6784,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnPriceOverride);
                 this.columnRoomName = new global::System.Data.DataColumn("RoomName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRoomName);
+                this.columnPreferences = new global::System.Data.DataColumn("Preferences", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPreferences);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey3", new global::System.Data.DataColumn[] {
                                 this.columnItineraryMemberID}, true));
                 this.columnItineraryMemberID.AutoIncrement = true;
@@ -14400,6 +14491,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ItineraryTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableItinerary.ItineraryTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ItineraryTypeID\' in table \'Itinerary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItinerary.ItineraryTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Preferences {
+                get {
+                    if (this.IsPreferencesNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableItinerary.PreferencesColumn]));
+                    }
+                }
+                set {
+                    this[this.tableItinerary.PreferencesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermItinerary"])));
@@ -14899,6 +15022,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAllocationsItineraryIDNull() {
                 this[this.tableItinerary.AllocationsItineraryIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsItineraryTypeIDNull() {
+                return this.IsNull(this.tableItinerary.ItineraryTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetItineraryTypeIDNull() {
+                this[this.tableItinerary.ItineraryTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPreferencesNull() {
+                return this.IsNull(this.tableItinerary.PreferencesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPreferencesNull() {
+                this[this.tableItinerary.PreferencesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17348,6 +17495,54 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime UpdatedOn {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableContact.UpdatedOnColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UpdatedOn\' in table \'Contact\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableContact.UpdatedOnColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Sex {
+                get {
+                    if (this.IsSexNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableContact.SexColumn]));
+                    }
+                }
+                set {
+                    this[this.tableContact.SexColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Preferences {
+                get {
+                    if (this.IsPreferencesNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableContact.PreferencesColumn]));
+                    }
+                }
+                set {
+                    this[this.tableContact.PreferencesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTitleNull() {
                 return this.IsNull(this.tableContact.TitleColumn);
             }
@@ -17692,6 +17887,42 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetPassportExpiryNull() {
                 this[this.tableContact.PassportExpiryColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsUpdatedOnNull() {
+                return this.IsNull(this.tableContact.UpdatedOnColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetUpdatedOnNull() {
+                this[this.tableContact.UpdatedOnColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSexNull() {
+                return this.IsNull(this.tableContact.SexColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSexNull() {
+                this[this.tableContact.SexColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPreferencesNull() {
+                return this.IsNull(this.tableContact.PreferencesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPreferencesNull() {
+                this[this.tableContact.PreferencesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18369,6 +18600,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Preferences {
+                get {
+                    if (this.IsPreferencesNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableItineraryMember.PreferencesColumn]));
+                    }
+                }
+                set {
+                    this[this.tableItineraryMember.PreferencesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactRow ContactRow {
                 get {
                     return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactGroupMember"])));
@@ -18627,6 +18874,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetRoomNameNull() {
                 this[this.tableItineraryMember.RoomNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPreferencesNull() {
+                return this.IsNull(this.tableItineraryMember.PreferencesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPreferencesNull() {
+                this[this.tableItineraryMember.PreferencesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

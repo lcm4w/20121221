@@ -171,7 +171,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             {
                 bool isNewRow = row.ItemArray[0] == DBNull.Value;
                 bool addPaxItem = item.IsDefaultOptionType;
-                bool addSupplimentItem = !addPaxItem && !item.IsOptionTypeIDNull() && costType == CostTypes.Client;
+                bool addSupplimentItem = /*!addPaxItem &&*/ !item.IsOptionTypeIDNull() && costType == CostTypes.Client;
                 bool isValid = addPaxItem || addSupplimentItem || costType != CostTypes.Client;
 
                 // populate text details columns
@@ -190,7 +190,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 }
                 if (addSupplimentItem)
                 {
-                    RowPopulateSupplimentColumns(row, item);
+                    RowPopulateSupplimentColumn(row, item, addPaxItem);
                 }
 
                 // validate
@@ -214,6 +214,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void RowPopulatePaxColumns(DataRow row, ItinerarySet.PurchaseItemRow item, CostTypes costType)
         {
+            // if item is 'double' (default), then use it to populate all teh pax columns
+
             foreach (ItinerarySet.ItineraryPaxRow pax in _itinerarySet.ItineraryPax.Rows)
             {
                 var paxCol = GetPaxColumn(pax);
@@ -233,13 +235,15 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
-        private void RowPopulateSupplimentColumns(DataRow row, ItinerarySet.PurchaseItemRow item)
+        private void RowPopulateSupplimentColumn(DataRow row, ItinerarySet.PurchaseItemRow item, bool isPaxItem)
         {
+            //  each item represents one surcharge (suppliement, reduction, etc - eg on item per surcharge).
+
             var supCol = GetSuppliementsColumn(item.OptionTypeID);
             if (supCol == null) return;
 
             var price = GetItemPrice(item) / supCol.Divisor; //.Gross / supCol.Divisor;
-            if (row["Price"] != DBNull.Value)
+            if (!isPaxItem && row["Price"] != DBNull.Value)
             {
                 var basePrice = (decimal) row["Price"];
                 if (item.ChargeType == "ROOM")

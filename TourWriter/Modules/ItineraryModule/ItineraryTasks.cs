@@ -177,6 +177,7 @@ namespace TourWriter.Modules.ItineraryModule
         private ToolStripButton btnPopulate;
         private ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolTip toolTip1;
+        private Label lblCurrency;
         private System.ComponentModel.IContainer components;
         
         protected override void Dispose(bool disposing)
@@ -201,12 +202,13 @@ namespace TourWriter.Modules.ItineraryModule
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItineraryTasks));
             this.gridTasks = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblCurrency = new System.Windows.Forms.Label();
             this.myToolStrip2 = new TourWriter.UserControls.MyToolStrip();
-            this.btnTaskAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnTaskDel = new System.Windows.Forms.ToolStripButton();
             this.btnPopulate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnTaskAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnTaskDel = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasks)).BeginInit();
             this.myToolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -225,6 +227,19 @@ namespace TourWriter.Modules.ItineraryModule
             this.gridTasks.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridTasks_InitializeRow);
             this.gridTasks.CellChange += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridTasks_CellChange);
             // 
+            // lblCurrency
+            // 
+            this.lblCurrency.AutoSize = true;
+            this.lblCurrency.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurrency.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCurrency.Location = new System.Drawing.Point(-3, 2);
+            this.lblCurrency.Name = "lblCurrency";
+            this.lblCurrency.Size = new System.Drawing.Size(34, 13);
+            this.lblCurrency.TabIndex = 146;
+            this.lblCurrency.Text = "Tasks";
+            this.lblCurrency.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblCurrency, "The currency to convert all prices to");
+            // 
             // myToolStrip2
             // 
             this.myToolStrip2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -237,13 +252,29 @@ namespace TourWriter.Modules.ItineraryModule
             this.toolStripSeparator1,
             this.btnTaskAdd,
             this.btnTaskDel});
-            this.myToolStrip2.Location = new System.Drawing.Point(363, -2);
+            this.myToolStrip2.Location = new System.Drawing.Point(394, -2);
             this.myToolStrip2.Name = "myToolStrip2";
             this.myToolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip2.Size = new System.Drawing.Size(144, 25);
+            this.myToolStrip2.Size = new System.Drawing.Size(113, 25);
             this.myToolStrip2.TabIndex = 130;
             this.myToolStrip2.Text = "myToolStrip2";
             this.myToolStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.myToolStrip2_ItemClicked);
+            // 
+            // btnPopulate
+            // 
+            this.btnPopulate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnPopulate.Image = ((System.Drawing.Image)(resources.GetObject("btnPopulate.Image")));
+            this.btnPopulate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPopulate.Name = "btnPopulate";
+            this.btnPopulate.Size = new System.Drawing.Size(58, 22);
+            this.btnPopulate.Text = "Populate";
+            this.btnPopulate.ToolTipText = "Re/Populate from Default Tasks";
+            this.btnPopulate.Click += new System.EventHandler(this.btnPopulate_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // btnTaskAdd
             // 
@@ -265,26 +296,11 @@ namespace TourWriter.Modules.ItineraryModule
             this.btnTaskDel.ToolTipText = "Delete selecte Task";
             this.btnTaskDel.Click += new System.EventHandler(this.btnTasksDel_Click);
             // 
-            // btnPopulate
-            // 
-            this.btnPopulate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnPopulate.Image = ((System.Drawing.Image)(resources.GetObject("btnPopulate.Image")));
-            this.btnPopulate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPopulate.Name = "btnPopulate";
-            this.btnPopulate.Size = new System.Drawing.Size(58, 22);
-            this.btnPopulate.Text = "Populate";
-            this.btnPopulate.ToolTipText = "Re/Populate from Default Tasks";
-            this.btnPopulate.Click += new System.EventHandler(this.btnPopulate_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
             // ItineraryTasks
             // 
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Controls.Add(this.lblCurrency);
             this.Controls.Add(this.gridTasks);
             this.Controls.Add(this.myToolStrip2);
             this.Name = "ItineraryTasks";

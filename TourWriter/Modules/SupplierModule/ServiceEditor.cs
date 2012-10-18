@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
@@ -29,6 +30,9 @@ namespace TourWriter.Modules.SupplierModule
         public event OnOptionCheckedChangedHandler OnOptionCheckedChanged;
 
         private SupplierSet supplierSet;
+        private SupplierSet.AllocationRow NewAllocationRow { get; set; }
+        private int CurrentAllocationID { get; set; }
+
         private bool allowEditing = true;
         private bool isFirstTimeVisible = true;
         private DateTime defaultDate = DateTime.Now.Date;
@@ -184,6 +188,7 @@ namespace TourWriter.Modules.SupplierModule
             txtServiceDescription.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Description");
             txtServiceComments.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.Comments");
             gridServiceWarnings.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceServiceWarning");
+           
             txtMaxPax.DataBindings.Add("Text", supplierSet, "Supplier.SupplierService.MaxPax");
             txtLatitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Latitude");
             txtLongitude.DataBindings.Add("Value", supplierSet, "Supplier.SupplierService.Longitude");
@@ -198,6 +203,10 @@ namespace TourWriter.Modules.SupplierModule
 
             // FOCs
             gridFoc.SetDataBinding(supplierSet, "Supplier.SupplierService.ServiceDiscount");
+
+            // Allocations
+            //gridAllocations.SetDataBinding(supplierSet, "Supplier.Allocation");
+            SetGridAllocations();
 
             // Select initial rows
             HideNonActiveItems(chkHideNonActiveItems.Checked);
@@ -1876,8 +1885,236 @@ namespace TourWriter.Modules.SupplierModule
         }
 
         #endregion                
+
+        private void tabControl_SelectedTabChanged(object sender, Infragistics.Win.UltraWinTabControl.SelectedTabChangedEventArgs e)
+        {
+
+        }
         
         #endregion
+
+        #region Allocations
+        private void btnAddAllocation_Click(object sender, EventArgs e)
+        {
+            if (gridServices.ActiveRow == null)
+            {
+                MessageBox.Show(App.GetResourceString("ShowRowNotSelected"));
+                return;
+            }
+            NewAllocationRow = supplierSet.Allocation.NewAllocationRow();
+            // add new row            
+            if (gridServices.ActiveRow.Cells["ServiceID"].Value != null)
+            {
+                NewAllocationRow.ServiceID = (int)gridServices.ActiveRow.Cells["ServiceID"].Value;
+            }            
+            NewAllocationRow.ValidFrom = DateTime.Now;
+            NewAllocationRow.ValidTo = DateTime.Now.AddDays(1);
+            NewAllocationRow.Quantity = 0;
+            NewAllocationRow.Release = 0;
+            supplierSet.Allocation.AddAllocationRow(NewAllocationRow);          
+            
+            GridHelper.SetActiveRow(gridAllocations, "AllocationID", NewAllocationRow.AllocationID, "ValidFrom");
+        }
+
+        private void btnDeleteAllocation_Click(object sender, EventArgs e)
+        {
+            if (gridAllocations.ActiveRow == null) return;
+
+            if (App.AskDeleteRow())
+            {
+                GridHelper.DeleteActiveRow(gridAllocations, true);
+            }
+        }
+
+        private void gridAllocations_ClickCellButton(object sender, CellEventArgs e)
+        {          
+            CurrentAllocationID = (int)e.Cell.Row.Cells["AllocationID"].Value;
+          
+            var allocation = supplierSet.Allocation.FindByAllocationID(CurrentAllocationID); 
+            if (e.Cell.Column.Key == "Agents")
+            {
+                var allocAgents = new AllocationAgentsForm(allocation);
+                allocAgents.SupplierSet = supplierSet;
+                if (allocAgents.ShowDialog() == DialogResult.OK)
+                {
+                    e.Cell.Row.Cells["Agents"].Value = allocAgents.AgentsAllocated;                   
+                    gridAllocations.ResetBindings();
+                    //gridServices.SetDataBinding(supplierSet, "Supplier.SupplierService");
+                    //RefreshGridServicesRow();
+                }
+                //GetAllocatedAgents(e.Cell.Row);
+            }
+            if (e.Cell.Column.Key == "Options")
+            {
+                var allocOptions = new AllocationOptionsForm(allocation);
+                allocOptions.SupplierSet = supplierSet;
+                if (allocOptions.ShowDialog() == DialogResult.OK)
+                {
+                    e.Cell.Row.Cells["Options"].Value = allocOptions.OptionsAllocated;
+                    RefreshGridServicesRow();
+                }
+            }
+        }
+
+        private void RefreshGridServicesRow()
+        {
+            var activerow = gridServices.ActiveRow;
+            gridServices.ActiveRow = gridServices.Rows[0];
+            gridServices.ActiveRow = activerow;
+        }
+
+        private void SetGridAllocations()
+        {
+            gridAllocations.SetDataBinding(supplierSet, "Supplier.SupplierService.FK_Service_Allocation");
+            if (gridServices.Rows.Count == 0 || gridAllocations.Rows.Count == 0) return;            
+            //gridAllocations.DataSource = supplierSet.Allocation;
+        }
+
+        private void gridAllocations_InitializeLayout(object sender, InitializeLayoutEventArgs e)
+        {
+            ////add custom columns                  
+
+            if (!e.Layout.Bands[0].Columns.Exists("Agents"))
+                e.Layout.Bands[0].Columns.Add("Agents");
+            if (!e.Layout.Bands[0].Columns.Exists("Options"))
+                e.Layout.Bands[0].Columns.Add("Options");
+
+             // show/hide columns 
+            foreach (var c in e.Layout.Bands[0].Columns)
+            {
+                if (c.Key == "ValidFrom" || c.Key == "ValidTo")
+                {
+                    if (c.Key == "ValidFrom")
+                        c.Header.Caption = "Valid from";
+                    if (c.Key == "ValidTo")
+                        c.Header.Caption = "Valid to";
+                    c.Width = 80;
+                    c.MinWidth = 80;
+                    c.MaxWidth = 80;
+                    c.Format = "d";
+                    c.MaskInput = "{date}";
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.EditAndSelectText;
+                    if (!allowEditing)
+                    {
+                        c.CellActivation = Activation.NoEdit;
+                        c.CellClickAction = CellClickAction.RowSelect;
+                    }
+                }
+                else if (c.Key == "Quantity" || c.Key == "Release") 
+                {
+                    //c.Header.Caption = "Used";
+                    c.Width = 55;
+                    c.MinWidth = 55;
+                    c.MaxWidth = 55;
+                    c.CellAppearance.TextHAlign = HAlign.Right;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                }
+                else if(c.Key == "Agents" || c.Key == "Options")
+                {
+                    c.Width = 216;
+                    c.MinWidth = 216;
+                    //c.MaxWidth = 215;                                      
+                    c.Style = ColumnStyle.Button;
+                    c.CellButtonAppearance.Image = TourWriter.Properties.Resources.PageEdit;
+                    c.CellButtonAppearance.ImageHAlign = HAlign.Left;
+                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
+                }
+                else
+                {
+                    c.Hidden = true;
+                }
+            }
+            GridHelper.SetDefaultGridAppearance(e);
+        }
+
+        private void gridAllocations_InitializeRow(object sender, InitializeRowEventArgs e)
+        {
+            //CurrentAllocationID = (int)gridAllocations.ActiveRow.Cells["AllocationID"].Value;
+            if (!e.ReInitialize)
+            {
+                GetAllocatedAgents(e.Row);
+                GetAllocatedOptions(e.Row);
+            }
+        }
+
+        private void GetAllocatedAgents(UltraGridRow allocationRow)
+        {
+            var allocation = supplierSet.Allocation.FindByAllocationID((int)allocationRow.Cells["AllocationID"].Value);
+            var agentsAllocated = "";
+            foreach (var r in allocation.GetAllocationAgentRows())
+            {
+                var agent = Cache.ToolSet.Agent.FindByAgentID(r.AgentID);
+                if (agent == null) continue;
+                if (!string.IsNullOrEmpty(agent.AgentName))
+                {
+                    agentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + r.Quantity + "]" + ", ");
+                }
+            }
+            allocationRow.Cells["Agents"].Value = string.IsNullOrEmpty(agentsAllocated) ? "All" : agentsAllocated.Remove(agentsAllocated.LastIndexOf(","));
+        }
+
+        private void GetAllocatedOptions(UltraGridRow allocationRow)
+        {
+            var allocation = supplierSet.Allocation.FindByAllocationID((int)allocationRow.Cells["AllocationID"].Value);            
+            var optionsAllocated = "";
+            foreach (var r in allocation.GetAllocationOptionRows())
+            {
+                var option = Global.Cache.ToolSet.OptionType.FindByOptionTypeID(r.OptionTypeID);
+                if (option == null) continue;
+                if (!string.IsNullOrEmpty(option.OptionTypeName))
+                {
+                    optionsAllocated += (option.OptionTypeName + ", ");
+                }
+            }
+            allocationRow.Cells["Options"].Value = string.IsNullOrEmpty(optionsAllocated) ? "All" : optionsAllocated.Remove(optionsAllocated.LastIndexOf(","));
+        }
+
+        //private void GetAllocatedAgents(UltraGridRow allocationRow)
+        //{
+        //    var allocation = GetAllocationByServiceID();//supplierSet.Allocation.FindByAllocationID(int.Parse(allocationRow.Cells["AllocationID"].Value.ToString()));           
+
+        //    var agentsAllocated = "";
+        //    foreach (var r in allocation.GetAllocationAgentRows())
+        //    {
+        //        var agent = Cache.ToolSet.Agent.FindByAgentID(r.AgentID);
+        //        if (agent == null) continue;
+        //        if (!string.IsNullOrEmpty(agent.AgentName))
+        //        {
+        //            agentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + r.Quantity + "]" + ", ");
+        //        }
+        //    }           
+        //    allocationRow.Cells["Agents"].Value = string.IsNullOrEmpty(agentsAllocated) ? "All" : agentsAllocated.Remove(agentsAllocated.LastIndexOf(","));
+        //}
+
+        //private void GetAllocatedOptions(UltraGridRow allocationRow)
+        //{
+        //    var allocation = GetAllocationByServiceID();//supplierSet.Allocation.FindByAllocationID(int.Parse(allocationRow.Cells["AllocationID"].Value.ToString()));
+        //    var optionsAllocated = "";
+        //    foreach(var r in allocation.GetAllocationOptionRows())
+        //    {
+        //        var option = Global.Cache.ToolSet.OptionType.FindByOptionTypeID(r.OptionTypeID);
+        //        if (option == null) continue;
+        //        if (!string.IsNullOrEmpty(option.OptionTypeName))
+        //        {
+        //            optionsAllocated += (option.OptionTypeName + ", ");
+        //        }
+        //    }
+        //    allocationRow.Cells["Options"].Value = string.IsNullOrEmpty(optionsAllocated) ? "All" : optionsAllocated.Remove(optionsAllocated.LastIndexOf(","));
+        //}
+
+        private SupplierSet.AllocationRow GetAllocationByServiceID()
+        {
+            if (supplierSet.Allocation.Count(x => x.ServiceID == (int)gridServices.ActiveRow.Cells["ServiceID"].Value) > 1)
+            {
+                if (NewAllocationRow != null)return NewAllocationRow;
+
+            }
+            return supplierSet.Allocation.SingleOrDefault(x => x.ServiceID == (int)gridServices.ActiveRow.Cells["ServiceID"].Value);
+        }
+
+        #endregion                                 
     }
 
     public delegate void OnOptionCheckedChangedHandler(OptionCheckedChangedEventArgs e);

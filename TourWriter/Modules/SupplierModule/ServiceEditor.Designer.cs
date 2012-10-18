@@ -42,6 +42,7 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServiceEditor));
             Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance16 = new Infragistics.Win.Appearance();
@@ -79,6 +80,30 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.Appearance appearance59 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance60 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance61 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance39 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance40 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance41 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance78 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance79 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance80 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance81 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance82 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance83 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance84 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance85 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance86 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance42 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance43 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance44 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance45 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance46 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance47 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance48 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance49 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance75 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance76 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance77 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance62 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance63 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance64 = new Infragistics.Win.Appearance();
@@ -96,28 +121,26 @@ namespace TourWriter.Modules.SupplierModule
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab2 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab3 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             Infragistics.Win.UltraWinTabControl.UltraTab ultraTab4 = new Infragistics.Win.UltraWinTabControl.UltraTab();
-            Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance39 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance40 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance41 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance42 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance43 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance44 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance45 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance46 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance47 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance48 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance49 = new Infragistics.Win.Appearance();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ServiceEditor));
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab5 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             this.ultraTabPageControl3 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.pnlOptions = new System.Windows.Forms.Panel();
             this.lblCurrencyInfo = new System.Windows.Forms.Label();
             this.lblOptions = new System.Windows.Forms.Label();
             this.gridOptions = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.tsOptions = new TourWriter.UserControls.MyToolStrip();
+            this.btnOptionCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOptionAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnOptionDelete = new System.Windows.Forms.ToolStripButton();
             this.pnlRates = new System.Windows.Forms.Panel();
             this.lblRates = new System.Windows.Forms.Label();
             this.gridRates = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.tsRates = new TourWriter.UserControls.MyToolStrip();
+            this.btnRateCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnRateAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnRateDelete = new System.Windows.Forms.ToolStripButton();
             this.ultraTabPageControl1 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.cmbGrossTaxType = new Infragistics.Win.UltraWinGrid.UltraCombo();
             this.label12 = new System.Windows.Forms.Label();
@@ -138,6 +161,9 @@ namespace TourWriter.Modules.SupplierModule
             this.linkEdit = new System.Windows.Forms.LinkLabel();
             this.txtPaymentTerms = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.tsFoc = new TourWriter.UserControls.MyToolStrip();
+            this.btnFocAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnFocDel = new System.Windows.Forms.ToolStripButton();
             this.ultraTabPageControl4 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
@@ -146,9 +172,23 @@ namespace TourWriter.Modules.SupplierModule
             this.label7 = new System.Windows.Forms.Label();
             this.gridServiceTimes = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.label5 = new System.Windows.Forms.Label();
+            this.tsServiceTimes = new TourWriter.UserControls.MyToolStrip();
+            this.btnServiceTimeAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnServiceTimeDelete = new System.Windows.Forms.ToolStripButton();
             this.label6 = new System.Windows.Forms.Label();
             this.txtServiceDescription = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.txtServiceComments = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
+            this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.gridServiceWarnings = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
+            this.btnServiceWarningAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnServiceWarningDelete = new System.Windows.Forms.ToolStripButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ultraTabPageControl5 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.gridAllocations = new Infragistics.Win.UltraWinGrid.UltraGrid();
+            this.tsAllocations = new TourWriter.UserControls.MyToolStrip();
+            this.btnAddAllocation = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteAllocation = new System.Windows.Forms.ToolStripButton();
             this.gridServices = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.chkHideExpiredSeasons = new Infragistics.Win.UltraWinEditors.UltraCheckEditor();
             this.chkHideNonActiveItems = new Infragistics.Win.UltraWinEditors.UltraCheckEditor();
@@ -160,30 +200,6 @@ namespace TourWriter.Modules.SupplierModule
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.pnlServices = new System.Windows.Forms.Panel();
             this.lblServices = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
-            this.gridServiceWarnings = new Infragistics.Win.UltraWinGrid.UltraGrid();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tsOptions = new TourWriter.UserControls.MyToolStrip();
-            this.btnOptionCopy = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOptionAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnOptionDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsRates = new TourWriter.UserControls.MyToolStrip();
-            this.btnRateCopy = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnRateAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnRateDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsServiceTimes = new TourWriter.UserControls.MyToolStrip();
-            this.btnServiceTimeAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnServiceTimeDelete = new System.Windows.Forms.ToolStripButton();
-            this.tsFoc = new TourWriter.UserControls.MyToolStrip();
-            this.btnFocAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnFocDel = new System.Windows.Forms.ToolStripButton();
-            this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
-            this.btnServiceWarningAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnServiceWarningDelete = new System.Windows.Forms.ToolStripButton();
             this.tsServices = new TourWriter.UserControls.MyToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuItemCurrencies = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,11 +209,15 @@ namespace TourWriter.Modules.SupplierModule
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnServiceAdd = new System.Windows.Forms.ToolStripButton();
             this.btnServiceDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.ultraTabPageControl3.SuspendLayout();
             this.pnlOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOptions)).BeginInit();
+            this.tsOptions.SuspendLayout();
             this.pnlRates.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridRates)).BeginInit();
+            this.tsRates.SuspendLayout();
             this.ultraTabPageControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbNetTaxType)).BeginInit();
@@ -205,12 +225,20 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxPax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridFoc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeServiceConfigs)).BeginInit();
+            this.tsFoc.SuspendLayout();
             this.ultraTabPageControl4.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCheckinMinutesEarly)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServiceTimes)).BeginInit();
+            this.tsServiceTimes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceDescription)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceComments)).BeginInit();
+            this.ultraTabPageControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).BeginInit();
+            this.myToolStrip1.SuspendLayout();
+            this.ultraTabPageControl5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAllocations)).BeginInit();
+            this.tsAllocations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridServices)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideExpiredSeasons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideNonActiveItems)).BeginInit();
@@ -219,15 +247,8 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.tabControl)).BeginInit();
             this.tabControl.SuspendLayout();
             this.pnlServices.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.ultraTabPageControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).BeginInit();
-            this.tsOptions.SuspendLayout();
-            this.tsRates.SuspendLayout();
-            this.tsServiceTimes.SuspendLayout();
-            this.tsFoc.SuspendLayout();
-            this.myToolStrip1.SuspendLayout();
             this.tsServices.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // ultraTabPageControl3
@@ -359,6 +380,62 @@ namespace TourWriter.Modules.SupplierModule
             this.gridOptions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridOptions_KeyDown);
             this.gridOptions.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridOptions_MouseClick);
             // 
+            // tsOptions
+            // 
+            this.tsOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tsOptions.BackColor = System.Drawing.Color.Transparent;
+            this.tsOptions.DisableAllMenuItems = true;
+            this.tsOptions.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsOptions.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOptionCopy,
+            this.toolStripSeparator3,
+            this.btnOptionAdd,
+            this.btnOptionDelete});
+            this.tsOptions.Location = new System.Drawing.Point(390, 6);
+            this.tsOptions.Name = "tsOptions";
+            this.tsOptions.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.tsOptions.Size = new System.Drawing.Size(78, 25);
+            this.tsOptions.TabIndex = 90;
+            this.tsOptions.Text = "tsOptions";
+            // 
+            // btnOptionCopy
+            // 
+            this.btnOptionCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptionCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionCopy.Image")));
+            this.btnOptionCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptionCopy.Name = "btnOptionCopy";
+            this.btnOptionCopy.Size = new System.Drawing.Size(23, 22);
+            this.btnOptionCopy.Text = "Copy selected option";
+            this.btnOptionCopy.Click += new System.EventHandler(this.btnOptionCopy_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOptionAdd
+            // 
+            this.btnOptionAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptionAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionAdd.Image")));
+            this.btnOptionAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptionAdd.Name = "btnOptionAdd";
+            this.btnOptionAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnOptionAdd.Text = "btnAdd";
+            this.btnOptionAdd.ToolTipText = "Add new option";
+            this.btnOptionAdd.Click += new System.EventHandler(this.btnOptionAdd_Click);
+            // 
+            // btnOptionDelete
+            // 
+            this.btnOptionDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptionDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionDelete.Image")));
+            this.btnOptionDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptionDelete.Name = "btnOptionDelete";
+            this.btnOptionDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnOptionDelete.Text = "btnDelete";
+            this.btnOptionDelete.ToolTipText = "Delete selected option";
+            this.btnOptionDelete.Click += new System.EventHandler(this.btnOptionDelete_Click);
+            // 
             // pnlRates
             // 
             this.pnlRates.BackColor = System.Drawing.Color.Transparent;
@@ -448,6 +525,63 @@ namespace TourWriter.Modules.SupplierModule
             this.gridRates.Text = "Season dates for service";
             this.gridRates.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridRates_InitializeLayout);
             this.gridRates.AfterRowActivate += new System.EventHandler(this.gridRates_AfterRowActivate);
+            // 
+            // tsRates
+            // 
+            this.tsRates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tsRates.BackColor = System.Drawing.Color.Transparent;
+            this.tsRates.DisableAllMenuItems = true;
+            this.tsRates.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsRates.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsRates.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnRateCopy,
+            this.toolStripSeparator2,
+            this.btnRateAdd,
+            this.btnRateDelete});
+            this.tsRates.Location = new System.Drawing.Point(390, 3);
+            this.tsRates.Name = "tsRates";
+            this.tsRates.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.tsRates.Size = new System.Drawing.Size(78, 25);
+            this.tsRates.TabIndex = 90;
+            this.tsRates.Text = "myToolStrip2";
+            // 
+            // btnRateCopy
+            // 
+            this.btnRateCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRateCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnRateCopy.Image")));
+            this.btnRateCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRateCopy.Name = "btnRateCopy";
+            this.btnRateCopy.Size = new System.Drawing.Size(23, 22);
+            this.btnRateCopy.Text = "btnCopy";
+            this.btnRateCopy.ToolTipText = "Copy selected season and related options";
+            this.btnRateCopy.Click += new System.EventHandler(this.btnRateCopy_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnRateAdd
+            // 
+            this.btnRateAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRateAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRateAdd.Image")));
+            this.btnRateAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRateAdd.Name = "btnRateAdd";
+            this.btnRateAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnRateAdd.Text = "btnAdd";
+            this.btnRateAdd.ToolTipText = "Add new season";
+            this.btnRateAdd.Click += new System.EventHandler(this.btnRateAdd_Click);
+            // 
+            // btnRateDelete
+            // 
+            this.btnRateDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRateDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnRateDelete.Image")));
+            this.btnRateDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRateDelete.Name = "btnRateDelete";
+            this.btnRateDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnRateDelete.Text = "btnDelete";
+            this.btnRateDelete.ToolTipText = "Delete selected season and related options";
+            this.btnRateDelete.Click += new System.EventHandler(this.btnRateDelete_Click);
             // 
             // ultraTabPageControl1
             // 
@@ -721,6 +855,44 @@ namespace TourWriter.Modules.SupplierModule
             this.label9.TabIndex = 166;
             this.label9.Text = "Payment Terms for selected Service";
             // 
+            // tsFoc
+            // 
+            this.tsFoc.BackColor = System.Drawing.Color.Transparent;
+            this.tsFoc.DisableAllMenuItems = true;
+            this.tsFoc.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsFoc.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsFoc.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnFocAdd,
+            this.btnFocDel});
+            this.tsFoc.Location = new System.Drawing.Point(262, 4);
+            this.tsFoc.Name = "tsFoc";
+            this.tsFoc.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.tsFoc.Size = new System.Drawing.Size(49, 25);
+            this.tsFoc.TabIndex = 174;
+            this.tsFoc.Text = "myToolStrip1";
+            // 
+            // btnFocAdd
+            // 
+            this.btnFocAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFocAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnFocAdd.Image")));
+            this.btnFocAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFocAdd.Name = "btnFocAdd";
+            this.btnFocAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnFocAdd.Text = "btnFocAdd";
+            this.btnFocAdd.ToolTipText = "Add new FOC";
+            this.btnFocAdd.Click += new System.EventHandler(this.btnFocAdd_Click);
+            // 
+            // btnFocDel
+            // 
+            this.btnFocDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnFocDel.Image = ((System.Drawing.Image)(resources.GetObject("btnFocDel.Image")));
+            this.btnFocDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFocDel.Name = "btnFocDel";
+            this.btnFocDel.Size = new System.Drawing.Size(23, 22);
+            this.btnFocDel.Text = "btnFocDel";
+            this.btnFocDel.ToolTipText = "Delete selected FOC";
+            this.btnFocDel.Click += new System.EventHandler(this.btnFocDel_Click);
+            // 
             // ultraTabPageControl4
             // 
             this.ultraTabPageControl4.AutoScroll = true;
@@ -863,6 +1035,45 @@ namespace TourWriter.Modules.SupplierModule
             this.toolTip1.SetToolTip(this.label5, "Enter the early arrival time in minutes. This is used to recalculate the client s" +
         "tart time for vouchers.");
             // 
+            // tsServiceTimes
+            // 
+            this.tsServiceTimes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tsServiceTimes.BackColor = System.Drawing.Color.Transparent;
+            this.tsServiceTimes.DisableAllMenuItems = true;
+            this.tsServiceTimes.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsServiceTimes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsServiceTimes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnServiceTimeAdd,
+            this.btnServiceTimeDelete});
+            this.tsServiceTimes.Location = new System.Drawing.Point(414, 15);
+            this.tsServiceTimes.Name = "tsServiceTimes";
+            this.tsServiceTimes.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.tsServiceTimes.Size = new System.Drawing.Size(49, 25);
+            this.tsServiceTimes.TabIndex = 120;
+            this.tsServiceTimes.Text = "tsServiceTimes";
+            // 
+            // btnServiceTimeAdd
+            // 
+            this.btnServiceTimeAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceTimeAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceTimeAdd.Image")));
+            this.btnServiceTimeAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceTimeAdd.Name = "btnServiceTimeAdd";
+            this.btnServiceTimeAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceTimeAdd.Text = "btnFocAdd";
+            this.btnServiceTimeAdd.ToolTipText = "Add new time when the service is available";
+            this.btnServiceTimeAdd.Click += new System.EventHandler(this.btnServiceTimeAdd_Click);
+            // 
+            // btnServiceTimeDelete
+            // 
+            this.btnServiceTimeDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceTimeDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceTimeDelete.Image")));
+            this.btnServiceTimeDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceTimeDelete.Name = "btnServiceTimeDelete";
+            this.btnServiceTimeDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceTimeDelete.Text = "btnServiceDelete";
+            this.btnServiceTimeDelete.ToolTipText = "Delete selected service time";
+            this.btnServiceTimeDelete.Click += new System.EventHandler(this.btnServiceTimeDelete_Click);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -900,6 +1111,242 @@ namespace TourWriter.Modules.SupplierModule
             this.txtServiceComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtServiceComments.Size = new System.Drawing.Size(453, 182);
             this.txtServiceComments.TabIndex = 112;
+            // 
+            // ultraTabPageControl2
+            // 
+            this.ultraTabPageControl2.Controls.Add(this.gridServiceWarnings);
+            this.ultraTabPageControl2.Controls.Add(this.myToolStrip1);
+            this.ultraTabPageControl2.Controls.Add(this.label2);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Name = "ultraTabPageControl2";
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(471, 546);
+            // 
+            // gridServiceWarnings
+            // 
+            this.gridServiceWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            appearance39.BackColor = System.Drawing.SystemColors.Window;
+            appearance39.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gridServiceWarnings.DisplayLayout.Appearance = appearance39;
+            this.gridServiceWarnings.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            appearance40.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance40.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance40.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance40.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.Appearance = appearance40;
+            appearance41.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.BandLabelAppearance = appearance41;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.Hidden = true;
+            appearance78.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance78.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance78.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance78.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridServiceWarnings.DisplayLayout.GroupByBox.PromptAppearance = appearance78;
+            this.gridServiceWarnings.DisplayLayout.MaxColScrollRegions = 1;
+            this.gridServiceWarnings.DisplayLayout.MaxRowScrollRegions = 1;
+            appearance79.BackColor = System.Drawing.SystemColors.Window;
+            appearance79.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.gridServiceWarnings.DisplayLayout.Override.ActiveCellAppearance = appearance79;
+            appearance80.BackColor = System.Drawing.SystemColors.Highlight;
+            appearance80.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.gridServiceWarnings.DisplayLayout.Override.ActiveRowAppearance = appearance80;
+            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
+            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
+            appearance81.BackColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.Override.CardAreaAppearance = appearance81;
+            appearance82.BorderColor = System.Drawing.Color.Silver;
+            appearance82.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this.gridServiceWarnings.DisplayLayout.Override.CellAppearance = appearance82;
+            this.gridServiceWarnings.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
+            this.gridServiceWarnings.DisplayLayout.Override.CellPadding = 0;
+            appearance83.BackColor = System.Drawing.SystemColors.Control;
+            appearance83.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance83.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance83.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance83.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridServiceWarnings.DisplayLayout.Override.GroupByRowAppearance = appearance83;
+            appearance84.TextHAlignAsString = "Left";
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderAppearance = appearance84;
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
+            this.gridServiceWarnings.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
+            appearance85.BackColor = System.Drawing.SystemColors.Window;
+            appearance85.BorderColor = System.Drawing.Color.Silver;
+            this.gridServiceWarnings.DisplayLayout.Override.RowAppearance = appearance85;
+            this.gridServiceWarnings.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
+            appearance86.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.gridServiceWarnings.DisplayLayout.Override.TemplateAddRowAppearance = appearance86;
+            this.gridServiceWarnings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
+            this.gridServiceWarnings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
+            this.gridServiceWarnings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
+            this.gridServiceWarnings.Location = new System.Drawing.Point(7, 39);
+            this.gridServiceWarnings.Name = "gridServiceWarnings";
+            this.gridServiceWarnings.Size = new System.Drawing.Size(453, 504);
+            this.gridServiceWarnings.TabIndex = 128;
+            this.gridServiceWarnings.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridServiceWarnings_InitializeLayout);
+            // 
+            // myToolStrip1
+            // 
+            this.myToolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.myToolStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.myToolStrip1.DisableAllMenuItems = true;
+            this.myToolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.myToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnServiceWarningAdd,
+            this.btnServiceWarningDelete});
+            this.myToolStrip1.Location = new System.Drawing.Point(414, 15);
+            this.myToolStrip1.Name = "myToolStrip1";
+            this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.myToolStrip1.Size = new System.Drawing.Size(49, 25);
+            this.myToolStrip1.TabIndex = 129;
+            this.myToolStrip1.Text = "myToolStrip1";
+            // 
+            // btnServiceWarningAdd
+            // 
+            this.btnServiceWarningAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceWarningAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningAdd.Image")));
+            this.btnServiceWarningAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceWarningAdd.Name = "btnServiceWarningAdd";
+            this.btnServiceWarningAdd.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceWarningAdd.Text = "btnFocAdd";
+            this.btnServiceWarningAdd.ToolTipText = "Add new time when the service is available";
+            this.btnServiceWarningAdd.Click += new System.EventHandler(this.btnServiceWarningAdd_Click);
+            // 
+            // btnServiceWarningDelete
+            // 
+            this.btnServiceWarningDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnServiceWarningDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningDelete.Image")));
+            this.btnServiceWarningDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnServiceWarningDelete.Name = "btnServiceWarningDelete";
+            this.btnServiceWarningDelete.Size = new System.Drawing.Size(23, 22);
+            this.btnServiceWarningDelete.Text = "btnServiceDelete";
+            this.btnServiceWarningDelete.ToolTipText = "Delete selected service time";
+            this.btnServiceWarningDelete.Click += new System.EventHandler(this.btnServiceWarningDelete_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(254, 13);
+            this.label2.TabIndex = 127;
+            this.label2.Text = "Booking warnings, shown when booking this service";
+            // 
+            // ultraTabPageControl5
+            // 
+            this.ultraTabPageControl5.Controls.Add(this.gridAllocations);
+            this.ultraTabPageControl5.Controls.Add(this.tsAllocations);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl5.Name = "ultraTabPageControl5";
+            this.ultraTabPageControl5.Size = new System.Drawing.Size(471, 546);
+            // 
+            // gridAllocations
+            // 
+            this.gridAllocations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            appearance38.BackColor = System.Drawing.SystemColors.Window;
+            appearance38.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gridAllocations.DisplayLayout.Appearance = appearance38;
+            this.gridAllocations.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            appearance42.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance42.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance42.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance42.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridAllocations.DisplayLayout.GroupByBox.Appearance = appearance42;
+            appearance43.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridAllocations.DisplayLayout.GroupByBox.BandLabelAppearance = appearance43;
+            this.gridAllocations.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
+            this.gridAllocations.DisplayLayout.GroupByBox.Hidden = true;
+            appearance44.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance44.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance44.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance44.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.gridAllocations.DisplayLayout.GroupByBox.PromptAppearance = appearance44;
+            this.gridAllocations.DisplayLayout.MaxColScrollRegions = 1;
+            this.gridAllocations.DisplayLayout.MaxRowScrollRegions = 1;
+            appearance45.BackColor = System.Drawing.SystemColors.Window;
+            appearance45.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.gridAllocations.DisplayLayout.Override.ActiveCellAppearance = appearance45;
+            appearance46.BackColor = System.Drawing.SystemColors.Highlight;
+            appearance46.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.gridAllocations.DisplayLayout.Override.ActiveRowAppearance = appearance46;
+            this.gridAllocations.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
+            this.gridAllocations.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
+            appearance47.BackColor = System.Drawing.SystemColors.Window;
+            this.gridAllocations.DisplayLayout.Override.CardAreaAppearance = appearance47;
+            appearance48.BorderColor = System.Drawing.Color.Silver;
+            appearance48.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this.gridAllocations.DisplayLayout.Override.CellAppearance = appearance48;
+            this.gridAllocations.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
+            this.gridAllocations.DisplayLayout.Override.CellPadding = 0;
+            appearance49.BackColor = System.Drawing.SystemColors.Control;
+            appearance49.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance49.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance49.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance49.BorderColor = System.Drawing.SystemColors.Window;
+            this.gridAllocations.DisplayLayout.Override.GroupByRowAppearance = appearance49;
+            appearance75.TextHAlignAsString = "Left";
+            this.gridAllocations.DisplayLayout.Override.HeaderAppearance = appearance75;
+            this.gridAllocations.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
+            this.gridAllocations.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
+            appearance76.BackColor = System.Drawing.SystemColors.Window;
+            appearance76.BorderColor = System.Drawing.Color.Silver;
+            this.gridAllocations.DisplayLayout.Override.RowAppearance = appearance76;
+            this.gridAllocations.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
+            appearance77.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.gridAllocations.DisplayLayout.Override.TemplateAddRowAppearance = appearance77;
+            this.gridAllocations.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
+            this.gridAllocations.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
+            this.gridAllocations.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
+            this.gridAllocations.Location = new System.Drawing.Point(7, 39);
+            this.gridAllocations.Name = "gridAllocations";
+            this.gridAllocations.Size = new System.Drawing.Size(464, 504);
+            this.gridAllocations.TabIndex = 129;
+            this.gridAllocations.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridAllocations_InitializeLayout);
+            this.gridAllocations.InitializeRow += new Infragistics.Win.UltraWinGrid.InitializeRowEventHandler(this.gridAllocations_InitializeRow);
+            this.gridAllocations.ClickCellButton += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridAllocations_ClickCellButton);
+            // 
+            // tsAllocations
+            // 
+            this.tsAllocations.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tsAllocations.BackColor = System.Drawing.Color.Transparent;
+            this.tsAllocations.DisableAllMenuItems = true;
+            this.tsAllocations.Dock = System.Windows.Forms.DockStyle.None;
+            this.tsAllocations.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tsAllocations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAddAllocation,
+            this.btnDeleteAllocation});
+            this.tsAllocations.Location = new System.Drawing.Point(414, 15);
+            this.tsAllocations.Name = "tsAllocations";
+            this.tsAllocations.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.tsAllocations.Size = new System.Drawing.Size(49, 25);
+            this.tsAllocations.TabIndex = 130;
+            this.tsAllocations.Text = "myToolStrip2";
+            // 
+            // btnAddAllocation
+            // 
+            this.btnAddAllocation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAddAllocation.Image = ((System.Drawing.Image)(resources.GetObject("btnAddAllocation.Image")));
+            this.btnAddAllocation.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAddAllocation.Name = "btnAddAllocation";
+            this.btnAddAllocation.Size = new System.Drawing.Size(23, 22);
+            this.btnAddAllocation.Text = "btnFocAdd";
+            this.btnAddAllocation.ToolTipText = "Add new allocation";
+            this.btnAddAllocation.Click += new System.EventHandler(this.btnAddAllocation_Click);
+            // 
+            // btnDeleteAllocation
+            // 
+            this.btnDeleteAllocation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnDeleteAllocation.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteAllocation.Image")));
+            this.btnDeleteAllocation.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteAllocation.Name = "btnDeleteAllocation";
+            this.btnDeleteAllocation.Size = new System.Drawing.Size(23, 22);
+            this.btnDeleteAllocation.Text = "btnServiceDelete";
+            this.btnDeleteAllocation.ToolTipText = "Delete allocation";
+            this.btnDeleteAllocation.Click += new System.EventHandler(this.btnDeleteAllocation_Click);
             // 
             // gridServices
             // 
@@ -1047,6 +1494,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabControl.Controls.Add(this.ultraTabPageControl4);
             this.tabControl.Controls.Add(this.ultraTabPageControl1);
             this.tabControl.Controls.Add(this.ultraTabPageControl2);
+            this.tabControl.Controls.Add(this.ultraTabPageControl5);
             this.tabControl.Location = new System.Drawing.Point(2, 26);
             this.tabControl.MinTabWidth = 50;
             this.tabControl.Name = "tabControl";
@@ -1067,11 +1515,16 @@ namespace TourWriter.Modules.SupplierModule
             ultraTab4.Key = "Warnings";
             ultraTab4.TabPage = this.ultraTabPageControl2;
             ultraTab4.Text = "Warnings";
+            ultraTab5.Key = "Allocations";
+            ultraTab5.TabPage = this.ultraTabPageControl5;
+            ultraTab5.Text = "Allocations";
             this.tabControl.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
             ultraTab1,
             ultraTab2,
             ultraTab3,
-            ultraTab4});
+            ultraTab4,
+            ultraTab5});
+            this.tabControl.SelectedTabChanged += new Infragistics.Win.UltraWinTabControl.SelectedTabChangedEventHandler(this.tabControl_SelectedTabChanged);
             // 
             // ultraTabSharedControlsPage2
             // 
@@ -1109,323 +1562,6 @@ namespace TourWriter.Modules.SupplierModule
             this.lblServices.Size = new System.Drawing.Size(48, 13);
             this.lblServices.TabIndex = 91;
             this.lblServices.Text = "Services";
-            // 
-            // errorProvider
-            // 
-            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider.ContainerControl = this;
-            // 
-            // ultraTabPageControl2
-            // 
-            this.ultraTabPageControl2.Controls.Add(this.gridServiceWarnings);
-            this.ultraTabPageControl2.Controls.Add(this.myToolStrip1);
-            this.ultraTabPageControl2.Controls.Add(this.label2);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(1, 23);
-            this.ultraTabPageControl2.Name = "ultraTabPageControl2";
-            this.ultraTabPageControl2.Size = new System.Drawing.Size(471, 546);
-            // 
-            // gridServiceWarnings
-            // 
-            this.gridServiceWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            appearance38.BackColor = System.Drawing.SystemColors.Window;
-            appearance38.BorderColor = System.Drawing.SystemColors.InactiveCaption;
-            this.gridServiceWarnings.DisplayLayout.Appearance = appearance38;
-            this.gridServiceWarnings.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
-            appearance39.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            appearance39.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance39.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
-            appearance39.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServiceWarnings.DisplayLayout.GroupByBox.Appearance = appearance39;
-            appearance40.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServiceWarnings.DisplayLayout.GroupByBox.BandLabelAppearance = appearance40;
-            this.gridServiceWarnings.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
-            this.gridServiceWarnings.DisplayLayout.GroupByBox.Hidden = true;
-            appearance41.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            appearance41.BackColor2 = System.Drawing.SystemColors.Control;
-            appearance41.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance41.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.gridServiceWarnings.DisplayLayout.GroupByBox.PromptAppearance = appearance41;
-            this.gridServiceWarnings.DisplayLayout.MaxColScrollRegions = 1;
-            this.gridServiceWarnings.DisplayLayout.MaxRowScrollRegions = 1;
-            appearance42.BackColor = System.Drawing.SystemColors.Window;
-            appearance42.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.gridServiceWarnings.DisplayLayout.Override.ActiveCellAppearance = appearance42;
-            appearance43.BackColor = System.Drawing.SystemColors.Highlight;
-            appearance43.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.gridServiceWarnings.DisplayLayout.Override.ActiveRowAppearance = appearance43;
-            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
-            this.gridServiceWarnings.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
-            appearance44.BackColor = System.Drawing.SystemColors.Window;
-            this.gridServiceWarnings.DisplayLayout.Override.CardAreaAppearance = appearance44;
-            appearance45.BorderColor = System.Drawing.Color.Silver;
-            appearance45.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
-            this.gridServiceWarnings.DisplayLayout.Override.CellAppearance = appearance45;
-            this.gridServiceWarnings.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.EditAndSelectText;
-            this.gridServiceWarnings.DisplayLayout.Override.CellPadding = 0;
-            appearance46.BackColor = System.Drawing.SystemColors.Control;
-            appearance46.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance46.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
-            appearance46.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance46.BorderColor = System.Drawing.SystemColors.Window;
-            this.gridServiceWarnings.DisplayLayout.Override.GroupByRowAppearance = appearance46;
-            appearance47.TextHAlignAsString = "Left";
-            this.gridServiceWarnings.DisplayLayout.Override.HeaderAppearance = appearance47;
-            this.gridServiceWarnings.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
-            this.gridServiceWarnings.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsXPCommand;
-            appearance48.BackColor = System.Drawing.SystemColors.Window;
-            appearance48.BorderColor = System.Drawing.Color.Silver;
-            this.gridServiceWarnings.DisplayLayout.Override.RowAppearance = appearance48;
-            this.gridServiceWarnings.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
-            appearance49.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.gridServiceWarnings.DisplayLayout.Override.TemplateAddRowAppearance = appearance49;
-            this.gridServiceWarnings.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
-            this.gridServiceWarnings.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
-            this.gridServiceWarnings.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
-            this.gridServiceWarnings.Location = new System.Drawing.Point(7, 39);
-            this.gridServiceWarnings.Name = "gridServiceWarnings";
-            this.gridServiceWarnings.Size = new System.Drawing.Size(453, 504);
-            this.gridServiceWarnings.TabIndex = 128;
-            this.gridServiceWarnings.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridServiceWarnings_InitializeLayout);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(254, 13);
-            this.label2.TabIndex = 127;
-            this.label2.Text = "Booking warnings, shown when booking this service";
-            // 
-            // tsOptions
-            // 
-            this.tsOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tsOptions.BackColor = System.Drawing.Color.Transparent;
-            this.tsOptions.DisableAllMenuItems = true;
-            this.tsOptions.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsOptions.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOptionCopy,
-            this.toolStripSeparator3,
-            this.btnOptionAdd,
-            this.btnOptionDelete});
-            this.tsOptions.Location = new System.Drawing.Point(390, 6);
-            this.tsOptions.Name = "tsOptions";
-            this.tsOptions.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsOptions.Size = new System.Drawing.Size(78, 25);
-            this.tsOptions.TabIndex = 90;
-            this.tsOptions.Text = "tsOptions";
-            // 
-            // btnOptionCopy
-            // 
-            this.btnOptionCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOptionCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionCopy.Image")));
-            this.btnOptionCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptionCopy.Name = "btnOptionCopy";
-            this.btnOptionCopy.Size = new System.Drawing.Size(23, 22);
-            this.btnOptionCopy.Text = "Copy selected option";
-            this.btnOptionCopy.Click += new System.EventHandler(this.btnOptionCopy_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnOptionAdd
-            // 
-            this.btnOptionAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOptionAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionAdd.Image")));
-            this.btnOptionAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptionAdd.Name = "btnOptionAdd";
-            this.btnOptionAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnOptionAdd.Text = "btnAdd";
-            this.btnOptionAdd.ToolTipText = "Add new option";
-            this.btnOptionAdd.Click += new System.EventHandler(this.btnOptionAdd_Click);
-            // 
-            // btnOptionDelete
-            // 
-            this.btnOptionDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOptionDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnOptionDelete.Image")));
-            this.btnOptionDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptionDelete.Name = "btnOptionDelete";
-            this.btnOptionDelete.Size = new System.Drawing.Size(23, 22);
-            this.btnOptionDelete.Text = "btnDelete";
-            this.btnOptionDelete.ToolTipText = "Delete selected option";
-            this.btnOptionDelete.Click += new System.EventHandler(this.btnOptionDelete_Click);
-            // 
-            // tsRates
-            // 
-            this.tsRates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tsRates.BackColor = System.Drawing.Color.Transparent;
-            this.tsRates.DisableAllMenuItems = true;
-            this.tsRates.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsRates.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsRates.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnRateCopy,
-            this.toolStripSeparator2,
-            this.btnRateAdd,
-            this.btnRateDelete});
-            this.tsRates.Location = new System.Drawing.Point(390, 3);
-            this.tsRates.Name = "tsRates";
-            this.tsRates.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsRates.Size = new System.Drawing.Size(78, 25);
-            this.tsRates.TabIndex = 90;
-            this.tsRates.Text = "myToolStrip2";
-            // 
-            // btnRateCopy
-            // 
-            this.btnRateCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRateCopy.Image = ((System.Drawing.Image)(resources.GetObject("btnRateCopy.Image")));
-            this.btnRateCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRateCopy.Name = "btnRateCopy";
-            this.btnRateCopy.Size = new System.Drawing.Size(23, 22);
-            this.btnRateCopy.Text = "btnCopy";
-            this.btnRateCopy.ToolTipText = "Copy selected season and related options";
-            this.btnRateCopy.Click += new System.EventHandler(this.btnRateCopy_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnRateAdd
-            // 
-            this.btnRateAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRateAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnRateAdd.Image")));
-            this.btnRateAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRateAdd.Name = "btnRateAdd";
-            this.btnRateAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnRateAdd.Text = "btnAdd";
-            this.btnRateAdd.ToolTipText = "Add new season";
-            this.btnRateAdd.Click += new System.EventHandler(this.btnRateAdd_Click);
-            // 
-            // btnRateDelete
-            // 
-            this.btnRateDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRateDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnRateDelete.Image")));
-            this.btnRateDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRateDelete.Name = "btnRateDelete";
-            this.btnRateDelete.Size = new System.Drawing.Size(23, 22);
-            this.btnRateDelete.Text = "btnDelete";
-            this.btnRateDelete.ToolTipText = "Delete selected season and related options";
-            this.btnRateDelete.Click += new System.EventHandler(this.btnRateDelete_Click);
-            // 
-            // tsServiceTimes
-            // 
-            this.tsServiceTimes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tsServiceTimes.BackColor = System.Drawing.Color.Transparent;
-            this.tsServiceTimes.DisableAllMenuItems = true;
-            this.tsServiceTimes.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsServiceTimes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsServiceTimes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnServiceTimeAdd,
-            this.btnServiceTimeDelete});
-            this.tsServiceTimes.Location = new System.Drawing.Point(414, 15);
-            this.tsServiceTimes.Name = "tsServiceTimes";
-            this.tsServiceTimes.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsServiceTimes.Size = new System.Drawing.Size(49, 25);
-            this.tsServiceTimes.TabIndex = 120;
-            this.tsServiceTimes.Text = "tsServiceTimes";
-            // 
-            // btnServiceTimeAdd
-            // 
-            this.btnServiceTimeAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnServiceTimeAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceTimeAdd.Image")));
-            this.btnServiceTimeAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnServiceTimeAdd.Name = "btnServiceTimeAdd";
-            this.btnServiceTimeAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnServiceTimeAdd.Text = "btnFocAdd";
-            this.btnServiceTimeAdd.ToolTipText = "Add new time when the service is available";
-            this.btnServiceTimeAdd.Click += new System.EventHandler(this.btnServiceTimeAdd_Click);
-            // 
-            // btnServiceTimeDelete
-            // 
-            this.btnServiceTimeDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnServiceTimeDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceTimeDelete.Image")));
-            this.btnServiceTimeDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnServiceTimeDelete.Name = "btnServiceTimeDelete";
-            this.btnServiceTimeDelete.Size = new System.Drawing.Size(23, 22);
-            this.btnServiceTimeDelete.Text = "btnServiceDelete";
-            this.btnServiceTimeDelete.ToolTipText = "Delete selected service time";
-            this.btnServiceTimeDelete.Click += new System.EventHandler(this.btnServiceTimeDelete_Click);
-            // 
-            // tsFoc
-            // 
-            this.tsFoc.BackColor = System.Drawing.Color.Transparent;
-            this.tsFoc.DisableAllMenuItems = true;
-            this.tsFoc.Dock = System.Windows.Forms.DockStyle.None;
-            this.tsFoc.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tsFoc.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnFocAdd,
-            this.btnFocDel});
-            this.tsFoc.Location = new System.Drawing.Point(262, 4);
-            this.tsFoc.Name = "tsFoc";
-            this.tsFoc.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsFoc.Size = new System.Drawing.Size(49, 25);
-            this.tsFoc.TabIndex = 174;
-            this.tsFoc.Text = "myToolStrip1";
-            // 
-            // btnFocAdd
-            // 
-            this.btnFocAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFocAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnFocAdd.Image")));
-            this.btnFocAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFocAdd.Name = "btnFocAdd";
-            this.btnFocAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnFocAdd.Text = "btnFocAdd";
-            this.btnFocAdd.ToolTipText = "Add new FOC";
-            this.btnFocAdd.Click += new System.EventHandler(this.btnFocAdd_Click);
-            // 
-            // btnFocDel
-            // 
-            this.btnFocDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFocDel.Image = ((System.Drawing.Image)(resources.GetObject("btnFocDel.Image")));
-            this.btnFocDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFocDel.Name = "btnFocDel";
-            this.btnFocDel.Size = new System.Drawing.Size(23, 22);
-            this.btnFocDel.Text = "btnFocDel";
-            this.btnFocDel.ToolTipText = "Delete selected FOC";
-            this.btnFocDel.Click += new System.EventHandler(this.btnFocDel_Click);
-            // 
-            // myToolStrip1
-            // 
-            this.myToolStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.myToolStrip1.BackColor = System.Drawing.Color.Transparent;
-            this.myToolStrip1.DisableAllMenuItems = true;
-            this.myToolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.myToolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.myToolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnServiceWarningAdd,
-            this.btnServiceWarningDelete});
-            this.myToolStrip1.Location = new System.Drawing.Point(414, 15);
-            this.myToolStrip1.Name = "myToolStrip1";
-            this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(49, 25);
-            this.myToolStrip1.TabIndex = 129;
-            this.myToolStrip1.Text = "myToolStrip1";
-            // 
-            // btnServiceWarningAdd
-            // 
-            this.btnServiceWarningAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnServiceWarningAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningAdd.Image")));
-            this.btnServiceWarningAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnServiceWarningAdd.Name = "btnServiceWarningAdd";
-            this.btnServiceWarningAdd.Size = new System.Drawing.Size(23, 22);
-            this.btnServiceWarningAdd.Text = "btnFocAdd";
-            this.btnServiceWarningAdd.ToolTipText = "Add new time when the service is available";
-            this.btnServiceWarningAdd.Click += new System.EventHandler(this.btnServiceWarningAdd_Click);
-            // 
-            // btnServiceWarningDelete
-            // 
-            this.btnServiceWarningDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnServiceWarningDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnServiceWarningDelete.Image")));
-            this.btnServiceWarningDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnServiceWarningDelete.Name = "btnServiceWarningDelete";
-            this.btnServiceWarningDelete.Size = new System.Drawing.Size(23, 22);
-            this.btnServiceWarningDelete.Text = "btnServiceDelete";
-            this.btnServiceWarningDelete.ToolTipText = "Delete selected service time";
-            this.btnServiceWarningDelete.Click += new System.EventHandler(this.btnServiceWarningDelete_Click);
             // 
             // tsServices
             // 
@@ -1519,6 +1655,11 @@ namespace TourWriter.Modules.SupplierModule
             this.btnServiceDelete.ToolTipText = "Delete selected services and related seasons/options";
             this.btnServiceDelete.Click += new System.EventHandler(this.btnServiceDelete_Click);
             // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            // 
             // ServiceEditor
             // 
             this.AutoScroll = true;
@@ -1532,9 +1673,13 @@ namespace TourWriter.Modules.SupplierModule
             this.pnlOptions.ResumeLayout(false);
             this.pnlOptions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOptions)).EndInit();
+            this.tsOptions.ResumeLayout(false);
+            this.tsOptions.PerformLayout();
             this.pnlRates.ResumeLayout(false);
             this.pnlRates.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridRates)).EndInit();
+            this.tsRates.ResumeLayout(false);
+            this.tsRates.PerformLayout();
             this.ultraTabPageControl1.ResumeLayout(false);
             this.ultraTabPageControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbGrossTaxType)).EndInit();
@@ -1544,13 +1689,27 @@ namespace TourWriter.Modules.SupplierModule
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxPax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridFoc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeServiceConfigs)).EndInit();
+            this.tsFoc.ResumeLayout(false);
+            this.tsFoc.PerformLayout();
             this.ultraTabPageControl4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtCheckinMinutesEarly)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridServiceTimes)).EndInit();
+            this.tsServiceTimes.ResumeLayout(false);
+            this.tsServiceTimes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceDescription)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtServiceComments)).EndInit();
+            this.ultraTabPageControl2.ResumeLayout(false);
+            this.ultraTabPageControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).EndInit();
+            this.myToolStrip1.ResumeLayout(false);
+            this.myToolStrip1.PerformLayout();
+            this.ultraTabPageControl5.ResumeLayout(false);
+            this.ultraTabPageControl5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAllocations)).EndInit();
+            this.tsAllocations.ResumeLayout(false);
+            this.tsAllocations.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridServices)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideExpiredSeasons)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideNonActiveItems)).EndInit();
@@ -1561,22 +1720,9 @@ namespace TourWriter.Modules.SupplierModule
             this.tabControl.ResumeLayout(false);
             this.pnlServices.ResumeLayout(false);
             this.pnlServices.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.ultraTabPageControl2.ResumeLayout(false);
-            this.ultraTabPageControl2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridServiceWarnings)).EndInit();
-            this.tsOptions.ResumeLayout(false);
-            this.tsOptions.PerformLayout();
-            this.tsRates.ResumeLayout(false);
-            this.tsRates.PerformLayout();
-            this.tsServiceTimes.ResumeLayout(false);
-            this.tsServiceTimes.PerformLayout();
-            this.tsFoc.ResumeLayout(false);
-            this.tsFoc.PerformLayout();
-            this.myToolStrip1.ResumeLayout(false);
-            this.myToolStrip1.PerformLayout();
             this.tsServices.ResumeLayout(false);
             this.tsServices.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1668,5 +1814,10 @@ namespace TourWriter.Modules.SupplierModule
         private System.Windows.Forms.ToolStripButton btnServiceWarningDelete;
         private Infragistics.Win.UltraWinGrid.UltraGrid gridServiceWarnings;
         private System.Windows.Forms.Label label2;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl5;
+        private UserControls.MyToolStrip tsAllocations;
+        private System.Windows.Forms.ToolStripButton btnAddAllocation;
+        private System.Windows.Forms.ToolStripButton btnDeleteAllocation;
+        private Infragistics.Win.UltraWinGrid.UltraGrid gridAllocations;
     }
 }
