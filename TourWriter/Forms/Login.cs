@@ -43,6 +43,7 @@ namespace TourWriter.Forms
 
         private void Login_Load(object sender, EventArgs e)
         {
+            TopMost = true;
             var args = Environment.GetCommandLineArgs();
             ProcessInputArgs(args);
             
