@@ -206,7 +206,6 @@ namespace TourWriter.Forms
             this.contextMenuSearch,
             this.contextMenuRefresh});
             this.contextMenuNavigation.Name = "contextMenu";
-            this.contextMenuNavigation.OwnerItem = this.menuContacts;
             resources.ApplyResources(this.contextMenuNavigation, "contextMenuNavigation");
             this.contextMenuNavigation.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
             this.contextMenuNavigation.LostFocus += new System.EventHandler(contextMenuNavigation_LostFocus);
