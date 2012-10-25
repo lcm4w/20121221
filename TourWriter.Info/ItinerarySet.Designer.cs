@@ -76,6 +76,10 @@ namespace TourWriter.Info {
         
         private RoomTypeDataTable tableRoomType;
         
+        private AllocationDataTable tableAllocation;
+        
+        private AllocationAgentDataTable tableAllocationAgent;
+        
         private global::System.Data.DataRelation relationPaymentTermItinerary;
         
         private global::System.Data.DataRelation relationItineraryItineraryPax;
@@ -114,7 +118,11 @@ namespace TourWriter.Info {
         
         private global::System.Data.DataRelation relationFK_PurchaseItem_ItineraryPaxOverride;
         
+        private global::System.Data.DataRelation relationFK_Itinerary_Allocation;
+        
         private global::System.Data.DataRelation relationItinerary_RoomType;
+        
+        private global::System.Data.DataRelation relationFK_AllocationAgent_Allocation;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -221,6 +229,12 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["RoomType"] != null)) {
                     base.Tables.Add(new RoomTypeDataTable(ds.Tables["RoomType"]));
+                }
+                if ((ds.Tables["Allocation"] != null)) {
+                    base.Tables.Add(new AllocationDataTable(ds.Tables["Allocation"]));
+                }
+                if ((ds.Tables["AllocationAgent"] != null)) {
+                    base.Tables.Add(new AllocationAgentDataTable(ds.Tables["AllocationAgent"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -502,6 +516,26 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AllocationDataTable Allocation {
+            get {
+                return this.tableAllocation;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public AllocationAgentDataTable AllocationAgent {
+            get {
+                return this.tableAllocationAgent;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -644,6 +678,12 @@ namespace TourWriter.Info {
                 }
                 if ((ds.Tables["RoomType"] != null)) {
                     base.Tables.Add(new RoomTypeDataTable(ds.Tables["RoomType"]));
+                }
+                if ((ds.Tables["Allocation"] != null)) {
+                    base.Tables.Add(new AllocationDataTable(ds.Tables["Allocation"]));
+                }
+                if ((ds.Tables["AllocationAgent"] != null)) {
+                    base.Tables.Add(new AllocationAgentDataTable(ds.Tables["AllocationAgent"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -834,6 +874,18 @@ namespace TourWriter.Info {
                     this.tableRoomType.InitVars();
                 }
             }
+            this.tableAllocation = ((AllocationDataTable)(base.Tables["Allocation"]));
+            if ((initTable == true)) {
+                if ((this.tableAllocation != null)) {
+                    this.tableAllocation.InitVars();
+                }
+            }
+            this.tableAllocationAgent = ((AllocationAgentDataTable)(base.Tables["AllocationAgent"]));
+            if ((initTable == true)) {
+                if ((this.tableAllocationAgent != null)) {
+                    this.tableAllocationAgent.InitVars();
+                }
+            }
             this.relationPaymentTermItinerary = this.Relations["PaymentTermItinerary"];
             this.relationItineraryItineraryPax = this.Relations["ItineraryItineraryPax"];
             this.relationItineraryItineraryMarginOverride = this.Relations["ItineraryItineraryMarginOverride"];
@@ -853,7 +905,9 @@ namespace TourWriter.Info {
             this.relationItinerarySaleItinerarySaleAllocation = this.Relations["ItinerarySaleItinerarySaleAllocation"];
             this.relationFK_ItineraryPax_ItineraryPaxOverride = this.Relations["FK_ItineraryPax_ItineraryPaxOverride"];
             this.relationFK_PurchaseItem_ItineraryPaxOverride = this.Relations["FK_PurchaseItem_ItineraryPaxOverride"];
+            this.relationFK_Itinerary_Allocation = this.Relations["FK_Itinerary_Allocation"];
             this.relationItinerary_RoomType = this.Relations["Itinerary_RoomType"];
+            this.relationFK_AllocationAgent_Allocation = this.Relations["FK_AllocationAgent_Allocation"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -917,6 +971,10 @@ namespace TourWriter.Info {
             base.Tables.Add(this.tableItineraryTask);
             this.tableRoomType = new RoomTypeDataTable();
             base.Tables.Add(this.tableRoomType);
+            this.tableAllocation = new AllocationDataTable();
+            base.Tables.Add(this.tableAllocation);
+            this.tableAllocationAgent = new AllocationAgentDataTable();
+            base.Tables.Add(this.tableAllocationAgent);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("PaymentTermItinerary", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
@@ -1065,6 +1123,13 @@ namespace TourWriter.Info {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Itinerary_Allocation", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAllocation.ItineraryIDColumn});
+            this.tableAllocation.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             this.relationPaymentTermItinerary = new global::System.Data.DataRelation("PaymentTermItinerary", new global::System.Data.DataColumn[] {
                         this.tablePaymentTerm.PaymentTermIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItinerary.PaymentTermIDColumn}, false);
@@ -1141,10 +1206,18 @@ namespace TourWriter.Info {
                         this.tablePurchaseItem.PurchaseItemIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableItineraryPaxOverride.PurchaseItemIDColumn}, false);
             this.Relations.Add(this.relationFK_PurchaseItem_ItineraryPaxOverride);
+            this.relationFK_Itinerary_Allocation = new global::System.Data.DataRelation("FK_Itinerary_Allocation", new global::System.Data.DataColumn[] {
+                        this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAllocation.ItineraryIDColumn}, false);
+            this.Relations.Add(this.relationFK_Itinerary_Allocation);
             this.relationItinerary_RoomType = new global::System.Data.DataRelation("Itinerary_RoomType", new global::System.Data.DataColumn[] {
                         this.tableItinerary.ItineraryIDColumn}, new global::System.Data.DataColumn[] {
                         this.tableRoomType.ItineraryIDColumn}, false);
             this.Relations.Add(this.relationItinerary_RoomType);
+            this.relationFK_AllocationAgent_Allocation = new global::System.Data.DataRelation("FK_AllocationAgent_Allocation", new global::System.Data.DataColumn[] {
+                        this.tableAllocation.AllocationIDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableAllocationAgent.AllocationIDColumn}, false);
+            this.Relations.Add(this.relationFK_AllocationAgent_Allocation);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1305,6 +1378,18 @@ namespace TourWriter.Info {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeAllocation() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeAllocationAgent() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void SchemaChanged(object sender, global::System.ComponentModel.CollectionChangeEventArgs e) {
             if ((e.Action == global::System.ComponentModel.CollectionChangeAction.Remove)) {
                 this.InitVars();
@@ -1435,6 +1520,12 @@ namespace TourWriter.Info {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void RoomTypeRowChangeEventHandler(object sender, RoomTypeRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void AllocationRowChangeEventHandler(object sender, AllocationRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void AllocationAgentRowChangeEventHandler(object sender, AllocationAgentRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -4977,6 +5068,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnJobDescription;
             
+            private global::System.Data.DataColumn columnPassportNumber;
+            
+            private global::System.Data.DataColumn columnPassportExpiry;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactDataTable() {
@@ -5244,6 +5339,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PassportNumberColumn {
+                get {
+                    return this.columnPassportNumber;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PassportExpiryColumn {
+                get {
+                    return this.columnPassportExpiry;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5307,7 +5418,9 @@ namespace TourWriter.Info {
                         int AddedBy, 
                         byte[] RowVersion, 
                         bool IsDeleted, 
-                        string JobDescription) {
+                        string JobDescription, 
+                        string PassportNumber, 
+                        System.DateTime PassportExpiry) {
                 ContactRow rowContactRow = ((ContactRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -5338,7 +5451,9 @@ namespace TourWriter.Info {
                         AddedBy,
                         RowVersion,
                         IsDeleted,
-                        JobDescription};
+                        JobDescription,
+                        PassportNumber,
+                        PassportExpiry};
                 rowContactRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowContactRow);
                 return rowContactRow;
@@ -5397,6 +5512,8 @@ namespace TourWriter.Info {
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnIsDeleted = base.Columns["IsDeleted"];
                 this.columnJobDescription = base.Columns["JobDescription"];
+                this.columnPassportNumber = base.Columns["PassportNumber"];
+                this.columnPassportExpiry = base.Columns["PassportExpiry"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5460,6 +5577,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnIsDeleted);
                 this.columnJobDescription = new global::System.Data.DataColumn("JobDescription", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnJobDescription);
+                this.columnPassportNumber = new global::System.Data.DataColumn("PassportNumber", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPassportNumber);
+                this.columnPassportExpiry = new global::System.Data.DataColumn("PassportExpiry", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPassportExpiry);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey4", new global::System.Data.DataColumn[] {
                                 this.columnContactID}, true));
                 this.columnContactID.AutoIncrement = true;
@@ -6054,6 +6175,14 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnTitle;
             
+            private global::System.Data.DataColumn columnRoomTypeID;
+            
+            private global::System.Data.DataColumn columnAgentID;
+            
+            private global::System.Data.DataColumn columnPriceOverride;
+            
+            private global::System.Data.DataColumn columnRoomName;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryMemberDataTable() {
@@ -6241,6 +6370,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoomTypeIDColumn {
+                get {
+                    return this.columnRoomTypeID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AgentIDColumn {
+                get {
+                    return this.columnAgentID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PriceOverrideColumn {
+                get {
+                    return this.columnPriceOverride;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RoomNameColumn {
+                get {
+                    return this.columnRoomName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6294,7 +6455,11 @@ namespace TourWriter.Info {
                         System.DateTime AddedOn, 
                         int AddedBy, 
                         byte[] RowVersion, 
-                        string Title) {
+                        string Title, 
+                        int RoomTypeID, 
+                        int AgentID, 
+                        decimal PriceOverride, 
+                        string RoomName) {
                 ItineraryMemberRow rowItineraryMemberRow = ((ItineraryMemberRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -6315,7 +6480,11 @@ namespace TourWriter.Info {
                         AddedOn,
                         AddedBy,
                         RowVersion,
-                        Title};
+                        Title,
+                        RoomTypeID,
+                        AgentID,
+                        PriceOverride,
+                        RoomName};
                 if ((parentItineraryGroupRowByItineraryGroupGroupMember != null)) {
                     columnValuesArray[1] = parentItineraryGroupRowByItineraryGroupGroupMember[0];
                 }
@@ -6370,6 +6539,10 @@ namespace TourWriter.Info {
                 this.columnAddedBy = base.Columns["AddedBy"];
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnTitle = base.Columns["Title"];
+                this.columnRoomTypeID = base.Columns["RoomTypeID"];
+                this.columnAgentID = base.Columns["AgentID"];
+                this.columnPriceOverride = base.Columns["PriceOverride"];
+                this.columnRoomName = base.Columns["RoomName"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6413,6 +6586,14 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnRowVersion);
                 this.columnTitle = new global::System.Data.DataColumn("Title", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTitle);
+                this.columnRoomTypeID = new global::System.Data.DataColumn("RoomTypeID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoomTypeID);
+                this.columnAgentID = new global::System.Data.DataColumn("AgentID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAgentID);
+                this.columnPriceOverride = new global::System.Data.DataColumn("PriceOverride", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPriceOverride);
+                this.columnRoomName = new global::System.Data.DataColumn("RoomName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRoomName);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey3", new global::System.Data.DataColumn[] {
                                 this.columnItineraryMemberID}, true));
                 this.columnItineraryMemberID.AutoIncrement = true;
@@ -12183,6 +12364,663 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AllocationDataTable : global::System.Data.TypedTableBase<AllocationRow> {
+            
+            private global::System.Data.DataColumn columnAllocationID;
+            
+            private global::System.Data.DataColumn columnServiceID;
+            
+            private global::System.Data.DataColumn columnItineraryID;
+            
+            private global::System.Data.DataColumn columnValidFrom;
+            
+            private global::System.Data.DataColumn columnValidTo;
+            
+            private global::System.Data.DataColumn columnQuantity;
+            
+            private global::System.Data.DataColumn columnRelease;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationDataTable() {
+                this.TableName = "Allocation";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal AllocationDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected AllocationDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AllocationIDColumn {
+                get {
+                    return this.columnAllocationID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ServiceIDColumn {
+                get {
+                    return this.columnServiceID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItineraryIDColumn {
+                get {
+                    return this.columnItineraryID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ValidFromColumn {
+                get {
+                    return this.columnValidFrom;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ValidToColumn {
+                get {
+                    return this.columnValidTo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QuantityColumn {
+                get {
+                    return this.columnQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReleaseColumn {
+                get {
+                    return this.columnRelease;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow this[int index] {
+                get {
+                    return ((AllocationRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationRowChangeEventHandler AllocationRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationRowChangeEventHandler AllocationRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationRowChangeEventHandler AllocationRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationRowChangeEventHandler AllocationRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddAllocationRow(AllocationRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow AddAllocationRow(int ServiceID, ItineraryRow parentItineraryRowByFK_Itinerary_Allocation, System.DateTime ValidFrom, System.DateTime ValidTo, int Quantity, int Release) {
+                AllocationRow rowAllocationRow = ((AllocationRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        ServiceID,
+                        null,
+                        ValidFrom,
+                        ValidTo,
+                        Quantity,
+                        Release};
+                if ((parentItineraryRowByFK_Itinerary_Allocation != null)) {
+                    columnValuesArray[2] = parentItineraryRowByFK_Itinerary_Allocation[0];
+                }
+                rowAllocationRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAllocationRow);
+                return rowAllocationRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow FindByAllocationID(int AllocationID) {
+                return ((AllocationRow)(this.Rows.Find(new object[] {
+                            AllocationID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                AllocationDataTable cln = ((AllocationDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AllocationDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnAllocationID = base.Columns["AllocationID"];
+                this.columnServiceID = base.Columns["ServiceID"];
+                this.columnItineraryID = base.Columns["ItineraryID"];
+                this.columnValidFrom = base.Columns["ValidFrom"];
+                this.columnValidTo = base.Columns["ValidTo"];
+                this.columnQuantity = base.Columns["Quantity"];
+                this.columnRelease = base.Columns["Release"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnAllocationID = new global::System.Data.DataColumn("AllocationID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAllocationID);
+                this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceID);
+                this.columnItineraryID = new global::System.Data.DataColumn("ItineraryID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItineraryID);
+                this.columnValidFrom = new global::System.Data.DataColumn("ValidFrom", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidFrom);
+                this.columnValidTo = new global::System.Data.DataColumn("ValidTo", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnValidTo);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantity);
+                this.columnRelease = new global::System.Data.DataColumn("Release", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRelease);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnAllocationID}, true));
+                this.columnAllocationID.AutoIncrement = true;
+                this.columnAllocationID.AutoIncrementSeed = -1;
+                this.columnAllocationID.AutoIncrementStep = -1;
+                this.columnAllocationID.AllowDBNull = false;
+                this.columnAllocationID.Unique = true;
+                this.columnValidFrom.AllowDBNull = false;
+                this.columnValidTo.AllowDBNull = false;
+                this.columnQuantity.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow NewAllocationRow() {
+                return ((AllocationRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AllocationRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(AllocationRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AllocationRowChanged != null)) {
+                    this.AllocationRowChanged(this, new AllocationRowChangeEvent(((AllocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AllocationRowChanging != null)) {
+                    this.AllocationRowChanging(this, new AllocationRowChangeEvent(((AllocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AllocationRowDeleted != null)) {
+                    this.AllocationRowDeleted(this, new AllocationRowChangeEvent(((AllocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AllocationRowDeleting != null)) {
+                    this.AllocationRowDeleting(this, new AllocationRowChangeEvent(((AllocationRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveAllocationRow(AllocationRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ItinerarySet ds = new ItinerarySet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AllocationDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class AllocationAgentDataTable : global::System.Data.TypedTableBase<AllocationAgentRow> {
+            
+            private global::System.Data.DataColumn columnAllocationID;
+            
+            private global::System.Data.DataColumn columnAgentID;
+            
+            private global::System.Data.DataColumn columnQuantity;
+            
+            private global::System.Data.DataColumn columnRelease;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentDataTable() {
+                this.TableName = "AllocationAgent";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal AllocationAgentDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected AllocationAgentDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AllocationIDColumn {
+                get {
+                    return this.columnAllocationID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AgentIDColumn {
+                get {
+                    return this.columnAgentID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn QuantityColumn {
+                get {
+                    return this.columnQuantity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReleaseColumn {
+                get {
+                    return this.columnRelease;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow this[int index] {
+                get {
+                    return ((AllocationAgentRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationAgentRowChangeEventHandler AllocationAgentRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationAgentRowChangeEventHandler AllocationAgentRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationAgentRowChangeEventHandler AllocationAgentRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event AllocationAgentRowChangeEventHandler AllocationAgentRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddAllocationAgentRow(AllocationAgentRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow AddAllocationAgentRow(AllocationRow parentAllocationRowByFK_AllocationAgent_Allocation, int AgentID, int Quantity, int Release) {
+                AllocationAgentRow rowAllocationAgentRow = ((AllocationAgentRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        AgentID,
+                        Quantity,
+                        Release};
+                if ((parentAllocationRowByFK_AllocationAgent_Allocation != null)) {
+                    columnValuesArray[0] = parentAllocationRowByFK_AllocationAgent_Allocation[0];
+                }
+                rowAllocationAgentRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowAllocationAgentRow);
+                return rowAllocationAgentRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow FindByAllocationIDAgentID(int AllocationID, int AgentID) {
+                return ((AllocationAgentRow)(this.Rows.Find(new object[] {
+                            AllocationID,
+                            AgentID})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                AllocationAgentDataTable cln = ((AllocationAgentDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new AllocationAgentDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnAllocationID = base.Columns["AllocationID"];
+                this.columnAgentID = base.Columns["AgentID"];
+                this.columnQuantity = base.Columns["Quantity"];
+                this.columnRelease = base.Columns["Release"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnAllocationID = new global::System.Data.DataColumn("AllocationID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAllocationID);
+                this.columnAgentID = new global::System.Data.DataColumn("AgentID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAgentID);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnQuantity);
+                this.columnRelease = new global::System.Data.DataColumn("Release", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRelease);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnAllocationID,
+                                this.columnAgentID}, true));
+                this.columnAllocationID.AllowDBNull = false;
+                this.columnAgentID.AllowDBNull = false;
+                this.columnQuantity.AllowDBNull = false;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow NewAllocationAgentRow() {
+                return ((AllocationAgentRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new AllocationAgentRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(AllocationAgentRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.AllocationAgentRowChanged != null)) {
+                    this.AllocationAgentRowChanged(this, new AllocationAgentRowChangeEvent(((AllocationAgentRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.AllocationAgentRowChanging != null)) {
+                    this.AllocationAgentRowChanging(this, new AllocationAgentRowChangeEvent(((AllocationAgentRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.AllocationAgentRowDeleted != null)) {
+                    this.AllocationAgentRowDeleted(this, new AllocationAgentRowChangeEvent(((AllocationAgentRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.AllocationAgentRowDeleting != null)) {
+                    this.AllocationAgentRowDeleting(this, new AllocationAgentRowChangeEvent(((AllocationAgentRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveAllocationAgentRow(AllocationAgentRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                ItinerarySet ds = new ItinerarySet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "AllocationAgentDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class PaymentTermRow : global::System.Data.DataRow {
@@ -13535,6 +14373,17 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAgentContactIDNull() {
                 this[this.tableItinerary.AgentContactIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow[] GetAllocationRows() {
+                if ((this.Table.ChildRelations["FK_Itinerary_Allocation"] == null)) {
+                    return new AllocationRow[0];
+                }
+                else {
+                    return ((AllocationRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Itinerary_Allocation"])));
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15919,6 +16768,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string PassportNumber {
+                get {
+                    try {
+                        return ((string)(this[this.tableContact.PassportNumberColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PassportNumber\' in table \'Contact\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableContact.PassportNumberColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime PassportExpiry {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableContact.PassportExpiryColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PassportExpiry\' in table \'Contact\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableContact.PassportExpiryColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsTitleNull() {
                 return this.IsNull(this.tableContact.TitleColumn);
             }
@@ -16239,6 +17120,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetJobDescriptionNull() {
                 this[this.tableContact.JobDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPassportNumberNull() {
+                return this.IsNull(this.tableContact.PassportNumberColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPassportNumberNull() {
+                this[this.tableContact.PassportNumberColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPassportExpiryNull() {
+                return this.IsNull(this.tableContact.PassportExpiryColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPassportExpiryNull() {
+                this[this.tableContact.PassportExpiryColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16852,6 +17757,70 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int RoomTypeID {
+                get {
+                    try {
+                        return ((int)(this[this.tableItineraryMember.RoomTypeIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RoomTypeID\' in table \'ItineraryMember\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryMember.RoomTypeIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AgentID {
+                get {
+                    try {
+                        return ((int)(this[this.tableItineraryMember.AgentIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AgentID\' in table \'ItineraryMember\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryMember.AgentIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal PriceOverride {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableItineraryMember.PriceOverrideColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PriceOverride\' in table \'ItineraryMember\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryMember.PriceOverrideColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string RoomName {
+                get {
+                    try {
+                        return ((string)(this[this.tableItineraryMember.RoomNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'RoomName\' in table \'ItineraryMember\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItineraryMember.RoomNameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ContactRow ContactRow {
                 get {
                     return ((ContactRow)(this.GetParentRow(this.Table.ParentRelations["ContactGroupMember"])));
@@ -17062,6 +18031,54 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetTitleNull() {
                 this[this.tableItineraryMember.TitleColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRoomTypeIDNull() {
+                return this.IsNull(this.tableItineraryMember.RoomTypeIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRoomTypeIDNull() {
+                this[this.tableItineraryMember.RoomTypeIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAgentIDNull() {
+                return this.IsNull(this.tableItineraryMember.AgentIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAgentIDNull() {
+                this[this.tableItineraryMember.AgentIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPriceOverrideNull() {
+                return this.IsNull(this.tableItineraryMember.PriceOverrideColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPriceOverrideNull() {
+                this[this.tableItineraryMember.PriceOverrideColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRoomNameNull() {
+                return this.IsNull(this.tableItineraryMember.RoomNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRoomNameNull() {
+                this[this.tableItineraryMember.RoomNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20080,6 +21097,258 @@ namespace TourWriter.Info {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class AllocationRow : global::System.Data.DataRow {
+            
+            private AllocationDataTable tableAllocation;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal AllocationRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAllocation = ((AllocationDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AllocationID {
+                get {
+                    return ((int)(this[this.tableAllocation.AllocationIDColumn]));
+                }
+                set {
+                    this[this.tableAllocation.AllocationIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ServiceID {
+                get {
+                    try {
+                        return ((int)(this[this.tableAllocation.ServiceIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceID\' in table \'Allocation\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllocation.ServiceIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int ItineraryID {
+                get {
+                    try {
+                        return ((int)(this[this.tableAllocation.ItineraryIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ItineraryID\' in table \'Allocation\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllocation.ItineraryIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ValidFrom {
+                get {
+                    return ((global::System.DateTime)(this[this.tableAllocation.ValidFromColumn]));
+                }
+                set {
+                    this[this.tableAllocation.ValidFromColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ValidTo {
+                get {
+                    return ((global::System.DateTime)(this[this.tableAllocation.ValidToColumn]));
+                }
+                set {
+                    this[this.tableAllocation.ValidToColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Quantity {
+                get {
+                    return ((int)(this[this.tableAllocation.QuantityColumn]));
+                }
+                set {
+                    this[this.tableAllocation.QuantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Release {
+                get {
+                    try {
+                        return ((int)(this[this.tableAllocation.ReleaseColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Release\' in table \'Allocation\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllocation.ReleaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public ItineraryRow ItineraryRow {
+                get {
+                    return ((ItineraryRow)(this.GetParentRow(this.Table.ParentRelations["FK_Itinerary_Allocation"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Itinerary_Allocation"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsServiceIDNull() {
+                return this.IsNull(this.tableAllocation.ServiceIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetServiceIDNull() {
+                this[this.tableAllocation.ServiceIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsItineraryIDNull() {
+                return this.IsNull(this.tableAllocation.ItineraryIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetItineraryIDNull() {
+                this[this.tableAllocation.ItineraryIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsReleaseNull() {
+                return this.IsNull(this.tableAllocation.ReleaseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetReleaseNull() {
+                this[this.tableAllocation.ReleaseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow[] GetAllocationAgentRows() {
+                if ((this.Table.ChildRelations["FK_AllocationAgent_Allocation"] == null)) {
+                    return new AllocationAgentRow[0];
+                }
+                else {
+                    return ((AllocationAgentRow[])(base.GetChildRows(this.Table.ChildRelations["FK_AllocationAgent_Allocation"])));
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class AllocationAgentRow : global::System.Data.DataRow {
+            
+            private AllocationAgentDataTable tableAllocationAgent;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal AllocationAgentRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableAllocationAgent = ((AllocationAgentDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AllocationID {
+                get {
+                    return ((int)(this[this.tableAllocationAgent.AllocationIDColumn]));
+                }
+                set {
+                    this[this.tableAllocationAgent.AllocationIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AgentID {
+                get {
+                    return ((int)(this[this.tableAllocationAgent.AgentIDColumn]));
+                }
+                set {
+                    this[this.tableAllocationAgent.AgentIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Quantity {
+                get {
+                    return ((int)(this[this.tableAllocationAgent.QuantityColumn]));
+                }
+                set {
+                    this[this.tableAllocationAgent.QuantityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Release {
+                get {
+                    try {
+                        return ((int)(this[this.tableAllocationAgent.ReleaseColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Release\' in table \'AllocationAgent\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAllocationAgent.ReleaseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow AllocationRow {
+                get {
+                    return ((AllocationRow)(this.GetParentRow(this.Table.ParentRelations["FK_AllocationAgent_Allocation"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_AllocationAgent_Allocation"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsReleaseNull() {
+                return this.IsNull(this.tableAllocationAgent.ReleaseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetReleaseNull() {
+                this[this.tableAllocationAgent.ReleaseColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -20949,6 +22218,74 @@ namespace TourWriter.Info {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public RoomTypeRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class AllocationRowChangeEvent : global::System.EventArgs {
+            
+            private AllocationRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRowChangeEvent(AllocationRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class AllocationAgentRowChangeEvent : global::System.EventArgs {
+            
+            private AllocationAgentRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRowChangeEvent(AllocationAgentRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public AllocationAgentRow Row {
                 get {
                     return this.eventRow;
                 }

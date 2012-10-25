@@ -98,6 +98,8 @@
               <xs:element name="RowVersion" msdata:ReadOnly="true" msprop:Generator_UserColumnName="RowVersion" msprop:Generator_ColumnPropNameInRow="RowVersion" msprop:Generator_ColumnVarNameInTable="columnRowVersion" msprop:Generator_ColumnPropNameInTable="RowVersionColumn" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="IsDeleted" msprop:Generator_UserColumnName="IsDeleted" msprop:Generator_ColumnPropNameInRow="IsDeleted" msprop:Generator_ColumnVarNameInTable="columnIsDeleted" msprop:Generator_ColumnPropNameInTable="IsDeletedColumn" type="xs:boolean" minOccurs="0" />
               <xs:element name="JobDescription" msprop:Generator_UserColumnName="JobDescription" msprop:Generator_ColumnVarNameInTable="columnJobDescription" msprop:Generator_ColumnPropNameInRow="JobDescription" msprop:Generator_ColumnPropNameInTable="JobDescriptionColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PassportNumber" msprop:Generator_UserColumnName="PassportNumber" msprop:Generator_ColumnVarNameInTable="columnPassportNumber" msprop:Generator_ColumnPropNameInRow="PassportNumber" msprop:Generator_ColumnPropNameInTable="PassportNumberColumn" type="xs:string" minOccurs="0" />
+              <xs:element name="PassportExpiry" msprop:Generator_UserColumnName="PassportExpiry" msprop:Generator_ColumnVarNameInTable="columnPassportExpiry" msprop:Generator_ColumnPropNameInRow="PassportExpiry" msprop:Generator_ColumnPropNameInTable="PassportExpiryColumn" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
