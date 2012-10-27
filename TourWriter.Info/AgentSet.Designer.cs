@@ -896,6 +896,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnCurrencyCode;
             
+            private global::System.Data.DataColumn columnAgentCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public AgentDataTable() {
@@ -1171,6 +1173,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AgentCodeColumn {
+                get {
+                    return this.columnAgentCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1235,7 +1245,8 @@ namespace TourWriter.Info {
                         byte[] RowVersion, 
                         bool IsDeleted, 
                         string NetMinOrMax, 
-                        string CurrencyCode) {
+                        string CurrencyCode, 
+                        string AgentCode) {
                 AgentRow rowAgentRow = ((AgentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1267,7 +1278,8 @@ namespace TourWriter.Info {
                         RowVersion,
                         IsDeleted,
                         NetMinOrMax,
-                        CurrencyCode};
+                        CurrencyCode,
+                        AgentCode};
                 if ((parentPaymentTermRowByPaymentTermAgent != null)) {
                     columnValuesArray[11] = parentPaymentTermRowByPaymentTermAgent[0];
                 }
@@ -1333,6 +1345,7 @@ namespace TourWriter.Info {
                 this.columnIsDeleted = base.Columns["IsDeleted"];
                 this.columnNetMinOrMax = base.Columns["NetMinOrMax"];
                 this.columnCurrencyCode = base.Columns["CurrencyCode"];
+                this.columnAgentCode = base.Columns["AgentCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1398,6 +1411,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnNetMinOrMax);
                 this.columnCurrencyCode = new global::System.Data.DataColumn("CurrencyCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCurrencyCode);
+                this.columnAgentCode = new global::System.Data.DataColumn("AgentCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAgentCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("AgentSetKey1", new global::System.Data.DataColumn[] {
                                 this.columnAgentID}, true));
                 this.columnAgentID.AutoIncrement = true;
@@ -1407,6 +1422,7 @@ namespace TourWriter.Info {
                 this.columnAgentName.AllowDBNull = false;
                 this.columnRowVersion.ReadOnly = true;
                 this.columnCurrencyCode.MaxLength = 3;
+                this.columnAgentCode.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3605,6 +3621,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AgentCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableAgent.AgentCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AgentCode\' in table \'Agent\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableAgent.AgentCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRowByPaymentTermAgent2 {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermAgent2"])));
@@ -3959,6 +3991,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCurrencyCodeNull() {
                 this[this.tableAgent.CurrencyCodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAgentCodeNull() {
+                return this.IsNull(this.tableAgent.AgentCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAgentCodeNull() {
+                this[this.tableAgent.AgentCodeColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

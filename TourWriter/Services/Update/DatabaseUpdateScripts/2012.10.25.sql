@@ -1596,14 +1596,14 @@ SELECT [AllocationID]
       ,[ValidTo]
       ,[Quantity]
       ,[Release]
-  FROM [TourWriterDev].[dbo].[Allocation]
+  FROM [Allocation]
   where ItineraryID = @ItineraryID
 
 SELECT [AllocationID]
       ,[AgentID]
       ,[Quantity]
       ,[Release]
-  FROM [TourWriterDev].[dbo].[AllocationAgent]
+  FROM [AllocationAgent]
   WHERE [AllocationID] IN ( 
     SELECT [AllocationID] FROM [dbo].[Allocation] a
     where ItineraryID = @ItineraryID )
@@ -1957,7 +1957,7 @@ SELECT [AllocationID]
       ,[ValidTo]
       ,[Quantity]
       ,[Release]
-  FROM [TourWriterDev].[dbo].[Allocation]
+  FROM [Allocation]
   WHERE [ServiceID] IN ( 
     SELECT [ServiceID] FROM [dbo].[Service] 
 	WHERE [SupplierID] = @SupplierID )
@@ -1966,7 +1966,7 @@ SELECT [AllocationID]
       ,[AgentID]
       ,[Quantity]
       ,[Release]
-  FROM [TourWriterDev].[dbo].[AllocationAgent]
+  FROM [AllocationAgent]
   WHERE [AllocationID] IN ( 
     SELECT [AllocationID] FROM [dbo].[Allocation] a
     LEFT JOIN [Service] s on s.ServiceID = a.ServiceID
@@ -1975,7 +1975,7 @@ SELECT [AllocationID]
 SELECT [AllocationID]
       ,[OptionTypeID]
       ,[AddedOn]
-  FROM [TourWriterDev].[dbo].[AllocationOption]
+  FROM [AllocationOption]
   WHERE [AllocationID] IN ( 
     SELECT [AllocationID] FROM [dbo].[Allocation] a
     LEFT JOIN [Service] s on s.ServiceID = a.ServiceID

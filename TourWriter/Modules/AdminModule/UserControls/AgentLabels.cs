@@ -937,8 +937,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
 				Currenc.Enabled = false;
 		}
 
-		private void DataBind()
-		{
+        private void DataBind()
+	    {
+	        EnsureAgentCodes();
+
             DataTable table = Cache.ToolSet.ServiceType.Copy();
 
             // copy the row filter settings from the original table
@@ -975,6 +977,34 @@ namespace TourWriter.Modules.AdminModule.UserControls
             return Cache.AgentSet.Agent.FindByAgentID(agentId);
         }
 
+        #region AgentCode (new property on Agent table)
+        private static readonly Random Rand = new Random();
+        /// <summary>
+        /// Create a randomized 8 char string.
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateAgentCode()
+        {
+            const string alphaSeed = "23456789abcdefghijkmnopqrstuvwxyz";
+            var rand = new string(Enumerable.Repeat(alphaSeed, 8).Select(s => s[Rand.Next(s.Length)]).ToArray());
+            return rand;
+        }
+
+        /// <summary>
+        /// Populate the new AgentCode property on the Agent table, this was added late and old rows will be NULL.
+        /// </summary>
+        private static void EnsureAgentCodes()
+        {
+            var agents = Cache.AgentSet.Agent.Where(agent => agent.IsAgentCodeNull());
+            if (agents.Any())
+            {
+                Cache.AgentSet.Agent.Columns["AgentCode"].ReadOnly = false;
+                foreach (var agent in agents) agent.AgentCode = CreateAgentCode();
+                Cache.AgentSet.Agent.Columns["AgentCode"].ReadOnly = true;
+            }
+        }
+        #endregion
+
         private void AddAgent()
         {
             // initialise new row
@@ -983,6 +1013,10 @@ namespace TourWriter.Modules.AdminModule.UserControls
             r.IsDefaultAgent = (Cache.AgentSet.Agent.Rows.Count == 0) ? true : false;
             r.AddedOn = DateTime.Now;
             r.AddedBy = Cache.User.UserID;
+
+            Cache.AgentSet.Agent.Columns["AgentCode"].ReadOnly = false;
+            r.AgentCode = CreateAgentCode();
+            Cache.AgentSet.Agent.Columns["AgentCode"].ReadOnly = true;
 
             // add the row
             Cache.AgentSet.Agent.AddAgentRow(r);
@@ -1149,7 +1183,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 					c.SortIndicator = SortIndicator.Ascending;
 					c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter;
                     c.CellClickAction = CellClickAction.Edit;
-				}
+                }
                 else if (c.Key == "ParentAgentID")
                 {
                     c.Header.Caption = "Belongs to";
@@ -1160,6 +1194,13 @@ namespace TourWriter.Modules.AdminModule.UserControls
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
                 }
+                else if (c.Key == "AgentCode")
+                {
+                    c.Header.Caption = "Code";
+                    c.Header.ToolTipText = "Unique system code";
+                    c.CellAppearance.TextTrimming = TextTrimming.EllipsisCharacter;
+                    c.CellClickAction = CellClickAction.EditAndSelectText;
+                }
 				else
 					c.Hidden = true;
 			}
@@ -1169,7 +1210,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             e.Layout.Override.RowSelectors = DefaultableBoolean.False;
 
 			GridHelper.LayoutCol(gridAgents, "IsDefaultAgent", 1, 20);
-			GridHelper.LayoutCol(gridAgents, "AgentName", 2, 120);
+            GridHelper.LayoutCol(gridAgents, "AgentName", 2, 120);
+            GridHelper.LayoutCol(gridAgents, "AgentCode", 4, 20);
 
 			EnableDisableAgents();
 		}
