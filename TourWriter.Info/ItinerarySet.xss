@@ -7,7 +7,7 @@
 <DiagramLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ex:showrelationlabel="False" ViewPortX="-10" ViewPortY="-47" xmlns:ex="urn:schemas-microsoft-com:xml-msdatasource-layout-extended" xmlns="urn:schemas-microsoft-com:xml-msdatasource-layout">
   <Shapes>
     <Shape ID="DesignTable:PaymentTerm" ZOrder="18" X="551" Y="151" Height="130" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="126" />
-    <Shape ID="DesignTable:Itinerary" ZOrder="3" X="70" Y="166" Height="215" Width="155" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="211" />
+    <Shape ID="DesignTable:Itinerary" ZOrder="4" X="70" Y="166" Height="215" Width="155" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="211" />
     <Shape ID="DesignTable:ItineraryPax" ZOrder="19" X="515" Y="1407" Height="146" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="142" />
     <Shape ID="DesignTable:ItineraryMarginOverride" ZOrder="52" X="290" Y="166" Height="62" Width="205" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="58" />
     <Shape ID="DesignTable:PurchaseLine" ZOrder="34" X="290" Y="365" Height="215" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="211" />
@@ -32,7 +32,7 @@
     <Shape ID="DesignTable:Task" ZOrder="10" X="1144" Y="259" Height="124" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="120" />
     <Shape ID="DesignTable:ItineraryTask" ZOrder="9" X="1144" Y="149" Height="86" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
     <Shape ID="DesignTable:RoomType" ZOrder="7" X="1173" Y="424" Height="124" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="168" />
-    <Shape ID="DesignTable:Allocation" ZOrder="1" X="1175" Y="577" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
+    <Shape ID="DesignTable:Allocation" ZOrder="3" X="1175" Y="577" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
     <Shape ID="DesignTable:AllocationAgent" ZOrder="5" X="1177" Y="761" Height="105" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
   </Shapes>
   <Connectors>
@@ -100,18 +100,6 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:PurchaseLinePurchaseItem" ZOrder="44" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>440</X>
-          <Y>365</Y>
-        </Point>
-        <Point>
-          <X>508</X>
-          <Y>365</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:PaymentTermPurchaseItem" ZOrder="37" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -121,6 +109,18 @@
         <Point>
           <X>617</X>
           <Y>364</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:PurchaseLinePurchaseItem" ZOrder="44" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>440</X>
+          <Y>365</Y>
+        </Point>
+        <Point>
+          <X>508</X>
+          <Y>365</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -156,6 +156,18 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:ContactGroupMember" ZOrder="42" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>743</X>
+          <Y>850</Y>
+        </Point>
+        <Point>
+          <X>673</X>
+          <Y>850</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:ItineraryGroupGroupMember" ZOrder="33" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -172,15 +184,15 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:ContactGroupMember" ZOrder="42" LineWidth="11">
+    <Connector ID="DesignRelation:MessageItineraryMessage" ZOrder="41" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>743</X>
-          <Y>850</Y>
+          <X>525</X>
+          <Y>1132</Y>
         </Point>
         <Point>
-          <X>673</X>
-          <Y>850</Y>
+          <X>455</X>
+          <Y>1132</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -196,18 +208,6 @@
         </Point>
         <Point>
           <X>290</X>
-          <Y>1132</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:MessageItineraryMessage" ZOrder="41" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>525</X>
-          <Y>1132</Y>
-        </Point>
-        <Point>
-          <X>455</X>
           <Y>1132</Y>
         </Point>
       </RoutePoints>
@@ -284,6 +284,22 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:FK_ItineraryPax_ItineraryPaxOverride" ZOrder="22" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>665</X>
+          <Y>1507</Y>
+        </Point>
+        <Point>
+          <X>716</X>
+          <Y>1507</Y>
+        </Point>
+        <Point>
+          <X>724</X>
+          <Y>1507</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:FK_PurchaseItem_ItineraryPaxOverride" ZOrder="21" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -301,34 +317,6 @@
         <Point>
           <X>911</X>
           <Y>1410</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_ItineraryPax_ItineraryPaxOverride" ZOrder="22" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>665</X>
-          <Y>1507</Y>
-        </Point>
-        <Point>
-          <X>716</X>
-          <Y>1507</Y>
-        </Point>
-        <Point>
-          <X>724</X>
-          <Y>1507</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_Task_ItineraryTask" ZOrder="11" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>1225</X>
-          <Y>259</Y>
-        </Point>
-        <Point>
-          <X>1225</X>
-          <Y>235</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -352,27 +340,15 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_Itinerary_Allocation" ZOrder="2" LineWidth="11">
+    <Connector ID="DesignRelation:FK_Task_ItineraryTask" ZOrder="11" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>163</X>
-          <Y>166</Y>
+          <X>1225</X>
+          <Y>259</Y>
         </Point>
         <Point>
-          <X>163</X>
-          <Y>69</Y>
-        </Point>
-        <Point>
-          <X>1344</X>
-          <Y>69</Y>
-        </Point>
-        <Point>
-          <X>1344</X>
-          <Y>577</Y>
-        </Point>
-        <Point>
-          <X>1325</X>
-          <Y>577</Y>
+          <X>1225</X>
+          <Y>235</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -396,7 +372,7 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_AllocationAgent_Allocation" ZOrder="4" LineWidth="11">
+    <Connector ID="DesignRelation:FK_AllocationAgent_Allocation" ZOrder="2" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>1217</X>
@@ -405,6 +381,30 @@
         <Point>
           <X>1217</X>
           <Y>761</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_Itinerary_Allocation" ZOrder="1" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>163</X>
+          <Y>166</Y>
+        </Point>
+        <Point>
+          <X>163</X>
+          <Y>69</Y>
+        </Point>
+        <Point>
+          <X>1344</X>
+          <Y>69</Y>
+        </Point>
+        <Point>
+          <X>1344</X>
+          <Y>577</Y>
+        </Point>
+        <Point>
+          <X>1325</X>
+          <Y>577</Y>
         </Point>
       </RoutePoints>
     </Connector>

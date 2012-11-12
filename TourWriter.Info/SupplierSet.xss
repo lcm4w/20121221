@@ -47,18 +47,6 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:PaymentTermService" ZOrder="21" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>362</X>
-          <Y>344</Y>
-        </Point>
-        <Point>
-          <X>362</X>
-          <Y>301</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:SupplierService" ZOrder="41" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -68,6 +56,18 @@
         <Point>
           <X>290</X>
           <Y>96</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:PaymentTermService" ZOrder="21" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>362</X>
+          <Y>344</Y>
+        </Point>
+        <Point>
+          <X>362</X>
+          <Y>301</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -123,6 +123,18 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:ContactSupplierContact" ZOrder="38" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>514</X>
+          <Y>642</Y>
+        </Point>
+        <Point>
+          <X>444</X>
+          <Y>642</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:SupplierSupplierContact" ZOrder="19" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -136,18 +148,6 @@
         <Point>
           <X>288</X>
           <Y>557</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:ContactSupplierContact" ZOrder="38" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>514</X>
-          <Y>642</Y>
-        </Point>
-        <Point>
-          <X>444</X>
-          <Y>642</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -183,6 +183,18 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:MessageSupplierMessage" ZOrder="35" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>521</X>
+          <Y>1231</Y>
+        </Point>
+        <Point>
+          <X>451</X>
+          <Y>1231</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:SupplierSupplierMessage" ZOrder="36" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -196,18 +208,6 @@
         <Point>
           <X>290</X>
           <Y>1201</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:MessageSupplierMessage" ZOrder="35" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>521</X>
-          <Y>1231</Y>
-        </Point>
-        <Point>
-          <X>451</X>
-          <Y>1231</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -255,22 +255,6 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_Content_SupplierContent" ZOrder="15" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>1246</X>
-          <Y>212</Y>
-        </Point>
-        <Point>
-          <X>1169</X>
-          <Y>212</Y>
-        </Point>
-        <Point>
-          <X>1169</X>
-          <Y>204</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:FK_Supplier_SupplierContent" ZOrder="9" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -287,15 +271,19 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_Content_ServiceContent" ZOrder="16" LineWidth="11">
+    <Connector ID="DesignRelation:FK_Content_SupplierContent" ZOrder="15" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>1246</X>
-          <Y>264</Y>
+          <Y>212</Y>
         </Point>
         <Point>
-          <X>1179</X>
-          <Y>264</Y>
+          <X>1169</X>
+          <Y>212</Y>
+        </Point>
+        <Point>
+          <X>1169</X>
+          <Y>204</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -312,6 +300,18 @@
         <Point>
           <X>1070</X>
           <Y>240</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_Content_ServiceContent" ZOrder="16" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>1246</X>
+          <Y>264</Y>
+        </Point>
+        <Point>
+          <X>1179</X>
+          <Y>264</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -335,7 +335,7 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_Service_Allocation" ZOrder="1" LineWidth="11">
+    <Connector ID="DesignRelation:FK_Service_Allocation" ZOrder="3" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>440</X>
@@ -355,18 +355,6 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_AllocationOption_Allocation" ZOrder="3" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>962</X>
-          <Y>735</Y>
-        </Point>
-        <Point>
-          <X>1019</X>
-          <Y>735</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
     <Connector ID="DesignRelation:FK_AllocationAgent_Allocation" ZOrder="2" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -376,6 +364,18 @@
         <Point>
           <X>1018</X>
           <Y>635</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_AllocationOption_Allocation" ZOrder="1" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>962</X>
+          <Y>735</Y>
+        </Point>
+        <Point>
+          <X>1019</X>
+          <Y>735</Y>
         </Point>
       </RoutePoints>
     </Connector>
