@@ -99,6 +99,8 @@
               </xs:element>
               <xs:element name="NetMinOrMax" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="NetMinOrMax" msprop:Generator_ColumnVarNameInTable="columnNetMinOrMax" msprop:Generator_ColumnPropNameInTable="NetMinOrMaxColumn" msprop:Generator_UserColumnName="NetMinOrMax" type="xs:string" minOccurs="0" />
               <xs:element name="AgentContactID" msprop:Generator_ColumnVarNameInTable="columnAgentContactID" msprop:Generator_ColumnPropNameInRow="AgentContactID" msprop:Generator_ColumnPropNameInTable="AgentContactIDColumn" msprop:Generator_UserColumnName="AgentContactID" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="UpdatedOn" msprop:Generator_ColumnVarNameInTable="columnUpdatedOn" msprop:Generator_ColumnPropNameInRow="UpdatedOn" msprop:Generator_ColumnPropNameInTable="UpdatedOnColumn" msprop:Generator_UserColumnName="UpdatedOn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AllocationsItineraryID" msprop:Generator_ColumnVarNameInTable="columnAllocationsItineraryID" msprop:Generator_ColumnPropNameInRow="AllocationsItineraryID" msprop:Generator_ColumnPropNameInTable="AllocationsItineraryIDColumn" msprop:Generator_UserColumnName="AllocationsItineraryID" type="xs:int" default="0" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

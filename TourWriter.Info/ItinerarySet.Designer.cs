@@ -1968,6 +1968,10 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnAgentContactID;
             
+            private global::System.Data.DataColumn columnUpdatedOn;
+            
+            private global::System.Data.DataColumn columnAllocationsItineraryID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ItineraryDataTable() {
@@ -2331,6 +2335,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn UpdatedOnColumn {
+                get {
+                    return this.columnUpdatedOn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AllocationsItineraryIDColumn {
+                get {
+                    return this.columnAllocationsItineraryID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2406,7 +2426,9 @@ namespace TourWriter.Info {
                         bool IsDeleted, 
                         string CurrencyCode, 
                         string NetMinOrMax, 
-                        int AgentContactID) {
+                        int AgentContactID, 
+                        System.DateTime UpdatedOn, 
+                        int AllocationsItineraryID) {
                 ItineraryRow rowItineraryRow = ((ItineraryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2449,7 +2471,9 @@ namespace TourWriter.Info {
                         IsDeleted,
                         CurrencyCode,
                         NetMinOrMax,
-                        AgentContactID};
+                        AgentContactID,
+                        UpdatedOn,
+                        AllocationsItineraryID};
                 if ((parentPaymentTermRowByPaymentTermItinerary != null)) {
                     columnValuesArray[19] = parentPaymentTermRowByPaymentTermItinerary[0];
                 }
@@ -2523,6 +2547,8 @@ namespace TourWriter.Info {
                 this.columnCurrencyCode = base.Columns["CurrencyCode"];
                 this.columnNetMinOrMax = base.Columns["NetMinOrMax"];
                 this.columnAgentContactID = base.Columns["AgentContactID"];
+                this.columnUpdatedOn = base.Columns["UpdatedOn"];
+                this.columnAllocationsItineraryID = base.Columns["AllocationsItineraryID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2610,6 +2636,10 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnNetMinOrMax);
                 this.columnAgentContactID = new global::System.Data.DataColumn("AgentContactID", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAgentContactID);
+                this.columnUpdatedOn = new global::System.Data.DataColumn("UpdatedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUpdatedOn);
+                this.columnAllocationsItineraryID = new global::System.Data.DataColumn("AllocationsItineraryID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAllocationsItineraryID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("ItinerarySetKey1", new global::System.Data.DataColumn[] {
                                 this.columnItineraryID}, true));
                 this.columnItineraryID.AutoIncrement = true;
@@ -2627,6 +2657,7 @@ namespace TourWriter.Info {
                 this.columnRowVersion.ReadOnly = true;
                 this.columnCurrencyCode.MaxLength = 3;
                 this.columnAgentContactID.DefaultValue = ((int)(0));
+                this.columnAllocationsItineraryID.DefaultValue = ((int)(0));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13905,6 +13936,38 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime UpdatedOn {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableItinerary.UpdatedOnColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UpdatedOn\' in table \'Itinerary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItinerary.UpdatedOnColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AllocationsItineraryID {
+                get {
+                    try {
+                        return ((int)(this[this.tableItinerary.AllocationsItineraryIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AllocationsItineraryID\' in table \'Itinerary\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableItinerary.AllocationsItineraryIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermItinerary"])));
@@ -14380,6 +14443,30 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAgentContactIDNull() {
                 this[this.tableItinerary.AgentContactIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsUpdatedOnNull() {
+                return this.IsNull(this.tableItinerary.UpdatedOnColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetUpdatedOnNull() {
+                this[this.tableItinerary.UpdatedOnColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAllocationsItineraryIDNull() {
+                return this.IsNull(this.tableItinerary.AllocationsItineraryIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAllocationsItineraryIDNull() {
+                this[this.tableItinerary.AllocationsItineraryIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

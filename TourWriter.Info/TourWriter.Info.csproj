@@ -151,6 +151,11 @@
     </Compile>
     <Compile Include="DepositTypeList.cs" />
     <Compile Include="ErrorMessage.cs" />
+    <Compile Include="ItinerarySet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItinerarySet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="NavigationTreeItemInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ConnectionString.cs" />
@@ -160,11 +165,6 @@
     <Compile Include="ItinerarySet.cs">
       <DependentUpon>ItinerarySet.xsd</DependentUpon>
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ItinerarySet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ItinerarySet.xsd</DependentUpon>
     </Compile>
     <Compile Include="SupplierSet.cs">
       <DependentUpon>SupplierSet.xsd</DependentUpon>
@@ -214,8 +214,8 @@
     </Content>
     <Content Include="ItinerarySet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ItinerarySet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>ItinerarySet.Designer.cs</LastGenOutput>
     </Content>
     <Content Include="SupplierSet.xsd">
       <Generator>MSDataSetGenerator</Generator>

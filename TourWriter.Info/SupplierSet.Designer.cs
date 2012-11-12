@@ -1814,6 +1814,8 @@ namespace TourWriter.Info {
             
             private global::System.Data.DataColumn columnIsDeleted;
             
+            private global::System.Data.DataColumn columnUpdatedOn;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SupplierDataTable() {
@@ -2177,6 +2179,14 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn UpdatedOnColumn {
+                get {
+                    return this.columnUpdatedOn;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2252,7 +2262,8 @@ namespace TourWriter.Info {
                         System.DateTime AddedOn, 
                         int AddedBy, 
                         byte[] RowVersion, 
-                        bool IsDeleted) {
+                        bool IsDeleted, 
+                        System.DateTime UpdatedOn) {
                 SupplierRow rowSupplierRow = ((SupplierRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2295,7 +2306,8 @@ namespace TourWriter.Info {
                         AddedOn,
                         AddedBy,
                         RowVersion,
-                        IsDeleted};
+                        IsDeleted,
+                        UpdatedOn};
                 if ((parentPaymentTermRowByPaymentTermSupplier != null)) {
                     columnValuesArray[28] = parentPaymentTermRowByPaymentTermSupplier[0];
                 }
@@ -2369,6 +2381,7 @@ namespace TourWriter.Info {
                 this.columnAddedBy = base.Columns["AddedBy"];
                 this.columnRowVersion = base.Columns["RowVersion"];
                 this.columnIsDeleted = base.Columns["IsDeleted"];
+                this.columnUpdatedOn = base.Columns["UpdatedOn"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2456,6 +2469,8 @@ namespace TourWriter.Info {
                 base.Columns.Add(this.columnRowVersion);
                 this.columnIsDeleted = new global::System.Data.DataColumn("IsDeleted", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIsDeleted);
+                this.columnUpdatedOn = new global::System.Data.DataColumn("UpdatedOn", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnUpdatedOn);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("SupplierSetKey1", new global::System.Data.DataColumn[] {
                                 this.columnSupplierID}, true));
                 this.columnSupplierID.AutoIncrement = true;
@@ -11283,6 +11298,22 @@ namespace TourWriter.Info {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime UpdatedOn {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSupplier.UpdatedOnColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'UpdatedOn\' in table \'Supplier\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSupplier.UpdatedOnColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PaymentTermRow PaymentTermRow {
                 get {
                     return ((PaymentTermRow)(this.GetParentRow(this.Table.ParentRelations["PaymentTermSupplier"])));
@@ -11746,6 +11777,18 @@ namespace TourWriter.Info {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetIsDeletedNull() {
                 this[this.tableSupplier.IsDeletedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsUpdatedOnNull() {
+                return this.IsNull(this.tableSupplier.UpdatedOnColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetUpdatedOnNull() {
+                this[this.tableSupplier.UpdatedOnColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
