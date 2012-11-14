@@ -500,7 +500,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ItineraryPaxOverride" msprop:Generator_TableClassName="ItineraryPaxOverrideDataTable" msprop:Generator_TableVarName="tableItineraryPaxOverride" msprop:Generator_TablePropName="ItineraryPaxOverride" msprop:Generator_RowDeletingName="ItineraryPaxOverrideRowDeleting" msprop:Generator_RowChangingName="ItineraryPaxOverrideRowChanging" msprop:Generator_RowEvHandlerName="ItineraryPaxOverrideRowChangeEventHandler" msprop:Generator_RowDeletedName="ItineraryPaxOverrideRowDeleted" msprop:Generator_UserTableName="ItineraryPaxOverride" msprop:Generator_RowChangedName="ItineraryPaxOverrideRowChanged" msprop:Generator_RowEvArgName="ItineraryPaxOverrideRowChangeEvent" msprop:Generator_RowClassName="ItineraryPaxOverrideRow">
+        <xs:element name="ItineraryPaxOverride" msprop:Generator_TableClassName="ItineraryPaxOverrideDataTable" msprop:Generator_TableVarName="tableItineraryPaxOverride" msprop:Generator_RowChangedName="ItineraryPaxOverrideRowChanged" msprop:Generator_TablePropName="ItineraryPaxOverride" msprop:Generator_RowDeletingName="ItineraryPaxOverrideRowDeleting" msprop:Generator_RowChangingName="ItineraryPaxOverrideRowChanging" msprop:Generator_RowEvHandlerName="ItineraryPaxOverrideRowChangeEventHandler" msprop:Generator_RowDeletedName="ItineraryPaxOverrideRowDeleted" msprop:Generator_RowClassName="ItineraryPaxOverrideRow" msprop:Generator_UserTableName="ItineraryPaxOverride" msprop:Generator_RowEvArgName="ItineraryPaxOverrideRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="PurchaseItemID" msprop:Generator_ColumnVarNameInTable="columnPurchaseItemID" msprop:Generator_ColumnPropNameInRow="PurchaseItemID" msprop:Generator_ColumnPropNameInTable="PurchaseItemIDColumn" msprop:Generator_UserColumnName="PurchaseItemID" type="xs:int" />
@@ -514,7 +514,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ServiceWarning" msprop:Generator_TableClassName="ServiceWarningDataTable" msprop:Generator_TableVarName="tableServiceWarning" msprop:Generator_TablePropName="ServiceWarning" msprop:Generator_RowDeletingName="ServiceWarningRowDeleting" msprop:Generator_RowChangingName="ServiceWarningRowChanging" msprop:Generator_RowEvHandlerName="ServiceWarningRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceWarningRowDeleted" msprop:Generator_UserTableName="ServiceWarning" msprop:Generator_RowChangedName="ServiceWarningRowChanged" msprop:Generator_RowEvArgName="ServiceWarningRowChangeEvent" msprop:Generator_RowClassName="ServiceWarningRow">
+        <xs:element name="ServiceWarning" msprop:Generator_TableClassName="ServiceWarningDataTable" msprop:Generator_TableVarName="tableServiceWarning" msprop:Generator_RowChangedName="ServiceWarningRowChanged" msprop:Generator_TablePropName="ServiceWarning" msprop:Generator_RowDeletingName="ServiceWarningRowDeleting" msprop:Generator_RowChangingName="ServiceWarningRowChanging" msprop:Generator_RowEvHandlerName="ServiceWarningRowChangeEventHandler" msprop:Generator_RowDeletedName="ServiceWarningRowDeleted" msprop:Generator_RowClassName="ServiceWarningRow" msprop:Generator_UserTableName="ServiceWarning" msprop:Generator_RowEvArgName="ServiceWarningRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ServiceWarningID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnServiceWarningID" msprop:Generator_ColumnPropNameInRow="ServiceWarningID" msprop:Generator_ColumnPropNameInTable="ServiceWarningIDColumn" msprop:Generator_UserColumnName="ServiceWarningID" type="xs:int" />
@@ -525,7 +525,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Task" msprop:Generator_TableClassName="TaskDataTable" msprop:Generator_TableVarName="tableTask" msprop:Generator_TablePropName="Task" msprop:Generator_RowDeletingName="TaskRowDeleting" msprop:Generator_RowChangingName="TaskRowChanging" msprop:Generator_RowEvHandlerName="TaskRowChangeEventHandler" msprop:Generator_RowDeletedName="TaskRowDeleted" msprop:Generator_UserTableName="Task" msprop:Generator_RowChangedName="TaskRowChanged" msprop:Generator_RowEvArgName="TaskRowChangeEvent" msprop:Generator_RowClassName="TaskRow">
+        <xs:element name="Task" msprop:Generator_TableClassName="TaskDataTable" msprop:Generator_TableVarName="tableTask" msprop:Generator_RowChangedName="TaskRowChanged" msprop:Generator_TablePropName="Task" msprop:Generator_RowDeletingName="TaskRowDeleting" msprop:Generator_RowChangingName="TaskRowChanging" msprop:Generator_RowEvHandlerName="TaskRowChangeEventHandler" msprop:Generator_RowDeletedName="TaskRowDeleted" msprop:Generator_RowClassName="TaskRow" msprop:Generator_UserTableName="Task" msprop:Generator_RowEvArgName="TaskRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="TaskID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnTaskID" msprop:Generator_ColumnPropNameInRow="TaskID" msprop:Generator_ColumnPropNameInTable="TaskIDColumn" msprop:Generator_UserColumnName="TaskID" type="xs:int" />
@@ -548,7 +548,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ItineraryTask" msprop:Generator_TableClassName="ItineraryTaskDataTable" msprop:Generator_TableVarName="tableItineraryTask" msprop:Generator_TablePropName="ItineraryTask" msprop:Generator_RowDeletingName="ItineraryTaskRowDeleting" msprop:Generator_RowChangingName="ItineraryTaskRowChanging" msprop:Generator_RowEvHandlerName="ItineraryTaskRowChangeEventHandler" msprop:Generator_RowDeletedName="ItineraryTaskRowDeleted" msprop:Generator_UserTableName="ItineraryTask" msprop:Generator_RowChangedName="ItineraryTaskRowChanged" msprop:Generator_RowEvArgName="ItineraryTaskRowChangeEvent" msprop:Generator_RowClassName="ItineraryTaskRow">
+        <xs:element name="ItineraryTask" msprop:Generator_TableClassName="ItineraryTaskDataTable" msprop:Generator_TableVarName="tableItineraryTask" msprop:Generator_RowChangedName="ItineraryTaskRowChanged" msprop:Generator_TablePropName="ItineraryTask" msprop:Generator_RowDeletingName="ItineraryTaskRowDeleting" msprop:Generator_RowChangingName="ItineraryTaskRowChanging" msprop:Generator_RowEvHandlerName="ItineraryTaskRowChangeEventHandler" msprop:Generator_RowDeletedName="ItineraryTaskRowDeleted" msprop:Generator_RowClassName="ItineraryTaskRow" msprop:Generator_UserTableName="ItineraryTask" msprop:Generator_RowEvArgName="ItineraryTaskRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ItineraryTaskID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnItineraryTaskID" msprop:Generator_ColumnPropNameInRow="ItineraryTaskID" msprop:Generator_ColumnPropNameInTable="ItineraryTaskIDColumn" msprop:Generator_UserColumnName="ItineraryTaskID" type="xs:int" />
@@ -557,7 +557,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="RoomType" msprop:Generator_TableClassName="RoomTypeDataTable" msprop:Generator_TableVarName="tableRoomType" msprop:Generator_RowChangedName="RoomTypeRowChanged" msprop:Generator_TablePropName="RoomType" msprop:Generator_RowDeletingName="RoomTypeRowDeleting" msprop:Generator_RowChangingName="RoomTypeRowChanging" msprop:Generator_RowEvHandlerName="RoomTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="RoomTypeRowDeleted" msprop:Generator_RowClassName="RoomTypeRow" msprop:Generator_UserTableName="RoomType" msprop:Generator_RowEvArgName="RoomTypeRowChangeEvent">
+        <xs:element name="RoomType" msprop:Generator_TableClassName="RoomTypeDataTable" msprop:Generator_TableVarName="tableRoomType" msprop:Generator_TablePropName="RoomType" msprop:Generator_RowDeletingName="RoomTypeRowDeleting" msprop:Generator_RowChangingName="RoomTypeRowChanging" msprop:Generator_RowEvHandlerName="RoomTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="RoomTypeRowDeleted" msprop:Generator_UserTableName="RoomType" msprop:Generator_RowChangedName="RoomTypeRowChanged" msprop:Generator_RowEvArgName="RoomTypeRowChangeEvent" msprop:Generator_RowClassName="RoomTypeRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="RoomTypeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnRoomTypeID" msprop:Generator_ColumnPropNameInRow="RoomTypeID" msprop:Generator_ColumnPropNameInTable="RoomTypeIDColumn" msprop:Generator_UserColumnName="RoomTypeID" type="xs:int" />
@@ -574,7 +574,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="Allocation" msprop:Generator_TableClassName="AllocationDataTable" msprop:Generator_TableVarName="tableAllocation" msprop:Generator_TablePropName="Allocation" msprop:Generator_RowDeletingName="AllocationRowDeleting" msprop:Generator_RowChangingName="AllocationRowChanging" msprop:Generator_RowEvHandlerName="AllocationRowChangeEventHandler" msprop:Generator_RowDeletedName="AllocationRowDeleted" msprop:Generator_UserTableName="Allocation" msprop:Generator_RowChangedName="AllocationRowChanged" msprop:Generator_RowEvArgName="AllocationRowChangeEvent" msprop:Generator_RowClassName="AllocationRow">
+        <xs:element name="Allocation" msprop:Generator_TableClassName="AllocationDataTable" msprop:Generator_TableVarName="tableAllocation" msprop:Generator_RowChangedName="AllocationRowChanged" msprop:Generator_TablePropName="Allocation" msprop:Generator_RowDeletingName="AllocationRowDeleting" msprop:Generator_RowChangingName="AllocationRowChanging" msprop:Generator_RowEvHandlerName="AllocationRowChangeEventHandler" msprop:Generator_RowDeletedName="AllocationRowDeleted" msprop:Generator_RowClassName="AllocationRow" msprop:Generator_UserTableName="Allocation" msprop:Generator_RowEvArgName="AllocationRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="AllocationID" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnAllocationID" msprop:Generator_ColumnPropNameInRow="AllocationID" msprop:Generator_ColumnPropNameInTable="AllocationIDColumn" msprop:Generator_UserColumnName="AllocationID" type="xs:int" />
@@ -587,13 +587,33 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="AllocationAgent" msprop:Generator_TableClassName="AllocationAgentDataTable" msprop:Generator_TableVarName="tableAllocationAgent" msprop:Generator_TablePropName="AllocationAgent" msprop:Generator_RowDeletingName="AllocationAgentRowDeleting" msprop:Generator_RowChangingName="AllocationAgentRowChanging" msprop:Generator_RowEvHandlerName="AllocationAgentRowChangeEventHandler" msprop:Generator_RowDeletedName="AllocationAgentRowDeleted" msprop:Generator_UserTableName="AllocationAgent" msprop:Generator_RowChangedName="AllocationAgentRowChanged" msprop:Generator_RowEvArgName="AllocationAgentRowChangeEvent" msprop:Generator_RowClassName="AllocationAgentRow">
+        <xs:element name="AllocationAgent" msprop:Generator_TableClassName="AllocationAgentDataTable" msprop:Generator_TableVarName="tableAllocationAgent" msprop:Generator_RowChangedName="AllocationAgentRowChanged" msprop:Generator_TablePropName="AllocationAgent" msprop:Generator_RowDeletingName="AllocationAgentRowDeleting" msprop:Generator_RowChangingName="AllocationAgentRowChanging" msprop:Generator_RowEvHandlerName="AllocationAgentRowChangeEventHandler" msprop:Generator_RowDeletedName="AllocationAgentRowDeleted" msprop:Generator_RowClassName="AllocationAgentRow" msprop:Generator_UserTableName="AllocationAgent" msprop:Generator_RowEvArgName="AllocationAgentRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="AllocationID" msprop:Generator_ColumnVarNameInTable="columnAllocationID" msprop:Generator_ColumnPropNameInRow="AllocationID" msprop:Generator_ColumnPropNameInTable="AllocationIDColumn" msprop:Generator_UserColumnName="AllocationID" type="xs:int" />
               <xs:element name="AgentID" msprop:Generator_ColumnVarNameInTable="columnAgentID" msprop:Generator_ColumnPropNameInRow="AgentID" msprop:Generator_ColumnPropNameInTable="AgentIDColumn" msprop:Generator_UserColumnName="AgentID" type="xs:int" />
               <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" />
               <xs:element name="Release" msprop:Generator_ColumnVarNameInTable="columnRelease" msprop:Generator_ColumnPropNameInRow="Release" msprop:Generator_ColumnPropNameInTable="ReleaseColumn" msprop:Generator_UserColumnName="Release" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="GroupPrice" msprop:Generator_TableClassName="GroupPriceDataTable" msprop:Generator_TableVarName="tableGroupPrice" msprop:Generator_TablePropName="GroupPrice" msprop:Generator_RowDeletingName="GroupPriceRowDeleting" msprop:Generator_RowChangingName="GroupPriceRowChanging" msprop:Generator_RowEvHandlerName="GroupPriceRowChangeEventHandler" msprop:Generator_RowDeletedName="GroupPriceRowDeleted" msprop:Generator_UserTableName="GroupPrice" msprop:Generator_RowChangedName="GroupPriceRowChanged" msprop:Generator_RowEvArgName="GroupPriceRowChangeEvent" msprop:Generator_RowClassName="GroupPriceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="GroupPriceID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnGroupPriceID" msprop:Generator_ColumnPropNameInRow="GroupPriceID" msprop:Generator_ColumnPropNameInTable="GroupPriceIDColumn" msprop:Generator_UserColumnName="GroupPriceID" type="xs:int" />
+              <xs:element name="GroupPriceName" msprop:Generator_ColumnVarNameInTable="columnGroupPriceName" msprop:Generator_ColumnPropNameInRow="GroupPriceName" msprop:Generator_ColumnPropNameInTable="GroupPriceNameColumn" msprop:Generator_UserColumnName="GroupPriceName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ItineraryID" msprop:Generator_ColumnVarNameInTable="columnItineraryID" msprop:Generator_ColumnPropNameInRow="ItineraryID" msprop:Generator_ColumnPropNameInTable="ItineraryIDColumn" msprop:Generator_UserColumnName="ItineraryID" type="xs:int" />
+              <xs:element name="ItineraryPaxID" msprop:Generator_ColumnVarNameInTable="columnItineraryPaxID" msprop:Generator_ColumnPropNameInRow="ItineraryPaxID" msprop:Generator_ColumnPropNameInTable="ItineraryPaxIDColumn" msprop:Generator_UserColumnName="ItineraryPaxID" type="xs:int" minOccurs="0" />
+              <xs:element name="OptionTypeID" msprop:Generator_ColumnVarNameInTable="columnOptionTypeID" msprop:Generator_ColumnPropNameInRow="OptionTypeID" msprop:Generator_ColumnPropNameInTable="OptionTypeIDColumn" msprop:Generator_UserColumnName="OptionTypeID" type="xs:int" minOccurs="0" />
+              <xs:element name="Price" msprop:Generator_ColumnVarNameInTable="columnPrice" msprop:Generator_ColumnPropNameInRow="Price" msprop:Generator_ColumnPropNameInTable="PriceColumn" msprop:Generator_UserColumnName="Price" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Markup" msprop:Generator_ColumnVarNameInTable="columnMarkup" msprop:Generator_ColumnPropNameInRow="Markup" msprop:Generator_ColumnPropNameInTable="MarkupColumn" msprop:Generator_UserColumnName="Markup" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PriceOverride" msprop:Generator_ColumnVarNameInTable="columnPriceOverride" msprop:Generator_ColumnPropNameInRow="PriceOverride" msprop:Generator_ColumnPropNameInTable="PriceOverrideColumn" msprop:Generator_UserColumnName="PriceOverride" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -707,102 +727,114 @@
       <xs:field xpath="mstns:AllocationID" />
       <xs:field xpath="mstns:AgentID" />
     </xs:unique>
-    <xs:keyref name="FK_AllocationAgent_Allocation" refer="Allocation_Constraint1" msprop:rel_Generator_UserChildTable="AllocationAgent" msprop:rel_Generator_ChildPropName="GetAllocationAgentRows" msprop:rel_Generator_UserRelationName="FK_AllocationAgent_Allocation" msprop:rel_Generator_ParentPropName="AllocationRow" msprop:rel_Generator_RelationVarName="relationFK_AllocationAgent_Allocation" msprop:rel_Generator_UserParentTable="Allocation">
+    <xs:unique name="GroupPrice_Constraint1" msdata:ConstraintName="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:GroupPrice" />
+      <xs:field xpath="mstns:GroupPriceID" />
+    </xs:unique>
+    <xs:keyref name="FK_ItineraryPax_GroupPrice" refer="ItineraryPax_Constraint1" msprop:rel_Generator_UserChildTable="GroupPrice" msprop:rel_Generator_ChildPropName="GetGroupPriceRows" msprop:rel_Generator_UserRelationName="FK_ItineraryPax_GroupPrice" msprop:rel_Generator_ParentPropName="ItineraryPaxRow" msprop:rel_Generator_RelationVarName="relationFK_ItineraryPax_GroupPrice" msprop:rel_Generator_UserParentTable="ItineraryPax">
+      <xs:selector xpath=".//mstns:GroupPrice" />
+      <xs:field xpath="mstns:ItineraryPaxID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Itinerary_GroupPrice" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="GroupPrice" msprop:rel_Generator_ChildPropName="GetGroupPriceRows" msprop:rel_Generator_UserRelationName="FK_Itinerary_GroupPrice" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationFK_Itinerary_GroupPrice" msprop:rel_Generator_UserParentTable="Itinerary">
+      <xs:selector xpath=".//mstns:GroupPrice" />
+      <xs:field xpath="mstns:ItineraryID" />
+    </xs:keyref>
+    <xs:keyref name="FK_AllocationAgent_Allocation" refer="Allocation_Constraint1" msprop:rel_Generator_UserChildTable="AllocationAgent" msprop:rel_Generator_ChildPropName="GetAllocationAgentRows" msprop:rel_Generator_UserRelationName="FK_AllocationAgent_Allocation" msprop:rel_Generator_RelationVarName="relationFK_AllocationAgent_Allocation" msprop:rel_Generator_UserParentTable="Allocation" msprop:rel_Generator_ParentPropName="AllocationRow">
       <xs:selector xpath=".//mstns:AllocationAgent" />
       <xs:field xpath="mstns:AllocationID" />
     </xs:keyref>
-    <xs:keyref name="FK_Itinerary_Allocation" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="Allocation" msprop:rel_Generator_ChildPropName="GetAllocationRows" msprop:rel_Generator_UserRelationName="FK_Itinerary_Allocation" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationFK_Itinerary_Allocation" msprop:rel_Generator_UserParentTable="Itinerary">
+    <xs:keyref name="FK_Itinerary_Allocation" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="Allocation" msprop:rel_Generator_ChildPropName="GetAllocationRows" msprop:rel_Generator_UserRelationName="FK_Itinerary_Allocation" msprop:rel_Generator_RelationVarName="relationFK_Itinerary_Allocation" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
       <xs:selector xpath=".//mstns:Allocation" />
+      <xs:field xpath="mstns:ItineraryID" />
+    </xs:keyref>
+    <xs:keyref name="FK_Itinerary_ItineraryTask" refer="ItinerarySetKey1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:ItineraryTask" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
     <xs:keyref name="FK_Task_ItineraryTask" refer="Task_Constraint1" msdata:ConstraintOnly="true">
       <xs:selector xpath=".//mstns:ItineraryTask" />
       <xs:field xpath="mstns:TaskID" />
     </xs:keyref>
-    <xs:keyref name="FK_Itinerary_ItineraryTask" refer="ItinerarySetKey1" msdata:ConstraintOnly="true">
-      <xs:selector xpath=".//mstns:ItineraryTask" />
-      <xs:field xpath="mstns:ItineraryID" />
-    </xs:keyref>
-    <xs:keyref name="FK_PurchaseItem_ItineraryPaxOverride" refer="ItinerarySetKey6" msprop:rel_Generator_UserChildTable="ItineraryPaxOverride" msprop:rel_Generator_ChildPropName="GetItineraryPaxOverrideRows" msprop:rel_Generator_UserRelationName="FK_PurchaseItem_ItineraryPaxOverride" msprop:rel_Generator_ParentPropName="PurchaseItemRow" msprop:rel_Generator_RelationVarName="relationFK_PurchaseItem_ItineraryPaxOverride" msprop:rel_Generator_UserParentTable="PurchaseItem">
-      <xs:selector xpath=".//mstns:ItineraryPaxOverride" />
-      <xs:field xpath="mstns:PurchaseItemID" />
-    </xs:keyref>
-    <xs:keyref name="FK_ItineraryPax_ItineraryPaxOverride" refer="ItineraryPax_Constraint1" msprop:rel_Generator_UserChildTable="ItineraryPaxOverride" msprop:rel_Generator_ChildPropName="GetItineraryPaxOverrideRows" msprop:rel_Generator_UserRelationName="FK_ItineraryPax_ItineraryPaxOverride" msprop:rel_Generator_RelationVarName="relationFK_ItineraryPax_ItineraryPaxOverride" msprop:rel_Generator_UserParentTable="ItineraryPax" msprop:rel_Generator_ParentPropName="ItineraryPaxRow">
+    <xs:keyref name="FK_ItineraryPax_ItineraryPaxOverride" refer="ItineraryPax_Constraint1" msprop:rel_Generator_UserChildTable="ItineraryPaxOverride" msprop:rel_Generator_ChildPropName="GetItineraryPaxOverrideRows" msprop:rel_Generator_UserRelationName="FK_ItineraryPax_ItineraryPaxOverride" msprop:rel_Generator_ParentPropName="ItineraryPaxRow" msprop:rel_Generator_RelationVarName="relationFK_ItineraryPax_ItineraryPaxOverride" msprop:rel_Generator_UserParentTable="ItineraryPax">
       <xs:selector xpath=".//mstns:ItineraryPaxOverride" />
       <xs:field xpath="mstns:ItineraryPaxID" />
     </xs:keyref>
-    <xs:keyref name="ItinerarySaleItinerarySaleAllocation" refer="ItinerarySale_Constraint1" msprop:rel_Generator_UserChildTable="ItinerarySaleAllocation" msprop:rel_Generator_ChildPropName="GetItinerarySaleAllocationRows" msprop:rel_Generator_UserRelationName="ItinerarySaleItinerarySaleAllocation" msprop:rel_Generator_RelationVarName="relationItinerarySaleItinerarySaleAllocation" msprop:rel_Generator_UserParentTable="ItinerarySale" msprop:rel_Generator_ParentPropName="ItinerarySaleRow">
+    <xs:keyref name="FK_PurchaseItem_ItineraryPaxOverride" refer="ItinerarySetKey6" msprop:rel_Generator_UserChildTable="ItineraryPaxOverride" msprop:rel_Generator_ChildPropName="GetItineraryPaxOverrideRows" msprop:rel_Generator_UserRelationName="FK_PurchaseItem_ItineraryPaxOverride" msprop:rel_Generator_RelationVarName="relationFK_PurchaseItem_ItineraryPaxOverride" msprop:rel_Generator_UserParentTable="PurchaseItem" msprop:rel_Generator_ParentPropName="PurchaseItemRow">
+      <xs:selector xpath=".//mstns:ItineraryPaxOverride" />
+      <xs:field xpath="mstns:PurchaseItemID" />
+    </xs:keyref>
+    <xs:keyref name="ItinerarySaleItinerarySaleAllocation" refer="ItinerarySale_Constraint1" msprop:rel_Generator_UserChildTable="ItinerarySaleAllocation" msprop:rel_Generator_ChildPropName="GetItinerarySaleAllocationRows" msprop:rel_Generator_UserRelationName="ItinerarySaleItinerarySaleAllocation" msprop:rel_Generator_ParentPropName="ItinerarySaleRow" msprop:rel_Generator_RelationVarName="relationItinerarySaleItinerarySaleAllocation" msprop:rel_Generator_UserParentTable="ItinerarySale">
       <xs:selector xpath=".//mstns:ItinerarySaleAllocation" />
       <xs:field xpath="mstns:ItinerarySaleID" />
     </xs:keyref>
-    <xs:keyref name="FK_Itinerary_ItinerarySale" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItinerarySale" msprop:rel_Generator_ChildPropName="GetItinerarySaleRows" msprop:rel_Generator_UserRelationName="FK_Itinerary_ItinerarySale" msprop:rel_Generator_RelationVarName="relationFK_Itinerary_ItinerarySale" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="FK_Itinerary_ItinerarySale" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItinerarySale" msprop:rel_Generator_ChildPropName="GetItinerarySaleRows" msprop:rel_Generator_UserRelationName="FK_Itinerary_ItinerarySale" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationFK_Itinerary_ItinerarySale" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:ItinerarySale" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="FK_ItineraryMember_ItineraryPayment" refer="ItinerarySetKey3" msprop:rel_Generator_UserChildTable="ItineraryPayment" msprop:rel_Generator_ChildPropName="GetItineraryPaymentRows" msprop:rel_Generator_UserRelationName="FK_ItineraryMember_ItineraryPayment" msprop:rel_Generator_RelationVarName="relationFK_ItineraryMember_ItineraryPayment" msprop:rel_Generator_UserParentTable="ItineraryMember" msprop:rel_Generator_ParentPropName="ItineraryMemberRow">
+    <xs:keyref name="FK_ItineraryMember_ItineraryPayment" refer="ItinerarySetKey3" msprop:rel_Generator_UserChildTable="ItineraryPayment" msprop:rel_Generator_ChildPropName="GetItineraryPaymentRows" msprop:rel_Generator_UserRelationName="FK_ItineraryMember_ItineraryPayment" msprop:rel_Generator_ParentPropName="ItineraryMemberRow" msprop:rel_Generator_RelationVarName="relationFK_ItineraryMember_ItineraryPayment" msprop:rel_Generator_UserParentTable="ItineraryMember">
       <xs:selector xpath=".//mstns:ItineraryPayment" />
       <xs:field xpath="mstns:ItineraryMemberID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryItineraryPubFile" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryPubFile" msprop:rel_Generator_ChildPropName="GetItineraryPubFileRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryPubFile" msprop:rel_Generator_RelationVarName="relationItineraryItineraryPubFile" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="ItineraryItineraryPubFile" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryPubFile" msprop:rel_Generator_ChildPropName="GetItineraryPubFileRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryPubFile" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryItineraryPubFile" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:ItineraryPubFile" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="MessageSupplierMessage" refer="ItinerarySetKey12" msprop:rel_Generator_UserChildTable="SupplierMessage" msprop:rel_Generator_ChildPropName="GetSupplierMessageRows" msprop:rel_Generator_UserRelationName="MessageSupplierMessage" msprop:rel_Generator_RelationVarName="relationMessageSupplierMessage" msprop:rel_Generator_UserParentTable="Message" msprop:rel_Generator_ParentPropName="MessageRow">
+    <xs:keyref name="MessageSupplierMessage" refer="ItinerarySetKey12" msprop:rel_Generator_UserChildTable="SupplierMessage" msprop:rel_Generator_ChildPropName="GetSupplierMessageRows" msprop:rel_Generator_UserRelationName="MessageSupplierMessage" msprop:rel_Generator_ParentPropName="MessageRow" msprop:rel_Generator_RelationVarName="relationMessageSupplierMessage" msprop:rel_Generator_UserParentTable="Message">
       <xs:selector xpath=".//mstns:SupplierMessage" />
       <xs:field xpath="mstns:MessageID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryItineraryMessage" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryMessage" msprop:rel_Generator_ChildPropName="GetItineraryMessageRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryMessage" msprop:rel_Generator_RelationVarName="relationItineraryItineraryMessage" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
-      <xs:selector xpath=".//mstns:ItineraryMessage" />
-      <xs:field xpath="mstns:ItineraryID" />
-    </xs:keyref>
-    <xs:keyref name="MessageItineraryMessage" refer="ItinerarySetKey12" msprop:rel_Generator_UserChildTable="ItineraryMessage" msprop:rel_Generator_ChildPropName="GetItineraryMessageRows" msprop:rel_Generator_UserRelationName="MessageItineraryMessage" msprop:rel_Generator_RelationVarName="relationMessageItineraryMessage" msprop:rel_Generator_UserParentTable="Message" msprop:rel_Generator_ParentPropName="MessageRow">
+    <xs:keyref name="MessageItineraryMessage" refer="ItinerarySetKey12" msprop:rel_Generator_UserChildTable="ItineraryMessage" msprop:rel_Generator_ChildPropName="GetItineraryMessageRows" msprop:rel_Generator_UserRelationName="MessageItineraryMessage" msprop:rel_Generator_ParentPropName="MessageRow" msprop:rel_Generator_RelationVarName="relationMessageItineraryMessage" msprop:rel_Generator_UserParentTable="Message">
       <xs:selector xpath=".//mstns:ItineraryMessage" />
       <xs:field xpath="mstns:MessageID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryGroupGroupMember" refer="ItinerarySetKey2" msprop:rel_Generator_UserChildTable="ItineraryMember" msprop:rel_Generator_ChildPropName="GetItineraryMemberRows" msprop:rel_Generator_UserRelationName="ItineraryGroupGroupMember" msprop:rel_Generator_RelationVarName="relationItineraryGroupGroupMember" msprop:rel_Generator_UserParentTable="ItineraryGroup" msprop:rel_Generator_ParentPropName="ItineraryGroupRow">
-      <xs:selector xpath=".//mstns:ItineraryMember" />
-      <xs:field xpath="mstns:ItineraryGroupID" />
+    <xs:keyref name="ItineraryItineraryMessage" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryMessage" msprop:rel_Generator_ChildPropName="GetItineraryMessageRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryMessage" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryItineraryMessage" msprop:rel_Generator_UserParentTable="Itinerary">
+      <xs:selector xpath=".//mstns:ItineraryMessage" />
+      <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="ContactGroupMember" refer="ItinerarySetKey4" msprop:rel_Generator_UserChildTable="ItineraryMember" msprop:rel_Generator_ChildPropName="GetItineraryMemberRows" msprop:rel_Generator_UserRelationName="ContactGroupMember" msprop:rel_Generator_RelationVarName="relationContactGroupMember" msprop:rel_Generator_UserParentTable="Contact" msprop:rel_Generator_ParentPropName="ContactRow">
+    <xs:keyref name="ContactGroupMember" refer="ItinerarySetKey4" msprop:rel_Generator_UserChildTable="ItineraryMember" msprop:rel_Generator_ChildPropName="GetItineraryMemberRows" msprop:rel_Generator_UserRelationName="ContactGroupMember" msprop:rel_Generator_ParentPropName="ContactRow" msprop:rel_Generator_RelationVarName="relationContactGroupMember" msprop:rel_Generator_UserParentTable="Contact">
       <xs:selector xpath=".//mstns:ItineraryMember" />
       <xs:field xpath="mstns:ContactID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryItineraryGroup" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryGroup" msprop:rel_Generator_ChildPropName="GetItineraryGroupRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryGroup" msprop:rel_Generator_RelationVarName="relationItineraryItineraryGroup" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="ItineraryGroupGroupMember" refer="ItinerarySetKey2" msprop:rel_Generator_UserChildTable="ItineraryMember" msprop:rel_Generator_ChildPropName="GetItineraryMemberRows" msprop:rel_Generator_UserRelationName="ItineraryGroupGroupMember" msprop:rel_Generator_ParentPropName="ItineraryGroupRow" msprop:rel_Generator_RelationVarName="relationItineraryGroupGroupMember" msprop:rel_Generator_UserParentTable="ItineraryGroup">
+      <xs:selector xpath=".//mstns:ItineraryMember" />
+      <xs:field xpath="mstns:ItineraryGroupID" />
+    </xs:keyref>
+    <xs:keyref name="ItineraryItineraryGroup" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryGroup" msprop:rel_Generator_ChildPropName="GetItineraryGroupRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryGroup" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryItineraryGroup" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:ItineraryGroup" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="PurchaseItemPurchaseItemNote" refer="ItinerarySetKey6" msprop:rel_Generator_UserChildTable="PurchaseItemNote" msprop:rel_Generator_ChildPropName="GetPurchaseItemNoteRows" msprop:rel_Generator_UserRelationName="PurchaseItemPurchaseItemNote" msprop:rel_Generator_RelationVarName="relationPurchaseItemPurchaseItemNote" msprop:rel_Generator_UserParentTable="PurchaseItem" msprop:rel_Generator_ParentPropName="PurchaseItemRow">
+    <xs:keyref name="PurchaseItemPurchaseItemNote" refer="ItinerarySetKey6" msprop:rel_Generator_UserChildTable="PurchaseItemNote" msprop:rel_Generator_ChildPropName="GetPurchaseItemNoteRows" msprop:rel_Generator_UserRelationName="PurchaseItemPurchaseItemNote" msprop:rel_Generator_ParentPropName="PurchaseItemRow" msprop:rel_Generator_RelationVarName="relationPurchaseItemPurchaseItemNote" msprop:rel_Generator_UserParentTable="PurchaseItem">
       <xs:selector xpath=".//mstns:PurchaseItemNote" />
       <xs:field xpath="mstns:PurchaseItemID" />
     </xs:keyref>
-    <xs:keyref name="PurchaseLinePurchaseItem" refer="ItinerarySetKey5" msprop:rel_Generator_UserChildTable="PurchaseItem" msprop:rel_Generator_ChildPropName="GetPurchaseItemRows" msprop:rel_Generator_UserRelationName="PurchaseLinePurchaseItem" msprop:rel_Generator_RelationVarName="relationPurchaseLinePurchaseItem" msprop:rel_Generator_UserParentTable="PurchaseLine" msprop:rel_Generator_ParentPropName="PurchaseLineRow">
-      <xs:selector xpath=".//mstns:PurchaseItem" />
-      <xs:field xpath="mstns:PurchaseLineID" />
-    </xs:keyref>
-    <xs:keyref name="PaymentTermPurchaseItem" refer="Constraint1" msprop:rel_Generator_UserChildTable="PurchaseItem" msprop:rel_Generator_ChildPropName="GetPurchaseItemRows" msprop:rel_Generator_UserRelationName="PaymentTermPurchaseItem" msprop:rel_Generator_RelationVarName="relationPaymentTermPurchaseItem" msprop:rel_Generator_UserParentTable="PaymentTerm" msprop:rel_Generator_ParentPropName="PaymentTermRow" msdata:DeleteRule="SetNull">
+    <xs:keyref name="PaymentTermPurchaseItem" refer="Constraint1" msprop:rel_Generator_UserChildTable="PurchaseItem" msprop:rel_Generator_ChildPropName="GetPurchaseItemRows" msprop:rel_Generator_UserRelationName="PaymentTermPurchaseItem" msprop:rel_Generator_ParentPropName="PaymentTermRow" msprop:rel_Generator_RelationVarName="relationPaymentTermPurchaseItem" msprop:rel_Generator_UserParentTable="PaymentTerm" msdata:DeleteRule="SetNull">
       <xs:selector xpath=".//mstns:PurchaseItem" />
       <xs:field xpath="mstns:PaymentTermID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryPurchaseLine" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="PurchaseLine" msprop:rel_Generator_ChildPropName="GetPurchaseLineRows" msprop:rel_Generator_UserRelationName="ItineraryPurchaseLine" msprop:rel_Generator_RelationVarName="relationItineraryPurchaseLine" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="PurchaseLinePurchaseItem" refer="ItinerarySetKey5" msprop:rel_Generator_UserChildTable="PurchaseItem" msprop:rel_Generator_ChildPropName="GetPurchaseItemRows" msprop:rel_Generator_UserRelationName="PurchaseLinePurchaseItem" msprop:rel_Generator_ParentPropName="PurchaseLineRow" msprop:rel_Generator_RelationVarName="relationPurchaseLinePurchaseItem" msprop:rel_Generator_UserParentTable="PurchaseLine">
+      <xs:selector xpath=".//mstns:PurchaseItem" />
+      <xs:field xpath="mstns:PurchaseLineID" />
+    </xs:keyref>
+    <xs:keyref name="ItineraryPurchaseLine" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="PurchaseLine" msprop:rel_Generator_ChildPropName="GetPurchaseLineRows" msprop:rel_Generator_UserRelationName="ItineraryPurchaseLine" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryPurchaseLine" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:PurchaseLine" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryItineraryMarginOverride" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryMarginOverride" msprop:rel_Generator_ChildPropName="GetItineraryMarginOverrideRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryMarginOverride" msprop:rel_Generator_RelationVarName="relationItineraryItineraryMarginOverride" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="ItineraryItineraryMarginOverride" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryMarginOverride" msprop:rel_Generator_ChildPropName="GetItineraryMarginOverrideRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryMarginOverride" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryItineraryMarginOverride" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:ItineraryMarginOverride" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="ItineraryItineraryPax" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryPax" msprop:rel_Generator_ChildPropName="GetItineraryPaxRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryPax" msprop:rel_Generator_RelationVarName="relationItineraryItineraryPax" msprop:rel_Generator_UserParentTable="Itinerary" msprop:rel_Generator_ParentPropName="ItineraryRow">
+    <xs:keyref name="ItineraryItineraryPax" refer="ItinerarySetKey1" msprop:rel_Generator_UserChildTable="ItineraryPax" msprop:rel_Generator_ChildPropName="GetItineraryPaxRows" msprop:rel_Generator_UserRelationName="ItineraryItineraryPax" msprop:rel_Generator_ParentPropName="ItineraryRow" msprop:rel_Generator_RelationVarName="relationItineraryItineraryPax" msprop:rel_Generator_UserParentTable="Itinerary">
       <xs:selector xpath=".//mstns:ItineraryPax" />
       <xs:field xpath="mstns:ItineraryID" />
     </xs:keyref>
-    <xs:keyref name="PaymentTermItinerary" refer="Constraint1" msprop:rel_Generator_UserChildTable="Itinerary" msprop:rel_Generator_ChildPropName="GetItineraryRows" msprop:rel_Generator_UserRelationName="PaymentTermItinerary" msprop:rel_Generator_RelationVarName="relationPaymentTermItinerary" msprop:rel_Generator_UserParentTable="PaymentTerm" msprop:rel_Generator_ParentPropName="PaymentTermRow" msdata:DeleteRule="SetNull">
+    <xs:keyref name="PaymentTermItinerary" refer="Constraint1" msprop:rel_Generator_UserChildTable="Itinerary" msprop:rel_Generator_ChildPropName="GetItineraryRows" msprop:rel_Generator_UserRelationName="PaymentTermItinerary" msprop:rel_Generator_ParentPropName="PaymentTermRow" msprop:rel_Generator_RelationVarName="relationPaymentTermItinerary" msprop:rel_Generator_UserParentTable="PaymentTerm" msdata:DeleteRule="SetNull">
       <xs:selector xpath=".//mstns:Itinerary" />
       <xs:field xpath="mstns:PaymentTermID" />
     </xs:keyref>
   </xs:element>
   <xs:annotation>
     <xs:appinfo>
-      <msdata:Relationship name="Itinerary_RoomType" msdata:parent="Itinerary" msdata:child="RoomType" msdata:parentkey="ItineraryID" msdata:childkey="ItineraryID" msprop:Generator_UserChildTable="RoomType" msprop:Generator_ChildPropName="GetRoomTypeRows" msprop:Generator_UserRelationName="Itinerary_RoomType" msprop:Generator_RelationVarName="relationItinerary_RoomType" msprop:Generator_UserParentTable="Itinerary" msprop:Generator_ParentPropName="ItineraryRow" />
+      <msdata:Relationship name="Itinerary_RoomType" msdata:parent="Itinerary" msdata:child="RoomType" msdata:parentkey="ItineraryID" msdata:childkey="ItineraryID" msprop:Generator_UserChildTable="RoomType" msprop:Generator_ChildPropName="GetRoomTypeRows" msprop:Generator_UserRelationName="Itinerary_RoomType" msprop:Generator_ParentPropName="ItineraryRow" msprop:Generator_RelationVarName="relationItinerary_RoomType" msprop:Generator_UserParentTable="Itinerary" />
     </xs:appinfo>
   </xs:annotation>
 </xs:schema>

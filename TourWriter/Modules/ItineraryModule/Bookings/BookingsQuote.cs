@@ -47,10 +47,63 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 quote.TablePopulate(ItinerarySet.PurchaseItem);
                 _tempQuoteTable = quote;
                 grid.DataSource = quote;
+
+                SaveGroupPrices(quote);
             }
             finally
             {
                 Cursor = Cursors.Default;
+            }
+        }
+
+        internal void SaveGroupPrices(QuoteTable quote)
+        {
+            // suppliments (optiontypes)
+            foreach (var option in Cache.ToolSet.OptionType)
+            {
+                var sum = string.Format("SUM([{0}])", option.OptionTypeName);
+                var flt = string.Format("[{0}] IS NOT NULL", option.OptionTypeName);
+                var obj = quote.Compute(sum, flt);
+                var val = obj.ToString() != string.Empty ? (decimal?)obj : null;
+
+                var col = ItinerarySet.GroupPrice.FirstOrDefault(x => !x.IsOptionTypeIDNull() && x.OptionTypeID == option.OptionTypeID);
+                if (col == null)
+                {
+                    // add the row
+                    col = ItinerarySet.GroupPrice.NewGroupPriceRow();
+                    col.ItineraryID = ItinerarySet.Itinerary[0].ItineraryID;
+                    col.GroupPriceName = "";
+                    ItinerarySet.GroupPrice.AddGroupPriceRow(col);
+                }
+                // add/update values
+                col.OptionTypeID = option.OptionTypeID;
+                col.GroupPriceName = option.OptionTypeName;
+                if (val.HasValue) col.Price = (decimal)val; 
+                else col.SetPriceNull();
+            }
+
+            // pax breaks (itineraypax)
+            foreach (var pax in ItinerarySet.ItineraryPax)
+            {
+                var sum = string.Format("SUM([{0}])", pax.ItineraryPaxName);
+                var flt = string.Format("[{0}] IS NOT NULL", pax.ItineraryPaxName);
+                var obj = quote.Compute(sum, flt);
+                var val = obj.ToString() != string.Empty ? (decimal?)obj : null;
+
+                var col = ItinerarySet.GroupPrice.FirstOrDefault(x => !x.IsItineraryPaxIDNull() && x.ItineraryPaxID == pax.ItineraryPaxID);
+                if (col == null)
+                {
+                    // add the row
+                    col = ItinerarySet.GroupPrice.NewGroupPriceRow();
+                    col.ItineraryID = ItinerarySet.Itinerary[0].ItineraryID;
+                    col.GroupPriceName = "";
+                    ItinerarySet.GroupPrice.AddGroupPriceRow(col);
+                }
+                // add/update values
+                col.ItineraryPaxID = pax.ItineraryPaxID;
+                col.GroupPriceName = pax.ItineraryPaxName;
+                if (val.HasValue) col.Price = (decimal)val;
+                else col.SetPriceNull();
             }
         }
 

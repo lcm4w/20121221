@@ -43,6 +43,66 @@ if not Exists(select * from sys.columns where Name = N'UpdatedOn' and Object_ID 
 		ADD [UpdatedOn] datetime;
 GO
 
+
+ALTER PROCEDURE [dbo].[_ContactSet_Sel_ByID]
+	@ContactID int
+AS
+SET NOCOUNT ON
+
+/* Select parent tables first */
+
+-- Contact --			
+SELECT
+	[ContactID],
+	[ContactName],
+	[Title],
+	[FirstName],
+	[LastName],
+	[StreetAddress],
+	[PostName],
+	[PostAddress],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[PostCode],
+	[WorkPhone],
+	[HomePhone],
+	[CellPhone],
+	[Fax],
+	[Email1],
+	[Email2],
+	[Website],
+	[BirthDate],
+	[Notes],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[JobDescription],
+	[PassportNumber],
+	[PassportExpiry],
+	[UpdatedOn]
+FROM [dbo].[Contact]
+WHERE
+	[ContactID] = @ContactID
+
+SELECT
+	[ContactID],
+	[ContactCategoryID],
+	[AddedBy]
+FROM [dbo].[ContactContactCategory]
+WHERE
+	[ContactID] = @ContactID
+
+GO
+
+
+
+
+
 ALTER VIEW [dbo].[ContactDetail]
 AS
 SELECT
@@ -251,7 +311,7 @@ GO
 if not exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[GroupPrice]') and OBJECTPROPERTY(id, N'IsTable') = 1)
 begin
 	CREATE TABLE [GroupPrice](
-		[GroupPriceID] [int] NOT NULL,
+		[GroupPriceID] [int] IDENTITY(1,1) NOT NULL,
 		[GroupPriceName] [varchar](100) NOT NULL,
 		[ItineraryID] [int] NOT NULL,
 		[ItineraryPaxID] [int] NULL,
@@ -1131,22 +1191,23 @@ ORDER BY
 	[ContactID] ASC
 GO
 
+
+GO
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[GroupPrice_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[GroupPrice_Ins]
 GO
 
 CREATE PROCEDURE [dbo].[GroupPrice_Ins]
-	@GroupPriceID int,
 	@GroupPriceName varchar(100),
 	@ItineraryID int,
 	@ItineraryPaxID int,
 	@OptionTypeID int,
 	@Price money,
 	@Markup money,
-	@PriceOverride money
+	@PriceOverride money,
+	@GroupPriceID int OUTPUT
 AS
 INSERT [dbo].[GroupPrice]
 (
-	[GroupPriceID],
 	[GroupPriceName],
 	[ItineraryID],
 	[ItineraryPaxID],
@@ -1157,7 +1218,6 @@ INSERT [dbo].[GroupPrice]
 )
 VALUES
 (
-	@GroupPriceID,
 	@GroupPriceName,
 	@ItineraryID,
 	@ItineraryPaxID,
@@ -1166,6 +1226,7 @@ VALUES
 	@Markup,
 	@PriceOverride
 )
+SELECT @GroupPriceID=SCOPE_IDENTITY()
 GO
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[GroupPrice_Upd]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[GroupPrice_Upd]
@@ -1386,6 +1447,7 @@ FROM [dbo].[GroupPrice]
 WHERE
 	[OptionTypeID] = @OptionTypeID
 GO
+
 
 
 
