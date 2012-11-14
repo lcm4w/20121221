@@ -42,9 +42,12 @@ namespace TourWriter.DataAccess
 		/// <param name="ds">SupplierSet with changes</param>
 		/// <returns>Refreshed SupplierSet</returns>
 		public SupplierSet SaveSupplierSet(SupplierSet ds)
-		{	
+        {
+            if (ds.HasChanges())
+                ds.Supplier[0].UpdatedOn = DateTime.Now;
+
 			// save changes
-			SupplierSet changes = ds;
+			var changes = (SupplierSet)ds.GetChanges();
 			DataSetHelper.SaveDataSet(connectionString, changes);
 			
 			// get id

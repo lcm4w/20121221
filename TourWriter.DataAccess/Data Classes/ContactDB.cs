@@ -41,7 +41,10 @@ namespace TourWriter.DataAccess
 		/// <param name="ds">ContactSet with changes</param>
 		/// <returns>Refreshed ContactSet</returns>
 		public ContactSet SaveContactSet(ContactSet ds)
-		{		
+        {
+            if (ds.HasChanges())
+                ds.Contact[0].UpdatedOn = DateTime.Now;
+
 			// save changes
 			ContactSet changes = (ContactSet)ds.GetChanges();
 			DataSetHelper.SaveDataSet(connectionString, changes);

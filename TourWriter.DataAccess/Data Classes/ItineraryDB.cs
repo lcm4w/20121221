@@ -48,6 +48,9 @@ namespace TourWriter.DataAccess
 			ds.OptionLookup.AcceptChanges();
             ds.ServiceWarning.AcceptChanges();
 
+            if (ds.HasChanges())
+                ds.Itinerary[0].UpdatedOn = DateTime.Now;
+
 			ItinerarySet changes = (ItinerarySet)ds.GetChanges();
 			if(changes == null)
 			    changes = ds; // ensure change not null after accepting changes above					

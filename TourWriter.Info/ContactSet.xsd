@@ -46,6 +46,7 @@
               <xs:element name="JobDescription" msprop:Generator_UserColumnName="JobDescription" msprop:Generator_ColumnVarNameInTable="columnJobDescription" msprop:Generator_ColumnPropNameInRow="JobDescription" msprop:Generator_ColumnPropNameInTable="JobDescriptionColumn" type="xs:string" minOccurs="0" />
               <xs:element name="PassportNumber" msprop:Generator_UserColumnName="PassportNumber" msprop:Generator_ColumnVarNameInTable="columnPassportNumber" msprop:Generator_ColumnPropNameInRow="PassportNumber" msprop:Generator_ColumnPropNameInTable="PassportNumberColumn" type="xs:string" minOccurs="0" />
               <xs:element name="PassportExpiry" msprop:Generator_UserColumnName="PassportExpiry" msprop:Generator_ColumnVarNameInTable="columnPassportExpiry" msprop:Generator_ColumnPropNameInRow="PassportExpiry" msprop:Generator_ColumnPropNameInTable="PassportExpiryColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="UpdatedOn" msprop:Generator_ColumnVarNameInTable="columnUpdatedOn" msprop:Generator_ColumnPropNameInRow="UpdatedOn" msprop:Generator_ColumnPropNameInTable="UpdatedOnColumn" msprop:Generator_UserColumnName="UpdatedOn" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
