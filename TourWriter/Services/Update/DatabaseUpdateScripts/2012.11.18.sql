@@ -1506,8 +1506,6 @@ PRINT N'Altering [dbo].[_ItinerarySet_Copy_ByID]...';
 
 
 GO
-/** Copy Itinerary and related records **/
-
 ALTER PROCEDURE [dbo].[_ItinerarySet_Copy_ByID]
     @OrigItineraryID int,
     @NewItineraryName varchar(100),
@@ -1615,6 +1613,7 @@ SELECT
     Margin
 FROM ItineraryMarginOverride WHERE ItineraryID = @OrigItineraryID
 
+/* DON"T THINK WE NEED THIS ANYMORE? (old publishing?)
 -- ItineraryPubFile ----------------------------------------------
 INSERT [dbo].[ItineraryPubFile]
 (
@@ -1633,6 +1632,52 @@ SELECT
 	[AddedOn],
 	[AddedBy]
 FROM [dbo].[ItineraryPubFile] WHERE [ItineraryID] = @OrigItineraryID
+*/
+
+-- Itinerary Pax
+INSERT [dbo].[ItineraryPax]
+(	
+	[ItineraryPaxName],
+	[ItineraryID],
+	[MemberCount],
+	[MemberRooms],
+	[StaffCount],
+	[StaffRooms],
+	[GrossMarkup],
+	[GrossOverride]
+)
+SELECT
+	[ItineraryPaxName],
+	@NewItineraryID,
+	[MemberCount],
+	[MemberRooms],
+	[StaffCount],
+	[StaffRooms],
+	[GrossMarkup],
+	[GrossOverride]
+FROM [dbo].[ItineraryPax] where [ItineraryID] = @OrigItineraryID
+
+-- group prices
+INSERT [dbo].[GroupPrice]
+(
+	[GroupPriceName],
+	[ItineraryID],
+	[ItineraryPaxID],
+	[OptionTypeID],
+	[Price],
+	[Markup],
+	[PriceOverride]
+)
+select
+	GroupPriceName,
+	@NewItineraryID,
+	ItineraryPaxID,
+	OptionTypeID,
+	Price,
+	Markup,
+	PriceOverride
+from GroupPrice where [ItineraryID] = @OrigItineraryID
+
 
 --=== Loop purchase lines ======================================
 DECLARE @NewPurchaseLineID int
@@ -1732,30 +1777,13 @@ END -- PurchaseLineCursor
 CLOSE PurchaseLineCursor
 DEALLOCATE PurchaseLineCursor
 
--- group prices
-INSERT [dbo].[GroupPrice]
-(
-	[GroupPriceName],
-	[ItineraryID],
-	[ItineraryPaxID],
-	[OptionTypeID],
-	[Price],
-	[Markup],
-	[PriceOverride]
-)
-select
-	GroupPriceName,
-	ItineraryID,
-	ItineraryPaxID,
-	OptionTypeID,
-	Price,
-	Markup,
-	PriceOverride
-from GroupPrice where [ItineraryID] = @OrigItineraryID
-
 -- return new itinerary id
 SELECT @NewItineraryID
+
 GO
+
+
+
 PRINT N'Refreshing [dbo].[ItineraryServiceTypePricing]...';
 
 
@@ -3148,6 +3176,43 @@ ORDER BY
 GO
 
 
+
+if not exists(select 1 from OptionType where OptionTypeName = 'Twin')
+    insert OptionType (OptionTypeName,Divisor)
+    values ('Twin',2);
+GO
+
+
+ALTER TABLE dbo.GroupPrice
+	DROP CONSTRAINT FK_GroupPrice_Itinerary
+GO
+ALTER TABLE dbo.GroupPrice
+	DROP CONSTRAINT FK_GroupPrice_ItineraryPax
+GO
+
+ALTER TABLE dbo.GroupPrice ADD CONSTRAINT
+	FK_GroupPrice_Itinerary FOREIGN KEY
+	(
+	ItineraryID
+	) REFERENCES dbo.Itinerary
+	(
+	ItineraryID
+	) ON UPDATE  CASCADE 
+	 ON DELETE  CASCADE 	
+GO
+
+
+ALTER TABLE dbo.GroupPrice ADD CONSTRAINT
+	FK_GroupPrice_ItineraryPax FOREIGN KEY
+	(
+	ItineraryPaxID
+	) REFERENCES dbo.ItineraryPax
+	(
+	ItineraryPaxID
+	) ON UPDATE  no action
+	 ON DELETE  no action
+	
+GO
 
 
 

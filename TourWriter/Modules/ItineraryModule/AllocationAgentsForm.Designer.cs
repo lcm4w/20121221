@@ -42,6 +42,8 @@
             Infragistics.Win.Appearance appearance77 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AllocationAgentsForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtAllocationTotal = new Infragistics.Win.UltraWinEditors.UltraNumericEditor();
+            this.label1 = new System.Windows.Forms.Label();
             this.gridAllocationAgent = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this.tsAllocationAgent = new TourWriter.UserControls.MyToolStrip();
             this.btnAddAllocation = new System.Windows.Forms.ToolStripButton();
@@ -49,6 +51,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtAllocationTotal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAllocationAgent)).BeginInit();
             this.tsAllocationAgent.SuspendLayout();
             this.SuspendLayout();
@@ -57,12 +60,34 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.txtAllocationTotal);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.gridAllocationAgent);
             this.panel1.Controls.Add(this.tsAllocationAgent);
             this.panel1.Location = new System.Drawing.Point(2, 1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(302, 289);
             this.panel1.TabIndex = 0;
+            // 
+            // txtAllocationTotal
+            // 
+            this.txtAllocationTotal.FormatString = "#####0";
+            this.txtAllocationTotal.Location = new System.Drawing.Point(85, 9);
+            this.txtAllocationTotal.MaskInput = "nnnnnn";
+            this.txtAllocationTotal.Name = "txtAllocationTotal";
+            this.txtAllocationTotal.Nullable = true;
+            this.txtAllocationTotal.PromptChar = ' ';
+            this.txtAllocationTotal.Size = new System.Drawing.Size(50, 21);
+            this.txtAllocationTotal.TabIndex = 140;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.TabIndex = 132;
+            this.label1.Text = "Total allocation";
             // 
             // gridAllocationAgent
             // 
@@ -127,7 +152,9 @@
             this.gridAllocationAgent.Size = new System.Drawing.Size(299, 250);
             this.gridAllocationAgent.TabIndex = 130;
             this.gridAllocationAgent.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnUpdate;
+            this.gridAllocationAgent.AfterCellUpdate += new Infragistics.Win.UltraWinGrid.CellEventHandler(this.gridAllocationAgent_AfterCellUpdate);
             this.gridAllocationAgent.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.gridAllocationAgent_InitializeLayout);
+            this.gridAllocationAgent.BeforeCellUpdate += new Infragistics.Win.UltraWinGrid.BeforeCellUpdateEventHandler(this.gridAllocationAgent_BeforeCellUpdate);
             this.gridAllocationAgent.KeyUp += new System.Windows.Forms.KeyEventHandler(this.gridAllocationAgent_KeyUp);
             // 
             // tsAllocationAgent
@@ -202,9 +229,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AllocationAgentsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Agents";
+            this.Text = "Itinerary allocations";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtAllocationTotal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridAllocationAgent)).EndInit();
             this.tsAllocationAgent.ResumeLayout(false);
             this.tsAllocationAgent.PerformLayout();
@@ -221,5 +249,7 @@
         private System.Windows.Forms.ToolStripButton btnDeleteAllocation;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private Infragistics.Win.UltraWinEditors.UltraNumericEditor txtAllocationTotal;
     }
 }

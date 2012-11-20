@@ -15,7 +15,6 @@ using TourWriter.Global;
 using TourWriter.Info;
 using TourWriter.Modules.ItineraryModule.Bookings;
 using TourWriter.Modules.ItineraryModule.DateKicker;
-using TourWriter.Modules.ItineraryModule.RoomTypes;
 using TourWriter.Services;
 using CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction;
 using SupplierMessage = TourWriter.Reports.Itinerary.SupplierMessage;
@@ -209,7 +208,7 @@ namespace TourWriter.Modules.ItineraryModule
                 }
                 else
                 {
-                    GetAllocatedAgents(false);
+                    GetAllocatedAgents();
                 }              
             }        
         }
@@ -478,11 +477,10 @@ namespace TourWriter.Modules.ItineraryModule
                         var optionLookup = itinerarySet.OptionLookup.Copy();
 
                         // Get data changes.
-                        var changes = (ItinerarySet) itinerarySet.GetChanges();
-                        if (changes != null)
+                        if (itinerarySet.HasChanges())
                         {
                             // Save data changes.
-                            ItinerarySet fresh = i.SaveItinerarySet(changes);
+                            ItinerarySet fresh = i.SaveItinerarySet(itinerarySet);
 
                             // merge the lookup tables
                             fresh.SupplierLookup.Merge(supplierLookup, true);
@@ -507,7 +505,7 @@ namespace TourWriter.Modules.ItineraryModule
                         }
                         // Update main form
                         UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
-                        GetAllocatedAgents(false);
+                        GetAllocatedAgents();
                         SetDataCleanName();
 
                         //accounting1.RefreshRequired = true;
@@ -1263,28 +1261,27 @@ namespace TourWriter.Modules.ItineraryModule
             allocAgents.ItinerarySet = itinerarySet;
             if (allocAgents.ShowDialog() == DialogResult.OK)
             {
-                GetAllocatedAgents(true);                
+                itinerarySet.Allocation[0].Quantity = allocAgents.TotalAllocations;
+                GetAllocatedAgents();                
             }
         }
 
-        private void GetAllocatedAgents(bool IsTotalNeeded)
-        {
-            var allocation = itinerarySet.Allocation.SingleOrDefault(x => x.ItineraryID == itinerarySet.Itinerary[0].ItineraryID);
-            if (allocation == null) return;
-            var agentsAllocated = "";
-            var totalQuantity = 0;
-            foreach (var r in allocation.GetAllocationAgentRows())
+        private void GetAllocatedAgents()
+        {           
+            var totalAllocation = itinerarySet.Allocation.Rows.Count > 0 ? itinerarySet.Allocation[0].Quantity : 0;
+            var totalAgents = 0;
+            if (totalAllocation != 0)
             {
-                var agent = Cache.ToolSet.Agent.FindByAgentID(r.AgentID);
-                if (agent == null) continue;
-                if (!string.IsNullOrEmpty(agent.AgentName))
-                {
-                    agentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + r.Quantity + "]" + ", ");
-                    totalQuantity += r.Quantity;
-                }
+                //if (itinerarySet.Allocation[0].GetAllocationAgentRows().Any())
+                //{                   
+                    totalAgents += itinerarySet.Allocation[0].GetAllocationAgentRows().Count(r => r.Quantity != 0);
+                //}
             }
-            if (IsTotalNeeded) itinerarySet.Allocation[0].Quantity = totalQuantity;
-            txtAgentAllocation.Text = string.IsNullOrEmpty(agentsAllocated) ? "" : agentsAllocated.Remove(agentsAllocated.LastIndexOf(","));
+            var agentText = totalAgents == 1 ? " agent)" : " agents)";
+            txtAgentAllocation.Text = totalAllocation == 0
+                                          ? "0"
+                                          : totalAllocation.ToString() +
+                                            (totalAgents == 0 ? "" : "(" + totalAgents.ToString() + agentText);           
         }
         #endregion
     }

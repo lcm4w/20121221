@@ -45,8 +45,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblHeader1 = new System.Windows.Forms.Label();
             this.tsRoomTypes = new TourWriter.UserControls.MyToolStrip();
-            this.btnAll = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnDel = new System.Windows.Forms.ToolStripButton();
             this.lblHeader2 = new System.Windows.Forms.Label();
@@ -187,32 +185,14 @@
             this.tsRoomTypes.Dock = System.Windows.Forms.DockStyle.None;
             this.tsRoomTypes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tsRoomTypes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAll,
-            this.toolStripSeparator2,
             this.btnAdd,
             this.btnDel});
-            this.tsRoomTypes.Location = new System.Drawing.Point(114, 4);
+            this.tsRoomTypes.Location = new System.Drawing.Point(199, 4);
             this.tsRoomTypes.Name = "tsRoomTypes";
             this.tsRoomTypes.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsRoomTypes.Size = new System.Drawing.Size(141, 25);
+            this.tsRoomTypes.Size = new System.Drawing.Size(56, 25);
             this.tsRoomTypes.TabIndex = 137;
             this.tsRoomTypes.Text = "myToolStrip2";
-            // 
-            // btnAll
-            // 
-            this.btnAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAll.Name = "btnAll";
-            this.btnAll.Size = new System.Drawing.Size(78, 22);
-            this.btnAll.Text = "All Members";
-            this.btnAll.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            this.btnAll.ToolTipText = "All Members";
-            this.btnAll.Click += new System.EventHandler(this.btnAll_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btnAdd
             // 
@@ -326,14 +306,12 @@
         private System.Windows.Forms.ToolStripDropDownButton btnAdd;
         private System.Windows.Forms.ToolStripButton btnDel;
         private Infragistics.Win.UltraWinGrid.UltraGrid gridRoomTypes;
-        private System.Windows.Forms.ToolStripButton btnAll;
         private UserControls.MyToolStrip tsMembers;
         private System.Windows.Forms.ToolStripButton btnMemberEdit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnMemberAdd;
         private System.Windows.Forms.ToolStripButton btnMemberDelete;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         internal Infragistics.Win.UltraWinGrid.UltraGrid gridMembers;
         private System.Windows.Forms.Label lblHeader1;
         private System.Windows.Forms.Label lblHeader2;

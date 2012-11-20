@@ -127,10 +127,9 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     // save changes
                     Supplier s = new Supplier();
-                    SupplierSet changes = (SupplierSet)supplierSet.GetChanges();
-                    if (changes != null)
+                    if (supplierSet.HasChanges())
                     {
-                        SupplierSet fresh = s.SaveSupplierSet(changes);
+                        SupplierSet fresh = s.SaveSupplierSet(supplierSet);
 
                         // handle errors
                         App.DataSet_CheckForErrors(fresh);

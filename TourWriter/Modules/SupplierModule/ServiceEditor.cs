@@ -115,6 +115,14 @@ namespace TourWriter.Modules.SupplierModule
         {
             InitializeComponent();
             gridRates.Click += gridRates_Click;
+            gridAllocations.AfterRowActivate += gridAllocations_AfterRowActivate;
+            
+        }
+
+        private void gridAllocations_AfterRowActivate(object sender, EventArgs e)
+        {
+
+            //throw new NotImplementedException();
         }
 
         internal void CommitOpenEdits()
@@ -1936,13 +1944,10 @@ namespace TourWriter.Modules.SupplierModule
                 var allocAgents = new AllocationAgentsForm(allocation);
                 allocAgents.SupplierSet = supplierSet;
                 if (allocAgents.ShowDialog() == DialogResult.OK)
-                {
-                    e.Cell.Row.Cells["Agents"].Value = allocAgents.AgentsAllocated;                   
-                    gridAllocations.ResetBindings();
-                    //gridServices.SetDataBinding(supplierSet, "Supplier.SupplierService");
-                    //RefreshGridServicesRow();
-                }
-                //GetAllocatedAgents(e.Cell.Row);
+                {                   
+                    e.Cell.Row.Cells["Agents"].Value = allocAgents.AgentsAllocated;                  
+                    RefreshGridServicesRow();                   
+                }                
             }
             if (e.Cell.Column.Key == "Options")
             {
@@ -1959,15 +1964,22 @@ namespace TourWriter.Modules.SupplierModule
         private void RefreshGridServicesRow()
         {
             var activerow = gridServices.ActiveRow;
-            gridServices.ActiveRow = gridServices.Rows[0];
-            gridServices.ActiveRow = activerow;
+            if (activerow.Index != 0)
+            {
+                gridServices.ActiveRow = gridServices.Rows[0];
+                gridServices.ActiveRow = activerow;
+            }
+            else
+            {
+                gridServices_AddRow();
+                GridHelper.DeleteActiveRow(gridServices, true);
+                gridServices.ActiveRow = activerow;
+            }
         }
 
         private void SetGridAllocations()
         {
-            gridAllocations.SetDataBinding(supplierSet, "Supplier.SupplierService.FK_Service_Allocation");
-            if (gridServices.Rows.Count == 0 || gridAllocations.Rows.Count == 0) return;            
-            //gridAllocations.DataSource = supplierSet.Allocation;
+            gridAllocations.SetDataBinding(supplierSet, "Supplier.SupplierService.FK_Service_Allocation");           
         }
 
         private void gridAllocations_InitializeLayout(object sender, InitializeLayoutEventArgs e)
@@ -2031,7 +2043,6 @@ namespace TourWriter.Modules.SupplierModule
 
         private void gridAllocations_InitializeRow(object sender, InitializeRowEventArgs e)
         {
-            //CurrentAllocationID = (int)gridAllocations.ActiveRow.Cells["AllocationID"].Value;
             if (!e.ReInitialize)
             {
                 GetAllocatedAgents(e.Row);
@@ -2069,40 +2080,7 @@ namespace TourWriter.Modules.SupplierModule
                 }
             }
             allocationRow.Cells["Options"].Value = string.IsNullOrEmpty(optionsAllocated) ? "All" : optionsAllocated.Remove(optionsAllocated.LastIndexOf(","));
-        }
-
-        //private void GetAllocatedAgents(UltraGridRow allocationRow)
-        //{
-        //    var allocation = GetAllocationByServiceID();//supplierSet.Allocation.FindByAllocationID(int.Parse(allocationRow.Cells["AllocationID"].Value.ToString()));           
-
-        //    var agentsAllocated = "";
-        //    foreach (var r in allocation.GetAllocationAgentRows())
-        //    {
-        //        var agent = Cache.ToolSet.Agent.FindByAgentID(r.AgentID);
-        //        if (agent == null) continue;
-        //        if (!string.IsNullOrEmpty(agent.AgentName))
-        //        {
-        //            agentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + r.Quantity + "]" + ", ");
-        //        }
-        //    }           
-        //    allocationRow.Cells["Agents"].Value = string.IsNullOrEmpty(agentsAllocated) ? "All" : agentsAllocated.Remove(agentsAllocated.LastIndexOf(","));
-        //}
-
-        //private void GetAllocatedOptions(UltraGridRow allocationRow)
-        //{
-        //    var allocation = GetAllocationByServiceID();//supplierSet.Allocation.FindByAllocationID(int.Parse(allocationRow.Cells["AllocationID"].Value.ToString()));
-        //    var optionsAllocated = "";
-        //    foreach(var r in allocation.GetAllocationOptionRows())
-        //    {
-        //        var option = Global.Cache.ToolSet.OptionType.FindByOptionTypeID(r.OptionTypeID);
-        //        if (option == null) continue;
-        //        if (!string.IsNullOrEmpty(option.OptionTypeName))
-        //        {
-        //            optionsAllocated += (option.OptionTypeName + ", ");
-        //        }
-        //    }
-        //    allocationRow.Cells["Options"].Value = string.IsNullOrEmpty(optionsAllocated) ? "All" : optionsAllocated.Remove(optionsAllocated.LastIndexOf(","));
-        //}
+        }       
 
         private SupplierSet.AllocationRow GetAllocationByServiceID()
         {

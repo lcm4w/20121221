@@ -13,6 +13,7 @@ namespace TourWriter.Modules.ItineraryModule
 {
     public partial class AllocationAgentsForm : Form
     {
+        public int TotalAllocations { get; set; }
         private ItinerarySet itinerarySet;
         private ItinerarySet ClonedItinerarySet { get; set; }
 
@@ -35,8 +36,7 @@ namespace TourWriter.Modules.ItineraryModule
         private void DataBind()
         {           
             //clone
-            ClonedItinerarySet = (ItinerarySet)itinerarySet.Copy();
-            //AllocationTable = itinerarySet.Allocation;
+            ClonedItinerarySet = (ItinerarySet)itinerarySet.Copy();          
             if (!ClonedItinerarySet.Itinerary[0].GetAllocationRows().Any())
             {
                 var allocation = ClonedItinerarySet.Allocation.NewAllocationRow();
@@ -45,7 +45,8 @@ namespace TourWriter.Modules.ItineraryModule
                 allocation.ValidTo = DateTime.Now;
                 allocation.Quantity = 0;
                 ClonedItinerarySet.Allocation.AddAllocationRow(allocation);
-                ClonedAllocation = allocation;
+                ClonedAllocation = allocation;                
+               
             }
             else
             {
@@ -53,8 +54,9 @@ namespace TourWriter.Modules.ItineraryModule
             }
             gridAllocationAgent.DisplayLayout.ValueLists.Add("AgentList");
             UpdateAgentDDL();
-            gridAllocationAgent.DataSource = ClonedAllocation.GetAllocationAgentRows();
-            gridAllocationAgent.CellDataError += gridAllocationAgent_CellDataError;
+            gridAllocationAgent.DataSource = ClonedItinerarySet.Allocation[0].GetAllocationAgentRows();//ClonedAllocation.GetAllocationAgentRows();
+            gridAllocationAgent.CellDataError += gridAllocationAgent_CellDataError;                     
+            txtAllocationTotal.Value = ClonedAllocation.Quantity;          
         }
 
         private void gridAllocationAgent_CellDataError(object sender, CellDataErrorEventArgs e)
@@ -127,8 +129,8 @@ namespace TourWriter.Modules.ItineraryModule
             row.AllocationID = ClonedAllocation.AllocationID;
             row.AgentID = availableAgentID;
             row.Quantity = 0;
-            ClonedItinerarySet.AllocationAgent.AddAllocationAgentRow(row); ;
-            gridAllocationAgent.DataSource = ClonedAllocation.GetAllocationAgentRows();
+            ClonedItinerarySet.AllocationAgent.AddAllocationAgentRow(row);
+            gridAllocationAgent.DataSource = ClonedItinerarySet.Allocation[0].GetAllocationAgentRows();//ClonedAllocation.GetAllocationAgentRows();
             GridHelper.SetActiveRow(gridAllocationAgent, "AgentID", row.AgentID, "AgentID");
         }
 
@@ -137,16 +139,21 @@ namespace TourWriter.Modules.ItineraryModule
             if (gridAllocationAgent.ActiveRow == null) return;
 
             if (App.AskDeleteRow())
-            {
-                //GridHelper.DeleteActiveRow(gridAllocationAgent, true);
-                ClonedItinerarySet.AllocationAgent.FindByAllocationIDAgentID(ClonedAllocation.AllocationID, int.Parse(gridAllocationAgent.ActiveRow.Cells["AgentID"].Value.ToString())).Delete();
-                gridAllocationAgent.DataSource = ClonedAllocation.GetAllocationAgentRows(); //CurrentAllocation.GetAllocationAgentRows();
+            {         
+                //GridHelper.DeleteActiveRow(gridAllocationAgent, true);       
+                var agent = ClonedItinerarySet.AllocationAgent.FindByAllocationIDAgentID(ClonedAllocation.AllocationID, int.Parse(gridAllocationAgent.ActiveRow.Cells["AgentID"].Value.ToString()));//Delete();
+                if (agent != null)
+                {
+                    agent.Delete();
+                    gridAllocationAgent.DataSource = ClonedItinerarySet.Allocation[0].GetAllocationAgentRows();//ClonedAllocation.GetAllocationAgentRows();
+                }
             }
         }
 
         private void gridAllocationAgent_KeyUp(object sender, KeyEventArgs e)
         {
             var grid = (UltraGrid)sender;
+            if (grid.ActiveCell == null) return;
             if (grid.ActiveCell.Column.Key != "Quantity") return;
             if (e.KeyCode == Keys.Enter)
             {
@@ -164,9 +171,80 @@ namespace TourWriter.Modules.ItineraryModule
         }
 
         private void BtnOkClick(object sender, EventArgs e)
+        {            
+            var id = -1;
+            foreach (var itin in ClonedItinerarySet.Itinerary.Rows.Cast<ItinerarySet.ItineraryRow>())
+            {
+                //itinerary allocations
+                foreach (var alloc in itin.GetAllocationRows())
+                {                    
+                    if (alloc.RowState == DataRowState.Added)
+                        SetInserted(alloc, "AllocationID", id--);
+
+                    //alloc agents
+                    foreach (var agent in alloc.GetAllocationAgentRows())
+                    {
+                        if (agent.RowState == DataRowState.Added)
+                            SetInserted(agent);
+                        if (agent.RowState == DataRowState.Deleted)
+                            SetDeleted(agent);
+                    }
+                }
+            }            
+
+            TotalAllocations = (int)txtAllocationTotal.Value;
+            ClonedItinerarySet.AllocationAgent.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);
+            ClonedItinerarySet.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);  
+
+            itinerarySet.AllocationAgent.Merge(ClonedItinerarySet.AllocationAgent);
+            itinerarySet.Merge(ClonedItinerarySet, true);                     
+        }
+
+        private void gridAllocationAgent_AfterCellUpdate(object sender, CellEventArgs e)
         {
-            ClonedItinerarySet.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);            
-            itinerarySet.Merge(ClonedItinerarySet, false);
+            if (e.Cell.Column.Key == "Quantity")
+            {
+                if (GetTotal() > (int)txtAllocationTotal.Value)
+                {
+                    App.ShowWarning(string.Format("Allocations are not allowed to exceed {0}", (int)txtAllocationTotal.Value));
+                    e.Cell.Value = e.Cell.OriginalValue;
+                }
+            }
+        }
+
+        private int GetTotal()
+        {
+            var total = 0;
+            foreach(var r in gridAllocationAgent.Rows)
+            {
+                total += (int) r.Cells["Quantity"].Value;
+            }
+            return total;
+        }
+
+        private void gridAllocationAgent_BeforeCellUpdate(object sender, BeforeCellUpdateEventArgs e)
+        {
+          
+        }
+
+        private static void SetInserted(DataRow row)
+        {
+            row.AcceptChanges();
+            row.SetAdded();
+        }
+
+        private static void SetDeleted(DataRow row)
+        {
+            row.AcceptChanges();
+            row.Delete();
+        }
+
+        private static void SetInserted(DataRow row, string key, int value)
+        {
+            row.Table.Columns[key].ReadOnly = false;
+            row[key] = value;
+            row.AcceptChanges();
+            row.SetAdded();
         }
     }
 }

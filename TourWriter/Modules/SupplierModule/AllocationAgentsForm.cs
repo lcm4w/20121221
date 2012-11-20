@@ -14,7 +14,7 @@ namespace TourWriter.Modules.SupplierModule
     public partial class AllocationAgentsForm : Form
     {
         private SupplierSet supplierSet;
-        private SupplierSet ClonedSupplierSet;
+        public SupplierSet ClonedSupplierSet;
         private int AllocationID { get; set; }       
         private SupplierSet.AllocationAgentRow[] AllocationAgentRows { get; set; }
         public string AgentsAllocated { get; set; }
@@ -166,8 +166,8 @@ namespace TourWriter.Modules.SupplierModule
                     AgentsAllocated += (agent.AgentName.Substring(0, agent.AgentName.Length > 14 ? 15 : agent.AgentName.Length - 1) + "[" + ((int)r.Cells["Quantity"].Value) + "]" + ", ");
                 }                
             }
-            AgentsAllocated = string.IsNullOrEmpty(AgentsAllocated) ? "All" : AgentsAllocated.Remove(AgentsAllocated.LastIndexOf(","));          
-            ClonedSupplierSet.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);           
+            AgentsAllocated = string.IsNullOrEmpty(AgentsAllocated) ? "All" : AgentsAllocated.Remove(AgentsAllocated.LastIndexOf(","));
+            ClonedSupplierSet.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);
             supplierSet.Merge(ClonedSupplierSet);         
         }
        
