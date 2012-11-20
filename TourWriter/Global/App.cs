@@ -225,6 +225,15 @@ namespace TourWriter
                        Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "89D91837-1EC7-4D16-B4A7-40B2C34E7D78".ToLower();   // ABT test
             }
         }
+		
+        internal static bool ShowRoomTypes
+        {
+            get
+            {
+                //atm, do not show
+                return true;
+            }
+        }
         #endregion
 
         #region Network

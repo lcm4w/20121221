@@ -27,6 +27,7 @@ namespace TourWriter.Modules.ItineraryModule
             set
             {
                 itinerarySet = value;
+                roomTypesControl.ItinerarySet = itinerarySet;
                 DataBind();
             }
         }
@@ -65,22 +66,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             // Pax
             txtPaxOverride.DataBindings.Add("Value", itinerarySet.Itinerary, "PaxOverride");
-            gridPax.DataSource = itinerarySet.ItineraryPax;
-
-            // Members
-            
-            gridMembers.DisplayLayout.ValueLists.Add("AgeGroupsList");
-            gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].SortStyle = ValueListSortStyle.Ascending;
-            gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].ValueListItems.Add(DBNull.Value, "(none)");
-            foreach (ToolSet.AgeGroupRow r in Cache.ToolSet.AgeGroup.Rows)
-            {
-                if (r.RowState == DataRowState.Deleted)
-                    continue;
-
-                gridMembers.DisplayLayout.ValueLists["AgeGroupsList"].ValueListItems.Add(r.AgeGroupID, r.AgeGroupName);
-            }
-
-            gridMembers.SetDataBinding(itinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");
+            gridPax.DataSource = itinerarySet.ItineraryPax;            
             
             // Notes
             
@@ -106,45 +92,45 @@ namespace TourWriter.Modules.ItineraryModule
                 saleRow.ItinerarySaleID, saleRow.Amount, (!saleRow.IsCommentsNull() ? saleRow.Comments : String.Empty));
         }
 
-        internal void AddExistingContact(int contactID)
-        {
-            // Ensure contact not already in list
-            ItinerarySet.ItineraryMemberRow[] rows2 = (ItinerarySet.ItineraryMemberRow[])
-                                                         itinerarySet.ItineraryMember.Select("ContactID = " + contactID);
+        //internal void AddExistingContact(int contactID)
+        //{
+        //    // Ensure contact not already in list
+        //    ItinerarySet.ItineraryMemberRow[] rows2 = (ItinerarySet.ItineraryMemberRow[])
+        //                                                 itinerarySet.ItineraryMember.Select("ContactID = " + contactID);
 
-            var rows = from member in itinerarySet.ItineraryMember
-                       where member.ContactID == contactID
-                       select member;
+        //    var rows = from member in itinerarySet.ItineraryMember
+        //               where member.ContactID == contactID
+        //               select member;
 
-            if (rows.Count() > 0)
-            {
-                MessageBox.Show(App.GetResourceString("ShowRowAlreadyExists"));
-                return;
-            }
+        //    if (rows.Count() > 0)
+        //    {
+        //        MessageBox.Show(App.GetResourceString("ShowRowAlreadyExists"));
+        //        return;
+        //    }
 
-            // Import actual contact to handle dataset relation constraints
-            if (itinerarySet.Contact.FindByContactID(contactID) == null)
-            {
-                Contact c = new Contact();
-                ContactSet.ContactRow contact = c.GetContactSet(contactID).Contact[0];
-                itinerarySet.Contact.ImportRow(contact);
-            }
+        //    // Import actual contact to handle dataset relation constraints
+        //    if (itinerarySet.Contact.FindByContactID(contactID) == null)
+        //    {
+        //        Contact c = new Contact();
+        //        ContactSet.ContactRow contact = c.GetContactSet(contactID).Contact[0];
+        //        itinerarySet.Contact.ImportRow(contact);
+        //    }
 
-            // Initialise a new groupmember row
-            ItinerarySet.ItineraryMemberRow r = itinerarySet.ItineraryMember.NewItineraryMemberRow();
-            r.ItineraryGroupID = GetDefaultItinerayGroup().ItineraryGroupID;
-            r.ItineraryMemberName = itinerarySet.Contact.FindByContactID(contactID).ContactName;
-            r.AddedOn = DateTime.Now;
-            r.AddedBy = TourWriter.Global.Cache.User.UserID;
-            bool isFirstRow = (itinerarySet.ItineraryMember.Rows.Count == 0);
-            r.IsDefaultContact = isFirstRow;
-            r.IsDefaultBilling = isFirstRow;
-            r.ContactID = contactID;
-            itinerarySet.ItineraryMember.AddItineraryMemberRow(r);
+        //    // Initialise a new groupmember row
+        //    ItinerarySet.ItineraryMemberRow r = itinerarySet.ItineraryMember.NewItineraryMemberRow();
+        //    r.ItineraryGroupID = GetDefaultItinerayGroup().ItineraryGroupID;
+        //    r.ItineraryMemberName = itinerarySet.Contact.FindByContactID(contactID).ContactName;
+        //    r.AddedOn = DateTime.Now;
+        //    r.AddedBy = TourWriter.Global.Cache.User.UserID;
+        //    bool isFirstRow = (itinerarySet.ItineraryMember.Rows.Count == 0);
+        //    r.IsDefaultContact = isFirstRow;
+        //    r.IsDefaultBilling = isFirstRow;
+        //    r.ContactID = contactID;
+        //    itinerarySet.ItineraryMember.AddItineraryMemberRow(r);
 
-            // select the new row
-            gridMembers.ActiveRow = gridMembers.Rows[gridMembers.Rows.Count - 1];
-        }
+        //    // select the new row
+        //    gridMembers.ActiveRow = gridMembers.Rows[gridMembers.Rows.Count - 1];
+        //}
 
         private ItinerarySet.ItineraryGroupRow GetDefaultItinerayGroup()
         {
@@ -219,40 +205,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         internal void AddContact(int? contactId)
         {
-            int groupId = GetDefaultItinerayGroup().ItineraryGroupID;
-            ItinerarySet.ItineraryMemberRow r = itinerarySet.ItineraryMember.NewItineraryMemberRow();
-            
-            r.ItineraryGroupID = groupId;
-            r.AddedOn = DateTime.Now;
-            r.AddedBy = TourWriter.Global.Cache.User.UserID;
-            bool isFirstRow = (itinerarySet.ItineraryMember.Rows.Count == 0);
-            r.IsDefaultContact = isFirstRow;
-            r.IsDefaultBilling = isFirstRow;
-            if (Cache.ToolSet.AgeGroup.Rows.Count > 0)
-                r.AgeGroupID = (int)Cache.ToolSet.AgeGroup.Rows[0]["AgeGroupID"];
-            
-            if(contactId.HasValue)
-            {
-                if (itinerarySet.Contact.FindByContactID((int)contactId) == null)
-                {
-                    // Import contact to handle constraints
-                    Contact c = new Contact();
-                    ContactSet.ContactRow contact = c.GetContactSet((int)contactId).Contact[0];
-                    itinerarySet.Contact.ImportRow(contact);
-                }
-                r.ItineraryMemberName = itinerarySet.Contact.FindByContactID((int) contactId).ContactName;
-                r.ContactID = (int)contactId;
-            }
-            else
-            {
-                r.ItineraryMemberName = App.CreateUniqueNameValue(
-                    gridMembers.Rows, "ItineraryMemberName", "New Member");
-            }
-            
-            itinerarySet.ItineraryMember.AddItineraryMemberRow(r);
-
-            GridHelper.SetActiveRow(
-                gridMembers, "ItineraryMemberID", r.ItineraryMemberID, "ItineraryMemberName");
+            roomTypesControl.AddContact(contactId);           
         }
 
         internal void AddPax()
@@ -336,190 +289,7 @@ namespace TourWriter.Modules.ItineraryModule
             if (gridPax.ActiveRow != null && App.AskDeleteRow())
                 GridHelper.DeleteActiveRow(gridPax, true);
         }
-
-        private void gridMembers_InitializeLayout(object sender, InitializeLayoutEventArgs e)
-        {
-            e.Layout.Bands[0].Columns.Insert(0, "Edit");
-
-            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
-            {
-                if (c.Key == "ItineraryMemberName")
-                {
-                    c.Width = 100;
-                    c.Header.Caption = "Person name";
-                    c.Header.ToolTipText = "Client name";
-                    c.Band.SortedColumns.Add(c, false);
-                    c.CellMultiLine = DefaultableBoolean.True;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "Comments")
-                {
-                    c.Width = 200;
-                    c.Header.Caption = "Comments";
-                    c.Header.ToolTipText = "Comments (private)";
-                    c.CellMultiLine = DefaultableBoolean.True;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                    c.VertScrollBar = true;
-                }
-                else if (c.Key == "AgeGroupID")
-                {
-                    c.Width = 65;
-                    c.MinWidth = 65;
-                    c.MaxWidth = 65;
-                    c.Header.Caption = "Age-group";
-                    c.Header.ToolTipText = "Age-group category";
-                    c.Style = ColumnStyle.DropDownList;
-                    c.ValueList = gridMembers.DisplayLayout.ValueLists["AgeGroupsList"];
-                }
-                else if (c.Key == "Age")
-                {
-                    c.Width = 35;
-                    c.MinWidth = 35;
-                    c.MaxWidth = 35;
-                    c.MaskInput = "nnn";
-                    c.Header.ToolTipText = "Client age";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "Edit")
-                {
-                    c.Width = 35;
-                    c.MinWidth = 35;
-                    c.MaxWidth = 35;
-                    c.Header.Caption = "More";
-                    c.Header.ToolTipText = "Full contact details";
-                    c.Style = ColumnStyle.Button;
-                    c.CellButtonAppearance.Image = TourWriter.Properties.Resources.PageEdit;
-                    c.CellButtonAppearance.ImageHAlign = HAlign.Center;
-                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
-                }
-                else if (c.Key == "Title")
-                {
-                    c.Width = 50;
-                    c.MinWidth = 50;
-                    c.MaxWidth = 50;
-                    c.Header.Caption = "Title";
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else
-                    c.Hidden = true;
-            }
-
-            int index = 0;
-            e.Layout.Bands[0].Columns["Title"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["ItineraryMemberName"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Comments"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["AgeGroupID"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Age"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["Edit"].Header.VisiblePosition = index++;
-
-            GridHelper.SetDefaultGridAppearance(e);
-            e.Layout.Override.RowSizing = RowSizing.AutoFree;
-        }
-        
-        private void gridMembers_ClickCellButton(object sender, CellEventArgs e)
-        {
-            gridMembers_HandleEditRequest(e.Cell.Row);
-        }
-
-        private void gridMembers_HandleEditRequest(UltraGridRow row)
-        {
-            if (row == null)
-                return;
-            
-            if(row.Cells["ContactID"].Value == DBNull.Value)
-            {
-                // Contact detail does not exist
-                if (App.AskCreateRow())
-                {
-                    // Open contact dialog to create new contact row
-                    ContactMain contact = new ContactMain();
-                    if (row.Cells["ItineraryMemberName"].Value != DBNull.Value)
-                        if (row.Cells["ItineraryMemberName"].Value.ToString() != String.Empty)
-                            contact.ContactRow["ContactName"] = row.Cells["ItineraryMemberName"].Value.ToString();
-
-                    if (contact.ShowDialog() == DialogResult.OK)
-                    {
-                        // Get new Contact row
-                        ContactSet.ContactRow c = (ContactSet.ContactRow)contact.ContactRow;
-
-                        // Load contact row into this itinerarySet
-                        itinerarySet.Contact.BeginLoadData();
-                        itinerarySet.Contact.LoadDataRow(c.ItemArray, true);
-                        itinerarySet.Contact.EndLoadData();
-                        
-                        // Add FK value
-                        row.Cells["ContactID"].Value = c.ContactID;
-                        row.Cells["ItineraryMemberName"].Value = c.ContactName;
-                    }
-                }
-            }
-            else
-            {
-                // Open existing contact record
-                ContactMain contact = new ContactMain((int)row.Cells["ContactID"].Value);
-
-                if (contact.ShowDialog() == DialogResult.OK)
-                {
-                    // Reload contact to reflect changes
-                    itinerarySet.Contact.BeginLoadData();
-                    itinerarySet.Contact.LoadDataRow(contact.ContactRow.ItemArray, true);
-                    itinerarySet.Contact.EndLoadData();
-                }
-                contact.Dispose();
-            }
-        }
-
-        private void gridMembers_CellChange(object sender, CellEventArgs e)
-        {
-            if (e.Cell.Column.Key == "IsDefaultContact")
-            {
-                if (!(bool) e.Cell.Value) // underlying is not ticked so this a tick
-                {
-                    // Make others false
-                    foreach (UltraGridRow r in gridMembers.Rows)
-                        if (r != e.Cell.Row && (bool) r.Cells["IsDefaultContact"].Value)
-                            r.Cells["IsDefaultContact"].Value = false;
-                }
-            }
-            else if (e.Cell.Column.Key == "IsDefaultBilling")
-            {
-                if (!(bool) e.Cell.Value) // underlying is not ticked so this a tick
-                {
-                    // Make others false
-                    foreach (UltraGridRow r in gridMembers.Rows)
-                        if (r != e.Cell.Row && (bool) r.Cells["IsDefaultBilling"].Value)
-                            r.Cells["IsDefaultBilling"].Value = false;
-                }
-            }
-        }
-        
-        private void gridMembers_DoubleClickRow(object sender, DoubleClickRowEventArgs e)
-        {
-            if (e.Row.GetType() != typeof(UltraGridEmptyRow))
-                gridMembers_HandleEditRequest(e.Row);
-        }
-
-        private void btnMemberAdd_Click(object sender, EventArgs e)
-        {
-            AddContact(null);
-        }
-
-        private void btnMemberDelete_Click(object sender, EventArgs e)
-        {
-            if (gridMembers.ActiveRow != null && App.AskDeleteRow())
-                GridHelper.DeleteActiveRow(gridMembers, true);
-        }
-
-        private void btnMemberEdit_Click(object sender, EventArgs e)
-        {
-            gridMembers_HandleEditRequest(gridMembers.ActiveRow);
-        }
-
+                  
         private void gridPayments_CellChange(object sender, CellEventArgs e)
         {
             // When the "Locked" checkbox is clicked, it needs to be forced out of edit mode
@@ -678,7 +448,7 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void btnPaymentAdd_Click(object sender, EventArgs e)
         {
-            if (gridMembers.Rows.Count == 0)
+            if (roomTypesControl.gridMembers.Rows.Count == 0)
             {
                 App.ShowInfo("You must first add a person to the clients list");
                 return;
@@ -686,8 +456,8 @@ namespace TourWriter.Modules.ItineraryModule
 
             // Ensure gridMembers.ActiveRow is in the members list.
             RefreshMembersList();
-            
-            UltraGridRow memberRow = gridMembers.ActiveRow ?? gridMembers.Rows[0];
+
+            UltraGridRow memberRow = roomTypesControl.gridMembers.ActiveRow ?? roomTypesControl.gridMembers.Rows[0];
 
             ItinerarySet.ItineraryPaymentRow r = itinerarySet.ItineraryPayment.NewItineraryPaymentRow();
             r.ItineraryMemberID = (int)memberRow.Cells["ItineraryMemberID"].Value;

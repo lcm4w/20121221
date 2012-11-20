@@ -51,7 +51,7 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DocumentationFile>
     </DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
@@ -351,6 +351,18 @@
     </Compile>
     <Compile Include="Modules\SupplierModule\AllocationOptionsForm.Designer.cs">
       <DependentUpon>AllocationOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\RoomTypes\RoomTypesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\RoomTypes\RoomTypesControl.Designer.cs">
+      <DependentUpon>RoomTypesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\RoomTypes\RoomTypesHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\RoomTypes\RoomTypesHost.Designer.cs">
+      <DependentUpon>RoomTypesHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Discounts.cs" />
     <Compile Include="Services\Travelmesh\DataSyncUi.cs" />
@@ -1216,6 +1228,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\SupplierModule\AllocationOptionsForm.resx">
       <DependentUpon>AllocationOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\RoomTypes\RoomTypesControl.resx">
+      <DependentUpon>RoomTypesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\RoomTypes\RoomTypesHost.resx">
+      <DependentUpon>RoomTypesHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Services\Travelmesh\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
