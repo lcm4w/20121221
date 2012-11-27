@@ -253,7 +253,7 @@ namespace TourWriter.Modules.ItineraryModule
 
                     ds.EnforceConstraints = false;
                     i.GetItinerarySet(id, ds);
-                    //ds.ReadXml(@"...\ds1.xml", XmlReadMode.DiffGram);
+
                     TestForPaymentTermsContraintError(ds);
                     ds.EnforceConstraints = true;
 
@@ -284,7 +284,7 @@ namespace TourWriter.Modules.ItineraryModule
                     foreach (var error in table.GetErrors())
                         errors += "Table '" + table.TableName + "', " + error.RowError;
                 ErrorHelper.SendEmail(ex.Message + errors, ex.ToString(), true, attach1);
-                throw;
+                throw new ConstraintException(errors, ex);
             }
             catch (Exception ex)
             {
