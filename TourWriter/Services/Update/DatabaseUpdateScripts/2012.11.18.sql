@@ -1282,7 +1282,6 @@ PRINT N'Altering [dbo].[ItineraryDetail]...';
 
 
 GO
-
 ALTER VIEW [dbo].[ItineraryDetail]
 AS
 select
@@ -1290,6 +1289,7 @@ select
 		itin.ItineraryName,
 		isnull(itin.DisplayName, itin.ItineraryName) DisplayName,
 		itin.CustomCode,
+		itin.Comments as ItineraryComments,
 		itin.CountryID as OriginID,
 		origin.CountryName as Origin,
 		datediff(dd, itin.ArriveDate, itin.DepartDate) + 1 as ItineraryLength,
@@ -1358,6 +1358,7 @@ select
 		--pric.GrossFinalTotal - dbo.PaymentTerm.DepositAmount as ItineraryBalanceAmount,
 		itin.IsRecordActive,
 		itin.AddedOn as ItineraryCreatedDate,
+		itin.UpdatedOn as ItineraryUpdatedDate,
 		itin.ParentFolderID as MenuFolderID,
 		itin.ItineraryTypeID,
 		typ.ItineraryTypeName,
@@ -1389,7 +1390,7 @@ select
 	left outer join Region contactRegion on contact.RegionID = contactRegion.RegionID
 	left outer join [State] contactState on contact.StateID = contactState.StateID
 	left outer join Country contactCountry on contact.CountryID = contactCountry.CountryID
-	left outer join ItineraryType typ on typ.ItineraryTypeID = itin.ItineraryTypeID
+	left outer join ItineraryType typ on typ.ItineraryTypeID = itin.ItineraryTypeID	
 	left outer join
 	(
 		select itin.ItineraryID, count(ItineraryMemberID) as PaxCount
@@ -1417,6 +1418,9 @@ select
 	where 
 		(itin.IsDeleted is null or itin.IsDeleted = 'false');
 GO
+
+
+
 PRINT N'Altering [dbo].[ItineraryClientDetail]...';
 
 
@@ -1676,7 +1680,9 @@ select
 	Price,
 	Markup,
 	PriceOverride
-from GroupPrice where [ItineraryID] = @OrigItineraryID
+from GroupPrice 
+where [ItineraryID] = @OrigItineraryID
+and ItineraryPaxID is null -- TODO: need cursor on ItineraryPax table, to handle these!
 
 
 --=== Loop purchase lines ======================================
