@@ -202,9 +202,8 @@ namespace TourWriter.Modules.ItineraryModule
                 if (!itinerarySet.Itinerary[0].IsAllocationsItineraryIDNull())
                 {                    
                     lblAllocations.Text = "Master";                   
-                    txtAgentAllocation.Text = itinerarySet.Itinerary[0].AllocationsItineraryID.ToString();
-                    txtAgentAllocation.Size = new Size(168,txtAgentAllocation.Size.Height);
-                    btnAgentAllocation.Visible = false;
+                    txtAgentAllocation.Text = itinerarySet.Itinerary[0].AllocationsItineraryID.ToString();                   
+                    btnAgentAllocation.Image = Properties.Resources.Remove;
                 }
                 else
                 {
@@ -486,28 +485,29 @@ namespace TourWriter.Modules.ItineraryModule
                             fresh.SupplierLookup.Merge(supplierLookup, true);
                             fresh.OptionLookup.Merge(optionLookup, true);
                             fresh.SupplierLookup.AcceptChanges();
-                            fresh.OptionLookup.AcceptChanges();
-
+                            fresh.OptionLookup.AcceptChanges();                          
                             // Handle any errors.
                             if (App.DataSet_CheckForErrors(fresh) && App.DataSet_AskSaveDeleteConstraints(fresh))
                             {
                                 // Clear dataset and merge to maintain any databindings
                                 itinerarySet.Clear();
-                                itinerarySet.Merge(fresh, false);
+                                itinerarySet.Merge(fresh, false);                           
                                 // and save again
-                                SaveDataChanges();
+                                SaveDataChanges();                              
                                 return;
                             }
-                            // Clear dataset and merge to maintain any databindings
+                            // Clear dataset and merge to maintain any databindings                          
                             itinerarySet.Clear();
                             itinerarySet.Merge(fresh, false);
                             bookingsViewer.SetGridExpanded();
                         }
                         // Update main form
                         UpdateMainForm(App.MainForm.ItineraryMenu, itinerarySet.Itinerary[0].IsRecordActive);
-                        GetAllocatedAgents();
-                        SetDataCleanName();
-
+                        if (itinerarySet.Itinerary[0].IsAllocationsItineraryIDNull())
+                        {
+                            GetAllocatedAgents();
+                        }
+                        SetDataCleanName();                     
                         //accounting1.RefreshRequired = true;
                     }
                     catch (ConstraintException ex)
@@ -1256,13 +1256,26 @@ namespace TourWriter.Modules.ItineraryModule
 
         #region Allocations
         private void btnAgentAllocation_Click(object sender, EventArgs e)
-        {            
-            var allocAgents = new AllocationAgentsForm();
-            allocAgents.ItinerarySet = itinerarySet;
-            if (allocAgents.ShowDialog() == DialogResult.OK)
+        {
+            if (lblAllocations.Text == "Allocations")
             {
-                itinerarySet.Allocation[0].Quantity = allocAgents.TotalAllocations;
-                GetAllocatedAgents();                
+                var allocAgents = new AllocationAgentsForm();
+                allocAgents.ItinerarySet = itinerarySet;
+                if (allocAgents.ShowDialog() == DialogResult.OK)
+                {
+                    itinerarySet.Allocation[0].Quantity = allocAgents.TotalAllocations;
+                    GetAllocatedAgents();
+                }
+            }
+            else
+            {
+                if (App.AskYesNo("Do you want to remove the master link of this itinerary ?"))
+                {
+
+                    lblAllocations.Text = "Allocations";
+                    btnAgentAllocation.Image = Properties.Resources.PageEdit;
+                    itinerarySet.Itinerary[0].SetAllocationsItineraryIDNull();
+                }
             }
         }
 

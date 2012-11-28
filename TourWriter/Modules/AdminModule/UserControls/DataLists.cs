@@ -191,6 +191,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			AddDataList("Office branches",							"Branch",			"BranchName"			);
             AddDataList("Contact categories",                       "ContactCategory",  "ContactCategoryName"   );
             AddDataList("Content types",                            "ContentType",      "ContentTypeName"       );
+            AddDataList("Itinerary types",                          "ItineraryType",    "ItineraryTypeName"     );
 		}
 		
 		private void EndAllEdits()

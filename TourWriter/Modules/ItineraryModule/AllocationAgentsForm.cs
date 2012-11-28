@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,6 +17,7 @@ namespace TourWriter.Modules.ItineraryModule
         public int TotalAllocations { get; set; }
         private ItinerarySet itinerarySet;
         private ItinerarySet ClonedItinerarySet { get; set; }
+        private List<int> DeletedAgents { get; set; }
 
         internal ItinerarySet ItinerarySet   
         {
@@ -56,7 +58,8 @@ namespace TourWriter.Modules.ItineraryModule
             UpdateAgentDDL();
             gridAllocationAgent.DataSource = ClonedItinerarySet.Allocation[0].GetAllocationAgentRows();//ClonedAllocation.GetAllocationAgentRows();
             gridAllocationAgent.CellDataError += gridAllocationAgent_CellDataError;                     
-            txtAllocationTotal.Value = ClonedAllocation.Quantity;          
+            txtAllocationTotal.Value = ClonedAllocation.Quantity;
+            DeletedAgents = new List<int>();
         }
 
         private void gridAllocationAgent_CellDataError(object sender, CellDataErrorEventArgs e)
@@ -144,7 +147,8 @@ namespace TourWriter.Modules.ItineraryModule
                 var agent = ClonedItinerarySet.AllocationAgent.FindByAllocationIDAgentID(ClonedAllocation.AllocationID, int.Parse(gridAllocationAgent.ActiveRow.Cells["AgentID"].Value.ToString()));//Delete();
                 if (agent != null)
                 {
-                    agent.Delete();
+                    DeletedAgents.Add(agent.AgentID);
+                    agent.Delete();                    
                     gridAllocationAgent.DataSource = ClonedItinerarySet.Allocation[0].GetAllocationAgentRows();//ClonedAllocation.GetAllocationAgentRows();
                 }
             }
@@ -171,7 +175,18 @@ namespace TourWriter.Modules.ItineraryModule
         }
 
         private void BtnOkClick(object sender, EventArgs e)
-        {            
+        {
+            if (DeletedAgents != null)
+            {
+                foreach (var agentID in DeletedAgents)
+                {
+                    var deletedAgent = itinerarySet.AllocationAgent.FindByAllocationIDAgentID(ClonedAllocation.AllocationID, agentID);
+                    if (deletedAgent != null)
+                    {
+                        itinerarySet.AllocationAgent.RemoveAllocationAgentRow(deletedAgent);
+                    }
+                }
+            }
             var id = -1;
             foreach (var itin in ClonedItinerarySet.Itinerary.Rows.Cast<ItinerarySet.ItineraryRow>())
             {
@@ -195,9 +210,9 @@ namespace TourWriter.Modules.ItineraryModule
             TotalAllocations = (int)txtAllocationTotal.Value;
             ClonedItinerarySet.AllocationAgent.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);
             ClonedItinerarySet.GetChanges(DataRowState.Modified | DataRowState.Added | DataRowState.Deleted);  
-
+          
             itinerarySet.AllocationAgent.Merge(ClonedItinerarySet.AllocationAgent);
-            itinerarySet.Merge(ClonedItinerarySet, true);                     
+            itinerarySet.Merge(ClonedItinerarySet, true);           
         }
 
         private void gridAllocationAgent_AfterCellUpdate(object sender, CellEventArgs e)

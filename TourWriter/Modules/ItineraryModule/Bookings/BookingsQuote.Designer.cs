@@ -42,7 +42,6 @@
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BookingsQuote));
             this.grid = new Infragistics.Win.UltraWinGrid.UltraGrid();
-            this.btnEditOverrides = new System.Windows.Forms.Button();
             this.myToolStrip1 = new TourWriter.UserControls.MyToolStrip();
             this.btnPaxBreaks = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -123,17 +122,6 @@
             this.grid.Text = "ultraGrid1";
             this.grid.UpdateMode = Infragistics.Win.UltraWinGrid.UpdateMode.OnCellChangeOrLostFocus;
             this.grid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.grid_InitializeLayout);
-            // 
-            // btnEditOverrides
-            // 
-            this.btnEditOverrides.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEditOverrides.Location = new System.Drawing.Point(3, 467);
-            this.btnEditOverrides.Name = "btnEditOverrides";
-            this.btnEditOverrides.Size = new System.Drawing.Size(125, 23);
-            this.btnEditOverrides.TabIndex = 76;
-            this.btnEditOverrides.Text = "Edit Overrides";
-            this.btnEditOverrides.UseVisualStyleBackColor = true;
-            this.btnEditOverrides.Click += new System.EventHandler(this.btnEditOverridesOLD_Click);
             // 
             // myToolStrip1
             // 
@@ -237,11 +225,11 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(134, 467);
+            this.button1.Location = new System.Drawing.Point(3, 467);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(125, 23);
             this.button1.TabIndex = 77;
-            this.button1.Text = "NEW Edit Overrides";
+            this.button1.Text = "Edit Overrides";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnEditOverrides_Click);
             // 
@@ -251,7 +239,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnEditOverrides);
             this.Controls.Add(this.grid);
             this.Controls.Add(this.myToolStrip1);
             this.Name = "BookingsQuote";
@@ -273,7 +260,6 @@
         private System.Windows.Forms.ToolStripButton btnFilter;
         private System.Windows.Forms.ToolStripButton btnPrint;
         private System.Windows.Forms.ToolStripButton btnExcel;
-        private System.Windows.Forms.Button btnEditOverrides;
         private System.Windows.Forms.ToolStripComboBox cmbPriceType;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnPaxBreaks;

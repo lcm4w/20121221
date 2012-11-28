@@ -88,10 +88,17 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             //add subtotal row
             newRow = dt.NewRow();
             newRow["Description"] = "Subtotal";
-            foreach (DataRow row in _itinerarySet.GroupPrice.Rows)
-            {                
-                columnName = row["GroupPriceName"].ToString();
-                newRow[columnName] = 0;                   
+            foreach (ItinerarySet.GroupPriceRow groupPriceRow in _itinerarySet.GroupPrice.Rows)
+            {
+                columnName = groupPriceRow.GroupPriceName; //row["GroupPriceName"].ToString();
+                if (groupPriceRow.IsMarkupNull())
+                {
+                    newRow[columnName] = groupPriceRow.IsPriceNull() ? 0 : groupPriceRow.Price;
+                }
+                else
+                {
+                    newRow[columnName] = groupPriceRow.IsPriceNull() ? 0 : ((groupPriceRow.Markup / 100) * groupPriceRow.Price) + groupPriceRow.Price;                  
+                }                           
             }
             dt.Rows.Add(newRow);
 
@@ -252,25 +259,32 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
         private void CalcSubtotal(UltraGridCell currentCell)
         {
-            if (string.IsNullOrEmpty(currentCell.Value.ToString())) return;
+            if (string.IsNullOrEmpty(currentCell.Value.ToString()))
+            {
+                currentCell.Value = 0;
+                //return;
+            }
+
             //markup
             if (currentCell.Row.Index == 1)
             {
                 if (grid.Rows[0].Cells[currentCell.Column.Index].Value == null) return;
-                var sum = (decimal) grid.Rows[0].Cells[currentCell.Column.Index].Value;
-                var mup = (1 + (decimal) currentCell.Value/100);
-
-                grid.Rows[2].Cells[currentCell.Column.Index].Value = sum*mup;
+                var sum = (decimal)grid.Rows[0].Cells[currentCell.Column.Index].Value;
+                var mup = (decimal) currentCell.Value;
+                //subtotal
+                grid.Rows[2].Cells[currentCell.Column.Index].Value = Info.Services.Common.CalcGrossByNetMarkup(sum, mup);                                
             }
+
             //override
             if (currentCell.Row.Index == 3)
             {
-                if (grid.Rows[0].Cells[currentCell.Column.Index].Value == null) return;
+                if (grid.Rows[0].Cells[currentCell.Column.Index].Value == null) return;                
                 var sum = (decimal)grid.Rows[0].Cells[currentCell.Column.Index].Value;
-                var mup = ((decimal)currentCell.Value - sum) / (decimal)currentCell.Value;
-             
-                grid.Rows[1].Cells[currentCell.Column.Index].Value = mup;
-                grid.Rows[2].Cells[currentCell.Column.Index].Value = sum * (mup+1);
+                if ((decimal)currentCell.Value == 0) return;
+                //mup
+                grid.Rows[1].Cells[currentCell.Column.Index].Value = Info.Services.Common.CalcMarkupByNetGross(sum, (decimal)currentCell.Value);          
+                //subtotal    
+                grid.Rows[2].Cells[currentCell.Column.Index].Value = sum + (sum * ((decimal)grid.Rows[1].Cells[currentCell.Column.Index].Value / 100));
             }
         }
 
@@ -279,24 +293,22 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var cols = grid.DisplayLayout.Bands[0].Columns;
             for (var i = 1; i < cols.Count; i++)
             {
-                var markup = grid.Rows[1].Cells[i].Value;
-                var overide = grid.Rows[3].Cells[i].Value;
+                var markup = string.IsNullOrEmpty(grid.Rows[1].Cells[i].Value.ToString()) ? 0 : (decimal)grid.Rows[1].Cells[i].Value;
+                var overide = string.IsNullOrEmpty(grid.Rows[3].Cells[i].Value.ToString()) ? 0 : (decimal)grid.Rows[3].Cells[i].Value;
 
                 var key = cols[i].Header.Caption;
-                var pax = _itinerarySet.GroupPrice.Where(x => x.GroupPriceName == key).FirstOrDefault();//_itinerarySet.ItineraryPax.Where(x => x.ItineraryPaxName == key).FirstOrDefault();
+                var pax = _itinerarySet.GroupPrice.FirstOrDefault(x => x.GroupPriceName == key);
                 if (pax == null) continue;
                
-                // set markup
-                //var markup = grid.Rows[1].Cells[i].Value;
-                if (markup != DBNull.Value && overide == DBNull.Value)
-                    pax.Markup = Convert.ToDecimal(markup); //pax.GrossMarkup = Convert.ToDecimal(markup);
-                else pax.SetMarkupNull(); //pax.SetGrossMarkupNull();
+                // set markup             
+                if (markup != 0 && overide == 0)
+                    pax.Markup = Convert.ToDecimal(markup); 
+                else pax.SetMarkupNull(); 
 
-                // set override
-                //var overide = grid.Rows[3].Cells[i].Value;
-                if (overide != DBNull.Value)
-                    pax.PriceOverride = Convert.ToDecimal(overide); // pax.GrossOverride = Convert.ToDecimal(overide);
-                else pax.SetPriceOverrideNull();//pax.SetGrossOverrideNull();
+                // set override               
+                if (overide != 0)
+                    pax.PriceOverride = Convert.ToDecimal(overide); 
+                else pax.SetPriceOverrideNull();
                 
             }
 

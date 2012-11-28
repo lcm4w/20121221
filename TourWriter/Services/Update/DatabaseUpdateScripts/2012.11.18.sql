@@ -87,6 +87,106 @@ end
 
 ---================================================================================================================================
 GO
+ALTER FUNCTION [dbo].[GetAdjustedItemGross] 
+(	
+	@itinMargin money,
+	@stypeMargin money,
+	@net money,
+	@gross money,
+	@comOrMup char(3),
+	@minOrMax varchar(10)
+)
+RETURNS money
+AS
+BEGIN
+	/****************************************************************************************
+	WARNING: if @stypeMargin=0.00 (zero) and @comOrMup='mup' then gross=net (eg zero markup).
+	User can set this to zero in agent overrides and/or itinerary servicetype overrides, and 
+	its caught us out a few times...
+	****************************************************************************************/
+	
+	-- null check (zero is ok for discounts
+	if (@net is null or @gross is null)
+		return @gross
+	
+	declare @overrideMargin money
+	set @overrideMargin = isnull(@itinMargin, @stypeMargin)
+	
+	-- nothing to do?
+	if (@overrideMargin is null)
+		return @gross -- no override
+		
+	-- adjust gross and we're done...	
+    if (@comOrMup = 'grs')
+		-- WARNING: assume 'user friendly' postive number, so subtract because taking comm OFF gross
+		return @gross * (1 - (@overrideMargin/100))
+
+
+	-- zero check before division calcs
+	if (@net = 0 or @gross = 0)
+		return @gross
+		
+	-- get the current margin (com or mup)
+	declare @currentMargin money
+	if (@comOrMup = 'com')
+		set @currentMargin = (@gross-@net)/@gross*100
+	if (@comOrMup = 'mup')
+		set @currentMargin = (@gross-@net)/@net*100		
+	
+	-- are we constraining the minimum or maximun margin?
+	if (@minOrMax = 'min' and @currentMargin > @overrideMargin)
+		set @overrideMargin = @currentMargin		
+	if (@minOrMax = 'max' and @currentMargin < @overrideMargin)
+		set @overrideMargin = @currentMargin
+		
+	-- recalculate the gross based on override margin
+	if (@comOrMup = 'com')
+		set @gross = @net*100/(100-@overrideMargin)
+	if (@comOrMup = 'mup')
+		set @gross = @net*(1+@overrideMargin/100)
+	
+	return @gross	
+
+/*
+SELECT 80*100/(100-cast(10 as money)) mup10, 80*100/(100-cast(25 as money)) mup25, 80*100/(100-cast(50 as money)) mup50, 
+	   80*(1+cast(10 as money)/100) com10, 80*(1+(cast(25 as money)/100)) com25, 80*(1+(cast(50 as money)/100)) com50
+
+select 
+ case when (dbo.GetAdjustedItemGross(null,10,80,100,'grs',null)     =  90.0000) then 'pass' else 'FAIL' end '1'
+,case when (dbo.GetAdjustedItemGross(null,10,80,100,'grs','  ')     =  90.0000) then 'pass' else 'FAIL' end '1'
+,case when (dbo.GetAdjustedItemGross(10  ,20,80,100,'grs','  ')     =  90.0000) then 'pass' else 'FAIL' end '1'
+
+select 
+ case when (dbo.GetAdjustedItemGross(10,50,80,100,'mup','   ')     =  88.0000) then 'pass' else 'FAIL' end '1'
+,case when (dbo.GetAdjustedItemGross(10,50,80,100,'mup','min')     = 100.0000) then 'pass' else 'FAIL' end '2' 
+,case when (dbo.GetAdjustedItemGross(10,50,80,100,'mup','max')     =  88.0000) then 'pass' else 'FAIL' end '3'
+
+,case when (dbo.GetAdjustedItemGross(10,50,80,100,'com','   ')     =  88.8888) then 'pass' else 'FAIL' end '4'
+,case when (dbo.GetAdjustedItemGross(10,50,80,100,'com','min')     = 100.0000) then 'pass' else 'FAIL' end '5'
+,case when (dbo.GetAdjustedItemGross(10,50,80,100,'com','max')     =  88.8888) then 'pass' else 'FAIL' end '6'
+
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'mup','   ')   = 120.0000) then 'pass' else 'FAIL' end '7'
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'mup','min')   = 120.0000) then 'pass' else 'FAIL' end '8'
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'mup','max')   = 100.0000) then 'pass' else 'FAIL' end '9'
+
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'com','   ')   = 160.0000) then 'pass' else 'FAIL' end '10'
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'com','min')   = 160.0000) then 'pass' else 'FAIL' end '11'
+,case when (dbo.GetAdjustedItemGross(null,50,80,100,'com','max')   = 100.0000) then 'pass' else 'FAIL' end '12'
+
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'mup','   ') = 100.0000) then 'pass' else 'FAIL' end '13'
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'mup','min') = 100.0000) then 'pass' else 'FAIL' end '14'
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'mup','max') = 100.0000) then 'pass' else 'FAIL' end '15'
+
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'com','   ') = 100.0000) then 'pass' else 'FAIL' end '16'
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'com','min') = 100.0000) then 'pass' else 'FAIL' end '17'
+,case when (dbo.GetAdjustedItemGross(null,null,80,100,'com','max') = 100.0000) then 'pass' else 'FAIL' end '18'
+*/				
+				
+END
+GO
+
+
+GO
 ALTER VIEW [dbo].[ViewsColumnList]
 AS
 select
