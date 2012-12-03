@@ -35,7 +35,7 @@ namespace TourWriter.Modules.SupplierModule.Content
                 Thread.Sleep(200); // show cursor...
                 try
                 {
-                    const string sql = "select ContentID, SupplierID, ContentName, substring([Heading],0,300) as Heading, substring([Body],0,300) as Body, ImagePath from Content";
+                    const string sql = "select ContentID, SupplierID, ContentName, Heading, Body, ImagePath from Content";
                     var reader = Info.Services.DatabaseHelper.ExecuteReader(sql);
                     _mainForm.ContentTableCache = new Info.SupplierSet.ContentDataTable();
                     _mainForm.ContentTableCache.Load(reader);
