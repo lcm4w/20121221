@@ -41,6 +41,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
         private const string ClientNotesTag = "[!ClientNotes]";
         private const string UserNameTag = "[!UserName]";
         private const string UserEmailTag = "[!UserEmail]";
+        private const string ItineraryStartDateTag = "[!ItineraryStartDate]";
         
         private const string BookingDetailStartTag = "[!BookingDetailStart]";
         private const string ItemCountTag = "[!ItemCount]";
@@ -216,6 +217,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             template = ReplaceTag(template, ClientNotesTag, BuildClientNotes(GetBookingItinerarySet().ItineraryGroup));
             template = ReplaceTag(template, UserNameTag, Cache.User.DisplayName);
             template = ReplaceTag(template, UserEmailTag, Cache.User.Email);
+            template = ReplaceTag(template, ItineraryStartDateTag, purchaseLine.ItineraryRow.ArriveDate.ToShortDateString());
 
             return template;
         }
