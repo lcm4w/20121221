@@ -89,10 +89,11 @@ namespace TourWriter.Services
                 if (row.Table.Columns.IndexOf(tag) > -1)
                 {
                     var val = row[tag];
-
+                   
                     // format dates
                     if (row.Table.Columns[tag].DataType == typeof(System.DateTime))
                     {
+                        if (string.IsNullOrEmpty(val.ToString())) continue;
                         val = ((System.DateTime)val).ToShortDateString();
                     }
 
