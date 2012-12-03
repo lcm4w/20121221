@@ -43,9 +43,24 @@ namespace TourWriter.Services
         public static ItinerarySet Copy(ItinerarySet src)
         {
             var id = -1;
-
-            // copy data and schama
-            var copy = (ItinerarySet)src.Copy();
+            var copy = new ItinerarySet();
+            copy.Merge(src.Itinerary);
+            copy.Merge(src.Contact);
+            copy.Merge(src.Message);
+            copy.Merge(src.PaymentTerm);
+            copy.Merge(src.PurchaseLine);
+            copy.Merge(src.PurchaseItem);
+            copy.Merge(src.PurchaseItemNote);
+            copy.Merge(src.ItineraryMarginOverride);
+            copy.Merge(src.ItineraryPubFile);
+            copy.Merge(src.ItineraryMessage);
+            copy.Merge(src.ItineraryGroup);
+            copy.Merge(src.ItineraryMember);
+            copy.Merge(src.Allocation);
+            copy.Merge(src.AllocationAgent);
+            copy.Merge(src.ItineraryPax);
+            copy.Merge(src.GroupPrice);
+            copy.Merge(src.ItinerarySale);
 
             // update ids and set row states to 'Added'
 
@@ -53,6 +68,7 @@ namespace TourWriter.Services
             foreach (var itin in copy.Itinerary.Rows.Cast<ItinerarySet.ItineraryRow>())
             {
                 SetInserted(itin, "ItineraryID", id--);
+                itin.AllocationsItineraryID = src.Itinerary[0].ItineraryID; // set link to master
 
                 // purchase lines
                 foreach (var line in itin.GetPurchaseLineRows())
@@ -111,8 +127,8 @@ namespace TourWriter.Services
                 {
                     SetInserted(pax, "ItineraryPaxID", id--);
 
-                    // itinerary pax overrides
-                    foreach (var row in pax.GetItineraryPaxOverrideRows())
+                    // group price overrides
+                    foreach (var row in pax.GetGroupPriceRows())
                         SetInserted(row);
                 }
 
@@ -124,8 +140,12 @@ namespace TourWriter.Services
                         SetInserted(row);
 
                 }
+
+                // group price overrides
+                foreach (var row in itin.GetGroupPriceRows())
+                    SetInserted(row);
+
             }
-            copy.Itinerary[0].AllocationsItineraryID = src.Itinerary[0].ItineraryID;
             return copy;
         }
 
