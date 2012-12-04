@@ -174,6 +174,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             Settings.Default.BookingEmailShowPrice = templateSettings.ShowPrices;
             Settings.Default.EmailerReadReceipt = templateSettings.ReadReceipt;
             Settings.Default.EmailEditorSkipTemplate = _templateForm.SkipTemplate;
+            Settings.Default.EmailerGroupBookingsSupplier = _templateForm.GroupBySupplierEmail;
             Settings.Default.Save();
         }
 

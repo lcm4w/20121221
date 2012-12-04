@@ -62,6 +62,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
             chkBccSender.Checked = Settings.Default.EmailerBccSender;
             chkShowBookingPrice.Checked = Settings.Default.BookingEmailShowPrice;
             chkReadReceipt.Checked = Settings.Default.EmailerReadReceipt;
+            checkGroupByEmail.Checked = Settings.Default.EmailerGroupBookingsSupplier;
             
             txtFrom.Text = Cache.User.Email;
             txtSubject.Text = String.Format(DefaultSubject, itineraryName);
