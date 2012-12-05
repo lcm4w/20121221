@@ -61,7 +61,7 @@ namespace TourWriter.Services
             copy.Merge(src.ItineraryPax);
             copy.Merge(src.GroupPrice);
             copy.Merge(src.ItinerarySale);
-
+            copy.Merge(src.RoomType);
             // update ids and set row states to 'Added'
 
             // itinerary
@@ -144,7 +144,11 @@ namespace TourWriter.Services
                 // group price overrides
                 foreach (var row in itin.GetGroupPriceRows())
                     SetInserted(row);
-
+                //roomtypes
+                foreach (var roomType in itin.GetRoomTypeRows())
+                {
+                    SetInserted(roomType, "RoomTypeID", id--);
+                }
             }
             return copy;
         }

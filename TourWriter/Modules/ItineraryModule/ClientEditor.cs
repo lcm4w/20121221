@@ -54,19 +54,12 @@ namespace TourWriter.Modules.ItineraryModule
                 row.ItineraryGroupName = itinerarySet.Itinerary[0].ItineraryName + " Group";
                 itinerarySet.ItineraryGroup.AddItineraryGroupRow(row);
             }
-        }
-
-        public bool EnableGroups
-        {
-            get { return panelPax.Enabled; }
-            set { panelPax.Enabled = value; }
-        }
+        }      
 
         private void DataBind()
         {
             // Pax
-            txtPaxOverride.DataBindings.Add("Value", itinerarySet.Itinerary, "PaxOverride");
-            gridPax.DataSource = itinerarySet.ItineraryPax;            
+            txtPaxOverride.DataBindings.Add("Value", itinerarySet.Itinerary, "PaxOverride");                    
             
             // Notes
             
@@ -212,10 +205,10 @@ namespace TourWriter.Modules.ItineraryModule
         {
             ItinerarySet.ItineraryPaxRow pax = itinerarySet.ItineraryPax.NewItineraryPaxRow();
             pax.ItineraryID = itinerarySet.Itinerary[0].ItineraryID;
-            pax.ItineraryPaxName = App.CreateUniqueNameValue(gridPax.Rows, "ItineraryPaxName", "New pax");
+            //pax.ItineraryPaxName = App.CreateUniqueNameValue(gridPax.Rows, "ItineraryPaxName", "New pax");
             itinerarySet.ItineraryPax.AddItineraryPaxRow(pax);
 
-            GridHelper.SetActiveRow(gridPax, "ItineraryPaxID", pax.ItineraryPaxID, "ItineraryPaxName");
+            //GridHelper.SetActiveRow(gridPax, "ItineraryPaxID", pax.ItineraryPaxID, "ItineraryPaxName");
         }
 
         private void LockUnlockPaymentsRow(UltraGridRow row)
@@ -229,66 +222,7 @@ namespace TourWriter.Modules.ItineraryModule
                     row.Cells[column].Activation = (isLocked) ? Activation.Disabled : Activation.AllowEdit;
         }
 
-        private void gridPax_InitializeLayout(object sender, InitializeLayoutEventArgs e)
-        {
-            foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
-            {
-                if (c.Key == "ItineraryPaxName")
-                {
-                    c.Width = 80;
-                    c.Header.Caption = "Pax name";
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "MemberCount")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Member count";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "MemberRooms")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Member rooms";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "StaffCount")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Staff count";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else if (c.Key == "StaffRooms")
-                {
-                    c.Width = 30;
-                    c.Header.Caption = "Staff rooms";
-                    c.CellAppearance.TextHAlign = HAlign.Right;
-                    c.CellClickAction = CellClickAction.Edit;
-                    c.CellActivation = Activation.AllowEdit;
-                }
-                else
-                    c.Hidden = true;
-            }
-
-            GridHelper.SetDefaultGridAppearance(e);
-        }
-
-        private void btnPaxAdd_Click(object sender, EventArgs e)
-        {
-            AddPax();
-        }
-
-        private void btnPaxDel_Click(object sender, EventArgs e)
-        {
-            if (gridPax.ActiveRow != null && App.AskDeleteRow())
-                GridHelper.DeleteActiveRow(gridPax, true);
-        }
+      
                   
         private void gridPayments_CellChange(object sender, CellEventArgs e)
         {
@@ -484,5 +418,7 @@ namespace TourWriter.Modules.ItineraryModule
         {
             if (!App.IsInDesignMode && Visible) AddFirstItineraryGroup();
         }
+
+        public bool EnableGroups { get; set; }
     }
 }

@@ -215,6 +215,15 @@ namespace TourWriter
             }
         }
 
+        internal static bool ShowClientTitleField
+        {
+            get
+            {
+                return App.IsDebugMode || // CTRL+ALT+D                      
+                       Cache.ToolSet.AppSettings[0].InstallID.ToString().ToLower() == "575e7900-bf13-42d1-a661-2242510c3359".ToLower();   // TE
+            }
+        }
+
         internal static bool ShowItineraryAllocations
         {
             get

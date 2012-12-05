@@ -660,6 +660,50 @@ namespace TourWriter.Info
                 }
                 return 0;
             }
+
+            public int GetRoomPax()
+            {
+                return ds.ItineraryGroup[0].GetItineraryMemberRows()
+                    .Where(itinMemberRow => itinMemberRow.RowState != DataRowState.Deleted)
+                    .Where(itinMemberRow => itinMemberRow["RoomTypeID"] != DBNull.Value)
+                    .Count(itinMemberRow => (int) itinMemberRow["RoomTypeID"] == RoomTypeID);
+            }
+
+            public int GetRoomCount(int divisor)
+            {
+                var totalRoomCount = 0;
+                var roomCount = 0;
+                var roomsDic = new Dictionary<string, int>();
+                foreach (ItineraryMemberRow itinMemberRow in ds.ItineraryGroup[0].GetItineraryMemberRows().Where(x => x["RoomName"] != DBNull.Value).OrderBy(x => x.RoomName))
+                {
+                    if (itinMemberRow["RoomTypeID"] == DBNull.Value || itinMemberRow.RoomTypeID != RoomTypeID) continue;
+                    if (!roomsDic.ContainsKey(itinMemberRow.RoomName))
+                    {
+                        roomsDic.Add(itinMemberRow.RoomName, 1);
+                    }
+                    else
+                    {
+                        roomsDic[itinMemberRow.RoomName] += 1;
+                    }
+                }
+                foreach (var r in roomsDic)
+                {
+                    //compute for the same room name using the divisor of this optiontype
+                    if (r.Value >= divisor)
+                    {
+                        roomCount = r.Value / divisor;
+                        if ((r.Value % divisor) > 0)
+                            roomCount++;
+                    }
+                    else
+                    {
+                        roomCount++;
+                    }
+                    totalRoomCount += roomCount;
+                    roomCount = 0;
+                }                
+                return totalRoomCount;
+            }
         }
 
         #endregion

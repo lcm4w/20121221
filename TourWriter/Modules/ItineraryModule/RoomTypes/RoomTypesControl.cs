@@ -24,8 +24,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             set
             {
                 itinerarySet = value;
-                DataBind();                
-                //itinerarySet.RoomType.ColumnChanged += RoomType_ColumnChanged;
+                DataBind();                               
             }
         }
         
@@ -46,19 +45,17 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                 btnAdd.DropDownItems.Add(new ToolStripMenuItem("Add for...") {Enabled = false});
                 btnAdd.DropDownItems.Add(new ToolStripSeparator());
                 foreach (var option in Global.Cache.ToolSet.OptionType)
-                {
-                    //btnAdd.DropDownItems.Add(new ToolStripMenuItem(option["OptionTypeName"].ToString(), null,btnAddRoomType_Click){Tag = option["OptionTypeID"].ToString()});
+                {                    
                     btnAdd.DropDownItems.Add(new ToolStripMenuItem(option["OptionTypeName"].ToString(), null, btnAddRoomType_Click) { Tag = option["OptionTypeID"].ToString() });
                 }
-
-                //gridRoomTypes.DataSource = itinerarySet.RoomType;
-                gridRoomTypes.SetDataBinding(itinerarySet, "Itinerary.Itinerary_RoomType");//SetDataBinding(itinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");
-                gridRoomTypes.InitializeRow += gridRoomTypes_InitializeRow;
-                gridMembers.InitializeRow += gridMembers_InitializeRow;
+                      
+                gridMembers.InitializeRow += gridMembers_InitializeRow;               
+                gridMembers.DisplayLayout.ValueLists.Add("RoomTypes");
                 gridMembers.DisplayLayout.ValueLists.Add("RoomList");
+                gridRoomTypes.SetDataBinding(itinerarySet, "Itinerary.Itinerary_RoomType");
+                gridRoomTypes.InitializeRow += gridRoomTypes_InitializeRow;
 
-                UpdateRoomTypeDDL();
-                itinerarySet.RoomType.ColumnChanged += RoomType_ColumnChanged;              
+                UpdateRoomTypeDDL();                         
             }
 
             // Members
@@ -82,22 +79,19 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                     continue;
                 gridMembers.DisplayLayout.ValueLists["AgentList"].ValueListItems.Add(r.AgentID, r.AgentName);
             }
-
-            //gridMembers.DisplayLayout.ValueLists.Add("RoomList");         
-            //UpdateRoomTypeDDL();            
+                
             gridMembers.SetDataBinding(itinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");
             CalculateRoomType();
-        }
-
+        }       
+       
         private void gridMembers_InitializeRow(object sender, InitializeRowEventArgs e)
-        {
-            //if ((from DataRow r in itinerarySet.RoomType.Rows where r.RowState != DataRowState.Deleted && r["OptionTypeID"].ToString() == optionTypeID.ToString() select r).SingleOrDefault() == null)
-            if (e.ReInitialize) return;
+        {            
+            if (e.ReInitialize) return;           
             if (e.Row.Cells["RoomTypeID"].Value != null)
             {
                 if (string.IsNullOrEmpty(e.Row.Cells["RoomTypeID"].Value.ToString())) return;
                 var roomType = itinerarySet.RoomType.FindByRoomTypeID((int) e.Row.Cells["RoomTypeID"].Value);               
-                e.Row.Cells["RoomTypeCombo"].Value = roomType == null ? 0 : roomType.OptionTypeID; ;                               
+                e.Row.Cells["RoomTypeCombo"].Value = roomType == null ? 0 : roomType.OptionTypeID;             
             }
         }
 
@@ -111,59 +105,57 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
        
         private void UpdateRoomTypeDDL()
         {
-            gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Clear();
-            gridMembers.DisplayLayout.ValueLists["RoomList"].SortStyle = ValueListSortStyle.Ascending;
-            gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add(0, "(none)");
+            gridMembers.DisplayLayout.ValueLists["RoomTypes"].ValueListItems.Clear();
+            gridMembers.DisplayLayout.ValueLists["RoomTypes"].SortStyle = ValueListSortStyle.Ascending;
+            gridMembers.DisplayLayout.ValueLists["RoomTypes"].ValueListItems.Add(0, "(none)");
             foreach (var option in Global.Cache.ToolSet.OptionType)
+            {               
+                gridMembers.DisplayLayout.ValueLists["RoomTypes"].ValueListItems.Add(option["OptionTypeID"], option["OptionTypeName"].ToString());
+            }         
+        }
+
+        private void UpdateRoomNameDDL(int totalRoomCount)
+        {
+            if (!gridMembers.DisplayLayout.ValueLists.Exists("RoomList")) return;
+            if (gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Count > 0)            
+                gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Clear();
+                      
+            gridMembers.DisplayLayout.ValueLists["RoomList"].SortStyle = ValueListSortStyle.Ascending;           
+            for(int i=1;i <= totalRoomCount;i++)
             {
-                //btnAdd.DropDownItems.Add(new ToolStripMenuItem(option["OptionTypeName"].ToString(), null, btnAddRoomType_Click) { Tag = option["OptionTypeID"].ToString() });
-                gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add(option["OptionTypeID"], option["OptionTypeName"].ToString());
-            }
-
-            //foreach (DataRow r in itinerarySet.RoomType.Rows)
-            //{
-            //    if (r.RowState == DataRowState.Deleted)
-            //        continue;
-
-            //    gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add(r["OptionTypeID"], r["RoomTypeName"].ToString());
-            //}
+                gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Add("Room " + i.ToString());
+            }             
         }
 
         private void FilterMembersRow()
         {
             if (!App.ShowRoomTypes) return;
             if (gridRoomTypes.ActiveRow == null) return;
-            gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].ClearFilterConditions(); //RoomTypeID
+            gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].ClearFilterConditions();
             gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].FilterConditions.Add(FilterComparisionOperator.Equals, gridRoomTypes.ActiveRow.Cells["RoomTypeName"].Value.ToString());//int.Parse(gridRoomTypes.ActiveRow.Cells["OptionTypeID"].Value.ToString())); //RoomTypeName          
         }
 
         private void CalculateRoomType()
         {
             if (gridRoomTypes.Rows.Count == 0) return;
+            var totalRoomCount = 0;
+            int count;            
             foreach (UltraGridRow r in gridRoomTypes.Rows)
-            {                                                                                                                                                      //OptionTypeID
-                //var roomTypeTotal = (from DataRow m in itinerarySet.ItineraryMember.Rows where m.RowState != DataRowState.Deleted && m["RoomTypeID"].ToString() == r.Cells["RoomTypeID"].Value.ToString() select m).Count();//Count(r => r.RowState != DataRowState.Deleted);
-                var count=0;
-                foreach (UltraGridRow m in gridMembers.Rows)
-                {
-                    if (m.Cells["RoomTypeCombo"].Value == null) continue;
-                    if (r.Cells["OptionTypeID"].Value.ToString() == m.Cells["RoomTypeCombo"].Value.ToString())
-                    {
-                        count++;
-                    }
-                }
-                r.Cells["Actual"].Value = count;//roomTypeTotal;
-            }
-            gridRoomTypes.UpdateData();            
-        }
+            {
+                if (r.IsDeleted) continue;
+                var div = Cache.ToolSet.OptionType.Where(x => x.OptionTypeID == (int) r.Cells["OptionTypeID"].Value).Select(x => x.IsDivisorNull() ? 1 : x.Divisor).SingleOrDefault();
 
-        private void RoomType_ColumnChanged(object sender, DataColumnChangeEventArgs e)
-        {
-            //if (e.Column.ColumnName == "RoomTypeName")
-            //{
-            //    UpdateRoomTypeDDL();
-            //}
-        }
+                count = itinerarySet.RoomType.Rows.Cast<ItinerarySet.RoomTypeRow>().Where(rt => rt.RowState != DataRowState.Deleted && (int)rt["RoomTypeID"] == (int)r.Cells["RoomTypeID"].Value).Sum(rt => rt.GetRoomPax());
+                r.Cells["Actual"].Value = count;
+                totalRoomCount += count;
+
+                count = itinerarySet.RoomType.Rows.Cast<ItinerarySet.RoomTypeRow>().Where(rt => rt.RowState != DataRowState.Deleted && (int)rt["RoomTypeID"] == (int)r.Cells["RoomTypeID"].Value).Sum(rt => rt.GetRoomCount(div));
+                r.Cells["RoomCount"].Value = count;                             
+            }
+
+            gridRoomTypes.UpdateData();    
+            UpdateRoomNameDDL(totalRoomCount);
+        }       
 
         internal void AddContact(int? contactId)
         {
@@ -175,7 +167,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             r.ItineraryGroupID = groupId;            
             if (gridRoomTypes.ActiveRow != null)
             {
-                r.RoomTypeID = (int)gridRoomTypes.ActiveRow.Cells["RoomTypeID"].Value;//int.Parse(gridRoomTypes.ActiveRow.Cells["OptionTypeID"].Value.ToString());
+                r.RoomTypeID = (int)gridRoomTypes.ActiveRow.Cells["RoomTypeID"].Value;
             }
                       
             r.AddedOn = DateTime.Now;
@@ -183,6 +175,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             bool isFirstRow = (itinerarySet.ItineraryMember.Rows.Count == 0);
             r.IsDefaultContact = isFirstRow;
             r.IsDefaultBilling = isFirstRow;
+            r.RoomName = "";
             if (Cache.ToolSet.AgeGroup.Rows.Count > 0)
                 r.AgeGroupID = (int)Cache.ToolSet.AgeGroup.Rows[0]["AgeGroupID"];
 
@@ -202,14 +195,12 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             {
                 r.ItineraryMemberName = App.CreateUniqueNameValue(
                     gridMembers.Rows, "ItineraryMemberName", "New Member");
-            }
-
+            }                       
             itinerarySet.ItineraryMember.AddItineraryMemberRow(r);
-            GridHelper.SetActiveRow(gridMembers, "ItineraryMemberID", r.ItineraryMemberID, "ItineraryMemberName");
-            if (App.ShowRoomTypes)
-            {              
-                CalculateRoomType();
-            }            
+            GridHelper.SetActiveRow(gridMembers, "ItineraryMemberID", r.ItineraryMemberID, "ItineraryMemberName");            
+            CalculateRoomType();
+            var nextRoom = gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Count;
+            if (nextRoom > 0) gridMembers.ActiveRow.Cells["RoomName"].Value = "Room " + nextRoom;
         }
         
         private void CommitOpenEdits()
@@ -243,9 +234,11 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
 
         private void gridRoomTypes_InitializeLayout(object sender, Infragistics.Win.UltraWinGrid.InitializeLayoutEventArgs e)
         {
-            //add custom column         
+            //add custom columns         
             if (!e.Layout.Bands[0].Columns.Exists("Actual"))
                 e.Layout.Bands[0].Columns.Add("Actual");
+            if (!e.Layout.Bands[0].Columns.Exists("RoomCount"))
+                e.Layout.Bands[0].Columns.Add("RoomCount");
 
             // show/hide columns 
             foreach (var c in e.Layout.Bands[0].Columns)
@@ -257,19 +250,30 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                 else if (c.Key == "RoomTypeName")
                 {
                     c.Header.Caption = "Room Name";
+                    c.Header.VisiblePosition = 0;
                     c.CellClickAction = CellClickAction.Edit;
                     c.CellActivation = Activation.AllowEdit;
                 }
+                else if (c.Key == "RoomCount")
+                {
+                    c.Header.Caption = "Room Count";
+                    c.Header.VisiblePosition = 1;
+                    c.Width = 130;
+                    c.DataType = typeof(int);
+                }
                 else if (c.Key == "Quantity")
                 {
-                    c.Header.Caption = "Pax Override";
-                    c.Width = 115;
+                    c.Header.Caption = "Override";
+                    c.Header.VisiblePosition = 2;
+                    c.Width = 100;
                     c.CellClickAction = CellClickAction.Edit;
                     c.CellActivation = Activation.AllowEdit;
                 }
                 else if (c.Key == "Actual")
                 {
-                    
+                    c.Header.Caption = "Pax";
+                    c.Header.VisiblePosition = 3;
+                    c.Width = 65;
                 }
             }
             GridHelper.SetDefaultGridAppearance(e);
@@ -300,7 +304,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                     c.CellClickAction = CellClickAction.Edit;
                     c.CellActivation = Activation.AllowEdit;
                 }
-                else if (c.Key == "Title")
+                else if (c.Key == "Title" && App.ShowClientTitleField)
                 {
                     c.Width = 40;
                     c.MinWidth = 40;
@@ -352,7 +356,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                     c.CellButtonAppearance.ImageHAlign = HAlign.Center;
                     c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
                 }
-                else if (c.Key ==  "RoomTypeCombo")//"RoomTypeID") && App.ShowRoomTypes)
+                else if (c.Key ==  "RoomTypeCombo")
                 {
                     c.Header.Caption = "Room Type";
                     c.Width = 70;
@@ -361,7 +365,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                     c.Header.ToolTipText = "Roomtype category";
                     c.Style = ColumnStyle.DropDownList;
                     c.DataType = typeof (int);
-                    c.ValueList = gridMembers.DisplayLayout.ValueLists["RoomList"];
+                    c.ValueList = gridMembers.DisplayLayout.ValueLists["RoomTypes"];
                 }
                 else if (c.Key == "AgentID" && App.ShowRoomTypes)
                 {
@@ -385,11 +389,15 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                     c.CellActivation = Activation.AllowEdit;
                     c.CellClickAction = CellClickAction.Edit;
                 }
-                else if (c.Key == "RoomName" && App.ShowRoomTypes)
-                {
+                else if (c.Key == "RoomName")
+                {                  
+                    c.Header.Caption = "Room Name";                  
+                    c.Header.ToolTipText = "Rooms";
                     c.Width = 80;
                     c.MinWidth = 80;
                     c.MaxWidth = 80;
+                    c.Style = ColumnStyle.DropDownList;                    
+                    c.ValueList = gridMembers.DisplayLayout.ValueLists["RoomList"];
                 }
                 else
                     c.Hidden = true;
@@ -402,10 +410,10 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             int index = 0;
             e.Layout.Bands[0].Columns["Title"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["ItineraryMemberName"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["AgentID"].Header.VisiblePosition = index++;
-            e.Layout.Bands[0].Columns["RoomTypeCombo"].Header.VisiblePosition = index++; //ROOMTYPEID
-            e.Layout.Bands[0].Columns["PriceOverride"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["RoomTypeCombo"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["RoomName"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["AgentID"].Header.VisiblePosition = index++;           
+            e.Layout.Bands[0].Columns["PriceOverride"].Header.VisiblePosition = index++;            
             e.Layout.Bands[0].Columns["Comments"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["AgeGroupID"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["Age"].Header.VisiblePosition = index++;
@@ -423,9 +431,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             if (string.IsNullOrEmpty(gridMembers.ActiveRow.Cells["RoomTypeCombo"].Value.ToString())) return;
             var optionTypeID = (int)gridMembers.ActiveRow.Cells["RoomTypeCombo"].Value;
             var optionTypeName = gridMembers.ActiveRow.Cells["RoomTypeCombo"].Text;
-            AddRoomType(optionTypeID, optionTypeName, false );
-            //CalculateRoomType();
-            //FilterMembersRow();           
+            AddRoomType(optionTypeID, optionTypeName, false );             
         }
 
         private void gridMembers_CellChange(object sender, CellEventArgs e)
@@ -525,7 +531,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
         private void AddRoomType(int optionTypeID, string optionTypeName, bool IsFromRoomType)
         {
             var roomType = (from DataRow r in itinerarySet.RoomType.Rows where r.RowState != DataRowState.Deleted && r["OptionTypeID"].ToString() == optionTypeID.ToString() select r).SingleOrDefault();
-            if (roomType == null)//((from DataRow r in itinerarySet.RoomType.Rows where r.RowState != DataRowState.Deleted && r["OptionTypeID"].ToString() == optionTypeID.ToString() select r).SingleOrDefault() == null)
+            if (roomType == null)                
             {             
                 var rt = itinerarySet.RoomType.NewRoomTypeRow();
                 rt.ItineraryID = itinerarySet.Itinerary[0].ItineraryID;
@@ -536,21 +542,30 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
                 GridHelper.SetActiveRow(gridRoomTypes, "RoomTypeID", rt.RoomTypeID, "RoomTypeName");
                 if (gridMembers.ActiveRow != null && !IsFromRoomType)
                     gridMembers.ActiveRow.Cells["RoomTypeID"].Value = rt.RoomTypeID;
-                //UpdateRoomTypeDDL();
 
+                if (gridMembers.ActiveRow != null && gridMembers.ActiveRow.Cells["RoomName"].Value == DBNull.Value)
+                    gridMembers.ActiveRow.Cells["RoomName"].Value = NextRoom();
             }
             else
             {
                 if (gridMembers.ActiveRow != null && !IsFromRoomType)
                     gridMembers.ActiveRow.Cells["RoomTypeID"].Value = roomType["RoomTypeID"];
-            }
+            }                                    
             CalculateRoomType();          
+        }
+
+        private string NextRoom()
+        {
+            var nextRoom = gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Count;
+            if (nextRoom > 0) return "Room " + nextRoom;
+            return "";
         }
 
         private void btnDel_Click(object sender, EventArgs e)
         {
             if (gridRoomTypes.ActiveRow != null && App.AskDeleteRow())
                 GridHelper.DeleteActiveRow(gridRoomTypes, true);
+            CalculateRoomType();
         }
              
         private void btnAll_Click(object sender, EventArgs e)
@@ -575,8 +590,7 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             if (gridMembers.ActiveRow != null && App.AskDeleteRow())
             {
                 GridHelper.DeleteActiveRow(gridMembers, true);
-                CalculateRoomType();
-                //CalculateRoomType(int.Parse(gridMembers.ActiveRow.Cells["RoomTypeID"].Value.ToString()));
+                CalculateRoomType();             
             }
         }
 
