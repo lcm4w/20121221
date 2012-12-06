@@ -322,7 +322,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl5
             // 
             this.ultraTabPageControl5.Controls.Add(this.reportControl);
-            this.ultraTabPageControl5.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl5.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl5.Name = "ultraTabPageControl5";
             this.ultraTabPageControl5.Size = new System.Drawing.Size(770, 587);
             // 
@@ -807,7 +807,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl4
             // 
             this.ultraTabPageControl4.Controls.Add(this.groupBox1);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(770, 587);
             // 
@@ -916,7 +916,7 @@ namespace TourWriter.Modules.SupplierModule
             this.tabSupplier.Controls.Add(this.chkIsSupplierActive);
             this.tabSupplier.Controls.Add(this.label14);
             this.tabSupplier.Controls.Add(this.txtSupplierComments);
-            this.tabSupplier.Location = new System.Drawing.Point(-10000, -10000);
+            this.tabSupplier.Location = new System.Drawing.Point(2, 21);
             this.tabSupplier.Name = "tabSupplier";
             this.tabSupplier.Size = new System.Drawing.Size(774, 625);
             // 
@@ -1028,7 +1028,7 @@ namespace TourWriter.Modules.SupplierModule
             // 
             // txtPostcode
             // 
-            this.txtPostcode.Location = new System.Drawing.Point(64, 250);
+            this.txtPostcode.Location = new System.Drawing.Point(64, 240);
             this.txtPostcode.Name = "txtPostcode";
             this.txtPostcode.Size = new System.Drawing.Size(114, 21);
             this.txtPostcode.TabIndex = 144;
@@ -1036,7 +1036,7 @@ namespace TourWriter.Modules.SupplierModule
             // label34
             // 
             this.label34.BackColor = System.Drawing.Color.Transparent;
-            this.label34.Location = new System.Drawing.Point(12, 249);
+            this.label34.Location = new System.Drawing.Point(12, 239);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(59, 23);
             this.label34.TabIndex = 145;
@@ -1234,7 +1234,7 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbCity.Location = new System.Drawing.Point(64, 133);
             this.cmbCity.Name = "cmbCity";
             this.cmbCity.PreferredDropDownSize = new System.Drawing.Size(0, 0);
-            this.cmbCity.Size = new System.Drawing.Size(200, 23);
+            this.cmbCity.Size = new System.Drawing.Size(272, 23);
             this.cmbCity.TabIndex = 7;
             this.cmbCity.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCity_InitializeLayout);
             // 
@@ -1294,7 +1294,7 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbRegion.Location = new System.Drawing.Point(64, 160);
             this.cmbRegion.Name = "cmbRegion";
             this.cmbRegion.PreferredDropDownSize = new System.Drawing.Size(0, 0);
-            this.cmbRegion.Size = new System.Drawing.Size(200, 23);
+            this.cmbRegion.Size = new System.Drawing.Size(272, 23);
             this.cmbRegion.TabIndex = 8;
             this.cmbRegion.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbRegion_InitializeLayout);
             // 
@@ -1354,7 +1354,7 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbState.Location = new System.Drawing.Point(64, 187);
             this.cmbState.Name = "cmbState";
             this.cmbState.PreferredDropDownSize = new System.Drawing.Size(0, 0);
-            this.cmbState.Size = new System.Drawing.Size(200, 23);
+            this.cmbState.Size = new System.Drawing.Size(272, 23);
             this.cmbState.TabIndex = 9;
             this.cmbState.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbState_InitializeLayout);
             // 
@@ -1364,7 +1364,7 @@ namespace TourWriter.Modules.SupplierModule
             this.cmbCountry.Location = new System.Drawing.Point(64, 214);
             this.cmbCountry.Name = "cmbCountry";
             this.cmbCountry.PreferredDropDownSize = new System.Drawing.Size(0, 0);
-            this.cmbCountry.Size = new System.Drawing.Size(200, 23);
+            this.cmbCountry.Size = new System.Drawing.Size(272, 23);
             this.cmbCountry.TabIndex = 10;
             this.cmbCountry.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.cmbCountry_InitializeLayout);
             // 
@@ -2068,7 +2068,7 @@ namespace TourWriter.Modules.SupplierModule
             // ultraTabPageControl2
             // 
             this.ultraTabPageControl2.Controls.Add(this.tabsAdditional);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(2, 21);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(774, 625);
             // 
