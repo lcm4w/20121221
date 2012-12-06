@@ -282,6 +282,19 @@ namespace TourWriter.Modules.ItineraryModule
                 foreach (var table in ds.Tables.Cast<DataTable>())
                     foreach (var error in table.GetErrors())
                         errors += "Table '" + table.TableName + "', " + error.RowError;
+
+                if (errors != "")
+                {
+                    errors = "ItinerarySet: " + errors;
+                }
+                else // or was error in the ToolSet?
+                {
+                    foreach (var table in toolSet.Tables.Cast<DataTable>())
+                        foreach (var error in table.GetErrors())
+                            errors += "Table '" + table.TableName + "', " + error.RowError;
+                    if (errors != "") errors = "ToolSet: " + errors;
+                }
+
                 ErrorHelper.SendEmail(ex.Message + errors, ex.ToString(), true, attach1);
                 throw new ConstraintException(errors, ex);
             }
