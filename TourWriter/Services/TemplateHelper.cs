@@ -92,10 +92,7 @@ namespace TourWriter.Services
                    
                     // format dates
                     if (row.Table.Columns[tag].DataType == typeof(System.DateTime))
-                    {
-                        if (string.IsNullOrEmpty(val.ToString())) continue;
-                        val = ((System.DateTime)val).ToShortDateString();
-                    }
+                        val = !string.IsNullOrEmpty(val.ToString()) ? ((System.DateTime)val).ToShortDateString() : "";
 
                     keyvals.Add(new KeyValuePair<string, string>(tag, val.ToString()));
                 }
