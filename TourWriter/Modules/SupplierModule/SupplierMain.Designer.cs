@@ -1031,7 +1031,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtPostcode.Location = new System.Drawing.Point(64, 240);
             this.txtPostcode.Name = "txtPostcode";
             this.txtPostcode.Size = new System.Drawing.Size(114, 21);
-            this.txtPostcode.TabIndex = 144;
+            this.txtPostcode.TabIndex = 11;
             // 
             // label34
             // 
@@ -1048,7 +1048,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtMobilePhone.Location = new System.Drawing.Point(429, 133);
             this.txtMobilePhone.Name = "txtMobilePhone";
             this.txtMobilePhone.Size = new System.Drawing.Size(186, 21);
-            this.txtMobilePhone.TabIndex = 142;
+            this.txtMobilePhone.TabIndex = 13;
             // 
             // label27
             // 
@@ -1069,42 +1069,42 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierPostAddress.Name = "txtSupplierPostAddress";
             this.txtSupplierPostAddress.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSupplierPostAddress.Size = new System.Drawing.Size(280, 66);
-            this.txtSupplierPostAddress.TabIndex = 141;
+            this.txtSupplierPostAddress.TabIndex = 18;
             // 
             // txtSupplierEmail
             // 
             this.txtSupplierEmail.Location = new System.Drawing.Point(429, 214);
             this.txtSupplierEmail.Name = "txtSupplierEmail";
             this.txtSupplierEmail.Size = new System.Drawing.Size(254, 21);
-            this.txtSupplierEmail.TabIndex = 14;
+            this.txtSupplierEmail.TabIndex = 16;
             // 
             // txtSupplierWebsite
             // 
             this.txtSupplierWebsite.Location = new System.Drawing.Point(429, 241);
             this.txtSupplierWebsite.Name = "txtSupplierWebsite";
             this.txtSupplierWebsite.Size = new System.Drawing.Size(254, 21);
-            this.txtSupplierWebsite.TabIndex = 15;
+            this.txtSupplierWebsite.TabIndex = 17;
             // 
             // txtFax
             // 
             this.txtFax.Location = new System.Drawing.Point(429, 187);
             this.txtFax.Name = "txtFax";
             this.txtFax.Size = new System.Drawing.Size(186, 21);
-            this.txtFax.TabIndex = 13;
+            this.txtFax.TabIndex = 15;
             // 
             // txtFreePhone
             // 
             this.txtFreePhone.Location = new System.Drawing.Point(429, 160);
             this.txtFreePhone.Name = "txtFreePhone";
             this.txtFreePhone.Size = new System.Drawing.Size(186, 21);
-            this.txtFreePhone.TabIndex = 12;
+            this.txtFreePhone.TabIndex = 14;
             // 
             // txtPhone
             // 
             this.txtPhone.Location = new System.Drawing.Point(429, 106);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(186, 21);
-            this.txtPhone.TabIndex = 11;
+            this.txtPhone.TabIndex = 12;
             // 
             // txtStreetAddress
             // 
@@ -1409,7 +1409,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierDescription.Name = "txtSupplierDescription";
             this.txtSupplierDescription.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSupplierDescription.Size = new System.Drawing.Size(340, 255);
-            this.txtSupplierDescription.TabIndex = 18;
+            this.txtSupplierDescription.TabIndex = 20;
             // 
             // chkIsSupplierActive
             // 
@@ -1448,7 +1448,7 @@ namespace TourWriter.Modules.SupplierModule
             this.txtSupplierComments.Name = "txtSupplierComments";
             this.txtSupplierComments.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtSupplierComments.Size = new System.Drawing.Size(337, 255);
-            this.txtSupplierComments.TabIndex = 17;
+            this.txtSupplierComments.TabIndex = 19;
             // 
             // ultraTabPageControl6
             // 
