@@ -38,6 +38,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             if (!App.IsOnScreen(this)) Location = new System.Drawing.Point(10, 10);
             panel1.Height = Settings.Default.BookingSelectorGridHeight;
             chkCurrency.Checked = Settings.Default.BookingSelectorCurrencyUpdate;
+            chkIncrementDates.Checked = Settings.Default.IncrementBookingDate;
 
             this.itinerarySet = itinerarySet;
             this.itineraryMain = itineraryMain;
@@ -64,7 +65,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             AcceptButton = btnNext;
             CancelButton = btnCancel;
             btnOk.Enabled = gridBookings.Rows.Count > 0;
-            chkIncrementDates.Checked = true;            
+            //chkIncrementDates.Checked = true;            
         }
 
         private DateTime GetNextDefaultDate()
@@ -722,7 +723,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             Settings.Default.BookingSelectorLocation = WindowState == FormWindowState.Normal ? Location : RestoreBounds.Location;
             Settings.Default.BookingSelectorGridHeight = panel1.Height;
             Settings.Default.BookingSelectorCurrencyUpdate = chkCurrency.Checked;
-
+            Settings.Default.IncrementBookingDate = chkIncrementDates.Checked;
             Settings.Default.Save();
             App.ClearBindings(this);
         }
