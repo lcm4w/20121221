@@ -255,6 +255,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 if (!newItem.PurchaseLineRow.NoteToVoucher.Contains(row.Note))
                     newItem.PurchaseLineRow.NoteToVoucher += (newItem.PurchaseLineRow.NoteToVoucher.Length > 0 ? "\r\n" : "") + row.Note;
 
+            // add supplier note
+            foreach (var row in service.SupplierRow.GetSupplierNoteRows().Where(x => !x.IsShowOnReportNull() && x.ShowOnReport))
+                if (!newItem.PurchaseLineRow.NoteToSupplier.Contains(row.Note))
+                    newItem.PurchaseLineRow.NoteToSupplier += (newItem.PurchaseLineRow.NoteToSupplier.Length > 0 ? "\r\n" : "") + row.Note;
+
             //if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
             btnOk.Enabled = true;
             return newItem;
