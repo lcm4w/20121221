@@ -908,8 +908,10 @@ namespace TourWriter.Modules.ItineraryModule
 
         private void cmbAgent_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cmbAgent.SelectedValue == null || (int) cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID)
-                return;
+            if (!itinerarySet.Itinerary[0].IsAgentIDNull())
+                if (cmbAgent.SelectedValue == null || (int) cmbAgent.SelectedValue == itinerarySet.Itinerary[0].AgentID) 
+					return;
+
             int id = (int) cmbAgent.SelectedValue;
 
             // force dataset value to update
