@@ -1557,7 +1557,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             AgentSet.AgentRow agentRow = GetSelectedAgentRow();
             if (!agentRow.IsNetComOrMupNull())
             {
-                cmbMargin.SelectedValue = agentRow.NetComOrMup;                
+                cmbMargin.SelectedValue = agentRow.NetComOrMup;
             }
             else
             {
@@ -1639,14 +1639,20 @@ namespace TourWriter.Modules.AdminModule.UserControls
         private void cmbOverride_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbOverride.SelectedIndex >= 0)
-                GetSelectedAgentRow().NetMinOrMax = (string)cmbOverride.SelectedValue;            
+            {
+                var selectedRow = GetSelectedAgentRow();
+                if (!selectedRow.IsNetComOrMupNull() && selectedRow.NetComOrMup != (string)cmbMargin.SelectedValue)
+                    selectedRow.NetComOrMup = (string)cmbMargin.SelectedValue; // update it
+            }            
         }
 
         private void cmbMargin_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbMargin.SelectedIndex >= 0)
             {
-                GetSelectedAgentRow().NetComOrMup = (string)cmbMargin.SelectedValue;
+                var selectedRow = GetSelectedAgentRow();
+                if (!selectedRow.IsNetComOrMupNull() && selectedRow.NetComOrMup != (string)cmbMargin.SelectedValue)
+                    selectedRow.NetComOrMup = (string)cmbMargin.SelectedValue; // update it
 
                 if (cmbMargin.SelectedValue == "grs")
                 {
