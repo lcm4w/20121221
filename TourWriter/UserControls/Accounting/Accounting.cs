@@ -210,8 +210,10 @@ namespace TourWriter.UserControls.Accounting
                 gridPurchases.UltraGrid.UpdateData();
                 var data = _purchasesDs.Copy().Tables[0];
                 App.PrepareDataTableForExport(data);
-                var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
-
+           
+                // get visible and selected row ids
+                var ids = gridPurchases.UltraGrid.Rows.Where(x => !x.IsFilteredOut && (bool)x.Cells["IsSelected"].Value).Select(x => (int)x.Cells["PurchaseItemID"].Value);
+                var rows = data.AsEnumerable().Where(x => ids.Contains(x.Field<int>("PurchaseItemID")));
                 var export = new ExportForm();
                 export.ExportPurchases(rows, template, GetExportFileName("Purchases"));
                 if (export.ShowDialog() == DialogResult.OK)
@@ -238,8 +240,10 @@ namespace TourWriter.UserControls.Accounting
                 gridSales.UltraGrid.UpdateData();
                 var data = _salesDs.Copy().Tables[0];
                 App.PrepareDataTableForExport(data);
-                var rows = data.AsEnumerable().Where(x => x.Field<bool>("IsSelected"));
-
+               
+                // get visible and selected row ids
+                var ids = gridSales.UltraGrid.Rows.Where(x => !x.IsFilteredOut && (bool)x.Cells["IsSelected"].Value).Select(x => (int)x.Cells["ItineraryID"].Value);
+                var rows = data.AsEnumerable().Where(x => ids.Contains(x.Field<int>("ItineraryID")));
                 var export = new ExportForm();
                 export.ExportSales(rows, template, GetExportFileName("Sales"));
                 if (export.ShowDialog() == DialogResult.OK)
