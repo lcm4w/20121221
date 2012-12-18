@@ -119,12 +119,16 @@ namespace TourWriter.Modules.ItineraryModule
             cityBindingSource1.DataSource = toolSet.City.DefaultView;
             cityBindingSource2.DataSource = toolSet.City.DefaultView;
             agentBindingSource.DataSource = toolSet.Agent.DefaultView;
+            itineraryStatusBindingSource.DataSource = toolSet.ItineraryStatus.DefaultView;
+            itinerarySourceBindingSource.DataSource = toolSet.ItinerarySource.DefaultView;
 
             toolSet.City.DefaultView.Sort = "CityName ASC";
             countryBindingSource.Sort = "CountryName ASC";
             userBindingSource.Sort = "UserName ASC";
             userBindingSource.Filter = "IsRecordActive <> 1";
             agentBindingSource.Sort = "AgentName ASC";
+            itineraryStatusBindingSource.Sort = "ItineraryStatusName ASC";
+            itinerarySourceBindingSource.Sort = "ItinerarySourceName ASC";
         }
         
         private void ItineraryLoad(object sender, EventArgs e)
