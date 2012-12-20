@@ -165,12 +165,13 @@ namespace TourWriter.Modules.ContactModule
                 {
                     // save changes
                     Contact contact = new Contact();
-                    if (contactSet.HasChanges())
+                    ContactSet changes = (ContactSet)contactSet.GetChanges();
+                    if (changes == null)
                     {
                         SetDataCleanName();
                         return;
                     }
-                    ContactSet fresh = contact.SaveContactSet(contactSet);
+                    ContactSet fresh = contact.SaveContactSet(changes);
 
                     // handle errors
                     App.DataSet_CheckForErrors(fresh);
