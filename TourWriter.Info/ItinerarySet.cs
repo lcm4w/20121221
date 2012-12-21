@@ -575,6 +575,10 @@ namespace TourWriter.Info
                 get { return (!IsGrossNull() ? Gross : 0) * getUnitMultiplier(); }
             }
 
+            public DateTime CustomSortDate
+            {
+                get { return !IsSortDateNull() ? SortDate : (!IsStartTimeNull() ? StartDate.Date + StartTime.TimeOfDay : StartDate); }
+            }
 
             private decimal calcNetBaseTotal()
             {

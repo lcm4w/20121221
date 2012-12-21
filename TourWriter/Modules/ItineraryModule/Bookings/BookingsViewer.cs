@@ -64,6 +64,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // TODO: hide flags feature for now, see also line 1004 ---
             btnEditFlags.Visible = editFlagsToolStripMenuItem.Visible = false;
+    		Initialize_DragDrop();
         }
 
         private void BookingsViewer_Load(object sender, EventArgs e)
@@ -790,6 +791,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 e.Layout.Bands[0].Columns.Add("BaseCurrency");
             if (!e.Layout.Bands[0].Columns.Exists("BookingCurrency"))
                 e.Layout.Bands[0].Columns.Add("BookingCurrency");
+            if (!e.Layout.Bands[0].Columns.Exists("CustomSort"))
+                e.Layout.Bands[0].Columns.Add("CustomSort");
 
             // Show/hide columns )
             foreach (UltraGridColumn c in e.Layout.Bands[0].Columns)
@@ -908,6 +911,30 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                     c.TabStop = true;
                     // custom sort comparer for time column
                     c.SortComparer = new TimeSortComparer();
+                }
+                else if (c.Key == "SortDate")
+                {
+                    c.Header.Caption = "Sort Date";
+                    c.Header.ToolTipText = "Sort Date";
+                    c.Style = ColumnStyle.DateTime;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
+                    c.Hidden = true; // default hide
+                }
+                else if (c.Key == "CustomSort")
+                {
+                    c.Header.Caption = "Sort";
+                    c.Header.ToolTipText = "Custom sort order";
+                    c.Style = ColumnStyle.DateTime;
+                    c.MergedCellContentArea = MergedCellContentArea.VirtualRect;
+                    c.ButtonDisplayStyle = ButtonDisplayStyle.OnRowActivate;
+                    c.CellActivation = Activation.AllowEdit;
+                    c.CellClickAction = CellClickAction.Edit;
+                    c.TabStop = true;
+                    c.Hidden = true; // default hide
                 }
                 else if (c.Key == "DefaultEndDate")
                 {
@@ -1100,6 +1127,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["RequestStatusID"].Width = 80;
             e.Layout.Bands[0].Columns["StartDate"].Width = 80;
             e.Layout.Bands[0].Columns["StartTime"].Width = 80;
+            e.Layout.Bands[0].Columns["SortDate"].Width = 150;
+            e.Layout.Bands[0].Columns["CustomSort"].Width = 150;
             e.Layout.Bands[0].Columns["DefaultEndDate"].Width = 80;
             e.Layout.Bands[0].Columns["NumberOfDays"].Width = 30;
             e.Layout.Bands[0].Columns["Quantity"].Width = 30;
@@ -1134,6 +1163,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             e.Layout.Bands[0].Columns["RequestStatusID"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["StartDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["StartTime"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["SortDate"].Header.VisiblePosition = index++;
+            e.Layout.Bands[0].Columns["CustomSort"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["DefaultEndDate"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["BookingCurrency"].Header.VisiblePosition = index++;
             e.Layout.Bands[0].Columns["NetUnit"].Header.VisiblePosition = index++;
@@ -1156,7 +1187,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // Override defaults
             e.Layout.Override.RowSelectorHeaderStyle = RowSelectorHeaderStyle.ColumnChooserButton;
-            e.Layout.Override.SelectTypeRow = SelectType.Extended;
+            e.Layout.Override.SelectTypeRow = SelectType.SingleAutoDrag;
             e.Layout.GroupByBox.Hidden = false;
             e.Layout.AutoFitStyle = AutoFitStyle.None;
             e.Layout.Override.SupportDataErrorInfo = SupportDataErrorInfo.RowsAndCells;
@@ -1257,6 +1288,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
                 ValidatePurchaseItem(item);
                 SetFlags(e.Row);
+
+                e.Row.Cells["CustomSort"].Value = item.CustomSortDate;
             }
             catch (ArgumentException ex)
             {
@@ -1862,6 +1895,155 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 grid.ResumeLayout();
             }
             bookingGridMenu.Close();
+        }
+
+        #endregion
+        
+        #region CustomSort
+
+        private void Initialize_DragDrop()
+        {
+            var menuItem = new ToolStripMenuItem("Remove Custom Sort");
+            menuItem.Click += tsb_Click;
+            bookingGridMenu.Items.Add(menuItem);
+
+            grid.AllowDrop = true;
+            grid.SelectionDrag += grid_SelectionDrag;
+            grid.DragOver += grid_DragOver;
+            grid.DragDrop += grid_DragDrop;
+        }
+
+        private void tsb_Click(object sender, EventArgs e)
+        {
+            if (grid.ActiveRow == null)
+                return;
+
+            if (!GridHelper.HandleInvalidGridEdits(grid, false))
+                return;
+
+            var row = itinerarySet.PurchaseItem.FindByPurchaseItemID((int)grid.ActiveRow.Cells["PurchaseItemID"].Value);
+            grid.ActiveRow.Cells["SortDate"].Value = DBNull.Value;
+            grid.ActiveRow.Cells["CustomSort"].Value = row.CustomSortDate;
+        }
+
+        private void grid_SelectionDrag(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (grid.DisplayLayout.Bands[0].Columns["CustomSort"].SortIndicator != SortIndicator.Ascending && grid.DisplayLayout.Bands[0].Columns["CustomSort"].SortIndicator != SortIndicator.Descending)
+            {
+                grid.DisplayLayout.Override.HeaderClickAction = HeaderClickAction.SortSingle;
+                grid.DisplayLayout.Bands[0].Columns["CustomSort"].SortIndicator = SortIndicator.Ascending;
+                grid.DisplayLayout.Override.HeaderClickAction = HeaderClickAction.Default;
+            }
+            grid.DoDragDrop(grid.Selected.Rows, DragDropEffects.Move);
+        }
+
+        private void grid_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+            UltraGrid gridobj = sender as UltraGrid;
+            Point pointInGridCoords = gridobj.PointToClient(new Point(e.X, e.Y));
+            if (pointInGridCoords.Y < 20)
+                // Scroll up
+                grid.ActiveRowScrollRegion.Scroll(RowScrollAction.LineUp);
+            else if (pointInGridCoords.Y > gridobj.Height - 20)
+                // Scroll down
+                grid.ActiveRowScrollRegion.Scroll(RowScrollAction.LineDown);
+        }
+
+        private void grid_DragDrop(object sender, DragEventArgs e)
+        {
+            int dropIndex;
+
+            // Get the position on the grid where the dragged row(s) are to be dropped.
+            //get the grid coordinates of the row (the drop zone)
+            UIElement uieOver = grid.DisplayLayout.UIElement.ElementFromPoint(grid.PointToClient(new Point(e.X, e.Y)));
+
+            //get the row that is the drop zone/or where the dragged row is to be dropped
+            UltraGridRow ugrOver = uieOver.GetContext(typeof(UltraGridRow), true) as UltraGridRow;
+            if (ugrOver != null)
+            {
+                dropIndex = ugrOver.Index;    //index/position of drop zone in grid
+
+                //get the dragged row(s)which are to be dragged to another position in the grid
+                SelectedRowsCollection SelRows = (SelectedRowsCollection)e.Data.GetData(typeof(SelectedRowsCollection)) as SelectedRowsCollection;
+                //get the count of selected rows and drop each starting at the dropIndex
+                foreach (UltraGridRow aRow in SelRows)
+                {
+                    if (dropIndex == aRow.Index) break;
+                    const int factor = -1;
+                    if (grid.Rows[dropIndex].Cells["SortDate"].Value == DBNull.Value)
+                    {
+                        if (grid.Rows[dropIndex].Cells["StartTime"].Value != DBNull.Value)
+                        {
+                            if (dropIndex == 0)
+                                aRow.Cells["SortDate"].Value = DateTime.Parse(grid.Rows[dropIndex].Cells["CustomSort"].Value.ToString()).AddHours(factor);
+                            else
+                                aRow.Cells["SortDate"].Value = this.ComputeMiddleDate("CustomSort", dropIndex);
+                        }
+                        else
+                        {
+                            var row = itinerarySet.PurchaseItem.FindByPurchaseItemID((int)aRow.Cells["PurchaseItemID"].Value);
+                            string dropZoneSortDate = DateTime.Parse(grid.Rows[dropIndex].Cells["StartDate"].Value.ToString()).ToShortDateString();
+                            aRow.Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 1:00 AM");
+                            aRow.Cells["CustomSort"].Value = row.CustomSortDate;
+                            if (grid.Rows[dropIndex].Cells["SortDate"].Value == DBNull.Value && DateTime.Parse(aRow.Cells["SortDate"].Value.ToString()).ToShortDateString() == dropZoneSortDate)
+                            {
+                                var row2 = itinerarySet.PurchaseItem.FindByPurchaseItemID((int)grid.Rows[dropIndex].Cells["PurchaseItemID"].Value);
+                                grid.Rows[dropIndex].Cells["SortDate"].Value = DateTime.Parse(DateTime.Parse(aRow.Cells["SortDate"].Value.ToString()).ToShortDateString() + " 2:00 AM");
+                                grid.Rows[dropIndex].Cells["CustomSort"].Value = row2.CustomSortDate;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (dropIndex == 0)
+                        {
+                            aRow.Cells["SortDate"].Value = DateTime.Parse(grid.Rows[dropIndex].Cells["SortDate"].Value.ToString()).AddHours(factor);
+                        }
+                        else
+                        {
+                            if (grid.Rows[dropIndex - 1].Cells["SortDate"].Value.ToString() != grid.Rows[dropIndex].Cells["SortDate"].Value.ToString())
+                            {
+                                aRow.Cells["SortDate"].Value = this.ComputeMiddleDate("SortDate", dropIndex);
+                            }
+                            else
+                            {
+                                string dropZoneSortDate = DateTime.Parse(grid.Rows[dropIndex].Cells["StartDate"].Value.ToString()).ToShortDateString();
+                                if (DateTime.Parse(grid.Rows[dropIndex - 1].Cells["SortDate"].Value.ToString()).ToShortTimeString() == "12:00 AM")
+                                {
+                                    aRow.Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 1:00 AM");
+                                    grid.Rows[dropIndex].Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 2:00 AM");
+                                }
+                                else if (DateTime.Parse(grid.Rows[dropIndex - 1].Cells["SortDate"].Value.ToString()).ToShortTimeString() == "11:59 PM")
+                                {
+                                    aRow.Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 11:00 PM");
+                                    grid.Rows[dropIndex - 1].Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 10:00 PM");
+                                }
+                                else
+                                {
+                                    aRow.Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 2:00 AM");
+                                    grid.Rows[dropIndex].Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 3:00 AM");
+                                    grid.Rows[dropIndex - 1].Cells["SortDate"].Value = DateTime.Parse(dropZoneSortDate + " 1:00 AM");
+                                }
+                            }
+                        }
+                        var row = itinerarySet.PurchaseItem.FindByPurchaseItemID((int)aRow.Cells["PurchaseItemID"].Value);
+                        aRow.Cells["CustomSort"].Value = row.CustomSortDate;
+                    }
+                    //move the selected row(s) to the drop zone
+                    if (aRow.Index < dropIndex)
+                        dropIndex--;
+                    grid.Rows.Move(aRow, dropIndex);
+                }
+            }
+        }
+
+        private DateTime ComputeMiddleDate(string column, int dropIndex)
+        {
+            TimeSpan ts = DateTime.Parse(grid.Rows[dropIndex - 1].Cells[column].Value.ToString()).Subtract(DateTime.Parse(grid.Rows[dropIndex].Cells[column].Value.ToString()));
+            double milli = ts.TotalMilliseconds;
+            DateTime middleDate = DateTime.Parse(grid.Rows[dropIndex - 1].Cells[column].Value.ToString()).AddMilliseconds(-(milli / 2));
+            return middleDate;
         }
 
         #endregion
