@@ -83,11 +83,17 @@ namespace TourWriter.Modules.ContactModule
             this.txtStreetAddress = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.label25 = new System.Windows.Forms.Label();
             this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.txtAge = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtBirthDate = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
             this.txtNotes = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.ultraTabPageControl4 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtPassportExpiry = new Infragistics.Win.UltraWinEditors.UltraDateTimeEditor();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtPassportNumber = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this.label5 = new System.Windows.Forms.Label();
             this.treeCategories = new Infragistics.Win.UltraWinTree.UltraTree();
             this.tabControl_Main = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
@@ -95,8 +101,6 @@ namespace TourWriter.Modules.ContactModule
             this.pnlMain = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolSave = new System.Windows.Forms.ToolStripButton();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtAge = new System.Windows.Forms.TextBox();
             this.ultraTabPageControl1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail1)).BeginInit();
@@ -125,6 +129,8 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtBirthDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtNotes)).BeginInit();
             this.ultraTabPageControl4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassportExpiry)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassportNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeCategories)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl_Main)).BeginInit();
             this.tabControl_Main.SuspendLayout();
@@ -610,9 +616,26 @@ namespace TourWriter.Modules.ContactModule
             this.ultraTabPageControl2.Controls.Add(this.label2);
             this.ultraTabPageControl2.Controls.Add(this.txtBirthDate);
             this.ultraTabPageControl2.Controls.Add(this.txtNotes);
-            this.ultraTabPageControl2.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl2.Name = "ultraTabPageControl2";
             this.ultraTabPageControl2.Size = new System.Drawing.Size(643, 280);
+            // 
+            // txtAge
+            // 
+            this.txtAge.Location = new System.Drawing.Point(224, 9);
+            this.txtAge.Name = "txtAge";
+            this.txtAge.ReadOnly = true;
+            this.txtAge.Size = new System.Drawing.Size(34, 20);
+            this.txtAge.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(194, 12);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Age";
             // 
             // label6
             // 
@@ -656,11 +679,48 @@ namespace TourWriter.Modules.ContactModule
             // 
             // ultraTabPageControl4
             // 
+            this.ultraTabPageControl4.Controls.Add(this.label11);
+            this.ultraTabPageControl4.Controls.Add(this.txtPassportExpiry);
+            this.ultraTabPageControl4.Controls.Add(this.label10);
+            this.ultraTabPageControl4.Controls.Add(this.txtPassportNumber);
             this.ultraTabPageControl4.Controls.Add(this.label5);
             this.ultraTabPageControl4.Controls.Add(this.treeCategories);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(643, 280);
+            // 
+            // label11
+            // 
+            this.label11.Location = new System.Drawing.Point(261, 40);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(88, 20);
+            this.label11.TabIndex = 80;
+            this.label11.Text = "Passport Expiry";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtPassportExpiry
+            // 
+            this.txtPassportExpiry.Location = new System.Drawing.Point(353, 40);
+            this.txtPassportExpiry.Name = "txtPassportExpiry";
+            this.txtPassportExpiry.Size = new System.Drawing.Size(108, 21);
+            this.txtPassportExpiry.TabIndex = 3;
+            this.txtPassportExpiry.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassportExpiry_Validating);
+            // 
+            // label10
+            // 
+            this.label10.Location = new System.Drawing.Point(258, 13);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(91, 23);
+            this.label10.TabIndex = 78;
+            this.label10.Text = "Passport Number";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtPassportNumber
+            // 
+            this.txtPassportNumber.Location = new System.Drawing.Point(353, 13);
+            this.txtPassportNumber.Name = "txtPassportNumber";
+            this.txtPassportNumber.Size = new System.Drawing.Size(200, 21);
+            this.txtPassportNumber.TabIndex = 2;
             // 
             // label5
             // 
@@ -680,7 +740,7 @@ namespace TourWriter.Modules.ContactModule
             _override1.SelectionType = Infragistics.Win.UltraWinTree.SelectType.Extended;
             this.treeCategories.Override = _override1;
             this.treeCategories.Size = new System.Drawing.Size(196, 257);
-            this.treeCategories.TabIndex = 31;
+            this.treeCategories.TabIndex = 1;
             this.treeCategories.AfterCheck += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.treeCategories_AfterCheck);
             // 
             // tabControl_Main
@@ -749,23 +809,6 @@ namespace TourWriter.Modules.ContactModule
             this.toolSave.Text = "&Save and Close";
             this.toolSave.Click += new System.EventHandler(this.toolSave_Click);
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(194, 12);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(26, 13);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Age";
-            // 
-            // txtAge
-            // 
-            this.txtAge.Location = new System.Drawing.Point(224, 9);
-            this.txtAge.Name = "txtAge";
-            this.txtAge.ReadOnly = true;
-            this.txtAge.Size = new System.Drawing.Size(34, 20);
-            this.txtAge.TabIndex = 5;
-            // 
             // ContactMain
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -815,6 +858,8 @@ namespace TourWriter.Modules.ContactModule
             ((System.ComponentModel.ISupportInitialize)(this.txtNotes)).EndInit();
             this.ultraTabPageControl4.ResumeLayout(false);
             this.ultraTabPageControl4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassportExpiry)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPassportNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeCategories)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl_Main)).EndInit();
             this.tabControl_Main.ResumeLayout(false);
@@ -890,6 +935,10 @@ namespace TourWriter.Modules.ContactModule
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtAge;
+        private System.Windows.Forms.Label label10;
+        private Infragistics.Win.UltraWinEditors.UltraTextEditor txtPassportNumber;
+        private System.Windows.Forms.Label label11;
+        private Infragistics.Win.UltraWinEditors.UltraDateTimeEditor txtPassportExpiry;
 
     }
 }

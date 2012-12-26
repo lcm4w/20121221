@@ -130,6 +130,10 @@ namespace TourWriter.Modules.ContactModule
             cmbRegion.ValueChanged += new System.EventHandler(this.cmbRegion_ValueChanged);
             cmbCity.ValueChanged += new System.EventHandler(this.cmbCity_ValueChanged);
 
+            // passport
+            txtPassportNumber.DataBindings.Add("Text", contactSet.Contact, "PassportNumber");
+            txtPassportExpiry.DataBindings.Add("Text", contactSet.Contact, "PassportExpiry");
+
             LoadContactCategories(contactSet.Contact[0].ContactID);
             CalculateAge();
         }
@@ -469,5 +473,11 @@ namespace TourWriter.Modules.ContactModule
             }
         }
         #endregion
+
+        private void txtPassportExpiry_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtPassportExpiry.Value == null)
+                contactSet.Contact[0].SetPassportExpiryNull();
+        }
     }
 }
