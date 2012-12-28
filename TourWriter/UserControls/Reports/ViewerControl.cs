@@ -262,6 +262,45 @@ namespace TourWriter.UserControls.Reports
                 }
             }
 
+            // Dump Group Quote totals
+            else if (key == "GroupQuoteTotals_client")
+            {
+                dt = new DataTable("GroupPrice");
+                dt.Columns.AddRange(new[]
+                                           {
+                                               new DataColumn("PriceName", typeof(string)),
+                                               new DataColumn("Markup", typeof(decimal)),
+                                               new DataColumn("Subtotal", typeof(decimal)),
+                                               new DataColumn("Override", typeof(decimal)),
+                                               new DataColumn("Total", typeof(decimal))
+                                           });
+                var quoteTable = (ParentForm as Modules.ItineraryModule.ItineraryMain).GetRefreshQuoteTable;
+
+                foreach (var row in (ParentForm as Modules.ItineraryModule.ItineraryMain).ItinerarySet.GroupPrice)
+                {
+                    var name = row.GroupPriceName;
+                    var subtotal = quoteTable.AsEnumerable().Sum(x => x.Field<decimal?>(name));
+
+                    decimal? total;
+                    if (!row.IsPriceOverrideNull())
+                        total = row.PriceOverride;
+                    else if (!row.IsMarkupNull())
+                        total = subtotal * (1 + row.Markup / 100);
+                    else total = subtotal;
+
+                    decimal? Markup;
+                    decimal? PriceOverride;
+                    Markup = 0;
+                    PriceOverride = 0;
+                    if (!row.IsMarkupNull())
+                        Markup = row.Markup;
+                    if (!row.IsPriceOverrideNull())
+                        PriceOverride = row.PriceOverride;
+
+                    dt.Rows.Add(row.GroupPriceName, Markup, subtotal, PriceOverride, total);
+                }
+            }
+
             // dump entire bookings grid
             else if (key == "GroupQuoteDumpAll_client")
             {
