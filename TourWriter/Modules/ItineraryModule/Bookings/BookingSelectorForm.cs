@@ -45,9 +45,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             tempItinerarySet = (ItinerarySet)itinerarySet.Copy();
             gridBookings.DataSource = tempItinerarySet.PurchaseItem;
-
            
-
             GridHelper.SetNumberOfDaysPicker(gridBookings);
             SetPage(PageType.Search);
         }
@@ -638,7 +636,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
             
             // show any warnings
-            var bookingDate = DateTime.MinValue;
+            DateTime bookingDate;
             if (!startDate.HasValue)
             {
                 bookingDate = GetNextDefaultDate();
@@ -649,7 +647,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 startDate = null;
             }
 
-            var warning = serviceEditor1.GetSelectedServiceWarningMessage(bookingDate);            
+            var warning = serviceEditor1.GetSelectedServiceWarningMessages(bookingDate, bookingDate.AddDays(1));            
             if (warning != string.Empty)
             {                
                 if (!ShowBookingWarnings(warning))
@@ -840,7 +838,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                                 // find service time record that matches selected start time value
                                 var id = (int) e.Cell.Row.Cells["OptionID"].Value;
                                 var row = supplierSet.Option.FindByOptionID(id).RateRow.ServiceRow.
-                                    GetServiceTimeRows().Where(t => t.StartTime == time).First();
+                                                      GetServiceTimeRows().First(t => t.StartTime == time);
 
                                 if (row != null)
                                 {
@@ -859,24 +857,36 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private void gridBookings_CellChange(object sender, CellEventArgs e)
         {    
             if (e.Cell.Column.Key == "StartDate")
-            {
-                // parse is safe because mask is used on the cell/column                
-                DateTime newDate = DateTime.Parse(e.Cell.Row.Cells["StartDate"].Text);
-                DateTime origDate = (DateTime)e.Cell.Row.Cells["StartDate"].Value;
+            {  
+                var start = DateTime.Parse(e.Cell.Row.Cells["StartDate"].Text);
+                var origDate = (DateTime)e.Cell.Row.Cells["StartDate"].Value;
+                var end = start.AddDays((int)(e.Cell.Row.Cells["NumberOfDays"].Value ?? 1));
 
-                // show any warnings                
-                var warning = serviceEditor1.GetSelectedServiceWarningMessage(newDate);
+                var warning = serviceEditor1.GetSelectedServiceWarningMessages(start, end);
                 if (warning != string.Empty)
                 {
-                    System.Threading.Thread thr = new System.Threading.Thread(delegate() 
+                    new System.Threading.Thread(delegate()
                     {
-                        bool acceptChanges = ShowBookingWarnings(warning);
-                        if (!acceptChanges)
-                        {
-                            gridBookings.Do(grid => e.Cell.Value = origDate);
-                        }
-                    });
-                    thr.Start();
+                        var acceptChanges = ShowBookingWarnings(warning);
+                        if (!acceptChanges) gridBookings.Do(grid => e.Cell.Value = origDate);
+                    }).Start();
+                }
+            }
+            else if (e.Cell.Column.Key == "NumberOfDays")
+            {
+                var start = (DateTime)e.Cell.Row.Cells["StartDate"].Value;
+                var newDays = int.Parse(e.Cell.Row.Cells["NumberOfDays"].Text);
+                var origDays = (int)(e.Cell.Row.Cells["NumberOfDays"].Value ?? 1);
+                var end = start.AddDays(newDays);
+
+                var warning = serviceEditor1.GetSelectedServiceWarningMessages(start, end);
+                if (warning != string.Empty)
+                {
+                    new System.Threading.Thread(delegate()
+                    {
+                        var acceptChanges = ShowBookingWarnings(warning);
+                        if (!acceptChanges) gridBookings.Do(grid => e.Cell.Value = origDays);
+                    }).Start();
                 }
             }
         }

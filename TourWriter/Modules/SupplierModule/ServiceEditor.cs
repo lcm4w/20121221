@@ -534,25 +534,25 @@ namespace TourWriter.Modules.SupplierModule
             return paymentTermID;
         }
 
-        internal string GetSelectedServiceWarningMessage(DateTime bookingDate)
+        internal string GetSelectedServiceWarningMessages(DateTime periodStart, DateTime periodEnd)
         {
             if (gridServices.ActiveRow != null)
             {
-                int? id = GetSelectedServiceId();
+                var id = GetSelectedServiceId();
                 if (id.HasValue)
                 {
                     var sb = new System.Text.StringBuilder();
                     var warnings = supplierSet.ServiceWarning.Where(w => w.ServiceID == id.Value && 
-                                                                         bookingDate.Date >= w.ValidFrom.Date &&
-                                                                         bookingDate.Date <= w.ValidTo.Date);
-                    int ctr = 0;
+                                                                         !(w.ValidFrom.Date > periodEnd.Date) &&  // not past the period
+                                                                         !(w.ValidTo.Date < periodStart.Date));   // not before the period
+                    var ctr = 0;
                     foreach (var warning in warnings)
                     {
                         ++ctr;
                         var expiringSoon = warning.ValidTo < DateTime.Now.AddYears(1);
 
                         sb.AppendLine(string.Format("{0}. {1}{2}", 
-                            ctr.ToString(),
+                            ctr,
                             expiringSoon ? "[until " + warning.ValidTo.ToShortDateString() + "] " : "",
                             warning.Description));
                     }
