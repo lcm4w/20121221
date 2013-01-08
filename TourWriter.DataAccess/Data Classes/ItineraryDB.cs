@@ -87,12 +87,11 @@ namespace TourWriter.DataAccess
 		/// <summary>
 		/// Copies a Itinerary and associated records.
 		/// </summary>
-		/// <param name="id">Itinerary ID</param>
 		/// <returns>New Itinerary ID</returns>
-		public int Copy(int origID, string newName, int userID)
+		public int Copy(int origID, string newName, int parentFolderId, int userId, bool copyClientsData, bool copyTasksData)
 		{
-			object o = SqlHelper.ExecuteScalar(connectionString, 
-				"_ItinerarySet_Copy_ByID", origID, newName, userID);
+            var o = SqlHelper.ExecuteScalar(connectionString, "_ItinerarySet_Copy_ByID",
+		                                    origID, newName, parentFolderId, copyClientsData, copyTasksData, DateTime.Now, userId);
                  			
 			return int.Parse(o.ToString());
 		}

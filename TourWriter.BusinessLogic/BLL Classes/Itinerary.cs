@@ -69,16 +69,14 @@ namespace TourWriter.BusinessLogic
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
-		public int Copy(int origItineraryID, string newItineraryName, int userID)
+		public int Copy(int origItineraryID, string newItineraryName, int parentFolderID, int userID, bool copyClientsData, bool copyTasksData)
 		{				
 			if(GetConnectionString())
 			{
 				if(TypeOfConnection == "LAN")
 				{
-					ItineraryDB db = new ItineraryDB(ConnectionString);
-					return db.Copy(origItineraryID, newItineraryName, userID);
+					var db = new ItineraryDB(ConnectionString);
+					return db.Copy(origItineraryID, newItineraryName, parentFolderID, userID, copyClientsData, copyTasksData);
 				}				
 				else if(TypeOfConnection == "WAN")
 				{}

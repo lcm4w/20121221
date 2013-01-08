@@ -452,18 +452,18 @@ namespace TourWriter.Forms
 		{
             var info = (NavigationTreeItemInfo)sourceNode.Tag;
             var newItineraryName = sourceNode.Text + " - Copy";
-			var copyItineraryId = info.ItemID;
+            var copyItineraryId = info.ItemID;
+            var parentFolderId = ((NavigationTreeItemInfo)targetNode.Tag).ItemID;
 
-			// create itinerary copy
-            var i = new Itinerary();
-            var newItinerary = Services.CopyHelper.CopyAndSaveItinerary(copyItineraryId, newItineraryName);
-            var newItineraryId = newItinerary.Itinerary[0].ItineraryID;
-            info.SetParentFolderID(newItineraryId, ((NavigationTreeItemInfo)targetNode.Tag).ItemID, NavigationTreeItemInfo.ItemTypes.Itinerary);
+            // copy itinerary
+            var copyMembers = true; // TODO: UI so user can select
+            var copyTasks = false; // TODO: UI so user can select
+            var newItineraryId = new Itinerary().Copy(copyItineraryId, newItineraryName, parentFolderId, Global.Cache.User.UserID, copyMembers, copyTasks);
 
-			// update info with new args
-			info = info.Copy();
+            // update menu node with new args
+            info = info.Copy();
             info.ItemID = newItineraryId;
-			info.ItemName = newItineraryName;
+            info.ItemName = newItineraryName;
 
             // create node
             sourceNode.Selected = false;
