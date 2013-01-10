@@ -91,9 +91,9 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             this.label6.Location = new System.Drawing.Point(12, 36);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(480, 16);
+            this.label6.Size = new System.Drawing.Size(480, 41);
             this.label6.TabIndex = 41;
-            this.label6.Text = "Configure email settings used by the TourWriter application.";
+            this.label6.Text = resources.GetString("label6.Text");
             // 
             // imageList1
             // 
@@ -151,8 +151,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.txtEmailPort);
             this.groupBox1.Controls.Add(this.chkEnableSsl);
             this.groupBox1.Controls.Add(this.btnTestEmail);
@@ -163,7 +163,7 @@ namespace TourWriter.Modules.AdminModule.UserControls
             this.groupBox1.Controls.Add(this.txtEmailUser);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txtEmailServer);
-            this.groupBox1.Location = new System.Drawing.Point(8, 80);
+            this.groupBox1.Location = new System.Drawing.Point(8, 92);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(500, 171);
             this.groupBox1.TabIndex = 62;

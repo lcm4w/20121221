@@ -85,7 +85,7 @@ namespace TourWriter.DataAccess
 		}
 		
 		/// <summary>
-		/// Copies a Itinerary and associated records.
+		/// Copies an Itinerary and associated records.
 		/// </summary>
 		/// <returns>New Itinerary ID</returns>
 		public int Copy(int origID, string newName, int parentFolderId, int userId, bool copyClientsData, bool copyTasksData)
