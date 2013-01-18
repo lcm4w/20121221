@@ -476,7 +476,8 @@ namespace TourWriter.Modules.AdminModule.UserControls
 			CurrencyManager cm = this.BindingContext[userSet, "User"] as CurrencyManager;
 			if(cm.Position > -1)
 			{
-				DataRowView drv = cm.Current as DataRowView;
+                cm.Position = userSet.User.Rows.IndexOf(userSet.User.Rows.Find((int)gridUsers.ActiveRow.Cells["UserID"].Value));
+                DataRowView drv = cm.Current as DataRowView;
 
 				if(drv["ContactID"].ToString() == "") // doesn't exist
 				{
