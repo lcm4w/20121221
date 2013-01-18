@@ -1573,6 +1573,16 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
+        private void btnUpdateQuantities_Click(object sender, EventArgs e)
+        {
+            UpdateQuantitiesForm frm = new UpdateQuantitiesForm(itinerarySet, false);
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                // TODO
+                RefreshGrid();
+            }
+        }
+
         private void btnResetGrid_Click(object sender, EventArgs e)
         {
             ResetGridLayout();

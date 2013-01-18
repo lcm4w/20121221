@@ -87,6 +87,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnUpdateCurrency = new System.Windows.Forms.ToolStripMenuItem();
             this.btnLockEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEditFlags = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnUpdateQuantities = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExportExcel = new System.Windows.Forms.ToolStripMenuItem();
@@ -604,10 +605,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnAdd,
             this.btnDelete});
             this.myToolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.myToolStrip1.Location = new System.Drawing.Point(584, 3);
+            this.myToolStrip1.Location = new System.Drawing.Point(553, 3);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(310, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(341, 25);
             this.myToolStrip1.TabIndex = 104;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -619,6 +620,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnUpdateCurrency,
             this.btnLockEdit,
             this.btnEditFlags,
+            this.btnUpdateQuantities,
             this.toolStripSeparator6,
             this.btnPrint,
             this.btnExportExcel,
@@ -662,6 +664,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnEditFlags.Size = new System.Drawing.Size(224, 22);
             this.btnEditFlags.Text = "Edit flags";
             this.btnEditFlags.Click += new System.EventHandler(this.btnEditFlags_Click);
+            // 
+            // btnUpdateQuantities
+            // 
+            this.btnUpdateQuantities.Name = "btnUpdateQuantities";
+            this.btnUpdateQuantities.Size = new System.Drawing.Size(224, 22);
+            this.btnUpdateQuantities.Text = "Update quantities...";
+            this.btnUpdateQuantities.Click += new System.EventHandler(this.btnUpdateQuantities_Click);
             // 
             // toolStripSeparator6
             // 
@@ -903,5 +912,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripMenuItem replaceSupplierMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveToNewBookingMenuItem;
         private System.Windows.Forms.ToolStripComboBox cmbBookings;
+        private System.Windows.Forms.ToolStripMenuItem btnUpdateQuantities;
     }
 }

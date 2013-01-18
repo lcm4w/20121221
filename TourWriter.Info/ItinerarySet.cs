@@ -630,6 +630,40 @@ namespace TourWriter.Info
 
         #endregion
 
+        #region PurchaseLine
+
+        partial class RoomTypeRow
+        {
+
+            private ItinerarySet ds
+            {
+                get { return (ItinerarySet)Table.DataSet; }
+            }
+
+            public int GetActualQuantity()
+            {
+                var itinGroup = ds.ItineraryGroup.Select("ItineraryID = " + ItineraryID.ToString());
+                foreach (var row in itinGroup)
+                {
+                    var itinMember = (ItinerarySet.ItineraryMemberRow[])ds.ItineraryMember.Select("ItineraryGroupID = " + ((ItinerarySet.ItineraryGroupRow)row).ItineraryGroupID.ToString());
+                    var query = from c in itinMember
+                                     group c.RoomTypeID by new { c.RoomTypeID, c.RoomName } into g
+                                select new { RoomTypeID = g.Key.RoomTypeID, RC = g.Count() };
+                    var query2 = from b in query
+                                 where b.RoomTypeID == RoomTypeID
+                                group b.RoomTypeID by b.RoomTypeID into i
+                                select i.Count();
+                    if (query2 == null)
+                        continue;
+                    else
+                        return !IsQuantityNull() ? Quantity : query2.FirstOrDefault();
+                }
+                return 0;
+            }
+        }
+
+        #endregion
+
         #region ItinerarySale
         public partial class ItinerarySaleRow
         {

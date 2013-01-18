@@ -346,6 +346,12 @@
     <Compile Include="Modules\ItineraryModule\ItineraryTasks.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Modules\ItineraryModule\UpdateQuantitiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\UpdateQuantitiesForm.Designer.cs">
+      <DependentUpon>UpdateQuantitiesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\SupplierModule\AllocationAgentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1231,6 +1237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\ItineraryModule\ItineraryTasks.resx">
       <DependentUpon>ItineraryTasks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\UpdateQuantitiesForm.resx">
+      <DependentUpon>UpdateQuantitiesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\SupplierModule\AllocationAgentsForm.resx">
       <DependentUpon>AllocationAgentsForm.cs</DependentUpon>
