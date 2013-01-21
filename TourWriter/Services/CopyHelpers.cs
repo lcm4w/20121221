@@ -154,7 +154,32 @@ namespace TourWriter.Services
             var id = -1;
 
             // copy data and schama
-            var copy = (SupplierSet)src.Copy();
+            var copy = new SupplierSet();
+            copy.Merge(src.Supplier);
+
+            copy.Merge(src.Content);
+            copy.Merge(src.Message);
+            copy.Merge(src.PaymentTerm);
+
+            copy.Merge(src.ServiceContent);
+            copy.Merge(src.ServiceConfig);
+
+            copy.Merge(src.Service);
+            copy.Merge(src.Rate);
+            copy.Merge(src.Option);
+            copy.Merge(src.Discount);
+            copy.Merge(src.ServiceWarning);
+            copy.Merge(src.SupplierContent);
+            copy.Merge(src.SupplierContact);
+            copy.Merge(src.SupplierCreditCard);
+            copy.Merge(src.SupplierConfig);
+            copy.Merge(src.SupplierMessage);
+            copy.Merge(src.SupplierNote);
+            copy.Merge(src.SupplierText);
+            copy.Merge(src.ServiceTime);
+            copy.Merge(src.Allocation);
+            copy.Merge(src.AllocationAgent);
+            copy.Merge(src.AllocationOption);
 
             // update ids and set row states to 'Added'
 
@@ -193,6 +218,24 @@ namespace TourWriter.Services
                     // discount
                     foreach (var row in service.GetDiscountRows())
                         SetInserted(row, "DiscountID", id--);
+
+                    // warning
+                    foreach (var row in service.GetServiceWarningRows())
+                        SetInserted(row, "ServiceWarningID", id--);
+
+                    // allocation
+                    foreach (var row in service.GetAllocationRows())
+                    {
+                        SetInserted(row, "AllocationID", id--);
+
+                        // allocation agent
+                        foreach (var allocation in row.GetAllocationAgentRows())
+                            SetInserted(allocation);
+
+                        // allocation option
+                        foreach (var allocation in row.GetAllocationOptionRows())
+                            SetInserted(allocation);
+                    }
                 }
 
                 // supplier content
