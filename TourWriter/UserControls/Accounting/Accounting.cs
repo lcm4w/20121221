@@ -64,6 +64,8 @@ namespace TourWriter.UserControls.Accounting
                                "RequestStatusName",
                                "PurchaseItemID",
                                "ArriveDate",
+                               "SaleDate",
+                               "IsInvoiced",
                            };
 
         private readonly List<string> _defaultSalesColumns = new List<string>()
