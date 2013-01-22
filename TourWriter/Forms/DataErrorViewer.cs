@@ -178,7 +178,8 @@ namespace TourWriter.Forms
 			{
 				foreach(DataRow dr in dt.GetErrors())
                 {
-                    if (dr.RowError.Contains(" DeleteCommand affected 0 of "))
+                    if (dr.RowError.Contains(" DeleteCommand affected 0 of ") || // en
+                        dr.RowError.Contains(" DeleteCommand afetou 0 dos "))    // pt-br (portuguese)
                     {
                         // Full error desc: Concurrency violation: the DeleteCommand affected 0 of the expected 1 records.
                         // Reason: this occurs when db cascades DELETE via FK relationship, then when dataset tries to 
