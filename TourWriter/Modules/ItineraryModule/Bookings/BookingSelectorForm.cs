@@ -251,12 +251,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             // add voucher note
             foreach (var row in service.SupplierRow.GetSupplierNoteRows().Where(x => !x.IsShowOnReportNull() && x.ShowOnReport))
-                if (!newItem.PurchaseLineRow.NoteToVoucher.Contains(row.Note))
+                if (!row.IsNoteNull() && !newItem.PurchaseLineRow.NoteToVoucher.Contains(row.Note))
                     newItem.PurchaseLineRow.NoteToVoucher += (newItem.PurchaseLineRow.NoteToVoucher.Length > 0 ? "\r\n" : "") + row.Note;
 
             // add supplier note
             foreach (var row in service.SupplierRow.GetSupplierNoteRows().Where(x => !x.IsShowOnReportNull() && x.ShowOnReport))
-                if (!newItem.PurchaseLineRow.NoteToSupplier.Contains(row.Note))
+                if (!row.IsNoteNull() && !newItem.PurchaseLineRow.NoteToSupplier.Contains(row.Note))
                     newItem.PurchaseLineRow.NoteToSupplier += (newItem.PurchaseLineRow.NoteToSupplier.Length > 0 ? "\r\n" : "") + row.Note;
 
             //if (!service.IsCurrencyCodeNull()) chkCurrency.Visible = true;
