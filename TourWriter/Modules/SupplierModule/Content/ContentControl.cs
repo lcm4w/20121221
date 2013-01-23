@@ -94,6 +94,7 @@ namespace TourWriter.Modules.SupplierModule
                 {
                     c.Header.Caption = "For";
                     c.Header.ToolTipText = "Name of connected Supplier or Service";
+                    c.Band.SortedColumns.Add(c, false);
                 }
                 else if (c.Key == "ContentName")
                 {
