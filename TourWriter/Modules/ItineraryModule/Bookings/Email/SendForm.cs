@@ -246,7 +246,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
             // join the ItineraryMessage table
             itinerarySet.ItineraryMessage.AddItineraryMessageRow(
-                itinerarySet.Itinerary[0], messageRow, DateTime.Now, Cache.User.UserID);
+                itinerarySet.Itinerary[0], Cache.User.UserID, DateTime.Now, messageRow);
 
             // join the SupplierMessage table
             if (email._Tag != null)

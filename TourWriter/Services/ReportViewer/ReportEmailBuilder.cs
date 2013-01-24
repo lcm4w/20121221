@@ -46,19 +46,19 @@ namespace TourWriter.Modules.ReportViewer
 				messageRow.MessageName = email.Subject;
                 messageRow.MessageFile = savedFilename;
 				messageRow.AddedOn     = DateTime.Now;
-				messageRow.AddedBy     = TourWriter.Global.Cache.User.UserID;
+				messageRow.AddedBy     = Global.Cache.User.UserID;
 				ItinerarySet.Message.AddMessageRow(messageRow);
 
 				// join the ItineraryMessage table
 				ItinerarySet.ItineraryMessage.AddItineraryMessageRow(
-					ItinerarySet.Itinerary[0], messageRow, DateTime.Now, TourWriter.Global.Cache.User.UserID);
+                    ItinerarySet.Itinerary[0], Global.Cache.User.UserID, DateTime.Now, messageRow);
 
 				// join the SupplierMessage table
 				if(email._Tag != null)
 				{
 					int supplierId = (int)email._Tag;
 					ItinerarySet.SupplierMessage.AddSupplierMessageRow(
-						messageRow, supplierId, DateTime.Now, TourWriter.Global.Cache.User.UserID);
+						messageRow, supplierId, DateTime.Now, Global.Cache.User.UserID);
 				}
 			}
 		}

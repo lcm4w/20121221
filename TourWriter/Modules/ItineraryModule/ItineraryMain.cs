@@ -1068,16 +1068,16 @@ namespace TourWriter.Modules.ItineraryModule
         private void btnMessagesAdd_Click(object sender, EventArgs e)
         {
             // add new row
-            ItinerarySet.MessageRow r = itinerarySet.Message.NewMessageRow();
-            r.MessageName = App.CreateUniqueNameValue(gridMessages.Rows, "MessageName", "New Message");
-            r.AddedOn = DateTime.Now;
-            r.AddedBy = Cache.User.UserID;
-            itinerarySet.Message.AddMessageRow(r);
+            ItinerarySet.MessageRow messageRow = itinerarySet.Message.NewMessageRow();
+            messageRow.MessageName = App.CreateUniqueNameValue(gridMessages.Rows, "MessageName", "New Message");
+            messageRow.AddedOn = DateTime.Now;
+            messageRow.AddedBy = Cache.User.UserID;
+            itinerarySet.Message.AddMessageRow(messageRow);
 
             itinerarySet.ItineraryMessage.AddItineraryMessageRow(
-                itinerarySet.Itinerary[0], r, DateTime.Now, Cache.User.UserID);
+                itinerarySet.Itinerary[0], Cache.User.UserID, DateTime.Now, messageRow);
 
-            GridHelper.SetActiveRow(gridMessages, "MessageID", r.MessageID, "MessageName");
+            GridHelper.SetActiveRow(gridMessages, "MessageID", messageRow.MessageID, "MessageName");
         }
 
         private void btnMessageDel_Click(object sender, EventArgs e)
