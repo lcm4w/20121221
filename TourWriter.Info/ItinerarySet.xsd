@@ -308,6 +308,23 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+          <xs:element name="RoomType" msprop:Generator_TableClassName="RoomTypeDataTable" msprop:Generator_TableVarName="tableRoomType" msprop:Generator_TablePropName="RoomType" msprop:Generator_RowDeletingName="RoomTypeRowDeleting" msprop:Generator_RowChangingName="RoomTypeRowChanging" msprop:Generator_RowEvHandlerName="RoomTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="RoomTypeRowDeleted" msprop:Generator_UserTableName="RoomType" msprop:Generator_RowChangedName="RoomTypeRowChanged" msprop:Generator_RowEvArgName="RoomTypeRowChangeEvent" msprop:Generator_RowClassName="RoomTypeRow">
+              <xs:complexType>
+                  <xs:sequence>
+                      <xs:element name="RoomTypeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnRoomTypeID" msprop:Generator_ColumnPropNameInRow="RoomTypeID" msprop:Generator_ColumnPropNameInTable="RoomTypeIDColumn" msprop:Generator_UserColumnName="RoomTypeID" type="xs:int" />
+                      <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
+                      <xs:element name="RoomTypeName" msprop:Generator_ColumnVarNameInTable="columnRoomTypeName" msprop:Generator_ColumnPropNameInRow="RoomTypeName" msprop:Generator_ColumnPropNameInTable="RoomTypeNameColumn" msprop:Generator_UserColumnName="RoomTypeName">
+                          <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                  <xs:maxLength value="100" />
+                              </xs:restriction>
+                          </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="OptionTypeID" msprop:Generator_ColumnVarNameInTable="columnOptionTypeID" msprop:Generator_ColumnPropNameInRow="OptionTypeID" msprop:Generator_ColumnPropNameInTable="OptionTypeIDColumn" msprop:Generator_UserColumnName="OptionTypeID" type="xs:int" minOccurs="0" />
+                      <xs:element name="ItineraryID" msprop:Generator_ColumnVarNameInTable="columnItineraryID" msprop:Generator_ColumnPropNameInRow="ItineraryID" msprop:Generator_ColumnPropNameInTable="ItineraryIDColumn" msprop:Generator_UserColumnName="ItineraryID" type="xs:int" />
+                  </xs:sequence>
+              </xs:complexType>
+          </xs:element>
         <xs:element name="ItineraryMember" msprop:Generator_UserTableName="ItineraryMember" msprop:Generator_RowEvArgName="ItineraryMemberRowChangeEvent" msprop:Generator_TableVarName="tableItineraryMember" msprop:Generator_TablePropName="ItineraryMember" msprop:Generator_RowDeletingName="ItineraryMemberRowDeleting" msprop:Generator_RowChangingName="ItineraryMemberRowChanging" msprop:Generator_RowDeletedName="ItineraryMemberRowDeleted" msprop:Generator_RowEvHandlerName="ItineraryMemberRowChangeEventHandler" msprop:Generator_TableClassName="ItineraryMemberDataTable" msprop:Generator_RowChangedName="ItineraryMemberRowChanged" msprop:Generator_RowClassName="ItineraryMemberRow">
           <xs:complexType>
             <xs:sequence>
@@ -559,23 +576,6 @@
             <xs:sequence>
               <xs:element name="ItineraryTaskID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnItineraryTaskID" msprop:Generator_ColumnPropNameInRow="ItineraryTaskID" msprop:Generator_ColumnPropNameInTable="ItineraryTaskIDColumn" msprop:Generator_UserColumnName="ItineraryTaskID" type="xs:int" />
               <xs:element name="TaskID" msprop:Generator_ColumnVarNameInTable="columnTaskID" msprop:Generator_ColumnPropNameInRow="TaskID" msprop:Generator_ColumnPropNameInTable="TaskIDColumn" msprop:Generator_UserColumnName="TaskID" type="xs:int" />
-              <xs:element name="ItineraryID" msprop:Generator_ColumnVarNameInTable="columnItineraryID" msprop:Generator_ColumnPropNameInRow="ItineraryID" msprop:Generator_ColumnPropNameInTable="ItineraryIDColumn" msprop:Generator_UserColumnName="ItineraryID" type="xs:int" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="RoomType" msprop:Generator_TableClassName="RoomTypeDataTable" msprop:Generator_TableVarName="tableRoomType" msprop:Generator_TablePropName="RoomType" msprop:Generator_RowDeletingName="RoomTypeRowDeleting" msprop:Generator_RowChangingName="RoomTypeRowChanging" msprop:Generator_RowEvHandlerName="RoomTypeRowChangeEventHandler" msprop:Generator_RowDeletedName="RoomTypeRowDeleted" msprop:Generator_UserTableName="RoomType" msprop:Generator_RowChangedName="RoomTypeRowChanged" msprop:Generator_RowEvArgName="RoomTypeRowChangeEvent" msprop:Generator_RowClassName="RoomTypeRow">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="RoomTypeID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnRoomTypeID" msprop:Generator_ColumnPropNameInRow="RoomTypeID" msprop:Generator_ColumnPropNameInTable="RoomTypeIDColumn" msprop:Generator_UserColumnName="RoomTypeID" type="xs:int" />
-              <xs:element name="Quantity" msprop:Generator_ColumnVarNameInTable="columnQuantity" msprop:Generator_ColumnPropNameInRow="Quantity" msprop:Generator_ColumnPropNameInTable="QuantityColumn" msprop:Generator_UserColumnName="Quantity" type="xs:int" minOccurs="0" />
-              <xs:element name="RoomTypeName" msprop:Generator_ColumnVarNameInTable="columnRoomTypeName" msprop:Generator_ColumnPropNameInRow="RoomTypeName" msprop:Generator_ColumnPropNameInTable="RoomTypeNameColumn" msprop:Generator_UserColumnName="RoomTypeName">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="100" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="OptionTypeID" msprop:Generator_ColumnVarNameInTable="columnOptionTypeID" msprop:Generator_ColumnPropNameInRow="OptionTypeID" msprop:Generator_ColumnPropNameInTable="OptionTypeIDColumn" msprop:Generator_UserColumnName="OptionTypeID" type="xs:int" minOccurs="0" />
               <xs:element name="ItineraryID" msprop:Generator_ColumnVarNameInTable="columnItineraryID" msprop:Generator_ColumnPropNameInRow="ItineraryID" msprop:Generator_ColumnPropNameInTable="ItineraryIDColumn" msprop:Generator_UserColumnName="ItineraryID" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
