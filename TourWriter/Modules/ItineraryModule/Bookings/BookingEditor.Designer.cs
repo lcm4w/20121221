@@ -99,6 +99,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnDownloadInvoice = new System.Windows.Forms.ToolStripLabel();
             this.headerLabel1 = new TourWriter.UserControls.HeaderLabel();
             this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.DummyLocationLabel = new System.Windows.Forms.Label();
@@ -135,6 +136,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtLineName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.ultraTabPageControl3.SuspendLayout();
             this.pnlItemDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtItemRef)).BeginInit();
@@ -173,7 +175,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.ultraTabPageControl3.Controls.Add(this.gridItems);
             this.ultraTabPageControl3.Controls.Add(this.myToolStrip1);
             this.ultraTabPageControl3.Controls.Add(this.headerLabel1);
-            this.ultraTabPageControl3.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl3.Location = new System.Drawing.Point(1, 23);
             this.ultraTabPageControl3.Name = "ultraTabPageControl3";
             this.ultraTabPageControl3.Size = new System.Drawing.Size(515, 372);
             // 
@@ -602,11 +604,12 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripButton1,
             this.toolStripSeparator1,
             this.btnAdd,
-            this.btnDelete});
-            this.myToolStrip1.Location = new System.Drawing.Point(410, 2);
+            this.btnDelete,
+            this.btnDownloadInvoice});
+            this.myToolStrip1.Location = new System.Drawing.Point(308, 2);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(101, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(203, 25);
             this.myToolStrip1.TabIndex = 0;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -656,6 +659,13 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.Text = "btnDelete";
             this.btnDelete.ToolTipText = "Delete selected booking item";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnDownloadInvoice
+            // 
+            this.btnDownloadInvoice.Name = "btnDownloadInvoice";
+            this.btnDownloadInvoice.Size = new System.Drawing.Size(102, 22);
+            this.btnDownloadInvoice.Text = "Download invoice";
+            this.btnDownloadInvoice.Click += new System.EventHandler(this.btnDownloadInvoice_Click);
             // 
             // headerLabel1
             // 
@@ -856,7 +866,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // ultraTabPageControl1
             // 
             this.ultraTabPageControl1.Controls.Add(this.splitContainer1);
-            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 23);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(515, 372);
             // 
@@ -1028,10 +1038,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator5,
             this.btnMemberAdd,
             this.btnMemberDelete});
-            this.tsMembers.Location = new System.Drawing.Point(238, 2);
+            this.tsMembers.Location = new System.Drawing.Point(275, 2);
             this.tsMembers.Name = "tsMembers";
             this.tsMembers.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsMembers.Size = new System.Drawing.Size(109, 25);
+            this.tsMembers.Size = new System.Drawing.Size(72, 25);
             this.tsMembers.TabIndex = 142;
             this.tsMembers.Text = "myToolStrip2";
             // 
@@ -1152,6 +1162,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.label12.Size = new System.Drawing.Size(75, 13);
             this.label12.TabIndex = 91;
             this.label12.Text = "Booking name";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // BookingEditor
             // 
@@ -1283,5 +1297,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnMemberAdd;
         private System.Windows.Forms.ToolStripButton btnMemberDelete;
+        private System.Windows.Forms.ToolStripLabel btnDownloadInvoice;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
