@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2012.11.18' and (select VersionNumber from AppSettings) <> '2013.01.10')
+if ((select VersionNumber from AppSettings) <> '2012.11.18' and (select VersionNumber from AppSettings) <> '2013.01.10' and (select VersionNumber from AppSettings) <> '2013.01.22')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -1335,6 +1335,135 @@ RETURN
 )
 GO
 
+
+GO
+PRINT N'Altering [dbo].[_AgentSet_Sel_ByID]...';
+
+
+GO
+
+/* Select from multiple tables for dataset fill command */
+ALTER PROCEDURE [dbo].[_AgentSet_Sel_ByID]
+	@AgentID int
+AS
+SET NOCOUNT ON
+
+-- PaymentTerm --
+SELECT
+	[PaymentTermID],
+	[PaymentDueID],
+	[PaymentDuePeriod],
+	[DepositAmount],
+	[DepositType],
+	[DepositDueID],
+	[DepositDuePeriod]
+FROM [dbo].[PaymentTerm]
+WHERE
+	[PaymentTermID] = (SELECT [PurchasePaymentTermID] FROM [Agent] WHERE [AgentID] = @AgentID)
+OR
+	[PaymentTermID] = (SELECT [SalePaymentTermID] FROM [Agent] WHERE [AgentID] = @AgentID)
+
+-- Agent --
+SELECT
+	[AgentID],
+	[AgentName],
+	[ParentAgentID],
+	[Address1],
+	[Address2],
+	[Address3],
+	[Phone],
+	[Fax],
+	[Email],
+	[TaxNumber],
+	[InvoiceNumberMask],
+	[PurchasePaymentTermID],
+	[SalePaymentTermID],
+	[LogoFile],
+	[VoucherLogoFile],
+	[NetComOrMup],
+	[Comments],
+	[AgentHeader],
+	[RequestFooter],
+	[ConfirmFooter],
+	[RemitFooter],
+	[ClientFooter],
+	[VoucherFooter],
+	[IsDefaultAgent],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[CurrencyCode],
+	[NetMinOrMax]
+FROM [dbo].[Agent]
+WHERE
+	[AgentID] = @AgentID
+
+-- Contact --			
+SELECT
+	[ContactID],
+	[ContactName],
+	[Title],
+	[FirstName],
+	[LastName],
+	[StreetAddress],
+	[PostName],
+	[PostAddress],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[PostCode],
+	[WorkPhone],
+	[HomePhone],
+	[CellPhone],
+	[Fax],
+	[Email1],
+	[Email2],
+	[Website],
+	[BirthDate],
+	[Notes],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[JobDescription],
+	[PassportNumber],
+	[PassportExpiry],
+	[UpdatedOn],
+	[Sex],
+	[Preferences]
+FROM [dbo].[Contact]
+WHERE
+	[ContactID] IN (
+		SELECT [ContactID] FROM [dbo].[AgentContact] 
+		WHERE [AgentID] = @AgentID )
+
+-- AgentContact --
+SELECT
+	[AgentID],
+	[ContactID],
+	[Description],
+	[IsDefaultContact],
+	[IsDefaultBilling]
+FROM [dbo].[AgentContact]
+WHERE
+	[AgentID] = @AgentID
+
+-- AgentMargin --
+SELECT
+	[AgentID],
+	[ServiceTypeID],
+	[Margin]
+FROM [dbo].[AgentMargin]
+WHERE
+	[AgentID] = @AgentID
+GO
+PRINT N'Altering [dbo].[_ItinerarySet_Sel_ByID]...';
+
+
+GO
 ALTER PROCEDURE [dbo].[_ItinerarySet_Sel_ByID]
 @ItineraryID INT
 AS
@@ -1544,6 +1673,7 @@ SELECT
 	[Website],
 	[BirthDate],
 	[Notes],
+	[IsRecordActive],
 	[ParentFolderID],
 	[AddedOn],
 	[AddedBy],
@@ -1890,6 +2020,399 @@ SELECT [GroupPriceID]
       ,[PriceOverride]
   FROM [GroupPrice]
   where ItineraryID = @ItineraryID
+  
+  -- Invoice
+  SELECT
+	[InvoiceID],
+	[PurchaseLineID],
+	[Filename],
+	[OriginalFilename],
+	[Amount],
+	[Validated],
+	[CreatedOn]
+FROM [dbo].[Invoice]
+WHERE [PurchaseLineID] IN ( 
+		SELECT [PurchaseLineID] FROM [dbo].[PurchaseLine] 
+		WHERE [ItineraryID] = @ItineraryID )
+GO
+
+
+PRINT N'Altering [dbo].[_SupplierSet_Sel_ByID]...';
+
+
+GO
+ALTER PROCEDURE [dbo].[_SupplierSet_Sel_ByID]
+@SupplierID INT
+AS
+SET NOCOUNT ON
+
+/* Select parent tables first */
+
+-- PaymentTerm --
+SELECT
+	[PaymentTermID],
+	[PaymentDueID],
+	[PaymentDuePeriod],
+	[DepositAmount],
+	[DepositType],
+	[DepositDueID],
+	[DepositDuePeriod]
+FROM [dbo].[PaymentTerm]
+WHERE
+	[PaymentTermID] = -- PurchasePaymentTerms from Supplier
+		(SELECT [PaymentTermID] FROM [Supplier] WHERE [SupplierID] = @SupplierID)
+OR
+	[PaymentTermID] IN -- PurchasePaymentTerms from Service
+		(SELECT DISTINCT [PaymentTermID] FROM [Service] WHERE
+			[ServiceID] IN ( 
+				SELECT [ServiceID] FROM [dbo].[Service] 
+					WHERE [SupplierID] = @SupplierID ))
+
+-- Supplier --
+SELECT
+	[SupplierID],
+	[SupplierName],
+	[HostName],
+	[StreetAddress],
+	[PostAddress],
+	[Postcode],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[Phone],
+	[MobilePhone],
+	[FreePhone],
+	[Fax],
+	[Email],
+	[Website],
+	[Latitude],
+	[Longitude],
+	[GradeID],
+	[GradeExternalID],
+	[Description],
+	[Comments],
+	[CancellationPolicy],
+	[BankDetails],
+	[AccountingName],
+	[NetTaxTypeID],
+	[GrossTaxTypeID],
+	[PaymentTermID],
+	[DefaultMargin],
+	[DefaultCheckinTime],
+	[DefaultCheckoutTime],
+	[ImportID],
+	[ExportID],
+	[BookingWebsite],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[UpdatedOn]
+FROM [dbo].[Supplier]
+WHERE
+	[SupplierID] = @SupplierID
+			
+-- Service --
+SELECT
+	[ServiceID],
+	[ServiceName],
+	[SupplierID],
+	[ServiceTypeID],
+	[Description],
+	[Comments],
+	[Warning],
+	[MaxPax],
+	[CheckinTime],
+	[CheckoutTime],
+	[CheckinMinutesEarly],
+	[IsRecordActive],
+	[CurrencyCode],
+	[ChargeType],
+	[PaymentTermID],
+	[NetTaxTypeID],
+	[GrossTaxTypeID],
+	[Latitude],
+	[Longitude],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[ImportID]
+FROM [dbo].[Service]
+WHERE
+	[SupplierID] = @SupplierID
+	
+-- ServiceTime
+SELECT
+	[ServiceTimeID],
+	[ServiceID],
+	[StartTime],
+	[EndTime],
+	[Comment]
+FROM [dbo].[ServiceTime]
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+
+-- ServiceConfig --
+SELECT
+	[ServiceID],
+	[ServiceConfigTypeID],
+	[Note],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[ServiceConfig]
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+	
+-- Rate --	
+SELECT
+	[RateID],
+	[ServiceID],
+	[ValidFrom],
+	[ValidTo],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[ImportID]
+FROM [dbo].[Rate]	
+WHERE 
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+	
+-- Option --
+SELECT
+	[OptionID],
+	[OptionName],
+	[OptionTypeID],
+	[RateID],
+	[Net],
+	[Gross],
+	[PricingOption],
+	isnull([IsDefault], 0) as [IsDefault],
+	[IsRecordActive],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[ImportID]
+FROM [dbo].[Option]	
+WHERE 
+	[RateID] IN (		
+		SELECT r.[RateID] 
+		FROM   [dbo].[Rate] r, [dbo].[Service] s 
+		WHERE  s.[SupplierID] = @SupplierID 
+		AND    r.[ServiceID] = s.[ServiceID] )
+			
+-- Contact --			
+SELECT
+	[ContactID],
+	[ContactName],
+	[Title],
+	[FirstName],
+	[LastName],
+	[StreetAddress],
+	[PostName],
+	[PostAddress],
+	[CityID],
+	[RegionID],
+	[StateID],
+	[CountryID],
+	[PostCode],
+	[WorkPhone],
+	[HomePhone],
+	[CellPhone],
+	[Fax],
+	[Email1],
+	[Email2],
+	[Website],
+	[BirthDate],
+	[Notes],
+	[IsRecordActive],
+	[ParentFolderID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion],
+	[IsDeleted],
+	[JobDescription],
+	[PassportNumber],
+	[PassportExpiry],
+	[UpdatedOn],
+	[Sex],
+	[Preferences]
+FROM [dbo].[Contact]
+WHERE
+	[ContactID] IN (
+		SELECT [ContactID] FROM [dbo].[SupplierContact] 
+		WHERE [SupplierID] = @SupplierID )
+
+-- SupplierContacts --			
+SELECT
+	[SupplierID],
+	[ContactID],
+	[Description],
+	[IsDefaultContact],
+	[IsDefaultBilling],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierContact]
+WHERE
+	[SupplierID] = @SupplierID
+	
+-- SupplierCreditCard --		
+SELECT
+	[SupplierID],
+	[CreditCardID],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierCreditCard]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- SupplierConfig --		
+SELECT
+	[SupplierID],
+	[SupplierConfigTypeID],
+	[Note],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierConfig]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- Message --
+SELECT
+	[MessageID],
+	[MessageName],
+	[MessageType],
+	[MessageTo],
+	[MessageFrom],
+	[MessageFile],
+	[MessageDate],
+	[Description],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[Message]
+WHERE
+	[MessageID] IN (
+		SELECT [MessageID] FROM [dbo].[SupplierMessage]
+		WHERE [SupplierID] = @SupplierID)
+
+-- SupplierMessage --
+SELECT
+	[SupplierID],
+	[MessageID],
+	[AddedOn],
+	[AddedBy]
+FROM [dbo].[SupplierMessage]
+WHERE [SupplierID] = @SupplierID
+
+-- SupplierText --
+SELECT
+	[SupplierTextID],
+	[SupplierTextName],
+	[SupplierID],
+	[FileName],
+	[AddedOn],
+	[AddedBy],
+	[RowVersion]
+FROM [dbo].[SupplierText]
+WHERE
+	[SupplierID] = @SupplierID
+
+-- SupplierNote --
+SELECT
+	[SupplierNoteID],
+	[SupplierID],
+	[Note],
+	[ShowOnReport],
+	[RowVersion]
+FROM [dbo].[SupplierNote]
+WHERE
+	[SupplierID] = @SupplierID
+ORDER BY 
+	SupplierNoteID
+
+-- Discount --
+SELECT
+	[DiscountID],
+	[ServiceID],
+	[UnitsUsed],
+	[UnitsFree],
+	[DiscountType]
+FROM [dbo].[Discount]
+WHERE
+	[ServiceID] IN ( 
+		SELECT [ServiceID] FROM [dbo].[Service] 
+		WHERE [SupplierID] = @SupplierID )
+		
+-- Content
+SELECT c.* 
+FROM [Content] c
+inner join SupplierContent s on s.ContentID = c.ContentID
+WHERE s.SupplierID = @SupplierID
+UNION
+SELECT c.* 
+FROM [Content] c
+inner join ServiceContent s on s.ContentID = c.ContentID
+where ServiceID in (select ServiceID from [Service] where SupplierID = @SupplierID)
+
+-- SupplierContent
+select * from SupplierContent
+where SupplierID = @SupplierID
+
+-- ServiceContent
+select * from ServiceContent
+where ServiceID in (select ServiceID from [Service] where SupplierID = @SupplierID)
+
+-- ServiceWarning
+select * from ServiceWarning
+where ServiceID in (select ServiceID from [Service] where SupplierID = @SupplierID)
+
+-- Allocations
+SELECT [AllocationID]
+      ,[ServiceID]
+      ,[ItineraryID]
+      ,[ValidFrom]
+      ,[ValidTo]
+      ,[Quantity]
+      ,[Release]
+  FROM [Allocation]
+  WHERE [ServiceID] IN ( 
+    SELECT [ServiceID] FROM [dbo].[Service] 
+	WHERE [SupplierID] = @SupplierID )
+
+SELECT [AllocationID]
+      ,[AgentID]
+      ,[Quantity]
+      ,[Release]
+  FROM [AllocationAgent]
+  WHERE [AllocationID] IN ( 
+    SELECT [AllocationID] FROM [dbo].[Allocation] a
+    LEFT JOIN [Service] s on s.ServiceID = a.ServiceID
+	WHERE [SupplierID] = @SupplierID )
+
+SELECT [AllocationID]
+      ,[OptionTypeID]
+      ,[AddedOn]
+  FROM [AllocationOption]
+  WHERE [AllocationID] IN ( 
+    SELECT [AllocationID] FROM [dbo].[Allocation] a
+    LEFT JOIN [Service] s on s.ServiceID = a.ServiceID
+	WHERE [SupplierID] = @SupplierID )
 GO
 
 
@@ -1900,7 +2423,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2013.01.22'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2013.01.31'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO

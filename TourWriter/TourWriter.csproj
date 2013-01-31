@@ -1663,7 +1663,7 @@
     <None Include="Resources\group_add.png" />
     <None Include="Resources\TourWriter.Email.BookingRequestCustom.html" />
     <Content Include="Resources\world_add.png" />
-    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2013.01.22.sql" />
+    <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2013.01.31.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.11.18.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.11.13.sql" />
     <EmbeddedResource Include="Services\Update\DatabaseUpdateScripts\2012.11.12.sql" />
