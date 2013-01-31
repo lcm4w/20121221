@@ -199,8 +199,11 @@ namespace TourWriter.Modules.ItineraryModule.RoomTypes
             itinerarySet.ItineraryMember.AddItineraryMemberRow(r);
             GridHelper.SetActiveRow(gridMembers, "ItineraryMemberID", r.ItineraryMemberID, "ItineraryMemberName");            
             CalculateRoomType();
-            var nextRoom = gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Count;
-            if (nextRoom > 0) gridMembers.ActiveRow.Cells["RoomName"].Value = "Room " + nextRoom;
+            if (gridRoomTypes.ActiveRow != null)
+            {
+                var nextRoom = gridMembers.DisplayLayout.ValueLists["RoomList"].ValueListItems.Count;
+                if (nextRoom > 0) gridMembers.ActiveRow.Cells["RoomName"].Value = "Room " + nextRoom;
+            }
         }
         
         private void CommitOpenEdits()
