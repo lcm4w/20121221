@@ -736,7 +736,6 @@ GO
 
 SET NOCOUNT ON
 GO
-USE [TourWriterDev]
 GO
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[AppSettings_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[AppSettings_Ins]
 GO
