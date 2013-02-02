@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -133,7 +132,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
 
             gridMembers.DisplayLayout.ValueLists.Add("RoomList");
             UpdateRoomTypeDDL();            
-            gridMembers.SetDataBinding(ClonedItinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");           
+            gridMembers.SetDataBinding(ClonedItinerarySet, "Itinerary.ItineraryItineraryGroup.ItineraryGroupGroupMember");
+
+            CurrencyManager cm = BindingContext[BindingSource, "PurchaseLineID"] as CurrencyManager;
+            var purchaseLine = itinerarySet.PurchaseLine.FindByPurchaseLineID(int.Parse(cm.Current.ToString()));
+            lnkInvoice.Text = string.Format(lnkInvoice.Tag.ToString(), purchaseLine.GetInvoiceRows().Count().ToString());
         }
         
 
@@ -141,6 +144,10 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         {
             supplierNotesList = null;
             SetNetSummary();
+
+            CurrencyManager cm = BindingContext[BindingSource, "PurchaseLineID"] as CurrencyManager;
+            var purchaseLine = itinerarySet.PurchaseLine.FindByPurchaseLineID(int.Parse(cm.Current.ToString()));
+            lnkInvoice.Text = string.Format(lnkInvoice.Tag.ToString(), purchaseLine.GetInvoiceRows().Count().ToString());
         }
 
         private static void PurchaseItem_CurrentChanged(object sender, EventArgs e)
@@ -1062,6 +1069,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             }
         }
 
+        private void lnkInvoice_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var purchaseLine = itinerarySet.PurchaseLine.FindByPurchaseLineID(int.Parse(txtLineId.Text));
+            if (purchaseLine.GetInvoiceRows().Count() <= 0)
+                App.ShowInfo("No invoice for this booking.");
+            else
+            {
+                InvoiceSelectorForm frm = new InvoiceSelectorForm(itinerarySet, int.Parse(txtLineId.Text));
+                frm.ShowDialog(this);
+            }
+        }
+
         #endregion    
     
         #region Passangers
@@ -1493,28 +1512,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             gridMembers.DisplayLayout.Bands[0].ColumnFilters["RoomTypeID"].FilterConditions.Add(FilterComparisionOperator.Equals, gridRoomTypes.ActiveRow.Cells["RoomTypeName"].Value.ToString());//int.Parse(gridRoomTypes.ActiveRow.Cells["OptionTypeID"].Value.ToString())); //RoomTypeName          
         }
         #endregion                    
-
-        private string invoiceFullPath;
-        private void btnDownloadInvoice_Click(object sender, EventArgs e)
-        {
-            const string sql = @"SELECT TOP 1 FileName FROM Invoice WHERE PurchaseLineId = @purchaseLineId;";
-
-            var invoice = TourWriter.Info.Services.DatabaseHelper.ExecuteDataset(sql,
-                            new System.Data.SqlClient.SqlParameter("@purchaseLineId", int.Parse(txtLineId.Text)));
-
-            if (invoice.Tables[0].Rows.Count != 0)
-            {
-                invoiceFullPath = invoice.Tables[0].Rows[0]["FileName"].ToString();
-                saveFileDialog1.FileName = Path.GetFileName(invoiceFullPath);
-                saveFileDialog1.Filter = "All Files (*.*)|*.*";
-                saveFileDialog1.ShowDialog();
-            }
-        }
-
-        private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            File.Copy(invoiceFullPath, saveFileDialog1.FileName);
-        }
     }
 
     public delegate void OnBookingEditorOpenSupplierHandler(BookingEditorOpenSupplierEventArgs e);

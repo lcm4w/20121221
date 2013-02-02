@@ -337,6 +337,12 @@
     <Compile Include="Modules\ItineraryModule\Bookings\GroupQuoteOverride.Designer.cs">
       <DependentUpon>GroupQuoteOverride.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\InvoiceSelectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modules\ItineraryModule\Bookings\InvoiceSelectorForm.Designer.cs">
+      <DependentUpon>InvoiceSelectorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1231,6 +1237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\ItineraryModule\Bookings\GroupQuoteOverride.resx">
       <DependentUpon>GroupQuoteOverride.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\ItineraryModule\Bookings\InvoiceSelectorForm.resx">
+      <DependentUpon>InvoiceSelectorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\ItineraryModule\Bookings\PaxBreaksForm.resx">
       <DependentUpon>PaxBreaksForm.cs</DependentUpon>

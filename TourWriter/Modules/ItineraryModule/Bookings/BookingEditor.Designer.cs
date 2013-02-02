@@ -99,7 +99,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAdd = new System.Windows.Forms.ToolStripButton();
             this.btnDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnDownloadInvoice = new System.Windows.Forms.ToolStripLabel();
             this.headerLabel1 = new TourWriter.UserControls.HeaderLabel();
             this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
             this.DummyLocationLabel = new System.Windows.Forms.Label();
@@ -136,7 +135,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.txtLineName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.lnkInvoice = new System.Windows.Forms.LinkLabel();
             this.ultraTabPageControl3.SuspendLayout();
             this.pnlItemDetail.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtItemRef)).BeginInit();
@@ -604,12 +603,11 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.toolStripButton1,
             this.toolStripSeparator1,
             this.btnAdd,
-            this.btnDelete,
-            this.btnDownloadInvoice});
-            this.myToolStrip1.Location = new System.Drawing.Point(308, 2);
+            this.btnDelete});
+            this.myToolStrip1.Location = new System.Drawing.Point(410, 2);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.myToolStrip1.Size = new System.Drawing.Size(203, 25);
+            this.myToolStrip1.Size = new System.Drawing.Size(101, 25);
             this.myToolStrip1.TabIndex = 0;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
@@ -659,13 +657,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnDelete.Text = "btnDelete";
             this.btnDelete.ToolTipText = "Delete selected booking item";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnDownloadInvoice
-            // 
-            this.btnDownloadInvoice.Name = "btnDownloadInvoice";
-            this.btnDownloadInvoice.Size = new System.Drawing.Size(102, 22);
-            this.btnDownloadInvoice.Text = "Download invoice";
-            this.btnDownloadInvoice.Click += new System.EventHandler(this.btnDownloadInvoice_Click);
             // 
             // headerLabel1
             // 
@@ -1163,15 +1154,25 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.label12.TabIndex = 91;
             this.label12.Text = "Booking name";
             // 
-            // saveFileDialog1
+            // lnkInvoice
             // 
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.lnkInvoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkInvoice.AutoSize = true;
+            this.lnkInvoice.Location = new System.Drawing.Point(437, 33);
+            this.lnkInvoice.Name = "lnkInvoice";
+            this.lnkInvoice.Size = new System.Drawing.Size(70, 13);
+            this.lnkInvoice.TabIndex = 92;
+            this.lnkInvoice.TabStop = true;
+            this.lnkInvoice.Tag = "Invoices ({0})";
+            this.lnkInvoice.Text = "Invoices ({0})";
+            this.lnkInvoice.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkInvoice_LinkClicked);
             // 
             // BookingEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.Controls.Add(this.lnkInvoice);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.txtLineId);
             this.Controls.Add(this.label2);
@@ -1297,7 +1298,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton btnMemberAdd;
         private System.Windows.Forms.ToolStripButton btnMemberDelete;
-        private System.Windows.Forms.ToolStripLabel btnDownloadInvoice;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.LinkLabel lnkInvoice;
     }
 }
