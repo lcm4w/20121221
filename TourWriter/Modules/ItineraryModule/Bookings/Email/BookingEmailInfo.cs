@@ -191,7 +191,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings.Email
 
         #region Email body creation
 
-        private string BuildEmailText(string template, ItinerarySet.PurchaseLineRow purchaseLine)
+        public string BuildEmailText(string template, ItinerarySet.PurchaseLineRow purchaseLine)
         {
             var supplier = GetBookingItinerarySet().SupplierLookup.FindBySupplierID(purchaseLine.SupplierID);
             var origin = !purchaseLine.ItineraryRow.IsCountryIDNull() ? Cache.ToolSet.Country.FindByCountryID(purchaseLine.ItineraryRow.CountryID) : null;

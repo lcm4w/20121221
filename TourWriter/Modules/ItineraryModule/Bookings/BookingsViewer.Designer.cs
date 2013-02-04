@@ -89,6 +89,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnEditFlags = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdateQuantities = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnCalendar = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.btnPrint = new System.Windows.Forms.ToolStripMenuItem();
             this.btnExportExcel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -622,6 +624,8 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             this.btnEditFlags,
             this.btnUpdateQuantities,
             this.toolStripSeparator6,
+            this.btnCalendar,
+            this.toolStripSeparator7,
             this.btnPrint,
             this.btnExportExcel,
             this.toolStripSeparator4,
@@ -676,6 +680,18 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(221, 6);
+            // 
+            // btnCalendar
+            // 
+            this.btnCalendar.Name = "btnCalendar";
+            this.btnCalendar.Size = new System.Drawing.Size(224, 22);
+            this.btnCalendar.Text = "Sync to Calendar...";
+            this.btnCalendar.Click += new System.EventHandler(this.btnCalendar_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(221, 6);
             // 
             // btnPrint
             // 
@@ -913,5 +929,7 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
         private System.Windows.Forms.ToolStripMenuItem moveToNewBookingMenuItem;
         private System.Windows.Forms.ToolStripComboBox cmbBookings;
         private System.Windows.Forms.ToolStripMenuItem btnUpdateQuantities;
+        private System.Windows.Forms.ToolStripMenuItem btnCalendar;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }

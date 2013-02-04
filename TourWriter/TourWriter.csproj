@@ -122,6 +122,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ActiveReports1\ActiveReports.Viewer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.GData.AccessControl, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.AccessControl.DLL</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Calendar, Version=2.1.0.0, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Calendar.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.1.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Interop.Excel, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Excel10\Interop.Excel.dll</HintPath>
@@ -376,6 +392,7 @@
     <Compile Include="Modules\ItineraryModule\RoomTypes\RoomTypesHost.Designer.cs">
       <DependentUpon>RoomTypesHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\Discounts.cs" />
     <Compile Include="Services\Travelmesh\DataSyncUi.cs" />
     <Compile Include="Services\Travelmesh\ApiWrapper.cs" />

@@ -1578,7 +1578,6 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             UpdateQuantitiesForm frm = new UpdateQuantitiesForm(itinerarySet, false);
             if (frm.ShowDialog() == DialogResult.OK)
             {
-                // TODO
                 RefreshGrid();
             }
         }
@@ -1905,6 +1904,60 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
                 grid.ResumeLayout();
             }
             bookingGridMenu.Close();
+        }
+
+        private void btnCalendar_Click(object sender, EventArgs e)
+        {
+            var idList = new List<int>();
+            foreach (var row in itinerarySet.PurchaseLine)
+            {
+                if (row.RowState != DataRowState.Deleted &&
+                    row.GetPurchaseItemRows().Length > 0)
+                {
+                    idList.Add(row.PurchaseLineID); // don't add empty bookings
+                }
+            }
+
+            string strEventName;
+            string strDescription;
+            ArrayList rowList;
+            var templateForm = new TemplateForm(itinerarySet.Itinerary[0].ItineraryName, Environment.CurrentDirectory + @"\BookingRequest-Plain.html");
+            var templateSettings = templateForm.GetTemplateSettings();
+
+            CalendarService cs;
+            string strUserName = Microsoft.VisualBasic.Interaction.InputBox("Enter Google username:", "TourWriter Input");
+            string strPassword = Microsoft.VisualBasic.Interaction.InputBox("Enter Google password:", "TourWriter Input");
+            try
+            {
+                cs = new CalendarService(strUserName, strPassword);
+
+                foreach (var purchaseLine in idList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
+                {
+                    rowList = new ArrayList();
+                    rowList.AddRange(itinerarySet.PurchaseItem.Select("PurchaseLineID = " + purchaseLine.PurchaseLineID));
+                    rowList.Sort(new DateTimeSortComparer());
+                    var item = (ItinerarySet.PurchaseItemRow)rowList[0];
+                    strEventName = purchaseLine.PurchaseLineID.ToString() + " " + (!purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
+                    strDescription = new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow> { purchaseLine }).BuildEmailText(templateSettings.Body, purchaseLine);
+                    strDescription = strDescription.Replace("<BODY contentEditable=true>", "").Replace("</BODY>", "").Replace("<BR>", "\r\n");
+                    if (!cs.IsExisting(purchaseLine.PurchaseLineID.ToString()))
+                    {
+                        cs.CreateEvent(strEventName, strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
+                        App.ShowInfo("Successfully added " + strEventName + ".");
+                    }
+                    else
+                    {
+                        cs.UpdateEvent(purchaseLine.PurchaseLineID.ToString(), strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
+                        App.ShowInfo("Successfully updated " + strEventName + ".");
+                    }
+                }
+                App.ShowInfo("Done!");
+            }
+            catch (Exception ex)
+            {
+                cs = null;
+                App.ShowError(ex.Message.ToString());
+            }
         }
 
         #endregion

@@ -96,6 +96,18 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.GData.Calendar, Version=2.1.0.0, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Calendar.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.1.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Google.GData.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Smo10.0\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
@@ -143,6 +155,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AgentSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="CalendarEventInfo.cs" />
     <Compile Include="ChargeTypeList.cs" />
     <Compile Include="ContactSet.Designer.cs">
       <AutoGen>True</AutoGen>
