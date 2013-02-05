@@ -24,7 +24,7 @@ SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 GO
 BEGIN TRANSACTION
 GO
-if ((select VersionNumber from AppSettings) <> '2012.11.18' and (select VersionNumber from AppSettings) <> '2013.01.10' and (select VersionNumber from AppSettings) <> '2013.01.22')
+if ((select VersionNumber from AppSettings) <> '2012.11.18' and (select VersionNumber from AppSettings) <> '2013.01.10' and (select VersionNumber from AppSettings) <> '2013.01.22' and (select VersionNumber from AppSettings) <> '2013.01.31')
 	RAISERROR (N'Database Update Script is not correct version for current database version',17,1)
 
 IF @@ERROR<>0 AND @@TRANCOUNT>0 ROLLBACK TRANSACTION
@@ -728,14 +728,29 @@ end
 
 GO
 
-if not Exists(select * from sys.columns where Name = N'ClientCode' and Object_ID = Object_ID(N'AppSettings'))
+if Exists(select * from sys.columns where Name = N'ClientCode' and Object_ID = Object_ID(N'AppSettings'))
+EXEC sp_rename 'AppSettings.ClientCode', 'OnlineID', 'COLUMN';
+	
+GO
+
+if not Exists(select * from sys.columns where Name = N'OnlineID' and Object_ID = Object_ID(N'AppSettings'))
 ALTER TABLE [dbo].[AppSettings]
-    ADD [ClientCode] VARCHAR (20) NULL;
+    ADD [OnlineID] VARCHAR (20) NULL;
+	
+GO
+
+if not Exists(select * from sys.columns where Name = N'GCalUser' and Object_ID = Object_ID(N'AppSettings'))
+ALTER TABLE [dbo].[AppSettings]
+    ADD [GCalUser] VARCHAR (100) NULL;
+	
+GO
+
+if not Exists(select * from sys.columns where Name = N'GCalPass' and Object_ID = Object_ID(N'AppSettings'))
+ALTER TABLE [dbo].[AppSettings]
+    ADD [GCalPass] VARCHAR (100) NULL;
 		
 GO
 
-SET NOCOUNT ON
-GO
 GO
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[AppSettings_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[AppSettings_Ins]
 GO
@@ -762,7 +777,9 @@ CREATE PROCEDURE [dbo].[AppSettings_Ins]
 	@LanguageCode varchar(10),
 	@CcyRateSource varchar(10),
 	@CcyDatePoint varchar(10),
-	@ClientCode varchar(20),
+	@OnlineID varchar(20),
+	@GCalUser varchar(100),
+	@GCalPass varchar(100),
 	@AppSettingsID int OUTPUT
 AS
 INSERT [dbo].[AppSettings]
@@ -788,7 +805,9 @@ INSERT [dbo].[AppSettings]
 	[LanguageCode],
 	[CcyRateSource],
 	[CcyDatePoint],
-	[ClientCode]
+	[OnlineID],
+	[GCalUser],
+	[GCalPass]
 )
 VALUES
 (
@@ -813,7 +832,9 @@ VALUES
 	@LanguageCode,
 	@CcyRateSource,
 	@CcyDatePoint,
-	@ClientCode
+	@OnlineID,
+	@GCalUser,
+	@GCalPass
 )
 SELECT @AppSettingsID=SCOPE_IDENTITY()
 GO
@@ -845,7 +866,9 @@ CREATE PROCEDURE [dbo].[AppSettings_Upd]
 	@LanguageCode varchar(10),
 	@CcyRateSource varchar(10),
 	@CcyDatePoint varchar(10),
-	@ClientCode varchar(20)
+	@OnlineID varchar(20),
+	@GCalUser varchar(100),
+	@GCalPass varchar(100)
 AS
 UPDATE [dbo].[AppSettings]
 SET 
@@ -870,7 +893,9 @@ SET
 	[LanguageCode] = @LanguageCode,
 	[CcyRateSource] = @CcyRateSource,
 	[CcyDatePoint] = @CcyDatePoint,
-	[ClientCode] = @ClientCode
+	[OnlineID] = @OnlineID,
+	[GCalUser] = @GCalUser,
+	[GCalPass] = @GCalPass
 WHERE
 	[AppSettingsID] = @AppSettingsID
 	AND [RowVersion] = @RowVersion
@@ -919,7 +944,9 @@ SELECT
 	[LanguageCode],
 	[CcyRateSource],
 	[CcyDatePoint],
-	[ClientCode]
+	[OnlineID],
+	[GCalUser],
+	[GCalPass]
 FROM [dbo].[AppSettings]
 WHERE
 	[AppSettingsID] = @AppSettingsID
@@ -956,7 +983,9 @@ SELECT
 	[LanguageCode],
 	[CcyRateSource],
 	[CcyDatePoint],
-	[ClientCode]
+	[OnlineID],
+	[GCalUser],
+	[GCalPass]
 FROM [dbo].[AppSettings]
 WHERE
 	[InstallID] = @InstallID
@@ -992,11 +1021,14 @@ SELECT
 	[LanguageCode],
 	[CcyRateSource],
 	[CcyDatePoint],
-	[ClientCode]
+	[OnlineID],
+	[GCalUser],
+	[GCalPass]
 FROM [dbo].[AppSettings]
 ORDER BY 
 	[AppSettingsID] ASC
 GO
+
 
 if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[Invoice_Ins]') and OBJECTPROPERTY(id, N'IsProcedure') = 1) drop procedure [dbo].[Invoice_Ins]
 GO
@@ -2422,7 +2454,7 @@ GO
 ----------------------------------------------------------------------------------------
 PRINT N'Updating [dbo].[AppSettings] version number'
 GO
-UPDATE [dbo].[AppSettings] SET [VersionNumber]='2013.01.31'
+UPDATE [dbo].[AppSettings] SET [VersionNumber]='2013.02.05'
 GO
 IF EXISTS (SELECT * FROM #tmpErrors) ROLLBACK TRANSACTION
 GO
