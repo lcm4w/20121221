@@ -197,6 +197,9 @@
               <xs:element name="LanguageCode" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="LanguageCode" msprop:Generator_ColumnVarNameInTable="columnLanguageCode" msprop:Generator_ColumnPropNameInTable="LanguageCodeColumn" msprop:Generator_UserColumnName="LanguageCode" type="xs:string" minOccurs="0" />
               <xs:element name="CcyRateSource" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CcyRateSource" msprop:Generator_ColumnVarNameInTable="columnCcyRateSource" msprop:Generator_ColumnPropNameInTable="CcyRateSourceColumn" msprop:Generator_UserColumnName="CcyRateSource" type="xs:string" minOccurs="0" />
               <xs:element name="CcyDatePoint" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="CcyDatePoint" msprop:Generator_ColumnVarNameInTable="columnCcyDatePoint" msprop:Generator_ColumnPropNameInTable="CcyDatePointColumn" msprop:Generator_UserColumnName="CcyDatePoint" type="xs:string" minOccurs="0" />
+              <xs:element name="OnlineID" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="OnlineID" msprop:Generator_ColumnVarNameInTable="columnClientCode" msprop:Generator_ColumnPropNameInTable="ClientCodeColumn" msprop:Generator_UserColumnName="OnlineID" type="xs:string" minOccurs="0" />
+              <xs:element name="GCalUser" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="GCalUser" msprop:Generator_ColumnVarNameInTable="columnGCalUser" msprop:Generator_ColumnPropNameInTable="GCalUserColumn" msprop:Generator_UserColumnName="GCalUser" type="xs:string" minOccurs="0" />
+              <xs:element name="GCalPass" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="GCalPass" msprop:Generator_ColumnVarNameInTable="columnGCalPass" msprop:Generator_ColumnPropNameInTable="GCalPassColumn" msprop:Generator_UserColumnName="GCalPass" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
