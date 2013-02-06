@@ -1924,39 +1924,43 @@ namespace TourWriter.Modules.ItineraryModule.Bookings
             var templateForm = new TemplateForm(itinerarySet.Itinerary[0].ItineraryName, Environment.CurrentDirectory + @"\BookingRequest-Plain.html");
             var templateSettings = templateForm.GetTemplateSettings();
 
+            ToolSet.AppSettingsRow settings = Global.Cache.ToolSet.AppSettings[0];
             CalendarService cs;
-            string strUserName = Microsoft.VisualBasic.Interaction.InputBox("Enter Google username:", "TourWriter Input");
-            string strPassword = Microsoft.VisualBasic.Interaction.InputBox("Enter Google password:", "TourWriter Input");
-            try
+            if (settings.GCalUser.Length <= 0 || settings.GCalPass.Length <= 0)
+                App.ShowInfo("Please set your Google login information first in Tools > Setup.");
+            else
             {
-                cs = new CalendarService(strUserName, strPassword);
-
-                foreach (var purchaseLine in idList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
+                try
                 {
-                    rowList = new ArrayList();
-                    rowList.AddRange(itinerarySet.PurchaseItem.Select("PurchaseLineID = " + purchaseLine.PurchaseLineID));
-                    rowList.Sort(new DateTimeSortComparer());
-                    var item = (ItinerarySet.PurchaseItemRow)rowList[0];
-                    strEventName = purchaseLine.PurchaseLineID.ToString() + " " + (!purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
-                    strDescription = new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow> { purchaseLine }).BuildEmailText(templateSettings.Body, purchaseLine);
-                    strDescription = strDescription.Replace("<BODY contentEditable=true>", "").Replace("</BODY>", "").Replace("<BR>", "\r\n");
-                    if (!cs.IsExisting(purchaseLine.PurchaseLineID.ToString()))
+                    cs = new CalendarService(settings.GCalUser, settings.GCalPass);
+
+                    foreach (var purchaseLine in idList.Select(id => itinerarySet.PurchaseLine.FindByPurchaseLineID(id)))
                     {
-                        cs.CreateEvent(strEventName, strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
-                        App.ShowInfo("Successfully added " + strEventName + ".");
+                        rowList = new ArrayList();
+                        rowList.AddRange(itinerarySet.PurchaseItem.Select("PurchaseLineID = " + purchaseLine.PurchaseLineID));
+                        rowList.Sort(new DateTimeSortComparer());
+                        var item = (ItinerarySet.PurchaseItemRow)rowList[0];
+                        strEventName = purchaseLine.PurchaseLineID.ToString() + " " + (!purchaseLine.ItineraryRow.IsAgentIDNull() ? Cache.ToolSet.Agent.FindByAgentID(purchaseLine.ItineraryRow.AgentID).AgentName : "");
+                        strDescription = new BookingEmailInfo(new List<ItinerarySet.PurchaseLineRow> { purchaseLine }).BuildEmailText(templateSettings.Body, purchaseLine);
+                        strDescription = strDescription.Replace("<BODY contentEditable=true>", "").Replace("</BODY>", "").Replace("<BR>", "\r\n");
+                        if (!cs.IsExisting(purchaseLine.PurchaseLineID.ToString()))
+                        {
+                            cs.CreateEvent(strEventName, strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
+                            App.ShowInfo("Successfully added " + strEventName + ".");
+                        }
+                        else
+                        {
+                            cs.UpdateEvent(purchaseLine.PurchaseLineID.ToString(), strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
+                            App.ShowInfo("Successfully updated " + strEventName + ".");
+                        }
                     }
-                    else
-                    {
-                        cs.UpdateEvent(purchaseLine.PurchaseLineID.ToString(), strDescription, "", item.StartDate, item.StartDate.AddHours(23).AddMinutes(59));
-                        App.ShowInfo("Successfully updated " + strEventName + ".");
-                    }
+                    App.ShowInfo("Done!");
                 }
-                App.ShowInfo("Done!");
-            }
-            catch (Exception ex)
-            {
-                cs = null;
-                App.ShowError(ex.Message.ToString());
+                catch (Exception ex)
+                {
+                    cs = null;
+                    App.ShowError(ex.Message.ToString());
+                }
             }
         }
 

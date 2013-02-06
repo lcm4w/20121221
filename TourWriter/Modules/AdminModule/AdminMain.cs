@@ -301,6 +301,7 @@ namespace TourWriter.Modules.AdminModule
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem13 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem14 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem15 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
+            Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem ultraExplorerBarItem17 = new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminMain));
             this.pnlMain = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -425,6 +426,9 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem12.Key = "EmailSettings";
             ultraExplorerBarItem12.Text = "Email settings";
             ultraExplorerBarItem12.ToolTipText = "Configure email related settings";
+            ultraExplorerBarItem17.Key = "CalendarSettings";
+            ultraExplorerBarItem17.Text = "Calendar settings";
+            ultraExplorerBarItem17.ToolTipText = "Configure Google calendar login";
             ultraExplorerBarItem13.Key = "FolderSettings";
             ultraExplorerBarItem13.Text = "Folder  settings";
             ultraExplorerBarItem13.ToolTipText = "Set default folder paths etc...";
@@ -436,6 +440,7 @@ namespace TourWriter.Modules.AdminModule
             ultraExplorerBarItem15.ToolTipText = "TourWriter subscription license";
             ultraExplorerBarGroup3.Items.AddRange(new Infragistics.Win.UltraWinExplorerBar.UltraExplorerBarItem[] {
             ultraExplorerBarItem12,
+            ultraExplorerBarItem17,
             ultraExplorerBarItem13,
             ultraExplorerBarItem14,
             ultraExplorerBarItem15});

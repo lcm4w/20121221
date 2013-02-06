@@ -338,6 +338,12 @@
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\ControlExtensions.cs" />
+    <Compile Include="Modules\AdminModule\UserControls\CalendarSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\AdminModule\UserControls\CalendarSettings.Designer.cs">
+      <DependentUpon>CalendarSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\AdminModule\UserControls\Tasks.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1238,6 +1244,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\AdminModule\UserControls\CalendarSettings.resx">
+      <DependentUpon>CalendarSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\AdminModule\UserControls\Tasks.resx">
       <DependentUpon>Tasks.cs</DependentUpon>
